@@ -1,0 +1,179 @@
+- Version 3.0 - DEV
+    - switch errors to next replica (batch mode)
+    - move default selection files in conf folder
+    - move configuration file in conf folder
+- Version 2.9 - 20141103
+    - several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info.
+    - new synda command (apt-get like front-end)
+    - support for most search-API parameters
+    - 'not' operation support (e.g. all models but one)
+    - multi-DRS support
+    - new formatting keyword
+    - only localpath is mutable
+    - support for different name for the same model (e.g. GFDL-CM2p1, GFDL-CM2.1 et GFDL-CM2-1)
+    - default values per project
+    - new 'searchapi_host' parameter to specify which index to use
+    - space are supported (e.g. 'ISI-MIP Fasttrack')
+    - replica support
+    - wildcard (all/*) supported in all facets
+    - local database reorganization
+- Version 2.8 - 20131220
+	- set CHUNKSIZE (search-API limit parameter) to 10000 (was 1000)
+	- add time coverage filter
+	- add support for "sha256" checksum type
+- Version 2.7 - 20130820
+	- fix B0039 bug
+	- fix B0034 bug
+	- fix B0033 bug
+	- add EUCLIPSE project
+	- XML parsing module rewriting
+	- add "timeout/retry" mecanism in the discovery process
+	- models discovery module improvement
+	- move tuning parameters into configuration file
+	- increase thredds-catalog timeout from 10 to 100
+	- add second logger for domain/functional messages
+	- load readonly tables in memory to speed up the discovery process
+	- add CMOR tables cache system
+	- add orphan transfer detection (without selection match)
+	- "stat" action rewriting
+	- add db_path option in configuration file
+- Version 2.6 - 20130418
+	- add "search-api-nocache" discovery engine
+	- add support for "obs4MIPs" project.
+	- add wild card support for realm and frequency
+	- fix B0032 bug.
+- Version 2.5 - 20121218
+	- add "url" column in dataset tmp tables
+	- add "-G" option (remove tmp tables)
+	- set "MyProxyClient" as default myproxy client.
+	- set search-API as default search-engine.
+	- add selection based statistics.
+	- add new "-E" option to retrieve model list from search-API.
+	- fix B0031 bug.
+	- replace PCMDI3 with PCMDI9 in get_data.sh script (myproxy server).
+	- add search-API multithreading to run several search in parallel.
+	- add search-API call metrics (to trace time spent in each call).
+	- add search-API pagination.
+	- fix B0030 bug.
+	- fix B0029 bug.
+	- fix B0028 bug.
+	- fix B0027 bug.
+	- fix B0026 bug
+- Version 2.4 - 20120619
+	- add "-x" option to run discovery process and print ESGF checksums
+	- add "-X" option to control if local checksum match remote checksum
+	- fix B0025 bug.
+	- add 'latest' symlink creation routine (last version identifier) 
+	- add old versions suppression routine
+	- add search API mode
+	- add "-L" option (set 'latest' flag)
+	- fix B0024 bug.
+	- mark CSTE_TRANSFERT_STATUS_DELETED status as deprecated
+- Version 2.3 - 20120420
+	- add PROC0001 method to list obsolete version.
+	- add new columns latest_date and last_done_transfer_date
+	- fix B0023 bug.
+	- fix B0022 bug (MIGR0001() method broken).
+	- fix B0021 bug. (variable missing when retrieving transfert from database).
+	- add "-y" option (dataset-info).
+- Version 2.2 - 20120407
+	- fix B0020 bug. (fix 2.2 at 20120410).
+	- fix B0019 bug. (fix 2.2 at 20120407).
+	- add ESGF MyProxyLogon (MyProxy Java client)
+	- replace "ps fax" with "ps ax" (Mac port)
+	- add dependencies check in install.sh
+	- add transfer_helper modules
+	- add dataset in transfer queue (eot_queue)
+	- fix B0018 bug.
+	- fix B0017 bug.
+	- fix "[Error 98] address already in use"
+	- use wget tries and timeout parameters from conf. file.
+	- fix B0016 bug.
+	- add "-r" option (exec proc)
+	- use transfert_id instead of local_image as primary key (for update)
+	- add new table "dataset"
+	- add new column "dataset_id" in transfert table
+- Version 2.1 - 20120312
+	- fix B0015 bug.
+    - add "-V" option in start.sh
+    - add "-b" to myproxy-logon options (only if myproxy-logon >= 5.0)
+    - set wget tries option to 1.
+	- fix B0014 bug.
+	- fix B0013 bug.
+	- add abnormal termination recovery routine
+	- add ignore checksum option.
+	- fix B0012 bug.
+	- set SQLite lock timeout to 120s.
+	- improve scheduler (increase queue and dequeue performance)
+	- frozen wget watchdog reactivation
+- Version 2.0 - 20120214
+	- add new synchronisation mode (retrieve dataset last version only).
+	- fix B0011 bug (remove local files when checksum doesn't match).
+	- add list-local-files action.
+	- fix B0007 bug (replace urllib with urllib2 and set timeout to 10).
+	- fix B0006 bug (add missing env. var. in stop.sh).
+	- fix B0009 bug (catch exception and process others datasets).
+	- remove non-working models from models table.
+- Version 1.9 - 20120130
+	- fix B0005 bug.
+- Version 1.8 - 20120128
+	- add "-w" option (shutdown immediate)
+	- improve errors handling
+	- fix B0003 bug.
+	- fix start.sh "-e" option (B0004 bug)
+- Version 1.7 - 20120127
+	- add start.sh "-u" option (refresh ESGF metadata)
+	- add start.sh "-q" option (stop daemon)
+	- add start.sh "-l" option (list selections)
+- Version 1.6 - 20120126
+	- fix B0001 and B0002 bugs.
+	- remove one-file-per-model logging
+	- add metadata caching system
+	- merge all logs in one file
+	- add model in tmp tables (dataset_version and file_timeslice)
+- Version 1.5 - 20120118
+	- move models loop inside the feeder
+	- add CMOR tablename forcing in template
+	- add stat action
+	- add syncmode check in start.sh
+	- move product out of local_image column
+- Version 1.4 - 20120114
+	- set myproxy-logon as default (change procedure in README to use "install.sh -a")
+	- add delete action
+	- add cancel action
+	- add retry action
+	- add info action
+	- merge output1 and output2 into output
+	- improve installation process
+	- use synchronous events to control the daemon
+- Version 1.3 - 20120102
+	- automatic update of model/datanode list
+	- add remote and local checksum
+	- unset X509_USER_PROXY variable (in get_data.sh script)
+	- fix selection overlapping bug
+	- fix product bug (check to prevent "output" value for product).
+	- add license information
+	- add svn properties in header
+	- ignore blank lines in selection files
+- Version 1.2 - 20111007
+	- improve "ensemble" support
+	- increase from 8 to 16 Wget threads
+	- add per model priority
+	- move main loop delay from 3 seconds to 6 seconds.
+	- support file ID with non-standard extension (".nc_0")
+	- add upgrade and archive option in script install.sh
+	- improve HTTP error handling in script get_data.sh
+- Version 1.1 - 20110928
+	- improve datanode and model configuration
+	- improve HTTP error code handling
+	- add watchdog to check for frozen wget
+	- fix PCMDI datanode incorrect url
+	- fix incorrect configuration for models GISS-E2-H, GISS-E2-R and inmcm4 
+	- add new models (HadCM3,IPSL-CM5A-LR,CanAM4,MIROC5,MIROC4h,CCSM4,MRI-CGCM3,MRI-AGCM3-2S,MRI-AGCM3-2H,MPI-ESM-LR)
+- Version 1.0 - 20110909
+	- support for myproxy-logon and myproxyclient
+	- simple data selection with model,experiment,realm and variable
+	- multi threaded downloads (8 tasks by default)
+	- manage datasets version following new drs
+	- incremental process (download only what's new)
+	- download history stored in a db 

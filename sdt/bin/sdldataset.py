@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @svn_file       $Id: sdldataset.py 12605 2014-03-18 07:31:36Z jerome $
+#  @version        $Rev: 12609 $
+#  @lastrevision   $Date: 2014-03-18 08:36:15 +0100 (Tue, 18 Mar 2014) $
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
+
+"""Contains *local* dataset routines."""
+
+import os
+import argparse
+import sdapp
+import sddeferredbefore
+import sddao
+import sdfiledao
+import sddatasetdao
+import sdstatquery
+import sddatasetflag
+import sdlsearch
+import sddatasetutils
+import sdi18n
+import sdvariable
+from tabulate import tabulate
+
+def get_datasets(stream=None,parameter=[],dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+
+    assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
+
+    if len(parameter)>0:
+        sddeferredbefore.add_forced_parameter(parameter,'type','Dataset')
+    elif stream is not None:
+        sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
+
+    datasets=sdlsearch.run(stream=stream,parameter=parameter,dry_run=dry_run)
+
+    return datasets
+
+def get_dataset(parameter=[],dry_run=False):
+    datasets=get_datasets(parameter=parameter,dry_run=dry_run)
+    if len(datasets)==1:
+        d=datasets[0]
+        d=_get_dataset_details(d.dataset_functional_id) # get dataset from DB again with more detailed informations
+    else:
+        d=None
+    return d
+
+def _get_dataset_details(dataset_functional_id):
+    """Helper func."""
+    d=sddatasetdao.get_dataset(dataset_functional_id=dataset_functional_id)
+
+    d.dataset_versions=sdstatquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
+    d.stats=sdstatquery.get_dataset_stats(d) 
+    d.variables=sdvariable.get_variables_progress(d)
+    d.files=sdfiledao.get_dataset_files(d)
+
+    return d
+
+def print_list(datasets):
+    li=[[d.status, d.dataset_functional_id] for d in datasets] # do not add data_node here ! (there is no data_node at dataset level in local database)
+    print tabulate(li,tablefmt="plain")
+
+def print_details(d):
+    print
+    print "dataset: %s"%d.dataset_functional_id
+    print "local path: %s"%d.get_full_local_path()
+    print "-----"
+    print "status: %s"%(d.status,)
+    print "latest: %s"%(str(bool(d.latest)).lower(),)
+    print "number of versions: %i"%(d.dataset_versions.count(),)
+    # print fresh dataset status (computed on-the-fly)
+    #print "computed status: %s"%(sddatasetflag.compute_dataset_status(d),)
+    #print "computed latest: %s"%(sddatasetflag.compute_latest_flag(d.dataset_versions,d),)
+    print "-----"
+    print "done: %i"%(d.stats['count']['done'],)
+    print "waiting: %i"%(d.stats['count']['waiting'],)
+    print "error: %i"%(d.stats['count']['error'],)
+    print "-----"
+    print "Dataset versions list:"
+    for d__v in d.dataset_versions.get_datasets():
+        print "%-8s %s"%(bool(d__v.latest),d__v.version,)
+    print "-----"
+    print "Variable status:"
+    for l__v in d.variables:
+        print "%-15s %s"%(l__v.name,l__v.status,)
+    print "-----"
+    print "Dataset files list:"
+    for t in d.files:
+        print "%-100s %s"%(t.filename,t.status,)
+
+if __name__ == '__main__':
+    prog=os.path.basename(__file__)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
+%s
+"""%sdi18n.m0002(prog))
+
+    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
+    parser.add_argument('-g', '--debug',action='store_true')
+    args = parser.parse_args()
+
+    datasets=get_datasets(parameter=args.parameter)
+    print_list(datasets)

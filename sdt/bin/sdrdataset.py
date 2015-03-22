@@ -1,0 +1,93 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @svn_file       $Id: sdrdataset.py 12605 2014-03-18 07:31:36Z jerome $
+#  @version        $Rev: 12609 $
+#  @lastrevision   $Date: 2014-03-18 08:36:15 +0100 (Tue, 18 Mar 2014) $
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
+
+"""Contains *remote* dataset search and display routines."""
+
+import os
+import argparse
+import sdapp
+import sdquicksearch
+from tabulate import tabulate
+from sdtools import print_stderr
+import sdi18n
+import sddeferredbefore
+import humanize
+
+def get_datasets(stream=None,parameter=[],post_pipeline_mode='dataset',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+
+    assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
+
+    if len(parameter)>0:
+        sddeferredbefore.add_forced_parameter(parameter,'type','Dataset')
+    elif stream is not None:
+        sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
+
+    result=sdquicksearch.run(stream=stream,parameter=parameter,post_pipeline_mode=post_pipeline_mode,dry_run=dry_run)
+    return result.files
+
+def get_dataset(stream=None,parameter=[],dry_run=False):
+    datasets=get_datasets(stream=stream,parameter=parameter,dry_run=dry_run)
+    if len(datasets)==0:
+        d=None
+    else:
+        d=datasets[0]
+
+        # retrieve dataset's files
+        """
+        dataset_functional_id=d['dataset_functional_id']
+        d.files=sdquicksearch.run(parameter=['type=File','dataset_id=%s'%dataset_functional_id],post_pipeline_mode='file',dry_run=False)
+        """
+
+    return d
+
+def print_replica_list(datasets):
+    """Print dataset list in a multi-replica context."""
+    li=[[d['status'],d['dataset_functional_id'],d['data_node']] for d in datasets]
+    print tabulate(li,tablefmt="plain")
+
+def print_list(datasets):
+    """Print dataset list in a mono-replica context."""
+    li=[[d['status'],d['dataset_functional_id']] for d in datasets]
+    print tabulate(li,tablefmt="plain")
+
+def print_details(d):
+    print "Dataset: %s"%d['dataset_functional_id']
+    print "Datanode: %s"%d['data_node']
+    print "Dataset total size: %s"%humanize.naturalsize(int(d['size']),gnu=False)
+    print "Dataset variable(s) list: %s"%','.join(d['variable'])
+
+    """
+    # Disable as it seems to be more ergonomic not to group datasets and files listing
+    # (when user wants datasets listing, he ask for it, when he wants files listing he ask for it with a new request)
+
+    print
+    print "Dataset files list:"
+    for f in d.files:
+        print "%-15s  %s"%(f['size'],f['filename'])
+    print "%i files found."%(len(d.files),)
+    """
+
+if __name__ == '__main__':
+    prog=os.path.basename(__file__)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
+%s
+"""%sdi18n.m0002(prog))
+
+    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
+    parser.add_argument('-y','--dry_run',action='store_true')
+    args = parser.parse_args()
+
+    datasets=get_datasets(parameter=args.parameter,dry_run=args.dry_run)
+    if not args.dry_run:
+        print_list(datasets)

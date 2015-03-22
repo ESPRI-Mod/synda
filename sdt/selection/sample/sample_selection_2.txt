@@ -1,0 +1,4 @@
+project=CMIP5
+experiment=rcp26
+variable[atmos][mon]=tasmin
+variable[atmos][day]=tas:Amon tasmin

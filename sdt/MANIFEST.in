@@ -1,0 +1,12 @@
+recursive-include selection *
+include bin/*
+include db
+include log
+include tmp
+include tools/*
+include doc
+include data
+include doc/README
+include doc/LICENSE
+include sdt.conf
+global-exclude .*swp

@@ -1,0 +1,65 @@
+-
+    - Q 
+        - Following error occurs during certificate retrieving (in sdlogon.sh)
+            -
+                Error: [('system library', 'fopen', 'No such file or directory'),
+                ('BIO routines', 'FILE_CTRL', 'system lib'), ('SSL routines',
+                'SSL_CTX_use_certificate_chain_file', 'system lib')] 
+    - A 
+        - 
+            - unset all X509 environment variable 
+            - remove '~/.esg' directory
+-
+    - Q 
+        -   
+            certificate unknown: signals that the server does not trust the certificate issued by the MyProxy CA
+
+            Example error message:
+
+            Connecting to test-datanode.jpl.nasa.gov|137.78.210.101|:443... connected.
+            OpenSL: error:14094416:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown
+            Unable to establish SSL connection.
+            download failed
+    - A 
+        -   
+            You might need to re-install the set of trusted ESGF certificates:
+
+            remove everything in the directory ~/.esg/*
+            run the wget script to download a new set of trusted certificates
+
+            Solution: contact the ESGF users mailing list to notify the ESGF administrators there might be a problem with the server certificate
+        - more info
+            - https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs
+-
+    - Q 
+        - if you have this error during install
+            ImportError: "No module named datetime" 
+    - A 
+        - remove virtualenv from the path
+            export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+-
+    - Q 
+        - if you have this error during install
+                main()
+              File "virtualenv.py", line 979, in main
+                no_pip=options.no_pip)
+              File "virtualenv.py", line 1081, in create_environment
+                site_packages=site_packages, clear=clear))
+              File "/prodigfs/esg/ArchiveTools/synchro_data/lib64/python2.6/posixpath.py", line 342, in abspath
+                if not isabs(path):
+              File "/prodigfs/esg/ArchiveTools/synchro_data/lib64/python2.6/posixpath.py", line 52, in isabs
+                return s.startswith('/')
+    - A 
+        - remove virtualenv from the path
+            - e.g.
+                export PATH=/bin:/usr/bin
+-
+    - Q 
+        - if error below occur
+            - AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'
+    - A 
+        - easy install HEAD from github
+          (note that you have to use easy_install, it doesn't work if install using pip)
+            easy_install https://github.com/pyca/pyopenssl/tarball/master
+    - more info
+        - http://stackoverflow.com/questions/23006023/error-installing-pyopenssl

@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @svn_file       $Id: sdnormalize.py 12605 2014-03-18 07:31:36Z jerome $
+#  @version        $Rev: 12638 $
+#  @lastrevision   $Date: 2014-03-18 08:36:15 +0100 (Tue, 18 Mar 2014) $
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
+
+"""This module contains normalization functions."""
+
+import string
+import sdapp
+
+def normalize_model_name(model_name):
+    """Replace special characters with hyphen.
+
+    Model names differ from search-API and DRS. text below described the mapping rule between both naming spaces
+
+    Example
+         CESM1(CAM5.1,FV2) <=> CESM1-CAM5-1-FV2
+
+        i.e.
+            this returns row
+                http://esgf-index1.ceda.ac.uk/esg-search/search?model=CESM1%28CAM5.1,FV2%29
+            this does not
+                http://esgf-index1.ceda.ac.uk/esg-search/search?model=CESM1-CAM5-1-FV2
+
+    Spec from http://cmip-pcmdi.llnl.gov/cmip5/docs/CMIP5_output_metadata_requirements.pdf
+
+        <model> should be identical to model_id, one of the global attributes described
+        in a subsequent section, except that the following characters, if they appear
+        in model_id should be replaced by a hyphen (i.e., by '-'):
+
+        _ ( ) . ; , [ ] : / * ? < > " ' { } & and/or a “space”. 
+
+        If, after substitution, any hyphens are found at the end of the string, they should be removed.
+
+    See below for official model names list
+
+        The official model names are shown at
+        http://cmip-pcmdi.llnl.gov/cmip5/availability.html and in the document
+        http://cmip-pcmdi.llnl.gov/cmip5/docs/CMIP5_modeling_groups.pdf, reachable from
+        various places on the CMIP5 website.
+    """
+
+    # translate special characters
+    #
+    # Note:
+    #   - str() func is used to prevent this error: 'Reason: character mapping must return integer, None or unicode'
+    #     (from details at http://stackoverflow.com/questions/10367302/what-is-producing-typeerror-character-mapping-must-return-integer-in-this-p)
+    #
+    mode_name_without_special_character=str(model_name).translate(string.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
+
+    # remove last hyphen if any
+    if mode_name_without_special_character[-1] == "-":
+        normalized_mode_name=mode_name_without_special_character[:-1] # remove last hyphen
+    else:
+        normalized_mode_name=mode_name_without_special_character
+
+    return normalized_mode_name
