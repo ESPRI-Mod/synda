@@ -1,0 +1,352 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved”
+#  @svn_file       $Id: worker 12605 2014-03-18 07:31:36Z jerome $
+#  @version        $Rev: 12638 $
+#  @lastrevision   $Date: 2014-03-18 08:36:15 +0100 (Tue, 18 Mar 2014) $
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
+
+"""Postprocessing worker."""
+
+import os
+import grp
+import getpass
+import imp
+import logging
+import datetime
+import time
+import signal
+import pyjsonrpc
+from argparse import RawTextHelpFormatter
+from pyjsonrpc.rpcerror import MethodNotFound,InternalError
+from retrying import retry
+import argparse
+import subprocess
+from urllib2 import URLError
+import daemon
+import daemon.pidfile
+import traceback
+
+class NoMoreJobToProcessException(Exception):
+    pass
+
+def _get_args():
+    """Returns parsed command line arguments."""
+    parser = argparse.ArgumentParser( description = """Post-processing worker used to fork Shell child-process or load python script as module.\nThe worker deals with sdp database from synchro-data to input CMIP5 variable to each process.\nThe worker returns job status to the database with run_log.\n\nThis script contains RPC client skeleton.""", formatter_class = RawTextHelpFormatter, epilog = "Developped by J. Raciazek (CNRS/IPSL) and G. Levavasseur (CNRS/IPSL)")
+
+    # positional args
+
+    parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status'])
+
+    # non-positional args
+
+    parser.add_argument('-d', '--debug', action = 'store_true', default = False, help = 'Debug mode')
+    parser.add_argument('-H', '--host', default = '134.157.179.45', help = 'Remote service hostname')
+    parser.add_argument('-j', '--job_class', choices = ['is_duplicate','suppression_variable','coalesce','overlap','copy','time_axis_normalization','cdscan'], required = False, metavar='JOB_CLASS', help = """Only processes specified job class.\nAvailable job classes are:\n- suppression_variable\n- coalesce\n- overlap\n- time_axis_normalization\n- cdscan\n- copy""")
+    parser.add_argument('-l', '--logdir', default = None, help = """Logfile directory""")
+
+    # This option is disabled for now as we need to always use crea_date as sort order
+    #parser.add_argument('-o', '--order', choices = ['aspgf','fifo'], default = 'fifo', help = """Pipeline processing order.""") # 'aspgf' means 'Already Started Pipelines Go First' 
+
+    parser.add_argument('-p','--port', default = '18290', help = 'Remote service port')
+    parser.add_argument('-P','--pipeline', default = None, help = """Only processes specified pipeline.\nAvailable pipelines are:\n- CMIP5_001\n- CMIP5_002""")
+    parser.add_argument('-s', '--script_dir', default = '/prodigfs/esg/ArchiveTools/sdp/script', help = """Process script directory (default = /prodigfs/esg/ArchiveTools/sdp/script)""")
+    parser.add_argument('-t', '--test', action = 'store_true', default = False, help = 'Test database connection service')
+    parser.add_argument('-T', '--timeout', type = int, default = 1000, help = 'Remote service timeout')
+    parser.add_argument('-u','--username', default = 'sdpp', help = 'Remote service username')
+    parser.add_argument('-1', '--one_item_only', action = 'store_true', default = False, help = 'Apply process on only one database entry')
+    parser.add_argument('-V', '--version', action = 'version', version = "%(prog)s ({0})".format(VERSION), help = 'Program version')
+    return parser.parse_args()
+
+def get_status_output(args, **kwargs):
+    """Fork process as Shell script
+    Args:
+        args (list): command + arguments
+    Notes
+        - handle exit status conversion and raise exception if child didn't complete normally
+        - as 'commands' module is deprecated, use this func as replacement
+        - also note that with this func, stderr and stdout are retrieved separately
+          (was not the case in 'commands' module)
+        - also note that there is a 'getstatusoutput' func in subprocess
+          maybe better to use it directly
+          (more info https://docs.python.org/3.3/library/subprocess.html#legacy-shell-invocation-functions)
+    """
+    kwargs['stdout']=subprocess.PIPE
+    kwargs['stderr']=subprocess.PIPE
+    kwargs['universal_newlines']=False
+    p = subprocess.Popen(args, **kwargs)
+    stdout, stderr = p.communicate()
+    return p.returncode, stdout, stderr
+
+def check_user_group(username):
+    groups = [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
+    if 'cmip5' not in groups:
+        raise Exception('Incorrect group (user running this script must be in cmip5 group).')
+
+def check_username(username):
+    if username in ['root']:
+        raise Exception('Incorrect user (this script must be run as normal user).')
+
+def check_user():
+    username=getpass.getuser()
+
+    check_username(username)
+    check_user_group(username)
+
+def get_unique_filename():
+    return "worker-%s-%i.log"%(datetime.datetime.now().strftime("%Y%m%d-%H%M%S"),os.getpid())
+
+def get_logfile(log_dir,filename):
+
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+
+    return '%s/%s'%(log_dir,filename)
+
+def run_test(service):
+    try:
+        buf = service.test1(1,2)
+    except URLError,e:
+        logging.info('Error occur while contacting the JSONRPC server. Are JSONRPC connection parameters correctly set (i.e. login, passwd, url...) ?')
+        raise
+    print buf
+
+def get_script_path(script_dir,job_class,extension):
+    return '%s/%s%s'%(script_dir,job_class,extension)
+
+def script_exists(script_dir,job_class,extension):
+    if os.path.isfile(get_script_path(script_dir,job_class,extension)):
+        return True
+    else:
+        return False
+
+def run_job(job,args):
+    """Fork the process if Shell script or loads the module if Python script, both work on job dictionnary to communicate with the worker"""
+
+    # check
+    if script_exists(args.script_dir,job['job_class'],'.py') and script_exists(args.script_dir,job['job_class'],'.sh'):
+        raise Exception('Too much scripts found for this job class (job_class=%s)'%job['job_class'])
+
+    if script_exists(args.script_dir,job['job_class'],'.py'):
+        # run job as python module (no fork)
+        task=imp.load_source(job['job_class'], get_script_path(args.script_dir,job['job_class'],'.py'))
+
+        try :
+            task.run(job) # warning: job gets modified here
+            logging.debug('Job completes successfully')
+            job['error'] = False
+            job['error_msg'] = None
+        except Exception, error:
+            logging.debug('Exception occurs during processing: %s'%str(error))
+            job['error'] = True
+            job['error_msg'] = str(error)
+
+        # if transition_return_code has not been set by the job, default value is None
+        if 'transition_return_code' not in job:
+            job['transition_return_code']=None
+
+    elif script_exists(args.script_dir,job['job_class'],'.sh'):
+        # Run job as shell script (fork)
+        (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh'),job['full_path_variable']],shell=False)
+        logging.debug('Script return code: {0}\n'.format(status))
+        logging.debug('Script stdout: {0}\n'.format(stdout))
+        logging.debug('Script stderr: {0}\n'.format(stderr))
+
+        if status==0:
+            job['error']=False
+            job['error_msg']=None
+        else:
+            job['error']=True
+            job['error_msg']=None # TODO
+
+        job['shell_script_status']=status
+        job['transition_return_code']=None # this is always None in case of shell script (i.e. shell script cannot return a transition_return_code)
+    else:
+        raise Exception('No script found for this job class (job_class=%s)'%job['job_class'])
+
+def process_jobs(service,args):
+    try:
+        logging.info('Check for waiting jobs')
+        result=service.get_job(job_class=args.job_class,pipeline=args.pipeline,order='fifo')
+        job=result['job']
+        # Loop until remaining jobs (job['status'] = 'waiting')
+        while job and (quit==False):
+            logging.info('Processing {0}'.format(job['full_path_variable']))
+            if args.debug:
+                print str(job)
+                job['error']=False
+                job['error_msg']=None
+            else:
+                # Run process on job
+                run_job(job,args) # warning: job gets modified here
+            service.job_done(job)
+            if args.one_item_only:
+                break
+            result = service.get_job(job_class=args.job_class,pipeline=args.pipeline,order='fifo')
+            job = result['job']
+        if not quit and not args.one_item_only:
+            logging.info('No jobs to process.')
+            raise NoMoreJobToProcessException()
+    except NoMoreJobToProcessException:
+        raise
+    except InternalError,e:
+        logging.error('{0}'.format(e.data))
+    except Exception,e:
+        logging.error('{0}'.format(e.__class__.__name__))
+        logging.error('{0}'.format(str(e)))
+    logging.info('Worker stopped')
+
+@retry(wait_exponential_multiplier=30000, wait_exponential_max=3600000,retry_on_exception=lambda e: isinstance(e, NoMoreJobToProcessException))
+def process_jobs_with_retry(service,args):
+    """
+    Retry mecanism when no more job to do use the decorator above.
+
+    Notes
+        - In daemon mode, once there is no more job to process, worker go idle,
+          then periodically checks for job using the following schedule (unit=minute): 
+          1, 2, 4, 8, 16, 32, 60, 60, 60, 60, 60...
+        - Retry forever if an NoMoreJobToProcessException occurs, raise any other errors
+    """
+    process_jobs(service,args)
+
+def init_logger(logfile):
+    logging.basicConfig(filename=logfile,level=logging.DEBUG,format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
+
+def run(args):
+    """Test service connection or start processing jobs"""
+
+    # Create database connection service
+    service = pyjsonrpc.HttpClient(url, args.username, password, args.timeout)
+
+    if args.test:
+        run_test(service)
+    else:
+        process_jobs(service,args)
+
+def stop(signum, frame):
+    global quit
+
+    logging.info('Worker received stop signal')
+    quit = True
+
+# daemon related funcs
+
+def locate_sp_home():
+    """Return Synda Post-processing location."""
+    if 'SP_HOME' in os.environ:
+        return os.environ.get('SP_HOME')
+    else:
+        if os.path.isfile('../sdp.conf'):
+            return os.path.dirname(os.getcwd())
+        else:
+            return None
+
+def get_log_dir(args):
+    """This func is used only in daemon mode."""
+    if args.logdir is None:
+        if locate_sp_home() is not None:
+            logdir='%s/log'%locate_sp_home()
+        else:
+            logdir=default_logdir
+    else:
+        logdir=args.logdir
+
+    return logdir
+
+def daemon_status():
+    if is_running():
+        return "Daemon running"
+    else:
+        return "Daemon not running"
+
+def is_running():
+    if os.path.isfile(pid_file): # maybe this can be replaced by "pidfile.is_locked()"
+        return True
+    else:
+        return False
+
+def stop_daemon(pidfile):
+    if is_running():
+        os.kill(pidfile.read_pid(),signal.SIGTERM)
+    else:
+        print 'Daemon is already stopped.'
+
+def start_daemon(args):
+    global quit
+
+    if not is_running():
+        quit=False
+
+        with context:
+
+            try:
+
+                # init logging
+                logdir=get_log_dir(args)
+                logfile=get_logfile(logdir,'worker.log')
+                init_logger(logfile) # must be done after the double fork
+
+                # start job processing
+                logging.info("Daemon starting ...")
+                service = pyjsonrpc.HttpClient(url, args.username, password, args.timeout) # Create database connection service
+                process_jobs_with_retry(service,args)
+                logging.info("Daemon stopped")
+
+            except Exception, e:
+                traceback.print_exc(file=open(stacktrace_log_file,"a"))
+
+    else:
+        print 'Daemon is already running.'
+
+# script init.
+
+VERSION = '{0} {1}-{2}-{3}'.format('v1.0', '2015', '01', '21')
+quit=False
+password=None # 'Remote service password'
+tmp_folder='/tmp'
+default_logdir='%s/worker_log'%tmp_folder
+pid_file="%s/sp_worker.pid"%tmp_folder
+stacktrace_log_file="/tmp/worker_stacktrace.log"
+
+if __name__ == '__main__':
+    args=_get_args()
+    check_user()
+
+    url='https://%s:%s/jsonrpc'%(args.host,args.port)
+
+    # retrieve passwd
+    if password is None:
+        password=getpass.getpass()
+
+    if args.action is None:
+        # non-daemon mode
+
+        signal.signal(signal.SIGTERM, stop)
+
+        # init logging
+        logdir=default_logdir if args.logdir is None else args.logdir
+        logfile=get_logfile(logdir,get_unique_filename())
+        init_logger(logfile)
+
+        run(args)
+    else:
+        # daemon mode
+
+        pidfile=daemon.pidfile.PIDLockFile(pid_file)
+        context=daemon.DaemonContext(working_directory=tmp_folder, pidfile=pidfile,)
+        context.signal_map={ signal.SIGTERM: stop, }
+
+        if args.action == 'start':
+            start_daemon(args)
+        elif args.action == 'stop':
+            stop_daemon(pidfile)
+        elif args.action == 'status':
+            print daemon_status()
+        else:
+            raise Exception('Incorrect value for action')
