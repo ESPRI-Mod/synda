@@ -58,6 +58,12 @@ def certificate(args):
         else:
             print_stderr('Not implemented yet.')   
 
+def history(args):
+    import sddao
+    from tabulate import tabulate
+    li=[d.values() for d in sddao.get_history_lines()] # listofdict to listoflist
+    print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
+
 def install(files,args,interactive=True):
     """
     Returns
@@ -92,7 +98,7 @@ def install(files,args,interactive=True):
             if count_total>0:
                 print_stderr('Dataset is already the newest version.')   
             else:
-                print_stderr('Unable to locate dataset.')   
+                print_stderr('0 file found.')
 
         return 0
 
@@ -316,6 +322,7 @@ actions={
     'autoremove':autoremove,
     'cache':cache,
     'certificate':certificate, 
+    'history':history, 
     'install':install, 
     'remove':remove, 
     'stat':stat, 
