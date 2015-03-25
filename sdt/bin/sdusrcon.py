@@ -101,9 +101,6 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
     def do_param(self,arg):
         sdparam.main(arg.split()) # tricks to re-use sdparam CLI parser
 
-    def do_version(self,line):
-        print "Synchro-data %s"%sdapp.version
-
     def do_config(self,arg):
         arg=None if arg=='' else arg # set None if empty
         sdconfig.print_(arg)

@@ -76,10 +76,6 @@ class AdminConsole(BaseConsole):
     def do_priority(self,arg):
         pass
 
-    def do_history(self,arg):
-        li=[d.values() for d in sddao.get_history_lines()] # listofdict to listoflist
-        print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
-
     #def do_si(self,line):
     #    """si SELECTION
     #    Print selection infos.
