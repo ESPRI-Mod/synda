@@ -90,7 +90,7 @@ mkdir -p $g__backup_directory
 msg "INF003" "backup.sh script started"
 
 \cp -a $DB_path/synchro_data.* $g__backup_directory                                                      # backup DB
-tar czf $g__backup_directory/$conf_archive_filename $ST_HOME/conf                                        # backup conf
+tar czf $g__backup_directory/$conf_archive_filename $SP_HOME/conf                                        # backup conf
 tar czf $g__backup_directory/$log_archive_filename $SP_HOME/log/*.log                                    # backup logs
 tar czf $g__backup_directory/$selections_archive_filename -- $SP_HOME/selection                          # backup selection
 
