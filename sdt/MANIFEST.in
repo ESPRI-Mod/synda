@@ -1,6 +1,6 @@
 recursive-include selection *
-include bin/*
 include conf/*
+include bin/*
 include db
 include log
 include tmp
