@@ -114,8 +114,21 @@ else
     g__transfer=1
 fi
 
+
+# env. check
+if [ -z "$SYNDA_SRC_ROOT" ]; then
+    echo "Error: SYNDA_SRC_ROOT is not set"
+    exit 1
+fi
+if [ -z "$SYNDA_WEBHOST" ]; then
+    echo "Error: SYNDA_WEBHOST is not set"
+    exit 1
+fi
+
+
 # init
-src_snapshot_root=/home/synda/src
+webhost=$SYNDA_WEBHOST
+src_snapshot_root=$SYNDA_SRC_ROOT
 sdt_src=$src_snapshot_root/sdt
 sdp_src=$src_snapshot_root/sdp
 sdt_version_prod="3.0"
@@ -126,16 +139,9 @@ sdt_archive_dev=sdt-${sdt_version_dev}.tar.gz
 sdp_archive_dev=sdp-${sdp_version_dev}.tar.gz
 sdt_archive_prod=sdt-${sdt_version_prod}.tar.gz
 sdp_archive_prod=sdp-${sdp_version_prod}.tar.gz
-webhost=
 
 
 # check
-
-if [ -z "$webhost" ]; then
-    echo "Error: webhost is not set"
-    exit 1
-fi
-
 if ! which pandoc &>/dev/null; then
     echo "Error: pandoc not found"
     exit 1
