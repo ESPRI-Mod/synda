@@ -234,12 +234,12 @@ update_transfer_environment_pre_install ()
         mkdir $st_root/conf
         mv $st_root/sdt.conf $st_root/conf
 
+        # remove sample default files
+        rm -f $st_root/selection/sample/default*
+
         # move default files
         mkdir $st_root/conf/default
         find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
-
-        # remove sample default files
-        rm -f $st_root/selection/sample/default*
     fi
 }
 
