@@ -205,12 +205,8 @@ check_python_installation ()
 
 update_transfer_environment_pre_install ()
 {
-    # TODO: see TAG4324234
-    #current_version=${1}
-    #new_version=${2}
-
-    current_version=$(cat $st_root/lib/sd/sdapp.py | grep "version=" | sed "s/[[:alpha:]=']*//g" )
-    new_version=$st_version
+    current_version=${1}
+    new_version=${2}
 
     # check
     if [ -z "$current_version" ]; then
@@ -236,16 +232,21 @@ update_transfer_environment_pre_install ()
 
         # move config file
         mkdir $st_root/conf
-        mv $st_conf_file $st_root/conf
+        mv $st_root/sdt.conf $st_root/conf
 
         # move default files
         mkdir $st_root/conf/default
-        mv $st_root/selection/default* $st_root/conf/default
+        find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
 
         # remove sample default files
-        rm $st_root/selection/sample/default*
+        rm -f $st_root/selection/sample/default*
     fi
 }
+
+#update_transfer_environment_post_install ()
+#{
+#    sqlite3 "update version set version=3.0"
+#}
 
 init_ve ()
 {
@@ -517,7 +518,8 @@ update_transfer_module ()
 
     # TODO: replace using 'synda -V' asap (TAG4324234)
     #update_transfer_environment_pre_install $(synda -V) $st_version
-    update_transfer_environment_pre_install
+    currver=$(cat $st_root/lib/sd/sdapp.py | grep "version=" | sed "s/[[:alpha:]=']*//g" )
+    update_transfer_environment_pre_install $currver $st_version
 
     pre_install $st_conf_file
     install_st_application
