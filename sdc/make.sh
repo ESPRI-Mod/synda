@@ -118,10 +118,10 @@ fi
 src_snapshot_root=/home/synda/src
 sdt_src=$src_snapshot_root/sdt
 sdp_src=$src_snapshot_root/sdp
-sdt_version_prod="2.9"
-sdt_version_dev="2.9"
+sdt_version_prod="3.0"
+sdt_version_dev="3.1"
 sdp_version_prod="1.0"
-sdp_version_dev="1.0"
+sdp_version_dev="1.1"
 sdt_archive_dev=sdt-${sdt_version_dev}.tar.gz
 sdp_archive_dev=sdp-${sdp_version_dev}.tar.gz
 sdt_archive_prod=sdt-${sdt_version_prod}.tar.gz

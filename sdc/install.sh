@@ -6,7 +6,7 @@
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
 #  @svn_file       $Id: install.sh 3057 2014-03-11 09:38:52Z jripsl $
-#  @version        $Rev: 3057 $
+#  @version        $Rev: 3058 $
 #  @lastrevision   $Date: 2014-03-11 10:38:52 +0100 (Tue, 11 Mar 2014) $
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
@@ -60,7 +60,7 @@ fatal_err ()
 {
     # this func is used by the trap mecanism
 
-    err "ERR011" "error occurs during installation: see $log_file for details"
+    err "INSTALL-ERR011" "error occurs during installation: see $log_file for details"
 }
 
 check_python_version ()
@@ -203,6 +203,50 @@ check_python_installation ()
     fi
 }
 
+update_transfer_environment_pre_install ()
+{
+    # TODO: see TAG4324234
+    #current_version=${1}
+    #new_version=${2}
+
+    current_version=$(cat $st_root/lib/sd/sdapp.py | grep "version=" | sed "s/[[:alpha:]=']*//g" )
+    new_version=$st_version
+
+    # check
+    if [ -z "$current_version" ]; then
+        err "INSTALL-ERR402" "Incorrect current version"
+    fi
+    if [ -z "$new_version" ]; then
+        err "INSTALL-ERR404" "Incorrect new version"
+    fi
+
+    # force to only allow some version for now
+    if [ $current_version != "2.9" -a $current_version != "3.0" ]; then
+        err "INSTALL-ERR406" "Incorrect current version"
+    fi
+    if [ $new_version != "3.0" ]; then
+        err "INSTALL-ERR408" "Incorrect new version"
+    fi
+
+    # TODO: add a check to prevent downgrade
+
+    # TODO: make this func generic
+
+    if [ "$current_version" = "2.9" -a "$new_version" = "3.0" ]; then
+
+        # move config file
+        mkdir $st_root/conf
+        mv $st_conf_file $st_root/conf
+
+        # move default files
+        mkdir $st_root/conf/default
+        mv $st_root/selection/default* $st_root/conf/default
+
+        # remove sample default files
+        rm $st_root/selection/sample/default*
+    fi
+}
+
 init_ve ()
 {
     ve_dir=${1}
@@ -230,7 +274,7 @@ check_ve ()
 
         # MEMO
         #
-        # Basically, ERR008 was made so 
+        # Basically, INSTALL-ERR008 was made so 
         #  - to inform user that no need to re-install ve and pypi package everytime
         #    Synchro-data application must be updated. 
         #    And so to inform user about the existency of '-u' install script option.
@@ -239,7 +283,7 @@ check_ve ()
         #    confirmation nor backup !)
         #
         # But OF COURSE, if first installation failed, user HAVE to reinstall everything.
-        # Which mean that ERR008 (error code and message) was not explicite at all and even more not correct.
+        # Which mean that INSTALL-ERR008 (error code and message) was not explicite at all and even more not correct.
 
 
         # old action (obsolete)
@@ -378,7 +422,7 @@ retrieve_archive ()
 
         # check
         if [ ! -f "$g__archive" ]; then
-            err "ERR400" "Archive file is missing ($g__archive)"
+            err "INSTALL-ERR400" "Archive file is missing ($g__archive)"
         fi
 
         # copy archive in tmp dir
@@ -470,6 +514,11 @@ update_transfer_module ()
 {
     init_ve $st_root
     check_python_installation # not sure if this is still needed
+
+    # TODO: replace using 'synda -V' asap (TAG4324234)
+    #update_transfer_environment_pre_install $(synda -V) $st_version
+    update_transfer_environment_pre_install
+
     pre_install $st_conf_file
     install_st_application
     post_install $st_conf_file
@@ -596,7 +645,7 @@ if [ -n "$g__archive" ]; then
     if [ $# -gt 1 ]; then
         # means more than one module are to be installed
 
-        err "ERR118" "'-e' option cannot be used for more than one module"
+        err "INSTALL-ERR118" "'-e' option cannot be used for more than one module"
     fi
 fi
 
@@ -608,7 +657,7 @@ if [ -n "$g__version" ]; then
     if [ $# -gt 1 ]; then
         # means more than one module have been asked to be installed
 
-        err "ERR218" "'-d' option cannot be used for more than one module"
+        err "INSTALL-ERR218" "'-d' option cannot be used for more than one module"
     fi
 fi
 
@@ -632,12 +681,11 @@ export LANG=C
 g__after_md5_conffile=
 g__before_md5_conffile=
 #
-#
 post_install_msg= # used to display some info to the user after installation
 tmpdir=$HOME/garbage
 curr_dir=$PWD # used for special deployment (developper only)
 #
-st_version=${g__version:-2.9} # set HEAD version unless vernum is specified by the user
+st_version=${g__version:-3.0} # set HEAD version unless vernum is specified by the user
 st_package=sdt-${st_version}
 st_archive=${st_package}.tar.gz
 st_url="http://dods.ipsl.jussieu.fr/jripsl/synchro_data/${st_archive}"
@@ -664,6 +712,20 @@ python_package_name=Python-2.6.6
 python_archive_name=Python-2.6.6.tgz
 python_url=http://www.python.org/ftp/python/2.6.6/Python-2.6.6.tgz
 python_dir=$HOME/python2.6
+
+# additional check
+if [ $g__transfer -eq 1 ]; then
+
+    # check transfer minimal version supported by this installer
+    # (this is because the installer depends of the environment and the environment changed in 3.0 (sdt.conf file moved to conf folder))
+    firstchar="$(echo $st_version | head -c 1)"
+    if [ "$firstchar" -lt "3" ]; then
+        err "INSTALL-ERR100" "This installer can only be used to install/update synda-transfer 3.0+ version. To install previous synda-transfer version, use this installer svn revision => 3057."
+    fi
+
+fi
+
+# clean temp files
 
 mkdir -p $tmpdir
 rm -rf $tmpdir/sdt-*
