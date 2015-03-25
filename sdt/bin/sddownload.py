@@ -32,7 +32,9 @@ class Download():
     @classmethod
     def run(cls,tr):
         if lfae_mode=="keep":
-            # usefull mode if metadata needs to be regenerated without retransfering the data
+            # usefull mode if
+            #  - metadata needs to be regenerated without retransfering the data
+            #  - synda files are mixed with files from other sources
 
             if os.path.isfile(tr.get_full_local_path()):
                 # file already here, just do some check and update some metadata 
@@ -40,7 +42,7 @@ class Download():
                 assert tr.size==os.path.getsize(tr.get_full_local_path())
 
                 tr.status=sdconst.TRANSFER_STATUS_DONE
-                tr.error_msg=""
+                tr.error_msg="Local file already exists: keep it (lfae_mode=keep)"
 
                 sdlog.info("SDDOWNLO-197","Local file already exists: keep it (lfae_mode=keep,local_file=%s)"%tr.get_full_local_path())
             else:
