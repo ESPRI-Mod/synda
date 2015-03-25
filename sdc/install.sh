@@ -115,6 +115,7 @@ check_dependencies ()
     check_dependency bc
     check_dependency md5sum
     check_dependency awk
+    check_dependency sqlite3
 }
 
 st_is_running ()
@@ -243,10 +244,13 @@ update_transfer_environment_pre_install ()
     fi
 }
 
-#update_transfer_environment_post_install ()
-#{
-#    sqlite3 "update version set version=3.0"
-#}
+update_transfer_environment_post_install ()
+{
+    current_version=${1}
+    new_version=${2}
+
+    sqlite3 $st_root/db/sdt.db "update version set version=$new_version"
+}
 
 init_ve ()
 {
@@ -524,6 +528,8 @@ update_transfer_module ()
     pre_install $st_conf_file
     install_st_application
     post_install $st_conf_file
+
+    update_transfer_environment_post_install $currver $st_version
 }
 
 install_postprocessing_module ()
