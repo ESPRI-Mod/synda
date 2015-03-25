@@ -5,7 +5,7 @@ import os
 setup(name='sdt',
 		#py_modules=['sdutils'],
 		scripts=[os.path.join('bin',f) for f in os.listdir('bin')],
-		data_files=[('conf',['sdt.conf']),
+		data_files=[('conf',['conf/sdt.conf']),
                     ('selection', glob.glob(os.path.join('selection', '*.txt'))),
                     ('selection/sample', glob.glob(os.path.join('selection/sample', '*'))),
                     ('doc',['doc/LICENSE','doc/README']),
