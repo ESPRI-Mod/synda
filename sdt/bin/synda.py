@@ -16,7 +16,7 @@
 
 Note
     - In this file, module import directives are moved near the calls,
-      so to improve startup time.
+      so to improve startup time (even for sdapp).
 """
 
 import sys
@@ -38,6 +38,7 @@ if __name__ == '__main__':
     parser.add_argument('-r','--replica',action='store_true',help='show replica')
     parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
     parser.add_argument('-s','--selection',default=None)
+    parser.add_argument('-V','--version',action='store_true') # beware: version exist both as option and as action
     parser.add_argument('-y','--dry_run',action='store_true')
 
     type_grp=parser.add_argument_group(None)
@@ -47,6 +48,10 @@ if __name__ == '__main__':
     type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
     args = parser.parse_args()
+
+    if args.version:
+        import sdapp
+        print "Synchro-data %s"%sdapp.version
 
     # check type mutex
     #
