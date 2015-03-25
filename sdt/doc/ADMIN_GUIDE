@@ -114,7 +114,7 @@ way to solve the problem is to change the file replica.
 
 To change the replica for all files in error, use command below
 
-    synda replica next -S error
+    synda replica next
 
 ### Get more details about errors
 

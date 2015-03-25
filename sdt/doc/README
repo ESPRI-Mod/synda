@@ -24,7 +24,7 @@
 		- download history stored in a db
 		- transfer priority
 	- last version
-		- 2.9
+		- 3.0
 - DEPENDENCIES
 	- python 2.6+
 	- sqlite

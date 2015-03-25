@@ -1,7 +1,11 @@
-- Version 3.0 - DEV
-    - switch errors to next replica (batch mode)
-    - move default selection files in conf folder
-    - move configuration file in conf folder
+- Version 3.1 - DEV
+- Version 3.0 - 20150325
+    - add '--version' option to print version in synda command
+    - add 'next replica' action (batch mode)
+    - move default selection files in 'sdt/conf/default'
+    - move configuration file in 'sdt/conf' folder
+    - add 'history' action
+    - lfae_mode into sdt.conf
 - Version 2.9 - 20141103
     - several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info.
     - new synda command (apt-get like front-end)
