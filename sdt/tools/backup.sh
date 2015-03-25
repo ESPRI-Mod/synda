@@ -73,6 +73,7 @@ fi
 
 DB_path="$(sdconfig -n db_folder)"
 log_archive_filename=logfiles.tgz
+conf_archive_filename=conffiles.tgz
 selections_archive_filename="selections.tgz"
 g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')"
 
@@ -87,7 +88,8 @@ mkdir -p $g__backup_directory
 
 msg "INF003" "backup.sh script started"
 
-\cp -a $DB_path/sdt.* $ST_HOME/sdt.conf $g__backup_directory                                             # backup conf and DB
+\cp -a $DB_path/sdt.* $g__backup_directory                                                               # backup DB
+tar czf $g__backup_directory/$conf_archive_filename $ST_HOME/conf                                        # backup conf
 tar czf $g__backup_directory/$log_archive_filename $ST_HOME/log/*.log                                    # backup logs
 tar czf $g__backup_directory/$selections_archive_filename -- $ST_HOME/selection                          # backup selection
 
