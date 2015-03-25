@@ -48,7 +48,8 @@ VARIABLE_COMPLETE="complete"
 VARIABLE_NOT_COMPLETE="not-complete"
 #
 DEFAULT_GROUP="default"
-#
+
+# SDSSSP means 'Synchro Data Specific Scalar Selection Parameters'
 SDSSSP=['group',
         'nearest',
         'keep_replica',
@@ -62,11 +63,19 @@ SDSSSP=['group',
         'priority',
         'progress',
         'tps',
-        'verbose']                               # SDSSSP means 'Synchro Data Specific Scalar Selection Parameters'
-SDSSP=SDSSSP+['local_path','status','timeslice'] # SDSSP means 'Synchro Data Specific Selection Parameters'
-SANAP=['offset', 'facets', 'format']             # SANAP means 'Search-API Non Authorized Parameter'
-SASP=['type','limit']                            # SASP means 'Search-API Scalar Parameter' (note that unlike 'SDSSSP' parameters, those parameters are not converted to scalar type in 'sdvectortoscalar' (this is because they will be processed using a generic function at the end of the pipeline, which need argument type to be 'list')
-#
+        'verbose']
+
+# SDSSP means 'Synchro Data Specific Selection Parameters'
+SDSSP=SDSSSP+['local_path',
+              'status',
+              'timeslice']
+
+# SANAP means 'Search-API Non Authorized Parameter'
+SANAP=['offset', 'facets', 'format']
+
+# SASP means 'Search-API Scalar Parameter' (note that unlike 'SDSSSP' parameters, those parameters are not converted to scalar type in 'sdvectortoscalar' (this is because they will be processed using a generic function at the end of the pipeline, which need argument type to be 'list')
+SASP=['type','limit']
+
 BIDPP='bidp_' # 'BIDPP' means 'Before Inference Default Parameter Prefix'. 'bidp_' means 'Before Inference Default Parameter'.
 BIFPP='bifp_' # 'BIFPP' means 'Before Inference Forced Parameter Prefix'. 'bifp_' means 'Before Inference Forced Parameter'.
 AIDPP='aidp_' # 'AIDPP' means 'After Inference Default Parameter Prefix'. 'aidp_' means 'After Inference Default Parameter'.
