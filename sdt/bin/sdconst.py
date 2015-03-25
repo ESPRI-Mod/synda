@@ -68,7 +68,8 @@ SDSSSP=['group',
 # SDSSP means 'Synchro Data Specific Selection Parameters'
 SDSSP=SDSSSP+['local_path',
               'status',
-              'timeslice']
+              'timeslice',
+              'insertion_group_id']
 
 # SANAP means 'Search-API Non Authorized Parameter'
 SANAP=['offset', 'facets', 'format']
