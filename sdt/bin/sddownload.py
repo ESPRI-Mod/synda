@@ -31,7 +31,7 @@ class Download():
 
     @classmethod
     def run(cls,tr):
-        if sdconfig.LFAE_mode=="keep":
+        if lfae_mode=="keep":
             # usefull mode if metadata needs to be regenerated without retransfering the data
 
             if os.path.isfile(tr.get_full_local_path()):
@@ -42,21 +42,21 @@ class Download():
                 tr.status=sdconst.TRANSFER_STATUS_DONE
                 tr.error_msg=""
 
-                sdlog.info("SDDOWNLO-197","Local file already exists: keep it (LFAE_mode=keep,local_file=%s)"%tr.get_full_local_path())
+                sdlog.info("SDDOWNLO-197","Local file already exists: keep it (lfae_mode=keep,local_file=%s)"%tr.get_full_local_path())
             else:
                 # file not here, start the download
 
                 cls.start_transfer_script(tr)
-        elif sdconfig.LFAE_mode=="replace":
+        elif lfae_mode=="replace":
             if os.path.isfile(tr.get_full_local_path()):
-                sdlog.info("SDDOWNLO-187","Local file already exists: remove it (LFAE_mode=replace,local_file=%s)"%tr.get_full_local_path())
+                sdlog.info("SDDOWNLO-187","Local file already exists: remove it (lfae_mode=replace,local_file=%s)"%tr.get_full_local_path())
                 os.remove(tr.get_full_local_path())
 
             cls.start_transfer_script(tr)
-        elif sdconfig.LFAE_mode=="abort":
+        elif lfae_mode=="abort":
             if os.path.isfile(tr.get_full_local_path()):
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Local file already exists: transfer aborted (LFAE_mode=abort)"
+                tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
             else:
                 cls.start_transfer_script(tr)
 
@@ -178,3 +178,4 @@ def end_of_transfer(tr):
 # module init.
 
 incorrect_checksum_action=sdconfig.incorrect_checksum_action
+lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
