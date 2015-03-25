@@ -39,7 +39,7 @@ def check_version():
         c.close()
     else:
         if sdapp.version!=version:
-            raise SDException("SYNCDDAO-317","Database must be upgraded.")
+            raise SDException("SYNCDDAO-317","Database must be upgraded (sdapp.version=%s,version=%s)."%(sdapp.version,version))
             #raise SDException("SYNCDDAO-317","Database must be upgraded: run 'sdupgrade' command")
 
 def connect():

@@ -87,7 +87,7 @@ def build_file_query(facets):
     else:
         # Search using search-API facets only
 
-        di=dict((k, facets[k]) for k in facets if k in ['status','model','project','variable']) # keep only local compatible keys
+        di=dict((k, facets[k]) for k in facets if k in ['insertion_group_id','status','model','project','variable']) # keep only local compatible keys
         if len(di)<1:
             q="SELECT * FROM file"
         else:
