@@ -103,7 +103,6 @@ check_path(data_folder)
 prevent_daemon_and_modification=True # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
-LFAE_mode="abort"            # LFAE means "local file already exists" (possible values are: "keep", "replace", "abort")
 
 #  remove => if checksum doesn't match, set transfer status to error and remove file from local repository
 #  keep   => if checksum doesn't match, set transfer status to done, log warning, keep file in local repository

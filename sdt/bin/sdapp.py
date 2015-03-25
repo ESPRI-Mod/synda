@@ -67,7 +67,7 @@ def who_am_i():
 # Init.
 
 name='transfer'
-version='2.9'
+version='3.0'
 sdapputils.set_exception_handler()
 
 # maybe remove the two mkdir below as it is a bit overkill
