@@ -1,5 +1,6 @@
 recursive-include selection *
 include bin/*
+include conf/*
 include db
 include log
 include tmp
@@ -8,5 +9,4 @@ include doc
 include data
 include doc/README
 include doc/LICENSE
-include sdt.conf
 global-exclude .*swp
