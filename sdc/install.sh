@@ -249,7 +249,7 @@ update_transfer_environment_post_install ()
     current_version=${1}
     new_version=${2}
 
-    sqlite3 $st_root/db/sdt.db "update version set version=$new_version"
+    sqlite3 $st_root/db/sdt.db "update version set version='$new_version'"
 }
 
 init_ve ()

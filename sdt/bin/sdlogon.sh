@@ -98,9 +98,9 @@ else
 fi
 
 conf_filename="sdt.conf"
-conf_file="$SYNCDA_ROOT/$conf_filename"
+conf_file="$SYNCDA_ROOT/conf/$conf_filename"
 passwd_filename=".sdpass"
-passwd_file="$SYNCDA_ROOT/$passwd_filename"
+passwd_file="$SYNCDA_ROOT/conf/$passwd_filename"
 
 # retrieve password
 if [ -f "$passwd_file" ]; then

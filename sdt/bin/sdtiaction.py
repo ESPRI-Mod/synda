@@ -222,7 +222,7 @@ def replica_next(file_functional_id,args):
     files=sdrfile.get_files(parameter=parameter,dry_run=args.dry_run)
     if not args.dry_run:
         if len(files)==0:
-            print_stderr("File not found (file_functional_id=%s)"%file_functional_id)
+            print_stderr("File not found in ESGF (file_functional_id=%s)"%file_functional_id)
         else:
             replicas=[(f['url'],f['data_node']) for f in files]
 
