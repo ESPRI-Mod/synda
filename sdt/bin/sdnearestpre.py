@@ -22,7 +22,6 @@ Notes
 import os
 import argparse
 import json
-import pycountry
 import sdnetutils
 import sdconfig
 import sdremoteparam
