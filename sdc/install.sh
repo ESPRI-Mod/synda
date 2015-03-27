@@ -367,6 +367,10 @@ install_st_additional_packages ()
     fi
     $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying
 
+    if [ "$PYTHON_CMD" = "python2.6" ]; then
+        $python_pkg_install_cmd argparse
+    fi
+
     install_myproxyclient
 
     # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
@@ -378,6 +382,10 @@ install_sp_additional_packages ()
     # install pypi python modules in virtualenv
     $python_pkg_install_cmd pyOpenSSL humanize tabulate progress python-jsonrpc python-daemon==1.6.1 retrying
     # pygraphviz
+
+    if [ "$PYTHON_CMD" = "python2.6" ]; then
+        $python_pkg_install_cmd argparse
+    fi
 }
 
 pre_install ()
