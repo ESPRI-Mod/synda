@@ -29,10 +29,10 @@ def cleanup():
     if os.path.isfile(sdconfig.ihm_pid_file):
         os.unlink(sdconfig.ihm_pid_file)
 
-    # HACK
+    # hack
     #
     # Something is hidding the cursor in 'synda' command, but I don't know what
-    # exactly. Code below is a hack/quickfix used to turn on the cursor.
+    # exactly. Code below is a quickfix used to turn on the cursor.
     #
     if sdconfig.config.getboolean('interface','progress'):
         sdtools.set_terminal_cursor_visible()

@@ -31,7 +31,7 @@ def get_facet_early(orig_stream,name):
         (i.e. when no transformation (e.g. sdinference) occured yet).
         
     TODO
-        Maybe find another way to do that as this func is a bit hacky
+        Maybe find a proper way to do that
     """
     import sdstream, sdextractitem, sdinference, copy, sddeferredbefore, sddeferredafter
 

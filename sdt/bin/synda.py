@@ -135,7 +135,7 @@ if __name__ == '__main__':
                 from sdexception import SDException
                 raise SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
 
-            args.stream=stream # HACK (i.e. pass 'stream' object downstream as a standalone argument (not inside args))
+            args.stream=stream # hack: pass 'stream' object downstream as a standalone argument (not inside args)
 
             import sdtsaction
             sdtsaction.actions[args.action](args)

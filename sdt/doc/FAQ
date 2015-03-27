@@ -1,4 +1,14 @@
 -
+    - Q
+        - Following error occurs when running synda command
+            /lhome/l_beyerleu/sdt/lib/python2.7/site-packages/pycountry/__init__.py:12:
+            UserWarning: Module argparse was already imported from
+            /usr/lib64/python2.7/argparse.pyc, but
+            /lhome/l_beyerleu/sdt/lib/python2.7/site-packages is being added to sys.path 
+    - A
+        - run command below
+            - pip uninstall argparse
+-
     - Q 
         - Following error occurs during certificate retrieving (in sdlogon.sh)
             -

@@ -179,7 +179,7 @@ g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum 
 # WGETOPT=" --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
 #
 # with checksum
-WGETOPT="-D $local_file" # this is a huge hack !!!! (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
+WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O >(tee $local_file | $g__checksum_cmd > $g__tmpfile__checksum)" # bash trick (">()" is a command substitution)
 
 # debug mode

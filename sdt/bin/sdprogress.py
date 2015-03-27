@@ -95,10 +95,10 @@ class ProgressThread():
         sys.stderr.flush()
         sys.stdout.flush()
 
-        # HACK
+        # hack
         #
         # Something is hidding the cursor once the spinner is done, but I don't
-        # know what exactly. Code below is a hack/quickfix used to turn on the
+        # know what exactly. Code below is a quickfix used to turn on the
         # cursor once spinner is done.
         #
         sdtools.set_terminal_cursor_visible()

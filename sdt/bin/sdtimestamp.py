@@ -65,7 +65,8 @@ def use_file_timestamp_if_dataset_timestamp_is_missing(d):
     if 'timestamp' not in d:
         # timestamp doesn't exist in ESGF for this dataset
 
-        # HACK
+        # hack
+        #
         # Use a dataset's (random (i.e. files have not always the same even
         # timestmap in one dataset, so we take one randomly)) file timestamp
         # as dataset's timestamp is missing in ESGF !

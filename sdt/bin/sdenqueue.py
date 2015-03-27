@@ -70,7 +70,7 @@ def add_insertion_group_id(files,insertion_group_id):
     return files
 
 def keep_recent_datasets(datasets):
-    """This func is a HACK."""
+    """This func is a hack."""
     li=[]
 
     # Note that we use last_mod_date instead of crea_date, so to also

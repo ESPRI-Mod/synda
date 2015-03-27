@@ -56,7 +56,7 @@ def now():
       fix microsecond bug (http://stackoverflow.com/questions/9123057/datetime-now-sometimes-in-same-loop-change-format-and-omit-fmicroseconds)
     """
 
-    # UGLY HACK: the idea here is to loop until microsecond is non-zero (because when it is zero, the format changes !!!)
+    # hack: the idea here is to loop until microsecond is non-zero (because when it is zero, the format changes !!!)
     while True: 
 
         l__now=datetime.datetime.now().isoformat(" ") # isoformat returns a string representing the date and time in ISO 8601 format, YYYY-MM-DDTHH:MM:SS.mmmmmm, or, if microsecond is 0, YYYY-MM-DDTHH:MM:SS
