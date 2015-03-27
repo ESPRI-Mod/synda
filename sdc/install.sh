@@ -365,7 +365,7 @@ install_st_additional_packages ()
     if [ "$appversion" = "2.8" ]; then
         $python_pkg_install_cmd thredds drslib
     fi
-    $python_pkg_install_cmd pyOpenSSL argparse psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying
+    $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying
 
     install_myproxyclient
 
@@ -376,7 +376,7 @@ install_st_additional_packages ()
 install_sp_additional_packages ()
 {
     # install pypi python modules in virtualenv
-    $python_pkg_install_cmd pyOpenSSL argparse humanize tabulate progress python-jsonrpc python-daemon==1.6.1 retrying
+    $python_pkg_install_cmd pyOpenSSL humanize tabulate progress python-jsonrpc python-daemon==1.6.1 retrying
     # pygraphviz
 }
 
