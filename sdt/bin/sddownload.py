@@ -31,35 +31,7 @@ class Download():
 
     @classmethod
     def run(cls,tr):
-        if lfae_mode=="keep":
-            # usefull mode if
-            #  - metadata needs to be regenerated without retransfering the data
-            #  - synda files are mixed with files from other sources
-
-            if os.path.isfile(tr.get_full_local_path()):
-                # file already here, mark the file as done
-
-                tr.status=sdconst.TRANSFER_STATUS_DONE
-                tr.error_msg="Local file already exists: keep it (lfae_mode=keep)"
-
-                sdlog.info("SDDOWNLO-197","Local file already exists: keep it (lfae_mode=keep,local_file=%s)"%tr.get_full_local_path())
-            else:
-                # file not here, start the download
-
-                cls.start_transfer_script(tr)
-        elif lfae_mode=="replace":
-            if os.path.isfile(tr.get_full_local_path()):
-                sdlog.info("SDDOWNLO-187","Local file already exists: remove it (lfae_mode=replace,local_file=%s)"%tr.get_full_local_path())
-                os.remove(tr.get_full_local_path())
-
-            cls.start_transfer_script(tr)
-        elif lfae_mode=="abort":
-            if os.path.isfile(tr.get_full_local_path()):
-                tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
-            else:
-                cls.start_transfer_script(tr)
-
+        cls.start_transfer_script(tr)
         tr.end_date=sdtime.now()
 
     @classmethod
@@ -178,4 +150,3 @@ def end_of_transfer(tr):
 # module init.
 
 incorrect_checksum_action=sdconfig.incorrect_checksum_action
-lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
