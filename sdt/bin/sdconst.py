@@ -68,6 +68,7 @@ SDSSSP=['group',
 # SDSSP means 'Synchro Data Specific Selection Parameters'
 SDSSP=SDSSSP+['local_path',
               'status',
+              'error_msg',
               'timeslice',
               'insertion_group_id']
 
