@@ -16,6 +16,7 @@
 
 import argparse
 import spapp
+import re
 from spexception import SPException
 
 def get_object_from_resultset(rs,class_):
@@ -28,7 +29,15 @@ def get_tablename(o):
     return o.__class__.__name__.lower() # (e.g. File gives "file")
 
 def build_search_placeholder(search_constraints):
+    """This func only handle scalar value."""
     return " AND ".join(["%s=:%s"%(k,k) for k in search_constraints])
+
+def prevent_sql_injection(s):
+    return re.sub(r'[^a-zA-Z0-9_]', '', s)
+
+def build_multivalues_filter(key,values):
+    buf=' OR '.join(["%s='%s'"%(key,prevent_sql_injection(value)) for value in values])
+    return '('+buf+')'
 
 def resultset_to_dict(rs):
     kw={}
