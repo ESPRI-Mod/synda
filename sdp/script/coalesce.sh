@@ -95,6 +95,14 @@ if [ -d $output1_path -a -d $output2_path ]; then
         for f in $( comm -13  <(ls $output1_path | sort ) <(ls $output2_path | sort ) ); do # list files that exist in output2 only
             ln ${output2_path}${f} $f
         done
+    else
+        if [ -d $output1_path ]; then
+            /usr/bin/rsync -viax --link-dest=$output1_path $output1_path $process_path
+        fi
+
+        if [ -d $output2_path ]; then
+            /usr/bin/rsync -viax --link-dest=$output2_path $output2_path $process_path
+        fi
     fi
 else
     if [ -d $output1_path ]; then
