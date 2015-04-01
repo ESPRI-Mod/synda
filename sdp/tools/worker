@@ -33,6 +33,13 @@ import daemon
 import daemon.pidfile
 import traceback
 
+# hack to prevent error below
+# urllib2.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)>
+# more info => http://bugs.python.org/issue23052
+import ssl
+if hasattr(ssl, '_create_unverified_context'):
+    ssl._create_default_https_context = ssl._create_unverified_context
+
 class NoMoreJobToProcessException(Exception):
     pass
 
@@ -47,7 +54,7 @@ def _get_args():
     # non-positional args
 
     parser.add_argument('-d', '--debug', action = 'store_true', default = False, help = 'Debug mode')
-    parser.add_argument('-H', '--host', default = '134.157.179.45', help = 'Remote service hostname')
+    parser.add_argument('-H', '--host', default = '127.0.0.1', help = 'Remote service hostname')
     parser.add_argument('-j', '--job_class', type=lambda s: s.split(','), required = False, metavar='JOB_CLASS', help = """Only processes specified job class.\nAvailable job classes are:\n- suppression_variable\n- coalesce\n- overlap\n- time_axis_normalization\n- cdscan\n- copy. \nMultiple values can be set using comma as delimiter (e.g. coalesce,overlap,copy).""")
     parser.add_argument('-l', '--logdir', default = None, help = """Logfile directory""")
 

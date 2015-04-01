@@ -69,6 +69,7 @@ def get_pppruns(order=None,conn=None,limit=None,**search_constraints): # don't c
 
     c = conn.cursor()
     q="select * from ppprun where %s order by %s %s"%(where_clause,orderby,limit_clause)
+    #splog.debug("SPPPPRDA-100","%s"%q)
     c.execute(q,search_constraints)
     rs=c.fetchone()
     while rs!=None:
