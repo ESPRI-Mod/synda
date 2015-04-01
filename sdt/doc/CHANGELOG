@@ -2,6 +2,7 @@
 - Version 3.0 - 20150325
     - add new local search filter (status, error_msg)
     - add '--version' option to print version in synda command
+    - improve external files support
     - add 'next replica' action (batch mode)
     - move default selection files in 'sdt/conf/default'
     - move configuration file in 'sdt/conf' folder

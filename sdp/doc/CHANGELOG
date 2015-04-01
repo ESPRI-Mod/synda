@@ -1,0 +1,8 @@
+- Version 1.1 - DEV
+    - Add multivalues support for job_class option
+    - Add conf folder
+- Version 1.0 - 20141225
+    - Pipeline engine
+    - Jsonrpc server 
+    - Database environment
+    - Worker script
