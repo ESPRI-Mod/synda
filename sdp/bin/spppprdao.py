@@ -59,11 +59,16 @@ def get_pppruns(order=None,conn=None,limit=None,**search_constraints): # don't c
     else:
         raise SPException("SPPPPRDA-006","incorrect value for 'order' (%s)"%order)
 
-    search_placeholder=spsqlutils.build_search_placeholder(search_constraints)
+    search_placeholder=spsqlutils.build_search_placeholder(search_constraints) # note that placeholders is only used for scalar value
+    multivalues_filters=spsqlutils.build_multivalues_filters(search_constraints)
+
+    where_clause_items=[search_placeholder,multivalues_filters]
+
+    where_clause=' AND '.join(filter(lambda x: len(x)>0,where_clause_items))
     limit_clause="limit %i"%limit if limit is not None else ""
 
     c = conn.cursor()
-    q="select * from ppprun where %s order by %s %s"%(search_placeholder,orderby,limit_clause)
+    q="select * from ppprun where %s order by %s %s"%(where_clause,orderby,limit_clause)
     c.execute(q,search_constraints)
     rs=c.fetchone()
     while rs!=None:

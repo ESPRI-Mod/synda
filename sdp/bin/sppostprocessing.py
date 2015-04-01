@@ -287,7 +287,7 @@ if __name__ == '__main__':
 
     # test 1
     """
-    job=get_job(job_class='time_axis_normalization',order='fifo')
+    job=get_job(job_class=['time_axis_normalization'],order='fifo')
     print job
     """
 
