@@ -104,10 +104,6 @@ prevent_daemon_and_modification=True # prevent modification while daemon is runn
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
-#  remove => if checksum doesn't match, set transfer status to error and remove file from local repository
-#  keep   => if checksum doesn't match, set transfer status to done, log warning, keep file in local repository
-incorrect_checksum_action="remove"
-
 max_metadata_parallel_download_per_index=3
 syndac_history_path=os.path.expanduser("~/.sdhistory")
 

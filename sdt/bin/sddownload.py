@@ -149,4 +149,4 @@ def end_of_transfer(tr):
 
 # module init.
 
-incorrect_checksum_action=sdconfig.incorrect_checksum_action
+incorrect_checksum_action=sdconfig.config.get('behaviour','incorrect_checksum_action')
