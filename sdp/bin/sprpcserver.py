@@ -95,7 +95,9 @@ class AuthRequestHandler(PostProcessingNetAPI,pyjsonrpc.HttpRequestHandler):
         ok or not. None means not authorized.
         """
 
-        assert _password!='foobar'
+        if _password=='foobar':
+            splog.error('SPRPCSRV-008','Incorrect password (default password need to be changed)')
+            return None
 
         if username==_username and password==_password:
             return 1
