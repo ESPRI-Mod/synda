@@ -1,0 +1,11 @@
+- INSTALLATION
+	- install dependencies
+        - TODO
+	- install synda postprocessing
+		- wget http://dods.ipsl.jussieu.fr/jripsl/synchro_data/install.sh
+		- chmod +x ./install.sh
+		- export PATH=/usr/local/bin:/usr/bin:/bin
+		- ./install.sh postprocessing
+- CONFIGURATION
+    - run command below in $HOME/sdp/tmp folder
+        - openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
