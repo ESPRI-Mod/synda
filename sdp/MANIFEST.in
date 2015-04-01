@@ -1,5 +1,6 @@
 include bin/*
 include conf/*
+include data
 include db
 include log
 include tmp
