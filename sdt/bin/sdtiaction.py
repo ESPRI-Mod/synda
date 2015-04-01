@@ -96,9 +96,9 @@ def install(files,args,interactive=True):
 
         if interactive:
             if count_total>0:
-                print_stderr('Dataset is already the newest version.')   
+                print_stderr('Nothing to install (files already installed).')   
             else:
-                print_stderr('0 file found.')
+                print_stderr('Nothing to install (0 file found).')
 
         return 0
 
