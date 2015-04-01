@@ -4,6 +4,5 @@ include db
 include log
 include tmp
 include script/*
-include doc/*
-include README
-include LICENSE
+include doc/README
+include doc/LICENSE
