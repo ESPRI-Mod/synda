@@ -30,7 +30,7 @@ def get_tablename(o):
 
 def build_search_placeholder(search_constraints):
     """This func only handle scalar value."""
-    return " AND ".join(["%s=:%s"%(k,k) for k in search_constraints])
+    return " AND ".join(["%s=:%s"%(k,k) for k in search_constraints if not isinstance(search_constraints[k],list)])
 
 def prevent_sql_injection(s):
     return re.sub(r'[^a-zA-Z0-9_]', '', s)
@@ -38,6 +38,10 @@ def prevent_sql_injection(s):
 def build_multivalues_filter(key,values):
     buf=' OR '.join(["%s='%s'"%(key,prevent_sql_injection(value)) for value in values])
     return '('+buf+')'
+
+def build_multivalues_filters(search_constraints):
+    """This func only handle list value."""
+    return " AND ".join([build_multivalues_filter(k,search_constraints[k]) for k in search_constraints if isinstance(search_constraints[k],list)])
 
 def resultset_to_dict(rs):
     kw={}
