@@ -173,7 +173,6 @@ def add_parameter(param_name,param_value,selection):
 
 def process_rfv_parameter(parameter,selection):
     # notes
-    #  - 2D, 3D.. prefix are just for template clarity (we don't use this dimension info in the program)
     #  - "*" wildcard character is supported for realm and frequency and variable
     #
     # sample
@@ -195,11 +194,31 @@ def process_rfv_parameter(parameter,selection):
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
-def is_rfv_parameter(parameter):
+def is_rfv_parameter(parameter): # rfv means 'Realm Frequency Variable'
     if re.search("^variables?\[",parameter)!=None:
         return True
     else:
         return False
+
+def process_fv_parameter(parameter,selection):
+    # sample
+    #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
+
+    m=re.search('variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$', parameter)
+    if(m!=None):
+        realm=m.group(1)
+        time_frequency=m.group(2)
+        variables=sdtools.split_values(m.group(3))
+
+        facets={}
+        facets["realm"]=[realm]
+        facets["time_frequency"]=[time_frequency]
+        facets["variable"]=variables
+
+        selection.childs.append(Selection(facets=facets,filename="rfvsp")) # add sub-selection ("rfv" means "realm frequency variable special parameter")
+
+    else:
+        raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
 # module init.
 
