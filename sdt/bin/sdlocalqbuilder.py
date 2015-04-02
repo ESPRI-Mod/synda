@@ -85,7 +85,7 @@ def build_file_query(facets):
         buf="'%%%s%%'"%value
         q="select * from file where file_functional_id like %s order by file_functional_id desc"%(buf,)
     else:
-        # Search using search-API facets only
+        # mainstream search
 
         di=dict((k, facets[k]) for k in facets if k in ['insertion_group_id','status','error_msg','model','project','variable']) # keep only local compatible keys
         if len(di)<1:
@@ -111,14 +111,14 @@ def build_dataset_query(facets):
         buf="'%%%s%%'"%value
         q="select * from dataset where dataset_functional_id like %s order by dataset_functional_id desc"%(buf,)
     else:
-        # Search using search-API facets only
+        # mainstream search
 
         di=dict((k, facets[k]) for k in facets if k in ['status','model','project']) # keep only local compatible keys
         if len(di)<1:
             q="SELECT * FROM dataset"
         else:
             serialized_parameters=serialize_parameters(di)
-            q="SELECT * FROM file WHERE {0} ".format(serialized_parameters)
+            q="SELECT * FROM dataset WHERE {0} ".format(serialized_parameters)
 
     return q
 
