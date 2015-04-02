@@ -176,10 +176,8 @@ def process_rfv_parameter(parameter,selection):
     #  - 2D, 3D.. prefix are just for template clarity (we don't use this dimension info in the program)
     #  - "*" wildcard character is supported for realm and frequency and variable
     #
-    # samples
-    #  - 2D_variables[atmos][mon]="pr ts clwc psl hfls hfss prw cllcalipso clmcalipso cltcalipso cltisccp"
-    #  - 3D_variables[*][mon]="cl ta hus hur wap ua va zg clcalipso"
-    #  - variables[atmos][*]="cl ta hus hur wap ua va zg clcalipso"
+    # sample
+    #  variable[atmos][*]=cl ta hus hur wap ua va zg clcalipso
 
     m=re.search('variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$', parameter)
     if(m!=None):
