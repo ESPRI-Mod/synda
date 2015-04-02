@@ -220,6 +220,12 @@ def process_fv_parameter(parameter,selection):
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
+def is_fv_parameter(parameter): # fv means 'Freetext Variable'
+    if re.search("^variables?\[",parameter)!=None:
+        return True
+    else:
+        return False
+
 # module init.
 
 if __name__ == '__main__':
