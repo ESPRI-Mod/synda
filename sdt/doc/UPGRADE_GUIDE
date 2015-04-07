@@ -1,6 +1,6 @@
 # *sd28to29* command user guide
 
-sd28to29 - upgrade Synchro-data from 2.8 to 2.9
+sd28to29 - upgrade synda from 2.8 to 2.9
 
 ## Synopsis
 
@@ -8,7 +8,7 @@ sd28to29 - upgrade Synchro-data from 2.8 to 2.9
 
 ## Usage
 
-* Install Synchro-data 2.9 from scratch
+* Install synda 2.9 from scratch
 
 * Move to bin directory
 
@@ -24,4 +24,4 @@ sd28to29 - upgrade Synchro-data from 2.8 to 2.9
 
 * Copy selection files from 2.8 selection folder to 2.9 selection folder.
 
-* Copy parameter from 2.8 configuration file (synchro_data.conf) to 2.9 configuration file (sdt.conf).
+* Copy parameter from 2.8 configuration file (sdt.conf) to 2.9 configuration file (sdt.conf).

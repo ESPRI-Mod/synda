@@ -55,9 +55,9 @@
                 no_pip=options.no_pip)
               File "virtualenv.py", line 1081, in create_environment
                 site_packages=site_packages, clear=clear))
-              File "/prodigfs/esg/ArchiveTools/synchro_data/lib64/python2.6/posixpath.py", line 342, in abspath
+              File "/prodigfs/esg/ArchiveTools/sdt/lib64/python2.6/posixpath.py", line 342, in abspath
                 if not isabs(path):
-              File "/prodigfs/esg/ArchiveTools/synchro_data/lib64/python2.6/posixpath.py", line 52, in isabs
+              File "/prodigfs/esg/ArchiveTools/sdt/lib64/python2.6/posixpath.py", line 52, in isabs
                 return s.startswith('/')
     - A 
         - remove virtualenv from the path

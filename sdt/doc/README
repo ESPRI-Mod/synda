@@ -1,5 +1,5 @@
 - NAME
-	- synchro-data
+	- synda
 - PLATFORM
 	- Linux
 - ABOUT
@@ -36,7 +36,7 @@
 		- with apt-get installer
 			- apt-get install gcc python python-pip python-dev libssl-dev libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 	- install synda
-		- wget http://dods.ipsl.jussieu.fr/jripsl/synchro_data/install.sh
+		- wget http://dods.ipsl.jussieu.fr/jripsl/synda/install.sh
 		- chmod +x ./install.sh
 		- export PATH=/usr/local/bin:/usr/bin:/bin
 		- ./install.sh

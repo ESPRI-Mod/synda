@@ -9,7 +9,7 @@ partial mirror on a local cluster and keep it up to date.
 
 See README file
 
-http://dods.ipsl.jussieu.fr/jripsl/synchro_data/README
+http://dods.ipsl.jussieu.fr/jripsl/synda/README
 
 ## Selection file
 
@@ -20,15 +20,15 @@ in selection files (aka template). Those selection files are stored in
 Example of a selection file
 
     <--
-    project="CMIP5"
-    model="CNRM-CM5 CSIRO-Mk3-6-0"
-    experiment="historical amip"
-    ensemble="r1i1p1"
-    variable[atmos][mon]="tasmin tas psl"
-    variable[ocean][fx]="areacello sftof"
-    variable[land][mon]="mrsos,nppRoot,nep"
-    variable[seaIce][mon]="sic evap"
-    variable[ocnBgchem][mon]="dissic fbddtalk"
+    project=CMIP5
+    model=CNRM-CM5 CSIRO-Mk3-6-0
+    experiment=historical amip
+    ensemble=r1i1p1
+    variable[atmos][mon]=tasmin tas psl
+    variable[ocean][fx]=areacello sftof
+    variable[land][mon]=mrsos,nppRoot,nep
+    variable[seaIce][mon]=sic evap
+    variable[ocnBgchem][mon]=dissic fbddtalk
     -->
 
 ### Adding a selection file

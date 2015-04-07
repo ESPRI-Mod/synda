@@ -1,10 +1,10 @@
-The following licence information concerns ONLY the synchro-data tools
+The following licence information concerns ONLY the synda tools
 ======================================================================
 
 Copyright © Centre National de la Recherche Scientifique CNRS 
             Commissariat à l'Énergie Atomique CEA
 
-synchro_data : climate models data transfert program.
+synda : climate models data transfert program.
 
 This software is a computer program whose purpose is to download files
 from the ESGF CMIP5 archive, for a list of variables, experiments and
