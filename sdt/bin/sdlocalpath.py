@@ -6,9 +6,6 @@
 # @description    climate models data transfer program
 # @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 # 						 All Rights Reserved”
-# @svn_file       $Id: sdlocalpath.py 3059 2014-03-11 10:58:16Z jripsl $
-# @version        $Rev: 3059 $
-# @lastrevision   $Date: 2014-03-11 11:58:16 +0100 (Tue, 11 Mar 2014) $
 # @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
