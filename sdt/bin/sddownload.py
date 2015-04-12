@@ -41,7 +41,7 @@ class Download():
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise
 
-        (tr.sdget_status,local_checksum,errmsg)=sdget.download(tr.get_download_command_line())
+        (tr.sdget_status,local_checksum,errmsg)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
 
         if tr.sdget_status==0:
 
