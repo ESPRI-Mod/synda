@@ -9,19 +9,19 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This script contains download high level functions (low level ones are in 'sdget' script)."""
+"""This script contains download high level functions."""
 
 import os
 import sdapp
 import sdlog
 import sdconst
-import sdutils
 from sdexception import SDException,FatalException
 import sdlogon
 import sdconfig
 import sdtime
 import sdfiledao
 import sdevent
+import sdget
 
 class Download():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
@@ -41,16 +41,9 @@ class Download():
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise
 
-        # start wget in a new process
-        # (wget fork is blocking here, so thread will wait until wget is done)
-        #
-        # Notes
-        #  - if success (status==0), stdout contains only checksum
-        #
-        (sdget_status,stdout,stderr)=sdutils.get_status_output(tr.get_download_command_line(),shell=True)
-        tr.sdget_status=sdget_status
-        if sdget_status==0:
-            local_checksum=stdout.rstrip(os.linesep) # BEWARE: unexpected "get_data.sh" errors may be hidden here (print "stdout" in logfile to debug)
+        (tr.sdget_status,local_checksum,errmsg)=sdget.download(tr.get_download_command_line())
+
+        if tr.sdget_status==0:
 
             tr.status=sdconst.TRANSFER_STATUS_DONE
 
@@ -99,16 +92,16 @@ class Download():
         else:
             # we don't remove file in this case (this is already done in 'sdget.sh' script)
 
-            if sdget_status==7:
+            if tr.sdget_status==7:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
                 tr.error_msg="'sdget.sh' script gets killed"
 
-            elif sdget_status==29:
+            elif tr.sdget_status==29:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
                 tr.error_msg="'wget' gets killed"
 
             else:
-                sdlog.debug("SDDOWNLO-855","%s"%stderr) # if error occurs in 'sdget.sh', stderr contains error message
+                sdlog.debug("SDDOWNLO-855","%s"%errmsg)
 
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
                 tr.error_msg="Error occurs in 'sdget.sh' script"
