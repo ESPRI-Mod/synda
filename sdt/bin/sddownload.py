@@ -90,8 +90,15 @@ class Download():
 
                 pass # we DON'T store the local checksum ('file' table contains only the *remote* checksum)
         else:
-            # we don't remove file in this case (this is already done in 'sdget.sh' script)
 
+            # Remove file if exists
+            if os.path.isfile(tr.get_full_local_path()):
+                try:
+                    os.remove(tr.get_full_local_path())
+                except Exception,e:
+                    sdlog.error("SDDOWNLO-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
+
+            # Set status
             if killed:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
                 tr.error_msg="Error occurs in during download (killed). Transfer marked for retry."
@@ -102,17 +109,17 @@ class Download():
 def end_of_transfer(tr):
     # log
     if tr.status==sdconst.TRANSFER_STATUS_DONE:
-        sdlog.info("SYNDTASK-101","Transfer done (%s)"%str(tr))
+        sdlog.info("SDDOWNLO-101","Transfer done (%s)"%str(tr))
     elif tr.status==sdconst.TRANSFER_STATUS_WAITING:
         # Transfer have been marked for retry
         # (this happens for example during shutdown immediate, where
         # all running transfers are killed, or when wget are 'stalled'
         # and killed by watchdog)
         
-        sdlog.info("SYNDTASK-108","%s"%(tr.error_msg,))
+        sdlog.info("SDDOWNLO-108","%s"%(tr.error_msg,))
         #sdlog.info("SYNDTASK-104","Transfer marked for retry (%s)"%str(tr))
     else:
-        sdlog.info("SYNDTASK-102","Transfer failed (%s)"%str(tr))
+        sdlog.info("SDDOWNLO-102","Transfer failed (%s)"%str(tr))
 
     # update file
     sdfiledao.update_file(tr)
