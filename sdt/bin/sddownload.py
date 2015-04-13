@@ -41,7 +41,7 @@ class Download():
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise
 
-        (tr.sdget_status,local_checksum,errmsg)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
+        (tr.sdget_status,local_checksum,errmsg,retry)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
 
         if tr.sdget_status==0:
 
@@ -91,6 +91,13 @@ class Download():
                 pass # we DON'T store the local checksum ('file' table contains only the *remote* checksum)
         else:
             # we don't remove file in this case (this is already done in 'sdget.sh' script)
+
+            if retry:
+                tr.status=sdconst.TRANSFER_STATUS_WAITING
+                tr.error_msg="Error occurs in during download. Transfer marked for retry."
+            else:
+                tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.error_msg="Fatal error occurs in during download. Transfer aborted."
 
             if tr.sdget_status==7:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
