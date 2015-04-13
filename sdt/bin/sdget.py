@@ -22,6 +22,8 @@ import sdapp
 import sdconfig
 from sdtools import print_stderr
 import sdutils
+import sdconst
+import sdlog
 
 def download_with_wget(url):
 
@@ -43,6 +45,8 @@ def download_with_wget(url):
 
 def download(url,full_local_path,checksum_type):
 
+    transfer_protocol=get_transfer_protocol(url)
+
     download_cmd_line="%s -c %s %s %s" % (sdconfig.data_download_script,checksum_type,url,full_local_path)
 
     # start a new process (fork is blocking here, so thread will wait until wget is done)
@@ -53,9 +57,39 @@ def download(url,full_local_path,checksum_type):
     else:
         local_checksum=None
 
-    # debug (unexpected errors may be hidden in stdout)
-    #print stdout
+    killed=is_killed(transfer_protocol,status)
 
-    return (status,local_checksum,stderr) # if error occurs in 'sdget.sh', stderr contains error message
+    sdlog.debug("SYNDAGET-001","%s"%stdout) # unexpected errors may be hidden in stdout
+
+    if not killed:
+        sdlog.debug("SYNDAGET-002","%s"%stderr) # if error occurs in 'sdget.sh', stderr contains error message
+
+    return (status,local_checksum,killed)
+
+def get_transfer_protocol(url):
+    if url.startswith('http://'):
+        return sdconst.TRANSFER_PROTOCOL_HTTP
+    elif url.startswith('gsiftp://'):
+        return sdconst.TRANSFER_PROTOCOL_GRIDFTP
+    else:
+        assert False
+
+def is_killed(transfer_protocol,status):
+    """This func return True if transfer child process has been killed."""
+
+    if transfer_protocol=sdconst.TRANSFER_PROTOCOL_HTTP:
+        if sdconfig.http_client=sdconst.HTTP_CLIENT_WGET:
+            if status in (7,29):
+                return True
+            else:
+                return False
+        elif sdconfig.http_client=sdconst.HTTP_CLIENT_URLLIB:
+            return False
+        else:
+            assert False
+    elif transfer_protocol=sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+        return False # TODO
+    else:
+        assert False
 
 # init.

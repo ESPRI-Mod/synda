@@ -104,6 +104,8 @@ prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 max_metadata_parallel_download_per_index=3
 syndac_history_path=os.path.expanduser("~/.sdhistory")
 
+http_client='wget' # wget | urllib
+
 daemon_command_name='sdtaskscheduler'
 
 # note that variable below only set which low_level mecanism to use to find the nearest (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
