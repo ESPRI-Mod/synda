@@ -251,9 +251,6 @@ class File():
     def get_full_local_path(self):
         return "%s/%s"%(sdconfig.data_folder,self.local_path)
 
-    def get_download_command_line(self):
-        return "%s -c %s %s %s" % (sdconfig.data_download_script,self.checksum_type,self.url,self.get_full_local_path())
-
     def __str__(self):
         if self.status==sdconst.TRANSFER_STATUS_ERROR:
             buf="sdget_status=%s,error_msg='%s',file_id=%d,status=%s,local_path=%s,url=%s" % (self.sdget_status,self.error_msg,self.file_id,self.status,self.get_full_local_path(),self.url)

@@ -41,7 +41,7 @@ class Download():
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise
 
-        (tr.sdget_status,local_checksum,errmsg,retry)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
+        (tr.sdget_status,local_checksum,killed)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
 
         if tr.sdget_status==0:
 
@@ -92,26 +92,12 @@ class Download():
         else:
             # we don't remove file in this case (this is already done in 'sdget.sh' script)
 
-            if retry:
+            if killed:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
-                tr.error_msg="Error occurs in during download. Transfer marked for retry."
+                tr.error_msg="Error occurs in during download (killed). Transfer marked for retry."
             else:
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
                 tr.error_msg="Fatal error occurs in during download. Transfer aborted."
-
-            if tr.sdget_status==7:
-                tr.status=sdconst.TRANSFER_STATUS_WAITING
-                tr.error_msg="'sdget.sh' script gets killed"
-
-            elif tr.sdget_status==29:
-                tr.status=sdconst.TRANSFER_STATUS_WAITING
-                tr.error_msg="'wget' gets killed"
-
-            else:
-                sdlog.debug("SDDOWNLO-855","%s"%errmsg)
-
-                tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Error occurs in 'sdget.sh' script"
 
 def end_of_transfer(tr):
     # log

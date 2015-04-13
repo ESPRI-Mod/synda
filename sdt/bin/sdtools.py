@@ -10,7 +10,7 @@
 ##################################
 
 """This module is like 'sdutils' module, except that it doesn't use any other
-(Synchro-Data) module and thus can be used everywhere (even in 'sdtypes' module).
+(synda) module and thus can be used everywhere (even in 'sdtypes' module).
 """
 
 import sys
