@@ -99,7 +99,7 @@ def get_transfer_protocol(url):
         assert False
 
 def is_killed(transfer_protocol,status):
-    """This func return True if transfer child process has been killed."""
+    """This func return True if child process has been killed."""
 
     if transfer_protocol=sdconst.TRANSFER_PROTOCOL_HTTP:
         if sdconfig.http_client=sdconst.HTTP_CLIENT_WGET:
