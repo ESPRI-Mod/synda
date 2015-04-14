@@ -33,30 +33,41 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def download_file(url, toDirectory="/tmp",credentials = "~/.esg/credentials.pem"):
-    """Download a single file."""
-    
-    # setup HTTP handler
-    certFile = expanduser(credentials)
-    opener = urllib2.build_opener(HTTPSClientAuthHandler(certFile,certFile))
-    opener.add_handler(urllib2.HTTPCookieProcessor())
-    
-    # download file
-    localFilePath = join(toDirectory,url.split('/')[-1])
-    localFile=open( localFilePath, 'w')
-    webFile=opener.open(url)
+def download_file(url, full_local_path, checksum_type, credentials = "~/.esg/credentials.pem"):
+    import sdutils
 
-    # TODO
-    # JRA: modify below to add checksum & huge file support (i.e. file that doesn't fit in memory)
-    #https://gist.github.com/brianewing/994303
-    #http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
+    try:
 
-    localFile.write(webFile.read())
-    
-    # cleanup
-    localFile.close()
-    webFile.close()
-    opener.close()
+        # setup HTTP handler
+        certFile = expanduser(credentials)
+        opener = urllib2.build_opener(HTTPSClientAuthHandler(certFile,certFile))
+        opener.add_handler(urllib2.HTTPCookieProcessor())
+        
+        # download file
+        localFile=open( full_local_path, 'w')
+        webFile=opener.open(url)
+
+        # TODO
+        # JRA: modify below to add checksum & huge file support (i.e. file that doesn't fit in memory)
+        #https://gist.github.com/brianewing/994303
+        #http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
+
+        localFile.write(webFile.read())
+        
+        # cleanup
+        localFile.close()
+        webFile.close()
+        opener.close()
+
+        local_checksum=sdutils.compute_checksum(file_fullpath,checksum_type)
+
+    except Exception,e:
+
+        # TODO: log error msg
+
+        return (1,None)
+
+    return (0,local_checksum)
 
 def call_web_service(request,timeout):
     start_time=SDTimer.get_time()

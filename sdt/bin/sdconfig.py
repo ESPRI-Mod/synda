@@ -73,7 +73,9 @@ bin_folder="%s/bin"%root_folder
 
 selection_default_folder="%s/default"%conf_folder
 
-data_download_script="%s/sdget.sh"%bin_folder
+data_download_script_http="%s/sdget.sh"%bin_folder
+data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
+
 logon_script="%s/sdlogon.sh"%bin_folder
 cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 default_selection_file="%s/default.txt"%selection_default_folder

@@ -71,7 +71,7 @@ def parse_openid(openid):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-o','--openid',default="https://esgf-node.ipsl.fr/esgf-idp/openid/raciazek")
+    parser.add_argument('-o','--openid',default="https://esgf-node.ipsl.fr/esgf-idp/openid/foobar")
     args = parser.parse_args()
 
     (hostname,port,username)=extract_info_from_openid(args.openid)
