@@ -198,17 +198,18 @@ def parse_metadata(buffer):
                         #
                         if l__name=="url":
                             # url array have three subitems (GRIDFTP, HTTPServer and openDAP), so we pass here three times
+                            # url array entry sample => http://bmbf-ipcc-ar5.dkrz.de/thredds/fileServer/cmip5/output1/MPI-M/MPI-ESM-P/historical/mon/atmos/Amon/r1i1p1/v20120315/tasmin/tasmin_Amon_MPI-ESM-P_historical_r1i1p1_185001-200512.nc|application/netcdf|HTTPServer
 
-                            # HACK_1
-                            #
-                            # if the array being processed is "url", keep only the "HTTPServer" child node (ignore "GRIDFTP" and "openDAP")
-                            # url entry sample => http://bmbf-ipcc-ar5.dkrz.de/thredds/fileServer/cmip5/output1/MPI-M/MPI-ESM-P/historical/mon/atmos/Amon/r1i1p1/v20120315/tasmin/tasmin_Amon_MPI-ESM-P_historical_r1i1p1_185001-200512.nc|application/netcdf|HTTPServer
-                            if l__value.split('|')[-1]=="HTTPServer":
+                            url=l__value.split('|')[0] # keep only first field (i.e. keep only the file url)
+                            protocol=l__value.split('|')[-1]
 
-                                # HACK_2
-                                #
-                                # keep only first field (i.e. keep only the file url)
-                                l__dict[l__name]=l__value.split('|')[0]
+                            # keep only the "HTTPServer" and "GRIDFTP" child node (ignore "openDAP")
+                            if protocol=="HTTPServer":
+                                l__dict['url']=url # TODO: rename key as 'url_http'
+                            elif protocol=="GRIDFTP":
+                                l__dict['url_gridftp']=url
+                            elif protocol=="openDAP":
+                                pass
 
 
                         elif l__name=="experiment_family":
