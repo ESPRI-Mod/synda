@@ -46,7 +46,7 @@ def download_with_wget(url):
 def download(url,full_local_path,checksum_type):
     killed=False
 
-    transfer_protocol=get_transfer_protocol(url)
+    transfer_protocol=sdutils.get_transfer_protocol(url)
 
 
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP
@@ -89,14 +89,6 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol):
 
 
     return (status,local_checksum,killed)
-
-def get_transfer_protocol(url):
-    if url.startswith('http://'):
-        return sdconst.TRANSFER_PROTOCOL_HTTP
-    elif url.startswith('gsiftp://'):
-        return sdconst.TRANSFER_PROTOCOL_GRIDFTP
-    else:
-        assert False
 
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""

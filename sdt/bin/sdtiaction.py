@@ -213,7 +213,7 @@ def upgrade(args):
             install(files,args,False)
 
 def replica_next(file_functional_id,args):
-    import sdrfile, sdmodify, sdfiledao
+    import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
 
     parameter=['keep_replica=true','nearest=false','file_functional_id=%s'%file_functional_id]
     files=sdrfile.get_files(parameter=parameter,dry_run=args.dry_run)
@@ -225,7 +225,12 @@ def replica_next(file_functional_id,args):
 
             file_=sdfiledao.get_file(file_functional_id)
             if f is not None:
-                sdmodify.replica_next(file_,replicas)
+
+                if sdutils.get_transfer_protocol(f.url)==sdconst.TRANSFER_PROTOCOL_HTTP:
+                    sdmodify.replica_next(file_,replicas)
+                else:
+                    print_stderr("Incorrect protocol") # only http protocol is supported in 'synda replica' for now
+
             else:
                 print_stderr("Local file not found")
 
