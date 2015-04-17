@@ -18,23 +18,47 @@ import sdapp
 import sdconst
 import sdprint
 import sdtools
+import sdlog
+from sdexception import SDException
 import sdpostpipelineutils
 
 def run(files):
     for file in files:
         protocol=sdpostpipelineutils.get_attached_parameter(file,'protocol',sdconst.TRANSFER_PROTOCOL_HTTP)
 
+        if 'url_gridftp' in file and 'url_http' in file:
 
-        if protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP and 'url_gridftp' in file:
+            if protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+                file['url']=file['url_gridftp']
+            elif protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
+                file['url']=file['url_http']
+            else:
+                raise SDException("SYNPROTO-003","Incorrect protocol (%s)"%protocol)
+
+        elif 'url_gridftp' in file:
+            # only gridftp
+
+            if protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
+                sdlog.info('SYNPROTO-001','Fallback to gridftp as http url is missing')
+
             file['url']=file['url_gridftp']
-        elif protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP and 'url_gridftp' not in file:
-            file['url']=file['url_http'] # fallback
-        elif protocol==sdconst.TRANSFER_PROTOCOL_HTTP and 'url_http' in file:
-            file['url']=file['url_http']
-        elif protocol==sdconst.TRANSFER_PROTOCOL_HTTP and 'url_http' not in file:
-            assert False # if happens, should have been removed by sdreducerow
 
-        sdtools.remove_dict_items(file,['url_gridftp', 'url_http'])
+        elif 'url_http' in file:
+            # only http
+    
+            if protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+                sdlog.info('SYNPROTO-002','Fallback to http as gridftp url is missing')
+
+            file['url']=file['url_http']
+
+        else:
+            # no url available to download the file
+            # (should not be here as sdremoverow takes care of those cases)
+
+            assert False
+
+
+        sdtools.remove_dict_items(file,['url_gridftp', 'url_http', 'url_opendap'])
 
     return files
 

@@ -188,7 +188,7 @@ def parse_metadata(buffer):
                         l__value=arr_n.text
 
 
-                        # WARNING !!
+                        # WARNING
                         #
                         # this switch is a bit tricky.
                         #
@@ -203,14 +203,12 @@ def parse_metadata(buffer):
                             url=l__value.split('|')[0] # keep only first field (i.e. keep only the file url)
                             protocol=l__value.split('|')[-1]
 
-                            # keep only the "HTTPServer" and "GRIDFTP" child node (ignore "openDAP")
                             if protocol=="HTTPServer":
-                                l__dict['url']=url # TODO: rename key as 'url_http'
+                                l__dict['url_http']=url
                             elif protocol=="GRIDFTP":
                                 l__dict['url_gridftp']=url
                             elif protocol=="openDAP":
-                                pass
-
+                                l__dict['url_opendap']=url
 
                         elif l__name=="experiment_family":
                             # not used
