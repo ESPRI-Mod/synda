@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='indent')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='indent',help="set format to be used with 'dump' action")
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
     parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
     parser.add_argument('-r','--replica',action='store_true',help='show replica')
