@@ -18,6 +18,13 @@ import os
 import re
 import argparse
 
+def remove_dict_items(di,keys_to_remove):
+    for k in keys_to_remove:
+        try:
+            del di[k]
+        except KeyError:
+            pass
+
 class DefaultHelpParser(argparse.ArgumentParser): 
     """This class display full help when error occurs.
 

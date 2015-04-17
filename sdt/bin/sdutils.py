@@ -9,7 +9,11 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This module contains generic functions."""
+"""This module contains generic functions.
+
+Also see
+    sdtools
+"""
 
 import sys
 import os

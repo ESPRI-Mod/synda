@@ -18,6 +18,7 @@ import sdapp
 from sdtypes import File
 import sdlog
 import sdprint
+import sdtools
 
 def run(files):
     files=remove_unused_fields(files)
@@ -25,23 +26,23 @@ def run(files):
     return files 
 
 def remove_unused_fields(files):
+
+    li=[ 'index_node'
+        ,'instance_id'
+        ,'cf_standard_name'
+        ,'drs_id'
+        ,'format'
+        ,'metadata_format'
+        ,'variable_long_name'
+        ,'variable_units'
+        ,'forcing'
+        ,'description'
+        ,'master_id'
+        ,'master_gateway']
+
     for file in files:
-        for k in [ 'index_node'
-                  ,'instance_id'
-                  ,'cf_standard_name'
-                  ,'drs_id'
-                  ,'format'
-                  ,'metadata_format'
-                  ,'variable_long_name'
-                  ,'variable_units'
-                  ,'forcing'
-                  ,'description'
-                  ,'master_id'
-                  ,'master_gateway']:
-            try:
-                del file[k]
-            except KeyError:
-                pass
+        sdtools.remove_dict_items(file,li)
+
     return files
 
 def remove_facets(files):
