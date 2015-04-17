@@ -8,3 +8,4 @@ distrib=true
 #local_path_product_format=normal
 local_path_format=tree
 #institute!=IPSL IPSL-INERIS LOA_IPSL
+protocol=http
