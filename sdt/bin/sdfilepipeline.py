@@ -36,6 +36,7 @@ import sdshrink
 import sdprint
 import sdlog
 import sdstatusfilter
+import sdprotocol
 from sdexception import SDException
 
 def run(**kw):
@@ -44,6 +45,7 @@ def run(**kw):
     check_fields(files)
     files=sdreducerow.run(files)
     files=sdremoveaggregation.run(files)
+    files=sdprotocol.run(files)
     files=sdtimefilter.run(files)
     files=sdprepare_dataset_attr.run(files)
     #files=sdcheck_dataset_template.run(files)
