@@ -24,6 +24,7 @@ from sdtools import print_stderr
 import sdutils
 import sdconst
 import sdlog
+import sdnetutils
 
 def download_with_wget(url):
 
@@ -52,7 +53,6 @@ def download(url,full_local_path,checksum_type):
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP
             and sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
 
-        import sdnetutils
         (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
     else:
         (status,local_checksum,killed)=run_download_script(url,full_local_path,checksum_type,transfer_protocol)

@@ -11,6 +11,7 @@
 
 """This module contains network functions."""
 
+from os.path import expanduser, join
 import urllib2
 #import requests
 import sdxml
@@ -20,7 +21,6 @@ from sdtime import SDTimer
 import sdlog
 import sdpoodlefix
 import httplib
-from os.path import expanduser, join
 
 class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     """HTTP handler that transmits an X509 certificate as part of the request."""
