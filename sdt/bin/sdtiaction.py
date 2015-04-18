@@ -209,6 +209,9 @@ def upgrade(args):
         print "Process %s.."%selection.filename
 
         if not args.dry_run:
+
+            # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
+
             files=sdsearch.run(selection=selection)
             install(files,args,False)
 

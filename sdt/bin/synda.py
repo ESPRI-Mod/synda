@@ -162,9 +162,11 @@ if __name__ == '__main__':
                 import sdsearch
                 files=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
+                """ DEBUG
                 for f in files:
                     import sdlog # do NOT import 'sdlog' at the beggining of this file, because in this case, it breaks the daemon startup (i.e. double-fork problem) !
                     sdlog.debug("SDASYNDA-002","%s"%f['url'],stdout=True)
+                """
 
                 # note: do not put a dry_run test here
                 #       (sdtiaction's funcs are called from other place too, so the dry_run test need to be done inside sdtiaction's funcs)

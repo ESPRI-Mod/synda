@@ -9,7 +9,7 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This script remove incomplete/malformed files.
+"""This script removes incomplete/malformed files.
 
 Description
     This module contains file rejection step 2 (file rejection step 1 is done
@@ -35,8 +35,8 @@ def is_file_complete(file):
         sdlog.error("SDREDUCE-002","incorrect dataset_id (filename=%s)"%filename)
         return False
 
-    if file.get("url") is None:
-        sdlog.error("SDREDUCE-001","incorrect url (%s)"%filename)
+    if file.get("url_http") is None: # memo: 'url_<proto>' is renamed to 'url' in a downstream step (in sdprotocol)
+        sdlog.error("SDREDUCE-001","Incorrect url_http (%s)"%filename)
         return False
 
     """
