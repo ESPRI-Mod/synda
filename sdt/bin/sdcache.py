@@ -153,6 +153,16 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
 
     assert len(result.files)==1 # just in case
 
+
+    # WARNING
+    #
+    # This code does not work for all parameters (e.g. url), as:
+    #     - type issue in the xml returned by search-api (i.e. some parameter
+    #       are not scalar (e.g. url))
+    #     - call_web_service() method returns not the exact search-api xml, but
+    #       altered result (e.g. url_http is returned instead of url)
+
+
     for attribute_name in result.files[0]: # indice 0 is because we retrieve one file only (with 'limit=1')
         if attribute_name not in params:
             params[attribute_name]=[None]
