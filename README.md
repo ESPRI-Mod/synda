@@ -44,7 +44,6 @@ With apt-get installer:
 
     wget http://dods.ipsl.jussieu.fr/jripsl/synda/install.sh
     chmod +x ./install.sh
-    export PATH=/usr/local/bin:/usr/bin:/bin
     ./install.sh
 
 ## Configuration

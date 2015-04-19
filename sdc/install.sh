@@ -587,9 +587,9 @@ create_sp_symlink ()
 
 trap 'fatal_err' ERR # bash trick related to the "-e" option above, see manpage
 
-# overwrite PATH (needed as install.sh fails if 'sdt/bin' is in the PATH)
+# remove 'sdx/bin' from PATH (needed as install.sh must use a real python install, not a virtualenv python)
 
-export PATH=/usr/bin:/bin
+export PATH=$(echo $PATH | tr ':' '\n' | awk '!/\/sd.\/bin/' | paste -sd:)
 
 # init.
 
