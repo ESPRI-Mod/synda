@@ -68,6 +68,7 @@ fi
 
 # ------ init ------ #
 
+sqlite_backup_script="$SP_HOME/tools/backup.py"
 DB_path="$(spconfig -n db_folder)"
 log_archive_filename=logfiles.tgz
 conf_archive_filename=conffiles.tgz
@@ -85,7 +86,7 @@ mkdir -p $g__backup_directory
 
 msg "INF003" "backup.sh script started"
 
-\cp -a $DB_path/sdp.* $g__backup_directory                                                               # backup DB
+$sqlite_backup_script -d $DB_path/sdp.db -b $g__backup_directory/sdp.db                                  # backup DB
 tar czf $g__backup_directory/$conf_archive_filename $SP_HOME/conf                                        # backup conf
 tar czf $g__backup_directory/$log_archive_filename $SP_HOME/log/*.log                                    # backup logs
 
