@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
-"""This script creates a sqlite3 hot backup."""    
+"""This script creates a sqlite3 hot backup.
+
+TODO
+    Maybe replace this file with a shell script when minimal sqlite3 version
+    supported by synda include '.backup' command.
+"""    
 
 import argparse
 import sqlite3
@@ -20,7 +25,19 @@ def sqlite3_hot_backup(db_file, db_backup_file):
     cursor = connection.cursor()
     cursor.execute('begin immediate')    # Lock database before making a backup
 
-    shutil.copyfile(dbfile, backup_file) # Make new backup file
+    # copy db file
+    shutil.copyfile(db_file, db_backup_file)
+
+    # copy journal file
+    #
+    # (with some sqlite3 version and on some filesystem, when running 'begin
+    # immediate' command, the journal file is created)
+    #
+    db_journal_file=db_file+'-journal'
+    db_journal_backup_file=db_backup_file+'-journal'
+    #
+    if os.path.isfile(db_journal_file) and not os.path.isfile(db_journal_backup_file):
+        shutil.copyfile(db_journal_file, db_journal_backup_file)
 
     connection.rollback()                # Unlock database
     connection.close()
