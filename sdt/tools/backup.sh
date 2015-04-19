@@ -68,10 +68,12 @@ fi
 
 # ------ init ------ #
 
+sqlite_backup_script="$ST_HOME/tools/backup.py"
 DB_path="$(sdconfig -n db_folder)"
 log_archive_filename=logfiles.tgz
 conf_archive_filename=conffiles.tgz
 selections_archive_filename="selections.tgz"
+crontab_filename="crontab"
 g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')"
 
 #umask u=rw,g=rw,o=r # set file permission
@@ -85,9 +87,10 @@ mkdir -p $g__backup_directory
 
 msg "INF003" "backup.sh script started"
 
-\cp -a $DB_path/sdt.* $g__backup_directory                                                               # backup DB
+$sqlite_backup_script -d $DB_path/sdt.db -b $g__backup_directory/sdt.db                                  # backup DB
 tar czf $g__backup_directory/$conf_archive_filename $ST_HOME/conf                                        # backup conf
 tar czf $g__backup_directory/$log_archive_filename $ST_HOME/log/*.log                                    # backup logs
 tar czf $g__backup_directory/$selections_archive_filename -- $ST_HOME/selection                          # backup selection
+crontab -l > $g__backup_directory/$crontab_filename                                                      # backup crontab
 
 msg "INF004" "backup.sh script complete"

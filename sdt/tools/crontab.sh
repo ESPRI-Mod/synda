@@ -1,6 +1,6 @@
 #
 # load with
-#  $ crontab crontab_ipsl.sh
+#  $ crontab crontab.sh
 #
 # use bash to run commands, no matter what /etc/passwd says
 SHELL=/bin/bash
