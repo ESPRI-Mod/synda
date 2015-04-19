@@ -24,6 +24,7 @@ import humanize
 def get_datasets(stream=None,parameter=[],post_pipeline_mode='dataset',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
 
     assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
+    assert post_pipeline_mode!='file'
 
     if len(parameter)>0:
         sddeferredbefore.add_forced_parameter(parameter,'type','Dataset')

@@ -159,7 +159,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
             elif type_=='File':
                 files=sdrfile.get_files(**kw)
                 if not dry_run:
-                    sdrfile.print_(files)
+                    sdrfile.print_list(files)
 
     def do_unset(self,arg):
         sdsessionparam.remove_session_param(arg)

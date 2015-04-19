@@ -187,6 +187,10 @@ def parse_metadata(buffer):
 
                         l__value=arr_n.text
 
+                        # TODO: maybe move transformation below in a downstream
+                        #       step (e.g. in the generic pipeline) so to keep
+                        #       original xml stream not altered when using dump
+                        #       action in raw mode.
 
                         # WARNING
                         #

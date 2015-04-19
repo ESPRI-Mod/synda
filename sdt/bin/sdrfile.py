@@ -92,4 +92,4 @@ if __name__ == '__main__':
     files=get_files(parameter=args.parameter,dry_run=args.dry_run)
 
     if not args.dry_run:
-        print_(files)
+        print_list(files)
