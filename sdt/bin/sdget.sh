@@ -11,7 +11,7 @@
 
 # notes
 #  - on success and when not in debug mode, the script displays checksum on stdout.
-#    so don't print anything except the checksum on stdout !!!
+#    so don't print anything except the checksum on stdout.
 #
 # return values
 #  0 => success

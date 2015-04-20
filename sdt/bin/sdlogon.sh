@@ -240,6 +240,8 @@ if [ $? -eq 0 ]; then
 	msg "ERR009" "Error occured while retrieving certificate"
 	exit 4
 else
+    chmod 600 $ESGF_CREDENTIAL # needed by globus-url-copy
+
 	certificate_is_valid
 	if [ $? -eq 0 ]; then
 		msg "ERR010" "Error occurs while retrieving certificate"
