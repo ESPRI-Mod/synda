@@ -7,7 +7,7 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-# This script retrieve a file from ESGF using GRID-FTP protocol
+# This script retrieves a file from ESGF using GRID-FTP protocol
 
 # Note
 #  this script displays checksum on stdout.
@@ -46,7 +46,10 @@ msg ()
     l__code="$1"
     l__msg="$2"
 
-    echo "$(curdate) - $l__code - $l__msg"
+    buf="$(curdate) - $l__code - $l__msg"
+
+    echo $buf 1>&2            # stderr
+    echo $buf >> $g__log_file # logfile
 }
 
 cleanup_on_error ()
@@ -88,7 +91,7 @@ done
 shift $(($OPTIND - 1)) # remove options
 
 ############################################
-# manage checksum type
+# set checksum cmd depending on checksum type
 g__checksum_cmd=
 if [ "$g__checksum_type" = "sha256" ]; then
     g__checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
@@ -101,7 +104,7 @@ else
 
     # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
     #
-    #msg "ERR005" "incorrect checksum type ($g__checksum_type)" | tee -a $g__log_file
+    #msg "ERR005" "incorrect checksum type ($g__checksum_type)"
     #exit 5
 fi
 
@@ -134,7 +137,7 @@ fi
 
 # check if file is already present
 if [ -f "$local_file" ]; then
-    msg "ERR011" "local file already exists ($local_file)" | tee -a $g__log_file
+    msg "ERR011" "local file already exists ($local_file)"
     exit 3
 fi
 
@@ -142,7 +145,7 @@ fi
 if touch "$local_file"; then # not that touch error msg is lost here (sent to stderr)
     rm "$local_file"
 else
-    msg "ERR111" "local file creation error ($local_file)" | tee -a $g__log_file
+    msg "ERR111" "local file creation error ($local_file)"
     exit 30
 fi
 
@@ -238,7 +241,7 @@ if [ $child_status -ne 0 ]; then
 
     cleanup_on_error # remove local file (this is to not have thousand of empty files)
 
-    msg "ERR001" "Transfer failed with error $status - $* - $child_status" | tee -a $g__log_file
+    msg "ERR001" "Transfer failed with error $status - $* - $child_status"
 
     exit $status
 else
@@ -250,7 +253,7 @@ else
     # return checksum
     echo $l__checksum
 
-    msg "INF003" "transfer done - $* - $l__checksum" >> $g__log_file
+    msg "INF003" "transfer done - $* - $l__checksum"
 
     exit 0
 fi
