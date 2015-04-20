@@ -12,9 +12,10 @@
 """This module contains data file download routines.
 
 Note
-    This module contains two implementations to download data file
-        - Pure python implementation (https and urllib2)
-        - 'wget' based implementation
+    This module provides 3 ways to download data file
+        - urllib2 (pure python)
+        - wget (external script)
+        - gridftp (external script)
 """
 
 import os
@@ -50,8 +51,8 @@ def download(url,full_local_path,checksum_type):
     transfer_protocol=sdutils.get_transfer_protocol(url)
 
 
-    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP
-            and sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
+    if (transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP
+        and sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB):
 
         (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
     else:
@@ -93,17 +94,17 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol):
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""
 
-    if transfer_protocol=sdconst.TRANSFER_PROTOCOL_HTTP:
-        if sdconfig.http_client=sdconst.HTTP_CLIENT_WGET:
+    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
+        if sdconfig.http_client==sdconst.HTTP_CLIENT_WGET:
             if status in (7,29):
                 return True
             else:
                 return False
-        elif sdconfig.http_client=sdconst.HTTP_CLIENT_URLLIB:
+        elif sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
             return False
         else:
             assert False
-    elif transfer_protocol=sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
         return False # TODO
     else:
         assert False
