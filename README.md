@@ -54,7 +54,7 @@ Add lines below in your shell configuration file (e.g. '.bashrc')
     export ST_HOME=$HOME/sdt
     export PATH=$ST_HOME/bin:$PATH
 
-Then edit $ST_HOME/sdt.conf to set openid and password (ESGF credential).
+Then edit $ST_HOME/conf/sdt.conf to set openid and password (ESGF credential).
 
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
