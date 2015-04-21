@@ -10,13 +10,14 @@
 # This script retrieves a file from ESGF using GRID-FTP protocol
 
 # Note
-#  this script displays checksum on stdout.
+#  This script displays checksum on stdout.
 #  (so don't print anything except the checksum on stdout)
 #
 # Return values
 #   0  success
 #   1  error
 #   3  incorrect arguments
+#   4  incorrect environment (fatal error, make the daemon to stop)
 #   7  this script has been killed (SIGINT or SIGTERM)
 #  29  child process has been killed (most likely caused by a "shutdown immediate")
 #  30  file creation error (likely caused by missing access right)
@@ -49,7 +50,7 @@ msg ()
     buf="$(curdate) - $l__code - $l__msg"
 
     echo $buf 1>&2            # stderr
-    echo $buf >> $g__log_file # logfile
+    echo $buf >> $log_file    # logfile
 }
 
 cleanup_on_error ()
@@ -74,14 +75,14 @@ umask u=rw,g=rw,o=r # set 'cmip5' group writable
 
 # retrieve options
 
-g__debug_level=
-g__checksum_type=md5
+debug_level=
+checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
-  c)    g__checksum_type=$OPTARG
+  c)    checksum_type=$OPTARG
         ;;
-  d)    g__debug_level=$OPTARG
+  d)    debug_level=$OPTARG
         ;;
   h)    usage
         exit 0
@@ -93,18 +94,18 @@ shift $(($OPTIND - 1)) # remove options
 ############################################
 # set checksum cmd depending on checksum type
 g__checksum_cmd=
-if [ "$g__checksum_type" = "sha256" ]; then
+if [ "$checksum_type" = "sha256" ]; then
     g__checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-elif [ "$g__checksum_type" = "md5" ]; then
+elif [ "$checksum_type" = "md5" ]; then
     g__checksum_cmd="md5sum  | awk '{print \$1}' "
-elif [ "$g__checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
+elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
     g__checksum_cmd="md5sum  | awk '{print \$1}' "
 else
     :
 
     # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
     #
-    #msg "ERR005" "incorrect checksum type ($g__checksum_type)"
+    #msg "ERR005" "incorrect checksum type ($checksum_type)"
     #exit 5
 fi
 
@@ -149,17 +150,14 @@ else
     exit 30
 fi
 
-############################################
-# init
-#
-
-# set root folder
 if [ -z "$ST_HOME" ]; then
     msg "ERR008" "root directory not found ($ST_HOME)"
     exit 4
-else
-    SYNCDA_ROOT=${ST_HOME}
 fi
+
+############################################
+# init
+#
 
 export LANG=C
 export LC_ALL=C
@@ -176,15 +174,19 @@ GRIDFTP_CMD=globus-url-copy
 
 child_pid=
 
-g__log_dir=$SYNCDA_ROOT/log
-g__log_file=${g__log_dir}/get_data.log
+log_dir=${ST_HOME}/log
+log_file=${log_dir}/get_data.log
+
+local_folder=`dirname $local_file` # retrieve destination folder
+
+CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
 
 ############################################
 # gridftp debug parameters
 #
 # debug mode
-if [ -n "$g__debug_level" ]; then
-    if [ $g__debug_level -eq 4 ]; then
+if [ -n "$debug_level" ]; then
+    if [ $debug_level -eq 4 ]; then
         set -x # bash debug mode (warning, this make globus-url-copy output to be duplicated 3 times)
 
         export GLOBUS_ERROR_OUTPUT=1
@@ -193,11 +195,11 @@ if [ -n "$g__debug_level" ]; then
         export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/AUTHMODULELOG
 
         GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-    elif [ $g__debug_level -eq 3 ]; then
+    elif [ $debug_level -eq 3 ]; then
         GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-    elif [ $g__debug_level -eq 2 ]; then
+    elif [ $debug_level -eq 2 ]; then
         GRIDFTP_DEBUG_OPT=" -v -vb "
-    elif [ $g__debug_level -eq 1 ]; then
+    elif [ $debug_level -eq 1 ]; then
         GRIDFTP_DEBUG_OPT=" -v "
     fi
 else
@@ -205,27 +207,22 @@ else
 fi
 
 ############################################
-# set environment
+# create folder
 
-mkdir -p ${g__log_dir}
-
-# create local folder if not exists
-local_folder=`dirname $local_file` # retrieve destination folder
+mkdir -p ${log_dir}
 mkdir -p ${local_folder}
-
-CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
 
 ############################################
 # start transfer
 #
 child_status=0
-if [ -n "$g__debug_level" ]; then
-    echo $WGET_CMD
-    eval $WGET_CMD 2>&1
+if [ -n "$debug_level" ]; then
+    echo $CMD
+    eval $CMD 1>&2
     child_status=$?
     child_pid=$!
 else
-    wget_stdxxx=`eval $WGET_CMD 2>&1`
+    eval $WGET_CMD 1>&2
     child_status=$?
 fi
 
