@@ -55,7 +55,6 @@ msg ()
 
 cleanup_on_error ()
 {
-    kill -TERM "$child_pid" 1>/dev/null 2>/dev/null # kill child if still running
     rm -f "$local_file"
 }
 
@@ -172,8 +171,6 @@ export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
 
 GRIDFTP_CMD=globus-url-copy
 
-child_pid=
-
 log_dir=${ST_HOME}/log
 log_file=${log_dir}/get_data.log
 
@@ -214,22 +211,20 @@ mkdir -p ${local_folder}
 
 ############################################
 # start transfer
-#
-child_status=0
+
 if [ -n "$debug_level" ]; then
     echo $CMD
-    eval $CMD 1>&2
-    child_status=$?
-    child_pid=$!
-else
-    eval $WGET_CMD 1>&2
-    child_status=$?
 fi
+
+$CMD 1>&2
+child_status=$?
 
 ############################################
 # post-processing
 #
 if [ $child_status -ne 0 ]; then
+    # error
+
     if [ $child_status -eq 143 ]; then # 143 means 'wget' gets killed
         status=29
     else
@@ -244,13 +239,10 @@ if [ $child_status -ne 0 ]; then
 else
     # success
 
-    # retrieve checksum
-    l__checksum=$(cat $local_file | $g__checksum_cmd)
+    l__checksum=$(cat $local_file | $g__checksum_cmd) # compute checksum
+    echo $l__checksum                                 # return checksum on stdout
 
-    # return checksum
-    echo $l__checksum
-
-    msg "INF003" "transfer done - $* - $l__checksum"
+    msg "INF003" "Transfer done - $* - $l__checksum"
 
     exit 0
 fi
