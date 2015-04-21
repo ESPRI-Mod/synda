@@ -30,7 +30,7 @@ folder. Selection examples are given in the 'sample' sub-folder.
 
 ## Installation
 
-As root, you need to install the following system package:
+As root, install the following system package:
 
 Centos
 
@@ -41,7 +41,7 @@ Debian
 
     apt-get install gcc python python-pip python-dev libssl-dev libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 
-Then install the application as simple user or root:
+Then as simple user or root, install the application:
 
     wget http://dods.ipsl.jussieu.fr/jripsl/synda/install.sh
     chmod +x ./install.sh
@@ -82,7 +82,7 @@ Stop the download
 
     synda daemon stop
 
-Downloaded files location
+Once downloaded, files are available in this location
 
     $HOME/sdt/data
 
