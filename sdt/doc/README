@@ -29,7 +29,7 @@
 	- python 2.6+
 	- sqlite
 	- gcc
-- INSTALL
+- INSTALLATION
 	- install dependencies
 		- with yum installer
 			- yum install gcc python python-pip python-devel openssl-devel sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel

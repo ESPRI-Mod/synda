@@ -28,19 +28,20 @@ folder. Selection examples are given in the 'sample' sub-folder.
 
 3.0
 
-## Install
+## Installation
 
-### Install dependencies
+As root, you need to install the following system package:
 
-With yum installer:
+Centos
 
     yum install gcc python python-pip python-devel openssl-devel sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel
 
-With apt-get installer:
+
+Debian
 
     apt-get install gcc python python-pip python-dev libssl-dev libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 
-### Install *synda* application
+Then install the application as simple user or root:
 
     wget http://dods.ipsl.jussieu.fr/jripsl/synda/install.sh
     chmod +x ./install.sh
@@ -63,27 +64,27 @@ CMIP5-RESEARCH role.
 
 Search datasets
 
-  synda search FACET..
+    synda search FACET..
 
 Install a dataset
 
-  synda install DATASET..
+    synda install DATASET..
 
 Start the download
 
-  synda daemon start
+    synda daemon start
 
 Check download completion
 
-  synda queue status
+    synda queue status
 
 Stop the download
 
-  synda daemon stop
+    synda daemon stop
 
 Downloaded files location
 
-  $HOME/sdt/data
+    $HOME/sdt/data
 
 ## User guide
 

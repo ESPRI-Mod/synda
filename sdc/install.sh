@@ -284,7 +284,7 @@ check_ve ()
         #    is installed without '-u' option, configuration file is overwrited without 
         #    confirmation nor backup !)
         #
-        # But OF COURSE, if first installation failed, user HAVE to reinstall everything.
+        # But if first installation failed, user has to reinstall everything.
         # Which mean that INSTALL-ERR008 (error code and message) was not explicite at all and even more not correct.
 
 
