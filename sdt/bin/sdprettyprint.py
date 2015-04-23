@@ -9,6 +9,8 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
+"""This module contains specific printing routines."""
+
 import sdapp
 from sdtypes import File
 

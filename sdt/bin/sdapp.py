@@ -89,4 +89,4 @@ if who_am_i()=='ihm':
     sdapputils.signal_init()
 
 if __name__ == '__main__':
-    print "Synchro-data initialization module."
+    print "Synda transfer initialization module."
