@@ -74,7 +74,7 @@ umask u=rw,g=rw,o=r # set 'cmip5' group writable
 
 # retrieve options
 
-debug_level=
+debug_level=0
 checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
@@ -182,24 +182,22 @@ CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
 # gridftp debug parameters
 #
 # debug mode
-if [ -n "$debug_level" ]; then
-    if [ $debug_level -eq 4 ]; then
-        set -x # bash debug mode (warning, this make globus-url-copy output to be duplicated 3 times)
+if [ $debug_level -eq 4 ]; then
+    set -x # bash debug mode (warning, this make globus-url-copy output to be duplicated 3 times)
 
-        export GLOBUS_ERROR_OUTPUT=1
-        export GLOBUS_ERROR_VERBOSE=1
-        export GLOBUS_GSI_AUTHZ_DEBUG_LEVEL=2
-        export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/AUTHMODULELOG
+    export GLOBUS_ERROR_OUTPUT=1
+    export GLOBUS_ERROR_VERBOSE=1
+    export GLOBUS_GSI_AUTHZ_DEBUG_LEVEL=2
+    export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/AUTHMODULELOG
 
-        GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-    elif [ $debug_level -eq 3 ]; then
-        GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-    elif [ $debug_level -eq 2 ]; then
-        GRIDFTP_DEBUG_OPT=" -v -vb "
-    elif [ $debug_level -eq 1 ]; then
-        GRIDFTP_DEBUG_OPT=" -v "
-    fi
-else
+    GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
+elif [ $debug_level -eq 3 ]; then
+    GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
+elif [ $debug_level -eq 2 ]; then
+    GRIDFTP_DEBUG_OPT=" -v -vb "
+elif [ $debug_level -eq 1 ]; then
+    GRIDFTP_DEBUG_OPT=" -v "
+elif [ $debug_level -eq 0 ]; then
     GRIDFTP_DEBUG_OPT=
 fi
 
@@ -212,11 +210,13 @@ mkdir -p ${local_folder}
 ############################################
 # start transfer
 
-if [ -n "$debug_level" ]; then
+if [[ $debug_level > 0 ]]; then
     echo $CMD
+    $CMD 1>&2
+else
+    $CMD 1>&2
 fi
 
-$CMD 1>&2
 child_status=$?
 
 ############################################
