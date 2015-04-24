@@ -303,7 +303,7 @@ def queue(args):
     #sddaemon.print_daemon_status()
 
 def test(args):
-    import sdlogon,sdget
+    import os,sdlogon,sdget
 
     sdlogon.renew_certificate(False)
 
@@ -311,7 +311,22 @@ def test(args):
         print_stderr('Incorrect argument')   
     else:
         file_url=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-        sdget.download_with_wget(file_url)
+
+        tmpfile='/tmp/sdt_test_file.nc'
+
+        if os.path.isfile(tmpfile):
+            os.remove(tmpfile)
+
+        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(file_url,tmpfile)
+
+        print_stderr(script_stdxxx)
+
+        #print "'Exit code: %i"%sdget_status
+
+        """
+        if sdget_status==0:
+            print 'file location: %s'%tmpfile
+        """
 
 def watch(args):
     import sdreport, sddaemon

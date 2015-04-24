@@ -27,26 +27,9 @@ import sdconst
 import sdlog
 import sdnetutils
 
-def download_with_wget(url):
-
-    tmpfile='/tmp/sdt_test_file.nc'
-
-    if os.path.isfile(tmpfile):
-        os.remove(tmpfile)
-
-    (sdget_status,stdout,stderr)=sdutils.get_status_output([sdconfig.data_download_script_http,'-d 3',url,tmpfile],shell=False)
-
-    print_stderr(stdout) # TODO: do not mix stderr and stdout upside down
-
-    #print "'sdget.sh' exit code: %i"%sdget_status
-
-    """
-    if sdget_status==0:
-        print 'file location: %s'%tmpfile
-    """
-
-def download(url,full_local_path,checksum_type):
+def download(url,full_local_path,checksum_type='md5',debug_level=0):
     killed=False
+    script_stdxxx=None
 
     transfer_protocol=sdutils.get_transfer_protocol(url)
 
@@ -56,12 +39,12 @@ def download(url,full_local_path,checksum_type):
 
         (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
     else:
-        (status,local_checksum,killed)=run_download_script(url,full_local_path,checksum_type,transfer_protocol)
+        (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
 
 
-    return (status,local_checksum,killed)
+    return (status,local_checksum,killed,script_stdxxx)
 
-def run_download_script(url,full_local_path,checksum_type,transfer_protocol):
+def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level):
 
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
         script=sdconfig.data_download_script_http        
@@ -71,8 +54,12 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol):
         assert False
 
 
-    cmd_line="%s -c %s %s %s" % (script,checksum_type,url,full_local_path)
-    (status,stdout,stderr)=sdutils.get_status_output(cmd_line,shell=True) # start a new process (fork is blocking here, so thread will wait until wget is done)
+    (status,stdout,stderr)=sdutils.get_status_output([script,'-c',checksum_type,'-d',debug_level,url,full_local_path],shell=False) # start a new process (fork is blocking here, so thread will wait until child is done)
+
+
+    # debug
+    #sdlog.debug("SYNDAGET-002","%s"%stderr) # unexpected errors may be hidden in stderr
+    #sdlog.debug("SYNDAGET-001","%s"%stdout) # unexpected errors may be hidden in stdout
 
 
     if status==0:
@@ -80,16 +67,14 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol):
     else:
         local_checksum=None
 
+
     killed=is_killed(transfer_protocol,status)
 
 
-    if not killed:
-        sdlog.debug("SYNDAGET-002","%s"%stderr) # if error occurs in 'sdget.sh', stderr contains error message
-
-    sdlog.debug("SYNDAGET-001","%s"%stdout) # unexpected errors may be hidden in stdout
+    script_stdxxx=stderr # memo: in the child shell script, stdout is redirected to stderr so to leave stdout for the checksum (so stderr contains both stdout and stderr)
 
 
-    return (status,local_checksum,killed)
+    return (status,local_checksum,killed,script_stdxxx)
 
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""
