@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
+
+"""This module filters a columns list."""
+
+import argparse
+import json
+import sdprint
+
+def run(files,key_list_to_keep):
+    new_list=[]
+
+    for f in files:
+        new_list.append(dict((k, f[k]) for k in f if k in key_list_to_keep))
+
+    return new_list
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to keep")
+    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
+    args = parser.parse_args()
+
+    files=json.load( sys.stdin )
+    files=run(files,args.column)
+    sdprint.print_format(files,args.format)
