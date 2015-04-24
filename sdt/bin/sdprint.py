@@ -9,10 +9,11 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This module contains print routines."""
+"""This module contains generic printing routines."""
 
 import json
 import sys
+import argparse
 
 def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
     """Print files list with given format."""
@@ -28,3 +29,11 @@ def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
             fh.write("%s\n"%json.dumps(f))
     elif format == 'indent':
         fh.write("%s\n"%json.dumps(files,indent=4, separators=(',', ': ')))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='indent')
+    args = parser.parse_args()
+
+    files=json.load( sys.stdin )
+    print_format(files,args.format)
