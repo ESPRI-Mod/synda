@@ -41,7 +41,9 @@ class Download():
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise
 
-        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(tr.url,tr.get_full_local_path(),tr.checksum_type)
+        checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
+
+        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
 
         if tr.sdget_status==0:
 
@@ -101,10 +103,10 @@ class Download():
             # Set status
             if killed:
                 tr.status=sdconst.TRANSFER_STATUS_WAITING
-                tr.error_msg="Error occurs in during download (killed). Transfer marked for retry."
+                tr.error_msg="Error occurs during download (killed). Transfer marked for retry."
             else:
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Fatal error occurs in during download. Transfer aborted."
+                tr.error_msg="Error occurs during download."
 
 def end_of_transfer(tr):
     # log

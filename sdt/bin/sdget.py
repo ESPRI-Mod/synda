@@ -53,8 +53,9 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     else:
         assert False
 
+    li=[script,'-c',checksum_type,'-d',str(debug_level),url,full_local_path]
 
-    (status,stdout,stderr)=sdutils.get_status_output([script,'-c',checksum_type,'-d',debug_level,url,full_local_path],shell=False) # start a new process (fork is blocking here, so thread will wait until child is done)
+    (status,stdout,stderr)=sdutils.get_status_output(li,shell=False) # start a new process (fork is blocking here, so thread will wait until child is done)
 
 
     # debug

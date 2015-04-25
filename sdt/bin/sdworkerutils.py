@@ -11,9 +11,12 @@
 
 """This module contains worker related objects."""
 
+import traceback
+import sys
+import threading
 import sdapp
 import sdlog
-import threading
+import sdconfig
 
 class WorkerThread(threading.Thread):
     """This class is the thread that take care of the file transfer."""
