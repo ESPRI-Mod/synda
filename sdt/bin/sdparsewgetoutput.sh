@@ -75,9 +75,9 @@ if [ $nbr -eq 3 ]; then
     else
         g__wget_error_status_from_parsing=24
 
-        msg "DEB001" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $g__debug_file
-        echo "$wget_stdxxx"                                                 >> $g__debug_file
-        msg "DEB002" "DEBUG END"                                            >> $g__debug_file
+        msg "DEB001" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+        echo "$wget_stdxxx"                                                 >> $debug_file
+        msg "DEB002" "DEBUG END"                                            >> $debug_file
     fi
 
 elif [ $nbr -eq 1 ]; then
@@ -98,9 +98,9 @@ elif [ $nbr -eq 1 ]; then
     else
         g__wget_error_status_from_parsing=23
 
-        msg "DEB003" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $g__debug_file
-        echo "$wget_stdxxx"                          >> $g__debug_file
-        msg "DEB004" "DEBUG END"         >> $g__debug_file
+        msg "DEB003" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+        echo "$wget_stdxxx"                          >> $debug_file
+        msg "DEB004" "DEBUG END"         >> $debug_file
     fi
 
 elif [ $nbr -eq 2 ]; then
@@ -108,17 +108,17 @@ elif [ $nbr -eq 2 ]; then
 
     g__wget_error_status_from_parsing=26
 
-    msg "DEB005" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $g__debug_file
-    echo "$wget_stdxxx"                          >> $g__debug_file
-    msg "DEB006" "DEBUG END"         >> $g__debug_file
+    msg "DEB005" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+    echo "$wget_stdxxx"                          >> $debug_file
+    msg "DEB006" "DEBUG END"         >> $debug_file
 
 else
     # we shouldn't be here
 
     g__wget_error_status_from_parsing=27
 
-    msg "DEB007" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $g__debug_file
-    echo "$wget_stdxxx"                          >> $g__debug_file
-    msg "DEB008" "DEBUG END"         >> $g__debug_file
+    msg "DEB007" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+    echo "$wget_stdxxx"                          >> $debug_file
+    msg "DEB008" "DEBUG END"         >> $debug_file
 
 fi

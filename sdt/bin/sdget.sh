@@ -65,7 +65,10 @@ msg ()
 	l__code="$1"
 	l__msg="$2"
 
-	echo "$(curdate) - $l__code - $l__msg" | tee -a $g__log_file 1>&2
+    buf="$(curdate) - $l__code - $l__msg"
+
+    echo $buf 1>&2             # stderr
+	#echo $buf >> $log_file    # deprecated ('transfer.log' duplicate)
 }
 
 cleanup ()
@@ -138,9 +141,9 @@ else
     SYNCDA_ROOT=${ST_HOME}
 fi
 
-g__log_dir=$SYNCDA_ROOT/log
-g__log_file=${g__log_dir}/get_data.log
-g__debug_file=${g__log_dir}/get_data__debug.log
+log_dir=$SYNCDA_ROOT/log
+#log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
+debug_file=${log_dir}/get_data__debug.log
 
 
 # set tmp dir.
@@ -217,7 +220,7 @@ TLS_ONLY=" --secure-protocol=TLSv1 "
 #TLS_ONLY=" "
 g__lifetime=168
 
-mkdir -p ${g__log_dir}
+mkdir -p ${log_dir}
 
 # prevent download if path not starting with '/'
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash

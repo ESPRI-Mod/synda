@@ -49,8 +49,8 @@ msg ()
 
     buf="$(curdate) - $l__code - $l__msg"
 
-    echo $buf 1>&2            # stderr
-    echo $buf >> $log_file    # logfile
+    echo $buf 1>&2             # stderr
+    #echo $buf >> $log_file    # deprecated ('transfer.log' duplicate)
 }
 
 cleanup_on_error ()
@@ -172,7 +172,7 @@ export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
 GRIDFTP_CMD=globus-url-copy
 
 log_dir=${ST_HOME}/log
-log_file=${log_dir}/get_data.log
+#log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
 
 local_folder=`dirname $local_file` # retrieve destination folder
 
