@@ -173,6 +173,7 @@ GRIDFTP_CMD=globus-url-copy
 
 log_dir=${ST_HOME}/log
 #log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
+debug_file=${log_dir}/debug.log
 
 local_folder=`dirname $local_file` # retrieve destination folder
 
@@ -188,7 +189,7 @@ if [ $debug_level -eq 4 ]; then
     export GLOBUS_ERROR_OUTPUT=1
     export GLOBUS_ERROR_VERBOSE=1
     export GLOBUS_GSI_AUTHZ_DEBUG_LEVEL=2
-    export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/AUTHMODULELOG
+    export GLOBUS_GSI_AUTHZ_DEBUG_FILE=$debug_file
 
     GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
 elif [ $debug_level -eq 3 ]; then

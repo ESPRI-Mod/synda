@@ -143,7 +143,7 @@ fi
 
 log_dir=$SYNCDA_ROOT/log
 #log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
-debug_file=${log_dir}/get_data__debug.log
+debug_file=${log_dir}/debug.log
 
 
 # set tmp dir.
