@@ -91,7 +91,7 @@ trap "abort" SIGINT SIGTERM
 # options
 
 DEBUG="no"
-g__debug_level=1
+debug_level=1
 g__checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
@@ -99,7 +99,7 @@ do
   c)	g__checksum_type=$OPTARG
 		;;
   d)	DEBUG="yes"
-		g__debug_level=$OPTARG
+		debug_level=$OPTARG
 		;;
   h)	usage
 		exit 0
@@ -187,16 +187,16 @@ WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O >(tee $local_fi
 # debug mode
 if [ "x$DEBUG" = "xyes" ]; then
 
-	if [ $g__debug_level -eq 4 ]; then
+	if [ $debug_level -eq 4 ]; then
 		set -x # bash debug mode (warning, this make wget output to be duplicated 3 times)
 
 		WGETOPT=" $WGETOPT -v -d "
 
-	elif [ $g__debug_level -eq 3 ]; then
+	elif [ $debug_level -eq 3 ]; then
 
 		WGETOPT=" $WGETOPT -v -d "
 
-	elif [ $g__debug_level -eq 2 ]; then
+	elif [ $debug_level -eq 2 ]; then
 
 		WGETOPT=" $WGETOPT -v "
 	fi
