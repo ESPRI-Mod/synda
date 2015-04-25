@@ -65,17 +65,17 @@ if [ $nbr -eq 3 ]; then
 
     # wget / get_data.sh error mapping
     if [ "x$data2_http_response_code" = "x403 Forbidden" ]; then
-        g__wget_error_status_from_parsing=20
+        wget_error_status_from_parsing=20
     elif [ "x$data2_http_response_code" = "x200 OK" ]; then
-        g__wget_error_status_from_parsing=0
+        wget_error_status_from_parsing=0
     elif [ "x$data2_http_response_code" = "xRead error (Connection timed out) in headers." ]; then
-        g__wget_error_status_from_parsing=21
+        wget_error_status_from_parsing=21
     elif [ "x$data2_http_response_code" = "xRead error (Connection reset by peer) in headers." ]; then
-        g__wget_error_status_from_parsing=28
+        wget_error_status_from_parsing=28
     else
-        g__wget_error_status_from_parsing=24
+        wget_error_status_from_parsing=24
 
-        msg "DEB001" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+        msg "DEB001" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
         echo "$wget_stdxxx"                                                 >> $debug_file
         msg "DEB002" "DEBUG END"                                            >> $debug_file
     fi
@@ -86,19 +86,19 @@ elif [ $nbr -eq 1 ]; then
     data1_http_response_code=$http_response_code_list
 
     if [ "x$data1_http_response_code" = "x403 Forbidden" ]; then
-        g__wget_error_status_from_parsing=22
+        wget_error_status_from_parsing=22
     elif [ "x$data1_http_response_code" = "xRead error (Connection timed out) in headers." ]; then
-        g__wget_error_status_from_parsing=25
+        wget_error_status_from_parsing=25
     elif [ "x$data1_http_response_code" = "x200 OK" ]; then
         # this case happens !!
         # seems that sometime, there is no redirect to ORP at all !!
         # the file can be accessed directly, without security check..
 
-        g__wget_error_status_from_parsing=0
+        wget_error_status_from_parsing=0
     else
-        g__wget_error_status_from_parsing=23
+        wget_error_status_from_parsing=23
 
-        msg "DEB003" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+        msg "DEB003" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
         echo "$wget_stdxxx"                          >> $debug_file
         msg "DEB004" "DEBUG END"         >> $debug_file
     fi
@@ -106,18 +106,18 @@ elif [ $nbr -eq 1 ]; then
 elif [ $nbr -eq 2 ]; then
     # it means we were redirected to the ORP, then it failed on the ORP (and we never get redirected on the datanode)
 
-    g__wget_error_status_from_parsing=26
+    wget_error_status_from_parsing=26
 
-    msg "DEB005" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+    msg "DEB005" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
     echo "$wget_stdxxx"                          >> $debug_file
     msg "DEB006" "DEBUG END"         >> $debug_file
 
 else
     # we shouldn't be here
 
-    g__wget_error_status_from_parsing=27
+    wget_error_status_from_parsing=27
 
-    msg "DEB007" "DEBUG BEGIN ($g__wget_error_status_from_parsing,$*)"  >> $debug_file
+    msg "DEB007" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
     echo "$wget_stdxxx"                          >> $debug_file
     msg "DEB008" "DEBUG END"         >> $debug_file
 

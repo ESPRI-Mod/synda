@@ -273,7 +273,7 @@ umask u=rw,g=rw,o=r
 ############################################
 # start wget
 #
-g__wget_error_status_from_parsing=0
+wget_error_status_from_parsing=0
 wget_status=0
 if [ "x$DEBUG" = "xyes" ]; then
 	# in debug mode, we don't parse wget output
@@ -307,8 +307,8 @@ if [ $wget_status -ne 0 ]; then
 		#
 		# if we found some error during the parsing, we use it, else we use 1
 		#
-		if [ $g__wget_error_status_from_parsing -ne 0 ]; then
-			g__getdata_status=$g__wget_error_status_from_parsing
+		if [ $wget_error_status_from_parsing -ne 0 ]; then
+			g__getdata_status=$wget_error_status_from_parsing
 		else
 			g__getdata_status=1
 		fi
