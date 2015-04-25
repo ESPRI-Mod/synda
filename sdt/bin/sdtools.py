@@ -150,4 +150,4 @@ def set_terminal_cursor_visible():
     BEWARE: this send code below on stdout
             ESC[34hESC[?25hESC[34hESC[?25h
     """
-    os.system('setterm -cursor on')
+    os.system('setterm -cursor on 1>&2') # redirect to stderr to prevent messing with functional stdout text stream
