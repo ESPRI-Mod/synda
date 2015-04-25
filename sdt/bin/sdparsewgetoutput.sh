@@ -16,7 +16,11 @@
 #    this way, you don't depend on language variation
 #    example: *403*) ...
 #
-# this gives something like:
+
+
+
+
+# This gives something like:
 #
 # HTTP request sent, awaiting response... 302 Moved Temporarily
 # HTTP request sent, awaiting response... 302 Moved Temporarily
@@ -75,7 +79,7 @@ if [ $nbr -eq 3 ]; then
     else
         wget_error_status_from_parsing=24
 
-        msg "DEB001" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
+        msg "DEB001" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"     >> $debug_file
         echo "$wget_stdxxx"                                                 >> $debug_file
         msg "DEB002" "DEBUG END"                                            >> $debug_file
     fi
