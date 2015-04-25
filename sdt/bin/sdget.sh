@@ -7,13 +7,13 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-# this script retrieve a file from ESGF using HTTP protocol
-
-# notes
-#  - on success and when not in debug mode, the script displays checksum on stdout.
-#    so don't print anything except the checksum on stdout.
+# This script retrieve a file from ESGF using HTTP protocol
 #
-# return values
+# Note
+#  - on success, the script displays checksum on stdout.
+#    (thus be carefull not to print anything except checksum on stdout)
+#
+# Return values
 #  0 => success
 #  1 => Wget error
 #  2 => File already exist on the local filesystem
@@ -60,10 +60,12 @@ curdate ()
 
 msg ()
 {
+    # display msg on stderr and logfile
+
 	l__code="$1"
 	l__msg="$2"
 
-	echo "$(curdate) - $l__code - $l__msg"
+	echo "$(curdate) - $l__code - $l__msg" | tee -a $g__log_file 1>&2
 }
 
 cleanup ()
@@ -162,7 +164,7 @@ else
 
     # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
     #
-	#msg "ERR005" "incorrect checksum type ($g__checksum_type)" | tee -a $g__log_file
+	#msg "ERR005" "incorrect checksum type ($g__checksum_type)"
 	#exit 5
 fi
 
@@ -227,7 +229,7 @@ fi
 
 # check if file is already present
 if [ -f "$local_file" ]; then
-	msg "ERR011" "local file already exists ($local_file)" | tee -a $g__log_file
+	msg "ERR011" "local file already exists ($local_file)"
 	exit 2
 fi
 
@@ -239,11 +241,11 @@ mkdir -p ${local_folder}
 
 # check if we have right to create local file
 
-if touch "$local_file"; then # not that touch error msg is lost here (sent to stderr)
+if touch "$local_file"; then
 	rm "$local_file"
 else
 
-	msg "ERR111" "local file creation error ($local_file)" | tee -a $g__log_file
+	msg "ERR111" "local file creation error ($local_file)"
 
 	exit 30
 fi
@@ -273,8 +275,8 @@ wget_status=0
 if [ "x$DEBUG" = "xyes" ]; then
 	# in debug mode, we don't parse wget output
 
-	echo $WGET_CMD
-	eval $WGET_CMD 2>&1
+	echo $WGET_CMD 1>&2
+	eval $WGET_CMD 1>&2
 	wget_status=$?
     wget_pid=$!
 else
@@ -311,7 +313,7 @@ if [ $wget_status -ne 0 ]; then
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-	msg "ERR001" "Transfer failed with error $g__getdata_status - $* - $wget_status" | tee -a $g__log_file
+	msg "ERR001" "Transfer failed with error $g__getdata_status - $* - $wget_status"
 
 	exit $g__getdata_status
 else
@@ -321,10 +323,10 @@ else
 	l__checksum=$(<$g__tmpfile__checksum) # bash trick
 	rm -f "$g__tmpfile__checksum"
 
-	# return checksum
+	# return checksum on stdout
 	echo $l__checksum
 
-	msg "INF003" "transfer done - $* - $l__checksum" >> $g__log_file
+	msg "INF003" "transfer done - $* - $l__checksum"
 
 	exit 0
 fi
