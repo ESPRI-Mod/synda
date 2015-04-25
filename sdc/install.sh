@@ -228,6 +228,10 @@ update_transfer_environment_pre_install ()
 
     if [ "$current_version" = "2.9" -a "$new_version" = "3.0" ]; then
 
+        # remove obsolete logfile
+        rm -f $st_root/log/get_data.log
+        rm -f $st_root/log/get_data__debug.log
+
         # move config file
         mkdir $st_root/conf
         mv $st_root/sdt.conf $st_root/conf
@@ -238,6 +242,17 @@ update_transfer_environment_pre_install ()
         # move default files
         mkdir $st_root/conf/default
         find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
+    fi
+
+    # tmp hack (remove asap)
+    #
+    # (this is because early 3.0 beta release did not had this code yet (i.e. obsolete log files removed))
+    #
+    if [ "$new_version" = "3.0" ]; then
+
+        # remove obsolete logfile
+        rm -f $st_root/log/get_data.log
+        rm -f $st_root/log/get_data__debug.log
     fi
 }
 
