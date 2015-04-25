@@ -16,6 +16,8 @@ import sdlog
 import threading
 
 class WorkerThread(threading.Thread):
+    """This class is the thread that take care of the file transfer."""
+
     def __init__(self,instance,queue,service):
         threading.Thread.__init__(self)
         self._queue=queue       # the queue where to push the item once work is done to deferre database I/O
@@ -30,8 +32,8 @@ class WorkerThread(threading.Thread):
             sdlog.error("SYDUTILS-024","Thread didn't complete successfully")
 
             # debug
-            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
-            #traceback.print_exc(file=sys.stderr)
+            traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+            traceback.print_exc(file=sys.stderr)
 
             self._service.exception_occurs=True
 

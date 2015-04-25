@@ -16,12 +16,16 @@ import json
 import sdprint
 
 def run(files,key_list_to_keep):
-    new_list=[]
 
-    for f in files:
-        new_list.append(dict((k, f[k]) for k in f if k in key_list_to_keep))
+    if len(key_list_to_keep)==0:
+        return files
+    else:
+        new_list=[]
 
-    return new_list
+        for f in files:
+            new_list.append(dict((k, f[k]) for k in f if k in key_list_to_keep))
+
+        return new_list
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
