@@ -96,7 +96,7 @@ g__checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
-  c)	g__checksum_type=$OPTARG
+  c)	checksum_type=$OPTARG
 		;;
   d)	DEBUG="yes"
 		debug_level=$OPTARG
@@ -156,18 +156,18 @@ WGET_TIMEOUT=360
 
 # manage checksum type
 g__checksum_cmd=
-if [ "$g__checksum_type" = "sha256" ]; then
+if [ "$checksum_type" = "sha256" ]; then
 	g__checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-elif [ "$g__checksum_type" = "md5" ]; then
+elif [ "$checksum_type" = "md5" ]; then
 	g__checksum_cmd="md5sum  | awk '{print \$1}' "
-elif [ "$g__checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
+elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
 	g__checksum_cmd="md5sum  | awk '{print \$1}' "
 else
     :
 
     # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
     #
-	#msg "ERR005" "incorrect checksum type ($g__checksum_type)"
+	#msg "ERR005" "incorrect checksum type ($checksum_type)"
 	#exit 5
 fi
 
@@ -299,7 +299,7 @@ fi
 #
 if [ $wget_status -ne 0 ]; then
 	if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
-		g__getdata_status=29
+		getdata_status=29
 	else
 		# wget wrap many different errors with -1 code
 		# so we better use the code resulting from the parsing
@@ -308,17 +308,17 @@ if [ $wget_status -ne 0 ]; then
 		# if we found some error during the parsing, we use it, else we use 1
 		#
 		if [ $wget_error_status_from_parsing -ne 0 ]; then
-			g__getdata_status=$wget_error_status_from_parsing
+			getdata_status=$wget_error_status_from_parsing
 		else
-			g__getdata_status=1
+			getdata_status=1
 		fi
 	fi
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-	msg "ERR001" "Transfer failed with error $g__getdata_status - $* - $wget_status"
+	msg "ERR001" "Transfer failed with error $getdata_status - $* - $wget_status"
 
-	exit $g__getdata_status
+	exit $getdata_status
 else
 	# success
 
