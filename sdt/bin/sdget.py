@@ -16,10 +16,8 @@ Notes
         - urllib2 (pure python)
         - wget (external script)
         - gridftp (external script)
-    - This module is mainly as module, but can also be used as script for basic
+    - This module is mainly used as module, but can also be used as script for basic
       url download test.
-    - When used as script, returns 0 if all url are soccessfully downloaded,
-      else 1.
 """
 
 import argparse
@@ -106,6 +104,7 @@ def is_killed(transfer_protocol,status):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('-q','--quiet',action='store_true')
     args = parser.parse_args()
 
     files=json.load( sys.stdin )
@@ -123,9 +122,12 @@ if __name__ == '__main__':
         (status,local_checksum,killed,script_stdxxx)=download(url,local_path,checksum_type='md5',debug_level=0)
 
         if status!=0:
-            print_stderr('Download failed: %s'%url)
+            if not args.quiet:
+                print_stderr('Download failed: %s'%url)
+
             sys.exit(1)
-        else:
-            print_stderr('File successfully downloaded: %s'%url)
+
+    if not args.quiet:
+        print_stderr('File(s) successfully downloaded')
 
     sys.exit(0)

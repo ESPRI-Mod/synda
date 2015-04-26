@@ -16,6 +16,7 @@ Note
     in 'raw' mode or 'line' mode (not 'indent' mode)
 """
 
+import sys
 import argparse
 import json
 import sdprint
@@ -28,13 +29,13 @@ def run(lines):
         if l.startswith('['):
             # many file dicts by line
 
-            items=json.load( l )
+            items=json.loads( l )
             files.extend(items)
 
         elif l.startswith('{'):
             # one file dict by line
 
-            item=json.load( l )
+            item=json.loads( l )
             files.append(item)
         else:
             assert False
