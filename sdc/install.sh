@@ -492,6 +492,7 @@ install_st_application ()
     ln -fs $st_lib/synda.py synda
     ln -fs $st_lib/sdconfig.py sdconfig
     ln -fs $st_lib/sdget.py sdget
+    ln -fs $st_lib/sdmerge.py sdmerge
 
     cd -
 

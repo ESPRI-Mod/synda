@@ -9,31 +9,43 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This module filters a columns list."""
+"""This script merges json chunks into one json document.
 
-import sys
+Note
+    This script is intended to process 'sdprint.print_format' output
+    in 'raw' mode or 'line' mode (not 'indent' mode)
+"""
+
 import argparse
 import json
 import sdprint
 
-def run(files,key_list_to_keep):
+def run(lines):
+    files=[]
 
-    if len(key_list_to_keep)==0:
-        return files
-    else:
-        new_list=[]
+    for l in lines:
 
-        for f in files:
-            new_list.append(dict((k, f[k]) for k in f if k in key_list_to_keep))
+        if l.startswith('['):
+            # many file dicts by line
 
-        return new_list
+            items=json.load( l )
+            files.extend(items)
+
+        elif l.startswith('{'):
+            # one file dict by line
+
+            item=json.load( l )
+            files.append(item)
+        else:
+            assert False
+
+    return files
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to keep")
     parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
     args = parser.parse_args()
 
-    files=json.load( sys.stdin )
-    files=run(files,args.column)
+    lines=sys.stdin.readlines()
+    files=run(lines)
     sdprint.print_format(files,args.format)
