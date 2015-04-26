@@ -11,21 +11,28 @@
 
 """This module contains data file download routines.
 
-Note
-    This module provides 3 ways to download data file
+Notes
+    - This module provides 3 ways to download data file
         - urllib2 (pure python)
         - wget (external script)
         - gridftp (external script)
+    - This module is mainly as module, but can also be used as script for basic
+      url download test.
+    - When used as script, returns 0 if all url are soccessfully downloaded,
+      else 1.
 """
 
+import argparse
 import os
+import sys
+import json
 import sdapp
 import sdconfig
-from sdtools import print_stderr
 import sdutils
 import sdconst
 import sdlog
 import sdnetutils
+from sdtools import print_stderr
 
 def download(url,full_local_path,checksum_type='md5',debug_level=0):
     killed=False
@@ -96,3 +103,29 @@ def is_killed(transfer_protocol,status):
         assert False
 
 # init.
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
+    files=json.load( sys.stdin )
+
+    for f in files:
+
+        assert 'url' in f
+
+        url=f['url']
+        local_path='/tmp/test.nc'
+
+        if os.path.isfile(local_path):
+            os.remove(local_path)
+
+        (status,local_checksum,killed,script_stdxxx)=download(url,local_path,checksum_type='md5',debug_level=0)
+
+        if status!=0:
+            print_stderr('Download failed: %s'%url)
+            sys.exit(1)
+        else:
+            print_stderr('File successfully downloaded: %s'%url)
+
+    sys.exit(0)

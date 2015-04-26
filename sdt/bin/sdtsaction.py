@@ -152,7 +152,7 @@ def file_search(args):
         import sdlfile
         files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
         if len(files)==0:
-            print "File not found"
+            print_stderr("File not found")   
         else:
             sdlfile.print_list(files)
     else:
@@ -161,7 +161,7 @@ def file_search(args):
 
         if not args.dry_run:
             if len(files)==0:
-                print "File not found"
+                print_stderr("File not found")   
             else:
                 if args.replica:
                     sdrfile.print_replica_list(files)
@@ -271,7 +271,7 @@ def file_dump(args):
             files=sdcolumnfilter.run(files,args.column)
             sdprint.print_format(files,args.format)
         else:
-            print "File not found"
+            print_stderr("File not found")   
 
 # init.
 

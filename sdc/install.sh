@@ -486,11 +486,12 @@ install_st_application ()
 
     ln -fs $st_lib/sdcleanup_tree.sh sdcleanup_tree.sh
     ln -fs $st_lib/sdget.sh sdget.sh
+    ln -fs $st_lib/sdgetg.sh sdgetg.sh
     ln -fs $st_lib/sdlogon.sh sdlogon.sh
     ln -fs $st_lib/sdparsewgetoutput.sh sdparsewgetoutput.sh
     ln -fs $st_lib/synda.py synda
     ln -fs $st_lib/sdconfig.py sdconfig
-    ln -fs $st_lib/sd28to29.py sd28to29
+    ln -fs $st_lib/sdget.py sdget
 
     cd -
 
