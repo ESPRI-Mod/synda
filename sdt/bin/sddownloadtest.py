@@ -21,6 +21,7 @@ import sys
 import json
 import sdapp
 import sdget
+import sdconfig
 from sdtools import print_stderr
 
 if __name__ == '__main__':
@@ -37,7 +38,8 @@ if __name__ == '__main__':
         url=f['url']
         dn=f['data_node']
 
-        local_path='/tmp/test.nc'
+        #local_path='/tmp/test.nc'
+        local_path='%s/test.nc'%sdconfig.tmp_folder
 
         if os.path.isfile(local_path):
             os.remove(local_path)
