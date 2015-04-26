@@ -493,6 +493,7 @@ install_st_application ()
     ln -fs $st_lib/sdconfig.py sdconfig
     ln -fs $st_lib/sdget.py sdget
     ln -fs $st_lib/sdmerge.py sdmerge
+    ln -fs $st_lib/sddownloadtest.py sddownloadtest
 
     cd -
 

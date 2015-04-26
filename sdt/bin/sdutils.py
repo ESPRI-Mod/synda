@@ -30,6 +30,8 @@ from sdexception import SDException
 def get_transfer_protocol(url):
     if url.startswith('http://'):
         return sdconst.TRANSFER_PROTOCOL_HTTP
+    elif url.startswith('https://'):
+        return sdconst.TRANSFER_PROTOCOL_HTTP
     elif url.startswith('gsiftp://'):
         return sdconst.TRANSFER_PROTOCOL_GRIDFTP
     else:
