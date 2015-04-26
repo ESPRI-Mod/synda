@@ -207,11 +207,11 @@ def parse_metadata(buffer):
                             url=l__value.split('|')[0] # keep only first field (i.e. keep only the file url)
                             protocol=l__value.split('|')[-1]
 
-                            if protocol=="HTTPServer":
+                            if protocol.upper()=="HTTPSERVER":
                                 l__dict['url_http']=url
-                            elif protocol=="GRIDFTP":
+                            elif protocol.upper()=="GRIDFTP":
                                 l__dict['url_gridftp']=url
-                            elif protocol=="openDAP":
+                            elif protocol.upper()=="OPENDAP":
                                 l__dict['url_opendap']=url
 
                         elif l__name=="experiment_family":

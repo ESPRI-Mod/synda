@@ -26,6 +26,9 @@ def run(files):
     for file in files:
         protocol=sdpostpipelineutils.get_attached_parameter(file,'protocol',sdconst.TRANSFER_PROTOCOL_HTTP)
 
+        if protocol not in sdconst.TRANSFER_PROTOCOLS:
+            raise SDException("SYNPROTO-004","Incorrect protocol (%s)"%protocol)
+
         if 'url_gridftp' in file and 'url_http' in file:
 
             if protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
