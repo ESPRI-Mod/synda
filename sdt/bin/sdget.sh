@@ -39,6 +39,15 @@
 # 29 => wget process has been killed (most likely caused by a "shutdown immediate")
 # 30 => file creation error (likely caused by missing access right)
 
+# TAG43242 error
+#
+# When not using eval, checksum_cmd doesn't get interpreted correctly
+#
+# md5sum: |: No such file or directory
+# md5sum: awk: No such file or directory
+# md5sum: '{print: No such file or directory
+# md5sum: $1}': No such file or directory
+
 usage ()
 {
 	echo ""
@@ -155,13 +164,13 @@ WGET_TRIES=1
 WGET_TIMEOUT=360
 
 # manage checksum type
-g__checksum_cmd=
+checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
-	g__checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+	checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
 elif [ "$checksum_type" = "md5" ]; then
-	g__checksum_cmd="md5sum  | awk '{print \$1}' "
+	checksum_cmd="md5sum  | awk '{print \$1}' "
 elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-	g__checksum_cmd="md5sum  | awk '{print \$1}' "
+	checksum_cmd="md5sum  | awk '{print \$1}' "
 else
     :
 
@@ -182,7 +191,7 @@ g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum 
 #
 # with checksum
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
-WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O >(tee $local_file | $g__checksum_cmd > $g__tmpfile__checksum)" # bash trick (">()" is a command substitution)
+WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O >(tee $local_file | $checksum_cmd > $g__tmpfile__checksum)" # bash trick (">()" is a command substitution)
 
 # debug mode
 if [ "x$DEBUG" = "xyes" ]; then
@@ -231,7 +240,7 @@ else
 fi
 
 # check if file is already present
-if [ -f "$local_file" ]; then
+if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
 	msg "ERR011" "local file already exists ($local_file)"
 	exit 2
 fi
@@ -279,11 +288,11 @@ if [ "x$DEBUG" = "xyes" ]; then
 	# in debug mode, we don't parse wget output
 
 	echo $WGET_CMD 1>&2
-	eval $WGET_CMD 1>&2
+	eval $WGET_CMD 1>&2 # we need eval to prevent TAG43242 error
 	wget_status=$?
     wget_pid=$!
 else
-	wget_stdxxx=`eval $WGET_CMD 2>&1`
+	wget_stdxxx=`eval $WGET_CMD 2>&1` # we need eval to prevent TAG43242 error
 	wget_status=$?
 
 	# if wget "--tries" option is set to 1, we parse wget output to get informations on the cause of the error

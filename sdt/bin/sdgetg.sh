@@ -92,13 +92,13 @@ shift $(($OPTIND - 1)) # remove options
 
 ############################################
 # set checksum cmd depending on checksum type
-g__checksum_cmd=
+checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
-    g__checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+    checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
 elif [ "$checksum_type" = "md5" ]; then
-    g__checksum_cmd="md5sum  | awk '{print \$1}' "
+    checksum_cmd="md5sum  | awk '{print \$1}' "
 elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-    g__checksum_cmd="md5sum  | awk '{print \$1}' "
+    checksum_cmd="md5sum  | awk '{print \$1}' "
 else
     :
 
@@ -136,7 +136,7 @@ else
 fi
 
 # check if file is already present
-if [ -f "$local_file" ]; then
+if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
     msg "ERR011" "local file already exists ($local_file)"
     exit 3
 fi
@@ -240,8 +240,8 @@ if [ $child_status -ne 0 ]; then
 else
     # success
 
-    l__checksum=$(cat $local_file | $g__checksum_cmd) # compute checksum
-    echo $l__checksum                                 # return checksum on stdout
+    l__checksum=$(cat $local_file | $checksum_cmd) # compute checksum
+    echo $l__checksum                              # return checksum on stdout
 
     msg "INF003" "Transfer done - $* - $l__checksum"
 
