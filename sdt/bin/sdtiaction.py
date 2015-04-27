@@ -227,9 +227,9 @@ def replica_next(file_functional_id,args):
             replicas=[(f['url'],f['data_node']) for f in files]
 
             file_=sdfiledao.get_file(file_functional_id)
-            if f is not None:
+            if file_ is not None:
 
-                if sdutils.get_transfer_protocol(f.url)==sdconst.TRANSFER_PROTOCOL_HTTP:
+                if sdutils.get_transfer_protocol(file_.url)==sdconst.TRANSFER_PROTOCOL_HTTP:
                     sdmodify.replica_next(file_,replicas)
                 else:
                     print_stderr("Incorrect protocol") # only http protocol is supported in 'synda replica' for now
