@@ -33,8 +33,7 @@ usage ()
     echo "  -d      debug level"
     echo ""
     echo "Example"
-    echo "  $0 -d 2 gsiftp://albedo2.dkrz.de:2811//cmip5/output1/BNU/BNU-ESM/1pctCO2/mon/seaIce/OImon/r1i1p1/v20120503/grCongel/grCongel_OImon_BNU-ESM_1pctCO2_r1i1p1_185001-198912.nc /dev/null"
-    echo "  $0 gsiftp://carbon.dkrz.de:2811/cmip5/output1/MPI-M/MPI-ESM-LR/amip/mon/atmos/Amon/r1i1p1/v20111005/cl/cl_Amon_MPI-ESM-LR_amip_r1i1p1_197901-198912.nc /tmp/sdt_test_file.nc"
+    echo "  $0 -d 2 gsiftp://bmbf-ipcc-ar5.dkrz.de:2811//cmip5/output1/MPI-M/MPI-ESM-LR/1pctCO2/mon/ocean/Omon/r1i1p1/v20120308/soga/soga_Omon_MPI-ESM-LR_1pctCO2_r1i1p1_199001-199912.nc /tmp/sdt_test_file.nc"
 }
 
 curdate ()
