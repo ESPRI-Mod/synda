@@ -112,7 +112,7 @@ http://dods.ipsl.jussieu.fr/jripsl/synda/LICENSE
 
 ## Contact
 
-<sdipsl AT ipsl DOT jussieu DOT fr>
+sdipsl AT ipsl DOT jussieu DOT fr
 
 ## Acknowledgment
 
