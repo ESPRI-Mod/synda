@@ -91,7 +91,7 @@ done
 shift $(($OPTIND - 1)) # remove options
 
 ############################################
-# set checksum cmd depending on checksum type
+# set checksum command depending on checksum type
 checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
     checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
@@ -177,8 +177,6 @@ debug_file=${log_dir}/debug.log
 
 local_folder=`dirname $local_file` # retrieve destination folder
 
-CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
-
 ############################################
 # gridftp debug parameters
 #
@@ -211,6 +209,8 @@ mkdir -p ${local_folder}
 ############################################
 # start transfer
 
+CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
+
 if [[ $debug_level > 0 ]]; then
     echo $CMD
     $CMD 1>&2
@@ -240,10 +240,10 @@ if [ $child_status -ne 0 ]; then
 else
     # success
 
-    l__checksum=$(cat $local_file | $checksum_cmd) # compute checksum
-    echo $l__checksum                              # return checksum on stdout
+    cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
+    echo $cs                                     # return checksum on stdout
 
-    msg "INF003" "Transfer done - $* - $l__checksum"
+    msg "INF003" "Transfer done - $* - $cs"
 
     exit 0
 fi
