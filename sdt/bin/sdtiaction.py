@@ -317,7 +317,7 @@ def test(args):
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
-        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(file_url,tmpfile)
+        (sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(file_url,tmpfile)
 
         print_stderr(script_stdxxx)
 
