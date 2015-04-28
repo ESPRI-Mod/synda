@@ -23,9 +23,17 @@ from sdtools import print_stderr
 
 def list_(args):
     """list is an alias for search in local mode.
-    (i.e. 'synda list' is equivalent to 'synda search -l')
+    (i.e. 'synda list' is equivalent to 'synda search -ln')
     """
+    import sddeferredafter
+
     args.localsearch=True
+    args.no_default=True
+
+    # add default status depending on type
+    if args.type_==sdconst.SA_TYPE_FILE:
+        sddeferredafter.add_default_parameter(args.stream,'status','done')
+
     search(args)
 
 def search(args):
