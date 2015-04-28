@@ -75,6 +75,10 @@ if __name__ == '__main__':
     else:
         import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
 
+        # hack
+        if args.action=='list':
+            args.no_default=True
+
         buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
         selection=sdparse.build(buffer,load_default=(not args.no_default))
         stream=selection.to_stream()

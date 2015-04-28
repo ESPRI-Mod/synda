@@ -28,11 +28,12 @@ def list_(args):
     import sddeferredafter
 
     args.localsearch=True
-    args.no_default=True
 
     # add default status depending on type
     if args.type_==sdconst.SA_TYPE_FILE:
         sddeferredafter.add_default_parameter(args.stream,'status','done')
+    elif args.type_==sdconst.SA_TYPE_DATASET:
+        sddeferredafter.add_default_parameter(args.stream,'status','complete')
 
     search(args)
 
