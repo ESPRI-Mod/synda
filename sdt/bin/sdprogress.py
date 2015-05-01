@@ -123,12 +123,16 @@ class SDProgressDotAuto():
 class SDProgressDot():
 
     @classmethod
+    def progress_begin(cls,msg=''):
+        sys.stderr.write('%s'%msg)
+
+    @classmethod
     def print_char(cls,char="."):
         sys.stderr.write(char)
 
     @classmethod
-    def progress_complete(cls):
-        sys.stderr.write('\n')
+    def progress_complete(cls,msg=''):
+        sys.stderr.write('%s\n'%msg)
 
 class SDProgressBar():
 
