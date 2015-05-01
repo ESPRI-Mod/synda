@@ -27,8 +27,6 @@
 		- 3.0
 - DEPENDENCIES
 	- python 2.6+
-	- sqlite
-	- gcc
 - INSTALLATION
 	- install dependencies
 		- with yum installer
