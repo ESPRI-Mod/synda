@@ -34,12 +34,12 @@ As root, install the following system package:
 
 Centos
 
-    yum install gcc python python-pip python-devel openssl-devel sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel
+    yum install gcc python python-pip python-devel openssl-devel sqlite sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel
 
 
 Debian
 
-    apt-get install gcc python python-pip python-dev libssl-dev libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
+    apt-get install gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 
 Then as simple user or root, install the application:
 
