@@ -8,8 +8,8 @@ Synda index settings are stored in sdt.conf in [index] section.
 
 ## Usage
 
-default_index=<index>
-indexes=<idx1,idx2,etc..>
+    default_index=<index>
+    indexes=<idx1,idx2,etc..>
 
 ## ESGF main indexes
 
