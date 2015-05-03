@@ -105,17 +105,11 @@ CMIP5-RESEARCH role.
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)
 
-## Selection file sample
+[Template sample](sdt/doc/TEMPLATE)
 
-http://dods.ipsl.jussieu.fr/jripsl/synda/TEMPLATE
+[FAQ](sdt/doc/FAQ)
 
-## Faq
-
-http://dods.ipsl.jussieu.fr/jripsl/synda/FAQ
-
-## License 
-
-http://dods.ipsl.jussieu.fr/jripsl/synda/LICENSE
+[License](sdt/doc/LICENSE)
 
 ## Contact
 
