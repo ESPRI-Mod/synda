@@ -1,4 +1,4 @@
-= Download the nearest replica
+# Download the nearest replica
 
 To make Synda automaticaly select the nearest replica, set the following parameters in sdt/conf/sdt.conf
 
@@ -26,7 +26,7 @@ To test if the nearest replica is correctly selected, you can run the command be
 
 It will show which replica has been selected.
  
-=== Examples
+### Examples
 
 If you are located in England *AND* there is a replica available in England
 
