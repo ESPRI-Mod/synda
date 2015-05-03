@@ -24,13 +24,18 @@ folder. Selection examples are given in the 'sample' sub-folder.
 * download history stored in a db
 * transfer priority
 
+## Platform
+
+* Linux
+* Mac
+
 ## Last version
 
 3.0
 
 ## Installation
 
-As root, install the following system package:
+As root, install the following system packages:
 
 Centos
 
@@ -41,9 +46,9 @@ Debian
 
     apt-get install gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 
-Then as simple user or root, install the application:
+Then install the application (as simple user or root):
 
-    wget http://dods.ipsl.jussieu.fr/jripsl/synda/install.sh
+    wget https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
     chmod +x ./install.sh
     ./install.sh
 
@@ -87,6 +92,8 @@ Once downloaded, files are available in this location
     $HOME/sdt/data
 
 ## Documentation
+
+[README (this file)](README.md)
 
 [User guide](sdt/doc/user_guide.md)
 
