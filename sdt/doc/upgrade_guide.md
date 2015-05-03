@@ -6,9 +6,9 @@
 
 ## Procedure
 
-1. Backup $ST_HOME folder (e.g. $HOME/sdt)
+### 1. Backup $ST_HOME folder (e.g. $HOME/sdt)
 
-2. Run commands below
+### 2. Run commands below
 
     mkdir inst_tmpdir
     cd $inst_tmpdir
@@ -16,7 +16,7 @@
     chmod +x install.sh
     ./install.sh -u transfer
 
-3. Check configuration files
+### 3. Check configuration files
 
 As configuration files located in $ST_HOME/conf may have been reinitialized
 during installation, you need to check if parameters are still correctly set
