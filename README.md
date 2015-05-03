@@ -107,7 +107,7 @@ CMIP5-RESEARCH role.
 
 [Template sample](sdt/doc/TEMPLATE)
 
-[FAQ](sdt/doc/FAQ)
+[FAQ](sdt/doc/FAQ.md)
 
 [License](sdt/doc/LICENSE)
 
