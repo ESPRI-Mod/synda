@@ -3,9 +3,9 @@
 ## Synopsis
 
 *Synda* can download files from the Earth System Grid Federation
-(ESGF) archive in an easy way, for a list of variables, experiments and
-ensemble members. The program will evolve together with the ESGF
-archive backend functionalities.
+(ESGF) archive in an easy way, based on a list of facets (variables,
+experiments, ensemble members, etc..). The program will evolve together
+with the ESGF archive backend functionalities.
 
 The user defines one or many templates. Each of them have a list of
 facets (variables, frequencies, experiments, ensemble, model..). Using
@@ -14,15 +14,30 @@ the corresponding available files. The program may be run regularly to
 download the possible new files. Typically each template is associated
 with an analysis (cfmip template, downscaling template and so on).
 Create as many template_name.txt as you want in the 'selection'
-folder. Selection examples are given in the 'sample' sub-folder. 
+folder. Selection file examples are given in the 'sample' sub-folder. 
 
-## Code Example
+## Basic usage
 
-TODO
+Search datasets
+
+    synda search FACET..
+
+Install a dataset
+
+    synda install DATASET..
+    synda daemon start
+
+Check download completion
+
+    synda queue status
+
+Once downloaded, files are available in this location
+
+    $HOME/sdt/data
 
 ## Motivation
 
-TODO
+This program is a command-line alternative to the ESGF web front-end.
 
 ## Main features
 
@@ -76,25 +91,6 @@ Then edit $ST_HOME/conf/sdt.conf to set openid and password (ESGF credential).
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
 CMIP5-RESEARCH role.
-
-## Basic usage
-
-Search datasets
-
-    synda search FACET..
-
-Install a dataset
-
-    synda install DATASET..
-    synda daemon start
-
-Check download completion
-
-    synda queue status
-
-Once downloaded, files are available in this location
-
-    $HOME/sdt/data
 
 ## Documentation
 
