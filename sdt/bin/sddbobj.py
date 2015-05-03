@@ -29,7 +29,7 @@ def create_tables(conn):
               do some version checking at file level (i.e. have a 'latest' flag
               in the 'file' table). In this case, the file 'version' attribute
               will be needed as well (currently this attribute is not stored in
-              Synchro-data).
+              Synda).
         - 'dataset' table
             - 'model' column contains non-normalized model name
             - 'path' and 'dataset_functional_id' contain the same value, but with different delimiter

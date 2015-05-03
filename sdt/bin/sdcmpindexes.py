@@ -14,7 +14,7 @@
 This module is used to check if a selection gives the same result for each indexes.
 
 Note
-    sdcmpindexes stands for "Synchro-Data compare indexes"
+    sdcmpindexes stands for "SynDa compare indexes"
 """
 
 import sys

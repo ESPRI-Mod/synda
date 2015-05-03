@@ -12,7 +12,7 @@
 """syndac command (REPL front-end).
 
 Note
-    'sdadmcon' stands for "Synchro-Data ADMin CONsole".
+    'sdadmcon' stands for "SynDa ADMin CONsole".
 """
 
 import argparse
@@ -37,7 +37,7 @@ import sdconfig
 from tabulate import tabulate
 
 class AdminConsole(BaseConsole):
-    intro='Synchro-data Admin console\nType help for a list of supported commands.\n'
+    intro='Synda admin console\nType help for a list of supported commands.\n'
     prompt='sda> '
 
     def do_retry(self,arg):

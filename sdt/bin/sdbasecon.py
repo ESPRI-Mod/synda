@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains Synchro-data core classes."""
+"""This module contains Synda core classes."""
 
 import cmd
 import sys
