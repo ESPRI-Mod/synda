@@ -96,7 +96,6 @@ CMIP5-RESEARCH role.
 | [User guide](sdt/doc/user_guide.md)                            | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)                   |
 |----------------------------------------------------------------|---------------------------------------------------------------------|
 | [Admin guide](sdt/doc/admin_guide.md)                          | [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)     |
-|----------------------------------------------------------------|---------------------------------------------------------------------|
 | [Upgrade guide](sdt/doc/upgrade_guide.md)                      | [Slides](sdt/doc/synda.odp)                                         |
 
 
