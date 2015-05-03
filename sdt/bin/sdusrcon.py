@@ -44,7 +44,7 @@ from sdconsoleutils import ConsoleUtils
 from sdshortcut import Shortcut
 
 class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
-    intro='Synchro-data User console\nType help for a list of supported commands.\n\n%s\n'%sddaemon.get_daemon_status()
+    intro='Synda User console\nType help for a list of supported commands.\n\n%s\n'%sddaemon.get_daemon_status()
     prompt='sd> '
 
     def default(self,arg):
@@ -190,7 +190,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
     def help_daemon(self):
         print sdi18n.m0006('daemon <action>','Start/stop daemon',example=sdi18n.m0012)
     def help_version(self):
-        print sdi18n.m0006('version','Print Synchro-data version')
+        print sdi18n.m0006('version','Print Synda version')
     def help_run(self):
         print sdi18n.m0006('run','Print running transfers.')
     def help_config(self):
@@ -202,7 +202,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
     def help_delete(self):
         print sdi18n.m0006('delete <file>','Delete file from local repository',example=sdi18n.m0007)
     def help_quit(self):
-        print sdi18n.m0006('quit','Leave synchro-data.')
+        print sdi18n.m0006('quit','Leave Synda console.')
     def help_unset(self):
         print sdi18n.m0006('unset name','Unset session parameter.')
     def help_set(self):

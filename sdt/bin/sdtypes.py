@@ -280,7 +280,7 @@ class SessionParam():
         self.search_api_facet=search_api_facet
         self.value=value
         self.removable=removable # not used for now
-        self.option=option # this flag means 'is synchro-data specific option ?'
+        self.option=option # this flag means 'is Synda specific option ?'
 
     def value_to_string(self):
         if self.value is None:

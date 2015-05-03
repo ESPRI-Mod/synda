@@ -139,11 +139,11 @@ def cast(value,dest_type_):
     
     Notes
         - BEWARE when doing string2bool cast, because bool('false') DO NOT returns false !
-        - Currently, typing is not formally defined in Synchro-data.
+        - Currently, typing is not formally defined in Synda.
           Basically, you have a mix of losely typed attribute (i.e. string) and strongely typed attribute (Python type).
           So, some bool parameter are stored as Python bool and some are stored as Python string.
           Also, some int are stored as Python int, and some are stored as string.
-          In most cases, strongely typed are Synchro-data attributes and losely typed are Search-API attributes.
+          In most cases, strongely typed are Synda attributes and losely typed are Search-API attributes.
           This func is used to make this mess transparent as much as possible.
         - TODO: in the future, maybe switch all to 'strongely typed' or all to
           'losely typed' (i.e. mix of both is kind of a mess). Maybe 'strongely typed' is better,
