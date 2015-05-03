@@ -9,6 +9,7 @@ Note: host set in *default_index* parameter can also be set in *indexes* paramet
 
 ## Usage
 
+    [index]
     default_index=<index>
     indexes=<idx1,idx2,etc..>
 
