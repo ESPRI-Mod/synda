@@ -10,7 +10,7 @@ Those indexes are used in batch mode to reduce latence.
 
 ## Set Synda default index
 
-default_index=<index>
+`default_index=<index>`
 
 ## Set Synda indexes list
 
