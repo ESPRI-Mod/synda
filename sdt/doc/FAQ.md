@@ -2,7 +2,7 @@
 
 ### 'Module argparse was already imported' error
 
-Run command below
+Run command below:
 
     pip uninstall argparse
 
@@ -10,8 +10,7 @@ Run command below
 
 ### "('system library', 'fopen', 'No such file or directory')" error during certificate retrieving
 
-* unset all X509 environment variable 
-* remove '~/.esg' directory
+Unset all X509 environment variable and remove '~/.esg' directory.
 
 --------------------------------------------------------
 
