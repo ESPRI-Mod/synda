@@ -21,6 +21,8 @@ Note: host set in *default_index* parameter can also be set in *indexes* paramet
 * esgf-index1.ceda.ac.uk
 * esg.ccs.ornl.gov
 
+## ESGF indexes complete list
+
 To display complete ESGF index list, use command below
 
     synda param index_node
