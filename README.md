@@ -24,7 +24,7 @@ Search datasets
 
 Install a dataset
 
-    synda install DATASET..
+    synda install DATASET
 
 Start the daemon
 
