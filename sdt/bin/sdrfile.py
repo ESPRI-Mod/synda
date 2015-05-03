@@ -44,6 +44,7 @@ def get_file(stream=None,parameter=[],dry_run=False):
     return f
 
 def print_list(files):
+
     # WAY 1
     li=[[f['status'],humanize.naturalsize(f['size'],gnu=False), f['file_functional_id']] for f in files]
     print tabulate(li,tablefmt="plain")

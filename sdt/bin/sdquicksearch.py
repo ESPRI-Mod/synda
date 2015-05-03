@@ -65,7 +65,7 @@ def run(stream=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_r
     else:
         try:
             if progress:
-                sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message
+                sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
             result=process_queries(queries) # return Response object
