@@ -1,27 +1,26 @@
-# *sd28to29* command user guide
-
-sd28to29 - upgrade synda from 2.8 to 2.9
+# Synda upgrade guide
 
 ## Synopsis
 
-    sd28to29 -d DBFILE_28
+    This documents contains instructions to install the new Synda software version.
 
-## Usage
+## Procedure
 
-* Install synda 2.9 from scratch
+1. Backup $ST_HOME folder (e.g. $HOME/sdt)
 
-* Move to bin directory
+2. Run commands below
 
-    cd $ST_HOME/bin
+    mkdir inst_tmpdir
+    cd $inst_tmpdir
+    wget https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
+    chmod +x install.sh
+    ./install.sh -u transfer
 
-* Run upgrade script over the 2.8 database file.
+3. Check configuration files
 
-    ./sd28to29 -d DBFILE_28
+As configuration files located in $ST_HOME/conf may have been reinitialized
+during installation, you need to check if parameters are still correctly set
+(e.g. openid).
 
-* Now, the new 2.9 database file should be populated with previous version data. If everything went fine, the command below will list your data from the 2.9 database.
-
-    ./synda search -l
-
-* Copy selection files from 2.8 selection folder to 2.9 selection folder.
-
-* Copy parameter from 2.8 configuration file (sdt.conf) to 2.9 configuration file (sdt.conf).
+Note: you can use a diff program to compare post-upgrade configuration files
+over pre-upgrade configuration files (from the backup).
