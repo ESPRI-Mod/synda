@@ -1,27 +1,26 @@
 # Select which ESGF index to use
 
-* Edit sdt.conf
+Synda index settings are stored in sdt.conf in '[index]' section.
 
-* Set default index
-
-e.g.
-    [index]
-    default_index=esgf-node.ipsl.fr
-
+*default_index* parameter is used to
 This index is used in interactive mode.
 
-* Set indexes list
-
-e.g.
-    [index]
-    indexes=esgf-node.ipsl.fr,esgf-data.dkrz.de,esgf-index1.ceda.ac.uk,esg.ccs.ornl.gov
-
+*indexes* parameter is used to
 Those indexes are used in batch mode to reduce latence.
 
-* Index list
+## Set Synda default index
 
-    esg-datanode.jpl.nasa.gov
-    esgf-node.ipsl.fr
-    esgf-data.dkrz.de
-    esgf-index1.ceda.ac.uk
-    esg.ccs.ornl.gov
+default_index=<index>
+
+## Set Synda indexes list
+
+indexes=<idx1,idx2,etc..>
+
+## MEMO: ESGF main indexes
+
+* esg-datanode.jpl.nasa.gov
+* esgf-node.ipsl.fr
+* esgf-data.dkrz.de
+* esgf-index1.ceda.ac.uk
+* esg.ccs.ornl.gov
+
