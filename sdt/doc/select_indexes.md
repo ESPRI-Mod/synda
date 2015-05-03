@@ -14,7 +14,7 @@ Those indexes are used in batch mode to reduce latence.
 
 ## Set Synda indexes list
 
-indexes=<idx1,idx2,etc..>
+    indexes=<idx1,idx2,etc..>
 
 ## MEMO: ESGF main indexes
 
