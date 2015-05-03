@@ -101,13 +101,13 @@ CMIP5-RESEARCH role.
 
 [Howto & Tutorial](sdt/doc/tutorial.md)
 
-[Slide](sdt/doc/synda.odp)
+[Template sample](sdt/doc/TEMPLATE)
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)
 
-[Template sample](sdt/doc/TEMPLATE)
-
 [FAQ](sdt/doc/FAQ.md)
+
+[Slides](sdt/doc/synda.odp)
 
 [License](sdt/doc/LICENSE)
 
