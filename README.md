@@ -99,7 +99,7 @@ CMIP5-RESEARCH role.
 
 [Upgrade guide](sdt/doc/upgrade_guide.md)
 
-[Howto & Tutorial](sdt/doc/tutorial.md)
+[Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
 [Template sample](sdt/doc/TEMPLATE)
 
