@@ -40,11 +40,11 @@ This program is a command-line alternative to the ESGF web front-end.
 
 ## Main features
 
-* simple data installation using an apt-get like command
-* parallel downloads
-* incremental process (download only what's new)
-* download history stored in a db
-* transfer priority
+* Simple data installation using an apt-get like command
+* Parallel downloads
+* Incremental process (download only what's new)
+* Download history stored in a db
+* Transfer priority
 
 ## Platform
 
