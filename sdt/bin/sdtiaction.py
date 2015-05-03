@@ -164,7 +164,7 @@ def remove(files,args):
             else:
                 print_stderr('Abort.')
         else:
-            print('Nothing to delete.')
+            print_stderr('Nothing to delete.')
 
 def reset(args):
     import sddeletefile
@@ -272,18 +272,18 @@ def daemon(args):
             else:
                 try:
                     sddaemon.start()
-                    print "Daemon successfully started"
+                    print_stderr("Daemon successfully started")
                 except SDException,e:
-                    print 'error occured',e.msg
+                    print_stderr('error occured',e.msg)
         elif action=="stop":
             if sddaemon.is_running():
                 try:
                     sddaemon.stop()
-                    print "Daemon successfully stopped"
+                    print_stderr("Daemon successfully stopped")
                 except SDException,e:
-                    print 'error occured',e.msg
+                    print_stderr('error occured',e.msg)
             else:
-                print "Daemon already stopped"
+                print_stderr("Daemon already stopped")
         elif action=="status":
             sddaemon.print_daemon_status()
 
@@ -320,11 +320,11 @@ def test(args):
 
         print_stderr(script_stdxxx)
 
-        #print "'Exit code: %i"%sdget_status
+        #print_stderr("'Exit code: %i"%sdget_status)
 
         """
         if sdget_status==0:
-            print 'file location: %s'%tmpfile
+            print_stderr('file location: %s'%tmpfile)
         """
 
 def watch(args):
@@ -333,7 +333,7 @@ def watch(args):
     if sddaemon.is_running():
         sdreport.print_running_transfers()
     else:
-        print 'Daemon not running'
+        print_stderr('Daemon not running')
 
 # init.
 
