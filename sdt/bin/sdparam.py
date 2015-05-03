@@ -189,7 +189,7 @@ params=sddao.fetch_parameters() # load parameters list in memory
 
 # if params empty, cache need to be populated
 if len(params)<1:
-    #sdtools.print_stderr('Retrieving parameters from ESGF..')
+    sdtools.print_stderr('Retrieving parameters from ESGF..')
     sdcache.run(reload=True)
     params=sddao.fetch_parameters()
 
