@@ -86,18 +86,11 @@ Search datasets
 Install a dataset
 
     synda install DATASET..
-
-Start the download
-
     synda daemon start
 
 Check download completion
 
     synda queue status
-
-Stop the download
-
-    synda daemon stop
 
 Once downloaded, files are available in this location
 
