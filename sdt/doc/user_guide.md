@@ -8,7 +8,7 @@ synda - a file discovery and installation tool for Earth Science Grid Federation
 
 ## General
 
-Synda downloads files from ESGF using HTTP protocol.
+Synda downloads files from ESGF using HTTP or GridFtp protocol.
 
 Search criteria called facets are used to select which files to download.
 

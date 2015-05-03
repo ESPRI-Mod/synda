@@ -66,21 +66,21 @@ Run commands below
 
 Then remove the file from the '$HOME/sdt/selection' folder.
 
-## Retrieve new dataset versions for all selection files
+## Retrieving new dataset versions for all selection files
 
 Run commands below
 
     synda daemon stop
     synda upgrade
 
-## Remove old dataset versions for all selection files
+## Removing old dataset versions for all selection files
 
 Run commands below
 
     synda daemon stop
     synda autoremove
 
-## View download progress
+## Watching download progress
 
 Commands below give informations about download queue state
 
@@ -93,13 +93,13 @@ Errors can occur during download for different reasons: remove server is down,
 incorrect files access right, authorization issue, authentication issue..
 Sections below are intended to help diagnose and solve those issues.
 
-### List errors
+### Displaying errors
 
 Command below can be used to print how many error occured
 
     synda queue
 
-### Retry errors
+### Retrying download in errors
 
 Command below can be used to retry transfer(s) in error.
 
@@ -107,7 +107,7 @@ Command below can be used to retry transfer(s) in error.
 
 Note: crontab can be used to retry errors every day
 
-### Change replica for files in errors
+### Changing replica for all files in errors
 
 Sometime, current file replica always fails as the remote server is down. One
 way to solve the problem is to change the file replica. 
@@ -116,7 +116,7 @@ To change the replica for all files in error, use command below
 
     synda replica next
 
-### Get more details about errors
+### Getting more details about errors
 
 Log files below contain useful informations about errors (log files are stored
 in '$HOME/sdt/log' folder)
