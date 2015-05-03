@@ -17,7 +17,7 @@ the files. The gain come from the fact that dataset id index gives better result
 than using separate facets.
 
 Notes
-    - sdtps means 'Synchro-Data Two Phases Search'
+    - sdtps means 'SynDa Two Phases Search'
     - this filter is experimental (not sure if the gain from fast indexing bypass the cost of having to do multiple search-api calls.. to be tested)
 """
 

@@ -12,7 +12,7 @@
 """This module compute the round trip time between two host.
 
 Note
-    sdrtt means 'Synchro-Data Round Trip Time'.
+    sdrtt means 'SynDa Round Trip Time'.
 """
 
 import re

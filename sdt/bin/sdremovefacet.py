@@ -55,7 +55,7 @@ def remove_system_facets(facets_group):
 
     # This is in case user set those parameters in selection file. Those
     # parameters should not be set by user, as they are set automatically by
-    # Synchro-data ('fields' and 'format' are set in sdremoteqbuilder.py,
+    # Synda ('fields' and 'format' are set in sdremoteqbuilder.py,
     # 'facets' is used in sdremoteparam, 'offset' is set in 'Request' class).
     
     for k in sdconst.SANAP:

@@ -12,7 +12,7 @@
 """This module contains squery (aka serialized query) related functions.
 
 Notes
-    - sdsquery means 'Synchro-Data Serialized query'
+    - sdsquery means 'SynDa Serialized query'
     - squery is query once url is built.
 """
 

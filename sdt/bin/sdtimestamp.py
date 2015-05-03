@@ -26,8 +26,8 @@ def fill_missing_dataset_timestamp(dataset_without_timestamp):
         - In ESFG, timestamp differs from replica to replica, and so, as there
           is no dataset replica concept in 'sdt', it's really a hack, because
           we set the timestamp randomly (i.e. dataset's timestamp in
-          Synchro-data installation at user A may differ to dataset's timestamp
-          in Synchro-data installation at user B (because the timestamp for the
+          Synda installation at user A may differ to dataset's timestamp
+          in Synda installation at user B (because the timestamp for the
           dataset may have been retrieved from replica X in the case of user A
           and from replica Y in the case of user B (and X replica's timestamp
           may differ from Y replica's timestamp))). Anyway, in the end, we

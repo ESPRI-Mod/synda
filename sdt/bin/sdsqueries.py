@@ -12,7 +12,7 @@
 """This module contains squeries func.
 
 Notes
-    - sdsqueries means 'Synchro-data Serialized queries'.
+    - sdsqueries means 'SynDa Serialized queries'.
     - squeries are queries once url is built.
 """
 import sdsquery

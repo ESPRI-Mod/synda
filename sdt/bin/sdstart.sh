@@ -7,7 +7,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-# This script starts Synchro-data daemon
+# This script starts Synda daemon
 
 if [ -z "$ST_HOME" ]; then
     echo "SDASTART-001 - Root directory not found"

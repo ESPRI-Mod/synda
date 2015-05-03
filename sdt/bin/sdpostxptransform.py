@@ -41,7 +41,7 @@ def force_scalar(files):
                     except:
     
                         # If conversion failed, do not raise fatal exception anymore, instead, leave it as vector
-                        # (so far, conversion failed only for non-mandatory attributes (from Synchro-data perspective),
+                        # (so far, conversion failed only for non-mandatory attributes (from Synda perspective),
                         # so it should not impact the process.
                         #
                         # Examples of attributes that trigger conversion failure are 'experiment_family', 'description'.
@@ -60,7 +60,7 @@ def force_scalar(files):
                         except:
 
                             # If conversion failed, do not raise fatal exception anymore, instead, leave it as vector
-                            # (so far, conversion failed only for non-mandatory attributes (from Synchro-data perspective),
+                            # (so far, conversion failed only for non-mandatory attributes (from Synda perspective),
                             # so it should not impact the process.
                             #
                             #raise SDException("SYNDAXML-004","List to scalar conversion error (key=%s,value=%s)"%(k,f[k]))
