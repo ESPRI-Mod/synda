@@ -10,7 +10,7 @@ Run command below
 
 ### "('system library', 'fopen', 'No such file or directory')" error during certificate retrieving
 
-Unset all X509 environment variable and remove '~/.esg' directory.
+Unset all X509 environment variables and remove '~/.esg' directory.
 
 --------------------------------------------------------
 
