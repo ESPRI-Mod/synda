@@ -30,13 +30,13 @@ It will show which replica has been selected.
 
 If you are located in England *AND* there is a replica available in England
 
-output should looks like
+output of the last command should looks like
 
     esgf-data1.ceda.ac.uk
 
 If you are located in Germany *AND* there is a replica available in Germany
 
-output should looks like
+output of the last command should looks like
 
     wdcc-esgf.dkrz.de
 
