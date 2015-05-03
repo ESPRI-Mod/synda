@@ -1,6 +1,6 @@
 # Select which ESGF index to use
 
-Synda index settings are stored in sdt.conf in '[index]' section.
+Synda index settings are stored in sdt.conf in [index] section.
 
 *default_index* parameter is used to
 This index is used in interactive mode.
