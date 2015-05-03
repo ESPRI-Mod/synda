@@ -16,7 +16,7 @@ Those indexes are used in batch mode to reduce latence.
 
     indexes=<idx1,idx2,etc..>
 
-## MEMO: ESGF main indexes
+## ESGF main indexes
 
 * esg-datanode.jpl.nasa.gov
 * esgf-node.ipsl.fr
