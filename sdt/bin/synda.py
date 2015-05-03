@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""'synda' command (front-end to Synchro-data main commands).
+"""'synda' command (front-end to Synda main commands).
 
 Note
     - In this file, module import directives are moved near the calls,

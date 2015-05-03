@@ -212,7 +212,7 @@ class Selection():
         """
 
         if len(self.childs)>0:
-            # processes sub-selection (Synchro-data specific realm&freq&vars lines (e.g. variables[atmos][mon]="tas psl")).
+            # processes sub-selection (Synda specific realm&freq&vars lines (e.g. variables[atmos][mon]="tas psl")).
             #
             # notes
             #  - if some facets exist in both place (in sub-selection and in main selection),

@@ -12,7 +12,7 @@
 """syndac command (REPL front-end).
 
 Note
-    'syndac' stands for "SYNchro-DAta Console".
+    'syndac' stands for "SYNDA Console".
 """
 
 import atexit

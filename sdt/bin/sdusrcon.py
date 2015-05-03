@@ -12,7 +12,7 @@
 """syndac command (REPL front-end).
 
 Note
-    'sdusrcon' stands for "Synchro-Data USeR CONsole".
+    'sdusrcon' stands for "SynDa USeR CONsole".
 """
 
 import re

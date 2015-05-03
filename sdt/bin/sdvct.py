@@ -9,10 +9,10 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module is a plugin to handle Synchro-data "varname:cmor_tblname" syntax.
+"""This module is a plugin to handle Synda "varname:cmor_tblname" syntax.
 
 Note
-    sdvct means "Synchro-Data Varname:Cmor_Tblname"
+    sdvct means "SynDa Varname:Cmor_Tblname"
 """
 
 import sys

@@ -108,7 +108,7 @@ def get_last_access_date(self,t):
         return l__date_str
     except OSError, e:
         if e.errno == errno.ENOENT: # errno.ENOENT = no such file or directory
-            raise FileNotFoundException("%s"%str(e)) # cast exception to synchro-data exception
+            raise FileNotFoundException("%s"%str(e)) # cast exception to Synda exception
         else:
             raise SDException("SYDUTILS-632","fatal I/O error (%s)"%str(e))
 
