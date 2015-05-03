@@ -2,19 +2,14 @@
 
 Synda index settings are stored in sdt.conf in [index] section.
 
-*default_index* parameter is used to
-This index is used in interactive mode.
+*default_index* parameter is used for interactive search operations.
 
-*indexes* parameter is used to
-Those indexes are used in batch mode to reduce latence.
+*indexes* parameter is used for parallel search (to improve response time by distributing queries on several indexes simultaneously).
 
-## Set Synda default index
+## Usage
 
-    default_index=<index>
-
-## Set Synda indexes list
-
-    indexes=<idx1,idx2,etc..>
+default_index=<index>
+indexes=<idx1,idx2,etc..>
 
 ## ESGF main indexes
 
