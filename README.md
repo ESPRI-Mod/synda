@@ -25,11 +25,10 @@ Search datasets
 Install a dataset
 
     synda install DATASET..
+
+Start the daemon
+
     synda daemon start
-
-Check download completion
-
-    synda queue status
 
 Once downloaded, files are available in this location
 

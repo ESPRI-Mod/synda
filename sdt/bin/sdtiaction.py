@@ -121,7 +121,7 @@ def install(files,args,interactive=True):
 
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
-            print_stderr('You can start the daemon to begin the download.') # TODO
+            print_stderr('You can now start the daemon to begin the download.') # TODO: ask for confirm and do the start here
     else:
         if interactive:
             print_stderr('Abort.')
