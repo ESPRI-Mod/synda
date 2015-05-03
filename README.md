@@ -1,8 +1,8 @@
 # *synda*
 
-## Program description
+## Synopsis
 
-This program can download files from the Earth System Grid Federation
+*Synda* can download files from the Earth System Grid Federation
 (ESGF) archive in an easy way, for a list of variables, experiments and
 ensemble members. The program will evolve together with the ESGF
 archive backend functionalities.
@@ -15,6 +15,14 @@ download the possible new files. Typically each template is associated
 with an analysis (cfmip template, downscaling template and so on).
 Create as many template_name.txt as you want in the 'selection'
 folder. Selection examples are given in the 'sample' sub-folder. 
+
+## Code Example
+
+TODO
+
+## Motivation
+
+TODO
 
 ## Main features
 
@@ -32,6 +40,10 @@ folder. Selection examples are given in the 'sample' sub-folder.
 ## Last version
 
 3.0
+
+## Dependency
+
+Python 2.6+
 
 ## Installation
 
@@ -93,13 +105,15 @@ Once downloaded, files are available in this location
 
 ## Documentation
 
-[README (this file)](README.md)
-
 [User guide](sdt/doc/user_guide.md)
 
 [Admin guide](sdt/doc/admin_guide.md)
 
 [Upgrade guide](sdt/doc/upgrade_guide.md)
+
+[Howto & Tutorial](sdt/doc/tutorial.md)
+
+[Slide](sdt/doc/synda.odp)
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)
 

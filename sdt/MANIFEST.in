@@ -7,6 +7,5 @@ include tmp
 include tools/*
 include doc
 include data
-include doc/README
 include doc/LICENSE
 global-exclude .*swp
