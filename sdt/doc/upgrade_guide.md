@@ -6,9 +6,13 @@ This documents contains instructions to install the new Synda software version.
 
 ## Procedure
 
-* Backup $ST_HOME folder (e.g. $HOME/sdt)
+### Pre-upgrade
 
-* Run commands below
+Backup $ST_HOME folder (e.g. $HOME/sdt)
+
+### Upgrade
+
+Run commands below:
 
     mkdir inst_tmpdir
     cd $inst_tmpdir
@@ -16,7 +20,9 @@ This documents contains instructions to install the new Synda software version.
     chmod +x install.sh
     ./install.sh -u transfer
 
-* Check configuration files
+### Post-upgrade
+
+Check configuration files.
 
 As configuration files located in $ST_HOME/conf may have been reinitialized
 during installation, you need to check if parameters are still correctly set
