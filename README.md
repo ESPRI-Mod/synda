@@ -94,13 +94,9 @@ CMIP5-RESEARCH role.
 ## Documentation
 
 [User guide](sdt/doc/user_guide.md)                             | [Admin guide](sdt/doc/admin_guide.md) | [Upgrade guide](sdt/doc/upgrade_guide.md) |
-[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
+[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           | [FAQ](sdt/doc/FAQ.md)
 
-[Template sample](sdt/doc/TEMPLATE)
-
-[FAQ](sdt/doc/FAQ.md)
-
-[License](sdt/doc/LICENSE)
+[Howto & Tutorial](sdt/doc/howto_and_tutorial.md)               |[Template sample](sdt/doc/TEMPLATE)    | [License](sdt/doc/LICENSE)
 
 ## Contact
 
