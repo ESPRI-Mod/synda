@@ -12,7 +12,7 @@
 """This module contains post-processing proxy.
 
 Note
-    sdppproxy means 'Synchro-Data Post-Processing proxy'
+    sdppproxy means 'SynDa Post-Processing proxy'
 """
 
 import urllib2

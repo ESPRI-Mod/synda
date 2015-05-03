@@ -12,7 +12,7 @@
 """This filter improves Search-API query response time when searching for one specific model.
 
 Notes
-    - 'sdonemgf' means 'Synchro-Data ONE Model Go Faster'
+    - 'sdonemgf' means 'SynDa ONE Model Go Faster'
     - This module IS independant from the 'sdonemgf_post' module.
     - This module works together with the 'sdautoextractmodel' module.
     - This module contains a cache which is only used in the 'syndac' context

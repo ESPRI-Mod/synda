@@ -12,7 +12,7 @@
 """This script build SQL query from facets
 
 Note
-    'sdlocalqbuilder' means 'Synchro-Data local query builder'
+    'sdlocalqbuilder' means 'SynDa local query builder'
 """
 
 import re

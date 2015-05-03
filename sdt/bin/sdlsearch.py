@@ -12,7 +12,7 @@
 """This module search files in local SQL database.
 
 Note
-    sdlsearch mean 'Synchro-Data Local Search'
+    sdlsearch mean 'SynDa Local Search'
 """
 
 import os

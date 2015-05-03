@@ -26,8 +26,8 @@ def run():
 def dump_ESGF(parameter,attribute,dry_run=False):
     """This func dumps attribute for all ESGF matching files/datasets.
 
-    Initially designed to batch update attribute in Synchro-data
-    (e.g. when a new attribute is decided to be stored in Synchro-data,
+    Initially designed to batch update attribute in Synda
+    (e.g. when a new attribute is decided to be stored in Synda,
     all already downloaded files metadata must be updated).
     """
 

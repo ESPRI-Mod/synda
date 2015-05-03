@@ -12,7 +12,7 @@
 """This module contains exception classes.
 
 Note
-    This module doesn't use any other (Synchro-Data) module and thus can be used
+    This module doesn't use any other (Synda) module and thus can be used
     everywhere (even in 'sdapp' module) without circular dependency problem.
 """
 

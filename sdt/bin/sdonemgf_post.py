@@ -13,7 +13,7 @@
 
 Notes
     - Not used for now.
-    - 'sdonemgf' means 'Synchro-Data ONE Model Go Faster'.
+    - 'sdonemgf' means 'SynDa ONE Model Go Faster'.
     - This module IS independant from the 'sdonemgf_pre' module.
     - This module works by calling lock func *after* search-api call.
       This make possible, for example, to first run

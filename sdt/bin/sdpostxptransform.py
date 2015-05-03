@@ -15,7 +15,7 @@ Description
     Transforms vector to scalar (change file attributes's *values* only (name stay the same)).
 
 Note
-    sdpostxptransform means 'Synchro-Data post Xml Parsing transform'
+    sdpostxptransform means 'SynDa post Xml Parsing transform'
 """
 
 from sdexception import SDException

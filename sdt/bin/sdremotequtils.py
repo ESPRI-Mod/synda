@@ -12,7 +12,7 @@
 """This module contains search-API query common routines.
 
 Notes
-    - 'sdremotequtils' means 'Synchro-Data remote Query utils'
+    - 'sdremotequtils' means 'SynDa remote Query utils'
     - logic
       'OR' operator is used between the different values of the same facet
       'AND' operator is used between different facets

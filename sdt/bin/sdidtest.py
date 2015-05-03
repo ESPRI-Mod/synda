@@ -12,7 +12,7 @@
 """This module contains routines to test identifier type.
 
 Note
-    sdidtest means 'Synchro-Data IDentifier test'
+    sdidtest means 'SynDa IDentifier test'
 """
 
 import argparse

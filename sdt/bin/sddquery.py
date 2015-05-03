@@ -12,7 +12,7 @@
 """This module contains dquery (aka deserialized query aka facets_group) related functions.
 
 Note
-    sddquery means 'Synchro-Data Deserialized query'
+    sddquery means 'SynDa Deserialized query'
 """
 
 import sdconst
@@ -93,7 +93,7 @@ def search_api_parameters(facets_group):
     return new_facets_group
 
 def synchro_data_parameters(facets_group):
-    """Keeps only Synchro-data parameters."""
+    """Keeps only Synda parameters."""
     new_facets_group={}
 
     for k in facets_group:

@@ -15,7 +15,7 @@ Description
     - File rejection step 1 (file rejection step 2 is done by sdreducerow module)
 
 Note
-    sdpostxpcleanup means 'Synchro-Data post Xml Parsing cleanup'
+    sdpostxpcleanup means 'SynDa post Xml Parsing cleanup'
 
 TODO
     - In the future, move/merge this module to/with sdreducerow module.

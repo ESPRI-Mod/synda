@@ -15,7 +15,7 @@ Url samples
     - http://<host>/esg-search/search?project=GeoMIP&type=File&experiment=G1&variable=rsdt&fields=*&latest=true
 
 Note
-    - 'sdremoteqbuilder' means 'Synchro-Data remote query builder'
+    - 'sdremoteqbuilder' means 'SynDa remote query builder'
 
 Reference
     - https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
