@@ -6,10 +6,14 @@ Run command below
 
     pip uninstall argparse
 
+--------------------------------------------------------
+
 ### "('system library', 'fopen', 'No such file or directory')" error during certificate retrieving
 
 unset all X509 environment variable 
 remove '~/.esg' directory
+
+--------------------------------------------------------
 
 ### 'OpenSL: error:14094416:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown' error
 
@@ -25,11 +29,15 @@ administrators there might be a problem with the server certificate
 
 More info: https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs
 
+--------------------------------------------------------
+
 ### "No module named datetime" error
 
 Remove virtualenv from the path
 
     export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+--------------------------------------------------------
 
 ### AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET' error
 
