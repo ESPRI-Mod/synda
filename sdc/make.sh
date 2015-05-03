@@ -142,10 +142,10 @@ sdp_archive_prod=sdp-${sdp_version_prod}.tar.gz
 
 
 # check
-if ! which pandoc &>/dev/null; then
-    echo "Error: pandoc not found"
-    exit 1
-fi
+#if ! which pandoc &>/dev/null; then
+#    echo "Error: pandoc not found"
+#    exit 1
+#fi
 
 
 # action
@@ -168,15 +168,17 @@ if [ "$deployprod" = "1" ]; then
 
     if [ "$g__transfer" = "1" ]; then
 
+        # obsolete
+        #
         # gen doc
-        cd $sdt_src/doc
-        pandoc -s USER_GUIDE -o user_guide.html
-        pandoc -s UPGRADE_GUIDE -o upgrade_guide.html
-        pandoc -s ADMIN_GUIDE -o admin_guide.html
-        cd -
+        #cd $sdt_src/doc
+        #pandoc -s USER_GUIDE -o user_guide.html
+        #pandoc -s UPGRADE_GUIDE -o upgrade_guide.html
+        #pandoc -s ADMIN_GUIDE -o admin_guide.html
+        #cd -
 
         # send extra files
-        FILES="$sdt_src/doc/TEMPLATE $sdt_src/doc/FAQ $sdt_src/doc/user_guide.html $sdt_src/doc/upgrade_guide.html $sdt_src/doc/admin_guide.html $sdt_src/doc/README $sdt_src/doc/CHANGELOG $sdt_src/doc/LICENSE"
+        FILES="$sdt_src/doc/TEMPLATE $sdt_src/doc/CHANGELOG $sdt_src/doc/LICENSE"
         scp $FILES $webhost
 
         # send tarball

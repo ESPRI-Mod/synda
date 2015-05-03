@@ -777,6 +777,9 @@ if [ $g__upgrade -eq 0 ]; then
     if [ $g__transfer -eq 1 ]; then
         st_is_running
         install_transfer_module
+
+        # Retrieve parameters from ESGF
+        $st_root/bin/synda cache init
     fi
 
     if [ $g__postprocessing -eq 1 ]; then
