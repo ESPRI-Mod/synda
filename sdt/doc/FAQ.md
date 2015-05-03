@@ -2,7 +2,7 @@
 
 ### 'Module argparse was already imported' error
 
-Run command below:
+Run command below
 
     pip uninstall argparse
 
