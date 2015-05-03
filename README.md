@@ -86,23 +86,15 @@ Once downloaded, files are available in this location
 
     $HOME/sdt/data
 
-## Wiki
-
-https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synchro-data
-
-## User guide
-
-http://dods.ipsl.jussieu.fr/jripsl/synda/user_guide.html
+## Documentation
 
 [User guide](sdt/doc/user_guide.md)
 
-## Admin guide
+[Admin guide](sdt/doc/admin_guide.md)
 
-http://dods.ipsl.jussieu.fr/jripsl/synda/admin_guide.html
+[Upgrade guide](sdt/doc/upgrade_guide.md)
 
-## Upgrade guide
-
-http://dods.ipsl.jussieu.fr/jripsl/synda/upgrade_guide.html
+[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)
 
 ## Selection file sample
 
