@@ -35,7 +35,7 @@ More info: https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs
 
 Remove virtualenv from the path
 
-    export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+    export PATH=/usr/local/bin:/usr/bin:/bin
 
 --------------------------------------------------------
 
