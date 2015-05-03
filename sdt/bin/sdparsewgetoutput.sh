@@ -1,5 +1,5 @@
 ##################################
-#  @program        synchro-data
+#  @program        synda
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”

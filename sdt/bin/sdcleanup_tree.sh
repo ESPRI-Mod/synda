@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 ##################################
-#  @program        synchro-data
+#  @program        synda
 #  @description    climate models data transfert program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
