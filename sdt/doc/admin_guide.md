@@ -7,9 +7,7 @@ partial mirror on a local cluster and keep it up to date.
 
 ## Installation
 
-See README file
-
-http://dods.ipsl.jussieu.fr/jripsl/synda/README
+See https://github.com/Prodiguer/synda
 
 ## Selection file
 
