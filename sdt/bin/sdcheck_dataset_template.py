@@ -36,6 +36,9 @@ def check_DRS_consistency(files):
 
     for f in files:
         if "dataset_template" in f: # For some project, template is missing. In this case, we don"t do the check.
+
+            # TODO: maybe replace '.' with '/' character in code below (i.e. misleading because variables below are called path, but do not contain '/')
+
             path_from_id=remove_version_from_path(f["dataset_functional_id"])
             path_from_template=f["dataset_template"]%f
 
