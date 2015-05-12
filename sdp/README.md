@@ -2,7 +2,9 @@
 
 Synda Post-Processing module is used to transform ESGF data files.
 
-## Architecture: Pipeline, Jobs and Workers
+## Architecture description
+
+Pipeline, Jobs and Workers
 
 In the centre is a pipeline database that list individual jobs to be run. These jobs are
 claimed and processed by Workers - autonomous processes that are running on the
