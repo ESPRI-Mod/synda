@@ -253,7 +253,7 @@ def file_version(args):
 # o-------------------------------------------------------o
 
 def dataset_dump(args):
-    import sdrdataset, sddeferredafter
+    import sdrdataset, sddeferredafter, sdcolumnfilter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',100)
     post_pipeline_mode=None if args.raw_mode else 'dataset'
@@ -261,6 +261,7 @@ def dataset_dump(args):
 
     if not args.dry_run:
         if len(files)>0:
+            files=sdcolumnfilter.run(files,args.column)
             sdprint.print_format(files,args.format)
         else:
             print "Dataset not found"
@@ -269,7 +270,7 @@ def variable_dump(args):
     assert False # there is no dump for variable
 
 def file_dump(args):
-    import sdrfile, sddeferredafter,sdcolumnfilter
+    import sdrfile, sddeferredafter, sdcolumnfilter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',100)
     post_pipeline_mode=None if args.raw_mode else 'file'

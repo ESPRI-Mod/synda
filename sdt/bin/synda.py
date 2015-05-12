@@ -25,7 +25,7 @@ from sdtools import DefaultHelpParser,print_stderr
 if __name__ == '__main__':
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('action',help=sdi18n.m0015)
+    parser.add_argument('action',nargs='?',help=sdi18n.m0015)
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
@@ -50,6 +50,7 @@ if __name__ == '__main__':
     if args.version:
         import sdapp
         print sdapp.version
+        sys.exit(0)
 
     # check type mutex
     #
@@ -57,12 +58,6 @@ if __name__ == '__main__':
     # use add_mutually_exclusive_group(), but currently, doing so makes the
     # help look ugly. So better leave it as is until argparse handle this case
     # smoothly.
-
-    # check action
-    if args.action not in ['autoremove','cache','certificate','daemon','dump','history','install','list','param','queue','remove','replica','reset','retry','search','show','stat','test','update','upgrade','version','watch']:
-        print_stderr('Invalid operation %s'%args.action)   
-        parser.print_help()
-        sys.exit(2)
 
     if args.action in ['autoremove','cache','certificate','daemon','history','queue','replica','reset','retry','selection','test','upgrade','watch']:
         import sdtiaction
@@ -72,7 +67,7 @@ if __name__ == '__main__':
     elif args.action=='param':
         import sdparam
         sdparam.main(args.parameter) # tricks to re-use sdparam CLI parser
-    else:
+    elif args.action in ['dump','install','list','remove','search','show','stat','version']:
         import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
 
         # hack
@@ -182,4 +177,8 @@ if __name__ == '__main__':
             # we shouldn't be here
 
             assert False
-
+    else:
+        print_stderr('Invalid operation %s'%args.action)   
+        print_stderr("Use '--help' option for more info")
+        #parser.print_help()
+        sys.exit(2)
