@@ -177,10 +177,6 @@ if [ "$deployprod" = "1" ]; then
         #pandoc -s ADMIN_GUIDE -o admin_guide.html
         #cd -
 
-        # send extra files
-        FILES="$sdt_src/doc/TEMPLATE $sdt_src/doc/CHANGELOG $sdt_src/doc/LICENSE"
-        scp $FILES $webhost
-
         # send tarball
         FILES="$sdt_src/dist/$sdt_archive_prod"
         scp $FILES $webhost
