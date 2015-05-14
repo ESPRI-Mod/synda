@@ -42,7 +42,7 @@ class NoMoreJobToProcessException(Exception):
 
 def _get_args():
     """Returns parsed command line arguments."""
-    parser = argparse.ArgumentParser( description = """Post-processing worker used to fork Shell child-process or load python script as module.\nThe worker deals with sdp database from synchro-data to input CMIP5 variable to each process.\nThe worker returns job status to the database with run_log.\n\nThis script contains RPC client skeleton.""", formatter_class = RawTextHelpFormatter, epilog = "Developped by J. Raciazek (CNRS/IPSL) and G. Levavasseur (CNRS/IPSL)")
+    parser = argparse.ArgumentParser(description = """Post-processing worker used to fork Shell child-process or load python script as module.\nThe worker deals with sdp database from synchro-data to input CMIP5 variable to each process.\nThe worker returns job status to the database with run_log.\n\nThis script contains RPC client skeleton.""", formatter_class = RawTextHelpFormatter)
 
     # positional args
 
