@@ -72,7 +72,7 @@ sqlite_backup_script="$SP_HOME/tools/backup.py"
 DB_path="$(spconfig -n db_folder)"
 log_archive_filename=logfiles.tgz
 conf_archive_filename=conffiles.tgz
-g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')"
+g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')/sdp"
 
 #
 #umask u=rw,g=rw,o=r # set file permission

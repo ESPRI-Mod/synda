@@ -74,7 +74,7 @@ log_archive_filename=logfiles.tgz
 conf_archive_filename=conffiles.tgz
 selections_archive_filename="selections.tgz"
 crontab_filename="crontab"
-g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')"
+g__backup_directory="$g__backup_directories/$(date '+%Y%m%d')/sdt"
 
 #umask u=rw,g=rw,o=r # set file permission
 export LANG=C
