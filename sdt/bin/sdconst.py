@@ -75,6 +75,7 @@ SDSSSP=['group',
 SDSSP=SDSSSP+['local_path',
               'status',
               'error_msg',
+              'sdget_status',
               'timeslice',
               'insertion_group_id']
 

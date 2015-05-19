@@ -601,6 +601,20 @@ create_sp_symlink ()
     done
 }
 
+start_spinner ()
+{
+    pid=$$
+    (
+        spin='-\|/'
+        i=0
+        while kill -0 $pid 2>/dev/null; do
+          i=$(( (i+1) %4 ))
+          printf "\r${spin:$i:1}" >&3
+          sleep .1
+        done
+    ) &
+}
+
 # bash trigger
 
 trap 'fatal_err' ERR # bash trick related to the "-e" option above, see manpage
@@ -668,6 +682,7 @@ echo "To see installation details, open a new terminal and run the command 'tail
 
 # from here, send script output to log file
 start_redir_stdxxx
+start_spinner
 
 # check
 # (having more than one package specified with '-e' option is a bit tricky to handle, so this check prevent it for now)
@@ -692,18 +707,6 @@ if [ -n "$g__version" ]; then
         err "INSTALL-ERR218" "'-d' option cannot be used for more than one module"
     fi
 fi
-
-# start spinner
-pid=$$
-(
-    spin='-\|/'
-    i=0
-    while kill -0 $pid 2>/dev/null; do
-      i=$(( (i+1) %4 ))
-      printf "\r${spin:$i:1}" >&3
-      sleep .1
-    done
-) &
 
 # init.
 export LC_ALL=C
