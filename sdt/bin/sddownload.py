@@ -136,7 +136,7 @@ def end_of_transfer(tr):
 
     # check for fatal error
     if tr.sdget_status==4:
-        sdlog.info("SYNDTASK-147","Stopping daemon as sdget.download() returns fatal error.")
+        sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returns fatal error.")
         raise FatalException()
 
 # module init.
