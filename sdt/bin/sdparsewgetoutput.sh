@@ -103,8 +103,8 @@ elif [ $nbr -eq 1 ]; then
         wget_error_status_from_parsing=23
 
         msg "DEB003" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-        echo "$wget_stdxxx"                          >> $debug_file
-        msg "DEB004" "DEBUG END"         >> $debug_file
+        echo "$wget_stdxxx"                                              >> $debug_file
+        msg "DEB004" "DEBUG END"                                         >> $debug_file
     fi
 
 elif [ $nbr -eq 2 ]; then
@@ -113,8 +113,8 @@ elif [ $nbr -eq 2 ]; then
     wget_error_status_from_parsing=26
 
     msg "DEB005" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-    echo "$wget_stdxxx"                          >> $debug_file
-    msg "DEB006" "DEBUG END"         >> $debug_file
+    echo "$wget_stdxxx"                                              >> $debug_file
+    msg "DEB006" "DEBUG END"                                         >> $debug_file
 
 else
     # we shouldn't be here
@@ -122,7 +122,7 @@ else
     wget_error_status_from_parsing=27
 
     msg "DEB007" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-    echo "$wget_stdxxx"                          >> $debug_file
-    msg "DEB008" "DEBUG END"         >> $debug_file
+    echo "$wget_stdxxx"                                              >> $debug_file
+    msg "DEB008" "DEBUG END"                                         >> $debug_file
 
 fi
