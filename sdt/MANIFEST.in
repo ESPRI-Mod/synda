@@ -1,5 +1,5 @@
 recursive-include selection *
-include conf/*
+recursive-include conf *
 include bin/*
 include db
 include log
