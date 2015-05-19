@@ -16,6 +16,15 @@ with an analysis (cfmip template, downscaling template and so on).
 Create as many template_name.txt as you want in the 'selection'
 folder. Selection file examples are given in the 'sample' sub-folder. 
 
+## Documentation
+
+[User guide](sdt/doc/user_guide.md)                             | [Admin guide](sdt/doc/admin_guide.md) |
+[Upgrade guide](sdt/doc/upgrade_guide.md)                       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
+
+[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           |
+[Faq](sdt/doc/FAQ.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
+[License](sdt/doc/LICENSE)
+
 ## Basic usage
 
 Search datasets
@@ -90,15 +99,6 @@ Then edit $ST_HOME/conf/sdt.conf to set openid and password (ESGF credential).
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
 CMIP5-RESEARCH role.
-
-## Documentation
-
-[User guide](sdt/doc/user_guide.md)                             | [Admin guide](sdt/doc/admin_guide.md) |
-[Upgrade guide](sdt/doc/upgrade_guide.md)                       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
-
-[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           |
-[Faq](sdt/doc/FAQ.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
-[License](sdt/doc/LICENSE)
 
 ## Contact
 
