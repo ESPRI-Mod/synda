@@ -110,6 +110,7 @@ m0015="""autoremove - Remove old datasets versions
 certificate - Manage X509 certificate
 daemon - Start/stop the daemon (download background process)
 dump - Display raw metadata
+help - Show help
 history - Show history
 install - Install dataset
 list - List installed dataset
