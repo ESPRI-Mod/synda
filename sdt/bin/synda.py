@@ -62,6 +62,8 @@ if __name__ == '__main__':
     if args.action in ['autoremove','cache','certificate','daemon','history','queue','replica','reset','retry','selection','test','upgrade','watch']:
         import sdtiaction
         sdtiaction.actions[args.action](args)
+    elif args.action=='help':
+        parser.print_help()
     elif args.action=='update':
         print_stderr('Not implemented yet.')   
     elif args.action=='param':
