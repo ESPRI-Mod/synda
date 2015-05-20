@@ -27,4 +27,4 @@ during installation, you need to check if parameters are still correctly set
 (e.g. openid).
 
 Note: you can use a diff program to compare post-upgrade configuration files
-over pre-upgrade configuration files (from the backup).
+over backuped pre-upgrade configuration files.
