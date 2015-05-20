@@ -61,7 +61,7 @@ def history(args):
     li=[d.values() for d in sddao.get_history_lines()] # listofdict to listoflist
     print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
 
-def install(files,args,interactive=True):
+def install(files,args):
     """
     Returns
         number of newly installed files
@@ -70,6 +70,8 @@ def install(files,args,interactive=True):
     if args.dry_run:
         return 0
 
+    # TODO
+    interactive=not args.non_interactive
 
     # Compute total files stat
     count_total=len(files)
@@ -212,7 +214,8 @@ def upgrade(args):
             # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
 
             files=sdsearch.run(selection=selection)
-            install(files,args,False)
+            args.non_interactive=True
+            install(files,args)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
