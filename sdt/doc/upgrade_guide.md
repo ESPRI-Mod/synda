@@ -22,8 +22,6 @@ Run commands below:
 
 ### Post-upgrade
 
-Check configuration files.
-
 As configuration files located in $ST_HOME/conf may have been reinitialized
 during installation, you need to check if parameters are still correctly set
 (e.g. openid).
