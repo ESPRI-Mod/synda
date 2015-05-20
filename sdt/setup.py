@@ -2,6 +2,11 @@
 from distutils.core import setup
 import glob
 import os
+import sys
+
+if sys.version_info < (2,6):
+    print("Python 26+ needed, please upgrade")
+    sys.exit(1)
 
 setup(name='sdt',
         #py_modules=['sdutils'],
