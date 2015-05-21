@@ -87,7 +87,10 @@ ihm_pid_file="%s/ihm.pid"%tmp_folder
 daemon_start_script="%s/sdstart.sh"%bin_folder
 daemon_stop_script="%s/sdstop.sh"%bin_folder
 
-default_options={'onemgf':'false','nearest':'false'}
+default_options={'onemgf':'false',
+                 'nearest':'false',
+                 'nearest_mode':'geolocation',
+                 'incorrect_checksum_action':'remove'}
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
 
