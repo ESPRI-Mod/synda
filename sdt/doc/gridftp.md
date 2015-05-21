@@ -1,4 +1,9 @@
-# Gridftp howto
+# Gridftp Howto
+
+## Configuration
+
+To use gridftp as default, edit $ST_HOME/conf/default/default.txt file 
+and set 'protocol' parameter to 'gridftp'.
 
 ## Usage examples
 
@@ -15,8 +20,3 @@ Add files in download queue using gridftp protocol
     synda install data_node=bmbf-ipcc-ar5.dkrz.de limit=1 protocol=gridftp
 
 Note that files not available gridftp protocol is not available, http protocol is used
-
-## Set 
-
-To use gridftp as default protocol, edit $ST_HOME/conf/default/default.txt file 
-and set 'protocol' parameter to 'gridftp'.
