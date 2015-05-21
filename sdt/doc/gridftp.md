@@ -7,9 +7,11 @@ and set 'protocol' parameter to 'gridftp'.
 
 ## Usage examples
 
-Print a random gridftp url
+Print gridftp url for a file
 
     synda dump cmip5.output1.MPI-M.MPI-ESM-LR.1pctCO2.day.atmos.cfDay.r1i1p1.v20120314.albisccp_cfDay_MPI-ESM-LR_1pctCO2_r1i1p1_19700101-19891231.nc limit=1 protocol=gridftp replica=false -nf -C url
+
+Print a random gridftp url
 
     synda dump data_node=bmbf-ipcc-ar5.dkrz.de limit=1 protocol=gridftp -nf -C url
 
