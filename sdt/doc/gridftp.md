@@ -17,6 +17,6 @@ Print a random gridftp url
 
 Add files in download queue using gridftp protocol
 
-    synda install data_node=bmbf-ipcc-ar5.dkrz.de limit=1 protocol=gridftp
+    synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 protocol=gridftp
 
 Note that files not available gridftp protocol is not available, http protocol is used
