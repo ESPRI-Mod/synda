@@ -2,7 +2,7 @@
 
 ## Configuration
 
-To use gridftp as default, edit $ST_HOME/conf/default/default.txt file 
+To use gridftp as default protocol, edit $ST_HOME/conf/default/default.txt file 
 and set 'protocol' parameter to 'gridftp'.
 
 ## Usage examples
@@ -19,4 +19,10 @@ Add files in download queue using gridftp protocol
 
     synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 protocol=gridftp
 
-Note that files not available gridftp protocol is not available, http protocol is used
+## Note
+
+When gridftp protocol is not available, http protocol is used instead. 
+
+This is why the command below returns a mix of gridftp url and http url
+
+    synda dump protocol=gridftp variable=tas limit=1000  -f -C url
