@@ -1,5 +1,13 @@
 # Gridftp Howto
 
+# Installation
+
+globus-url-copy additional program is needed to transfer files over GridFtp.
+
+On Debian, it is part of the 'globus-gass-copy-progs' package and can be installed with:
+
+    apt-get install globus-gass-copy-progs
+
 ## Configuration
 
 To use gridftp as default protocol, edit $ST_HOME/conf/default/default.txt file 
