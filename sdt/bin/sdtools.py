@@ -147,7 +147,7 @@ def compute_rate(size,duration):
 def set_terminal_cursor_visible():
     """Turn on the cursor.
 
-    BEWARE: this send code below on stdout
+    BEWARE: this send code below on stderr
             ESC[34hESC[?25hESC[34hESC[?25h
     """
-    os.system('setterm -cursor on 1>&2') # redirect to stderr to prevent messing with functional stdout text stream
+    os.system('setterm -cursor on 1>&2') # redirect to stderr to prevent messing with stdout text stream

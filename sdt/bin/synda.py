@@ -12,7 +12,7 @@
 """'synda' command (front-end to Synda main commands).
 
 Note
-    - In this file, module import directives are moved near the calls,
+    - In this file, most module import directives are moved near the calls,
       so to improve startup time (even for sdapp).
 """
 

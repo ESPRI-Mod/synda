@@ -12,7 +12,7 @@
 """This module contains application initialization code.
 
 Note
-    This module must be imported in every other script (daemon included)
+    This module must be imported in every other scripts (daemon included)
 """
 
 import os
@@ -64,7 +64,7 @@ def who_am_i():
 # Init.
 
 name='transfer'
-version='3.0'
+version='3.1'
 sdapputils.set_exception_handler()
 
 # maybe remove the two mkdir below as it is a bit overkill
