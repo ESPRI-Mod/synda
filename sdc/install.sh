@@ -8,6 +8,12 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
+# Notes regarding synda versions
+# - This installer can upgrade synda 2.9+ and install synda 3.0+
+# - (to upgrade synda 2.8, use sd28to29.py script).
+# - To install synda 2.9, see synchro_data/old/29 on orion svn.
+# - To install/upgrade synda 2.8-, see synchro_data/old/28_and_older on orion svn.
+
 # func
 
 stop_spinner ()
@@ -257,7 +263,9 @@ update_transfer_environment_post_install ()
     current_version=${1}
     new_version=${2}
 
-    sqlite3 $st_root/db/sdt.db "update version set version='$new_version'"
+    if [ "$new_version" = "3.0" ]; then # in 3.1+, this is done in binary
+        sqlite3 $st_root/db/sdt.db "update version set version='$new_version'"
+    fi
 }
 
 init_ve ()
@@ -537,7 +545,7 @@ update_transfer_module ()
     init_ve $st_root
     check_python_installation # not sure if this is still needed
 
-    # TODO: replace using 'synda -V' asap (TAG4324234)
+    # TODO: replace using 'synda -V' asap
     #update_transfer_environment_pre_install $(synda -V) $st_version
     currver=$(cat $st_root/lib/sd/sdapp.py | grep "version=" | sed "s/[[:alpha:]=']*//g" )
     update_transfer_environment_pre_install $currver $st_version
