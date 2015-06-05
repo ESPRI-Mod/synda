@@ -11,8 +11,8 @@
 # Notes regarding synda versions
 # - This installer can upgrade synda 2.9+ and install synda 3.0+
 # - (to upgrade synda 2.8, use sd28to29.py script).
-# - To install synda 2.9, see synchro_data/old/29 on orion svn.
-# - To install/upgrade synda 2.8-, see synchro_data/old/28_and_older on orion svn.
+# - To install synda 2.9, see synda/old/29 on orion svn.
+# - To install/upgrade synda 2.8-, see synda/old/28_and_older on orion svn.
 
 # func
 
@@ -757,7 +757,7 @@ if [ $g__transfer -eq 1 ]; then
     # (this is because the installer depends of the environment and the environment changed in 3.0 (sdt.conf file moved to conf folder))
     firstchar="$(echo $st_version | head -c 1)"
     if [ "$firstchar" -lt "3" ]; then
-        err "INSTALL-ERR100" "This installer can only be used to install/update synda-transfer 3.0+ version. To install previous synda-transfer version, use this installer svn revision => 3057."
+        err "INSTALL-ERR100" "This installer can only be used to install synda-transfer 3.0+ version."
     fi
 
 fi
