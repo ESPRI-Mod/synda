@@ -250,12 +250,9 @@ update_transfer_environment_pre_install ()
     #
     # (this is because early 3.0 beta release did not had this code yet (i.e. obsolete log files removed))
     #
-    if [ "$current_version" = "3.0" ]; then
-
-        # remove obsolete logfile
-        rm -f $st_root/log/get_data.log
-        rm -f $st_root/log/get_data__debug.log
-    fi
+    # remove obsolete logfile
+    rm -f $st_root/log/get_data.log
+    rm -f $st_root/log/get_data__debug.log
 }
 
 update_transfer_environment_post_install ()
