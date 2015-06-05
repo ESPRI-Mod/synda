@@ -213,7 +213,7 @@ update_transfer_environment_pre_install ()
     if [ -z "$new_version" ]; then
         err "INSTALL-ERR404" "Incorrect new version"
     fi
-    if [[ "$new_version" < "2.9" ]]; then
+    if [[ "$new_version" < "3.0" ]]; then
         err "INSTALL-ERR406" "Incorrect new version"
     fi
     if [[ "$new_version" < "$current_version" ]]; then
@@ -240,11 +240,11 @@ update_transfer_environment_pre_install ()
         fi
     fi
 
-    # tmp hack (remove asap)
+    # tmp hack just in case (remove asap)
     #
     # (this is because early 3.0 beta release did not had this code yet (i.e. obsolete log files removed))
     #
-    if [ "$new_version" = "3.0" ]; then
+    if [ "$current_version" = "3.0" ]; then
 
         # remove obsolete logfile
         rm -f $st_root/log/get_data.log
