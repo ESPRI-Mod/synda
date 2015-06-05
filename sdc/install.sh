@@ -213,19 +213,14 @@ update_transfer_environment_pre_install ()
     if [ -z "$new_version" ]; then
         err "INSTALL-ERR404" "Incorrect new version"
     fi
-
-    # force to only allow some version for now
-    if [ $current_version != "2.9" -a $current_version != "3.0" ]; then
-        err "INSTALL-ERR406" "Incorrect current version"
+    if [[ "$new_version" < "2.9" ]]; then
+        err "INSTALL-ERR406" "Incorrect new version"
     fi
-    if [ $new_version != "3.0" ]; then
+    if [[ "$new_version" < "$current_version" ]]; then
         err "INSTALL-ERR408" "Incorrect new version"
     fi
 
-    # TODO: add a check to prevent downgrade
-
-    # TODO: make this func generic
-
+    if [ "$current_version" = "2.9" ]; then
     if [ "$current_version" = "2.9" -a "$new_version" = "3.0" ]; then
 
         # remove obsolete logfile
@@ -242,6 +237,7 @@ update_transfer_environment_pre_install ()
         # move default files
         mkdir $st_root/conf/default
         find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
+    fi
     fi
 
     # tmp hack (remove asap)
@@ -374,9 +370,6 @@ install_myproxyclient ()
 install_st_additional_packages ()
 {
     # install pypi python modules in virtualenv
-    if [ "$appversion" = "2.8" ]; then
-        $python_pkg_install_cmd thredds drslib
-    fi
     $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
