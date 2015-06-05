@@ -221,7 +221,7 @@ update_transfer_environment_pre_install ()
     fi
 
     if [ "$current_version" = "2.9" ]; then
-    if [ "$current_version" = "2.9" -a "$new_version" = "3.0" ]; then
+        if [ ! -d $st_root/conf ]; then # this is to prevent running this code again in case of reinstalling 2.9 over 2.9
 
         # remove obsolete logfile
         rm -f $st_root/log/get_data.log
@@ -237,7 +237,7 @@ update_transfer_environment_pre_install ()
         # move default files
         mkdir $st_root/conf/default
         find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
-    fi
+        fi
     fi
 
     # tmp hack (remove asap)
