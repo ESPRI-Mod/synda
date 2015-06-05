@@ -17,28 +17,6 @@ import sddb
 import sdsqlutils
 import sdtime
 
-# --- version table --- #
-
-def get_version():
-    c = conn.cursor()
-    c.execute("select version from version")
-    rs=c.fetchone()
-
-    if rs==None:
-        raise SDException("SYNCDDAO-316","fatal error")
-
-    version=rs[0]
-
-    c.close()
-
-    return version
-
-def update_version(version):
-    c = conn.cursor()
-    c.execute("update version set version=?",(version,))
-    conn.commit()
-    c.close()
-
 # --- parameter table --- #
 
 def add_parameter_value(name,value,commit=True,conn=sddb.conn):
