@@ -14,30 +14,9 @@
 import sqlite3
 import atexit
 import sdapp
-from sdexception import SDException
 import sdconfig
 import sddbobj
-
-def check_version():
-    # this method must stay in this module to prevent any DB I/O if database version does not match binary version
-
-    c = conn.cursor()
-    c.execute("select version from version")
-    rs=c.fetchone()
-    version=rs[0] if rs!=None else None
-    c.close()
-
-    if version==None:
-        # this case is for when starting from scratch (e.g. when db file as been removed)
-
-        c = conn.cursor()
-        c.execute("insert into version (version) values (?)",(sdapp.version,))
-        conn.commit()
-        c.close()
-    else:
-        if sdapp.version!=version:
-            raise SDException("SYNCDDAO-317","Database must be upgraded (sdapp.version=%s,version=%s)."%(sdapp.version,version))
-            #raise SDException("SYNCDDAO-317","Database must be upgraded: run 'sdupgrade' command")
+import sddbversion
 
 def connect():
     global conn
@@ -127,5 +106,5 @@ conn=None
 _in_memory_conn=None
 
 connect()
-check_version()
+sddbversion.check_version(conn) # this call upgrade the database schema if database version does not match binary version
 atexit.register(disconnect)
