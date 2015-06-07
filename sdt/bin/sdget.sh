@@ -191,7 +191,7 @@ g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum 
 #
 # with checksum
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
-WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O >(tee $local_file | $checksum_cmd > $g__tmpfile__checksum)" # bash trick (">()" is a command substitution)
+WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O - "
 
 # debug mode
 if [ "x$DEBUG" = "xyes" ]; then
@@ -276,6 +276,9 @@ else
 		$url"
 fi
 
+# file redirection n checksum management
+WGET_CMD="$WGET_CMD | tee $local_file | $checksum_cmd > $g__tmpfile__checksum"
+
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
@@ -288,11 +291,18 @@ if [ "x$DEBUG" = "xyes" ]; then
 	# in debug mode, we don't parse wget output
 
 	echo $WGET_CMD 1>&2
-	eval $WGET_CMD 1>&2 # we need eval to prevent TAG43242 error
+
+    # we need eval to prevent TAG43242 error
+	eval $WGET_CMD
+
 	wget_status=$?
     wget_pid=$!
 else
-	wget_stdxxx=`eval $WGET_CMD 2>&1` # we need eval to prevent TAG43242 error
+
+    # - we need eval to prevent TAG43242 error
+    # - we save stderr and forget about stdout (stdout is empty anyway)
+	wget_stderr=$(`eval $WGET_CMD` 2>&1 >/dev/null)
+
 	wget_status=$?
 
 	# if wget "--tries" option is set to 1, we parse wget output to get informations on the cause of the error
