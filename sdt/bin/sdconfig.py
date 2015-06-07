@@ -87,10 +87,23 @@ ihm_pid_file="%s/ihm.pid"%tmp_folder
 daemon_start_script="%s/sdstart.sh"%bin_folder
 daemon_stop_script="%s/sdstop.sh"%bin_folder
 
-default_options={'onemgf':'false',
+
+default_options={'max_parallel_download':'8',
+                 'post_processing':'0',
+                 'unicode_term':'0',
+                 'progress':'1',
+                 'onemgf':'false',
+                 'check_parameter':'1',
+                 'verbosity_level':'info',
+                 'scheduler_profiling':'0',
+                 'lfae_mode':'abort',
+                 'indexes':'esgf-node.ipsl.fr,esgf-data.dkrz.de,esgf-index1.ceda.ac.uk',
+                 'default_index':'esgf-node.ipsl.fr',
+                 'onemgf':'false',
                  'nearest':'false',
                  'nearest_mode':'geolocation',
                  'incorrect_checksum_action':'remove'}
+
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
 

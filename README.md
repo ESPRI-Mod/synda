@@ -60,9 +60,10 @@ This program is a command-line alternative to the ESGF web front-end.
 * Linux
 * Mac
 
-## Last version
+## Version
 
-3.0
+Stable: 3.0
+Testing: 3.1
 
 ## Dependency
 
