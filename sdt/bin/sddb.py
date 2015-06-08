@@ -14,6 +14,7 @@
 import sqlite3
 import atexit
 import sdapp
+import sdlog
 import sdconfig
 import sddbobj
 import sddbversion

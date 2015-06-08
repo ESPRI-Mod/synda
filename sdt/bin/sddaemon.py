@@ -19,7 +19,7 @@ Note
     If we do import it and it's loaded before the double-fork, then the who_am_i()
     func doesn't work anymore. My understanding is that a double-fork is not like
     an exec, i.e. loaded module before the double fork are reused after the double fork.
-    I think that because it's seems that sdapp module init code doesn't get executed 
+    I think that, because it's seems that sdapp module init code doesn't get executed 
     twice (TO BE CONFIRMED).
 """
 

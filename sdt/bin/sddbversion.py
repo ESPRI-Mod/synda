@@ -12,12 +12,17 @@
 """This module contains database versioning routines."""
 
 import sdapp
+import sdlog
 import sddbversionutils
 from sdexception import SDException
-import sdlog
 
 def check_version(conn):
-    """Upgrade the database schema if database version does not match binary version."""
+    """Upgrade the database schema if database version does not match binary version.
+
+    Note
+        This func must be light as executed each time 'synda' starts
+        (except for special case like 'synda -V').
+    """
 
     current_db_version=sddbversionutils.get_db_version(conn)
 
