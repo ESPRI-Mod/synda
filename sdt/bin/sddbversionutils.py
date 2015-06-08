@@ -16,7 +16,7 @@ Note
 """
 
 def _str2int(version):
-    assert isinstance(version,str)
+    assert isinstance(version,basestring)
     return int(float(version)*10)
 
 def _int2str(version):
