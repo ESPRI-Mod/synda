@@ -163,21 +163,11 @@ if [ "$g__buildpackage" = "1" ]; then
 
 fi
 
-# send the prod. package to apache
+# send prod tarball to apache
 if [ "$deployprod" = "1" ]; then
 
     if [ "$g__transfer" = "1" ]; then
 
-        # obsolete
-        #
-        # gen doc
-        #cd $sdt_src/doc
-        #pandoc -s USER_GUIDE -o user_guide.html
-        #pandoc -s UPGRADE_GUIDE -o upgrade_guide.html
-        #pandoc -s ADMIN_GUIDE -o admin_guide.html
-        #cd -
-
-        # send tarball
         FILES="$sdt_src/dist/$sdt_archive_prod"
         scp $FILES $webhost
     fi
@@ -188,7 +178,7 @@ if [ "$deployprod" = "1" ]; then
     fi
 fi
 
-# send the dev. package to apache
+# send dev tarball to apache
 if [ "$deploydev" = "1" ]; then
     if [ "$g__transfer" = "1" ]; then
         upload $sdt_src/dist/$sdt_archive_dev
