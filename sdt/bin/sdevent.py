@@ -11,6 +11,7 @@
 
 """This script contains event related routines."""
 
+import argparse
 import sdvariable
 import sddatasetdao
 import sddatasetflag
@@ -19,6 +20,7 @@ import sdeventdao
 import sdconst
 import sdtime
 import sdlog
+from sdtools import print_stderr
 from sdtypes import Event
 
 """ TODO: add deletion pipeline
@@ -242,3 +244,23 @@ def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
     event.priority=sdconst.DEFAULT_PRIORITY
     sdeventdao.add_event(event,commit=commit)
     """
+
+if __name__ == '__main__':
+    # code below is used to trigger event manually
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n','--name',required=True,help='Event name')
+    parser.add_argument('-m','--model',help='Model name')
+    parser.add_argument('-p','--project',default='CMIP5',help='Project name')
+    parser.add_argument('-P','--dataset_pattern',help='Dataset pattern')
+    args = parser.parse_args()
+
+    if args.name == 'latest_dataset_complete_output12':
+
+        assert args.project is not None
+        assert args.model is not None
+        assert args.dataset_pattern is not None
+
+        latest_dataset_complete_output12_event(args.project,args.model,args.dataset_pattern,commit=True)
+    else:
+        print_stderr('Incorrect event name')   
