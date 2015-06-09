@@ -58,6 +58,32 @@ upload ()
     scp $file_ $webhost
 }
 
+get_archive_name ()
+{
+    local version="$1"
+    local module_light_name="$2" # sdt, sdp..
+
+    local archive_name
+    local dist_dir
+
+    archive_name=${module_light_name}-${version}.tar.gz
+
+    dist_dir=$src_snapshot_root/${module_light_name}/dist
+
+    echo "$dist_dir/$archive_name"
+}
+
+get_version ()
+{
+    local app_file="$1"
+
+    local version
+
+    version=$(cat $app_file | grep "version=" | sed "s/[[:alpha:]=']*//g" )
+
+    echo $version
+}
+
 # check
 
 if [ $# -eq 0 ]; then
@@ -67,20 +93,17 @@ fi
 
 # retrieve args
 
-deployprod=0
-deploydev=0
-g__buildpackage=0
+deploy=0
+buildpackage=0
 g__verbose=
 g__transfer=0
 g__postprocessing=0
 while getopts 'acfhv' OPTION
 do
   case $OPTION in
-  a)    deployprod=1
+  c)    buildpackage=1
         ;;
-  c)    g__buildpackage=1
-        ;;
-  f)    deploydev=1
+  f)    deploy=1
         ;;
   h)    usage
         exit 2
@@ -124,33 +147,14 @@ if [ -z "$SYNDA_WEBHOST" ]; then
     exit 1
 fi
 
-
 # init
 webhost=$SYNDA_WEBHOST
 src_snapshot_root=$SYNDA_SRC_ROOT
-sdt_src=$src_snapshot_root/sdt
-sdp_src=$src_snapshot_root/sdp
-sdt_version_prod="3.0"
-sdt_version_dev="3.1"
-sdp_version_prod="1.0"
-sdp_version_dev="1.1"
-sdt_archive_dev=sdt-${sdt_version_dev}.tar.gz
-sdp_archive_dev=sdp-${sdp_version_dev}.tar.gz
-sdt_archive_prod=sdt-${sdt_version_prod}.tar.gz
-sdp_archive_prod=sdp-${sdp_version_prod}.tar.gz
 
-
-# check
-#if ! which pandoc &>/dev/null; then
-#    echo "Error: pandoc not found"
-#    exit 1
-#fi
-
-
-# action
+# --- action --- #
 
 # rebuild the archive
-if [ "$g__buildpackage" = "1" ]; then
+if [ "$buildpackage" = "1" ]; then
 
     if [ "$g__transfer" = "1" ]; then
         build sdt
@@ -159,31 +163,22 @@ if [ "$g__buildpackage" = "1" ]; then
     if [ "$g__postprocessing" = "1" ]; then
         build sdp
     fi
-
 fi
 
-# send prod tarball to apache
-if [ "$deployprod" = "1" ]; then
+# send tarball to apache
+if [ "$deploy" = "1" ]; then
 
     if [ "$g__transfer" = "1" ]; then
-
-        FILES="$sdt_src/dist/$sdt_archive_prod"
-        scp $FILES $webhost
+        version=$( get_version $st_root/sdt/bin/sdapp.py )
+        archive=$( get_archive_name $version sdt )
     fi
 
     if [ "$g__postprocessing" = "1" ]; then
-        FILES="$sdp_src/dist/$sdp_archive_prod"
-        scp $FILES $webhost
-    fi
-fi
-
-# send dev tarball to apache
-if [ "$deploydev" = "1" ]; then
-    if [ "$g__transfer" = "1" ]; then
-        upload $sdt_src/dist/$sdt_archive_dev
+        version=$( get_version $st_root/sdp/bin/spapp.py )
+        archive=$( get_archive_name $version sdp )
     fi
 
-    if [ "$g__postprocessing" = "1" ]; then
-        upload $sdp_src/dist/$sdp_archive_dev
-    fi
+    upload $_archive
 fi
+
+exit 0
