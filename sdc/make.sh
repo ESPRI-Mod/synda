@@ -17,9 +17,8 @@ POSITIONAL ARGS:
                 If no module specified, install 'transfer' module.
 
 OPTIONS:
-   -a      send prod. archive and files to website
    -c      build archive
-   -f      send dev. archive to website
+   -f      send archive to http server
    -h      Show this message
 
 EOF

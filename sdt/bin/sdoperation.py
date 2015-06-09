@@ -79,7 +79,8 @@ def get_recently_modified_datasets():
     return datasets_to_export
 
 def trigger_events():
-    """Artificially trigger event (usually, events are triggered after each transfer completion).
+    """Artificially trigger event for all complete variable 
+    (usually, events are triggered after each transfer completion).
 
     This func is used, for example, to trigger pipeline on already downloaded data.
     """
