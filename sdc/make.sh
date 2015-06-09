@@ -95,9 +95,9 @@ fi
 
 deploy=0
 buildpackage=0
-g__verbose=
-g__transfer=0
-g__postprocessing=0
+verbose=
+sdt_mod=0
+sdp_mod=0
 while getopts 'acfhv' OPTION
 do
   case $OPTION in
@@ -108,7 +108,7 @@ do
   h)    usage
         exit 2
         ;;
-  v)    g__verbose="-v"
+  v)    verbose="-v"
         ;;
   ?)    exit 1 # don't forget that one, as having this option trigger special getopts incorrect option check mecanisms
         ;;
@@ -122,9 +122,9 @@ shift $((OPTIND-1))
 if [ $# -ge 1 ]; then
     for module in "$@"; do
         if [ $module = "transfer" ]; then
-            g__transfer=1
+            sdt_mod=1
         elif [ $module = "postprocessing" ]; then
-            g__postprocessing=1
+            sdp_mod=1
         else
             usage
             exit 0
@@ -133,7 +133,7 @@ if [ $# -ge 1 ]; then
 else
     # default if no args
 
-    g__transfer=1
+    sdt_mod=1
 fi
 
 
@@ -156,11 +156,11 @@ src_snapshot_root=$SYNDA_SRC_ROOT
 # rebuild the archive
 if [ "$buildpackage" = "1" ]; then
 
-    if [ "$g__transfer" = "1" ]; then
+    if [ "$sdt_mod" = "1" ]; then
         build sdt
     fi
 
-    if [ "$g__postprocessing" = "1" ]; then
+    if [ "$sdp_mod" = "1" ]; then
         build sdp
     fi
 fi
@@ -168,12 +168,12 @@ fi
 # send tarball to apache
 if [ "$deploy" = "1" ]; then
 
-    if [ "$g__transfer" = "1" ]; then
+    if [ "$sdt_mod" = "1" ]; then
         version=$( get_version $st_root/sdt/bin/sdapp.py )
         archive=$( get_archive_name $version sdt )
     fi
 
-    if [ "$g__postprocessing" = "1" ]; then
+    if [ "$sdp_mod" = "1" ]; then
         version=$( get_version $st_root/sdp/bin/spapp.py )
         archive=$( get_archive_name $version sdp )
     fi
