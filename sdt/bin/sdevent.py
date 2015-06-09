@@ -23,7 +23,7 @@ from sdtypes import Event
 
 """ TODO: add deletion pipeline
 def file_deleted_event(d):
-    sdlog.debug("SYDEVENT-030","'delete_dataset_event' triggered")
+    sdlog.info("SYDEVENT-030","'delete_dataset_event' triggered (%s)"%dataset_functional_id)
 
     event=Event(name=sdconst.EVENT_OUTPUT12_VARIABLE_COMPLETE)
     event.project=project
@@ -47,7 +47,7 @@ def file_complete_event(tr):
         but a dataset can be marked as complete even if it contains only a subset of variables included in this dataset
         (but still all variables that have been discovered for this dataset must be complete)
     """
-    sdlog.debug("SYDEVENT-001","'file_complete_event' triggered")
+    sdlog.info("SYDEVENT-001","'file_complete_event' triggered (%s)"%tr.file_functional_id)
 
     # update dataset (all except 'latest' flag)
     tr.dataset.status=sddatasetflag.compute_dataset_status(tr.dataset)
@@ -58,7 +58,7 @@ def file_complete_event(tr):
         variable_complete_event(tr.project,tr.model,tr.dataset,tr.variable) # trigger 'variable complete' event
 
 def variable_complete_event(project,model,dataset,variable):
-    sdlog.debug("SYDEVENT-002","'variable_complete_event' triggered")
+    sdlog.info("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable))
 
     # cascade 1
     if dataset.status==sdconst.DATASET_STATUS_COMPLETE:
@@ -85,7 +85,7 @@ def variable_complete_event(project,model,dataset,variable):
             variable_complete_output12_event(project,model,dataset_pattern,variable) # trigger event (cross dataset event)
 
 def variable_complete_output12_event(project,model,dataset_pattern,variable,commit=True):
-    sdlog.debug("SYDEVENT-003","'variable_complete_output12_event' triggered")
+    sdlog.info("SYDEVENT-003","'variable_complete_output12_event' triggered (%s,%s)"%(dataset_pattern,variable))
 
     event=Event(name=sdconst.EVENT_OUTPUT12_VARIABLE_COMPLETE)
     event.project=project
@@ -98,7 +98,7 @@ def variable_complete_output12_event(project,model,dataset_pattern,variable,comm
     sdeventdao.add_event(event,commit=commit)
 
 def dataset_complete_event(project,model,dataset,commit=True):
-    sdlog.debug("SYDEVENT-004","'dataset_complete_event' triggered")
+    sdlog.info("SYDEVENT-004","'dataset_complete_event' triggered (%s)"%dataset.dataset_functional_id)
 
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
@@ -152,6 +152,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
         dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
 def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
+    sdlog.info("SYDEVENT-005","'dataset_complete_output12_event' triggered (%s)"%dataset_pattern)
 
     # not used
     """
@@ -171,6 +172,8 @@ def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
 def latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     # this event means one latest dataset has been completed (i.e. was latest before and still is)
 
+    sdlog.info("SYDEVENT-006","'latest_dataset_complete_output12_event' triggered (%s)"%dataset_pattern)
+
     event=Event(name=sdconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE)
     event.project=project
     event.model=model
@@ -183,6 +186,8 @@ def latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=
 
 def non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     # this event means one non-latest dataset has been completed (i.e. was not latest before and still isn't)
+
+    sdlog.info("SYDEVENT-007","'non_latest_dataset_complete_output12_event' triggered (%s)"%dataset_pattern)
 
     # not used for now
     """
@@ -202,6 +207,8 @@ def non_latest_dataset_complete_output12_event(project,model,dataset_pattern,com
 def dataset_latest_event(project,model,dataset_path,commit=True):
     # this event means one dataset has been granted latest (i.e. was not latest before and now is)
 
+    sdlog.info("SYDEVENT-008","'dataset_latest_event' triggered (%s)"%dataset_path)
+
     # cascade
     if project=='CMIP5':
         assert '/output/' not in dataset_path
@@ -220,6 +227,8 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
 def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
+
+    sdlog.info("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern)
 
     # not used
     """
