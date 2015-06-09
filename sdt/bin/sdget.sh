@@ -93,6 +93,10 @@ abort ()
     exit 7
 }
 
+# set flag
+
+set -o pipefail
+
 # signal
 
 trap "abort" SIGINT SIGTERM
