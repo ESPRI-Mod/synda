@@ -11,4 +11,4 @@ RUN su synda -c "mkdir -p /home/synda/src/synda && cd /home/synda/src/synda && w
 
 RUN wget -O /tmp/synda_autologin.sh https://raw.githubusercontent.com/Prodiguer/synda/master/Docker/synda_autologin.sh; cat /tmp/synda_autologin.sh >> /root/.bashrc
 
-RUN su synda -c "echo 'ST_HOME=/home/synda/sdt' >> /home/synda/.bashrc; echo 'PATH=$ST_HOME/bin:$PATH' >> /home/synda/.bashrc"
+RUN su synda -c "export echo 'ST_HOME=/home/synda/sdt' >> /home/synda/.bashrc; echo 'export PATH=$ST_HOME/bin:$PATH' >> /home/synda/.bashrc"
