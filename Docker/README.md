@@ -12,15 +12,15 @@ Usage
 ---
 
 ```
-[user@host~]$ mkdir -p /tmp/synda/sdt/conf; wget -O /tmp/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
-[user@host~]$ vi /tmp/synda/sdt/conf/sdt.conf
+[user@host~]$ mkdir -p ~/synda/sdt/conf; wget -O ~/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
+[user@host~]$ vi ~/synda/sdt/conf/sdt.conf
 ```
 
 3/ Startup container in daemon mode and mount host directories as container data volumes owned by your host user and group
 ---
 
 ```
-[user@host~]$ sudo docker run -d -t -i -v /tmp/synda/sdt/data/:/home/synda/sdt/data/ -v /tmp/synda/sdt/db/:/home/synda/sdt/db/ -v /tmp/synda/sdt/log/:/home/synda/sdt/log/ -v /tmp/synda/sdt/selection:/home/synda/sdt/selection/ -v /tmp/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS prodiguer/synda /bin/bash
+[user@host~]$ sudo docker run -d -t -i -v ~/synda/sdt/data/:/home/synda/sdt/data/ -v ~/synda/sdt/db/:/home/synda/sdt/db/ -v ~/synda/sdt/log/:/home/synda/sdt/log/ -v ~/synda/sdt/selection:/home/synda/sdt/selection/ -v ~/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS prodiguer/synda /bin/bash
 ```
 
 4/ Dataset installation and download
@@ -44,9 +44,9 @@ Usage
 ---
 
 ```
-[user@host~]$ ls /tmp/synda/sdt/data/
-[user@host~]$ ls /tmp/synda/sdt/log/
-[user@host~]$ ls /tmp/synda/sdt/db/
-[user@host~]$ ls /tmp/synda/sdt/selection/
-[user@host~]$ ls /tmp/synda/sdt/conf/
+[user@host~]$ ls ~/synda/sdt/data/
+[user@host~]$ ls ~/synda/sdt/log/
+[user@host~]$ ls ~/synda/sdt/db/
+[user@host~]$ ls ~/synda/sdt/selection/
+[user@host~]$ ls ~/synda/sdt/conf/
 ```
