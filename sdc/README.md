@@ -1,1 +1,3 @@
-Synda *sdc* module aka *synda-c*
+# Synda Common
+
+This directory contains code shared by other modules.
