@@ -1,18 +1,18 @@
 Usage
 ===
 
- 1/ Installation and startup
+ 1/ Docker image download
+---
+
+```
+[user@host~]$ sudo docker pull prodiguer/synda
+```
+
+2/ Host side directories setup and OpenID/Password configuration
 ---
 
 ```
 [user@host~]$ mkdir -p /tmp/synda/sdt/conf; wget -O /tmp/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
-[user@host~]$ sudo docker pull prodiguer/synda
-```
-
-2/ OpenID/Password configuration
----
-
-```
 [user@host~]$ vi /tmp/synda/sdt/conf/sdt.conf
 ```
 
@@ -20,7 +20,7 @@ Usage
 ---
 
 ```
-[user@host~]$ sudo docker run -d -t -i -name my_synda -v /tmp/synda/sdt/data/:/home/synda/sdt/data/ -v /tmp/synda/sdt/db/:/home/synda/sdt/db/ -v /tmp/synda/sdt/log/:/home/synda/sdt/log/ -v /tmp/synda/sdt/selection:/home/synda/sdt/selection/ -v /tmp/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS prodiguer/synda /bin/bash
+[user@host~]$ sudo docker run -d -t -i -v /tmp/synda/sdt/data/:/home/synda/sdt/data/ -v /tmp/synda/sdt/db/:/home/synda/sdt/db/ -v /tmp/synda/sdt/log/:/home/synda/sdt/log/ -v /tmp/synda/sdt/selection:/home/synda/sdt/selection/ -v /tmp/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS prodiguer/synda /bin/bash
 ```
 
 4/ Dataset installation and download
@@ -28,7 +28,7 @@ Usage
 
 ```
 [user@host~]$ sudo docker ps
-[user@host~]$ sudo docker attach my_synda
+[user@host~]$ sudo docker attach 204fcee0d7e5
 [synda@204fcee0d7e5 ~]$ synda install [dataset_name]
 [synda@204fcee0d7e5 ~]$ synda daemon start &
 ```
