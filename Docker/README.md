@@ -6,7 +6,7 @@ Usage
 
 ```
 [user@host~]$ mkdir -p /tmp/synda/sdt/conf; wget -O /tmp/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
-[user@host~]$ sudo docker pull ncaripsl/synda
+[user@host~]$ sudo docker pull prodiguer/synda
 ```
 
 2/ OpenID/Password configuration
@@ -20,7 +20,7 @@ Usage
 ---
 
 ```
-[user@host~]$ sudo docker run -d -t -i -name my_synda -v /tmp/synda/sdt/data/:/home/synda/sdt/data/ -v /tmp/synda/sdt/db/:/home/synda/sdt/db/ -v /tmp/synda/sdt/log/:/home/synda/sdt/log/ -v /tmp/synda/sdt/selection:/home/synda/sdt/selection/ -v /tmp/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS ncaripsl/synda /bin/bash
+[user@host~]$ sudo docker run -d -t -i -name my_synda -v /tmp/synda/sdt/data/:/home/synda/sdt/data/ -v /tmp/synda/sdt/db/:/home/synda/sdt/db/ -v /tmp/synda/sdt/log/:/home/synda/sdt/log/ -v /tmp/synda/sdt/selection:/home/synda/sdt/selection/ -v /tmp/synda/sdt/conf/:/home/synda/sdt/conf/ -e UID=$UID -e GID=$GROUPS prodiguer/synda /bin/bash
 ```
 
 4/ Dataset installation and download
