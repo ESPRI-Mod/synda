@@ -781,6 +781,7 @@ if [ $g__upgrade -eq 0 ]; then
         install_transfer_module
 
         # Retrieve parameters from ESGF
+        export ST_HOME=$g__prefix/sdt
         $st_root/bin/synda cache init
     fi
 
