@@ -169,12 +169,12 @@ fi
 if [ "$deploy" = "1" ]; then
 
     if [ "$sdt_mod" = "1" ]; then
-        version=$( get_version $st_root/sdt/bin/sdapp.py )
+        version=$( get_version $src_snapshot_root/sdt/bin/sdapp.py )
         archive=$( get_archive_name $version sdt )
     fi
 
     if [ "$sdp_mod" = "1" ]; then
-        version=$( get_version $st_root/sdp/bin/spapp.py )
+        version=$( get_version $src_snapshot_root/sdp/bin/spapp.py )
         archive=$( get_archive_name $version sdp )
     fi
 
