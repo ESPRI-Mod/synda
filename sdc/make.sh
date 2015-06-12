@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 #
 # Dependencies
 #  pandoc
@@ -178,7 +178,7 @@ if [ "$deploy" = "1" ]; then
         archive=$( get_archive_name $version sdp )
     fi
 
-    upload $_archive
+    upload $archive
 fi
 
 exit 0
