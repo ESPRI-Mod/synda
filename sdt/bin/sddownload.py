@@ -15,7 +15,7 @@ import os
 import sdapp
 import sdlog
 import sdconst
-from sdexception import SDException,FatalException
+from sdexception import SDException,FatalException,CertificateRenewalException
 import sdlogon
 import sdconfig
 import sdtime
@@ -37,9 +37,10 @@ class Download():
         # renew certificate if needed
         try:
             sdlogon.renew_certificate(False)
-        except:
+        except Exception,e:
+            sdlog.error("SDDOWNLO-502","Exception occured while retrieving certificate (%s)"%str(e))
             sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
-            raise
+            raise CertificateRenewalException()
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
 

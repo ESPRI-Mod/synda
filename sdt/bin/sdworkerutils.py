@@ -17,6 +17,7 @@ import threading
 import sdapp
 import sdlog
 import sdconfig
+from sdexception import CertificateRenewalException
 
 class WorkerThread(threading.Thread):
     """This class is the thread that take care of the file transfer."""
@@ -31,12 +32,19 @@ class WorkerThread(threading.Thread):
         try:
             self._service.run(self._instance)
             self._queue.put(self._instance) # add item in queue to handle database I/O in the main process
-        except:
-            sdlog.error("SYDUTILS-024","Thread didn't complete successfully")
+        except CertificateRenewalException, e:
+
+            sdlog.error("SDWUTILS-001","Thread didn't complete successfully")
+
+            # no need to log stacktrace here as exception is already logged downstream
+
+            self._service.exception_occurs=True
+
+        except Exception, e:
+            sdlog.error("SDWUTILS-002","Thread didn't complete successfully")
 
             # debug
             traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
             traceback.print_exc(file=sys.stderr)
 
             self._service.exception_occurs=True
-

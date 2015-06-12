@@ -29,3 +29,5 @@ class FatalException(SDException):
     pass
 class RemoteException(SDException):
     pass
+class CertificateRenewalException(SDException):
+    pass
