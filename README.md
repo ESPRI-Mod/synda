@@ -22,7 +22,7 @@ folder. Selection file examples are given in the 'sample' sub-folder.
 [Upgrade guide](sdt/doc/upgrade_guide.md)                       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           |
-[Faq](sdt/doc/FAQ.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
+[Faq](sdt/doc/faq.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
 [License](sdt/doc/LICENSE)
 
 ## Basic usage
