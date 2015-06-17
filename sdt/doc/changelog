@@ -1,28 +1,28 @@
 - Version 3.1 - DEV
 - Version 3.0 - 20150325
-    - add new local search filter (status, error_msg)
-    - add '--version' option to print version in synda command
-    - improve external files support
-    - add 'next replica' action (batch mode)
-    - move default selection files in 'sdt/conf/default'
-    - move configuration file in 'sdt/conf' folder
-    - add 'history' action
-    - move lfae_mode into sdt.conf
+	- add new local search filter (status, error_msg)
+	- add '--version' option to print version in synda command
+	- improve external files support
+	- add 'next replica' action (batch mode)
+	- move default selection files in 'sdt/conf/default'
+	- move configuration file in 'sdt/conf' folder
+	- add 'history' action
+	- move lfae_mode into sdt.conf
 - Version 2.9 - 20141103
-    - several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info.
-    - new synda command (apt-get like front-end)
-    - support for most search-API parameters
-    - 'not' operation support (e.g. all models but one)
-    - multi-DRS support
-    - new formatting keyword
-    - only localpath is mutable
-    - support for different name for the same model (e.g. GFDL-CM2p1, GFDL-CM2.1 et GFDL-CM2-1)
-    - default values per project
-    - new 'searchapi_host' parameter to specify which index to use
-    - space are supported (e.g. 'ISI-MIP Fasttrack')
-    - replica support
-    - wildcard (all/*) supported in all facets
-    - local database reorganization
+	- several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info.
+	- new synda command (apt-get like front-end)
+	- support for most search-API parameters
+	- 'not' operation support (e.g. all models but one)
+	- multi-DRS support
+	- new formatting keyword
+	- only localpath is mutable
+	- support for different name for the same model (e.g. GFDL-CM2p1, GFDL-CM2.1 et GFDL-CM2-1)
+	- default values per project
+	- new 'searchapi_host' parameter to specify which index to use
+	- space are supported (e.g. 'ISI-MIP Fasttrack')
+	- replica support
+	- wildcard (all/*) supported in all facets
+	- local database reorganization
 - Version 2.8 - 20131220
 	- set CHUNKSIZE (search-API limit parameter) to 10000 (was 1000)
 	- add time coverage filter
@@ -101,9 +101,9 @@
 	- add new column "dataset_id" in transfert table
 - Version 2.1 - 20120312
 	- fix B0015 bug.
-    - add "-V" option in start.sh
-    - add "-b" to myproxy-logon options (only if myproxy-logon >= 5.0)
-    - set wget tries option to 1.
+	- add "-V" option in start.sh
+	- add "-b" to myproxy-logon options (only if myproxy-logon >= 5.0)
+	- set wget tries option to 1.
 	- fix B0014 bug.
 	- fix B0013 bug.
 	- add abnormal termination recovery routine
