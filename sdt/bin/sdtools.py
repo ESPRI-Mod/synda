@@ -18,6 +18,10 @@ import os
 import re
 import argparse
 
+def portable_chomp (line):
+    """Remove eol."""
+    return line.rstrip('\r\n')
+
 def remove_dict_items(di,keys_to_remove):
     for k in keys_to_remove:
         try:

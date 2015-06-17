@@ -16,6 +16,7 @@ import sys
 import sdapp
 import sdconst
 import sdconfig
+import sdtools
 from sdtypes import Buffer
 from sdexception import SDException
 
@@ -72,7 +73,7 @@ def get_selection_file_buffer(path=None,parameter=[]):
         else:
             # assume same exact format as selection file
 
-            lines=[line.rstrip(os.linesep) for line in lines] # remove newline
+            lines=[sdtools.portable_chomp(line) for line in lines] # remove newline
             buffer=Buffer(path=sdconst.SELECTION_FROM_STDIN,filename=sdconst.SELECTION_FROM_STDIN,lines=lines)
 
     elif mode=='file':
@@ -81,7 +82,7 @@ def get_selection_file_buffer(path=None,parameter=[]):
         with open(path, 'r') as fh:
 
             lines=fh.readlines()
-            lines=[line.rstrip(os.linesep) for line in lines] # remove newline
+            lines=[sdtools.portable_chomp(line) for line in lines] # remove newline
 
             buffer=Buffer(path=path,filename=os.path.basename(path),lines=lines)
 
