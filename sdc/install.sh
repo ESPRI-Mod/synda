@@ -782,7 +782,9 @@ if [ $g__upgrade -eq 0 ]; then
 
         # Retrieve parameters from ESGF
         export ST_HOME=$g__prefix/sdt
-        $st_root/bin/synda cache init
+        if ! $st_root/bin/synda cache init 2>/dev/null; then # this 'if' block is used as an an alternative to "set +o errexit" to prevent fatal error
+            echo "Warning: cannot retrieve parameter from ESGF"
+        fi
     fi
 
     if [ $g__postprocessing -eq 1 ]; then
