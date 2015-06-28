@@ -1,0 +1,18 @@
+pyOpenSSL
+
+# TODO: see install.sh
+#https://github.com/pyca/pyopenssl/tarball/master
+
+# TODO: see install.sh
+# myproxyclient stuff
+
+
+psutil
+humanize
+lxml==3.3.5
+tabulate
+progress
+pycountry
+python-jsonrpc
+python-daemon==1.6.1
+retrying
