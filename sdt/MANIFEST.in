@@ -1,3 +1,4 @@
+include requirements.txt
 recursive-include selection *
 recursive-include conf *
 include bin/*
