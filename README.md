@@ -23,7 +23,7 @@ folder. Selection file examples are given in the 'sample' sub-folder.
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Slides](sdt/doc/synda.odp)           |
 [Faq](sdt/doc/faq.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
-[License](sdt/doc/LICENSE)
+[Changelog](sdt/doc/changelog.md)                               |[License](sdt/doc/LICENSE)             |
 
 ## Basic usage
 

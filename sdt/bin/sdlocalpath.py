@@ -71,7 +71,7 @@ def get_file_local_path(f):
     else:
         raise SDException('SDLOCALP-001',"'local_path_format' is incorrect (%s)"%fmt)
 
-    return path    
+    return path
 
 def transform_local_path_project(files):
     def extract_project(path):
