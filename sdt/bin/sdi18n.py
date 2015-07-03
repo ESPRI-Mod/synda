@@ -32,7 +32,7 @@ def m0002(prog):
   %s dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
   %s cmip5.output1.IPSL.IPSL-CM5A-LR.abrupt4xCO2.fx.land.fx.r0i0p0.v20110726.sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc"""%((prog,)*17)
 
-    return 'buf'
+    return buf
 
 def m0003(host):
     return """Request sent to %s. Please wait.."""%host
