@@ -41,8 +41,8 @@ from sdprogress import ProgressThread
 from sdtypes import Request,Response
 from sdexception import SDException
 
-def run(stream=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_run=False):
-    queries=sdpipeline.build_queries(stream=stream,parameter=parameter,index_host=index_host,parallel=False,load_default=False)
+def run(stream=None,path=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_run=False):
+    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False)
 
     if len(queries)<1:
         raise SDException("SDQSEARC-001","No query to process")
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use\n%s"""%sdi18n.m0002(prog))
 
-    parser.add_argument('parameter',nargs='+',help=sdi18n.m0001)
+    parser.add_argument('parameter',nargs='*',help=sdi18n.m0001)
 
     parser.add_argument('-c','--count',action='store_true',help='Count how many found files')
     parser.add_argument('-f','--format',choices=['raw','line','indent'],default='indent')
