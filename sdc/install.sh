@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
 ##################################
-#  @program        synchro-data
+#  @program        synda
 #  @description    climate models data transfert program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
-#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synda/LICENSE)
 ##################################
 
 # Notes regarding synda versions
@@ -94,7 +94,7 @@ POSITIONAL ARGS:
 
 OPTIONS:
    -d <vernum>   Specify version to install
-   -e <file>     Use specified archive instead of downloading archive from Synchro-data website
+   -e <file>     Use specified archive instead of downloading archive from synda website
    -t <path>     Specify directory where to install the application
    -u            Upgrade
    -h            Show this message
@@ -125,11 +125,11 @@ st_is_running ()
 {
     # check if daemon is running
     if [ -f "$st_root/tmp/daemon.pid" ]; then
-        err "INSTALL-ERR004" "The Synchro-data daemon must be stopped during installation"
+        err "INSTALL-ERR004" "The synda daemon must be stopped during installation"
     fi
     # check if IHM is running
     if [ -f "$st_root/tmp/ihm.pid" ]; then
-        err "INSTALL-ERR018" "Synchro-data must be stopped during installation"
+        err "INSTALL-ERR018" "synda must be stopped during installation"
     fi
 }
 
@@ -137,7 +137,7 @@ sp_is_running ()
 {
     # check if daemon is running
     if [ -f "$sp_root/tmp/daemon.pid" ]; then
-        err "INSTALL-ERR044" "The Synchro-data post-processing daemon must be stopped during installation"
+        err "INSTALL-ERR044" "The synda post-processing daemon must be stopped during installation"
     fi
 }
 
@@ -286,7 +286,7 @@ check_ve ()
         # If we are here, it can be because:
         #     - Previous installation failed.
         #       In this case we really want to overwrite previous installation. So user should answer 'yes' to the question below.
-        #     - User wants only to update Synchro-data application (i.e. not virtualenv and related stuff), but forgot to pass '-u' option.
+        #     - User wants only to update synda application (i.e. not virtualenv and related stuff), but forgot to pass '-u' option.
         #       In this case we want to restart the installation with the '-u' option. So user should answer 'no' to the question below.
 
 
@@ -294,9 +294,9 @@ check_ve ()
         #
         # Basically, INSTALL-ERR008 was made so 
         #  - to inform user that no need to re-install ve and pypi package everytime
-        #    Synchro-data application must be updated. 
+        #    synda application must be updated. 
         #    And so to inform user about the existency of '-u' install script option.
-        #  - to PREVENT overwriting Synchro-data configuration file (yes, when Synchro-data
+        #  - to PREVENT overwriting synda configuration file (yes, when synda
         #    is installed without '-u' option, configuration file is overwrited without 
         #    confirmation nor backup !)
         #
@@ -313,7 +313,7 @@ check_ve ()
         #
         # The good point is if previous installation failed, the user did the right thing by reinstalling everything.
         #
-        # But the drawback is that if it's just an Synchro-data application upgrade, it's overkill to reinstall everything
+        # But the drawback is that if it's just an synda application upgrade, it's overkill to reinstall everything
         # (this is especially annoying when doing fast cycle debugging or development).
         #
         # But there should be no harm, so until we have more interactivity in this script, we go for that solution.
@@ -327,7 +327,7 @@ check_ve ()
         # To fix this problem, maybe use another way to stop the spinner (using lockfile existency
         # check for example), and maybe rewrite this script in Python (to be confirmed, not sure this will help).
         #
-        #read -p "Existing Synchro-data installation detected ($ve_dir). Do you want to continue the installation ? (y/n)" -n 1 -r
+        #read -p "Existing synda installation detected ($ve_dir). Do you want to continue the installation ? (y/n)" -n 1 -r
         #echo # move to a new line (needed because of the '-n' option)
         #if [ "$REPLY" = "y" ]; then
         #    :
@@ -495,7 +495,7 @@ install_st_application ()
 
     cd -
 
-    post_install_msg="$post_install_msg\nsynchro-data application has been installed in $st_root"
+    post_install_msg="$post_install_msg\nsynda application has been installed in $st_root"
 }
 
 install_sp_application ()
@@ -511,7 +511,7 @@ install_sp_application ()
     create_sp_symlink
     cd -
 
-    post_install_msg="$post_install_msg\nsynchro-data-pp application has been installed in $sp_root"
+    post_install_msg="$post_install_msg\nsynda-pp application has been installed in $sp_root"
 }
 
 set_default_python_version ()
@@ -717,7 +717,7 @@ g__before_md5_conffile=
 post_install_msg= # used to display some info to the user after installation
 tmpdir=$HOME/garbage
 curr_dir=$PWD # used for special deployment (developper only)
-url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synchro_data
+url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
 #
 st_version=${g__version:-3.0} # set HEAD version unless vernum is specified by the user
 st_package=sdt-${st_version}
