@@ -35,14 +35,13 @@ import sdconfig
 import sdnetutils
 import sdi18n
 import sdprint
-import sddeferredafter
 import sdsqueries
 from sdprogress import ProgressThread
 from sdtypes import Request,Response
 from sdexception import SDException
 
-def run(stream=None,path=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_run=False):
-    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False)
+def run(stream=None,path=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_run=False,count=False):
+    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False,count=count)
 
     if len(queries)<1:
         raise SDException("SDQSEARC-001","No query to process")
@@ -112,7 +111,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use\n%s"""%sdi18n.m0002(prog))
 
-    parser.add_argument('parameter',nargs='*',help=sdi18n.m0001)
+    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
     parser.add_argument('-c','--count',action='store_true',help='Count how many found files')
     parser.add_argument('-f','--format',choices=['raw','line','indent'],default='indent')
@@ -123,11 +122,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.count:
-        # in this mode, we don't want to return any files, so we force limit to 0 just in case this option has been set by the user
-        sddeferredafter.add_forced_parameter(args.parameter,'limit','0')
-
-    result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run)
+    result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run,count=args.count)
 
     if args.count:
         print "%i"%result.num_found

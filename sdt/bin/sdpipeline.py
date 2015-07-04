@@ -27,6 +27,7 @@ import sdinference
 import sdgenericpipeline
 import sdfilepipeline
 import sddatasetpipeline
+import sddeferredafter
 from sdexception import SDException
 
 
@@ -50,7 +51,7 @@ def post_pipeline(files,mode=None):
 
     return files
 
-def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True):
+def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
     standalone query pipeline.
 
@@ -65,6 +66,17 @@ def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=N
             selection=sdparse.build(buffer,load_default=load_default)
 
         stream=selection.merge_facets()
+
+
+    # at this point, stream contains all possible parameters sources (file,stdin,cli..)
+
+
+    if count:
+        # in this mode, we don't want to return any files, so we force limit to
+        # 0 just in case this option has been set by the user
+
+        sddeferredafter.add_forced_parameter(stream,'limit','0')
+
 
     queries=sdquerypipeline.run(stream,index_host=index_host,query_type=query_type,dry_run=dry_run,parallel=parallel)
     return queries
