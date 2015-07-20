@@ -22,6 +22,8 @@ setup(name='sdt',
         long_description='This program download files from the Earth System Grid Federation (ESGF) archive using command line.',
         license='Public',
         platforms='Linux',
+        maintainer='jripsl',
+        maintainer_email='jripsl@ipsl.jussieu.fr',
         author='jripsl',
         author_email='jripsl@ipsl.jussieu.fr'
         )
