@@ -107,6 +107,7 @@ m0014="""
         """
 
 m0015="""autoremove - Remove old datasets versions
+cache - Manage cache
 certificate - Manage X509 certificate
 daemon - Start/stop the daemon (download background process)
 dump - Display raw metadata
@@ -121,6 +122,7 @@ replica - Change replica
 reset - Remove all 'waiting' and 'error' transfers
 retry - Retry transfer
 search - Search dataset
+selection - Manage selection
 show - Display detailed information about dataset
 stat - Display summary information about dataset
 test - Test file download
