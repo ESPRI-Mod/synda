@@ -20,7 +20,15 @@ import sys
 import argparse
 import sdconst
 import sdi18n
+#import sdaction
+#import sdsubparser
 from sdtools import DefaultHelpParser,print_stderr
+
+"""
+def exec_action(args):
+    method = getattr(sdaction, args.subparser_name)
+    result = method()
+"""
 
 if __name__ == '__main__':
     """
@@ -28,7 +36,7 @@ if __name__ == '__main__':
 
     # create the top-level parser
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest='subparser_name')
 
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
@@ -48,19 +56,11 @@ if __name__ == '__main__':
     type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
     # create parser for sub-commands
-    for subc in ['autoremove','cache','certificate','daemon','history','queue','replica','reset','retry','selection','test','upgrade','watch','help','update','param','dump','install','list','remove','search','show','stat','version']:
-        parser_subc = subparsers.add_parser(subc)
-        parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
-        #parser_subc.add_argument('-x', type=int, default=1)
-        #parser_subc.set_defaults(func=search)
+    sdsubparser.run(subparsers)
 
-    # sub-command functions
-    #def search(args):
-    #    print('((%s))' % args.z)
-
-    # parse the args and call whatever function was selected
     args=parser.parse_args()
-    #args.func(args)
+
+    exec_action(args)
     """
 
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
