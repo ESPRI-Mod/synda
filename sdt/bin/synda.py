@@ -23,6 +23,46 @@ import sdi18n
 from sdtools import DefaultHelpParser,print_stderr
 
 if __name__ == '__main__':
+    """
+    NEW WAY
+
+    # create the top-level parser
+    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
+    subparsers = parser.add_subparsers()
+
+    parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
+    parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
+    parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
+    parser.add_argument('-N','--non_interactive',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively (useful in cron jobs)')
+    parser.add_argument('-r','--replica',action='store_true',help='show replica')
+    parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
+    parser.add_argument('-s','--selection',default=None)
+    parser.add_argument('-V','--version',action='store_true') # beware: version exist both as option and as action
+    parser.add_argument('-y','--dry_run',action='store_true')
+
+    type_grp=parser.add_argument_group(None)
+    type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
+    type_grp.add_argument('-d','--dataset',dest='type_',action='store_const',const=sdconst.SA_TYPE_DATASET)
+    type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
+    type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
+
+    # create parser for sub-commands
+    for subc in ['autoremove','cache','certificate','daemon','history','queue','replica','reset','retry','selection','test','upgrade','watch','help','update','param','dump','install','list','remove','search','show','stat','version']:
+        parser_subc = subparsers.add_parser(subc)
+        parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
+        #parser_subc.add_argument('-x', type=int, default=1)
+        #parser_subc.set_defaults(func=search)
+
+    # sub-command functions
+    #def search(args):
+    #    print('((%s))' % args.z)
+
+    # parse the args and call whatever function was selected
+    args=parser.parse_args()
+    #args.func(args)
+    """
+
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('action',nargs='?',help=sdi18n.m0015)
