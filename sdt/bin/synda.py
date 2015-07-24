@@ -31,6 +31,44 @@ def exec_action(args):
     result = method()
 """
 
+def set_stream_type(args):
+    import sddeferredbefore
+
+    # Set the sdtream type (aka search-API 'type').
+    #
+    # Note that arg.type_ is NOT the same thing as the stream type (aka
+    # search-API type). arg.type_ is only used locally to format the
+    # listing presented to user, while the stream type is the one sent
+    # to the ESGF service to retrieve data. For example,
+    # SA_TYPE_AGGREGATION is used by arg.type_ to make some change in
+    # the output, but search-API don't know about this type (i.e. for
+    # most project, you can't list anything by using this type). Also
+    # most modules of Synda behave the same way as search-API: they
+    # don't know about SA_TYPE_AGGREGATION. SA_TYPE_AGGREGATION is ONLY
+    # used in Synda upstream code to make some local display
+    # modifications.
+    #
+    # So what we do here is choose which is the search-API type we need
+    # (dataset, file) for the listing type asked by user (i.e.
+    # variable, dataset, file)
+    #
+    # But note that in most case, search-API 'type' will be overrided
+    # later anyway as it is forced in dedicated modules (e.g. in
+    # sdrdataset, sdrfile, etc..).
+    #
+    # Also note that we 'force' (i.e. not 'default') the parameter
+    # here, so to prevent user to set it. We do this because if user
+    # use '-f' option and type=Dataset, it will not do as the display
+    # type will not fit the type of data fetched from search-API).
+    #
+    if args.type_ in (sdconst.SA_TYPE_AGGREGATION,sdconst.SA_TYPE_DATASET):
+        sddeferredbefore.add_forced_parameter(args.stream,'type',sdconst.SA_TYPE_DATASET)
+    elif args.type_ in (sdconst.SA_TYPE_FILE,):
+        sddeferredbefore.add_forced_parameter(args.stream,'type',sdconst.SA_TYPE_FILE)
+    else:
+        from sdexception import SDException
+        raise SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
+
 def check_daemon():
     import sdconfig
     if sdconfig.prevent_daemon_and_modification:
@@ -152,51 +190,16 @@ if __name__ == '__main__':
     elif args.action=='help':
         parser.print_help()
     elif args.action in ['dump','list','search','show','version']:
-        import sddeferredbefore
-
         stream=get_stream(args)
 
-        # Set default type
+        # set default type
         if args.type_ is None:
             import sdtype
             args.type_=sdtype.infer_display_type(stream)
 
-        # Set the sdtream type (aka search-API 'type').
-        #
-        # Note that arg.type_ is NOT the same thing as the stream type (aka
-        # search-API type). arg.type_ is only used locally to format the
-        # listing presented to user, while the stream type is the one sent
-        # to the ESGF service to retrieve data. For example,
-        # SA_TYPE_AGGREGATION is used by arg.type_ to make some change in
-        # the output, but search-API don't know about this type (i.e. for
-        # most project, you can't list anything by using this type). Also
-        # most modules of Synda behave the same way as search-API: they
-        # don't know about SA_TYPE_AGGREGATION. SA_TYPE_AGGREGATION is ONLY
-        # used in Synda upstream code to make some local display
-        # modifications.
-        #
-        # So what we do here is choose which is the search-API type we need
-        # (dataset, file) for the listing type asked by user (i.e.
-        # variable, dataset, file)
-        #
-        # But note that in most case, search-API 'type' will be overrided
-        # later anyway as it is forced in dedicated modules (e.g. in
-        # sdrdataset, sdrfile, etc..).
-        #
-        # Also note that we 'force' (i.e. not 'default') the parameter
-        # here, so to prevent user to set it. We do this because if user
-        # use '-f' option and type=Dataset, it will not do as the display
-        # type will not fit the type of data fetched from search-API).
-        #
-        if args.type_ in (sdconst.SA_TYPE_AGGREGATION,sdconst.SA_TYPE_DATASET):
-            sddeferredbefore.add_forced_parameter(stream,'type',sdconst.SA_TYPE_DATASET)
-        elif args.type_ in (sdconst.SA_TYPE_FILE,):
-            sddeferredbefore.add_forced_parameter(stream,'type',sdconst.SA_TYPE_FILE)
-        else:
-            from sdexception import SDException
-            raise SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
-
         args.stream=stream # hack: pass 'stream' object downstream as a standalone argument (not inside args)
+
+        set_stream_type(args)
 
         import sdtsaction
         sdtsaction.actions[args.action](args)
