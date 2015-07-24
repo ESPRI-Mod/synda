@@ -101,53 +101,12 @@ def get_stream(args):
             sdstream.set_scalar(stream,'progress',True)
 
 if __name__ == '__main__':
-    """
-    NEW WAY
 
     # create the top-level parser
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
-    subparsers = parser.add_subparsers(dest='subparser_name')
 
-    parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
-    parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
-    parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
-    parser.add_argument('-N','--non_interactive',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively (useful in cron jobs)')
-    parser.add_argument('-r','--replica',action='store_true',help='show replica')
-    parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
-    parser.add_argument('-s','--selection',default=None)
-    parser.add_argument('-V','--version',action='store_true') # beware: version exist both as option and as action
-    parser.add_argument('-y','--dry_run',action='store_true')
-
-    type_grp=parser.add_argument_group(None)
-    type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-    type_grp.add_argument('-d','--dataset',dest='type_',action='store_const',const=sdconst.SA_TYPE_DATASET)
-    type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
-    type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-
-    # create parser for sub-commands
-    sdsubparser.run(subparsers)
-
-    args=parser.parse_args()
-
-    if args.version:
-        import sdapp
-        print sdapp.version
-        sys.exit(0)
-
-    # check type mutex
-    #
-    # There is no way to check mutex as 'dest' argparse feature is used. Maybe
-    # use add_mutually_exclusive_group(), but currently, doing so makes the
-    # help look ugly. So better leave it as is until argparse handle this case
-    # smoothly.
-
-    import sdtiaction
-    sdtiaction.actions[args.action](args)
-    #exec_action(args)
-    """
-
-    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
+    # NEW WAY
+    #subparsers = parser.add_subparsers(dest='subparser_name')
 
     parser.add_argument('action',nargs='?',help=sdi18n.m0015)
 
@@ -170,6 +129,10 @@ if __name__ == '__main__':
     type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
     type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
+    # NEW WAY
+    # create parser for sub-commands
+    #sdsubparser.run(subparsers)
+
     args = parser.parse_args()
 
     if args.version:
@@ -183,6 +146,11 @@ if __name__ == '__main__':
     # use add_mutually_exclusive_group(), but currently, doing so makes the
     # help look ugly. So better leave it as is until argparse handle this case
     # smoothly.
+
+    # NEW WAY
+    #import sdtiaction
+    #sdtiaction.actions[args.action](args)
+    #exec_action(args)
 
     if args.action in ['autoremove','cache','certificate','daemon','history','param','queue','replica','reset','retry','selection','test','update','upgrade','watch']:
         import sdtiaction
