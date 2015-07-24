@@ -12,8 +12,7 @@
 """'synda' command (front-end to Synda main commands).
 
 Notes
-    - in this file, most module import directives are moved near the calls,
-      so to improve startup time (even for sdapp).
+    - in this file, most module import directives are moved near the calls, so to improve startup time (even for sdapp).
     - do not import 'sdlog' at the beggining of this file, because in this case, it breaks the daemon startup (i.e. double-fork problem) !
     - do not put a dry_run test here (sdtiaction's funcs are called from other place too, so the dry_run test need to be done inside sdtiaction's funcs)
 """
@@ -93,7 +92,21 @@ if __name__ == '__main__':
 
     args=parser.parse_args()
 
-    exec_action(args)
+    if args.version:
+        import sdapp
+        print sdapp.version
+        sys.exit(0)
+
+    # check type mutex
+    #
+    # There is no way to check mutex as 'dest' argparse feature is used. Maybe
+    # use add_mutually_exclusive_group(), but currently, doing so makes the
+    # help look ugly. So better leave it as is until argparse handle this case
+    # smoothly.
+
+    import sdtiaction
+    sdtiaction.actions[args.action](args)
+    #exec_action(args)
     """
 
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -133,17 +146,11 @@ if __name__ == '__main__':
     # help look ugly. So better leave it as is until argparse handle this case
     # smoothly.
 
-    if args.action in ['autoremove','cache','certificate','daemon','history','queue','replica','reset','retry','selection','test','upgrade','watch']:
+    if args.action in ['autoremove','cache','certificate','daemon','history','param','queue','replica','reset','retry','selection','test','update','upgrade','watch']:
         import sdtiaction
         sdtiaction.actions[args.action](args)
     elif args.action=='help':
         parser.print_help()
-    elif args.action=='update':
-        print_stderr('Not implemented yet.')   
-    elif args.action=='param':
-        import sdparam
-        sdparam.main(args.parameter) # tricks to re-use sdparam CLI parser
-
     elif args.action in ['dump','list','search','show','version']:
         import sddeferredbefore
 

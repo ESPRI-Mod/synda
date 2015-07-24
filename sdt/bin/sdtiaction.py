@@ -290,6 +290,10 @@ def daemon(args):
         elif action=="status":
             sddaemon.print_daemon_status()
 
+def param(args):
+    import sdparam
+    sdparam.main(args.parameter) # tricks to re-use sdparam CLI parser
+
 def queue(args):
     import sdstatquery
     from tabulate import tabulate
@@ -338,6 +342,9 @@ def watch(args):
     else:
         print_stderr('Daemon not running')
 
+def update(args):
+    print_stderr('Not implemented yet.')   
+
 # init.
 
 actions={
@@ -351,10 +358,12 @@ actions={
     'selection':selection, 
     'upgrade':upgrade,
     'daemon':daemon, 
+    'param':param,
     'queue':queue,
     'replica':replica,
     'reset':reset,
     'retry':retry,
     'test':test,
+    'update':update,
     'watch':watch
 }
