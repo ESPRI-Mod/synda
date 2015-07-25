@@ -15,6 +15,7 @@ Notes
     - In this file, module import directives are moved near the calls, so to improve startup time.
 """
 
+import sys
 import sdconst
 import sdtools
 from sdtools import print_stderr
@@ -50,6 +51,13 @@ def get_stream(args):
         if sdconfig.config.getboolean('interface','progress'):
             sdstream.set_scalar(stream,'progress',True)
 
+def check_stream(stream):
+    import sdstream
+
+    if sdstream.is_empty(stream):
+        print 'No packages will be installed, upgraded, or removed.'
+        sys.exit(0)
+
 def get_facet_early(orig_stream,name):
     """Get facets from a dqueries object at an early time (before any transformation of that object occured).
 
@@ -83,7 +91,6 @@ def is_one_variable_per_dataset_project(args):
         For such cases, there is no point to display a variable list,
         so we change the route to display the dataset list.
     """
-    import sys
 
     # retrieve project from input
     project=get_facet_early(args.stream,'project')

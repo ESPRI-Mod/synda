@@ -12,9 +12,12 @@
 """'synda' command (front-end to Synda main commands).
 
 Notes
-    - in this file, most module import directives are moved near the calls, so to improve startup time (even for sdapp).
-    - do not import 'sdlog' at the beggining of this file, because in this case, it breaks the daemon startup (i.e. double-fork problem) !
-    - do not put a dry_run test here (sdtiaction's funcs are called from other place too, so the dry_run test need to be done inside sdtiaction's funcs)
+    - in this file, most module import directives are moved near the calls, so
+      to improve startup time (even for sdapp).
+    - do not import 'sdlog' at the beggining of this file, because in this
+      case, it breaks the daemon startup (i.e. double-fork problem) !
+    - do not put a dry_run test here (sdtiaction's funcs are called from other
+      place too, so the dry_run test need to be done inside sdtiaction's funcs)
 """
 
 import sys
@@ -144,7 +147,7 @@ if __name__ == '__main__':
         sdtsaction.actions[args.action](args)
 
     elif args.action in ['remove','install','stat']:
-        import sdstream, sddeferredbefore, syndautils
+        import sddeferredbefore, syndautils
 
         stream=syndautils.get_stream(args)
 
@@ -153,9 +156,7 @@ if __name__ == '__main__':
         if args.action in ['remove','install']:
             syndautils.check_daemon()
 
-        if sdstream.is_empty(stream):
-            print 'No packages will be installed, upgraded, or removed.'
-            sys.exit(0)
+        syndautils.check_stream(stream)
 
         # set the stream type.
         # note that we 'force' (i.e. not 'default') the parameter here, so to prevent user to set it
