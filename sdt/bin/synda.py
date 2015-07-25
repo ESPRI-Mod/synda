@@ -69,37 +69,6 @@ def set_stream_type(args):
         from sdexception import SDException
         raise SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
 
-def check_daemon():
-    import sdconfig
-    if sdconfig.prevent_daemon_and_modification:
-        import sddaemon
-        if sddaemon.is_running():
-            print 'The daemon must be stopped before installing/removing dataset'
-            sys.exit(3)
-
-def get_stream(args):
-        import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
-
-        # hack
-        if args.action=='list':
-            args.no_default=True
-
-        buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
-        selection=sdparse.build(buffer,load_default=(not args.no_default))
-        stream=selection.to_stream()
-
-        # Set default value for nearest here
-        #
-        # TODO: make it work with all actions (e.g. search) as it only working for 'install' action for now
-        #
-        #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
-        if sdconfig.config.getboolean('behaviour','nearest'):
-            sdstream.set_scalar(stream,'nearest',True)
-
-        # progress
-        if sdconfig.config.getboolean('interface','progress'):
-            sdstream.set_scalar(stream,'progress',True)
-
 if __name__ == '__main__':
 
     # create the top-level parser
@@ -158,7 +127,9 @@ if __name__ == '__main__':
     elif args.action=='help':
         parser.print_help()
     elif args.action in ['dump','list','search','show','version']:
-        stream=get_stream(args)
+        import syndautils
+
+        stream=syndautils.get_stream(args)
 
         # set default type
         if args.type_ is None:
@@ -173,14 +144,14 @@ if __name__ == '__main__':
         sdtsaction.actions[args.action](args)
 
     elif args.action in ['remove','install','stat']:
-        import sdstream, sddeferredbefore
+        import sdstream, sddeferredbefore, syndautils
 
-        stream=get_stream(args)
+        stream=syndautils.get_stream(args)
 
         # those actions systematically trigger full search (i.e. limit keyword cannot be used here)
 
         if args.action in ['remove','install']:
-            check_daemon()
+            syndautils.check_daemon()
 
         if sdstream.is_empty(stream):
             print 'No packages will be installed, upgraded, or removed.'

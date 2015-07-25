@@ -9,16 +9,46 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains 'synda' command utils.
+"""This module contains startup helper.
 
-Note
-    In this file, module import directives are moved near the calls,
-    so to improve startup time.
+Notes
+    - In this file, module import directives are moved near the calls, so to improve startup time.
 """
 
 import sdconst
 import sdtools
 from sdtools import print_stderr
+
+def check_daemon():
+    import sdconfig
+    if sdconfig.prevent_daemon_and_modification:
+        import sddaemon
+        if sddaemon.is_running():
+            print 'The daemon must be stopped before installing/removing dataset'
+            sys.exit(3)
+
+def get_stream(args):
+        import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
+
+        # hack
+        if args.action=='list':
+            args.no_default=True
+
+        buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
+        selection=sdparse.build(buffer,load_default=(not args.no_default))
+        stream=selection.to_stream()
+
+        # Set default value for nearest here
+        #
+        # TODO: make it work with all actions (e.g. search) as it only working for 'install' action for now
+        #
+        #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
+        if sdconfig.config.getboolean('behaviour','nearest'):
+            sdstream.set_scalar(stream,'nearest',True)
+
+        # progress
+        if sdconfig.config.getboolean('interface','progress'):
+            sdstream.set_scalar(stream,'progress',True)
 
 def get_facet_early(orig_stream,name):
     """Get facets from a dqueries object at an early time (before any transformation of that object occured).
