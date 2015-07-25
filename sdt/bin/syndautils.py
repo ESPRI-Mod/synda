@@ -51,12 +51,28 @@ def get_stream(args):
         if sdconfig.config.getboolean('interface','progress'):
             sdstream.set_scalar(stream,'progress',True)
 
+def file_full_search(args):
+    # this func systematically trigger full search (i.e. limit keyword cannot be used here)
+
+    stream=get_stream(args)
+    check_stream(stream)
+    force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
+    import sdsearch
+    files=sdsearch.run(stream=stream,dry_run=args.dry_run)
+
 def check_stream(stream):
     import sdstream
 
     if sdstream.is_empty(stream):
         print 'No packages will be installed, upgraded, or removed.'
         sys.exit(0)
+
+def force_type(stream,type_):
+    import sddeferredbefore
+
+    # we 'force' (i.e. we do not just set as 'default') the parameter here, so
+    # to prevent user to set it
+    sddeferredbefore.add_forced_parameter(stream,'type',type_)
 
 def get_facet_early(orig_stream,name):
     """Get facets from a dqueries object at an early time (before any transformation of that object occured).

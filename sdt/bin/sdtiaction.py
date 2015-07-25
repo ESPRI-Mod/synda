@@ -61,11 +61,17 @@ def history(args):
     li=[d.values() for d in sddao.get_history_lines()] # listofdict to listoflist
     print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
 
-def install(files,args):
+def install(args,files=None):
     """
     Returns
         number of newly installed files
     """
+    import syndautils
+
+    syndautils.check_daemon()
+
+    if files is None:
+        files=syndautils.file_full_search(args)
 
     if args.dry_run:
         return 0
@@ -130,8 +136,12 @@ def install(files,args):
 
     return count_new
 
-def remove(files,args):
-    import sddelete,sddeletefile
+def remove(args):
+    import sddelete,sddeletefile,syndautils
+
+    syndautils.check_daemon()
+
+    files=syndautils.file_full_search(args)
 
     if not args.dry_run:
         import humanize, sdsimplefilter, sdconst, sdutils, sdoperation, sddeletedataset
@@ -172,7 +182,11 @@ def reset(args):
     import sddeletefile
     sddeletefile.reset()
 
-def stat(files,args):
+def stat(args):
+
+    import syndautils
+    files=syndautils.file_full_search(args)
+
     if not args.dry_run:
         import sdstat
         sdstat.run(files)
@@ -215,7 +229,7 @@ def upgrade(args):
 
             files=sdsearch.run(selection=selection)
             args.non_interactive=True
-            install(files,args)
+            install(args,files=files)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst

@@ -124,7 +124,7 @@ if __name__ == '__main__':
     #sdtiaction.actions[args.action](args)
     #exec_action(args)
 
-    if args.action in ['autoremove','cache','certificate','daemon','history','param','queue','replica','reset','retry','selection','test','update','upgrade','watch']:
+    if args.action in ['autoremove','cache','certificate','daemon','history','install','param','queue','remove','replica','reset','retry','selection','stat','test','update','upgrade','watch']:
         import sdtiaction
         sdtiaction.actions[args.action](args)
     elif args.action=='help':
@@ -146,28 +146,6 @@ if __name__ == '__main__':
         import sdtsaction
         sdtsaction.actions[args.action](args)
 
-    elif args.action in ['remove','install','stat']:
-        import sddeferredbefore, syndautils
-
-        stream=syndautils.get_stream(args)
-
-        # those actions systematically trigger full search (i.e. limit keyword cannot be used here)
-
-        if args.action in ['remove','install']:
-            syndautils.check_daemon()
-
-        syndautils.check_stream(stream)
-
-        # set the stream type.
-        # note that we 'force' (i.e. not 'default') the parameter here, so to prevent user to set it
-        # (i.e. the type is always SA_TYPE_FILE when we are here).
-        sddeferredbefore.add_forced_parameter(stream,'type',sdconst.SA_TYPE_FILE)
-
-        import sdsearch
-        files=sdsearch.run(stream=stream,dry_run=args.dry_run)
-
-        import sdtiaction
-        sdtiaction.actions[args.action](files,args)
     else:
         print_stderr('Invalid operation %s'%args.action)   
         print_stderr("Use '--help' option for more info")
