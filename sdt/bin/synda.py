@@ -124,12 +124,14 @@ if __name__ == '__main__':
     #sdtiaction.actions[args.action](args)
     #exec_action(args)
 
-    if args.action in ['autoremove','cache','certificate','daemon','history','install','param','queue','remove','replica','reset','retry','selection','stat','test','update','upgrade','watch']:
-        import sdtiaction
+    import sdtiaction
+    import sdtsaction
+
+    if args.action in sdtiaction.actions.keys():
         sdtiaction.actions[args.action](args)
     elif args.action=='help':
         parser.print_help()
-    elif args.action in ['dump','list','search','show','version']:
+    elif args.action in sdtsaction.actions.keys():
         import syndautils
 
         stream=syndautils.get_stream(args)
