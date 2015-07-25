@@ -124,14 +124,14 @@ if __name__ == '__main__':
     #sdtiaction.actions[args.action](args)
     #exec_action(args)
 
-    import sdtiaction
-    import sdtsaction
 
-    if args.action in sdtiaction.actions.keys():
-        sdtiaction.actions[args.action](args)
-    elif args.action=='help':
+    if args.action=='help':
         parser.print_help()
-    elif args.action in sdtsaction.actions.keys():
+        sys.exit(0)
+
+
+    import sdtsaction
+    if args.action in sdtsaction.actions.keys():
         import syndautils
 
         stream=syndautils.get_stream(args)
@@ -148,8 +148,16 @@ if __name__ == '__main__':
         import sdtsaction
         sdtsaction.actions[args.action](args)
 
-    else:
-        print_stderr('Invalid operation %s'%args.action)   
-        print_stderr("Use '--help' option for more info")
-        #parser.print_help()
-        sys.exit(2)
+        sys.exit(0)
+
+
+    import sdtiaction
+    if args.action in sdtiaction.actions.keys():
+        sdtiaction.actions[args.action](args)
+        sys.exit(0)
+
+
+    print_stderr('Invalid operation %s'%args.action)   
+    print_stderr("Use '--help' option for more info")
+    #parser.print_help()
+    sys.exit(2)
