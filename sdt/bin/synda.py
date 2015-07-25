@@ -24,15 +24,8 @@ import sys
 import argparse
 import sdconst
 import sdi18n
-#import sdaction
 #import sdsubparser
 from sdtools import DefaultHelpParser,print_stderr
-
-"""
-def exec_action(args):
-    method = getattr(sdaction, args.subparser_name)
-    result = method()
-"""
 
 def set_stream_type(args):
     import sddeferredbefore
