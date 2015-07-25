@@ -157,8 +157,8 @@ if __name__ == '__main__':
             print 'No packages will be installed, upgraded, or removed.'
             sys.exit(0)
 
-        # Set the sdtream type.
-        # Note that we 'force' (i.e. not 'default') the parameter here, so to prevent user to set it
+        # set the stream type.
+        # note that we 'force' (i.e. not 'default') the parameter here, so to prevent user to set it
         # (i.e. the type is always SA_TYPE_FILE when we are here).
         sddeferredbefore.add_forced_parameter(stream,'type',sdconst.SA_TYPE_FILE)
 
