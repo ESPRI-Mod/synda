@@ -70,12 +70,9 @@ if __name__ == '__main__':
     # create the top-level parser
     parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
 
-    # NEW WAY
-    #subparsers = parser.add_subparsers(dest='subparser_name')
-
-    parser.add_argument('action',nargs='?',help=sdi18n.m0015)
-
-    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
+    #subparsers = parser.add_subparsers(dest='action')                      # NEW WAY
+    parser.add_argument('action',nargs='?',help=sdi18n.m0015)               # OLD WAY
+    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # OLD WAY
 
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
@@ -112,16 +109,12 @@ if __name__ == '__main__':
     # help look ugly. So better leave it as is until argparse handle this case
     # smoothly.
 
-    # NEW WAY
-    #import sdtiaction
-    #sdtiaction.actions[args.action](args)
-    #exec_action(args)
 
+    # -- action routing -- #
 
     if args.action=='help':
         parser.print_help()
         sys.exit(0)
-
 
     import sdtsaction
     if args.action in sdtsaction.actions.keys():
@@ -143,12 +136,10 @@ if __name__ == '__main__':
 
         sys.exit(0)
 
-
     import sdtiaction
     if args.action in sdtiaction.actions.keys():
         sdtiaction.actions[args.action](args)
         sys.exit(0)
-
 
     print_stderr('Invalid operation %s'%args.action)   
     print_stderr("Use '--help' option for more info")
