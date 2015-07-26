@@ -51,6 +51,8 @@ def get_stream(args):
         if sdconfig.config.getboolean('interface','progress'):
             sdstream.set_scalar(stream,'progress',True)
 
+        return stream
+
 def file_full_search(args):
     # this func systematically trigger full search (i.e. limit keyword cannot be used here)
 
@@ -59,6 +61,8 @@ def file_full_search(args):
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
     import sdsearch
     files=sdsearch.run(stream=stream,dry_run=args.dry_run)
+
+    return files
 
 def check_stream(stream):
     import sdstream
