@@ -157,7 +157,7 @@ def run_job(job,args):
 
     elif script_exists(args.script_dir,job['job_class'],'.sh'):
         # Run job as shell script (fork)
-        (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh'),job['full_path_variable']],shell=False)
+        (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh'),job['full_path_variable'],job['project']],shell=False)
         logging.debug('Script return code: {0}\n'.format(status))
         logging.debug('Script stdout: {0}\n'.format(stdout))
         logging.debug('Script stderr: {0}\n'.format(stderr))
@@ -179,8 +179,7 @@ def process_jobs(service,args):
         logging.info('Check for waiting jobs')
         result=service.get_job(job_class=args.job_class,pipeline=args.pipeline,order='fifo')
         job=result['job']
-        # Loop until remaining jobs (job['status'] = 'waiting')
-        while job and (quit==False):
+        while job and (quit==False): # loop until no more job waiting
             logging.info('Processing {0}'.format(job['full_path_variable']))
             if args.debug:
                 print str(job)

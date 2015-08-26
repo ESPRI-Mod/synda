@@ -138,7 +138,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
             arg='%s/%s/%s/'%(spconfig.data_folder,dataset_pattern,ppprun.variable)
 
         # notes: 
-        #  - job_class and transition are the same (transition is from the FSM view, and job_class is from the job consumer view).
+        #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
         #  - transition must be set the the job, because we need it when doing insertion in jobrun table.
         job=JOBRun(job_class=ppprun.transition,
                 full_path_variable=arg, # TODO: rename full_path_variable into generic name (matching both variable and dataset only path)
@@ -147,7 +147,8 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
                 dataset_pattern=dataset_pattern,
                 variable=ppprun.variable,
                 start_date=sptime.now(),
-                ppprun_id=ppprun.ppprun_id)
+                ppprun_id=ppprun.ppprun_id,
+                project=ppprun.project)
 
         # update DB
         ppprun.error_msg=None # we reset values from previous try if any
