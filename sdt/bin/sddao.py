@@ -12,10 +12,13 @@
 """Contains SQL simple queries."""
 
 import sdapp
-from sdexception import SDException
+import sdconst
+from sdexception import SDException,NoTransferWaitingException
 import sddb
 import sdsqlutils
 import sdtime
+import sdfiledao
+import sddatasetdao
 
 # --- parameter table --- #
 
@@ -171,5 +174,21 @@ def store_dataset_export_event(d,conn=sddb.conn):
     c.execute("insert into export (dataset_id,export_date) values (?,?)",(d.dataset_id,sdtime.now(),))
     conn.commit()
     c.close()
+
+# --- multi tables --- # 
+
+def get_one_waiting_transfer():
+    li=sdfiledao.get_files(limit=1,status=sdconst.TRANSFER_STATUS_WAITING)
+
+    if len(li)==0:
+        raise NoTransferWaitingException()
+    else:
+        t=li[0]
+
+    # retrieve the dataset
+    d=sddatasetdao.get_dataset(dataset_id=t.dataset_id)
+    t.dataset=d
+
+    return t
 
 # module init.

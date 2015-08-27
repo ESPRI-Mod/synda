@@ -12,12 +12,10 @@
 """Contains file DAO SQL queries."""
 
 import sdapp
-from sdexception import SDException,NoTransferWaitingException
+from sdexception import SDException
 import sddb
 import sdsqlutils
 from sdtypes import File
-import sdconst
-import sddatasetdao
 
 def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
     # no commit here (will be committed in updatelastaccessdate())
@@ -113,20 +111,6 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
     c.close()
 
     return files
-
-def get_one_waiting_transfer():
-    li=get_files(limit=1,status=sdconst.TRANSFER_STATUS_WAITING)
-
-    if len(li)==0:
-        raise NoTransferWaitingException()
-    else:
-        t=li[0]
-
-    # retrieve the dataset
-    d=sddatasetdao.get_dataset(dataset_id=t.dataset_id)
-    t.dataset=d
-
-    return t
 
 def get_dataset_files(d,conn=sddb.conn,limit=None):
     """
