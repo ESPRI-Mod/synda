@@ -177,7 +177,7 @@ def store_dataset_export_event(d,conn=sddb.conn):
 
 # --- multi tables --- # 
 
-def get_file(file_functional_id):
+def get_file(file_functional_id=None):
     li=sdfiledao.get_files(file_functional_id=file_functional_id)
 
     if len(li)==0:

@@ -17,6 +17,7 @@ import sddatasetdao
 import sddatasetflag
 import sdproduct
 import sdeventdao
+import sddao
 import sdconst
 import sdtime
 import sdlog
@@ -249,6 +250,7 @@ if __name__ == '__main__':
     # code below is used to trigger event manually
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--file_functional_id',help='File identifier')
     parser.add_argument('-n','--name',required=True,help='Event name')
     parser.add_argument('-m','--model',help='Model name')
     parser.add_argument('-p','--project',default='CMIP5',help='Project name')
@@ -262,5 +264,12 @@ if __name__ == '__main__':
         assert args.dataset_pattern is not None
 
         latest_dataset_complete_output12_event(args.project,args.model,args.dataset_pattern,commit=True)
+    elif args.name == 'file_complete_event':
+
+        assert args.file_functional_id is not None
+
+        f=sddao.get_file(file_functional_id=args.file_functional_id)
+
+        file_complete_event(f)
     else:
-        print_stderr('Incorrect event name')   
+        print_stderr('Incorrect event name')
