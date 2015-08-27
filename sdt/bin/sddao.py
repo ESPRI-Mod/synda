@@ -13,7 +13,7 @@
 
 import sdapp
 import sdconst
-from sdexception import SDException,NoTransferWaitingException
+from sdexception import SDException,NoTransferWaitingException,FileNotFoundException
 import sddb
 import sdsqlutils
 import sdtime
@@ -176,6 +176,20 @@ def store_dataset_export_event(d,conn=sddb.conn):
     c.close()
 
 # --- multi tables --- # 
+
+def get_file(file_functional_id):
+    li=sdfiledao.get_files(file_functional_id=file_functional_id)
+
+    if len(li)==0:
+        raise FileNotFoundException()
+    else:
+        f=li[0]
+
+    # retrieve the dataset
+    d=sddatasetdao.get_dataset(dataset_id=f.dataset_id)
+    f.dataset=d
+
+    return f
 
 def get_one_waiting_transfer():
     li=sdfiledao.get_files(limit=1,status=sdconst.TRANSFER_STATUS_WAITING)
