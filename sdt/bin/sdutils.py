@@ -25,7 +25,7 @@ import subprocess
 import argparse
 import sdapp
 import sdconst
-from sdexception import SDException
+from sdexception import SDException,FileNotFoundException
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):

@@ -23,6 +23,8 @@ class SDException(Exception):
     def __str__(self):
         return "code=%s,message=%s"%(self.code,self.msg)
 
+class FileNotFoundException(SDException):
+    pass
 class NoTransferWaitingException(SDException):
     pass
 class FatalException(SDException):
