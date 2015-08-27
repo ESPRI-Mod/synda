@@ -9,15 +9,17 @@
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
  
-"""This module contains events used in 'sdtaskscheduler' module."""
+"""This module contains funcs used in 'sdtaskscheduler' module."""
 
 import sys
 import os
 import time
 import Queue
 import traceback
+import sdapp
 import sdconfig
 import sdfiledao
+import sddao
 import sdconst
 import sdstatquery
 import sdtime
@@ -143,7 +145,7 @@ def start_transfers():
     if new_transfer_count>0:
         for i in range(new_transfer_count):
             try:
-                tr=sdfiledao.get_one_waiting_transfer()
+                tr=sddao.get_one_waiting_transfer()
                 start_transfer(tr)
             except NoTransferWaitingException, e:
                 pass
