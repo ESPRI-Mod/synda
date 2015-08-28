@@ -57,6 +57,9 @@ class DatasetVersions():
 
         Note
             This method do not use the latest flag (computes from scratch)
+
+        TODO
+            Maybe rewrite this method to be based on get_latest_dataset() method (so to remove duplicate code)
         """
 
         # initialise with the first dataset's (may be any dataset)
@@ -72,15 +75,23 @@ class DatasetVersions():
             return False
 
     def get_latest_dataset(self):
-        """Return the dataset with the most recent version number.
+        """Return the latest dataset.
 
         Note
             This method do not use the latest flag (computes from scratch)
         """
-        pass
+
+        # initialise with the first dataset's (may be any dataset)
+        latest_dataset=self._dataset_versions[0]
+
+        for d in self._dataset_versions:
+            if self.compare(d,latest_dataset):
+                latest_dataset=d
+
+        return latest_dataset
 
     def compare(self,d_a,d_b):
-        """Returns true if d_a is higher than d_b, else false.
+        """Returns true if d_a is more recent (higher in most case) than d_b, else false.
 
         Samples
             d_a.version => v20110901
