@@ -70,14 +70,13 @@ class DatasetVersions():
 
     def get_version_with_latest_flag_set(self):
         """
+        Description
+            alias
+
         Returns
             dataset
         """
-        for d in self._dataset_versions:
-            if d.latest:
-                return d
-
-        raise SDException("SDATYPES-032","fatal error")
+        return get_dataset_with_latest_flag_set()
 
     def get_dataset_with_latest_flag_set(self):
         for d in self._dataset_versions:
