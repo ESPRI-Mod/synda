@@ -43,17 +43,7 @@ class DatasetVersions():
 
     def is_version_higher_than_latest(self,i__d):
         """ returns true if i__d version is higher than the version with latest flag set, else returns false """
-        return self.compare(i__d,self.get_version_with_latest_flag_set())
-
-    def get_version_with_latest_flag_set(self):
-        """
-        Description
-            alias
-
-        Returns
-            dataset
-        """
-        return get_dataset_with_latest_flag_set()
+        return self.compare(i__d,self.get_dataset_with_latest_flag_set())
 
     def get_dataset_with_latest_flag_set(self):
         for d in self._dataset_versions:
@@ -63,10 +53,10 @@ class DatasetVersions():
         raise SDException("SDDATVER-001","fatal error")
 
     def is_most_recent_version_number(self,i__d):
-        """Is i__d version the latest one
+        """Is i__d version the latest one.
 
-        note
-          this method is *NOT* related with the latest flag !! (it is just a version *NUMBER* comparison method)
+        Note
+            This method do not use the latest flag (computes from scratch)
         """
 
         # initialise with the first dataset's (may be any dataset)
@@ -80,6 +70,14 @@ class DatasetVersions():
             return True
         else:
             return False
+
+    def get_latest_dataset(self):
+        """Return the dataset with the most recent version number.
+
+        Note
+            This method do not use the latest flag (computes from scratch)
+        """
+        pass
 
     def compare(self,d_a,d_b):
         """Returns true if d_a is higher than d_b, else false.
