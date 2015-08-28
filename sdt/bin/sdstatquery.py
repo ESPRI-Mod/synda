@@ -17,7 +17,8 @@ import sdapp
 import sddb
 import sdconst
 import sdsqlutils
-from sdtypes import DatasetVersions,Dataset
+from sdtypes import Dataset
+from sddatasetversion import DatasetVersions
 import sddao
 
 def get_selection_stats(us,status):
