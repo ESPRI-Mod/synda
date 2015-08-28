@@ -60,7 +60,7 @@ class DatasetVersions():
             if d.latest:
                 return d
 
-        raise SDException("SDATYPES-044","fatal error")
+        raise SDException("SDDATVER-001","fatal error")
 
     def is_most_recent_version_number(self,i__d):
         """Is i__d version the latest one
@@ -115,11 +115,11 @@ class DatasetVersions():
                 elif len(d_a.version)==2 and len(d_b.version)==9:
                     return False
                 else:
-                    raise SDException("SDATYPES-092","Incorrect version number (%s,%s)"%(d_a.version,d_b.version))
+                    raise SDException("SDDATVER-002","Incorrect version number (%s,%s)"%(d_a.version,d_b.version))
 
 
                 # To raise exception instead, uncomment line below
-                #raise SDException("SDATYPES-600","Incorrect timestamp (%s,%s,%s,%s)"%(d_a.dataset_functional_id,d_b.dataset_functional_id,d_a.timestamp,d_b.timestamp))
+                #raise SDException("SDDATVER-003","Incorrect timestamp (%s,%s,%s,%s)"%(d_a.dataset_functional_id,d_b.dataset_functional_id,d_a.timestamp,d_b.timestamp))
 
 
         else:
