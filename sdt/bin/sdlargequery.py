@@ -12,7 +12,7 @@
 """This module contains complex SQL queries."""
 
 import sdapp
-from sdtypes import DatasetVersions,File
+from sdtypes import File
 import sddb
 import sddao
 import sdconst
