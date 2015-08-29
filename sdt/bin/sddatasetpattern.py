@@ -16,44 +16,42 @@ import sdapp
 import sddatasetdao
 import sdproduct
 from sddatasetversion import DatasetVersions
+from sdtypes import Dataset
 from sdtools import print_stderr
 from sdexception import SDException
 
 def build_dataset(dataset_pattern):
+    d=Dataset()
+    d.dataset_pattern=dataset_pattern
 
     # explode dataset_pattern to o1/o2
     (local_path_output1,local_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern)
 
     # retrieve dataset from db
-    d1=get_dataset(local_path_output1)
-    d2=get_dataset(local_path_output2)
+    d1=sddatasetdao.get_dataset_(local_path=local_path_output1)
+    d2=sddatasetdao.get_dataset_(local_path=local_path_output2)
 
     if d1 and d2:
+
+        #TODO BEGIN
 
         # do some consistency check between output1 dataset and output2 dataset
         if d1.latest and d2.latest:
             dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
+        #TODO END
+
     elif d1:
-
+        d.version=d2.version
+        d.timestamp=d2.timestamp
     elif d2:
-
+        d.version=d2.version
+        d.timestamp=d2.timestamp
     else:
         raise SDException()
 
     return d
-
-
-    d=sddatasetdao.get_dataset(path=dataset_local_path)
-    (version,timestamp)=get_version_and_timestamp(args.dataset[0])
-    d=Dataset()
-    d.version=version
-    d.timestamp=timestamp
-    d.dataset_pattern=dataset_pattern
-    return d
-
-# code below ok
 
 def check_requirement(dataset_pattern_paths):
     assert len(dataset)==2
