@@ -90,6 +90,18 @@ class DatasetVersions():
 
         return latest_dataset
 
+    def get_oldest_dataset(self):
+        """Returns the oldest dataset."""
+
+        # initialise with the first dataset's (may be any dataset)
+        oldest_dataset=self._dataset_versions[0]
+
+        for d in self._dataset_versions:
+            if not self.compare(d,oldest_dataset):
+                oldest_dataset=d
+
+        return oldest_dataset
+
     def compare(self,d_a,d_b):
         """Returns true if d_a is more recent (higher in most case) than d_b, else false.
 
