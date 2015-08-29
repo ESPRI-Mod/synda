@@ -126,9 +126,10 @@ def get_datasets(limit=None,conn=sddb.conn,**search_constraints): # don't change
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('dataset_functional_id')
+    parser.add_argument('dataset')
     args = parser.parse_args()
 
-    if args.dataset_functional_id is not None:
-        d=get_dataset(dataset_functional_id=args.dataset_functional_id)
+    if args.dataset is not None:
+        #d=get_dataset(dataset_functional_id=args.dataset)
+        d=get_dataset_(local_path=args.dataset)
         print d
