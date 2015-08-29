@@ -22,17 +22,19 @@ def add_dataset(dataset,commit=True,conn=sddb.conn):
     keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model']
     return sdsqlutils.insert(dataset,keys_to_insert,commit,conn)
 
-def get_dataset_id(dataset_functional_id,conn=sddb.conn):
-    """
-    Not used.
-    """
-    d=get_dataset(dataset_functional_id=dataset_functional_id,conn=conn)
+def get_dataset_(**search_constraints):
+    datasets=get_datasets(**search_constraints)
 
-    return d.dataset_id
+    if len(datasets)==0:
+        raise SDException("SYNCDDAO-003","Dataset not found")
+    elif len(datasets)==1:
+        return datasets[0]
+    else:
+        raise SDException("SYNCDDAO-004","Too many results")
 
 def get_dataset(path=None,dataset_id=None,dataset_functional_id=None,conn=sddb.conn):
     """
-    TODO: Maybe rewrite this func using a 'get_datasets()' generic search method.
+    TODO: if possible, remove this func and use get_dataset_() instead
     """
     d=None
 
