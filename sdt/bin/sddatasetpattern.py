@@ -19,28 +19,30 @@ from sddatasetversion import DatasetVersions
 from sdtools import print_stderr
 from sdexception import SDException
 
-def get_dataset_pattern_info(path):
-    check_multi_product_consistency(d)
-    d=get_dataset(dataset_pattern)
-
 def build_dataset(dataset_pattern):
 
     # explode dataset_pattern to o1/o2
-    (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern)
+    (local_path_output1,local_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern)
 
-    # retrieve info from db
-    if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
+    # retrieve dataset from db
+    d1=get_dataset(local_path_output1)
+    d2=get_dataset(local_path_output2)
 
-        d1=sddatasetdao.get_dataset(path=ds_path_output1)
-        d2=sddatasetdao.get_dataset(path=ds_path_output2)
+    if d1 and d2:
 
+        # do some consistency check between output1 dataset and output2 dataset
         if d1.latest and d2.latest:
             dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
-    else:
-        dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
-        dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
+    elif d1:
+
+    elif d2:
+
+    else:
+        raise SDException()
+
+    return d
 
 
     d=sddatasetdao.get_dataset(path=dataset_local_path)
