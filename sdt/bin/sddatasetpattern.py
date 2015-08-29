@@ -33,14 +33,13 @@ def build_dataset(dataset_pattern):
 
     if d1 and d2:
 
-        #TODO BEGIN
+        # do some consistency checks between output1 dataset and output2 dataset
 
-        # do some consistency check between output1 dataset and output2 dataset
-        if d1.latest and d2.latest:
-            dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
-            dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
+        if d1.latest != d2.latest:
+            print_stderr('Inconsistency detected: latest flag differ between %s and %s'%(d1.local_path,d2.local_path))
 
-        #TODO END
+        if d1.timestamp != d2.timestamp:
+            print_stderr('Inconsistency detected: timestamp differ between %s and %s'%(d1.local_path,d2.local_path))
 
     elif d1:
         d.version=d2.version
