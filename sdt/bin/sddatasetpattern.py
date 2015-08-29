@@ -53,7 +53,11 @@ def build_dataset(dataset_pattern):
 
 # code below ok
 
-def build_dataset_version(dataset_pattern_paths):
+def check_requirement(dataset_pattern_paths):
+    assert len(dataset)==2
+    assert 'CMIP5' in path for path in dataset_pattern_paths
+
+def build_datasetversions(dataset_pattern_paths):
     d1=build_dataset(dataset_pattern_paths[0])
     d2=build_dataset(dataset_pattern_paths[1])
 
@@ -70,12 +74,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.action == 'latest':
-        assert len(args.dataset)==2
-        datasetVersions=build_dataset_version(args.dataset)
+        check_requirement(args.dataset)
+        datasetVersions=build_datasetversions(args.dataset)
         print datasetVersions.get_latest_dataset().dataset_pattern
     elif args.action == 'oldest':
-        assert len(args.dataset)==2
-        datasetVersions=build_dataset_version(args.dataset)
+        check_requirement(args.dataset)
+        datasetVersions=build_datasetversions(args.dataset)
         print datasetVersions.get_oldest_dataset().dataset_pattern
     else:
         print_stderr('Invalid operation %s'%args.action)   
