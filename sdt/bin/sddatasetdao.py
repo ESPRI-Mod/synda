@@ -22,11 +22,14 @@ def add_dataset(dataset,commit=True,conn=sddb.conn):
     keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model']
     return sdsqlutils.insert(dataset,keys_to_insert,commit,conn)
 
-def get_dataset_(**search_constraints):
+def get_dataset_(not_found_raise_exception=False,**search_constraints):
     datasets=get_datasets(**search_constraints)
 
     if len(datasets)==0:
-        raise SDException("SYNCDDAO-003","Dataset not found")
+        if not_found_raise_exception:
+            raise SDException("SYNCDDAO-003","Dataset not found")
+        else:
+            return None
     elif len(datasets)==1:
         return datasets[0]
     else:
