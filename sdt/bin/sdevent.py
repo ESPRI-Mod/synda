@@ -134,6 +134,9 @@ def dataset_complete_event(project,model,dataset,commit=True):
     # store current 'latest' flag state
     old_latest=dataset.latest
 
+    # TODO: check if we we switch latest flag independently for each product (meaning output1 latest can be 1 while output2 latest is 0)
+    # tag4342342
+
     # compute new 'latest' flag
     if not old_latest:
         # old state is not latest
