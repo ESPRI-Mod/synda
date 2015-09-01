@@ -11,9 +11,14 @@
 
 """Contains product related routines."""
 
-def build_output12_dataset_pattern(path):
-    """Replace output12 product with Unix wildcard."""
+def replace_all_product_with_wildcard(path):
+    # this may be deprecated soon as 'process' will become a top directory
 
+    for product in ['/output/','/output1/','/output2/','/process/','/merge/']:
+        path=path.replace(product,"/*/")
+    return path
+
+def replace_output12_product_with_wildcard(path):
     for product in ['/output1/','/output2/']:
         path=path.replace(product,"/*/")
     return path
@@ -21,7 +26,7 @@ def build_output12_dataset_pattern(path):
 def get_output12_dataset_paths(path):
     """Return tuple with output1 based dataset path and output2 based dataset path."""
 
-    dataset_pattern=build_output12_dataset_pattern(path)
+    dataset_pattern=replace_output12_product_with_wildcard(path)
 
     o1=dataset_pattern.replace("/*/","/output1/")
     o2=dataset_pattern.replace("/*/","/output2/")

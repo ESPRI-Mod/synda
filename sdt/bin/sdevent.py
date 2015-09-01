@@ -79,12 +79,12 @@ def variable_complete_event(project,model,dataset,variable):
             d2=sddatasetdao.get_dataset(path=ds_path_output2)
 
             if sdvariable.is_variable_complete(d1.dataset_id,variable) and sdvariable.is_variable_complete(d2.dataset_id,variable):
-                dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset.local_path)
+                dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
                 variable_complete_output12_event(project,model,dataset_pattern,variable) # trigger event (cross dataset event)
         else:
             # we also trigger the 'variable_complete_output12_event' event if the variable is over one product only (because if only one product, then output12 event is also true)
 
-            dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset.local_path)
+            dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
             variable_complete_output12_event(project,model,dataset_pattern,variable) # trigger event (cross dataset event)
 
 def variable_complete_output12_event(project,model,dataset_pattern,variable,commit=True):
@@ -111,7 +111,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
             d2=sddatasetdao.get_dataset(path=ds_path_output2)
 
             if d1.status==sdconst.DATASET_STATUS_COMPLETE and d2.status==sdconst.DATASET_STATUS_COMPLETE:
-                dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset.local_path)
+                dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
                 dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
                 if d1.latest and d2.latest:
@@ -121,7 +121,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
                 else:
                     sdlog.warning("SYDEVENT-032","Event not triggered as one product is latest while the other product is not") # TODO: is this the right way to handle this case ?
         else:
-            dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset.local_path)
+            dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
             dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
             if dataset.latest:
@@ -226,10 +226,10 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
             d2=sddatasetdao.get_dataset(path=ds_path_output2)
 
             if d1.latest and d2.latest:
-                dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
+                dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
                 dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
         else:
-            dataset_pattern=sdproduct.build_output12_dataset_pattern(dataset_path)
+            dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
 def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):

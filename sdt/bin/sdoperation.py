@@ -89,7 +89,7 @@ def trigger_events():
 
     # add the dataset_pattern (used in the next step to remove duplicates)
     for v in li:
-        v.dataset_pattern=sdproduct.build_output12_dataset_pattern(v.dataset_path)
+        v.dataset_pattern=sdproduct.replace_output12_product_with_wildcard(v.dataset_path)
 
     # Remove duplicates
     #
