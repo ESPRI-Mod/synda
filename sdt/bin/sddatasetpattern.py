@@ -53,6 +53,9 @@ def build_dataset(dataset_pattern):
         if d1.timestamp != d2.timestamp:
             print_stderr('Inconsistency detected: timestamp differ between %s and %s'%(d1.local_path,d2.local_path))
 
+        d.version=d1.version
+        d.timestamp=d1.timestamp
+
     elif d1:
         # only output1 exist for this dataset
 
