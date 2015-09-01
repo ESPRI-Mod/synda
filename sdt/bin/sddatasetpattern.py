@@ -23,7 +23,7 @@ from sdexception import SDException
 def replace_all_product_with_wildcard(path):
     """
     Notes
-        - This func is an exception in sdt, because sdt should not deal with 'merge' product (this is usually managed only by sdp)
+        - This func is an exception in sdt, because sdt should not deal with non-ESGF 'merge' product (this is usually managed only by sdp)
         - This may be deprecated soon as 'process' will become a top directory
     """
 
@@ -37,7 +37,7 @@ def build_dataset(dataset_pattern):
     d.dataset_pattern=dataset_pattern
 
     # explode dataset_pattern to o1/o2
-    (local_path_output1,local_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern)
+    (local_path_output1,local_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern,replace_func=replace_all_product_with_wildcard)
 
     # retrieve dataset from db
     d1=sddatasetdao.get_dataset_(local_path=local_path_output1)

@@ -16,10 +16,10 @@ def replace_output12_product_with_wildcard(path):
         path=path.replace(product,"/*/")
     return path
 
-def get_output12_dataset_paths(path):
+def get_output12_dataset_paths(path,replace_func=replace_output12_product_with_wildcard):
     """Return tuple with output1 based dataset path and output2 based dataset path."""
 
-    dataset_pattern=replace_output12_product_with_wildcard(path)
+    dataset_pattern=replace_func(path)
 
     o1=dataset_pattern.replace("/*/","/output1/")
     o2=dataset_pattern.replace("/*/","/output2/")
