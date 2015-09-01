@@ -20,6 +20,18 @@ from sdtypes import Dataset
 from sdtools import print_stderr
 from sdexception import SDException
 
+def replace_all_product_with_wildcard(path):
+    """
+    Notes
+        - This func is an exception in sdt, because sdt should not deal with 'merge' product (this is usually managed only by sdp)
+        - This may be deprecated soon as 'process' will become a top directory
+    """
+
+    for product in ['/output/','/output1/','/output2/','/process/','/merge/']:
+        path=path.replace(product,"/*/")
+
+    return path
+
 def build_dataset(dataset_pattern):
     d=Dataset()
     d.dataset_pattern=dataset_pattern
