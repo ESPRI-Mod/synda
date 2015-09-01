@@ -12,10 +12,14 @@
 """Contains product related routines."""
 
 def replace_all_product_with_wildcard(path):
-    # this may be deprecated soon as 'process' will become a top directory
+    """
+    Note
+        This may be deprecated soon as 'process' will become a top directory
+    """
 
     for product in ['/output/','/output1/','/output2/','/process/','/merge/']:
         path=path.replace(product,"/*/")
+
     return path
 
 def replace_output12_product_with_wildcard(path):
