@@ -42,19 +42,23 @@ def build_dataset(dataset_pattern):
             print_stderr('Inconsistency detected: timestamp differ between %s and %s'%(d1.local_path,d2.local_path))
 
     elif d1:
-        d.version=d2.version
-        d.timestamp=d2.timestamp
+        # only output1 exist for this dataset
+
+        d.version=d1.version
+        d.timestamp=d1.timestamp
     elif d2:
+        # only output2 exist for this dataset
+
         d.version=d2.version
         d.timestamp=d2.timestamp
     else:
-        raise SDException()
+        raise SDException('SDDAPATT-001', 'Dataset not found')
 
     return d
 
 def check_requirement(dataset_pattern_paths):
-    assert len(dataset)==2
-    assert 'CMIP5' in path for path in dataset_pattern_paths
+    assert len(dataset_pattern_paths)==2
+    for path in dataset_pattern_paths: assert 'CMIP5' in path
 
 def build_datasetversions(dataset_pattern_paths):
     d1=build_dataset(dataset_pattern_paths[0])
