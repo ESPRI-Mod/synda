@@ -24,7 +24,7 @@ def get_data_folder():
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
-    return  "%s/data"%root_folder
+    return "%s/data"%root_folder
 
 def get_db_folder():
     if config.has_option('path','db_path'):
@@ -32,7 +32,7 @@ def get_db_folder():
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
-    return  "%s/db"%root_folder
+    return "%s/db"%root_folder
 
 def get_project_default_selection_file(project):
     path="%s/default_%s.txt"%(selection_default_folder,project)
