@@ -33,7 +33,7 @@ class WorkerThread(threading.Thread):
             self._service.run(self._instance)
             self._queue.put(self._instance) # add item in queue to handle database I/O in the main process
         except CertificateRenewalException, e:
-
+            sdlog.error("SDWUTILS-003","Certificate error: the daemon must be stopped")
             sdlog.error("SDWUTILS-001","Thread didn't complete successfully")
 
             # no need to log stacktrace here as exception is already logged downstream

@@ -39,7 +39,6 @@ class Download():
             sdlogon.renew_certificate(False)
         except Exception,e:
             sdlog.error("SDDOWNLO-502","Exception occured while retrieving certificate (%s)"%str(e))
-            sdlog.error("SDDOWNLO-504","Certificate error: the daemon must be stopped")
             raise CertificateRenewalException()
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
