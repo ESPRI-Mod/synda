@@ -40,6 +40,10 @@ def is_openid_set():
 def renew_certificate(force,quiet=True):
     """Renew ESGF certificate."""
 
+    _renew_certificate_helper(force,quiet)
+
+def _renew_certificate_helper(force,quiet):
+
     # TODO: move this log into the script so to print only when expired
     #sdlog.info("SYDLOGON-002","Renew certificate..")
 
