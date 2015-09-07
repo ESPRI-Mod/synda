@@ -15,7 +15,7 @@ import commands
 import os
 import argparse
 import sdapp
-from sdexception import SDException
+from sdexception import SDException,CertificateRenewalException
 import sdconfig
 import sdopenid
 import sdutils
@@ -39,10 +39,6 @@ def is_openid_set():
 
 def renew_certificate(force,quiet=True):
     """Renew ESGF certificate."""
-
-    _renew_certificate_helper(force,quiet)
-
-def _renew_certificate_helper(force,quiet):
 
     # TODO: move this log into the script so to print only when expired
     #sdlog.info("SYDLOGON-002","Renew certificate..")
@@ -72,7 +68,9 @@ def _renew_certificate_helper(force,quiet):
             print_stderr("'%s' script returned an error\n"%os.path.basename(sdconfig.logon_script))
             print_stderr('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
 
-        raise SDException("SYDLOGON-001","Cannot retrieve certificate from ESGF")
+        sdlog.error("SYDLOGON-040","Exception occured while retrieving certificate (status=%i)"%status)
+
+        raise CertificateRenewalException("SYDLOGON-001","Cannot retrieve certificate from ESGF (hostname=%s,port=%s)"%(hostname,port))
 
 # Init.
 
