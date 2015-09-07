@@ -38,14 +38,14 @@ def is_openid_set():
     else:
         return True
 
-@retry(wait_exponential_multiplier=30000, wait_exponential_max=3600000,retry_on_exception=lambda e: isinstance(e, SDException))
+@retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, SDException)) # 1800000 => 30mn, 86400000 => 24 hours
 def renew_certificate_with_retry(force,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
     Notes
-        - IDP is periodically contacted using the following schedule (unit=minute): 
-          1, 2, 4, 8, 16, 32, 60, 60, 60, 60, 60...
+        - IDP is periodically contacted using the following schedule: 
+          30mn, 1h, 2h, 4h, 8h, 16h, 24h, 24h, 24h, 24h...
         - Retry when SDException occurs, raise any other errors
     """
     renew_certificate(force,quiet)
