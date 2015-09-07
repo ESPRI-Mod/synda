@@ -19,7 +19,7 @@ from xml.etree import ElementTree
 import re
 import argparse
 import sdutils
-from sdexception import SDException
+from sdexception import SDException,OpenIDProcessingException
 import sdnetutils
 
 XRI_NS = 'xri://$xrd*($v*2.0)'
@@ -30,10 +30,13 @@ MYPROXY_URI_REXP = r'socket://([^:]*):?(\d+)?'
 def extract_info_from_openid(openid):
     """Retrieve username,host,port informations from ESGF openID."""
 
-    xrds_buf=sdnetutils.HTTP_GET(openid)
-    (hostname,port)=parse_XRDS(xrds_buf)
-    username=parse_openid(openid)
-    return (hostname,port,username)
+    try:
+        xrds_buf=sdnetutils.HTTP_GET(openid)
+        (hostname,port)=parse_XRDS(xrds_buf)
+        username=parse_openid(openid)
+        return (hostname,port,username)
+    except Exception,e:
+        raise OpenIDProcessingException('SDOPENID-002','Error occurs while processing OpenID (%s)'%str(e))
 
 def parse_XRDS(XRDS_document):
     xml = ElementTree.fromstring(XRDS_document)

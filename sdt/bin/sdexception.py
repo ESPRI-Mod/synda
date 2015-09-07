@@ -33,3 +33,5 @@ class RemoteException(SDException):
     pass
 class CertificateRenewalException(SDException):
     pass
+class OpenIDProcessingException(SDException):
+    pass
