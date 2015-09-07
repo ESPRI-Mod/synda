@@ -14,6 +14,7 @@
 import commands
 import os
 import argparse
+from retrying import retry
 import sdapp
 from sdexception import SDException,CertificateRenewalException
 import sdconfig
@@ -36,6 +37,18 @@ def is_openid_set():
         return False
     else:
         return True
+
+@retry(wait_exponential_multiplier=30000, wait_exponential_max=3600000,retry_on_exception=lambda e: isinstance(e, SDException))
+def renew_certificate_with_retry(force,quiet=True):
+    """
+    Retry mecanism when ESGF IDP cannot be reached.
+
+    Notes
+        - IDP is periodically contacted using the following schedule (unit=minute): 
+          1, 2, 4, 8, 16, 32, 60, 60, 60, 60, 60...
+        - Retry when SDException occurs, raise any other errors
+    """
+    renew_certificate(force,quiet)
 
 def renew_certificate(force,quiet=True):
     """Renew ESGF certificate."""

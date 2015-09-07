@@ -124,7 +124,7 @@ def event_loop():
     cleanup_running_transfer()
     scheduler_state=1
 
-    sdlogon.renew_certificate(True)
+    sdlogon.renew_certificate_with_retry(True)
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
