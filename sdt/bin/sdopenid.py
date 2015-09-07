@@ -18,6 +18,7 @@ Credit
 from xml.etree import ElementTree
 import re
 import argparse
+import sdlog
 import sdutils
 from sdexception import SDException,OpenIDProcessingException
 import sdnetutils
@@ -36,7 +37,9 @@ def extract_info_from_openid(openid):
         username=parse_openid(openid)
         return (hostname,port,username)
     except Exception,e:
-        raise OpenIDProcessingException('SDOPENID-002','Error occurs while processing OpenID (%s)'%str(e))
+        sdlog.error("SDOPENID-200","Error occured while processing OpenID (%s)"%str(e))
+
+        raise OpenIDProcessingException('SDOPENID-002','Error occured while processing OpenID (%s)'%str(e))
 
 def parse_XRDS(XRDS_document):
     xml = ElementTree.fromstring(XRDS_document)
