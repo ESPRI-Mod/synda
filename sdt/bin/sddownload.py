@@ -15,7 +15,7 @@ import os
 import sdapp
 import sdlog
 import sdconst
-from sdexception import SDException,FatalException,CertificateRenewalException
+from sdexception import SDException,FatalException
 import sdlogon
 import sdconfig
 import sdtime
@@ -39,7 +39,7 @@ class Download():
             sdlogon.renew_certificate(False)
         except Exception,e:
             sdlog.error("SDDOWNLO-502","Exception occured while retrieving certificate (%s)"%str(e))
-            raise CertificateRenewalException()
+            raise
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
 
