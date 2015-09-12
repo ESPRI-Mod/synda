@@ -84,7 +84,7 @@ def dump(args):
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
-# o-------------------------------------------------------o
+# o=======================================================o
 
 def dataset_foobar():
     print_stderr('Not implemented yet.')   
@@ -110,7 +110,7 @@ def dataset_search(args):
         else:
             sdldataset.print_list(datasets)
     else:
-        import sdrdataset, sddeferredafter, sdstream
+        import sdrdataset, sdstream
 
         sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
         datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -140,7 +140,7 @@ def variable_search(args):
             sdldataset.print_list(datasets)
         """
     else:
-        import sdrdataset, sdrvariable, sddeferredafter
+        import sdrdataset, sdrvariable
 
         sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
         datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -150,11 +150,14 @@ def variable_search(args):
             sdrvariable.print_list(datasets)
 
 def file_search(args):
-    # we treat this action separately from the others, as there is different constraint for this action (speed here is the most important so we retrieve only a subset of output attributes)
+    # we treat this action separately from the others, as there is different
+    # constraint for this action (speed here is the most important so we
+    # retrieve only a subset of output attributes)
 
     import sdrfile, sddeferredafter
 
-    # tuning: note that we don't reduce the number of field returned here. Maybe change that to optimise download time / reduce bandwidth footprint.
+    # tuning: note that we don't reduce the number of field returned here.
+    # Maybe change that to optimise download time / reduce bandwidth footprint.
 
 
     if args.localsearch:

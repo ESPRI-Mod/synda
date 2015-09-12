@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This ESGF search module is a light version of sdproxy module which doesn't
+"""This ESGF search module is a light version of sdsearch module which doesn't
 contain paging management.
 
 Notes
@@ -19,9 +19,9 @@ Notes
     - this module do not have a next chunk offset based mecanism (i.e. it cannot aggregate multiple search-api calls together)
     - with this module it is NOT possible to retrieve all records if number of result > sdconst.CHUNKSIZE
     - this module DO NOT have a retry mecanism if the search-API call failed
-    - one other advantage in this module is there is no threading in this module, so
+    - one advantage of this module is it is not threads based, so
       doing CTRL-C make it stop immediately (but now, it should also be the case
-      for sdsearch, as sdproxy_mt threads are now of the 'daemon' type)
+      for sdsearch, as sdproxy_mt threads are now configured as 'daemon')
 """
 
 import os
