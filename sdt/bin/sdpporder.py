@@ -20,14 +20,19 @@ import sdeventdao
 import sdconst
 import sdtime
 import sdlog
+import sddb
 from sdtools import print_stderr
 from sdtypes import Event
 
-def submit_many(type_,dataset):
-    for d in datasets:
-        for v in d['variable']:
+def submit_many(order_name,type_,li):
 
-def submit(order_name,type_,project,model,dataset_pattern,variable='',commit=True):
+    for d in li:
+        for v in d['variable']:
+            submit(order_name,type_,project,model,dataset_pattern,variable,commit=False)
+
+    sddb.conn.commit()
+
+def submit(order_name,type_,project,model,dataset_pattern,variable,commit=True):
     event_name="%s_"%(type_,task_name) # sample => cdf_dataset
 
     sdlog.info("SDUDEVEN-001","'%s' triggered (%s,%s)"%(dataset_pattern,variable))
