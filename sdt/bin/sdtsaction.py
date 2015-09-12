@@ -84,6 +84,14 @@ def dump(args):
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
+def pexec(args):
+    if args.type_==sdconst.SA_TYPE_FILE:
+        file_pexec(args)
+    elif args.type_==sdconst.SA_TYPE_AGGREGATION:
+        variable_pexec(args)
+    elif args.type_==sdconst.SA_TYPE_DATASET:
+        dataset_pexec(args)
+
 # o=======================================================o
 
 def dataset_foobar():
@@ -127,7 +135,7 @@ def dataset_search(args):
 def variable_search(args):
     import sddeferredafter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',15) # note: in variable mode, total number of row is: (number of dataset) * (variable per dataset)
+    sddeferredafter.add_default_parameter(args.stream,'limit',15) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
 
     if args.localsearch:
         print_stderr('Not implemented yet.')   
@@ -286,6 +294,48 @@ def file_dump(args):
         else:
             print_stderr("File not found")   
 
+# o-------------------------------------------------------o
+
+def dataset_pexec():
+    import sdrdataset, sddeferredafter, sdstream
+
+    sddeferredafter.add_default_parameter(args.stream,'limit',8000) # add default limit
+    sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
+
+    datasets=sdrdataset.get_datasets(stream=args.stream)
+
+    if len(datasets)>0:
+        sdrdataset.print_list(datasets)
+        print "Dataset not found"
+
+def variable_pexec():
+    import sdrdataset, sdrvariable, sddeferredafter
+
+    sddeferredafter.add_default_parameter(args.stream,'limit', 8000) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
+    sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
+
+    datasets=sdrdataset.get_datasets(stream=args.stream)
+
+    if len(datasets)>0:
+        sdrvariable.print_list(datasets)
+        print "Variable not found"
+
+
+
+    import sdcustomevent
+
+    sdcustomevent.create_event()
+
+def file_pexec():
+    import sdrfile, sddeferredafter
+
+    sddeferredafter.add_default_parameter(args.stream,'limit',8000)
+    files=sdrfile.get_files(stream=args.stream)
+
+    if len(files)>0:
+        sdrfile.print_list(files)
+        print_stderr("File not found")   
+
 # init.
 
 dataset_light_fields=sdconst.LIGHT_FIELDS
@@ -295,6 +345,7 @@ file_light_fields=sdconst.LIGHT_FIELDS
 actions={
     'dump':dump,
     'list':list_, 
+    'pexec':pexec, 
     'search':search, 
     'show':show,
     'version':version
