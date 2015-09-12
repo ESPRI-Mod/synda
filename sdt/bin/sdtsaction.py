@@ -94,13 +94,13 @@ def pexec(args):
 
 # o=======================================================o
 
-def dataset_foobar():
+def dataset_foobar(args):
     print_stderr('Not implemented yet.')   
 
-def variable_foobar():
+def variable_foobar(args):
     print_stderr('Not implemented yet.')   
 
-def file_foobar():
+def file_foobar(args):
     print_stderr('Not implemented yet.')   
 
 # o-------------------------------------------------------o
@@ -296,8 +296,8 @@ def file_dump(args):
 
 # o-------------------------------------------------------o
 
-def dataset_pexec():
-    import sdrdataset, sddeferredafter, sdstream
+def dataset_pexec(args):
+    import sdrdataset, sddeferredafter, sdstream, sdpporder
 
     sddeferredafter.add_default_parameter(args.stream,'limit',8000) # add default limit
     sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
@@ -305,13 +305,13 @@ def dataset_pexec():
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdrdataset.print_list(datasets)
+        sdpporder.submit_many(datasets)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Dataset not found')   
 
-def variable_pexec():
-    import sdrdataset, sdrvariable, sddeferredafter
+def variable_pexec(args):
+    import sdrdataset, sdrvariable, sddeferredafter, sdpporder
 
     sddeferredafter.add_default_parameter(args.stream,'limit', 8000) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
     sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
@@ -319,21 +319,20 @@ def variable_pexec():
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdrvariable.print_list(datasets)
-        import sdcustomevent
-        sdcustomevent.create_event()
+        sdpporder.submit_many(datasets)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Variable not found')   
 
-def file_pexec():
-    import sdrfile, sddeferredafter
+def file_pexec(args):
+    import sdrfile, sddeferredafter, sdpporder
 
     sddeferredafter.add_default_parameter(args.stream,'limit',8000)
+
     files=sdrfile.get_files(stream=args.stream)
 
     if len(files)>0:
-        sdrfile.print_list(files)
+        sdpporder.submit_many(,files)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr("File not found")   
