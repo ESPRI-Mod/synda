@@ -306,7 +306,9 @@ def dataset_pexec():
 
     if len(datasets)>0:
         sdrdataset.print_list(datasets)
-        print "Dataset not found"
+        print_stderr("Post-processing task successfully submitted")   
+    else:
+        print_stderr('Dataset not found')   
 
 def variable_pexec():
     import sdrdataset, sdrvariable, sddeferredafter
@@ -318,13 +320,11 @@ def variable_pexec():
 
     if len(datasets)>0:
         sdrvariable.print_list(datasets)
-        print "Variable not found"
-
-
-
-    import sdcustomevent
-
-    sdcustomevent.create_event()
+        import sdcustomevent
+        sdcustomevent.create_event()
+        print_stderr("Post-processing task successfully submitted")   
+    else:
+        print_stderr('Variable not found')   
 
 def file_pexec():
     import sdrfile, sddeferredafter
@@ -334,6 +334,8 @@ def file_pexec():
 
     if len(files)>0:
         sdrfile.print_list(files)
+        print_stderr("Post-processing task successfully submitted")   
+    else:
         print_stderr("File not found")   
 
 # init.
