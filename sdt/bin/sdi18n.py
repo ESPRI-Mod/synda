@@ -116,6 +116,7 @@ history - Show history
 install - Install dataset
 list - List installed dataset
 param - Display ESGF parameters
+pexec - Execute post-processing task
 queue - Display download queue status
 remove - Remove dataset
 replica - Change replica

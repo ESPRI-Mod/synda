@@ -31,6 +31,7 @@ def run(subparsers):
     basic(subparsers,'install')
     basic(subparsers,'list')
     basic(subparsers,'param')
+    basic(subparsers,'pexec')
     basic(subparsers,'queue')
     basic(subparsers,'remove')
     basic(subparsers,'replica')

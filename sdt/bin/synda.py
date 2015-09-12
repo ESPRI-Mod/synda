@@ -127,7 +127,7 @@ if __name__ == '__main__':
             import sdtype
             args.type_=sdtype.infer_display_type(stream)
 
-        args.stream=stream # hack: pass 'stream' object downstream as a standalone argument (not inside args)
+        args.stream=stream # TODO: pass 'stream' object downstream as a standalone argument (not inside args)
 
         set_stream_type(args)
 

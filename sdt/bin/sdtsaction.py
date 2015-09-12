@@ -85,6 +85,11 @@ def dump(args):
         dataset_dump(args)
 
 def pexec(args):
+
+    # remove when switching to subcommand
+    assert len(args.parameter)==1 # hack
+    args.order_name=args.parameter[0]
+
     if args.type_==sdconst.SA_TYPE_FILE:
         file_pexec(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
@@ -305,7 +310,7 @@ def dataset_pexec(args):
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdpporder.submit_many(datasets)
+        sdpporder.submit_many(args.order_name,args.type_,datasets)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Dataset not found')   
@@ -319,7 +324,7 @@ def variable_pexec(args):
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdpporder.submit_many(datasets)
+        sdpporder.submit_many(args.order_name,args.type_,datasets)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Variable not found')   
@@ -332,7 +337,7 @@ def file_pexec(args):
     files=sdrfile.get_files(stream=args.stream)
 
     if len(files)>0:
-        sdpporder.submit_many(,files)
+        sdpporder.submit_many(args.order_name,args.type_,files)
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr("File not found")   
