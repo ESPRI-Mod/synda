@@ -20,12 +20,16 @@ import sdeventdao
 import sdconst
 import sdtime
 import sdlog
+import sdproduct
 from sdtools import print_stderr
 from sdtypes import Event
 
-def submit(order_name,type_,project,model,dataset_pattern,variable,filename_pattern,commit=True):
+def submit(order_name,type_,project,model,dataset,variable='',filename='',commit=True): # TODO: replace single quote with None and move 'None2SingleQuote' processing inside Event object (and add comment about why we use single quote instead of None in event table !!!)
 
     event_name="%s_%s"%(type_,order_name) # sample: 'dataset_cdf'
+
+    dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset)
+    filename_pattern=filename
 
     sdlog.info("SDPPORDE-001","'%s' triggered (%s,%s)"%(event_name,dataset_pattern,variable))
 

@@ -305,13 +305,12 @@ def dataset_pexec(args):
     import sdrdataset, sddeferredafter, sdstream, sdpporder, sddb
 
     sddeferredafter.add_default_parameter(args.stream,'limit',8000) # add default limit
-    sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
 
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
         for d in datasets:
-            sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],v,commit=False)
+            sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],commit=False)
         sddb.conn.commit()
 
         print_stderr("Post-processing task successfully submitted")   
@@ -322,7 +321,6 @@ def variable_pexec(args):
     import sdrdataset, sdrvariable, sddeferredafter, sdpporder, sddb
 
     sddeferredafter.add_default_parameter(args.stream,'limit', 8000) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
-    sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
 
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
@@ -330,7 +328,7 @@ def variable_pexec(args):
 
         for d in datasets:
             for v in d['variable']:
-                sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],v,commit=False)
+                sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],variable=v,commit=False)
         sddb.conn.commit()
 
         print_stderr("Post-processing task successfully submitted")   
@@ -346,7 +344,7 @@ def file_pexec(args):
 
     if len(files)>0:
         for f in files:
-            sdpporder.submit(args.order_name,sdconst.SA_TYPE_FILE,f['project'],f['model'],f['local_path'],v,commit=False)
+            sdpporder.submit(args.order_name,sdconst.SA_TYPE_FILE,f['project'],f['model'],f['dataset_local_path'],variable=f['variable'],filename=f['filename'],commit=False)
         sddb.conn.commit()
 
         print_stderr("Post-processing task successfully submitted")   
