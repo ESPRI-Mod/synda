@@ -302,7 +302,7 @@ def file_dump(args):
 # o-------------------------------------------------------o
 
 def dataset_pexec(args):
-    import sdrdataset, sddeferredafter, sdstream, sdpporder
+    import sdrdataset, sddeferredafter, sdstream, sdpporder, sddb
 
     sddeferredafter.add_default_parameter(args.stream,'limit',8000) # add default limit
     sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
@@ -310,13 +310,16 @@ def dataset_pexec(args):
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdpporder.submit_many(args.order_name,args.type_,datasets)
+        for d in datasets:
+            sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],v,commit=False)
+        sddb.conn.commit()
+
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Dataset not found')   
 
 def variable_pexec(args):
-    import sdrdataset, sdrvariable, sddeferredafter, sdpporder
+    import sdrdataset, sdrvariable, sddeferredafter, sdpporder, sddb
 
     sddeferredafter.add_default_parameter(args.stream,'limit', 8000) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
     sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
@@ -324,20 +327,28 @@ def variable_pexec(args):
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-        sdpporder.submit_many(args.order_name,args.type_,datasets)
+
+        for d in datasets:
+            for v in d['variable']:
+                sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],v,commit=False)
+        sddb.conn.commit()
+
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr('Variable not found')   
 
 def file_pexec(args):
-    import sdrfile, sddeferredafter, sdpporder
+    import sdrfile, sddeferredafter, sdpporder, sddb
 
     sddeferredafter.add_default_parameter(args.stream,'limit',8000)
 
     files=sdrfile.get_files(stream=args.stream)
 
     if len(files)>0:
-        sdpporder.submit_many(args.order_name,args.type_,files)
+        for f in files:
+            sdpporder.submit(args.order_name,sdconst.SA_TYPE_FILE,f['project'],f['model'],f['local_path'],v,commit=False)
+        sddb.conn.commit()
+
         print_stderr("Post-processing task successfully submitted")   
     else:
         print_stderr("File not found")   
