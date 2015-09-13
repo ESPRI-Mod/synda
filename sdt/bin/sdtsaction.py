@@ -310,6 +310,7 @@ def dataset_pexec(args):
 
     if len(datasets)>0:
         for d in datasets:
+            if d['status']==sdconst.DATASET_STATUS_COMPLETE:
             sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],commit=False)
         sddb.conn.commit()
 
@@ -325,8 +326,8 @@ def variable_pexec(args):
     datasets=sdrdataset.get_datasets(stream=args.stream)
 
     if len(datasets)>0:
-
         for d in datasets:
+            if d['status']==sdconst.DATASET_STATUS_COMPLETE: # TODO: use VARIABLE_COMPLETE here !
             for v in d['variable']:
                 sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],variable=v,commit=False)
         sddb.conn.commit()
@@ -344,6 +345,7 @@ def file_pexec(args):
 
     if len(files)>0:
         for f in files:
+            if f['status']==sdconst.TRANSFER_STATUS_DONE:
             sdpporder.submit(args.order_name,sdconst.SA_TYPE_FILE,f['project'],f['model'],f['dataset_local_path'],variable=f['variable'],filename=f['filename'],commit=False)
         sddb.conn.commit()
 
