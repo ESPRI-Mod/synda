@@ -106,7 +106,8 @@ m0014="""
             selection print <idx>
         """
 
-m0015="""autoremove - Remove old datasets versions
+m0015="""
+autoremove - Remove old datasets versions
 cache - Manage cache
 certificate - Manage X509 certificate
 daemon - Start/stop the daemon (download background process)
@@ -133,3 +134,5 @@ version - List all versions of a dataset
 watch - Display running transfer
 
 """
+
+m0016="synda - a fast and versatile data management tool for Earth Science Grid Federation (ESGF)"

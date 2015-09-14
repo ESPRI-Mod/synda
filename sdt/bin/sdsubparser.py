@@ -18,7 +18,7 @@ def add_parameter(parser):
 
 def basic(subparsers,action):
     subparser = subparsers.add_parser(action)
-    add_parameter(subparser):
+    add_parameter(subparser)
 
 def run(subparsers):
     basic(subparsers,'autoremove')
@@ -26,7 +26,10 @@ def run(subparsers):
     basic(subparsers,'certificate')
     basic(subparsers,'daemon')
     basic(subparsers,'dump')
-    basic(subparsers,'help')
+
+    subparser = subparsers.add_parser('help')
+    subparser.add_argument('topic',nargs='?')
+
     basic(subparsers,'history')
     basic(subparsers,'install')
     basic(subparsers,'list')

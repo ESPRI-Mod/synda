@@ -24,7 +24,7 @@ import sys
 import argparse
 import sdconst
 import sdi18n
-#import sdsubparser
+import sdsubparser
 from sdtools import DefaultHelpParser,print_stderr
 
 def set_stream_type(args):
@@ -68,11 +68,9 @@ def set_stream_type(args):
 if __name__ == '__main__':
 
     # create the top-level parser
-    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter)
+    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter,description=sdi18n.m0016)
 
-    #subparsers = parser.add_subparsers(dest='action')                      # NEW WAY
-    parser.add_argument('action',nargs='?',help=sdi18n.m0015)               # OLD WAY
-    parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # OLD WAY
+    subparsers = parser.add_subparsers(dest='action',help=sdi18n.m0015)
 
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
@@ -91,9 +89,8 @@ if __name__ == '__main__':
     type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
     type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
-    # NEW WAY
     # create parser for sub-commands
-    #sdsubparser.run(subparsers)
+    sdsubparser.run(subparsers)
 
     args = parser.parse_args()
 
@@ -113,8 +110,14 @@ if __name__ == '__main__':
     # -- action routing -- #
 
     if args.action=='help':
-        parser.print_help()
+
+        if args.topic is None:
+            parser.print_help()
+        else:
+            subparsers.choices[args.topic].print_help()
+
         sys.exit(0)
+
 
     import sdtsaction
     if args.action in sdtsaction.actions.keys():
