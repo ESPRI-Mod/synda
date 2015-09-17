@@ -31,8 +31,6 @@ def run(host=None,reload=False,project=None):
     # default
     if host is None:
         host=sdindex.get_default_index()
-    if project is None:
-        project='CMIP5'
 
     if reload:
         sdsqlutils.truncate_table('param')
@@ -137,6 +135,17 @@ def remove_unused_parameters(parameters):
 
     return parameters
 
+def select_project(project_list):
+    project_names=[item.name for item in project_list]
+    if 'CMIP5' in project_names:
+        # default to 'CMIP5'
+
+        return 'CMIP5'
+    else:
+        # if 'CMIP5' doesn't exists, return the first project in the list
+
+        return project_names[0]
+
 def get_parameters_from_searchapi(host,project,dry_run=False):
     """Method used to retrieve parameters list from search-API
 
@@ -169,6 +178,12 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
 
     #sdprogress.SDProgressDot.print_char()
 
+    if project is None:
+        if 'project' in params:
+            assert isinstance(params['project'],list)
+            if len(params['project'])>0:
+                project=select_project(params['project'])
+
     # Third pass to fetch file attributes which can also be used as search criterias (e.g. title). TAG543534563
     #
     # Note:
@@ -178,7 +193,8 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     # TODO: 
     #   Maybe do this for each project (to retrieve project specific attributes)
     #
-    url='http://%s/esg-search/search?limit=1&project=%s&type=File&fields=*'%(host,project)
+    project_filter='' if project is None else "&project=%s"%project
+    url='http://%s/esg-search/search?limit=1%s&type=File&fields=*'%(host,project_filter)
     request=Request(url=url,pagination=False)
     result=sdnetutils.call_web_service(request,60) # return Response object
 
