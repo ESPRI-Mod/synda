@@ -13,7 +13,7 @@
 
 Notes
     - in this file, most module import directives are moved near the calls, so
-      to improve startup time (even for sdapp).
+      to improve startup time.
     - do not import 'sdlog' at the beggining of this file, because in this
       case, it breaks the daemon startup (i.e. double-fork problem) !
     - do not put a dry_run test here (sdtiaction's funcs are called from other
@@ -22,6 +22,7 @@ Notes
 
 import sys
 import argparse
+import sdapp
 import sdconst
 import sdi18n
 import sdsubparser
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('-r','--replica',action='store_true',help='show replica')
     parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
     parser.add_argument('-s','--selection',default=None)
-    parser.add_argument('-V','--version',action='store_true') # beware: version exist both as option and as action
+    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
     parser.add_argument('-y','--dry_run',action='store_true')
 
     type_grp=parser.add_argument_group(None)
@@ -97,11 +98,6 @@ if __name__ == '__main__':
     sdsubparser.run(subparsers)
 
     args = parser.parse_args()
-
-    if args.version:
-        import sdapp
-        print sdapp.version
-        sys.exit(0)
 
     # check type mutex
     #
