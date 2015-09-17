@@ -61,16 +61,47 @@ def _reload_parameters(parameters):
 def _update_parameters(parameters):
     for pname,pvalues in parameters.iteritems():
         if len(pvalues)==0:
-            raise SDException("SYDCACHE-003","fatal error (pvalues=%s)"%str(pvalues))
+            # This case means this is a parameter without any associated value (e.g. 'title').
+            #
+            # It is likely to be a NON-free parameter which is present in solar
+            # parameters, but not used by any dataset (TBC).
+            # e.g. 'realm' and 'driving_ensemble' in the query below are of that kind
+            # https://esg-devel.nsc.liu.se/esg-search/search?limit=0&facets=*&type=Dataset&fields=*&format=application%2Fsolr%2Bxml
+            #
+            # When we are here, items likely come from TAG4353453453 step
+            #
+            # We DON'T add the parameter name as it seems not to be used
+            # (another reason we don't store this parameter is that currently,
+            # non-free parameter can only be added in param table if they are
+            # associated with at least two values. If they are associated with
+            # only one value, it has to be None, and it means it's a free parameter.
+            # Maybe we can associate 'non-free parameter without value' with
+            # NULL or '', but it's a hacky way to solve this issue. Maybe best
+            # is to redesign 'param' table from scratch)
+
+            pass
         elif len(pvalues)==1:
-            # This case means this is a parameter without value (e.g. 'title'). This is because a parameter with values have at least two values, else it's a constant...
-            # We just add the parameter name if not exist.
+            # This case means this is a free parameter (i.e. without predefined
+            # value choices) e.g. 'title'. This is because a NON-free parameter
+            # have at least two values (e.g. true or false), else it's free
+            # parameter aka a constant...
+            #
+            # When we are here, items likely come from TAG543534563 step
+            #
+            # We add the parameter name if not exist.
 
             if not sddao.exists_parameter_name(pname):
                 sdtools.print_stderr('Add new parameter: %s'%pname)
                 sddao.add_parameter_value(pname,None) # value is always None in this case
 
         elif len(pvalues)>1:
+            # This case means this is a NON-free parameter (i.e. with predefined
+            # value choices) e.g. 'experiment'.
+            #
+            # When we are here, items likely come from TAG4353453453 step
+            #
+            # We add the parameter name if not exist.
+
             for item in pvalues:
                 if not sddao.exists_parameter_value(pname,item.name):
                     sdtools.print_stderr('Add new value for %s parameter: %s'%(pname,item.name))
@@ -126,7 +157,7 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
 
     params={}
 
-    # First pass to retrieve most parameters
+    # First pass to retrieve most parameters. TAG4353453453
     d=sdremoteparam_light.run(facets_group={'type':['Dataset']},dry_run=dry_run,host=host)
     params.update(d)
 
@@ -138,7 +169,7 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
 
     #sdprogress.SDProgressDot.print_char()
 
-    # Third pass to fetch file attributes which can also be used as search criterias (e.g. title)
+    # Third pass to fetch file attributes which can also be used as search criterias (e.g. title). TAG543534563
     #
     # Note:
     #   Those attributes are added without corresponding values 
