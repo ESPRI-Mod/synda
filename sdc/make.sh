@@ -138,10 +138,10 @@ fi
 
 
 # env. check
-if [ -z "$SYNDA_SRC_ROOT" ]; then
-    echo "Error: SYNDA_SRC_ROOT is not set"
-    exit 1
-fi
+#if [ -z "$SYNDA_SRC_ROOT" ]; then
+#    echo "Error: SYNDA_SRC_ROOT is not set"
+#    exit 1
+#fi
 if [ -z "$SYNDA_WEBHOST" ]; then
     echo "Error: SYNDA_WEBHOST is not set"
     exit 1
