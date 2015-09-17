@@ -68,7 +68,7 @@ def set_stream_type(args):
 if __name__ == '__main__':
 
     # create the top-level parser
-    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter,description=sdi18n.m0016)
+    parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter) # ,description=sdi18n.m0016
 
     subparsers = parser.add_subparsers(dest='action',help=sdi18n.m0015)
 
