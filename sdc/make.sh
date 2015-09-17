@@ -9,7 +9,7 @@ usage ()
 {
     cat >&2 << EOF
 
-USAGE: $(basename $0): [-a] [-b] [-h] [ MODULE ]
+USAGE: ./$(basename $0): [-a] [-b] [-h] [ MODULE ]
 
 POSITIONAL ARGS:
    MODULE       Specify which module(s) to build
@@ -149,7 +149,8 @@ fi
 
 # init
 webhost=$SYNDA_WEBHOST
-src_snapshot_root=$SYNDA_SRC_ROOT
+#src_snapshot_root=$SYNDA_SRC_ROOT # obsolete
+src_snapshot_root=$(dirname $(pwd))
 
 # --- action --- #
 
