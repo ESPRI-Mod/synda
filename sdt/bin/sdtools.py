@@ -127,6 +127,13 @@ def extract_digit(li):
     return (alum,digit)
 
 def split_values(values):
+
+
+    # cleaning (trim spaces on both ends)
+    values=values.strip()
+
+
+    # build regex
     if ',' in values:
         # delimiter is ','
 
@@ -136,7 +143,12 @@ def split_values(values):
 
         r = re.compile('\s+')
 
-    return r.split(values)
+
+    # split
+    values_list=r.split(values)
+
+
+    return values_list
 
 def compute_rate(size,duration):
     """Unit: bytes / seconds.
