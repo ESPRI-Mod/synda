@@ -45,11 +45,22 @@ def get_parameter_type(name):
 
     if values_count==1:
 
-        # Assert
-        if values[0] is not None:
-            raise SDException("SYDPARAM-001","Incorrect predefined value for '%s' parameter (value must be 'None' when parameter have only one value)"%name)
+        if values[0] is None:
+            return sdconst.PARAM_TYPE_FREE
+        else:
 
-        return sdconst.PARAM_TYPE_FREE
+            # obsolete
+            #raise SDException("SYDPARAM-001","Incorrect predefined value for '%s' parameter (value must be 'None' when parameter have only one value)"%name)
+
+            # When parameter have only one value, that value CAN be NON-None !
+            # e.g. if an index have only one project and the 'project'
+            # parameter is set to 'CORDEX', then 'project' have only one value which 
+            # is non-None.
+
+            # We return PARAM_TYPE_CONTROLLED here.
+
+            return sdconst.PARAM_TYPE_CONTROLLED
+
     else:
         return sdconst.PARAM_TYPE_CONTROLLED
 
