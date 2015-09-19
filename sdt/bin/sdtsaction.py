@@ -24,6 +24,8 @@ from sdtools import print_stderr
 def list_(args):
     """list is an alias for search in local mode.
     (i.e. 'synda list' is equivalent to 'synda search -ln')
+
+    TODO: move local search related code in 'list' action and remove 'localsearch' option from search command (i.e. 'search' command will then only be used for remote search)
     """
     import sddeferredafter
 
