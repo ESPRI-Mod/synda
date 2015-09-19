@@ -77,14 +77,9 @@ if __name__ == '__main__':
 
     subparsers = parser.add_subparsers(dest='action',help=sdi18n.m0015)
 
-    parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
-    parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
     parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
-    parser.add_argument('-N','--non_interactive',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively (useful in cron jobs)')
-    parser.add_argument('-r','--replica',action='store_true',help='show replica')
-    parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
     parser.add_argument('-s','--selection',default=None)
+
     parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
     parser.add_argument('-y','--dry_run',action='store_true')
 
