@@ -44,7 +44,6 @@ def add_dump_option(parser):
 def create_subparser(subparsers,action):
     subparser = subparsers.add_parser(action)
     add_common_option(subparser)
-    add_type_grp(subparser)
     return subparser
 
 def run(subparsers):
@@ -60,8 +59,9 @@ def run(subparsers):
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'dump')
-    add_dump_option(subparser)
     add_parameter_argument(subparser)
+    add_type_grp(subparser)
+    add_dump_option(subparser)
 
     subparser=subparsers.add_parser('help')
     subparser.add_argument('topic',nargs='?')
@@ -74,12 +74,14 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'list')
     add_parameter_argument(subparser)
+    add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'param')
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'pexec')
     subparser.add_argument('order')
+    add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'queue')
     add_parameter_argument(subparser)
@@ -97,12 +99,14 @@ def run(subparsers):
     add_parameter_argument(subparser)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_lsearch_option(subparser)
+    add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'selection')
 
     subparser=create_subparser(subparsers,'show')
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
+    add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'stat')
     add_parameter_argument(subparser)
@@ -118,5 +122,6 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'version')
     add_parameter_argument(subparser)
+    add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'watch')
