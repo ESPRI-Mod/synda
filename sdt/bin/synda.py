@@ -77,11 +77,7 @@ if __name__ == '__main__':
 
     subparsers = parser.add_subparsers(dest='action',help=sdi18n.m0015)
 
-    parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
-    parser.add_argument('-s','--selection',default=None)
-
     parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
-    parser.add_argument('-y','--dry_run',action='store_true')
 
     # create parser for sub-commands
     sdsubparser.run(subparsers)
