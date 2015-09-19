@@ -12,6 +12,14 @@
 """This module contains actions specific parsers used by 'synda' script."""
 
 import sdi18n
+import sdconst
+
+def add_type_grp(parser):
+    type_grp=parser.add_argument_group(None)
+    type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
+    type_grp.add_argument('-d','--dataset',dest='type_',action='store_const',const=sdconst.SA_TYPE_DATASET)
+    type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
+    type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
 def add_parameter(parser):
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
@@ -19,6 +27,7 @@ def add_parameter(parser):
 def basic(subparsers,action):
     subparser = subparsers.add_parser(action)
     add_parameter(subparser)
+    add_type_grp(subparser)
 
 def run(subparsers):
     basic(subparsers,'autoremove')
@@ -37,6 +46,7 @@ def run(subparsers):
 
     subparser = subparsers.add_parser('pexec')
     subparser.add_argument('order')
+    add_type_grp(subparser)
 
     basic(subparsers,'queue')
     basic(subparsers,'remove')

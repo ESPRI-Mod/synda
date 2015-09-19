@@ -88,12 +88,6 @@ if __name__ == '__main__':
     parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
     parser.add_argument('-y','--dry_run',action='store_true')
 
-    type_grp=parser.add_argument_group(None)
-    type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-    type_grp.add_argument('-d','--dataset',dest='type_',action='store_const',const=sdconst.SA_TYPE_DATASET)
-    type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
-    type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-
     # create parser for sub-commands
     sdsubparser.run(subparsers)
 
