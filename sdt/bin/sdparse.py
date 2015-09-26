@@ -128,7 +128,12 @@ def parse_file(path,selection):
 def process_parameter(parameter,selection):
 
     if is_sfg_parameter(parameter):
-        process_rfv_parameter(parameter,selection)
+        if is_rfv_parameter(parameter):
+            process_rfv_parameter(parameter,selection)
+        elif is_ffv_parameter(parameter):
+            process_ffv_parameter(parameter,selection)
+        else:
+            raise SDException("SDPARSER-012","incorrect parameter format (%s)"%parameter)
     else:
         if '=' not in parameter:
 
