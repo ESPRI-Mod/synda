@@ -216,15 +216,14 @@ def process_ffv_parameter(parameter,selection): # ffv means 'Free Facets n Varia
 
     m=re.search('variables?\[(.+)\]="?([^"=]+)"?$', parameter)
     if(m!=None):
-        free_facets=m.group(1) # for now, free facet syntax support only standalone value (i.e. key=value syntax is not supported yet inside ffv block)
+        free_facets=m.group(1) # free facet syntax support currently only standalone values (i.e. key=value syntax is not supported inside the left member of a ffv block)
         variables=sdtools.split_values(m.group(2))
 
         facets={}
-        #facets[sdconst.PENDING_PARAMETER]=TODO free_facets.split()
+        facets[sdconst.PENDING_PARAMETER]=sdtools.split_values(free_facets)
         facets["variable"]=variables
 
         selection.childs.append(Selection(facets=facets,filename="ffvsp")) # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
-
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
