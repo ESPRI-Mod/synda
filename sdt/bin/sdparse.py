@@ -193,7 +193,7 @@ def process_rfv_parameter(parameter,selection): # rfv means 'Realm Frequency n V
         facets["time_frequency"]=[time_frequency]
         facets["variable"]=variables
 
-        selection.childs.append(Selection(facets=facets,filename="rfvsp")) # add sub-selection ("rfv" means "realm frequency variable special parameter")
+        selection.childs.append(Selection(facets=facets,filename="rfvsp")) # add sub-selection ("rfvsp" means "Realm Frequency Variable Special Parameter")
 
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
@@ -214,18 +214,16 @@ def process_ffv_parameter(parameter,selection): # ffv means 'Free Facets n Varia
     # sample
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
-    m=re.search('variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$', parameter)
+    m=re.search('variables?\[(.+)\]="?([^"=]+)"?$', parameter)
     if(m!=None):
-        realm=m.group(1)
-        time_frequency=m.group(2)
-        variables=sdtools.split_values(m.group(3))
+        free_facets=m.group(1) # for now, free facet support only 
+        variables=sdtools.split_values(m.group(2))
 
         facets={}
-        facets["realm"]=[realm]
-        facets["time_frequency"]=[time_frequency]
+        #facets[sdconst.PENDING_PARAMETER]=TODO free_facets.split()
         facets["variable"]=variables
 
-        selection.childs.append(Selection(facets=facets,filename="rfvsp")) # add sub-selection ("rfv" means "realm frequency variable special parameter")
+        selection.childs.append(Selection(facets=facets,filename="ffvsp")) # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
 
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
