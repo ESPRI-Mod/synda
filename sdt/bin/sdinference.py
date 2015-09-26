@@ -45,6 +45,11 @@ def run(facets_groups):
             del facets_group[sdconst.PENDING_PARAMETER]
 
             for pvalue in pending_parameters:
+
+                # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
+                if pvalue=='*':
+                    continue
+
                 pname=infere_parameter_name(pvalue,type_)
 
                 if pname in facets_group:
