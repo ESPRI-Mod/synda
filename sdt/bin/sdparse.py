@@ -127,14 +127,14 @@ def parse_file(path,selection):
 
 def process_parameter(parameter,selection):
 
-    if is_rfv_parameter(parameter):
+    if is_sfg_parameter(parameter):
         process_rfv_parameter(parameter,selection)
     else:
         if '=' not in parameter:
 
             # as '=' is missing, we consider it's the parameter name that is
             # not present.
-            # we keep the parameter value and will try to guess the
+            # we keep the parameter value and we will try to guess the
             # corresponding parameter name using 'sdinference' module in a
             # downstream step.
 
@@ -142,6 +142,8 @@ def process_parameter(parameter,selection):
             param_name=sdconst.PENDING_PARAMETER
             param_value=[parameter]
         else:
+            # key-value parameter
+
             (param_name,param_value)=parse_parameter(parameter)
 
         add_parameter(param_name,param_value,selection)
@@ -168,7 +170,7 @@ def add_parameter(param_name,param_value,selection):
     else:
         selection.facets[param_name]=param_value
 
-def process_rfv_parameter(parameter,selection): # rfv means 'Realm Frequency Variable'
+def process_rfv_parameter(parameter,selection): # rfv means 'Realm Frequency n Variable'
     # note
     #  - "*" wildcard character is supported for realm and frequency and variable
     #
@@ -191,8 +193,14 @@ def process_rfv_parameter(parameter,selection): # rfv means 'Realm Frequency Var
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
-def is_rfv_parameter(parameter): # rfv means 'Realm Frequency Variable'
+def is_sfg_parameter(parameter): # sfg means 'Structured Facet Group'
     if re.search("^variables?\[",parameter)!=None:
+        return True
+    else:
+        return False
+
+def is_rfv_parameter(parameter): # rfv means 'Realm Frequency n Variable'
+    if parameter.count('[')==2:
         return True
     else:
         return False
@@ -217,8 +225,8 @@ def process_ffv_parameter(parameter,selection): # ffv means 'Free Facets n Varia
     else:
         raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
 
-def is_fv_parameter(parameter): # fv means 'Freetext Variable'
-    if re.search("^variables?\[",parameter)!=None:
+def is_ffv_parameter(parameter): # ffv means 'Free Facets n Variable'
+    if parameter.count('[')==1:
         return True
     else:
         return False
