@@ -197,7 +197,7 @@ def is_rfv_parameter(parameter): # rfv means 'Realm Frequency Variable'
     else:
         return False
 
-def process_fv_parameter(parameter,selection): # fv means 'Free n Variable'
+def process_ffv_parameter(parameter,selection): # ffv means 'Free Facets n Variable'
     # sample
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
