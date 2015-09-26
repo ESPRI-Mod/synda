@@ -168,8 +168,8 @@ def add_parameter(param_name,param_value,selection):
     else:
         selection.facets[param_name]=param_value
 
-def process_rfv_parameter(parameter,selection):
-    # notes
+def process_rfv_parameter(parameter,selection): # rfv means 'Realm Frequency Variable'
+    # note
     #  - "*" wildcard character is supported for realm and frequency and variable
     #
     # sample
