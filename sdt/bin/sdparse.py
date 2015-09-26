@@ -225,7 +225,7 @@ def process_ffv_parameter(parameter,selection): # ffv means 'Free Facets n Varia
 
         selection.childs.append(Selection(facets=facets,filename="ffvsp")) # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
     else:
-        raise SDException("SDPARSER-002","incorrect parameter format (%s)"%parameter)
+        raise SDException("SDPARSER-022","incorrect parameter format (%s)"%parameter)
 
 def is_ffv_parameter(parameter): # ffv means 'Free Facets n Variable'
     if parameter.count('[')==1:
