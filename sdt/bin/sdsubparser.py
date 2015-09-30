@@ -28,9 +28,21 @@ def add_type_grp(parser):
 def add_ni_option(parser):
     parser.add_argument('-N','--non_interactive',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively (useful in cron jobs)')
 
-def add_common_option(parser):
+def add_common_option(parser,**kw):
+
+    """
+    dryrun=kw['dryrun'] if 'dryrun' in kw else True
+    selection=kw['selection'] if 'selection' in kw else True
+    no_default=kw['no_default'] if 'no_default' in kw else True
+    """
+
+    #if selection:
     parser.add_argument('-s','--selection',default=None)
+
+    #if no_default:
     parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
+
+    #if dryrun:
     parser.add_argument('-y','--dry_run',action='store_true')
 
 def add_parameter_argument(parser):
@@ -41,9 +53,9 @@ def add_dump_option(parser):
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
 
-def create_subparser(subparsers,action):
+def create_subparser(subparsers,action,**kw):
     subparser = subparsers.add_parser(action)
-    add_common_option(subparser)
+    add_common_option(subparser,**kw)
     return subparser
 
 def run(subparsers):
