@@ -33,6 +33,8 @@ def run(pname=None,host=None,facets_group={},dry_run=False):
         Dict of list of 'Item' object
     """
 
+    assert isinstance(facets_group,dict)
+
     # denorm. model
     facets_groups=sddenormodel.run([facets_group])
     facets_group=facets_groups[0]

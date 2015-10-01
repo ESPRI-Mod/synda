@@ -37,6 +37,8 @@ def run(pname=None,host=None,facets_group={},dry_run=False):
         Dict of list of 'Item' object
     """
 
+    assert isinstance(facets_group,dict)
+
     # keep only search-API parameter
     facets_group=sddquery.search_api_parameters(facets_group)
 
