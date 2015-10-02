@@ -51,7 +51,7 @@ def get_stream(args):
         if sdconfig.config.getboolean('interface','progress'):
             sdstream.set_scalar(stream,'progress',True)
 
-        return stream
+        return stream # aka facets_groups
 
 def file_full_search(args):
     # this func systematically trigger full search (i.e. limit keyword cannot be used here)
