@@ -57,85 +57,85 @@ def create_subparser(subparsers,action,**kw):
     return subparser
 
 def run(subparsers):
-    subparser=create_subparser(subparsers,'autoremove')
+    subparser=create_subparser(subparsers,'autoremove',help='Remove old datasets versions')
 
-    subparser=create_subparser(subparsers,'cache')
+    subparser=create_subparser(subparsers,'cache',help='Manage cache')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'certificate')
+    subparser=create_subparser(subparsers,'certificate',help='Manage X509 certificate')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'daemon')
+    subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'dump')
+    subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
     add_parameter_argument(subparser)
     add_type_grp(subparser)
     add_dump_option(subparser)
 
-    subparser=create_subparser(subparsers,'facet')
+    subparser=create_subparser(subparsers,'facet',help='Facet discovery')
     subparser.add_argument('facet_name')
     add_parameter_argument(subparser)
 
-    subparser=subparsers.add_parser('help')
+    subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 
-    subparser=create_subparser(subparsers,'history')
+    subparser=create_subparser(subparsers,'history',help='Show history')
 
-    subparser=create_subparser(subparsers,'install')
+    subparser=create_subparser(subparsers,'install',help='Install dataset')
     add_ni_option(subparser)
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'list')
+    subparser=create_subparser(subparsers,'list',help='List installed dataset')
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'param')
+    subparser=create_subparser(subparsers,'param',help='Display ESGF parameters')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'pexec')
+    subparser=create_subparser(subparsers,'pexec',help='Execute post-processing task')
     subparser.add_argument('order')
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'queue')
+    subparser=create_subparser(subparsers,'queue',help='Display download queue status')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'remove')
+    subparser=create_subparser(subparsers,'remove',help='Remove dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'replica')
+    subparser=create_subparser(subparsers,'replica',help='Change replica')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'reset')
-    subparser=create_subparser(subparsers,'retry')
+    subparser=create_subparser(subparsers,'reset',help="Remove all 'waiting' and 'error' transfers")
+    subparser=create_subparser(subparsers,'retry',help='Retry transfer')
 
-    subparser=create_subparser(subparsers,'search')
+    subparser=create_subparser(subparsers,'search',help='Search dataset')
     add_parameter_argument(subparser)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_lsearch_option(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'selection')
+    subparser=create_subparser(subparsers,'selection',help='Manage selection')
 
-    subparser=create_subparser(subparsers,'show')
+    subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset')
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'stat')
+    subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'test')
+    subparser=create_subparser(subparsers,'test',help='Test file download')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'update')
+    subparser=create_subparser(subparsers,'update',help='Update ESGF parameter local cache')
 
-    subparser=create_subparser(subparsers,'upgrade')
+    subparser=create_subparser(subparsers,'upgrade',help='Perform an upgrade (retrieve new version for already installed datasets)')
     add_parameter_argument(subparser)
     add_ni_option(subparser)
 
-    subparser=create_subparser(subparsers,'version')
+    subparser=create_subparser(subparsers,'version',help='List all versions of a dataset')
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'watch')
+    subparser=create_subparser(subparsers,'watch',help='Display running transfer')

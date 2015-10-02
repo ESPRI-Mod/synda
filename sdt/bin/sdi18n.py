@@ -107,32 +107,7 @@ m0014="""
         """
 
 m0015="""
-autoremove - Remove old datasets versions
-cache - Manage cache
-certificate - Manage X509 certificate
-daemon - Start/stop the daemon (download background process)
-dump - Display raw metadata
-facet - Facet discovery
-help - Show help
-history - Show history
-install - Install dataset
-list - List installed dataset
-param - Display ESGF parameters
-pexec - Execute post-processing task
-queue - Display download queue status
-remove - Remove dataset
-replica - Change replica
-reset - Remove all 'waiting' and 'error' transfers
-retry - Retry transfer
-search - Search dataset
-selection - Manage selection
-show - Display detailed information about dataset
-stat - Display summary information about dataset
-test - Test file download
-update - Update ESGF parameter local cache
-upgrade - Perform an upgrade (retrieve new version for already installed datasets)
-version - List all versions of a dataset
-watch - Display running transfer
+Synda subcommands list
 
 """
 

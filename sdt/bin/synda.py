@@ -75,7 +75,7 @@ if __name__ == '__main__':
     # argparse customization example
     #parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter,description=sdi18n.m0016)
 
-    subparsers = parser.add_subparsers(dest='action',help=sdi18n.m0015)
+    subparsers = parser.add_subparsers(dest='action') # ,help=sdi18n.m0015
 
     parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
 
