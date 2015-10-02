@@ -30,20 +30,18 @@ def add_ni_option(parser):
 
 def add_common_option(parser,**kw):
 
-    """
-    dryrun=kw['dryrun'] if 'dryrun' in kw else True
-    selection=kw['selection'] if 'selection' in kw else True
-    no_default=kw['no_default'] if 'no_default' in kw else True
-    """
+    dry_run=kw.get('dry_run',True)
+    selection=kw.get('selection',True)
+    no_default=kw.get('no_default',True)
 
-    #if selection:
-    parser.add_argument('-s','--selection',default=None)
+    if selection:
+        parser.add_argument('-s','--selection',default=None)
 
-    #if no_default:
-    parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
+    if no_default:
+        parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
 
-    #if dryrun:
-    parser.add_argument('-y','--dry_run',action='store_true')
+    if dry_run:
+        parser.add_argument('-y','--dry_run',action='store_true')
 
 def add_parameter_argument(parser):
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # we use PARAMETER and not FACET as is more generic (e.g. for title, id, etc..)
@@ -54,7 +52,7 @@ def add_dump_option(parser):
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
 
 def create_subparser(subparsers,action,**kw):
-    subparser = subparsers.add_parser(action)
+    subparser = subparsers.add_parser(action,help=kw.get('help'))
     add_common_option(subparser,**kw)
     return subparser
 
