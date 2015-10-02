@@ -99,7 +99,10 @@ if __name__ == '__main__':
         if args.topic is None:
             parser.print_help()
         else:
-            subparsers.choices[args.topic].print_help()
+            if args.topic in subparsers.choices:
+                subparsers.choices[args.topic].print_help()
+            else:
+                print_stderr('Help topic not found (%s)'%args.topic)
 
         sys.exit(0)
 
