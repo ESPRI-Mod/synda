@@ -304,6 +304,35 @@ def daemon(args):
         elif action=="status":
             sddaemon.print_daemon_status()
 
+def facet(args):
+    import sdparam,sdremoteparam,syndautils,sdinference
+
+    facets_groups=syndautils.get_stream(args)
+    facets_groups=sdinference.run(facets_groups)
+
+
+    if sdparam.exists_parameter_name(args.facet_name): # first, we check in cache so to quickly return if facet is unknown
+
+        if len(facets_groups)==1:
+            # facet selected: retrieve parameters from ESGF
+
+            facets_group=facets_groups[0]
+
+            params=sdremoteparam.run(pname=args.facet_name,facets_group=facets_group,dry_run=args.dry_run)
+
+            # TODO: func for code below
+            items=params.get(args.facet_name,[])
+            for item in items:
+                print item.name
+        elif len(facets_groups)>1:
+            print_stderr('Multi-queries not supported')
+
+        else:
+            sdparam.main([args.facet_name]) # tricks to re-use sdparam CLI parser
+
+    else:
+        print_stderr('Unknown facet')   
+
 def param(args):
     import sdparam
     sdparam.main(args.parameter) # tricks to re-use sdparam CLI parser
@@ -366,6 +395,7 @@ actions={
     'cache':cache,
     'certificate':certificate, 
     'daemon':daemon, 
+    'facet':facet,
     'history':history, 
     'install':install, 
     'param':param,

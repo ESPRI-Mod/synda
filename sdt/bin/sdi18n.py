@@ -11,7 +11,7 @@
 
 """This module contains messages available as string."""
 
-m0001="selection parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted."
+m0001="search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted."
 
 def m0002(prog):
     buf="""  %s experiment=rcp45,rcp85 model=CCSM4
@@ -112,6 +112,7 @@ cache - Manage cache
 certificate - Manage X509 certificate
 daemon - Start/stop the daemon (download background process)
 dump - Display raw metadata
+facet - Facet discovery
 help - Show help
 history - Show history
 install - Install dataset
