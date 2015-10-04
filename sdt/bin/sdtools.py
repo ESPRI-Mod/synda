@@ -30,7 +30,7 @@ def remove_dict_items(di,keys_to_remove):
             pass
 
 class DefaultHelpParser(argparse.ArgumentParser): 
-    """This class display full help when error occurs.
+    """This class display full help when error occurs (instead of only usage).
 
     Note
         For more info, see http://stackoverflow.com/questions/3636967/python-argparse-how-can-i-display-help-automatically-on-error
