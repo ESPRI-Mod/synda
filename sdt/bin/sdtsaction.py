@@ -202,7 +202,7 @@ def dataset_show(args):
         import sdldataset
         dataset=sdldataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
         if dataset is None:
-            print "Dataset not found"
+            print_stderr("Dataset not found")
         else:
             sdldataset.print_details(dataset)
     else:
@@ -240,14 +240,22 @@ def variable_show(args):
         """
 
 def file_show(args):
-    import sdrfile
-    file=sdrfile.get_file(stream=args.stream,dry_run=args.dry_run)
-
-    if not args.dry_run:
+    if args.localsearch:
+        import sdlfile
+        file=sdlfile.get_file(stream=args.stream,dry_run=args.dry_run)
         if file is None:
             print_stderr("File not found")
         else:
-            sdrfile.print_details(file)
+            sdlfile.print_details(file)
+    else:
+        import sdrfile
+        file=sdrfile.get_file(stream=args.stream,dry_run=args.dry_run)
+
+        if not args.dry_run:
+            if file is None:
+                print_stderr("File not found")
+            else:
+                sdrfile.print_details(file)
 
 # o-------------------------------------------------------o
 

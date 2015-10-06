@@ -32,6 +32,14 @@ def get_files(stream=None,parameter=[],dry_run=False):
 
     return files
 
+def get_file(parameter=[],dry_run=False):
+    files=get_files(parameter=parameter,dry_run=dry_run)
+    if len(files)==1:
+        f=files[0]
+    else:
+        f=None
+    return f
+
 def print_(files):
     if len(files)==0:
         print "File not found"
