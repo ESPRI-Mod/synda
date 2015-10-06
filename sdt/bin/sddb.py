@@ -22,6 +22,8 @@ import sddbversion
 def connect():
     global conn
 
+    # set timeout
+    #
     # When a database is accessed by multiple connections, and one of the processes
     # modifies the database, the SQLite database is locked until that transaction is
     # committed. The timeout parameter specifies how long the connection should wait
@@ -30,10 +32,14 @@ def connect():
     #
     # more info here => http://www.sqlite.org/faq.html#q5
     #
-    # we increase the timeout so we are able to use sqlite3 to run manual
-    # query without stopping the daemon
-    #
-    l__timeout=120 # 2 mn
+    if sdapp.is_daemon():
+        # we increase the sqlite default timeout so we are able to use sqlite3
+        # to run manual query without stopping the daemon
+        timeout=120 # TODO => use 86400 / 24h here
+    else:
+        # we increase the sqlite default timeout so we are able to use sqlite3
+        # to run manual query without stopping the daemon
+        timeout=120 # 2 mn
 
     # Note
     #  by default, sqlite is in autocommit mode,
@@ -42,7 +48,7 @@ def connect():
     #  (If you want autocommit mode, then set isolation_level to None)
 
     # open connection
-    conn=sqlite3.connect(sdconfig.db_file,l__timeout)
+    conn=sqlite3.connect(sdconfig.db_file,timeout)
     conn.row_factory=sqlite3.Row # this is for "by name" colums indexing
 
     # create DB object
@@ -63,16 +69,16 @@ def is_connected():
     else:
         return True
 
-def unloadTableFromMemory(tablename):
+def unload_table_from_memory(tablename):
     _in_memory_conn.execute("drop table if exists main.'%s'"%tablename)
 
-def closeInMemoryDatabase():
+def close_in_memory_database():
     global _in_memory_conn
 
     _in_memory_conn.close()
     _in_memory_conn=None
 
-def loadTableInMemory(tablename,indexname):
+def load_table_in_memory(tablename,indexname):
     global _in_memory_conn
 
     sdlog.log("SDDATABA-INF001","loading '%s' table"%tablename)
