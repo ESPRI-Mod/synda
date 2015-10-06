@@ -71,13 +71,14 @@ def print_details(f):
     print "file: %s"%f.file_functional_id
     print "status: %s"%f.status
     print "size: %s (%s)"%(f.size,humanize.naturalsize(f.size,gnu=False))
-    print "replica: %s"%f.replica
-    print "data_node: %s"%f.data_node
     print "checksum: %s"%f.checksum
     print "url: %s"%f.url
 
     local_path_label='local path' if f.status in (sdconst.TRANSFER_STATUS_DELETE,sdconst.TRANSFER_STATUS_DONE) else 'local path (once downloaded)'
     print "%s: %s"%(local_path_label,f.get_full_local_path())
+
+    print "replica: %s"%f.replica
+    print "data_node: %s"%f.data_node
 
 # init.
 
