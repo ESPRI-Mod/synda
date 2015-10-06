@@ -243,10 +243,12 @@ def file_show(args):
     if args.localsearch:
         import sdlfile
         file=sdlfile.get_file(stream=args.stream,dry_run=args.dry_run)
-        if file is None:
-            print_stderr("File not found")
-        else:
-            sdlfile.print_details(file)
+
+        if not args.dry_run:
+            if file is None:
+                print_stderr("File not found")
+            else:
+                sdlfile.print_details(file)
     else:
         import sdrfile
         file=sdrfile.get_file(stream=args.stream,dry_run=args.dry_run)

@@ -32,8 +32,8 @@ def get_files(stream=None,parameter=[],dry_run=False):
 
     return files
 
-def get_file(parameter=[],dry_run=False):
-    files=get_files(parameter=parameter,dry_run=dry_run)
+def get_file(stream=None,dry_run=False):
+    files=get_files(stream=stream,dry_run=dry_run)
     if len(files)==1:
         f=files[0]
     else:

@@ -84,7 +84,7 @@ def build_file_query(facets):
     else:
         # mainstream search
 
-        di=dict((k, facets[k]) for k in facets if k in ['insertion_group_id','status','error_msg','sdget_status','model','project','variable']) # keep only local compatible keys
+        di=dict((k, facets[k]) for k in facets if k in ['insertion_group_id','status','error_msg','sdget_status','model','project','variable','filename']) # keep only local compatible keys
         if len(di)<1:
             q="SELECT * FROM file"
         else:
