@@ -171,24 +171,12 @@ def update_last_access_date():
     if transfers_without_file>0:
         sdlog.error("SDOPERAT-132","%d files missing on filesystem"%transfers_without_file)
 
-def print_latest_datasets_full():
-    print_latest_datasets(True)
-
-def print_latest_datasets_recent():
-    print_latest_datasets(False)
-
-def print_latest_datasets(full):
-    for d in sdlatestquery.get_latest_datasets(full):
-        print d.get_full_local_path()
-
 # init.
 
 procs={
     'PROC0001': sddeletedataset.purge_orphan_datasets,
     'PROC0006': print_recently_modified_datasets,
     'PROC0008': recreate_selection_transfer_association_table,
-    'PROC0009': print_latest_datasets_full,
-    'PROC0010': print_latest_datasets_recent,
     'PROC0011': trigger_events
 }
 
