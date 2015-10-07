@@ -37,7 +37,7 @@ from tabulate import tabulate
 
 class AdminConsole(BaseConsole):
     intro='Synda admin console\nType help for a list of supported commands.\n'
-    prompt='sda> '
+    prompt='sdt (admin)> '
 
     def do_retry(self,arg):
         if arg=='all':

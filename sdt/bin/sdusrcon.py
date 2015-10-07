@@ -45,7 +45,7 @@ from sdshortcut import Shortcut
 
 class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
     intro='Synda User console\nType help for a list of supported commands.\n\n%s\n'%sddaemon.get_daemon_status()
-    prompt='sd> '
+    prompt='sdt> '
 
     def default(self,arg):
         """
