@@ -13,6 +13,8 @@
 
 import sdapp
 import sdlatestquery
+import sddatasetflag
+import sddatasetdao
 
 def print_latest_datasets_full():
     print_latest_datasets(True)
@@ -23,3 +25,19 @@ def print_latest_datasets_recent():
 def print_latest_datasets(full):
     for d in sdlatestquery.get_latest_datasets(full):
         print d.get_full_local_path()
+
+def set_latest_flag(path):
+    """This method is used to manually set the 'latest' flag.
+
+    Note
+        Not used.
+    """
+
+    d=sddatasetdao.get_dataset(path=path,raise_exception_if_not_found=False) # retrieve dataset from database
+    if d is not None:
+        if d.latest==True:
+            print "'latest' flag is already set for this dataset"
+        else:
+            sddatasetflag.update_latest_flag(d,force_latest=True) # warning: this method modifies the dataset in memory (and in database too)
+    else:
+        print "Dataset not found"
