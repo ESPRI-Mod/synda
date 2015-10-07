@@ -22,6 +22,8 @@ import sdutils
 import sdtime
 import sdlog
 import sdvariable
+import sdmodifyquery
+from sdprogress import SDProgressDot
 from sdexception import SDException
 
 def switch_off_latest_flag_for_all_other_versions(latest_dataset_version,dataset_versions):
@@ -276,3 +278,64 @@ def qualitycheck_ok(dataset_versions,d):
     """
 
     return True
+
+def set_datasets_flags():
+    """Reset dataset status and latest flag from scratch for all datasets."""
+    count=0
+
+    sdlog.info("SDOPERAT-933","recalculate status and latest flag for all dataset..",True)
+
+    sdmodifyquery.reset_datasets_flags() # we reset all flags before starting the main processing (we clean everything to start from scratch)
+
+    count=update_datasets__status_and_latest()
+    while count>0:
+        count=update_datasets__status_and_latest()
+
+def update_datasets__status_and_latest():
+    """
+    Set status and latest flag for all datasets.
+
+    Return value
+        Returns how many datasets have been modified
+
+    Note
+        This procedure must be run until no modifications remain (a run makes
+        changes, which impact the next one, and so one. after a few runs, the
+        graph traversal must be complete)
+    """
+    datasets_modified_count=0
+
+    i=0
+    for d in sddatasetdao.get_datasets():
+
+        # store dataset current state
+        l__latest=d.latest
+        l__status=d.status
+
+        # compute new 'status' flag
+        d.status=compute_dataset_status(d)
+        sddatasetdao.update_dataset(d)
+
+        # compute new 'latest' flag
+        if not d.latest: # we check here the current value for 'latest' flag
+            update_latest_flag(d) # warning: this method modifies the dataset in memory (and in database too)
+        else:
+            # nothing to do concerning the 'latest' flag as the current dataset is already the latest
+            # (the latest flag can only be switched off (i.e. to False) by *other* datasets versions, not by himself !!!)
+            pass
+
+        # check if the dataset has changed
+        if l__latest!=d.latest or l__status!=d.status:
+            datasets_modified_count+=1
+
+        # display progress
+        if i%2==0:
+            SDProgressDot.print_char(".")
+
+        i+=1
+
+    print ""
+    sdlog("SDOPERAT-630","modified datasets: %i"%datasets_modified_count)
+
+    return datasets_modified_count
+

@@ -171,6 +171,24 @@ def update_last_access_date():
     if transfers_without_file>0:
         sdlog.error("SDOPERAT-132","%d files missing on filesystem"%transfers_without_file)
 
+def cleanup2():
+    """
+    Not used for now.
+
+    1. error and waiting cleaning
+    2. recalculate dataset flags (latest & status).This step is
+       important, otherwise, some datasets version may switch to 'latest' as the
+       dataset now looks like 'complete (based on the fact that all the remaining
+       files are 'done').
+    """
+    global_cleanup()
+
+    # discovery process is needed here (./start.sh -a) to prevent switching
+    # some datasets to latest while there are in fact not complete (we see them
+    # as complete just because error & waiting have been removed..).
+
+    sddatasetflag.set_datasets_flags()
+
 # init.
 
 procs={
