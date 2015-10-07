@@ -717,7 +717,10 @@ g__before_md5_conffile=
 post_install_msg= # used to display some info to the user after installation
 tmpdir=$HOME/garbage
 curr_dir=$PWD # used for special deployment (developper only)
+#
 url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
+# TODO: switch to this url ? => http://esgf-local.ipsl.upmc.fr/thredds/fileServer/ipsl_public/jripsl/synda/sdt-3.1.tar.gz
+#
 #
 st_version=${g__version:-3.0} # set HEAD version unless vernum is specified by the user
 st_package=sdt-${st_version}
