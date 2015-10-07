@@ -19,7 +19,7 @@ import sddatasetflag
 from sdprogress import SDProgressDot
 import sdconfig
 import sdlog
-import sdoperationquery
+import sdlatestquery
 import sdstatquery
 import sdutils
 import sddao
@@ -49,7 +49,7 @@ def get_recently_modified_datasets():
     max_files_count_per_dataset=1000000 # this is not to export dataset with too much files (if we don't do that, the server crashes). It has a huge value, as this problem seems now to be obsolete
     datasets_to_export=[]
 
-    for d in sdoperationquery.get_latest_datasets_to_export("CMIP5"): # currently, we only export CMIP5 project to prodiguer
+    for d in sdlatestquery.get_latest_datasets_to_export("CMIP5"): # currently, we only export CMIP5 project to prodiguer
 
         # retrieve how many files in the dataset
         dataset_stats=sdstatquery.get_dataset_stats(d) 
@@ -178,7 +178,7 @@ def print_latest_datasets_recent():
     print_latest_datasets(False)
 
 def print_latest_datasets(full):
-    for d in sdoperationquery.get_latest_datasets(full):
+    for d in sdlatestquery.get_latest_datasets(full):
         print d.get_full_local_path()
 
 # init.
