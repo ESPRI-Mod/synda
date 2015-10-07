@@ -17,16 +17,7 @@ Note
 
 import argparse
 from sdbasecon import BaseConsole
-import sdselection
-import sdselectionsgroup
-import sdquicksearch
-import sdfiledao
-import sdconst
-import sdextractremoteinfos
 import sdi18n
-import sdsessionparam
-import sdmodify
-import sdtest
 from tabulate import tabulate
 
 class AdminConsole(BaseConsole):
@@ -34,9 +25,12 @@ class AdminConsole(BaseConsole):
     prompt='sdt (admin)> '
 
     def do_rdf(self,arg):
-        print 'test'
+        import sddatasetflag
+        sddatasetflag.reset_datasets_flags()
 
     def do_retry(self,arg):
+        import sdfiledao,sdconst,sdmodify
+
         if arg=='all':
             nbr=sdmodify.retry_all()
             if nbr>0:
@@ -54,9 +48,12 @@ class AdminConsole(BaseConsole):
                 print "File not found"
 
     def do_benchmark(self,arg):
+        import sdtest
         sdtest.test_index_hosts()
 
     def do_sample(self,arg):
+        import sdextractremoteinfos
+
         parser = argparse.ArgumentParser(add_help=False) 
         parser.add_argument('project', type = str) 
         parser.add_argument('sample_type', type = str) 
@@ -75,6 +72,8 @@ class AdminConsole(BaseConsole):
     #    """
     #    print_selections_infos()
     def do_selection(self,arg):
+        import sdselectionsgroup,sdselection
+
         if arg=='':
             arg='list'
 
@@ -101,6 +100,9 @@ class AdminConsole(BaseConsole):
 
     def do_select(self,arg):
         # -- SQL mode (non-documented as not sure if this is here to stay) -- #
+
+        import sdsessionparam,sdquicksearch
+
         tokens=arg.split()
 
         column=tokens[0]
