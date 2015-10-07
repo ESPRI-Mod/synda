@@ -201,10 +201,12 @@ def dataset_show(args):
     if args.localsearch:
         import sdldataset
         dataset=sdldataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
-        if dataset is None:
-            print_stderr("Dataset not found")
-        else:
-            sdldataset.print_details(dataset)
+
+        if not args.dry_run:
+            if dataset is None:
+                print_stderr("Dataset not found")
+            else:
+                sdldataset.print_details(dataset)
     else:
         import sdrdataset
         dataset=sdrdataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
