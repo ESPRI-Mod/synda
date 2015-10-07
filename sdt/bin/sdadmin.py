@@ -51,7 +51,7 @@ def cleanup2():
     set_datasets_flags()
 
 def set_datasets_flags():
-    """Set dataset status and latest flag."""
+    """Reset dataset status and latest flag from scratch for all datasets."""
     count=0
 
     sdlog.info("SDOPERAT-933","recalculate status and latest flag for all dataset..",True)
