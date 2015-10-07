@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""Contains routines related to 'latest' flag."""
+"""Contains routines related to 'latest' flag.
+
+Note
+    Routines dealing with both 'status' and 'latest' flag are stored in sddatasetflag module.
+"""
 
 import sdapp
 import sdlatestquery
