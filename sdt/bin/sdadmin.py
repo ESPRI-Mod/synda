@@ -64,13 +64,15 @@ def set_datasets_flags():
 
 def update_datasets__status_and_latest():
     """
-    set status and latest flag for all datasets
+    Set status and latest flag for all datasets.
 
-    return value
-     returns how many datasets have been modified
+    Return value
+        Returns how many datasets have been modified
 
-    note
-        - this procedure must be run until no modifications remain (a run makes changes, which impact the next one, and so one. after a few runs, the graph traversal must be complete)
+    Note
+        This procedure must be run until no modifications remain (a run makes
+        changes, which impact the next one, and so one. after a few runs, the
+        graph traversal must be complete)
     """
     datasets_modified_count=0
 
@@ -109,7 +111,11 @@ def update_datasets__status_and_latest():
     return datasets_modified_count
 
 def set_latest_flag(path):
-    """This method is used to manually set the 'latest' flag."""
+    """This method is used to manually set the 'latest' flag.
+
+    Note
+        Not used.
+    """
 
     d=sddatasetdao.get_dataset(path=path,raise_exception_if_not_found=False) # retrieve dataset from database
     if d is not None:

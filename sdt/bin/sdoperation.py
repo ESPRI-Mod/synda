@@ -178,10 +178,6 @@ def print_latest_datasets_recent():
     print_latest_datasets(False)
 
 def print_latest_datasets(full):
-    """
-    Note
-        Used by symlink.sh script
-    """
     for d in sdoperationquery.get_latest_datasets(full):
         print d.get_full_local_path()
 
