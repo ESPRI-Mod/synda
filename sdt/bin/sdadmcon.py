@@ -136,5 +136,4 @@ class AdminConsole(BaseConsole):
     def help_retry(self):
         print sdi18n.m0006('retry [ all | file ]','Retry failed transfer(s)',example=sdi18n.m0010)
     def help_rdf(self):
-        print sdi18n.m0006('rdf','Reset dataset flag')
-
+        print sdi18n.m0006('rdf','Reset Dataset Flag')
