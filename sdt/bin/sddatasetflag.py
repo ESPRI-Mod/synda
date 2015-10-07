@@ -279,7 +279,7 @@ def qualitycheck_ok(dataset_versions,d):
 
     return True
 
-def set_datasets_flags():
+def reset_datasets_flags():
     """Reset dataset status and latest flag from scratch for all datasets."""
     count=0
 
@@ -338,4 +338,3 @@ def update_datasets__status_and_latest():
     sdlog("SDOPERAT-630","modified datasets: %i"%datasets_modified_count)
 
     return datasets_modified_count
-

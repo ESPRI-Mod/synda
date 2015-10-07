@@ -187,7 +187,7 @@ def cleanup2():
     # some datasets to latest while there are in fact not complete (we see them
     # as complete just because error & waiting have been removed..).
 
-    sddatasetflag.set_datasets_flags()
+    sddatasetflag.reset_datasets_flags()
 
 # init.
 
