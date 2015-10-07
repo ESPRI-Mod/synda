@@ -285,7 +285,7 @@ def reset_datasets_flags():
 
     sdlog.info("SDOPERAT-933","recalculate status and latest flag for all dataset..",True)
 
-    sdmodifyquery.reset_datasets_flags() # we reset all flags before starting the main processing (we clean everything to start from scratch)
+    sdmodifyquery.wipeout_datasets_flags() # we reset all flags before starting the main processing (we clean everything to start from scratch)
 
     count=update_datasets__status_and_latest()
     while count>0:

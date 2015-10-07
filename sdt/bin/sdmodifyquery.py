@@ -43,7 +43,7 @@ def change_priority(new_priority,conn=sddb.conn):
     conn.commit()
     c.close()
 
-def reset_datasets_flags(conn=sddb.conn):
+def wipeout_datasets_flags(conn=sddb.conn):
     """Reset flags on all datasets."""
     c=conn.cursor()
     c.execute("update dataset set status=?, latest=?",(None,0,))
