@@ -25,7 +25,6 @@ import sddao
 import sdfiledao
 import sdconst
 import sdextractremoteinfos
-import sdoperation
 import sddeletedataset
 import sdi18n
 import sdsessionparam

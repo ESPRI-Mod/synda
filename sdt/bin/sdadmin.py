@@ -9,6 +9,8 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
+"""Contains administration routines."""
+
 import argparse
 import sdapp
 import sddeletefile
