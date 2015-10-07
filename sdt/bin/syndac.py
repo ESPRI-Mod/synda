@@ -9,10 +9,10 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""syndac command (REPL front-end).
+"""sdtc command (REPL front-end).
 
 Note
-    'syndac' stands for "SYNDA Console".
+    'sdtc' stands for "SynDa Transfer Console".
 """
 
 import atexit
@@ -28,11 +28,11 @@ from sdusrcon import UserConsole
 import sdconfig
 
 # history load
-if os.path.exists(sdconfig.syndac_history_path):
-    readline.read_history_file(sdconfig.syndac_history_path)
+if os.path.exists(sdconfig.sdtc_history_path):
+    readline.read_history_file(sdconfig.sdtc_history_path)
 
 # history save
-def save_history(history_path=sdconfig.syndac_history_path):
+def save_history(history_path=sdconfig.sdtc_history_path):
     import readline # import must stay here as this func is used by atexit
     readline.write_history_file(history_path)
 atexit.register(save_history)

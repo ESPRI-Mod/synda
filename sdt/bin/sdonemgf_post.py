@@ -17,10 +17,10 @@ Notes
     - This module IS independant from the 'sdonemgf_pre' module.
     - This module works by calling lock func *after* search-api call.
       This make possible, for example, to first run
-      'syndac search cmip5.output1.NSF-DOE-NCAR.CESM1-CAM5.rcp26.mon.ocean.Omon.r1i1p1.v20130302.rhopoto_Omon_CESM1-CAM5_rcp26_r1i1p1_216001-216912.nc'
+      'sdtc search cmip5.output1.NSF-DOE-NCAR.CESM1-CAM5.rcp26.mon.ocean.Omon.r1i1p1.v20130302.rhopoto_Omon_CESM1-CAM5_rcp26_r1i1p1_216001-216912.nc'
       which take sometime, 
       but then the next calls will be faster (only if next calls are using the same model, of course)
-    - One drawback is 'unlock' func must be called (in syndac) to switch to another model
+    - One drawback is 'unlock' func must be called (in sdtc) to switch to another model
 
 Also see
     - 'sdadmcon' module

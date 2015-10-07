@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""syndac command (REPL front-end).
+"""This module contains sdtc user commands.
 
 Note
     'sdusrcon' stands for "SynDa USeR CONsole".

@@ -120,7 +120,7 @@ prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
 max_metadata_parallel_download_per_index=3
-syndac_history_path=os.path.expanduser("~/.sdhistory")
+sdtc_history_path=os.path.expanduser("~/.sdhistory")
 
 http_client='wget' # wget | urllib
 

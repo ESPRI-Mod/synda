@@ -15,7 +15,7 @@ Notes
     - 'sdonemgf' means 'SynDa ONE Model Go Faster'
     - This module IS independant from the 'sdonemgf_post' module.
     - This module works together with the 'sdautoextractmodel' module.
-    - This module contains a cache which is only used in the 'syndac' context
+    - This module contains a cache which is only used in the 'sdtc' context
     - This module performs automatically what 'lock' and 'unlock' funcs perform manually.
 """
 

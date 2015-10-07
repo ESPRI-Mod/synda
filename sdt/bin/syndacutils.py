@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains func used by 'syndac' script.
+"""This module contains func used by 'sdtc' script.
 
 Not used (maybe remove it).
 """

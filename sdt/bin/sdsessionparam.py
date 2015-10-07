@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""'syndac' helper classes."""
+"""'sdtc' helper classes."""
 
 import re
 import sdconst
