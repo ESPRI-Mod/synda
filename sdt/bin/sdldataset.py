@@ -39,8 +39,8 @@ def get_datasets(stream=None,parameter=[],dry_run=False): # TODO: maybe remove p
 
     return datasets
 
-def get_dataset(parameter=[],dry_run=False):
-    datasets=get_datasets(parameter=parameter,dry_run=dry_run)
+def get_dataset(stream=None,parameter=[],dry_run=False):
+    datasets=get_datasets(stream=stream,parameter=parameter,dry_run=dry_run)
     if len(datasets)==1:
         d=datasets[0]
         d=_get_dataset_details(d.dataset_functional_id) # get dataset from DB again with more detailed informations
@@ -63,31 +63,35 @@ def print_list(datasets):
     li=[[d.status, d.dataset_functional_id] for d in datasets] # do not add data_node here ! (there is no data_node at dataset level in local database)
     print tabulate(li,tablefmt="plain")
 
+def print_title(title,before_space=True):
+
+    if before_space:
+        print
+
+    print title
+    print "-"*len(title)
+
 def print_details(d):
-    print
+    print_title('Main',before_space=False)
     print "dataset: %s"%d.dataset_functional_id
     print "local path: %s"%d.get_full_local_path()
-    print "-----"
     print "status: %s"%(d.status,)
     print "latest: %s"%(str(bool(d.latest)).lower(),)
     print "number of versions: %i"%(d.dataset_versions.count(),)
     # print fresh dataset status (computed on-the-fly)
     #print "computed status: %s"%(sddatasetflag.compute_dataset_status(d),)
     #print "computed latest: %s"%(sddatasetflag.compute_latest_flag(d.dataset_versions,d),)
-    print "-----"
+    print_title('Files status')
     print "done: %i"%(d.stats['count']['done'],)
     print "waiting: %i"%(d.stats['count']['waiting'],)
     print "error: %i"%(d.stats['count']['error'],)
-    print "-----"
-    print "Dataset versions list:"
+    print_title('Dataset versions list')
     for d__v in d.dataset_versions.get_datasets():
-        print "%-8s %s"%(bool(d__v.latest),d__v.version,)
-    print "-----"
-    print "Variable status:"
+        print "%-10s (latest=%s)"%(d__v.version,bool(d__v.latest))
+    print_title('Variable status')
     for l__v in d.variables:
         print "%-15s %s"%(l__v.name,l__v.status,)
-    print "-----"
-    print "Dataset files list:"
+    print_title('Dataset files list')
     for t in d.files:
         print "%-100s %s"%(t.filename,t.status,)
 
