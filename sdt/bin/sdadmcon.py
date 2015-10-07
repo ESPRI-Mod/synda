@@ -17,27 +17,24 @@ Note
 
 import argparse
 from sdbasecon import BaseConsole
-import sdtools
 import sdselection
 import sdselectionsgroup
 import sdquicksearch
-import sddao
 import sdfiledao
 import sdconst
 import sdextractremoteinfos
-import sddeletedataset
 import sdi18n
 import sdsessionparam
 import sdmodify
 import sdtest
-import sdremoteparam
-import sddeletefile
-import sdconfig
 from tabulate import tabulate
 
 class AdminConsole(BaseConsole):
     intro='Synda admin console\nType help for a list of supported commands.\n'
     prompt='sdt (admin)> '
+
+    def do_rdf(self,arg):
+        print 'test'
 
     def do_retry(self,arg):
         if arg=='all':
@@ -138,4 +135,6 @@ class AdminConsole(BaseConsole):
         print sdi18n.m0006('sample sample_type [ project ]','Print samples',example=sdi18n.m0013)
     def help_retry(self):
         print sdi18n.m0006('retry [ all | file ]','Retry failed transfer(s)',example=sdi18n.m0010)
+    def help_rdf(self):
+        print sdi18n.m0006('rdf','Reset dataset flag')
 

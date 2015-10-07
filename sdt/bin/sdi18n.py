@@ -57,17 +57,14 @@ m0005="""
 """
 
 def m0006(name,description,example=None,note=None):
-    return """%s
-%s
-
-Examples
-
-%s 
-
-Notes
-
-%s 
-"""%(name,description,example,note)
+    import StringIO                                                                                                                              
+    buf = StringIO.StringIO()                                                                                                                    
+    buf.write("%s\n%s\n"%(name,description))
+    if example is not None:
+        buf.write("\nExample\n%s\n"%example)
+    if note is not None:
+        buf.write("\nNotes\n%s\n"%note)
+    return buf.getvalue()
 
 m0007='delete cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
 m0008='add cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
