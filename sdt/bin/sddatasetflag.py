@@ -283,7 +283,7 @@ def reset_datasets_flags():
     """Reset dataset status and latest flag from scratch for all datasets."""
     count=0
 
-    sdlog.info("SDOPERAT-933","recalculate status and latest flag for all dataset..",True)
+    sdlog.info("SYDDFLAG-933","recalculate status and latest flag for all dataset..",True)
 
     sdmodifyquery.wipeout_datasets_flags() # we reset all flags before starting the main processing (we clean everything to start from scratch)
 
@@ -335,6 +335,6 @@ def update_datasets__status_and_latest():
         i+=1
 
     print ""
-    sdlog("SDOPERAT-630","modified datasets: %i"%datasets_modified_count)
+    sdlog.info("SYDDFLAG-630","modified datasets: %i"%datasets_modified_count)
 
     return datasets_modified_count

@@ -72,7 +72,7 @@ def populate_selection_transfer_junction():
 
 
     if transfer_without_selection>0:
-        sdlog.log("SDMIGR-ERR032","%d transfer(s) not matching any selection found"%transfer_without_selection)
+        sdlog.log("SDOPERAQ-032","%d transfer(s) not matching any selection found"%transfer_without_selection)
 
     if transfer_without_dataset>0:
-        sdlog.log("SDMIGR-ERR033","%d missing dataset transfer(s) found"%transfer_without_dataset)
+        sdlog.log("SDOPERAQ-033","%d missing dataset transfer(s) found"%transfer_without_dataset)
