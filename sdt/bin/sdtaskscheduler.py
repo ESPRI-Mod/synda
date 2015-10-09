@@ -96,6 +96,8 @@ def run_hard_tasks():
     """Hard tasks are executed during application shutdown."""
     global quit
 
+    sleep 120
+
     try:
         sdtask.end_of_tasks()
     except FatalException,e:
@@ -155,7 +157,7 @@ def event_loop():
 quit=0 # 0 => start, 1 => stop
 scheduler_state=0 # 0 => stopped, 1 => running, 2 => starting
 main_loop_sleep=9
-sdlog.set_logger(sdconst.LOGGER_CONSUMER) # use dedicated logger
+#sdlog.set_logger(sdconst.LOGGER_CONSUMER) # use dedicated logger
 
 if sdconfig.prevent_daemon_and_ihm:
     if os.path.isfile(sdconfig.ihm_pid_file):

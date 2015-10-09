@@ -28,11 +28,11 @@ from sdusrcon import UserConsole
 import sdconfig
 
 # history load
-if os.path.exists(sdconfig.sdtc_history_path):
-    readline.read_history_file(sdconfig.sdtc_history_path)
+if os.path.exists(sdconfig.sdtc_history_file):
+    readline.read_history_file(sdconfig.sdtc_history_file)
 
 # history save
-def save_history(history_path=sdconfig.sdtc_history_path):
+def save_history(history_path=sdconfig.sdtc_history_file):
     import readline # import must stay here as this func is used by atexit
     readline.write_history_file(history_path)
 atexit.register(save_history)

@@ -16,7 +16,6 @@ Note
 """
 
 import os
-import sys
 import atexit
 import sdapputils
 import sdconfig
@@ -34,21 +33,6 @@ def cleanup():
     if sdconfig.config.getboolean('interface','progress'):
         sdtools.set_terminal_cursor_visible()
 
-def is_daemon():
-
-    # the parent of a daemon is always Init, so check for ppid 1 
-    if os.getppid() == 1:
-
-        # note that in some case, some non-daemon also have init as parent
-        # so we double check with controlling tty (i.e. daemon have no controlling tty)
-        if not os.isatty(sys.stdout.fileno()):
-            return True
-        else:
-            return False
-
-    else:
-        return False
-
 def who_am_i():
     """This func line checks if we are IHM or daemon.
 
@@ -56,7 +40,7 @@ def who_am_i():
         There are many different IHM commands, but only one daemon command
     """
 
-    if not is_daemon():
+    if not sdtools.is_daemon():
         return 'ihm'
     else:
         return 'daemon'

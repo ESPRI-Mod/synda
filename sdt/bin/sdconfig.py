@@ -80,6 +80,8 @@ logon_script="%s/sdlogon.sh"%bin_folder
 cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 default_selection_file="%s/default.txt"%selection_default_folder
 configuration_file="%s/sdt.conf"%conf_folder
+user_configuration_file=os.path.expanduser("~/.syndarc")
+
 stacktrace_log_file="%s/stacktrace.log"%log_folder
 
 daemon_pid_file="%s/daemon.pid"%tmp_folder
@@ -88,6 +90,8 @@ daemon_start_script="%s/sdstart.sh"%bin_folder
 daemon_stop_script="%s/sdstop.sh"%bin_folder
 
 
+# TODO: replace default options DICTIONNARY below with a default options FILE
+# (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
                  'post_processing':'0',
                  'unicode_term':'0',
@@ -104,8 +108,14 @@ default_options={'max_parallel_download':'8',
                  'nearest_mode':'geolocation',
                  'incorrect_checksum_action':'remove'}
 
+# global options
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
+
+# user options override global options (if any user options)
+if not sdtools.is_daemon():
+    if os.path.exists(user_configuration_file):
+        config.read(user_configuration_file)
 
 data_folder=get_data_folder()
 db_folder=get_db_folder()
@@ -120,7 +130,7 @@ prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
 max_metadata_parallel_download_per_index=3
-sdtc_history_path=os.path.expanduser("~/.sdhistory")
+sdtc_history_file=os.path.expanduser("~/.sdtc_history")
 
 http_client='wget' # wget | urllib
 

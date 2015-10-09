@@ -18,6 +18,7 @@ import sdlog
 import sdconfig
 import sddbobj
 import sddbversion
+import sdtools
 
 def connect():
     global conn
@@ -32,7 +33,7 @@ def connect():
     #
     # more info here => http://www.sqlite.org/faq.html#q5
     #
-    if sdapp.is_daemon():
+    if sdtools.is_daemon():
         # we increase the sqlite default timeout so we are able to use sqlite3
         # to run manual query without stopping the daemon
         timeout=120 # TODO => use 86400 / 24h here
