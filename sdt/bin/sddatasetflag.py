@@ -77,11 +77,12 @@ def update_latest_flag(d,force_latest=False):
 
 def compute_latest_flag(dataset_versions,d):
     """
-    Notes
-     - warning: this modify 'latest' member of 'd' object
-     - when this func is called, d.latest is false
+    Note
+        when this func is called, d.latest is false
     """
     l__latest=None
+
+    assert d.status is not None
 
     if dataset_versions.count()==0:
         # assert
@@ -203,6 +204,9 @@ def compute_latest_flag(dataset_versions,d):
                          
                         l__latest=False
 
+        else:
+            raise SDException("SYDDFLAG-064","fatal error") # should never occurs
+    
     return l__latest
 
 def compute_dataset_status(d):
