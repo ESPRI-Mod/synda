@@ -106,7 +106,10 @@ def run_hard_tasks():
 @sdprofiler.timeit
 def run_soft_tasks():
     """Soft tasks are not executed during application shutdown."""
-    sdtask.start_transfers()
+
+    if sdconfig.files_download:
+        sdtask.start_transfers()
+
     sdtask.delete_transfers()
 
     if sdconfig.config.get('daemon','post_processing')=='1':
@@ -126,7 +129,8 @@ def event_loop():
     cleanup_running_transfer()
     scheduler_state=1
 
-    sdlogon.renew_certificate_with_retry(True)
+    if sdconfig.files_download:
+        sdlogon.renew_certificate_with_retry(True)
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 

@@ -129,6 +129,8 @@ prevent_daemon_and_modification=True # prevent modification while daemon is runn
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
+files_download=True # if set to False, daemon do not renew certificate nor download files (useful to use synda in post-processing mode only)
+
 max_metadata_parallel_download_per_index=3
 sdtc_history_file=os.path.expanduser("~/.sdtc_history")
 
