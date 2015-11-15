@@ -9,11 +9,7 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""Contains post-processing pipeline.
-
-Note
-    - 'spppp' means 'Synda Post-Processing Pipeline' # TODO: rename spppp.py to sppp.py
-"""
+"""Contains 'variable complete' pipeline definition."""
 
 import copy
 import sppipelineutils
@@ -26,8 +22,6 @@ def get_pipeline(name):
 
 pipelines={}
 
-
-# 'variable complete' pipeline definition
 
 name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
@@ -69,25 +63,5 @@ s7=State(name='S0700',transition=t7)
 s8=State(name='S0800',transition=None)
 
 ppp.add(s1,s2,s3,s4,s5,s6,s7,s8)
-
-pipelines[name]=ppp
-
-
-# 'dataset latest' pipeline definition
-
-name='CMIP5_002'
-ppp=PostProcessingPipeline(name)
-ppp.project='CMIP5'
-
-t1=Transition(name='latest',destination='S1200',workdir='merge')
-t2=Transition(name='latest_xml',destination='S1300',workdir='merge')
-t3=Transition(name='mapfile',destination='S1400',workdir='merge')
-
-s1=State(name='S1100',transition=t1,initial=True)
-s2=State(name='S1200',transition=t2)
-s3=State(name='S1300',transition=t3)
-s4=State(name='S1400',transition=None)
-
-ppp.add(s1,s2,s3,s4)
 
 pipelines[name]=ppp
