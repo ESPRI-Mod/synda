@@ -123,18 +123,10 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         # retrieve job metadata from pipeline definition
         pipeline=spppp.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
-        folder=pipeline.get_current_state().transition.workdir
 
         generic_args={'project':ppprun.project,
                       'dataset_pattern':ppprun.dataset_pattern,
                       'variable':ppprun.variable}
-
-        # dataset_pattern resolution (when possible (e.g. for 'merge' it is not possible as we go from TWO src dir (i.e. 'output12'), so we need to keep the '*' char))
-        #
-        # TODO: find an elegant way to manage /*/ tranformation (i.e. to /process/ for the axis_normal case). Maybe move this logic into spppp.py.
-        #
-        dataset_pattern=ppprun.dataset_pattern.replace('/*/','/'+folder+'/')
-
         # prepare argument to make it easier for the job
         if ppprun.variable=='':
             arg='%s/%s/'%(spconfig.data_folder,dataset_pattern)
