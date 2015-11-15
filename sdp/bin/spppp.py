@@ -33,6 +33,25 @@ name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
+def f1(**generic_args):
+    dataset_pattern=sppparg.replace_product_facet(dataset_pattern) if project=='CMIP5' else dataset_pattern # product coalesce hack
+    dataset_pattern=replace_product_facet(dataset_pattern,project)
+    path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/process')
+    return {'full_path_variable':path}
+def f2(**generic_args):
+    input_path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/mirror')
+    dataset_pattern=sppparg.replace_product(dataset_pattern) if project=='CMIP5' else dataset_pattern # product coalesce hack
+    output_path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/process')
+    return {'input_variable_path':input_path,'output_variable_path':output_path}
+def f3(**generic_args):
+    dataset_pattern=sppparg.remove_first_facet(dataset_pattern) # Remove project facet. WARNING: we assume all datasets start with 'project' facet (but this is not the case for some projects, e.g. obs4MIPs / RMBE.ARMBE_Wind_Direction)
+    dataset_pattern=sppparg.remove_first_facet(dataset_pattern) if project in ['CMIP5','CORDEX'] else dataset_pattern # Remove product facet
+    prefix='%s/%s/%s/%s'%(spconfig.data_folder,'project',project,'main')
+    path=sppparg.get_full_path_variable(dataset_pattern,project,variable,prefix)
+    return {'full_path_variable':path}
+def f4(**generic_args):
+    TODO
+
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
 t2=Transition(name='coalesce',destination='S0300',get_args=f2)
 t3=Transition(name='overlap',destination='S0400',get_args=f1)
@@ -73,22 +92,3 @@ s4=State(name='S1400',transition=None)
 ppp.add(s1,s2,s3,s4)
 
 pipelines[name]=ppp
-
-def f1(**generic_args):
-    dataset_pattern=sppparg.replace_product_facet(dataset_pattern) if project=='CMIP5' else dataset_pattern # product coalesce hack
-    dataset_pattern=replace_product_facet(dataset_pattern,project)
-    path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/process')
-    return {'full_path_variable':path}
-def f2(**generic_args):
-    input_path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/mirror')
-    dataset_pattern=sppparg.replace_product(dataset_pattern) if project=='CMIP5' else dataset_pattern # product coalesce hack
-    output_path=sppparg.get_full_path_variable(dataset_pattern,project,variable,'esgf/process')
-    return {'input_variable_path':input_path,'output_variable_path':output_path}
-def f3(**generic_args):
-    dataset_pattern=sppparg.remove_first_facet(dataset_pattern) # Remove project facet. WARNING: we assume all datasets start with 'project' facet (but this is not the case for some projects, e.g. obs4MIPs / RMBE.ARMBE_Wind_Direction)
-    dataset_pattern=sppparg.remove_first_facet(dataset_pattern) if project in ['CMIP5','CORDEX'] else dataset_pattern # Remove product facet
-    prefix='%s/%s/%s/%s'%(spconfig.data_folder,'project',project,'main')
-    path=sppparg.get_full_path_variable(dataset_pattern,project,variable,prefix)
-    return {'full_path_variable':path}
-def f4(**generic_args):
-    TODO
