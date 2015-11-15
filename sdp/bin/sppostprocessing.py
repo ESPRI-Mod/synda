@@ -125,6 +125,10 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         pipeline.set_current_state(ppprun.state)
         folder=pipeline.get_current_state().transition.workdir
 
+        generic_args={'project':ppprun.project,
+                      'dataset_pattern':ppprun.dataset_pattern,
+                      'variable':ppprun.variable}
+
         # dataset_pattern resolution (when possible (e.g. for 'merge' it is not possible as we go from TWO src dir (i.e. 'output12'), so we need to keep the '*' char))
         #
         # TODO: find an elegant way to manage /*/ tranformation (i.e. to /process/ for the axis_normal case). Maybe move this logic into spppp.py.
@@ -141,14 +145,11 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
         #  - transition must be set the the job, because we need it when doing insertion in jobrun table.
         job=JOBRun(job_class=ppprun.transition,
-                full_path_variable=arg, # TODO: rename full_path_variable into generic name (matching both variable and dataset only path)
+                args=pipeline.get_current_state().transition.get_args(generic_args) <= TODO_CHECK (now arguments are stored in args object !)
                 error_msg=None,
                 transition=ppprun.transition,
-                dataset_pattern=dataset_pattern,
-                variable=ppprun.variable,
                 start_date=sptime.now(),
-                ppprun_id=ppprun.ppprun_id,
-                project=ppprun.project)
+                ppprun_id=ppprun.ppprun_id)
 
         # update DB
         ppprun.error_msg=None # we reset values from previous try if any
