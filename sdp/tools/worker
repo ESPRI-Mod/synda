@@ -32,7 +32,9 @@ import traceback
 
 # hack to prevent error below
 # urllib2.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)>
-# more info => http://bugs.python.org/issue23052
+# more info
+#     - http://bugs.python.org/issue23052
+#     - https://www.python.org/dev/peps/pep-0476/
 import ssl
 if hasattr(ssl, '_create_unverified_context'):
     ssl._create_default_https_context = ssl._create_unverified_context
