@@ -166,10 +166,17 @@ class PostProcessingPipeline(object):
         print '=>'.join(li)
 
 class Transition():
-    def __init__(self,name=None,destination=None,workdir='*'):
+    def __init__(self,name=None,destination=None,get_args=None):
         self.name=name
-        self.workdir=workdir
         self.destination=destination # BEWARE: can be dict type or scalar type !!! TODO: change to have only dict type here !!!
+
+        if get_args is not None:
+            self.get_args=get_args # override get_args with custom method
+
+    def get_args(generic_args):
+        # Override this method to customize job arguments
+
+        return generic_args
 
 class State():
     DOT_ATTRS = {
