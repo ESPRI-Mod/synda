@@ -20,7 +20,6 @@ import spconfig
 import spconst
 import spdb
 import sppostprocessing
-import spppp
 from spexception import SPException,PipelineRunningException
 
 def create_pipeline(pipeline,status,e,conn):
