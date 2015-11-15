@@ -210,7 +210,7 @@ def compute_latest_flag(dataset_versions,d):
     return l__latest
 
 def compute_dataset_status(d):
-    """This method compute the dataset transfers status."""
+    """This method compute the dataset transfer status."""
     l__status=None
 
     # retrieve global infos
