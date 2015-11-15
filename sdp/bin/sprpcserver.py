@@ -108,7 +108,10 @@ def start():
         splog.info('SPRPCSRV-001','http_server.serve_forever stopped by KeyboardInterrupt')
         http_server.shutdown()
     except SystemExit:
+        # normal termination
+
         splog.info('SPRPCSRV-002','http_server.serve_forever stopped by SystemExit')
+
         http_server.shutdown()
 
 # init.
