@@ -33,7 +33,7 @@ name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
-TODO_CHECK
+TODO_CHECK BEGIN
 def f1(**generic_args):
     path=sppipelineutils.build_process_path(**generic_args)
     return {'variable_path':path}
@@ -48,6 +48,8 @@ def f4(**generic_args):
     src_path=sppipelineutils.build_process_path(**generic_args)
     dest_path=sppipelineutils.build_user_path(**generic_args)
     return {'src_variable_path':src_path,'dest_variable_path':dest_path}
+TODO_CHECK END
+TODO_CHECK => also see if is ok not to send generic args project, variable and dataset_pattern as before
 
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
 t2=Transition(name='coalesce',destination='S0300',get_args=f2)
