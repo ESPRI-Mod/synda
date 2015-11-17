@@ -33,7 +33,13 @@ msg ()
 
 # args
 
-variable_path="$1"
+while [ "$1" != "" ]; do
+    case "$1" in
+        "--project")       shift; project="$1"         ;;
+        "--variable_path") shift; variable_path="$1"   ;;
+    esac
+    shift
+done
 
 # check arg
 if [ -z "$variable_path" ]; then

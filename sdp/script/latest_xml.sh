@@ -37,7 +37,14 @@ msg ()
 
 # --------- arguments & initialization --------- #
 
-dataset_path="${1}"
+while [ "$1" != "" ]; do
+    case "$1" in
+        "--project")      shift;  project="$1"        ;;
+        "--dataset_path") shift;  dataset_path="$1"   ;;
+    esac
+    shift
+done
+
 dataset_dir=$( dirname $dataset_path)
 dataset_version=$( basename $dataset_path )
 

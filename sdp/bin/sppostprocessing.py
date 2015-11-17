@@ -134,7 +134,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
         #  - transition must be set in the job, because we need it when doing insertion in jobrun table.
         job=JOBRun(job_class=ppprun.transition,
-                args=pipeline.get_current_state().transition.get_args(generic_args) <= TODO_CHECK (now arguments are stored in args object !)
+                args=pipeline.get_current_state().transition.get_args(generic_args) <= TODO_CHECK (1. now arguments are stored in args object 2. arguments name changed 3. number of argument changed)
                 error_msg=None,
                 transition=ppprun.transition,
                 start_date=sptime.now(),

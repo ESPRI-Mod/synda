@@ -39,8 +39,15 @@ msg ()
 
 # --------- arguments & initialization --------- #
 
+while [ "$1" != "" ]; do
+    case "$1" in
+        "--project")      shift;  project="$1"        ;;
+        "--dataset_path") shift;  dataset_path="$1"   ;;
+    esac
+    shift
+done
+
 # check arg
-dataset_path=${1}
 if [ -z "${dataset_path}" ]; then
     msg "ERR001" "Incorrect arguments"
     exit 1

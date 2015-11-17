@@ -45,10 +45,16 @@ msg ()
 
 # --------- arguments & initialization --------- #
 
-variable_path="${1}"
+while [ "$1" != "" ]; do
+    case "$1" in
+        "--project")       shift; project="$1"         ;;
+        "--variable_path") shift; variable_path="$1"   ;;
+    esac
+    shift
+done
+
 process_path=$variable_path
 merge_path=$( echo "${variable_path}" | sed 's|/process/|/merge/|' )
-
 
 # --------- main --------- #
 

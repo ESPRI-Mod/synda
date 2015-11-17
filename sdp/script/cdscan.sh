@@ -44,7 +44,14 @@ msg ()
 
 # --------- arguments & initialization --------- #
 
-variable_path="${1}"
+while [ "$1" != "" ]; do
+    case "$1" in
+        "--project")       shift; project="$1"         ;;
+        "--variable_path") shift; variable_path="$1"   ;;
+    esac
+    shift
+done
+
 xml_output=$( echo ${variable_path} | awk -F '/' '{print tolower($4)"."$7"."$8"."$12"."$9"."$10"."$11"."$14"."$13".xml"}' )
 dir_out=$( echo ${variable_path} | awk -F '/' '{print "/prodigfs/esg/xml/"$4"/"$8"/"$10"/"$9"/"$14}' )
 
