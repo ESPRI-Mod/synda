@@ -18,7 +18,7 @@ def get_pipeline():
     return ppp
 
 def set_variable_path_type(kw):
-    assert kw['variable']!='' # additional check just in case
+    assert kw.variable!='' # additional check just in case
     kw['path_type']='variable'
 
 # init.

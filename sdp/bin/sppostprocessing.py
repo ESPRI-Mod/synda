@@ -125,10 +125,10 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         pipeline=spppp.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
 
-        generic_args=Bunch('project'=ppprun.project,
-                           'dataset_pattern'=ppprun.dataset_pattern,
-                           'variable'=ppprun.variable,
-                           'data_folder'=spconfig.data_folder)
+        generic_args=Bunch(project=ppprun.project,
+                           dataset_pattern=ppprun.dataset_pattern,
+                           variable=ppprun.variable,
+                           data_folder=spconfig.data_folder)
 
         # notes: 
         #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
