@@ -11,20 +11,19 @@
 
 """Contains 'dataset latest' pipeline definition."""
 
-import copy
 import sppipelineutils
 from sppostprocessingutils import PostProcessingPipeline,State,Transition
 
-def get_pipeline(name):
-    return copy.deepcopy(pipelines[name])
+def get_pipeline():
+    return ppp
 
 # init.
 
 pipelines={}
 
-def f1(**generic_args):
-    path=sppipelineutils.build_process_path(**generic_args)
-    return {'variable_path':path}
+def f1(**kw):
+    path=sppipelineutils.build_user_path(**kw)
+    return {'dataset_path':path}
 
 name='CMIP5_002'
 ppp=PostProcessingPipeline(name)
@@ -40,5 +39,3 @@ s3=State(name='S1300',transition=t3)
 s4=State(name='S1400',transition=None)
 
 ppp.add(s1,s2,s3,s4)
-
-pipelines[name]=ppp

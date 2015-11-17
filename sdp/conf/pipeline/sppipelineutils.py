@@ -9,12 +9,7 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""Contains post-processing pipeline job argument builder.
-
-Note
-    - 'sppparg' means 'Synda Post-Processing Pipeline ARGument'
-"""
-import spconfig
+"""Contains post-processing pipeline utils."""
 
 TODO_CHECK
 
@@ -35,10 +30,10 @@ def remove_first_facet(path):
 def replace_product_facet(dataset_pattern):
     return dataset_pattern.replace('/*/','/merge/')
 
-def get_variable_full_path(prefix,dataset_pattern,variable):
-    return '%s/%s/%s/%s/'%(spconfig.data_folder,prefix,dataset_pattern,variable)
+def get_variable_full_path(data_folder,prefix,dataset_pattern,variable):
+    return '%s/%s/%s/%s/'%(data_folder,prefix,dataset_pattern,variable)
 
-def build_user_path(**generic_args):
+def build_user_path(**kw):
     """Build end-user path.
 
     Sample
@@ -48,22 +43,22 @@ def build_user_path(**generic_args):
     # Remove project facet. WARNING: we assume all datasets start with 'project'
     # facet (but this is not the case for some projects, e.g. obs4MIPs /
     # RMBE.ARMBE_Wind_Direction)
-    dataset_pattern=remove_first_facet(dataset_pattern)
+    dataset_pattern=remove_first_facet(kw.dataset_pattern)
 
     # Remove product facet
-    dataset_pattern=remove_first_facet(dataset_pattern) if project in ['CMIP5','CORDEX'] else dataset_pattern
+    dataset_pattern=remove_first_facet(dataset_pattern) if kw.project in ['CMIP5','CORDEX'] else dataset_pattern
 
-    prefix='%s/%s/%s/%s'%(spconfig.data_folder,'project',project,'main')
+    prefix='%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,'main')
 
-    path=get_variable_full_path(prefix,dataset_pattern,variable)
+    path=get_variable_full_path(prefix,dataset_pattern,kw.variable)
 
     return path
 
-def build_mirror_path(**generic_args):
-    path=sppipelineutils.get_variable_full_path('esgf/mirror',dataset_pattern,variable)
+def build_mirror_path(**kw):
+    path=sppipelineutils.get_variable_full_path('esgf/mirror',kw.dataset_pattern,kw.variable)
     return path
 
-def build_process_path(**generic_args):
-    dataset_pattern=sppipelineutils.replace_product_facet(dataset_pattern) if project=='CMIP5' else dataset_pattern # product coalesce hack
-    path=sppipelineutils.get_variable_full_path('esgf/process',dataset_pattern,variable)
+def build_process_path(**kw):
+    dataset_pattern=sppipelineutils.replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
+    path=sppipelineutils.get_variable_full_path('esgf/process',dataset_pattern,kw.variable)
     return path

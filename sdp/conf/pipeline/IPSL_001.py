@@ -11,39 +11,33 @@
 
 """Contains 'variable complete' pipeline definition."""
 
-import copy
 import sppipelineutils
 from sppostprocessingutils import PostProcessingPipeline,State,Transition
 
-def get_pipeline(name):
-    return copy.deepcopy(pipelines[name])
-
-# init.
-
-pipelines={}
-
+def get_pipeline():
+    return ppp
 
 name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
-TODO_CHECK BEGIN
-def f1(**generic_args):
-    path=sppipelineutils.build_process_path(**generic_args)
+TODO_CHECK => see if is ok not to send generic args project, variable and dataset_pattern as before
+
+TODO_CHECK
+def f1(**kw):
+    path=sppipelineutils.build_process_path(**kw)
     return {'variable_path':path}
-def f2(**generic_args):
-    src_path=sppipelineutils.build_mirror_path(**generic_args)
-    dest_path=sppipelineutils.build_process_path(**generic_args)
+def f2(**kw):
+    src_path=sppipelineutils.build_mirror_path(**kw)
+    dest_path=sppipelineutils.build_process_path(**kw)
     return {'src_variable_path':src_path,'dest_variable_path':dest_path}
-def f3(**generic_args):
-    path=sppipelineutils.build_user_path(**generic_args)
+def f3(**kw):
+    path=sppipelineutils.build_user_path(**kw)
     return {'variable_path':path}
-def f4(**generic_args):
-    src_path=sppipelineutils.build_process_path(**generic_args)
-    dest_path=sppipelineutils.build_user_path(**generic_args)
+def f4(**kw):
+    src_path=sppipelineutils.build_process_path(**kw)
+    dest_path=sppipelineutils.build_user_path(**kw)
     return {'src_variable_path':src_path,'dest_variable_path':dest_path}
-TODO_CHECK END
-TODO_CHECK => also see if is ok not to send generic args project, variable and dataset_pattern as before
 
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
 t2=Transition(name='coalesce',destination='S0300',get_args=f2)
@@ -63,5 +57,3 @@ s7=State(name='S0700',transition=t7)
 s8=State(name='S0800',transition=None)
 
 ppp.add(s1,s2,s3,s4,s5,s6,s7,s8)
-
-pipelines[name]=ppp
