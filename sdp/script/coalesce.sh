@@ -54,22 +54,21 @@ msg ()
 
 while [ "$1" != "" ]; do
     case "$1" in
-        "--project")       shift; project="$1"         ;;
-        "--variable_path") shift; variable_path="$1"   ;;
+        "--project")            shift; project="$1"              ;;
+        "--src_variable_path")  shift; src_variable_path="$1"    ;;
+        "--dest_variable_path") shift; dest_variable_path="$1"   ;;
     esac
     shift
 done
 
 # init
-l__project=CMIP5 # currently, only manage CMIP5 project. TODO: this script needs to be modified to manage GeoMIP and other project also !
-l__root=/prodigfs/esg
-output1_path=$( echo "$variable_path" | sed 's|/\*/|/output1/|' )
-output2_path=$( echo "$variable_path" | sed 's|/\*/|/output2/|' )
-process_path=$( echo "$variable_path" | sed 's|/\*/|/process/|' )
+output1_path=$( echo "$src_variable_path" | sed 's|/\*/|/output1/|' )
+output2_path=$( echo "$src_variable_path" | sed 's|/\*/|/output2/|' )
+process_path=$dest_variable_path
 
 # --------- main --------- #
 
-msg "INF001" "coalesce.sh script started (variable=$variable_path)"
+msg "INF001" "coalesce.sh script started (variable=$src_variable_path)"
 
 # This is needed, because rsync expects destination path to exist (or at least parent folders in destination path).
 # More info: http://www.schwertly.com/2013/07/forcing-rsync-to-create-a-remote-path-using-rsync-path/
@@ -85,7 +84,7 @@ if [ -d $output1_path -a -d $output2_path ]; then
     if [ $nbr -gt 0 ]; then
         # duplicate(s) found
 
-        msg "INF003" "$nbr duplicate(s) found b/w output1 and output2 ($variable_path)"
+        msg "INF003" "$nbr duplicate(s) found b/w output1 and output2 ($src_variable_path)"
 
         # notify computing/modeling center
         # TODO

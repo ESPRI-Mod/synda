@@ -48,17 +48,18 @@ msg ()
 while [ "$1" != "" ]; do
     case "$1" in
         "--project")       shift; project="$1"         ;;
-        "--variable_path") shift; variable_path="$1"   ;;
+        "--src_variable_path")  shift; src_variable_path="$1"    ;;
+        "--dest_variable_path") shift; dest_variable_path="$1"   ;;
     esac
     shift
 done
 
-process_path=$variable_path
-merge_path=$( echo "${variable_path}" | sed 's|/process/|/merge/|' )
+process_path=$src_variable_path
+merge_path=$dest_variable_path
 
 # --------- main --------- #
 
-msg "INF001" "copy.sh started (variable_path = ${variable_path})"
+msg "INF001" "copy.sh started (src_variable_path = ${src_variable_path})"
 
 if [ -d ${process_path} ]; then
 
