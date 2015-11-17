@@ -30,7 +30,7 @@ def remove_first_facet(path):
 def replace_product_facet(dataset_pattern):
     return dataset_pattern.replace('/*/','/merge/')
 
-def get_variable_full_path(data_folder,prefix,dataset_pattern,variable):
+def build_path(data_folder,prefix,dataset_pattern,variable):
     return '%s/%s/%s/%s/'%(data_folder,prefix,dataset_pattern,variable)
 
 def build_user_path(**kw):
@@ -50,15 +50,15 @@ def build_user_path(**kw):
 
     prefix='%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,'main')
 
-    path=get_variable_full_path(prefix,dataset_pattern,kw.variable)
+    path=build_path(prefix,dataset_pattern,kw.variable)
 
     return path
 
 def build_mirror_path(**kw):
-    path=sppipelineutils.get_variable_full_path('esgf/mirror',kw.dataset_pattern,kw.variable)
+    path=sppipelineutils.build_path('esgf/mirror',kw.dataset_pattern,kw.variable)
     return path
 
 def build_process_path(**kw):
     dataset_pattern=sppipelineutils.replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
-    path=sppipelineutils.get_variable_full_path('esgf/process',dataset_pattern,kw.variable)
+    path=sppipelineutils.build_path('esgf/process',dataset_pattern,kw.variable)
     return path
