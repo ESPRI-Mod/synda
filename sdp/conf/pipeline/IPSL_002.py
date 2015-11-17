@@ -19,7 +19,7 @@ def get_pipeline():
 
 def set_dataset_path_type(kw):
     assert kw.variable=='' # additional check just in case
-    kw['path_type']='dataset'
+    kw.path_type='dataset'
 
 # init.
 
