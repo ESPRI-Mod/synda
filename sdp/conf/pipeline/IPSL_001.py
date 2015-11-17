@@ -27,27 +27,25 @@ name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
-TODO_CHECK => see if is ok not to send generic args project, variable and dataset_pattern as before
-
-TODO_CHECK
+TODO_CHECK => see if is ok not to send variable and dataset_pattern anymore
 def f1(kw):
     set_variable_path_type(kw)
     path=sppipelineutils.build_process_path(kw)
-    return {'variable_path':path}
+    return {'project':kw.project,'variable_path':path}
 def f2(kw):
     set_variable_path_type(kw)
     src_path=sppipelineutils.build_mirror_path(kw)
     dest_path=sppipelineutils.build_process_path(kw)
-    return {'src_variable_path':src_path,'dest_variable_path':dest_path}
+    return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
 def f3(kw):
     set_variable_path_type(kw)
     path=sppipelineutils.build_user_path(kw)
-    return {'variable_path':path}
+    return {'project':kw.project,'variable_path':path}
 def f4(kw):
     set_variable_path_type(kw)
     src_path=sppipelineutils.build_process_path(kw)
     dest_path=sppipelineutils.build_user_path(kw)
-    return {'src_variable_path':src_path,'dest_variable_path':dest_path}
+    return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
 
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
 t2=Transition(name='coalesce',destination='S0300',get_args=f2)

@@ -173,7 +173,7 @@ class Transition():
         if get_args is not None:
             self.get_args=get_args # override get_args with custom method
 
-    def get_args(**kw):
+    def get_args(kw):
         # Override this method to customize job arguments
 
         # filter not to send all generic args

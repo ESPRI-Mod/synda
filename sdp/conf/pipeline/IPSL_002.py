@@ -28,7 +28,7 @@ pipelines={}
 def f1(kw):
     set_dataset_path_type(kw)
     path=sppipelineutils.build_user_path(kw)
-    return {'dataset_path':path}
+    return {'project':kw.project,'dataset_path':path}
 
 name='CMIP5_002'
 ppp=PostProcessingPipeline(name)
