@@ -48,6 +48,7 @@ log_folder="%s/log"%root_folder
 bin_folder="%s/bin"%root_folder
 conf_folder="%s/conf"%root_folder
 script_folder="%s/script"%root_folder
+pipeline_folder="%s/pipeline"%conf_folder
 
 cleanup_tree_script="%s/spcleanup_tree.sh"%bin_folder
 configuration_file="%s/sdp.conf"%conf_folder

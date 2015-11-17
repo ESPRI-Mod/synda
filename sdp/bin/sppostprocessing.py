@@ -14,6 +14,7 @@
 import re
 import argparse
 import json
+from bunch import Bunch
 from spexception import SPException,NoPostProcessingTaskWaitingException,PipelineRunningException
 from sptypes import JOBRun,PPPRun
 import splog
@@ -124,18 +125,14 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         pipeline=spppp.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
 
-        generic_args={'project':ppprun.project,
-                      'dataset_pattern':ppprun.dataset_pattern,
-                      'variable':ppprun.variable}
-        # prepare argument to make it easier for the job
-        if ppprun.variable=='':
-            arg='%s/%s/'%(spconfig.data_folder,dataset_pattern)
-        else:
-            arg='%s/%s/%s/'%(spconfig.data_folder,dataset_pattern,ppprun.variable)
+        generic_args=Bunch('project'=ppprun.project,
+                           'dataset_pattern'=ppprun.dataset_pattern,
+                           'variable'=ppprun.variable,
+                           'data_folder'=spconfig.data_folder)
 
         # notes: 
         #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
-        #  - transition must be set the the job, because we need it when doing insertion in jobrun table.
+        #  - transition must be set in the job, because we need it when doing insertion in jobrun table.
         job=JOBRun(job_class=ppprun.transition,
                 args=pipeline.get_current_state().transition.get_args(generic_args) <= TODO_CHECK (now arguments are stored in args object !)
                 error_msg=None,

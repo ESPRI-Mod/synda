@@ -173,10 +173,13 @@ class Transition():
         if get_args is not None:
             self.get_args=get_args # override get_args with custom method
 
-    def get_args(generic_args):
+    def get_args(**kw):
         # Override this method to customize job arguments
 
-        return generic_args
+        # filter not to send all generic args
+        args = { k: kw[k] for k in ['project'] } # only send project
+
+        return args
 
 class State():
     DOT_ATTRS = {
