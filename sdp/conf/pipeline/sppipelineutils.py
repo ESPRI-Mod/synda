@@ -30,10 +30,11 @@ def remove_first_facet(path):
 def replace_product_facet(dataset_pattern):
     return dataset_pattern.replace('/*/','/merge/')
 
-def build_path(data_folder,prefix,dataset_pattern,variable):
+def build_path(kw):
+    path='%s/%s/%s/'%(data_folder,'esgf/process',dataset_pattern)
     return '%s/%s/%s/%s/'%(data_folder,prefix,dataset_pattern,variable)
 
-def build_user_path(**kw):
+def build_user_path(kw):
     """Build end-user path.
 
     Sample
@@ -54,11 +55,13 @@ def build_user_path(**kw):
 
     return path
 
-def build_mirror_path(**kw):
+def build_mirror_path(kw):
     path=sppipelineutils.build_path('esgf/mirror',kw.dataset_pattern,kw.variable)
     return path
 
-def build_process_path(**kw):
+def build_process_path(kw):
     dataset_pattern=sppipelineutils.replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
     path=sppipelineutils.build_path('esgf/process',dataset_pattern,kw.variable)
+    kw['dataset_pattern']=replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
+    path=build_path(kw)
     return path
