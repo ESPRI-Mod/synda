@@ -30,10 +30,6 @@ def remove_first_facet(path):
 def replace_product_facet(dataset_pattern):
     return dataset_pattern.replace('/*/','/merge/')
 
-def build_path(kw):
-    path='%s/%s/%s/'%(data_folder,'esgf/process',dataset_pattern)
-    return '%s/%s/%s/%s/'%(data_folder,prefix,dataset_pattern,variable)
-
 def build_user_path(kw):
     """Build end-user path.
 
@@ -49,19 +45,25 @@ def build_user_path(kw):
     # Remove product facet
     dataset_pattern=remove_first_facet(dataset_pattern) if kw.project in ['CMIP5','CORDEX'] else dataset_pattern
 
-    prefix='%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,'main')
-
-    path=build_path(prefix,dataset_pattern,kw.variable)
+    path='%s/%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,'main',dataset_pattern)
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path+='/' # add ending slash
 
     return path
 
 def build_mirror_path(kw):
-    path=sppipelineutils.build_path('esgf/mirror',kw.dataset_pattern,kw.variable)
+
+    path='%s/%s/%s'%(kw.data_folder,'esgf/mirror',kw.dataset_pattern)
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path+='/' # add ending slash
+
     return path
 
 def build_process_path(kw):
-    dataset_pattern=sppipelineutils.replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
-    path=sppipelineutils.build_path('esgf/process',dataset_pattern,kw.variable)
-    kw['dataset_pattern']=replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
-    path=build_path(kw)
+    dataset_pattern=replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
+
+    path='%s/%s/%s'%(kw.data_folder,'esgf/process',dataset_pattern)
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path+='/' # add ending slash
+
     return path
