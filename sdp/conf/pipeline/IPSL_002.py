@@ -17,12 +17,17 @@ from sppostprocessingutils import PostProcessingPipeline,State,Transition
 def get_pipeline():
     return ppp
 
+def set_dataset_path_type(kw):
+    assert kw['variable']=='' # additional check just in case
+    kw['path_type']='dataset'
+
 # init.
 
 pipelines={}
 
-def f1(**kw):
-    path=sppipelineutils.build_user_path(**kw)
+def f1(kw):
+    set_dataset_path_type(kw)
+    path=sppipelineutils.build_user_path(kw)
     return {'dataset_path':path}
 
 name='CMIP5_002'

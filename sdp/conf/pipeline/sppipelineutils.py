@@ -11,8 +11,6 @@
 
 """Contains post-processing pipeline utils."""
 
-TODO_CHECK
-
 def remove_first_facet(path):
     """Remove first item in path
 
@@ -26,9 +24,6 @@ def remove_first_facet(path):
     li=li[1:]
 
     return '/'.join(li)
-
-def replace_product_facet(dataset_pattern):
-    return dataset_pattern.replace('/*/','/merge/')
 
 def build_user_path(kw):
     """Build end-user path.
@@ -60,7 +55,7 @@ def build_mirror_path(kw):
     return path
 
 def build_process_path(kw):
-    dataset_pattern=replace_product_facet(kw.dataset_pattern) if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce hack
+    dataset_pattern=kw.dataset_pattern.replace('/*/','/merge/') if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce CMIP5 hack
 
     path='%s/%s/%s'%(kw.data_folder,'esgf/process',dataset_pattern)
     path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path

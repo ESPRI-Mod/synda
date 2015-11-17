@@ -17,6 +17,12 @@ from sppostprocessingutils import PostProcessingPipeline,State,Transition
 def get_pipeline():
     return ppp
 
+def set_variable_path_type(kw):
+    assert kw['variable']!='' # additional check just in case
+    kw['path_type']='variable'
+
+# init.
+
 name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
@@ -24,19 +30,23 @@ ppp.project='CMIP5'
 TODO_CHECK => see if is ok not to send generic args project, variable and dataset_pattern as before
 
 TODO_CHECK
-def f1(**kw):
-    path=sppipelineutils.build_process_path(**kw)
+def f1(kw):
+    set_variable_path_type(kw)
+    path=sppipelineutils.build_process_path(kw)
     return {'variable_path':path}
-def f2(**kw):
-    src_path=sppipelineutils.build_mirror_path(**kw)
-    dest_path=sppipelineutils.build_process_path(**kw)
+def f2(kw):
+    set_variable_path_type(kw)
+    src_path=sppipelineutils.build_mirror_path(kw)
+    dest_path=sppipelineutils.build_process_path(kw)
     return {'src_variable_path':src_path,'dest_variable_path':dest_path}
-def f3(**kw):
-    path=sppipelineutils.build_user_path(**kw)
+def f3(kw):
+    set_variable_path_type(kw)
+    path=sppipelineutils.build_user_path(kw)
     return {'variable_path':path}
-def f4(**kw):
-    src_path=sppipelineutils.build_process_path(**kw)
-    dest_path=sppipelineutils.build_user_path(**kw)
+def f4(kw):
+    set_variable_path_type(kw)
+    src_path=sppipelineutils.build_process_path(kw)
+    dest_path=sppipelineutils.build_user_path(kw)
     return {'src_variable_path':src_path,'dest_variable_path':dest_path}
 
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
