@@ -27,8 +27,6 @@ name='CMIP5_001'
 ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
-TODO_CHECK => see if is ok not to send variable and dataset_pattern anymore
-
 def f1(kw):
     set_variable_path_type(kw)
     path=sppipelineutils.build_process_path(kw)
