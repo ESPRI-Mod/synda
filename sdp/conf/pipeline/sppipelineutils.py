@@ -25,7 +25,7 @@ def remove_first_facet(path):
 
     return '/'.join(li)
 
-def build_user_path(kw):
+def build_user_path(project_subdir,kw):
     """Build end-user path.
 
     Sample
@@ -40,7 +40,7 @@ def build_user_path(kw):
     # Remove product facet
     dataset_pattern=remove_first_facet(dataset_pattern) if kw.project in ['CMIP5','CORDEX'] else dataset_pattern
 
-    path='%s/%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,'main',dataset_pattern)
+    path='%s/%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,project_subdir,dataset_pattern)
     path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
     path+='/' # add ending slash
 

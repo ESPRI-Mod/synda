@@ -28,6 +28,7 @@ ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
 TODO_CHECK => see if is ok not to send variable and dataset_pattern anymore
+
 def f1(kw):
     set_variable_path_type(kw)
     path=sppipelineutils.build_process_path(kw)
@@ -39,12 +40,12 @@ def f2(kw):
     return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
 def f3(kw):
     set_variable_path_type(kw)
-    path=sppipelineutils.build_user_path(kw)
+    path=sppipelineutils.build_user_path('main',kw)
     return {'project':kw.project,'variable_path':path}
 def f4(kw):
     set_variable_path_type(kw)
     src_path=sppipelineutils.build_process_path(kw)
-    dest_path=sppipelineutils.build_user_path(kw)
+    dest_path=sppipelineutils.build_user_path('main',kw)
     return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
 
 t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)

@@ -27,7 +27,19 @@ pipelines={}
 
 def f1(kw):
     set_dataset_path_type(kw)
-    path=sppipelineutils.build_user_path(kw)
+    path=sppipelineutils.build_user_path('main',kw)
+    return {'project':kw.project,'dataset_path':path}
+def f2(kw):
+    set_dataset_path_type(kw)
+    path=sppipelineutils.build_user_path('cdscan',kw)
+    return {'project':kw.project,'dataset_path':path}
+def f3(kw):
+    set_dataset_path_type(kw)
+    path=sppipelineutils.build_user_path('merge',kw)
+    return {'project':kw.project,'dataset_path':path}
+def f4(kw):
+    set_dataset_path_type(kw)
+    path=sppipelineutils.build_user_path('interpolated',kw)
     return {'project':kw.project,'dataset_path':path}
 
 name='CMIP5_002'
@@ -35,7 +47,7 @@ ppp=PostProcessingPipeline(name)
 ppp.project='CMIP5'
 
 t1=Transition(name='latest',destination='S1200',get_args=f1)
-t2=Transition(name='latest_xml',destination='S1300',get_args=f1)
+t2=Transition(name='latest_xml',destination='S1300',get_args=f2)
 t3=Transition(name='mapfile',destination='S1400',get_args=f1)
 
 s1=State(name='S1100',transition=t1,initial=True)
