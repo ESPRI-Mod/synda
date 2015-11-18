@@ -9,7 +9,7 @@ usage ()
 {
     cat >&2 << EOF
 
-USAGE: ./$(basename $0): [-a] [-b] [-h] [ MODULE ]
+USAGE: ./$(basename $0): [-c] [-f] [-h] [ MODULE ]
 
 POSITIONAL ARGS:
    MODULE       Specify which module(s) to build
