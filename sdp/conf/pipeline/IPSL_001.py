@@ -23,9 +23,8 @@ def set_variable_path_type(kw):
 
 # init.
 
-name='CMIP5_001'
+name='IPSL_001'
 ppp=PostProcessingPipeline(name)
-ppp.project='CMIP5'
 
 def f1(kw):
     set_variable_path_type(kw)

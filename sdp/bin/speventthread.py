@@ -32,11 +32,11 @@ def create_pipeline(pipeline,status,e,conn):
 
 def process_event(e,conn):
     if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
-        pipeline='CMIP5_001'
+        pipeline='IPSL_001'
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
     elif e.name==spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:
-        pipeline='CMIP5_002'
+        pipeline='IPSL_002'
         assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
 
@@ -45,7 +45,7 @@ def process_event(e,conn):
         # not implemented yet
         raise SPException("SPEVENTT-006","Unsupported event (%s)"%str(e))
 
-        #pipeline='CMIP5_003'
+        #pipeline='IPSL_003'
         #assert e.variable == ''
         #create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
 

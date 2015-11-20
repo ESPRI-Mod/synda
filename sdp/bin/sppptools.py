@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser.add_argument('-v','--viewer',action='store_true')
     args = parser.parse_args()
 
-    pipeline=spppp.get_pipeline('CMIP5_001')
+    pipeline=spppp.get_pipeline('IPSL_001')
 
     if args.list is not None:
 

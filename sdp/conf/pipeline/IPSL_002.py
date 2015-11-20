@@ -42,9 +42,8 @@ def f4(kw):
     path=sppipelineutils.build_user_path('interpolated',kw)
     return {'project':kw.project,'dataset_path':path}
 
-name='CMIP5_002'
+name='IPSL_002'
 ppp=PostProcessingPipeline(name)
-ppp.project='CMIP5'
 
 t1=Transition(name='latest',destination='S1200',get_args=f1)
 t2=Transition(name='latest_xml',destination='S1300',get_args=f2)

@@ -29,7 +29,7 @@ import spconfig
 def all_variable_complete(dataset_pattern,conn):
 
     # retrieve pipeline runs
-    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline='CMIP5_001',conn=conn)
+    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline='IPSL_001',conn=conn)
 
     for ppprun in li: # loop over the different runs of the same pipeline
         if ppprun.status!=spconst.PPPRUN_STATUS_DONE:
@@ -71,12 +71,12 @@ def add_ppprun(pipeline,status,project,model,dataset_pattern,variable,conn):
             ppprun=pppruns[0]
 
             # check existing pipeline state (if state do not allow us to restart it, we raise PipelineRunningException)
-            if pipeline=='CMIP5_001':
+            if pipeline=='IPSL_001':
                 if ppprun.status==spconst.PPPRUN_STATUS_DONE:
                     pass
                 else:
                     raise PipelineRunningException()
-            elif pipeline=='CMIP5_002':
+            elif pipeline=='IPSL_002':
                 if ppprun.status==spconst.PPPRUN_STATUS_DONE:
                     pass
                 elif ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
@@ -220,10 +220,10 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 
         # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
-        if ppprun.pipeline=='CMIP5_001': # this block must be executed only at the end of CMIP5_001 pipeline
+        if ppprun.pipeline=='IPSL_001': # this block must be executed at the end of IPSL_001 pipeline
             if ppprun.status==spconst.PPPRUN_STATUS_DONE:
                 if all_variable_complete(ppprun.dataset_pattern,conn):
-                    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline='CMIP5_002',conn=conn)
+                    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline='IPSL_002',conn=conn)
                     if len(li)==1:
                         dataset_ppprun=li[0]
                         if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
