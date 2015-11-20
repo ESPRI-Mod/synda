@@ -54,11 +54,11 @@ if [ -z "${dataset_path}" ]; then
 fi
 
 # check arg depth
-slashes_char_count=$( echo $dataset_path | sed 's/[^/]//g' | awk '{ print length }' )
-if [ $slashes_char_count -ne 13 ]; then
-    msg "ERR002" "Incorrect arguments"
-    exit 1
-fi
+#slashes_char_count=$( echo $dataset_path | sed 's/[^/]//g' | awk '{ print length }' )
+#if [ $slashes_char_count -ne 13 ]; then
+#    msg "ERR002" "Incorrect arguments"
+#    exit 1
+#fi
 
 # --------- main --------- #
 

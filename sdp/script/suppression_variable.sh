@@ -48,11 +48,11 @@ if [ -z "$variable_path" ]; then
 fi
 
 # check arg depth
-slashes_char_count=$( echo $variable_path | sed 's/[^/]//g' | awk '{ print length }' )
-if [ $slashes_char_count -ne 14 ]; then
-    msg "ERR002" "Incorrect arguments"
-    exit 1
-fi
+#slashes_char_count=$( echo $variable_path | sed 's/[^/]//g' | awk '{ print length }' )
+#if [ $slashes_char_count -ne 14 ]; then
+#    msg "ERR002" "Incorrect arguments"
+#    exit 1
+#fi
 
 # main
 
