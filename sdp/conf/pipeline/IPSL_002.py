@@ -23,8 +23,6 @@ def set_dataset_path_type(kw):
 
 # init.
 
-pipelines={}
-
 def f1(kw):
     set_dataset_path_type(kw)
     path=sppipelineutils.build_user_path('main',kw)
