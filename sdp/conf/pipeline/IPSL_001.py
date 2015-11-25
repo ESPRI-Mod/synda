@@ -49,7 +49,7 @@ t1=Transition(name='suppression_variable',destination='S0200',get_args=f1)
 t2=Transition(name='coalesce',destination='S0300',get_args=f2)
 t3=Transition(name='overlap',destination='S0400',get_args=f1)
 t4=Transition(name='time_axis_normalization',destination='S0500',get_args=f1)
-t5=Transition(name='cdscan',destination='S0600',get_args=f1)
+t5=Transition(name='cdscan',destination='S0600',get_args=f4)
 t6=Transition(name='suppression_variable',destination='S0700',get_args=f3)
 t7=Transition(name='copy',destination='S0800',get_args=f4)
 
