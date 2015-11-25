@@ -30,7 +30,7 @@ def f1(kw):
     set_variable_path_type(kw)
     src_path=sppipelineutils.build_process_path(kw)
     dest_path=sppipelineutils.build_user_path('interpolated/weights',kw)
-    return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
+    return {'project':kw.project,'model':kw.model,'src_variable_path':src_path,'dest_variable_path':dest_path}
 
 def f2(kw):
     set_variable_path_type(kw)

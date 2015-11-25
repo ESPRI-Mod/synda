@@ -126,6 +126,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         pipeline.set_current_state(ppprun.state)
 
         generic_args=Bunch(project=ppprun.project,
+                           model=ppprun.model,
                            dataset_pattern=ppprun.dataset_pattern,
                            variable=ppprun.variable,
                            data_folder=spconfig.data_folder)

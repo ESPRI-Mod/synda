@@ -26,7 +26,7 @@ def set_dataset_path_type(kw):
 def f1(kw):
     set_dataset_path_type(kw)
     path=sppipelineutils.build_user_path('main',kw)
-    return {'project':kw.project,'dataset_path':path}
+    return {'project':kw.project,'model':kw.model,'dataset_path':path}
 def f2(kw):
     set_dataset_path_type(kw)
     path=sppipelineutils.build_user_path('cdscan',kw)
