@@ -18,7 +18,7 @@ Notes
     depending on 'replica' flag (if set to false, use master data_node, if set
     to true use a random replica data_node).
   - This filter maybe be deprecated because of this:
-     - it IS possible to use type=File and dataset_id WITHOUT DATA_NODE
+     - it is possible to use type=File and dataset_id without data_node
         - example
            - http://esgf-index1.ceda.ac.uk/esg-search/search?query=cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926
               - gives two datasets
@@ -26,6 +26,8 @@ Notes
               - gives all files of the two datasets
         - the only thing to be careful of is replica
           (in the example above, both found datasets are the same, one is the master, one is a replica)
+     - it is possible, but it seems not reliable
+        - see TAG543N45K3KJK
 """
 
 import sys

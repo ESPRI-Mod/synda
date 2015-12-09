@@ -68,7 +68,26 @@ def infere_parameter_name(pvalue,type_):
         pname='title'
     elif sdidtest.is_dataset_functional_id(pvalue):
         if type_==sdconst.SA_TYPE_FILE:
-            pname='query' # new behaviour (previously, we were using dataset_id here, with the 'sdcompletedatasetid' filter)
+
+            if sdconfig.dataset_filter_mecanism_in_file_context=='query':
+
+                # Use ESGF free text 'query' parameter
+                #
+                # Beware: this mode is experimental and seems not reliable (see TAG543N45K3KJK for info )
+                #
+                pname='query'
+
+            elif sdconfig.dataset_filter_mecanism_in_file_context=='dataset_id':
+
+                # Use 'dataset_id' parameter with the 'sdcompletedatasetid' filter
+                #
+                # Beware: this trigger a search-api call in 'sdcompletedatasetid' filter
+                #
+                pname='dataset_id'
+
+            else:
+                raise SDException('SDINFERE-040','Unknown value (%s)'%sdconfig.dataset_filter_mecanism_in_file_context)
+
         elif type_==sdconst.SA_TYPE_DATASET:
             pname='instance_id'
         else:

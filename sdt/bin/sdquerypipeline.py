@@ -36,7 +36,10 @@ def run(facets_groups,parallel=True,index_host=None,dry_run=False,query_type='re
     facets_groups=sdparampipeline.run(facets_groups)
 
     if query_type=='remote':
-        #facets_groups=sdcompletedatasetid.run(facets_groups) # beware: this trigger a search-api call
+
+        if sdconfig.dataset_filter_mecanism_in_file_context=='dataset_id':
+            facets_groups=sdcompletedatasetid.run(facets_groups) # beware: this trigger a search-api call
+
         facets_groups=sdonemgf_pre.run(facets_groups,dry_run=False)
         facets_groups=sdindexhost.run(facets_groups,parallel=parallel,index_host=index_host,dry_run=dry_run)
         #facets_groups=sdexplode.run(facets_groups) # ,facet_to_explode='filename'
