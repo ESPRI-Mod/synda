@@ -40,7 +40,7 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
     # Prevent use of 'limit' keyword ('limit' keyword can't be used in this module because it interfere with the pagination system)
     for q in squeries:
         if sdtools.url_contains_limit_keyword(q['url']):
-            raise SDException('SDSEARCH-001',"'limit' facet is not supported in this module. Use 'sdquicksearch' module instead.")
+            raise SDException('SDSEARCH-001',"'limit' facet is not supported in this mode. Use 'sdquicksearch' module instead.")
 
     if dry_run:
         sdsqueries.print_(squeries)
