@@ -1,4 +1,11 @@
 - Version 3.1 - DEV
+	- multi-user
+	- daemon integrated in systemd
+	- RPM package
+	- per-user config file (~/.syndarc)
+	- online help
+	- parameter discovery (list parameter based on other parameters)
+	- support for free syntax in template (e.g. [realm experiment frequency]=v1 v2)
 - Version 3.0 - 20150325
 	- add new local search filter (status, error_msg)
 	- add '--version' option to print version in synda command
@@ -8,6 +15,7 @@
 	- move configuration file in 'sdt/conf' folder
 	- add 'history' action
 	- move lfae_mode into sdt.conf
+	- gridftp support
 - Version 2.9 - 20141103
 	- several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info.
 	- new synda command (apt-get like front-end)
