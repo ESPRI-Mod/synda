@@ -215,7 +215,7 @@ def dataset_show(args):
             if dataset is None:
                 print_stderr("Dataset not found")
             else:
-                sdrdataset.print_details(dataset)
+                sdrdataset.print_details(dataset,verbose=args.verbose)
 
 def variable_show(args):
     if args.localsearch:

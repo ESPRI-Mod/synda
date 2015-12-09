@@ -59,9 +59,13 @@ def print_list(datasets):
     li=[[d['status'],d['dataset_functional_id']] for d in datasets]
     print tabulate(li,tablefmt="plain")
 
-def print_details(d):
+def print_details(d,verbose=False):
     print "Dataset: %s"%d['dataset_functional_id']
     print "Datanode: %s"%d['data_node']
+
+    if verbose:
+        print "ESGF identifier (id): %s|%s"%(d['dataset_functional_id'],d['data_node'])
+
     print "Dataset total size: %s"%humanize.naturalsize(int(d['size']),gnu=False)
     print "Dataset variable(s) list: %s"%','.join(d['variable'])
 

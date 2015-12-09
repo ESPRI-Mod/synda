@@ -17,6 +17,9 @@ import sdconst
 def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
 
+def add_verbose_option(parser):
+    parser.add_argument('--verbose',action='store_true',help='verbose mode')
+
 def add_type_grp(parser):
     type_grp=parser.add_argument_group(None)
     type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
@@ -121,6 +124,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
     add_type_grp(subparser)
+    add_verbose_option(subparser)
 
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset')
     add_parameter_argument(subparser)
