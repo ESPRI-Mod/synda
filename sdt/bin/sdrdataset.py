@@ -41,7 +41,7 @@ def get_dataset(stream=None,parameter=[],dry_run=False):
     else:
         d=datasets[0]
 
-        # retrieve dataset's files
+        # retrieve dataset's files TAG54H4JK5H4J5
         """
         dataset_functional_id=d['dataset_functional_id']
         d.files=sdquicksearch.run(parameter=['type=File','dataset_id=%s'%dataset_functional_id],post_pipeline_mode='file',dry_run=False)
@@ -69,16 +69,26 @@ def print_details(d,verbose=False):
     print "Dataset total size: %s"%humanize.naturalsize(int(d['size']),gnu=False)
     print "Dataset variable(s) list: %s"%','.join(d['variable'])
 
-    """
-    # Disable as it seems to be more ergonomic not to group datasets and files listing
-    # (when user wants datasets listing, he ask for it, when he wants files listing he ask for it with a new request)
+    if verbose:
 
-    print
-    print "Dataset files list:"
-    for f in d.files:
-        print "%-15s  %s"%(f['size'],f['filename'])
-    print "%i files found."%(len(d.files),)
-    """
+        """
+        Disabled for now as not ready yet (see TAG54H4JK5H4J5)
+
+        Maybe completely remove files listing here as it seems to be more
+        ergonomic not to group datasets and files listing together (when user
+        wants datasets listing, he ask for it, when he wants files listing he
+        ask for it with a new request). TBC.
+        """
+
+        """
+        print
+        print "Dataset files list:"
+        for f in d.files:
+            print "%-15s  %s"%(f['size'],f['filename'])
+        print "%i files found."%(len(d.files),)
+        """
+
+        pass
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
