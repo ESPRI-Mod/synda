@@ -48,6 +48,7 @@ def renew_certificate_with_retry(force,quiet=True):
           1h, 2h, 4h, 8h, 16h, 24h, 24h, 24h, 24h...
           (based on 2^x which gives 2, 4, 8, 16, 32, 64, 128..)
         - Retry when SDException occurs, raise any other errors
+        - when the daemon is stopped, this retry is cancelled using SIGTERM
     """
     renew_certificate(force,quiet)
 
