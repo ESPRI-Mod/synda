@@ -50,24 +50,6 @@ def is_running():
     else:
         return False
 
-# OLD WAY START
-"""
-def start():
-    import sdutils
-    (status,stdout,stderr)=sdutils.get_status_output(['%s'%(sdconfig.daemon_start_script),'-q'],preexec_fn=os.setsid) # setsid is to use a different process group (so killing the daemon do not kill interactive session)
-    if status!=0:
-        raise SDException('SDDAEMON-001',"Daemon failed to start. See log files for details")
-
-def stop():
-    import sdutils
-    (status,stdout,stderr)=sdutils.get_status_output(['%s'%(sdconfig.daemon_stop_script),'-i','-q'],preexec_fn=os.setsid) # setsid is to use a different process group (so killing the daemon do not kill interactive session)
-    if status!=0:
-        raise SDException('SDDAEMON-002',"Daemon failed to stop. See log files for details")
-"""
-# OLD WAY END
-
-# NEW WAY START
-
 def main_loop():
     import sdlog, sdtaskscheduler # both must be here because of double-fork (sdtaskscheduler too, because sdtaskscheduler do use sdlog)
     import sddb # this is to create database objects if not done already
@@ -164,5 +146,3 @@ if __name__ == "__main__":
         stop()
     elif args.action == 'status':
         print get_daemon_status()
-
-# NEW WAY END

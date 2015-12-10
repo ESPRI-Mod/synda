@@ -86,8 +86,6 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
-daemon_start_script="%s/sdstart.sh"%bin_folder
-daemon_stop_script="%s/sdstop.sh"%bin_folder
 
 
 # TODO: replace default options DICTIONNARY below with a default options FILE
