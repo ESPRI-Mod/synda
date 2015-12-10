@@ -31,7 +31,7 @@ import sdtask
 import sdprofiler
 import sdstatquery
 from sddownload import Download
-from sdexception import FatalException,SDException
+from sdexception import FatalException,SDException,CertificateRenewalException
 
 def terminate(signal,frame):
     global quit
@@ -147,21 +147,29 @@ def event_loop():
 
         try:
 
-            # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
-            #
-            # Note 
-            #     To be practical, a 'systemd reload sdt' command must be implemented
-            #     (else, openid change in sdt.conf have no impact until the next
-            #     retry, which may be a few hours..). Because currently, synda is not aware
-            #     of sdt.conf changes while running.
-            #
-            #sdlogon.renew_certificate_with_retry(True)
-            #sdlogon.renew_certificate_with_retry_highfreq()
+            if sdlogon.is_openid_set():
 
 
-            # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
-            #
-            sdlogon.renew_certificate(True)
+                # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
+                #
+                # Note 
+                #     To be practical, a 'systemd reload sdt' command must be implemented
+                #     (else, openid change in sdt.conf have no impact until the next
+                #     retry, which may be a few hours..). Because currently, synda is not aware
+                #     of sdt.conf changes while running.
+                #
+                #sdlogon.renew_certificate_with_retry(True)
+                #sdlogon.renew_certificate_with_retry_highfreq()
+
+
+                # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
+                #
+                sdlogon.renew_certificate(True)
+
+
+            else:
+                sdlog.error("SDTSCHED-928",'OpenID not set in configuration file',stderr=True)
+                raise CertificateRenewalException("SDTSCHED-264","OpenID not set in configuration file")
 
         except SDException,e:
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
