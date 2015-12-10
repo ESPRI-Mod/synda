@@ -39,7 +39,7 @@ def extract_info_from_openid(openid):
     except Exception,e:
         sdlog.error("SDOPENID-200","Error occured while processing OpenID (%s)"%str(e))
 
-        raise OpenIDProcessingException('SDOPENID-002','Error occured while processing OpenID (%s)'%str(e))
+        raise OpenIDProcessingException('SDOPENID-002','Error occured while processing OpenID')
 
 def parse_XRDS(XRDS_document):
     xml = ElementTree.fromstring(XRDS_document)

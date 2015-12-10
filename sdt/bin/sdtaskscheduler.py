@@ -31,7 +31,7 @@ import sdtask
 import sdprofiler
 import sdstatquery
 from sddownload import Download
-from sdexception import FatalException
+from sdexception import FatalException,SDException
 
 def terminate(signal,frame):
     global quit
@@ -145,21 +145,27 @@ def event_loop():
 
     if sdconfig.files_download:
 
-        # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
-        #
-        # Note 
-        #     To be practical, a 'systemd reload sdt' command must be implemented
-        #     (else, openid change in sdt.conf have no impact until the next
-        #     retry, which may be a few hours..). Because currently, synda is not aware
-        #     of sdt.conf changes while running.
-        #
-        #sdlogon.renew_certificate_with_retry(True)
-        #sdlogon.renew_certificate_with_retry_highfreq()
+        try:
+
+            # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
+            #
+            # Note 
+            #     To be practical, a 'systemd reload sdt' command must be implemented
+            #     (else, openid change in sdt.conf have no impact until the next
+            #     retry, which may be a few hours..). Because currently, synda is not aware
+            #     of sdt.conf changes while running.
+            #
+            #sdlogon.renew_certificate_with_retry(True)
+            #sdlogon.renew_certificate_with_retry_highfreq()
 
 
-        # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
-        #
-        sdlogon.renew_certificate(True)
+            # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
+            #
+            sdlogon.renew_certificate(True)
+
+        except SDException,e:
+            sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
+            raise
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 

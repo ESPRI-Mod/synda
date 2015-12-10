@@ -84,7 +84,7 @@ def main_loop():
 
             sdlog.debug('SDDAEMON-008',"Exception occured (%s)"%str(e))
         else:
-            if e.__class__.__name__=="SDException":
+            if isinstance(e,SDException):
                 # In this case, we only print the exception code, as the errmsg
                 # is likely to be there already (i.e. low-level func should have 
                 # log information about this exception).
