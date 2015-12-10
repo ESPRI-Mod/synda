@@ -149,11 +149,11 @@ def event_loop():
         #
         # TODO: this mode needs some testing as non-working in some cases
         #
-        #sdlogon.renew_certificate_with_retry(True)
+        sdlogon.renew_certificate_with_retry(True)
 
         # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
         #
-        sdlogon.renew_certificate(True)
+        #sdlogon.renew_certificate(True)
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
