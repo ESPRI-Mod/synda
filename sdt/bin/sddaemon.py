@@ -77,7 +77,25 @@ def main_loop():
     try:
         sdtaskscheduler.event_loop()
     except SDException, e:
-        sdlog.info('SDDAEMON-008',"Exception occured (%s)"%str(e))
+        level=sdconfig.config.get('log','verbosity_level')
+
+        if level=='debug':
+            # We log everything in debug mode no matter the exception type
+
+            sdlog.debug('SDDAEMON-008',"Exception occured (%s)"%str(e))
+        else:
+            if e.__class__.__name__=="SDException":
+                # In this case, we only print the exception code, as the errmsg
+                # is likely to be there already (i.e. low-level func should have 
+                # log information about this exception).
+                # The primary reason for this is to have a clear log entry
+                # when authentication failed (e.g. ESGF is down or openid is incorrect)
+
+                sdlog.info('SDDAEMON-010',"Exception occured (%s)"%str(e.code))
+            else:
+                # This case should not occur, so we log everything to help debugging
+
+                sdlog.info('SDDAEMON-012',"Exception occured (%s)"%str(e))
 
     sdlog.info('SDDAEMON-034',"Daemon stopped")
 
