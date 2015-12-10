@@ -145,24 +145,21 @@ def event_loop():
 
     if sdconfig.files_download:
 
-
-        # In this mode, we keep retrying with a high frequency if ESGF IDP is not accessible (e.g. if ESGF is down)
-        sdlogon.renew_certificate_with_retry_highfreq()
-
-
-        # In this mode, we keep retrying with a low frequency if ESGF IDP is not accessible (e.g. if ESGF is down)
+        # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
         #
         # Note 
         #     To be practical, a 'systemd reload sdt' command must be implemented
         #     (else, openid change in sdt.conf have no impact until the next
-        #     retry, which may be a few hours..)
+        #     retry, which may be a few hours..). Because currently, synda is not aware
+        #     of sdt.conf changes while running.
         #
         #sdlogon.renew_certificate_with_retry(True)
+        #sdlogon.renew_certificate_with_retry_highfreq()
 
 
         # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
         #
-        #sdlogon.renew_certificate(True)
+        sdlogon.renew_certificate(True)
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
