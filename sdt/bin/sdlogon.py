@@ -38,6 +38,17 @@ def is_openid_set():
     else:
         return True
 
+@retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, SDException)) # 50000 => 50 seconds
+def renew_certificate_with_retry_highfreq():
+    """
+    Retry mecanism when ESGF IDP cannot be reached.
+
+    Notes
+        - Retry when SDException occurs, raise any other errors
+        - when the daemon is stopped, this retry is cancelled using SIGTERM
+    """
+    renew_certificate(False,True)
+
 @retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, SDException)) # 1800000 => 30mn, 86400000 => 24 hours
 def renew_certificate_with_retry(force,quiet=True):
     """
