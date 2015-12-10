@@ -52,9 +52,25 @@ def terminate(signal,frame):
     # kill all childs (i.e. abort running transfer(s) if any)
     import psutil
     parent = psutil.Process(os.getpid())
+
+    # NEW WAY
+    # see TAG54353543DFDSFD for info
+    #
+    if hasattr(parent, 'get_children'):
+        for child in parent.get_children(True):
+            if child.is_running():
+                child.terminate()
+    else:
+        for child in parent.children(True):
+            if child.is_running():
+                child.terminate()
+
+    # OLD
+    """
     for child in parent.get_children(True):
         if child.is_running():
             child.terminate()
+    """
 
 def cleanup_running_transfer():
     """This handle zombie cases (transfers with 'running' status, but not running).
