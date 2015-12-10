@@ -32,7 +32,7 @@ def extract_info_from_openid(openid):
     """Retrieve username,host,port informations from ESGF openID."""
 
     try:
-        xrds_buf=sdnetutils.HTTP_GET(openid)
+        xrds_buf=sdnetutils.HTTP_GET(openid,timeout=10)
         (hostname,port)=parse_XRDS(xrds_buf)
         username=parse_openid(openid)
         return (hostname,port,username)

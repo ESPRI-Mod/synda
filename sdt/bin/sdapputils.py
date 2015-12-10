@@ -54,6 +54,12 @@ def from_signal_to_atexit(signum, stackframe):
     raise SystemExit # To make sure atexit registered funcs are called also in the signal case.
 
 def signal_init():
-    # handle signals (atexit don't handle signal)
+    """
+    Handle signals (atexit don't handle signal)
+    
+    Note
+        Used in IHM mode only
+    """
+
     signal.signal(signal.SIGINT, from_signal_to_atexit)
     signal.signal(signal.SIGTERM, from_signal_to_atexit)
