@@ -128,7 +128,16 @@ def event_loop():
     scheduler_state=1
 
     if sdconfig.files_download:
-        sdlogon.renew_certificate_with_retry(True)
+
+        # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
+        #
+        # TODO: this mode needs some testing as non-working in some cases
+        #
+        #sdlogon.renew_certificate_with_retry(True)
+
+        # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
+        #
+        sdlogon.renew_certificate(True)
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
