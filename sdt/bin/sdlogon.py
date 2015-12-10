@@ -46,6 +46,7 @@ def renew_certificate_with_retry_highfreq():
     Notes
         - Retry when SDException occurs, raise any other errors
         - when the daemon is stopped, this retry is cancelled using SIGTERM
+          (seems not working for now as it only stops on 'kill -9' TBC)
     """
     renew_certificate(False,True)
 
@@ -60,6 +61,7 @@ def renew_certificate_with_retry(force,quiet=True):
           (based on 2^x which gives 2, 4, 8, 16, 32, 64, 128..)
         - Retry when SDException occurs, raise any other errors
         - when the daemon is stopped, this retry is cancelled using SIGTERM
+          (seems not working for now as it only stops on 'kill -9' TBC)
     """
     renew_certificate(force,quiet)
 
