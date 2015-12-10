@@ -77,7 +77,7 @@ msg ()
     buf="$(curdate) - $l__code - $l__msg"
 
     echo $buf 1>&2             # stderr
-	#echo $buf >> $log_file    # deprecated ('transfer.log' duplicate)
+	#echo $buf
 }
 
 cleanup ()
@@ -146,21 +146,13 @@ export ESGF_CREDENTIAL=$HOME/.esg/credentials.pem
 export ESGF_CERT_DIR=$HOME/.esg/certificates
 wget_pid=
 
-# set root folder
-if [ -z "$ST_HOME" ]; then
-    msg "ERR008" "root directory not found ($ST_HOME)"
-    exit 4
-else
-    SYNCDA_ROOT=${ST_HOME}
-fi
+wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 
-log_dir=$SYNCDA_ROOT/log
-#log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
-debug_file=${log_dir}/debug.log
+debug_file=/tmp/sdt_wget_debug.log
 
 
 # set tmp dir.
-g__tmpdir=$SYNCDA_ROOT/tmp
+g__tmpdir=/tmp/sdt_tmp
 mkdir -p $g__tmpdir # create tmp dir. (if missing)
 
 # wget parameters
@@ -232,8 +224,6 @@ NO_CHECK_SERVER_CERTIFICATE=" --no-check-certificate "
 TLS_ONLY=" --secure-protocol=TLSv1 "
 #TLS_ONLY=" "
 g__lifetime=168
-
-mkdir -p ${log_dir}
 
 # prevent download if path not starting with '/'
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
@@ -313,7 +303,7 @@ else
 	# (currently, wget output parsing work only if "--tries" is set to 1)
 	#
 	if [ "$WGET_TRIES" = "1" ]; then
-        source $SYNCDA_ROOT/bin/sdparsewgetoutput.sh
+        source "$wgetoutputparser"
 	fi
 fi
 
