@@ -18,6 +18,11 @@ import os
 import re
 import argparse
 
+def trace(tracefile,scriptname,status,stdout,stderr):
+    with open(tracefile,'a') as fh:
+        fh.write("'%s' script returned an error\n"%scriptname)
+        fh.write('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
+
 def is_daemon():
 
     # the parent of a daemon is always Init, so check for ppid 1 

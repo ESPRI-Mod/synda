@@ -21,6 +21,7 @@ import sdconfig
 import sdlog
 import sdlatestquery
 import sdstatquery
+import sdtools
 import sdutils
 import sddao
 import sddeletedataset
@@ -117,7 +118,8 @@ def cleanup_tree():
 
     (status,stdout,stderr)=sdutils.get_status_output(argv)
     if status!=0:
-        raise SDException("SDOPERAT-001","Error occurs during tree cleanup (see 'cleanup_tree.log' for details)")
+        sdtools.trace(sdconfig.stacktrace_log_file,os.path.basename(sdconfig.cleanup_tree_script),status,stdout,stderr)
+        raise SDException("SDOPERAT-001","Error occurs during tree cleanup")
 
     sdlog.info("SDOPERAT-010","Cleanup done.")
 

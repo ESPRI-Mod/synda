@@ -26,7 +26,7 @@ msg ()
 	l__code="$1"
 	l__msg="$2"
 
-	echo "$(curdate) - ${0##*/} - $l__code - $l__msg" | tee -a $log_file
+	echo "$(curdate) - ${0##*/} - $l__code - $l__msg"
 }
 
 # --------- check -------- #
@@ -38,16 +38,9 @@ fi
 
 # --------- init --------- #
 
-if [ -z "$ST_HOME" ]; then
-    msg "ERR009" "Root directory not found"
-    exit 1
-fi
-
 PATH=/usr/bin:/bin
 data_path="$1"
 export LANG=C
-log_dir=$ST_HOME/log
-log_file=${log_dir}/operation.log
 
 # --------- check -------- #
 
