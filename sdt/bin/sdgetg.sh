@@ -49,7 +49,7 @@ msg ()
     buf="$(curdate) - $l__code - $l__msg"
 
     echo $buf 1>&2             # stderr
-    #echo $buf >> $log_file    # deprecated ('transfer.log' duplicate)
+    #echo $buf
 }
 
 cleanup_on_error ()
@@ -148,11 +148,6 @@ else
     exit 30
 fi
 
-if [ -z "$ST_HOME" ]; then
-    msg "ERR008" "root directory not found ($ST_HOME)"
-    exit 4
-fi
-
 ############################################
 # init
 #
@@ -170,10 +165,6 @@ export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
 
 GRIDFTP_CMD=globus-url-copy
 
-log_dir=${ST_HOME}/log
-#log_file=${log_dir}/get_data.log # deprecated ('transfer.log' duplicate)
-debug_file=${log_dir}/debug.log
-
 local_folder=`dirname $local_file` # retrieve destination folder
 
 ############################################
@@ -186,7 +177,7 @@ if [ $debug_level -eq 4 ]; then
     export GLOBUS_ERROR_OUTPUT=1
     export GLOBUS_ERROR_VERBOSE=1
     export GLOBUS_GSI_AUTHZ_DEBUG_LEVEL=2
-    export GLOBUS_GSI_AUTHZ_DEBUG_FILE=$debug_file
+    export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/gridftp_debug.log
 
     GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
 elif [ $debug_level -eq 3 ]; then
@@ -202,7 +193,6 @@ fi
 ############################################
 # create folder
 
-mkdir -p ${log_dir}
 mkdir -p ${local_folder}
 
 ############################################
