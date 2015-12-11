@@ -68,9 +68,10 @@ do
 done
 shift $(($OPTIND - 1)) # remove options
 
+certdirprefix=$HOME
 
-export ESGF_CREDENTIAL=$HOME/.esg/credentials.pem
-export ESGF_CERT_DIR=$HOME/.esg/certificates
+export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
+export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
 
 # we unset X509_USER_PROXY to prevent error below (i.e. to ignore X509_USER_PROXY if already set by user)
 #
@@ -129,9 +130,8 @@ set_X509_CERT_DIR ()
 	# it may be related with X509_CERT_DIR
 	# you can try to set it to the values below:
 	# - ""
-	# - $HOME/.esg/certificates
+	# - $certdirprefix/.esg/certificates
 	# - /etc/grid-security/certificates
-	#
 
 
 	# also if you have error below, try without setting "X509_CERT_DIR" env. var.
@@ -145,7 +145,7 @@ set_X509_CERT_DIR ()
 
 
 	#export X509_CERT_DIR=/etc/grid-security/certificates
-	export X509_CERT_DIR=$HOME/.esg/certificates
+	export X509_CERT_DIR=$certdirprefix/.esg/certificates
 }
 
 set_X509_CERT_DIR
