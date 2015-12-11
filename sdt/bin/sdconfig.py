@@ -87,6 +87,7 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
+multiuser=False
 
 # TODO: replace default options DICTIONNARY below with a default options FILE
 # (pb with options below is that they are available in all sections)
