@@ -54,8 +54,8 @@ def add_dump_option(parser):
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw',help="set format to be used with 'dump' action")
 
-def create_subparser(subparsers,action,**kw):
-    subparser = subparsers.add_parser(action,help=kw.get('help'))
+def create_subparser(subparsers,subcommand,**kw):
+    subparser = subparsers.add_parser(subcommand,help=kw.get('help'))
     add_common_option(subparser,**kw)
     return subparser
 
