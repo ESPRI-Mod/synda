@@ -152,10 +152,18 @@ fi
 # init
 #
 
+multiuser="0"
+
+if [ "$multiuser" = "0" ]; then
+    certdirprefix=$HOME
+else
+    certdirprefix=/var/tmp/synda/sdt
+fi
+
 export LANG=C
 export LC_ALL=C
 
-export ESGF_SECURITY_ROOT=$HOME/.esg
+export ESGF_SECURITY_ROOT=$certdirprefix/.esg
 export ESGF_CREDENTIAL=$ESGF_SECURITY_ROOT/credentials.pem 
 
 export X509_USER_CERT=$ESGF_CREDENTIAL
