@@ -275,12 +275,17 @@ def retry(args):
         print_stderr("No transfer in error")
 
 def daemon(args):
-    import sddaemon
+    import sddaemon,sdconfig
 
     if args.action is None:
         sddaemon.print_daemon_status()
     else:
         if args.action=="start":
+
+            if sdconfig.multiuser:
+                print_stderr("synda daemon must be started using 'systemctl' command")
+                return
+
             if sddaemon.is_running():
                 print_stderr("Daemon already started")
             else:
@@ -290,6 +295,11 @@ def daemon(args):
                 except SDException,e:
                     print_stderr('error occured',e.msg)
         elif args.action=="stop":
+
+            if sdconfig.multiuser:
+                print_stderr("synda daemon must be stopped using 'systemctl' command")
+                return
+
             if sddaemon.is_running():
                 try:
                     sddaemon.stop()
