@@ -36,11 +36,10 @@ def cache(args):
 
 def certificate(args):
     import sdlogon
-    if len(args.parameter)==0:
+    if len(args.action)==0:
         sdlogon.print_certificate()
     else:
-        action=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-        if action=="renew":
+        if args.action=="renew":
 
             if sdlogon.is_openid_set():
                 try:
@@ -50,7 +49,7 @@ def certificate(args):
                     print_stderr('Error occurs while renewing certificate (%s)'%str(e))
             else:
                 print_stderr('Error: OpenID not set in configuration file.')   
-        elif action=="print":
+        elif args.action=="print":
             sdlogon.print_certificate()
         else:
             print_stderr('Not implemented yet.')   

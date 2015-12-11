@@ -49,6 +49,9 @@ def add_common_option(parser,**kw):
 def add_parameter_argument(parser):
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # we use PARAMETER and not FACET as is more generic (e.g. for title, id, etc..)
 
+def add_action_argument(parser):
+    parser.add_argument('action',help=sdi18n.m0017)
+
 def add_dump_option(parser):
     parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
@@ -66,7 +69,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'certificate',help='Manage X509 certificate')
-    add_parameter_argument(subparser)
+    add_action_argument(subparser)
 
     subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
     add_parameter_argument(subparser)
