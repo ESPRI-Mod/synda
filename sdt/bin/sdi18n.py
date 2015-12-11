@@ -132,16 +132,42 @@ new  195.2 MB  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1
 
 Install the dataset
 
-$ synda install cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 
+$ sudo synda install cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 
 1 file(s) will be added to the download queue.
 Once downloaded, 195.2 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
-                                                                                                    
 1 file(s) enqueued
-You can now start the daemon to begin the download.
+You can follow the download using 'synda watch' and 'synda log' commands.
 
 
+Check download progress
+
+$ synda watch
+Daemon not running
 
 
+We see here that the daemon is not running, let 's see the log for more info
+
+$ tail /var/log/synda/sdt/transfer.log
+2015-12-11 20:02:31,844 ERROR SDTSCHED-928 OpenID not set in configuration file
+2015-12-11 20:02:31,845 ERROR SDTSCHED-920 Error occured while retrieving ESGF certificate
+2015-12-11 20:02:31,845 INFO SDDAEMON-010 Exception occured (SDTSCHED-264)
+2015-12-11 20:02:31,846 INFO SDDAEMON-034 Daemon stopped
+
+We see in the log that credentials (openid) are not set in the configuration file.
+
+Let's do it
+
+$ vi /etc/synda/sdt/sdt.conf
+
+
+Then start the daemon
+
+$ sudo systemctl start synda
+
+
+Check download progress
+
+$ synda watch
 
 """

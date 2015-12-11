@@ -138,12 +138,22 @@ if [ -z "$url" ]; then
     exit 3
 fi
 
+
 # init
+
+multiuser="0"
+
+if [ "$multiuser" = "0" ]; then
+    certdirprefix=$HOME
+else
+    certdirprefix=/var/tmp/synda/sdt
+fi
+
 export LANG=C
 export LC_ALL=C
 USE_CERTIFICATE="yes" # yes | no
-export ESGF_CREDENTIAL=$HOME/.esg/credentials.pem
-export ESGF_CERT_DIR=$HOME/.esg/certificates
+export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
+export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
 wget_pid=
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"

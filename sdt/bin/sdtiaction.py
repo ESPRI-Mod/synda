@@ -24,6 +24,9 @@ def autoremove(args):
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
 def cache(args):
+    """
+    Deprecated: use 'update' subcommand instead
+    """
     if args.action is None:
         pass
     else:
@@ -393,7 +396,10 @@ def watch(args):
         print_stderr('Daemon not running')
 
 def update(args):
-    print_stderr('Not implemented yet.')   
+    print_stderr("Retrieving parameters from ESGF...")
+    import sdcache
+    sdcache.run(reload=True)
+    print_stderr("Parameters are up-to-date.")
 
 # init.
 
