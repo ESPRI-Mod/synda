@@ -68,22 +68,7 @@ do
 done
 shift $(($OPTIND - 1)) # remove options
 
-certdirprefix=$HOME
-
-export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
-export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
-
-# we unset X509_USER_PROXY to prevent error below (i.e. to ignore X509_USER_PROXY if already set by user)
-#
-#  Error: [('system library', 'fopen', 'No such file or directory'),
-#  ('BIO routines', 'FILE_CTRL', 'system lib'), ('SSL routines',
-#  'SSL_CTX_use_certificate_chain_file', 'system lib')]
-#
-unset X509_USER_PROXY
-#export X509_USER_PROXY=$ESGF_CREDENTIAL # old stuff
-
 MYPROXY_CMD="${0%/*}/myproxyclient"
-
 MYPROXY_VERBOSE=""
 #MYPROXY_VERBOSE="--verbose"
 FORCE_RENEW_CERTIFICATE="no"
@@ -100,6 +85,25 @@ if [ "$multiuser" = "0" ]; then
 else
     conf_dir="/etc/synda/sdt"
 fi
+
+if [ "$multiuser" = "0" ]; then
+    certdirprefix=$HOME
+else
+    certdirprefix=/var/tmp/synda/sdt
+fi
+
+export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
+export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
+
+# we unset X509_USER_PROXY to prevent error below (i.e. to ignore X509_USER_PROXY if already set by user)
+#
+#  Error: [('system library', 'fopen', 'No such file or directory'),
+#  ('BIO routines', 'FILE_CTRL', 'system lib'), ('SSL routines',
+#  'SSL_CTX_use_certificate_chain_file', 'system lib')]
+#
+unset X509_USER_PROXY
+#export X509_USER_PROXY=$ESGF_CREDENTIAL # old stuff
+
 
 conf_filename="sdt.conf"
 conf_file="$conf_dir/$conf_filename"
