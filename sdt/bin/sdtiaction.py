@@ -339,10 +339,8 @@ def queue(args):
     from tabulate import tabulate
     from sdprogress import ProgressThread
 
-    project=args.parameter[0] if not (len(args.parameter)==0) else None
-
     ProgressThread.start(sleep=0.1,running_message='Collecting status information.. ',end_message='') # spinner start
-    li=sdstatquery.get_download_status(project)
+    li=sdstatquery.get_download_status(args.project)
     ProgressThread.stop() # spinner stop
 
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")

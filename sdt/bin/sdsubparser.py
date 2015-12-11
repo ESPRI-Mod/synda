@@ -68,13 +68,13 @@ def create_subparser(subparsers,subcommand,**kw):
 def run(subparsers):
     subparser=create_subparser(subparsers,'autoremove',help='Remove old datasets versions')
 
-    subparser=create_subparser(subparsers,'cache',help='Manage cache')
+    subparser=create_subparser(subparsers,'cache',common_option=False,help='Manage cache')
     add_action_argument(subparser,choices=['init'])
 
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate')
-    add_action_argument(subparser,choices=['renew'])
+    add_action_argument(subparser,choices=['renew','print'])
 
-    subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
+    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Start/stop the daemon')
     add_action_argument(subparser,choices=['start','stop','status'])
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
@@ -106,8 +106,8 @@ def run(subparsers):
     subparser.add_argument('order')
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'queue',help='Display download queue status')
-    add_parameter_argument(subparser)
+    subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status')
+    subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
 
     subparser=create_subparser(subparsers,'remove',help='Remove dataset')
     add_parameter_argument(subparser)
@@ -115,7 +115,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'replica',help='Change replica')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'reset',help="Remove all 'waiting' and 'error' transfers")
+    subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',help='Retry transfer')
 
     subparser=create_subparser(subparsers,'search',help='Search dataset')
