@@ -133,7 +133,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'test',help='Test file download')
-    add_parameter_argument(subparser)
+    subparser.add_argument('file_url',help='file url')
 
     subparser=create_subparser(subparsers,'update',help='Update ESGF parameter local cache')
 

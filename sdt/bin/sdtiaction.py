@@ -353,17 +353,15 @@ def test(args):
 
     sdlogon.renew_certificate(False)
 
-    if len(args.parameter)==0:
+    if args.file_url is None:
         print_stderr('Incorrect argument')   
     else:
-        file_url=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-
         tmpfile='/tmp/sdt_test_file.nc'
 
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
-        (sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(file_url,tmpfile)
+        (sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(args.file_url,tmpfile)
 
         print_stderr(script_stdxxx)
 
