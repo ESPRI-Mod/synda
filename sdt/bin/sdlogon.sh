@@ -81,7 +81,8 @@ export ESGF_CERT_DIR=$HOME/.esg/certificates
 unset X509_USER_PROXY
 #export X509_USER_PROXY=$ESGF_CREDENTIAL # old stuff
 
-MYPROXY_CMD="myproxyclient"
+MYPROXY_CMD="${0%/*}/myproxyclient"
+
 MYPROXY_VERBOSE=""
 #MYPROXY_VERBOSE="--verbose"
 FORCE_RENEW_CERTIFICATE="no"
@@ -122,15 +123,6 @@ else
     g__pass=$(echo "$esgf_credential_section" | awk -F '=' '{ if (! ($0 ~ /^;/) && ! ($0 ~ /^#/) && $0 ~ /password/) print $2}' ) # what we do here is read 'password' and ignore comment if any (i.e. line starting with ';' or '#').
 fi
 
-exists_myproxy_command ()
-{
-	/usr/bin/which $MYPROXY_CMD >/dev/null 2>&1
-	if [ $? -ne 0 ]; then
-		msg "ERR014" "$MYPROXY_CMD command not found"
-		exit 4
-	fi
-}
-
 set_X509_CERT_DIR ()
 {
 	# if you have the error "self signed certificate in certificate chain"
@@ -157,8 +149,6 @@ set_X509_CERT_DIR ()
 }
 
 set_X509_CERT_DIR
-
-exists_myproxy_command # check for myproxy command
 
 # check passwd
 if [ $g__pass = "pwd" ]; then
