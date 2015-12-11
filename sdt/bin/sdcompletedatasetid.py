@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -9,25 +9,32 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module add data_node to dataset_id in case dataset_id is set without data_node in selection file.
+"""This module add data_node to dataset_functional_id.
 
 Notes
-  - This module make possible to search files using reduced dataset_id (aka
-    instance_id aka dataset_functional_id).
-  - If 'data_node' is set in selection file use it, else use choose data_node
-    depending on 'replica' flag (if set to false, use master data_node, if set
-    to true use a random replica data_node).
-  - This filter maybe be deprecated because of this:
-     - it is possible to use type=File and dataset_id without data_node
-        - example
-           - http://esgf-index1.ceda.ac.uk/esg-search/search?query=cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926
-              - gives two datasets
-           - http://esgf-index1.ceda.ac.uk/esg-search/search?type=File&query=cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926
-              - gives all files of the two datasets
-        - the only thing to be careful of is replica
-          (in the example above, both found datasets are the same, one is the master, one is a replica)
-     - it is possible, but it seems not reliable
-        - see TAG543N45K3KJK
+    - This module is useful for example to transform dataset_functional_id to ESGF dataset_id (aka ESGF id).
+    - The datanode used is retrieve from ESGF and can be a replica datanode or a master datanode
+    - If a standalone data_node facet is present, it takes priority and is used.
+    - This module makes possible to search files using dataset instance_id aka dataset_functional_id.
+    - In this module, input dataset_id can be one of two things:
+        - 'ESGF dataset_id' (i.e. including the data_node)
+        - dataset_functional_id (i.e. without the data_node)
+    - In this module, output dataset_id is always 'ESGF dataset_id' (i.e. including the data_node)
+    - If 'data_node' is set in selection file use it, else use choose data_node
+      depending on 'replica' flag (if set to false, use master data_node, if set
+      to true use a random replica data_node).
+    - This filter maybe be deprecated because of this:
+         - it IS possible to send a search-API request with type=File and dataset_functional_id (i.e. without data_node)
+              - example
+                   - http://esgf-index1.ceda.ac.uk/esg-search/search?query=cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926
+                        - gives two datasets
+                   - http://esgf-index1.ceda.ac.uk/esg-search/search?type=File&query=cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926
+                        - gives all files of the two datasets
+              - the only thing to be careful of is replica
+                (in the example above, both found datasets are the same, one is the master, one is a replica)
+        - well maybe not
+               - it is possible, but it seems not reliable
+                    - see TAG543N45K3KJK
 """
 
 import sys
@@ -50,7 +57,9 @@ def run(facets_groups):
                     new_values.append(dataset_id)
                 else:
                     instance_id=dataset_id # meaningfull as instance_id is dataset_id without data_node
+		    print 'hello01',instance_id
                     new_values.append(instance_id_to_dataset_id(instance_id,facets_group))
+		    print 'hello02',new_values
 
             facets_group['dataset_id']=new_values
 
@@ -73,7 +82,9 @@ def retrieve_full_dataset_id(instance_id,replica):
     replica=replica[0]
 
     # search-API call
+    print 'hello11',instance_id,replica
     datanodes=get_data_nodes(instance_id,replica)
+    print 'hello12',datanodes
 
     if replica=='true':
         # retrieve a random replica data_node
@@ -94,12 +105,15 @@ def retrieve_full_dataset_id(instance_id,replica):
 def get_data_nodes(instance_id,replica_scalar):
     """Return one or more data_nodes depending on the 'replica' flag."""
 
+
     parameter=['limit=50','type=Dataset','instance_id=%s'%instance_id,'replica=%s'%replica_scalar]
+
+    print 'hello21',parameter
 
     # debug
     #print parameter
 
-    result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=False)
+    result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=True)
     if result.num_result>0:
 
         datanodes=[]
