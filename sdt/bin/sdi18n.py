@@ -111,3 +111,37 @@ Synda subcommands list
 m0016="synda - a fast and versatile data management tool for Earth Science Grid Federation (ESGF)"
 
 m0017="action parameter"
+
+m0018="""
+Introduction to synda command
+
+A session might go like
+
+
+Search for a dataset
+
+$ synda search cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815
+new  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815
+
+
+Print dataset file(s)
+
+$ synda search cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 -f
+new  195.2 MB  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815.snw_LImon_HadGEM2-AO_historical_r1i1p1_186001-200512.nc
+
+
+Install the dataset
+
+$ synda install cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 
+1 file(s) will be added to the download queue.
+Once downloaded, 195.2 MB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+                                                                                                    
+1 file(s) enqueued
+You can now start the daemon to begin the download.
+
+
+
+
+
+"""

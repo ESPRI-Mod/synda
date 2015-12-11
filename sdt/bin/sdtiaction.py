@@ -127,12 +127,16 @@ def install(args,files=None):
 
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
-            print_stderr('You can now start the daemon to begin the download.') # TODO: ask for confirm and do the start here
+            print_stderr("You can follow the download using 'synda watch' and 'synda log' commands")
     else:
         if interactive:
             print_stderr('Abort.')
 
     return count_new
+
+def intro(args):
+    import sdi18n
+    print sdi18n.m0018
 
 def remove(args):
     import sddelete,sddeletefile,syndautils
@@ -283,7 +287,7 @@ def daemon(args):
         if args.action=="start":
 
             if sdconfig.multiuser:
-                print_stderr("synda daemon must be started using 'systemctl' command")
+                print_stderr("Synda daemon must be started using 'systemctl' command")
                 return
 
             if sddaemon.is_running():
@@ -297,7 +301,7 @@ def daemon(args):
         elif args.action=="stop":
 
             if sdconfig.multiuser:
-                print_stderr("synda daemon must be stopped using 'systemctl' command")
+                print_stderr("Synda daemon must be stopped using 'systemctl' command")
                 return
 
             if sddaemon.is_running():
@@ -402,6 +406,7 @@ actions={
     'facet':facet,
     'history':history, 
     'install':install, 
+    'intro':intro, 
     'param':param,
     'queue':queue,
     'remove':remove, 
