@@ -1,4 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
+#!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -56,9 +56,7 @@ def run(facets_groups):
                     new_values.append(dataset_id)
                 else:
                     instance_id=dataset_id # meaningfull as instance_id is dataset_id without data_node
-		    print 'hello01',instance_id
                     new_values.append(instance_id_to_dataset_id(instance_id,facets_group))
-		    print 'hello02',new_values
 
             facets_group['dataset_id']=new_values
 
@@ -81,9 +79,7 @@ def retrieve_full_dataset_id(instance_id,replica):
     replica=replica[0]
 
     # search-API call
-    print 'hello11',instance_id,replica
     datanodes=get_data_nodes(instance_id,replica)
-    print 'hello12',datanodes
 
     if replica=='true':
         # retrieve a random replica data_node
@@ -104,15 +100,12 @@ def retrieve_full_dataset_id(instance_id,replica):
 def get_data_nodes(instance_id,replica_scalar):
     """Return one or more data_nodes depending on the 'replica' flag."""
 
-
     parameter=['limit=50','type=Dataset','instance_id=%s'%instance_id,'replica=%s'%replica_scalar]
-
-    print 'hello21',parameter
 
     # debug
     #print parameter
 
-    result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=True)
+    result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=False)
     if result.num_result>0:
 
         datanodes=[]
