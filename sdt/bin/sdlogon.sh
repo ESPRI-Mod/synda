@@ -85,19 +85,24 @@ MYPROXY_CMD="myproxyclient"
 MYPROXY_VERBOSE=""
 #MYPROXY_VERBOSE="--verbose"
 FORCE_RENEW_CERTIFICATE="no"
+multiuser="0"
 
 # set root folder
-if [ -z "$ST_HOME" ]; then
-    msg "ERR008" "root directory not found"
-    exit 9
+if [ "$multiuser" = "0" ]; then
+    if [ -z "$ST_HOME" ]; then
+        msg "ERR008" "root directory not found"
+        exit 9
+    else
+        conf_dir=${ST_HOME}/conf
+    fi
 else
-    SYNCDA_ROOT=${ST_HOME}
+    conf_dir="/etc/synda/sdt"
 fi
 
 conf_filename="sdt.conf"
-conf_file="$SYNCDA_ROOT/conf/$conf_filename"
+conf_file="$conf_dir/$conf_filename"
 passwd_filename=".sdpass"
-passwd_file="$SYNCDA_ROOT/conf/$passwd_filename"
+passwd_file="$conf_dir/$passwd_filename"
 
 # retrieve password
 if [ -f "$passwd_file" ]; then
