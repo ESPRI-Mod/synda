@@ -207,14 +207,14 @@ def upgrade(args):
 
     # BEWARE: tricky statement
     #
-    # 'upgrade' is a multi-selections 'action' which do the same as the
-    # mono-selection 'install' action, but for many selections.  What we do
-    # here is replace 'upgrade' action with 'install' action, so that we can,
+    # 'upgrade' is a multi-selections 'subcommand' which do the same as the
+    # mono-selection 'install' subcommand, but for many selections.  What we do
+    # here is replace 'upgrade' subcommand with 'install' subcommand, so that we can,
     # now that we are in 'upgrade' func/context, 
-    # come back to the existing mono-selection func (i.e. execute_x_action() func),
-    # for each selection, with 'install' action.
+    # come back to the existing mono-selection func,
+    # for each selection, with 'install' subcommand.
     #
-    args.action='install'
+    args.subcommand='install'
 
     project=sdparameter.extract_values_from_parameter(args.parameter,'project') # retrieve project(s) from parameter
 
@@ -385,6 +385,7 @@ def update(args):
 
 # init.
 
+# TODO: rename as subcommands
 actions={
     'autoremove':autoremove,
     'cache':cache,

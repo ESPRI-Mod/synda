@@ -75,9 +75,9 @@ if __name__ == '__main__':
     # argparse customization example
     #parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter,description=sdi18n.m0016)
 
-    subparsers = parser.add_subparsers(dest='action',metavar='subcommand') # ,help=sdi18n.m0015
+    subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand') # ,help=sdi18n.m0015
 
-    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as action
+    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as subcommand
 
     # create parser for sub-commands
     sdsubparser.run(subparsers)
@@ -92,9 +92,9 @@ if __name__ == '__main__':
     # smoothly.
 
 
-    # -- action routing -- #
+    # -- subcommand routing -- #
 
-    if args.action=='help':
+    if args.subcommand=='help':
 
         if args.topic is None:
             parser.print_help()
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
 
     import sdtsaction
-    if args.action in sdtsaction.actions.keys():
+    if args.subcommand in sdtsaction.actions.keys():
         import syndautils
 
         stream=syndautils.get_stream(args)
@@ -123,16 +123,16 @@ if __name__ == '__main__':
         set_stream_type(args)
 
         import sdtsaction
-        sdtsaction.actions[args.action](args)
+        sdtsaction.actions[args.subcommand](args)
 
         sys.exit(0)
 
     import sdtiaction
-    if args.action in sdtiaction.actions.keys():
-        sdtiaction.actions[args.action](args)
+    if args.subcommand in sdtiaction.actions.keys():
+        sdtiaction.actions[args.subcommand](args)
         sys.exit(0)
 
-    print_stderr('Invalid operation %s'%args.action)   
+    print_stderr('Invalid operation %s'%args.subcommand)   
     print_stderr("Use '--help' option for more info")
     #parser.print_help()
     sys.exit(2)

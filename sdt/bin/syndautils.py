@@ -32,7 +32,7 @@ def get_stream(args):
         import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
 
         # hack
-        if args.action=='list':
+        if args.subcommand=='list':
             args.no_default=True
 
         buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
