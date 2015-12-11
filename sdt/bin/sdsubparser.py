@@ -72,7 +72,7 @@ def run(subparsers):
     add_action_argument(subparser)
 
     subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
-    add_parameter_argument(subparser)
+    add_action_argument(subparser)
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
     add_parameter_argument(subparser)

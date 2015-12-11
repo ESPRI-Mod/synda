@@ -277,11 +277,10 @@ def retry(args):
 def daemon(args):
     import sddaemon
 
-    if len(args.parameter)==0:
+    if args.action is None:
         sddaemon.print_daemon_status()
     else:
-        action=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-        if action=="start":
+        if args.action=="start":
             if sddaemon.is_running():
                 print_stderr("Daemon already started")
             else:
@@ -290,7 +289,7 @@ def daemon(args):
                     print_stderr("Daemon successfully started")
                 except SDException,e:
                     print_stderr('error occured',e.msg)
-        elif action=="stop":
+        elif args.action=="stop":
             if sddaemon.is_running():
                 try:
                     sddaemon.stop()
@@ -299,7 +298,7 @@ def daemon(args):
                     print_stderr('error occured',e.msg)
             else:
                 print_stderr("Daemon already stopped")
-        elif action=="status":
+        elif args.action=="status":
             sddaemon.print_daemon_status()
 
 def facet(args):
