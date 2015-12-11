@@ -69,13 +69,13 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'autoremove',help='Remove old datasets versions')
 
     subparser=create_subparser(subparsers,'cache',help='Manage cache')
-    add_action_argument(subparser)
+    add_action_argument(subparser,choices=['init'])
 
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate')
     add_action_argument(subparser,choices=['renew'])
 
     subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
-    add_action_argument(subparser)
+    add_action_argument(subparser,choices=['start','stop','status'])
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
     add_parameter_argument(subparser)
