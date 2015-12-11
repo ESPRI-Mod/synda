@@ -14,15 +14,14 @@
 Notes
     - This module is useful for example to transform dataset_functional_id to ESGF dataset_id (aka ESGF id).
     - The datanode used is retrieve from ESGF and can be a replica datanode or a master datanode
-    - If a standalone data_node facet is present, it takes priority and is used.
+    - If a standalone data_node facet is present, it takes the lead and is used in priority.
     - This module makes possible to search files using dataset instance_id aka dataset_functional_id.
     - In this module, input dataset_id can be one of two things:
         - 'ESGF dataset_id' (i.e. including the data_node)
         - dataset_functional_id (i.e. without the data_node)
     - In this module, output dataset_id is always 'ESGF dataset_id' (i.e. including the data_node)
-    - If 'data_node' is set in selection file use it, else use choose data_node
-      depending on 'replica' flag (if set to false, use master data_node, if set
-      to true use a random replica data_node).
+    - Choose data_node depending on 'replica' flag (if set to false, use master
+      data_node, if set to true use a random replica data_node).
     - This filter maybe be deprecated because of this:
          - it IS possible to send a search-API request with type=File and dataset_functional_id (i.e. without data_node)
               - example
