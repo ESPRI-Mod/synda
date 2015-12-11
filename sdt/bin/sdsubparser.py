@@ -148,4 +148,4 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'watch',help='Display running transfer')
+    subparser=create_subparser(subparsers,'watch',common_option=False,help='Display running transfer')
