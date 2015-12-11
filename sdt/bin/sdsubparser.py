@@ -59,7 +59,10 @@ def add_dump_option(parser):
 
 def create_subparser(subparsers,subcommand,**kw):
     subparser = subparsers.add_parser(subcommand,help=kw.get('help'))
-    add_common_option(subparser,**kw)
+
+    if kw.get('common_option',True):
+        add_common_option(subparser,**kw)
+
     return subparser
 
 def run(subparsers):
@@ -69,7 +72,7 @@ def run(subparsers):
     add_action_argument(subparser)
 
     subparser=create_subparser(subparsers,'certificate',help='Manage X509 certificate')
-    add_action_argument(subparser)
+    add_action_argument(subparser,common_option=False)
 
     subparser=create_subparser(subparsers,'daemon',help='Start/stop the daemon (download background process)')
     add_action_argument(subparser)
