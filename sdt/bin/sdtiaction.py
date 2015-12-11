@@ -24,11 +24,10 @@ def autoremove(args):
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
 def cache(args):
-    if len(args.parameter)==0:
+    if args.action is None:
         pass
     else:
-        action=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-        if action=="init":
+        if args.action=="init":
             print_stderr("Retrieving parameters from ESGF...")
             import sdcache
             sdcache.run(reload=True)
@@ -36,7 +35,7 @@ def cache(args):
 
 def certificate(args):
     import sdlogon
-    if len(args.action)==0:
+    if args.action is None:
         sdlogon.print_certificate()
     else:
         if args.action=="renew":

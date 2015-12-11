@@ -66,7 +66,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'autoremove',help='Remove old datasets versions')
 
     subparser=create_subparser(subparsers,'cache',help='Manage cache')
-    add_parameter_argument(subparser)
+    add_action_argument(subparser)
 
     subparser=create_subparser(subparsers,'certificate',help='Manage X509 certificate')
     add_action_argument(subparser)
