@@ -95,7 +95,7 @@ def run(subparsers):
     add_ni_option(subparser)
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'intro',common_option=False,help='introduction to synda command')
+    subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
     subparser=create_subparser(subparsers,'list',help='List installed dataset')
     add_parameter_argument(subparser)
