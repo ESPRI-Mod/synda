@@ -74,7 +74,7 @@ def instance_id_to_dataset_id(instance_id,facets_group):
 
             # force value for replica if not present
             #
-            #replica='true' # if replica flag not present, let's choose the master (arbitrary choice)
+            #replica='false' # if replica flag not present, let's choose the master (arbitrary choice)
 
 
             # leave as None so to match master as well as replica in a random way
