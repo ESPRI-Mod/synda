@@ -130,7 +130,7 @@ def install(args,files=None):
 
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
-            print_stderr("You can follow the download using 'synda watch' and 'synda log' commands")
+            print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
     else:
         if interactive:
             print_stderr('Abort.')

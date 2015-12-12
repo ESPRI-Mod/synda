@@ -103,16 +103,14 @@ trap "abort" SIGINT SIGTERM
 
 # options
 
-DEBUG="no"
-debug_level=1
+debug_level=0
 g__checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
   c)	checksum_type=$OPTARG
 		;;
-  d)	DEBUG="yes"
-		debug_level=$OPTARG
+  d)	debug_level=$OPTARG
 		;;
   h)	usage
 		exit 0
@@ -199,26 +197,16 @@ g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum 
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O - "
 
-# debug mode
-if [ "x$DEBUG" = "xyes" ]; then
-
-	if [ $debug_level -eq 4 ]; then
-		set -x # bash debug mode (warning, this make wget output to be duplicated 3 times)
-
-		WGETOPT=" $WGETOPT -v -d "
-
-	elif [ $debug_level -eq 3 ]; then
-
-		WGETOPT=" $WGETOPT -v -d "
-
-	elif [ $debug_level -eq 2 ]; then
-
-		WGETOPT=" $WGETOPT -v "
-	fi
-
-else
-	# set verbose mode for wget (this is not related to debug mode and need to be set all the time)
+# set verbose mode
+if [ $debug_level -eq 3 ]; then
+    set -x # bash debug mode (warning, this makes wget output to be duplicated 3 times)
+    WGETOPT=" $WGETOPT -v -d "
+elif [ $debug_level -eq 2 ]; then
+    WGETOPT=" $WGETOPT -v -d "
+elif [ $debug_level -eq 1 ]; then
 	WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
+elif [ $debug_level -eq 0 ]; then
+    # level used in normal operation (no debug info displayed)
 
 	# this is not used anymore, because it hide HTTP errors
 	#WGETOPT=" $WGETOPT --quiet "
@@ -226,6 +214,8 @@ else
 
 	# so we must deal with the transfer progress.
 	# it is not a big deal as it is automatically removed from wget stdxxx during parsing
+
+    :
 fi
 
 # Don't check the server certificate against the available certificate authorities.  Also don't require the URL host name to match the common name presented by the certificate.
@@ -291,7 +281,7 @@ umask u=rw,g=rw,o=r
 #
 wget_error_status_from_parsing=0
 wget_status=0
-if [ "x$DEBUG" = "xyes" ]; then
+if [ $debug_level -gt 0 ]; then
 	# in debug mode, we don't parse wget output
 
 	echo $WGET_CMD 1>&2

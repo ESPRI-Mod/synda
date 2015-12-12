@@ -60,12 +60,10 @@ if [ $nbr -eq 3 ]; then
     orp_http_response_code=`echo "$http_response_code_list" | head -n 2 | tail -n 1`
     data2_http_response_code=`echo "$http_response_code_list" | tail -n 1`
 
-    # print
-    if [ "x$DEBUG" = "xyes" ]; then
-        echo $data1_http_response_code
-        echo $orp_http_response_code
-        echo $data2_http_response_code
-    fi
+    # debug
+    #echo $data1_http_response_code
+    #echo $orp_http_response_code
+    #echo $data2_http_response_code
 
     # wget / get_data.sh error mapping
     if [ "x$data2_http_response_code" = "x403 Forbidden" ]; then
