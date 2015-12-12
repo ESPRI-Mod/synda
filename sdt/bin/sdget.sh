@@ -39,15 +39,6 @@
 # 29 => wget process has been killed (most likely caused by a "shutdown immediate")
 # 30 => file creation error (likely caused by missing access right)
 
-# TAG43242 error
-#
-# When not using eval, checksum_cmd doesn't get interpreted correctly
-#
-# md5sum: |: No such file or directory
-# md5sum: awk: No such file or directory
-# md5sum: '{print: No such file or directory
-# md5sum: $1}': No such file or directory
-
 usage ()
 {
 	echo ""
@@ -288,15 +279,13 @@ if [ $debug_level -gt 0 ]; then
 
 	echo $WGET_CMD 1>&2
 
-    # we need eval to prevent TAG43242 error
 	eval $WGET_CMD
 
 	wget_status=$?
     wget_pid=$!
 else
 
-    # - we need eval to prevent TAG43242 error
-    # - we save stderr and forget about stdout (stdout is empty anyway)
+    # we save stderr and forget about stdout (stdout is empty anyway)
 	wget_stderr=$(`eval $WGET_CMD` 2>&1 >/dev/null)
 
 	wget_status=$?
