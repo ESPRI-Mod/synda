@@ -21,6 +21,8 @@ Notes
       sometimes into 'instance_id'). 
       If want to infere the type (i.e. infere type from id instead of id from
       type), use syndautils.infer_type() func.
+    - Some processing done in this module overlap with sdcheckparam module, but
+      most don't, so both module are required.
 """
 
 import sys

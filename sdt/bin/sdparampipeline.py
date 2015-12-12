@@ -52,7 +52,6 @@ def run(facets_groups):
 
     # vector and scalar from this point
 
-    # TODO: check if this is needed, as we already do the same in sdinference ...
     if sdconfig.config.getint('behaviour','check_parameter')==1:
         sdcheckparam.run(facets_groups)
 

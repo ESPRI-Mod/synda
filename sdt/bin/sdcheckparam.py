@@ -9,7 +9,12 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module checks selection parameters."""
+"""This module checks selection parameters.
+
+Note
+    Some processing done in this module overlap with sdinference module, but
+    most don't, so both module are required.
+"""
 
 import sys
 import json
