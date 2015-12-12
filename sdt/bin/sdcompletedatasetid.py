@@ -19,7 +19,9 @@ Notes
     - In this module, input dataset_id can be one of two things:
         - 'ESGF dataset_id' (i.e. including the data_node)
         - dataset_functional_id (i.e. without the data_node)
-    - In this module, output dataset_id is always 'ESGF dataset_id' (i.e. including the data_node)
+    - In this module, output dataset_id is 'ESGF dataset_id' (i.e. including the
+      data_node), except if no data_node is found, in which case output
+      dataset_id is the dataset_functional_id (i.e. without the data_node).
     - Choose data_node depending on 'replica' flag (if set to false, use master
       data_node, if set to true use a random replica data_node).
     - This filter maybe be deprecated because of this:
@@ -67,40 +69,50 @@ def instance_id_to_dataset_id(instance_id,facets_group):
         return "%s|%s"%(instance_id,facets_group['data_node'])
     else:
         replica=facets_group['replica'] if "replica" in facets_group else None
+
+        if replica is None:
+
+            # force value for replica if not present
+            #
+            #replica='true' # if replica flag not present, let's choose the master (arbitrary choice)
+
+
+            # leave as None so to match master as well as replica in a random way
+            pass
+
+        else:
+            replica=replica[0] # list to scalar
+
+        # at this point, replica can be: 'true','false',None
+
         return retrieve_full_dataset_id(instance_id,replica)
 
 def retrieve_full_dataset_id(instance_id,replica):
     """Retrieve missing data_node from search-API."""
 
-    if replica is None:
-        replica=['false'] # if replica flag not present, let's choose the master (arbitrary choice)
-
-    # list to scalar
-    replica=replica[0]
-
     # search-API call
     datanodes=get_data_nodes(instance_id,replica)
 
-    if replica=='true':
-        # retrieve a random replica data_node
+    if len(datanodes)<1:
+        return instance_id # datanode not found, don't change anything
+    else:
 
-        if len(datanodes)>0:
-            return "%s|%s"%(instance_id, random.choice(datanodes))
-        else:
-            return instance_id # datanode not found, don't change anything
+        if replica is None:
+            data_node=random.choice(datanodes) # retrieve random replica or master data_node
+        elif replica=='true':
+            data_node=random.choice(datanodes) # retrieve a random replica data_node
+        elif replica=='false':
+            data_node=datanodes[0] # retrieve master data_node
 
-    elif replica=='false':
-        # retrieve master data_node
+        return "%s|%s"%(instance_id,data_node)
 
-        if len(datanodes)==1:
-            return "%s|%s"%(instance_id,datanodes[0])
-        else:
-            return instance_id # datanode not found, don't change anything
-
-def get_data_nodes(instance_id,replica_scalar):
+def get_data_nodes(instance_id,replica):
     """Return one or more data_nodes depending on the 'replica' flag."""
 
-    parameter=['limit=50','type=Dataset','instance_id=%s'%instance_id,'replica=%s'%replica_scalar]
+    parameter=['limit=50','type=Dataset','instance_id=%s'%instance_id]
+
+    if replica is not None:
+        parameter.append('replica=%s'%replica)
 
     # debug
     #print parameter
