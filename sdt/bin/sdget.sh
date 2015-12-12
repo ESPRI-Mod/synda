@@ -147,7 +147,7 @@ wget_pid=
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 
-debug_file=/tmp/sdt_wget_debug.log
+debug_file=/tmp/sdt_wget.log
 
 
 # set tmp dir.
@@ -291,7 +291,7 @@ else
 	wget_status=$?
 
 	# we parse wget output to get informations on the cause of the error
-    # (info are printed in $debug_file by 'wgetoutputparser' script)
+    # (infos are printed in $debug_file by 'wgetoutputparser' script)
 	if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
 		source "$wgetoutputparser"
 	fi
