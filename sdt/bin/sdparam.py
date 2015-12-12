@@ -91,6 +91,20 @@ def get_models_mapping(models):
 
     return di
 
+def reverse_params(params):
+    """Transform key/value dict to value/key dict."""
+    di={}
+
+    for name,values in params.iteritems():
+        for v in values:
+            if v in di:
+                if name not in di[v]:
+                    di[v].append(name)
+            else:
+                di[v]=[name]
+
+    return di
+
 def print_models_mapping(models,pattern=None):
 
     def print_models_mapping_line(norm_name,non_norm_name):
@@ -157,6 +171,10 @@ def denormalize_models_list(models_list):
 
     return new_models_list
 
+def search_match_fast(value):
+    """Same as 'search_match' func, but faster."""
+    return reversed_params[value]
+
 def search_match(value):
     """Search name(s) matching the given value."""
     names=[]
@@ -171,7 +189,7 @@ def search_match(value):
 def get_name_from_value(value):
     """This method is used by sdinference module."""
 
-    names=search_match(value)
+    names=search_match_fast(value)
 
     if len(names)==0:
         raise SDException("SYDPARAM-002","Parameter name cannot be infered from '%s' value (value not found)"%value)
@@ -213,6 +231,8 @@ if len(params)<1:
 
 models=get_models_mapping(params['model']) # load norm.=>non-norm. model mapping in memory
 mapping_keywords=('model_mapping','mapping')
+
+reversed_params=reverse_params(params)
 
 def main(argv):
     parser = argparse.ArgumentParser()
