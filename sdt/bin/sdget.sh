@@ -208,7 +208,9 @@ elif [ $debug_level -eq 1 ]; then
 elif [ $debug_level -eq 0 ]; then
     # level used in normal operation (no debug info displayed)
 
-	# this is not used anymore, because it hide HTTP errors
+	# we need this even in non-debug mode, else it hide HTTP errors
+	WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
+
 	#WGETOPT=" $WGETOPT --quiet "
 	#WGETOPT=" $WGETOPT --no-verbose "
 
