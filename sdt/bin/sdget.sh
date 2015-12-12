@@ -290,11 +290,10 @@ else
 
 	wget_status=$?
 
-	# if wget "--tries" option is set to 1, we parse wget output to get informations on the cause of the error
-	# (currently, wget output parsing work only if "--tries" is set to 1)
-	#
-	if [ "$WGET_TRIES" = "1" ]; then
-        source "$wgetoutputparser"
+	# we parse wget output to get informations on the cause of the error
+    # (info are printed on stdout by 'wgetoutputparser' script)
+	if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
+		source "$wgetoutputparser"
 	fi
 fi
 
@@ -303,7 +302,7 @@ fi
 #
 if [ $wget_status -ne 0 ]; then
 	if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
-		getdata_status=29
+		status=29
 	else
 		# wget wrap many different errors with -1 code
 		# so we better use the code resulting from the parsing
@@ -312,17 +311,17 @@ if [ $wget_status -ne 0 ]; then
 		# if we found some error during the parsing, we use it, else we use 1
 		#
 		if [ $wget_error_status_from_parsing -ne 0 ]; then
-			getdata_status=$wget_error_status_from_parsing
+			status=$wget_error_status_from_parsing
 		else
-			getdata_status=1
+			status=1
 		fi
 	fi
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-	msg "ERR001" "Transfer failed with error $getdata_status - $* - $wget_status"
+	msg "ERR001" "Transfer failed with error $status - $* - $wget_status"
 
-	exit $getdata_status
+	exit $status
 else
 	# success
 
