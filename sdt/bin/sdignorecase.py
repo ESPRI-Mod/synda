@@ -22,69 +22,40 @@ import sdapp
 from sdexception import SDException
 import sdconst
 import sdparam
-import sdi18n
-import sddquery
 import sdidtest
 import sdconfig
 import sdprint
 
 def run(facets_groups):
     for facets_group in facets_groups:
-        type_=sddquery.get_scalar(facets_group,'type',default=sdconst.SD_TYPE_DEFAULT) 
-
         if sdconst.PENDING_PARAMETER in facets_group:
-            pending_parameters=facets_group[sdconst.PENDING_PARAMETER]
-
-            for pvalue in pending_parameters:
+            new_pending_parameter=[]
+            for pvalue in facets_group[sdconst.PENDING_PARAMETER]:
 
                 # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
                 if pvalue=='*':
                     continue
 
-                pname=infere_parameter_name(pvalue,type_)
-                facets_group[pname].append(pvalue)
+                fixed_pvalue=fix_case(pvalue)
+                new_pending_parameter.append(pvalue)
 
             del facets_group[sdconst.PENDING_PARAMETER]
 
     return facets_groups
 
-def infere_parameter_name(pvalue,type_):
+def fix_case(pvalue):
     if pvalue.isdigit():
-        pname='limit'
+        pass
     elif sdidtest.is_file_functional_id(pvalue):
-        pname='query'
+        pass
     elif sdidtest.is_filename(pvalue):
-        pname='title'
+        pass
     elif sdidtest.is_dataset_functional_id(pvalue):
-        if type_==sdconst.SA_TYPE_FILE:
-
-            if sdconfig.dataset_filter_mecanism_in_file_context=='query':
-
-                # Use ESGF free text 'query' parameter
-                #
-                # Beware: this mode is experimental and seems not reliable (see TAG543N45K3KJK for info )
-                #
-                pname='query'
-
-            elif sdconfig.dataset_filter_mecanism_in_file_context=='dataset_id':
-
-                # Use 'dataset_id' parameter with the 'sdcompletedatasetid' filter
-                #
-                # Beware: this trigger a search-api call in 'sdcompletedatasetid' filter
-                #
-                pname='dataset_id'
-
-            else:
-                raise SDException('SDINFERE-040','Unknown value (%s)'%sdconfig.dataset_filter_mecanism_in_file_context)
-
-        elif type_==sdconst.SA_TYPE_DATASET:
-            pname='instance_id'
-        else:
-            raise SDException('SDINFERE-001','Unknown type (%s)'%type_)
+        pass
     elif sdidtest.is_dataset_local_path(pvalue):
-        pname='local_path'
+        pass
     elif sdidtest.is_file_local_path(pvalue):
-        pname='local_path'
+        pass
     else:
         try:
             pname=sdparam.get_name_from_value(pvalue)

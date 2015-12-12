@@ -32,7 +32,6 @@ import sdapp
 from sdexception import SDException
 import sdconst
 import sdparam
-import sdi18n
 import sddquery
 import sdidtest
 import sdconfig
