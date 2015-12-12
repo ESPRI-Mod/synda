@@ -157,14 +157,21 @@ def denormalize_models_list(models_list):
 
     return new_models_list
 
-def get_name_from_value(value):
-    """This method is used by sdinference module."""
+def search_match(value):
+    """Search name(s) matching the given value."""
     names=[]
 
     for name,values in params.iteritems():
         for v in values:
             if v == value: 
                 names.append(name)
+
+    return names
+
+def get_name_from_value(value):
+    """This method is used by sdinference module."""
+
+    names=search_match(value)
 
     if len(names)==0:
         raise SDException("SYDPARAM-002","Parameter name cannot be infered from '%s' value (value not found)"%value)
