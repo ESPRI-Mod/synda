@@ -147,16 +147,23 @@ wget_pid=
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 
-# set tmp dir.
+# set log & tmp dir.
 if [ "$multiuser" = "0" ]; then
-    tmpdir=/tmp/sdt_cs
-    logdir=/tmp/sdt_cs
+
+    # check root folder
+    if [ -z "$ST_HOME" ]; then
+        msg "ERR008" "root directory not found ($ST_HOME)"
+        exit 4
+    fi
+
+    tmpdir="${ST_HOME}/tmp"
+    logdir="${ST_HOME}/log"
 else
     tmpdir=/var/tmp/synda/sdt
     logdir=/var/log/synda/sdt
 fi
 
-debug_file=$logdir/wget_debug.log
+debug_file=$logdir/debug.log
 
 csdir=$tmpdir/cs
 
