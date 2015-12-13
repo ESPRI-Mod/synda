@@ -137,7 +137,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'test',help='Test file download')
+    subparser=create_subparser(subparsers,'test',common_option=False,help='Test file download')
     subparser.add_argument('file_url',help='file url')
 
     subparser=create_subparser(subparsers,'update',help='Update ESGF parameter local cache')

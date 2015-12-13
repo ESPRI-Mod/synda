@@ -147,12 +147,16 @@ wget_pid=
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 
-debug_file=/tmp/sdt_wget.log
-
-
 # set tmp dir.
-g__tmpdir=/tmp/sdt_tmp
-mkdir -p $g__tmpdir # create tmp dir. (if missing)
+if [ "$multiuser" = "0" ]; then
+    cs_tmpdir=/tmp/sdt_cs
+    debug_file=/tmp/sdt_wget.log
+else
+    cs_tmpdir=/var/tmp/synda/sdt/cs
+    debug_file=/tmp/sdt_wget.log
+fi
+
+mkdir -p $cs_tmpdir # create tmp dir. (if missing)
 
 # wget parameters
 WGET_TRIES=1
@@ -176,7 +180,7 @@ else
 fi
 
 # set checksum tmp file
-g__tmpfile__checksum_template=$g__tmpdir/checksum_$$_XXXXXXX # set checksum tmp file template
+g__tmpfile__checksum_template=$cs_tmpdir/checksum_$$_XXXXXXX # set checksum tmp file template
 g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum tmp file
 
 # wget configuration
