@@ -27,6 +27,7 @@ import sdconst
 import sdi18n
 import sdsubparser
 from sdtools import print_stderr
+from sdtools import is_root
 #from sdtools import DefaultHelpParser
 
 def set_stream_type(args):
@@ -90,6 +91,13 @@ if __name__ == '__main__':
     # use add_mutually_exclusive_group(), but currently, doing so makes the
     # help look ugly. So better leave it as is until argparse handle this case
     # smoothly.
+
+
+    # -- permission check -- #
+    if args.subcommand in (sdconst.RW_SUBCOMMANDS):
+        if not is_root():
+            print_stderr("You need to be root to perform this command.")
+            sys.exit(1)
 
 
     # -- subcommand routing -- #
