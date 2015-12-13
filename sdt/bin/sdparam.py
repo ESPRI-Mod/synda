@@ -128,6 +128,10 @@ def build_ucvalue_index(reversed_params):
 
     for value in reversed_params.keys():
 
+        # hack: exclude None value artefact
+        if value is None:
+            continue
+
         # collision are solved here by overwriting the previous entry (i.e.
         # several values with different case collide in the same ucvalue)
         #

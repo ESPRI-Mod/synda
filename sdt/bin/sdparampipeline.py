@@ -36,7 +36,10 @@ import sdprint
 
 def run(facets_groups):
     facets_groups=sddeferredbefore.run(facets_groups)
-    facets_groups=sdignorecase.run(facets_groups)
+
+    if sdconfig.config.getboolean('behaviour','ignorecase'):
+        facets_groups=sdignorecase.run(facets_groups)
+
     facets_groups=sdinference.run(facets_groups)
     facets_groups=sddeferredafter.run(facets_groups)
     facets_groups=sddecode.run(facets_groups)
