@@ -65,7 +65,16 @@ def infere_parameter_name(pvalue,type_):
     if pvalue.isdigit():
         pname='limit'
     elif sdidtest.is_file_functional_id(pvalue):
-        pname='query'
+
+        # Use ESGF free text 'query' parameter
+        #
+        # Beware: this mode is experimental and seems not reliable (see TAG543N45K3KJK for info)
+        #
+        #pname='query'
+
+        # Use instance_id
+        pname='instance_id'
+
     elif sdidtest.is_filename(pvalue):
         pname='title'
     elif sdidtest.is_dataset_functional_id(pvalue):
