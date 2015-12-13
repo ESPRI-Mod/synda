@@ -36,36 +36,34 @@ def run(facets_groups):
                 if pvalue=='*':
                     continue
 
-                fixed_pvalue=fix_case(pvalue)
-                new_pending_parameter.append(pvalue)
+                if is_case_incorrect(pvalue):
+                    v=sdparam.fix_value_case(pvalue)
+                    new_pending_parameter.append(v)
+                else:
+                    new_pending_parameter.append(pvalue)
 
-            del facets_group[sdconst.PENDING_PARAMETER]
+            facets_group[sdconst.PENDING_PARAMETER]=new_pending_parameter # overwrite previous value
 
     return facets_groups
 
-def fix_case(pvalue):
+def is_case_incorrect(pvalue):
     if pvalue.isdigit():
-        pass
+        return False
     elif sdidtest.is_file_functional_id(pvalue):
-        pass
+        return False
     elif sdidtest.is_filename(pvalue):
-        pass
+        return False
     elif sdidtest.is_dataset_functional_id(pvalue):
-        pass
+        return False
     elif sdidtest.is_dataset_local_path(pvalue):
-        pass
+        return False
     elif sdidtest.is_file_local_path(pvalue):
-        pass
+        return False
     else:
-        try:
-            pname=sdparam.get_name_from_value(pvalue)
-        except SDException,e:
-            if sdconfig.config.getint('behaviour','check_parameter')==1:
-                raise
-            else:
-                pname='query' # fallback to free pattern
-
-    return pname
+        if sdparam.is_case_incorrect(pvalue):
+            return True
+        else:
+            return False
 
 # module init.
 

@@ -28,6 +28,22 @@ def handle_negated_value(name):
     """
     return re.sub('!$','',name)
 
+def is_case_incorrect(value):
+    if value in reversed_params:
+        return False
+    else:
+        if value.upper() in ucvalue2value:
+            return True
+        else:
+            # if we are here, value is likely to be incorrect, but the problem
+            # is not related with a case problem. This will be handled by
+            # sdcheckparam
+
+            return False
+
+def fix_value_case(value):
+    return ucvalue2value[value.upper()]
+
 def exists_parameter_name(name):
     name=handle_negated_value(name)
 
@@ -102,6 +118,24 @@ def reverse_params(params):
                     di[v].append(name)
             else:
                 di[v]=[name]
+
+    return di
+
+def build_ucvalue_index(reversed_params):
+    di={}
+
+    for value in reversed_params.keys():
+
+        # collision are solved here by overwriting the previous entry (i.e.
+        # several values with different case collide in the same ucvalue)
+        #
+        # this is not perfect as we end up with partial choice
+        # (e.g. if cmIP5 and cMIp5 both exist as value, we randomly choose one)
+        #
+        # but sdinference is not able to solve this issue as well,
+        # as sdinference except the case to be correct.
+        #
+        di[value.upper()]=value
 
     return di
 
@@ -229,10 +263,16 @@ if len(params)<1:
     sdcache.run(reload=True)
     params=sddao.fetch_parameters()
 
-models=get_models_mapping(params['model']) # load norm.=>non-norm. model mapping in memory
-mapping_keywords=('model_mapping','mapping')
-
+# data structure used for acceleration
 reversed_params=reverse_params(params)
+
+# load norm.=>non-norm. model mapping in memory
+models=get_models_mapping(params['model'])
+
+# data structure used by ignorecase mode
+ucvalue2value=build_ucvalue_index(reversed_params)
+
+mapping_keywords=('model_mapping','mapping')
 
 def main(argv):
     parser = argparse.ArgumentParser()
