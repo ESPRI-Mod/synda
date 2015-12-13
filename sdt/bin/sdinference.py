@@ -48,6 +48,7 @@ def run(facets_groups):
             for pvalue in pending_parameters:
 
                 # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
+                # (TODO: find a beter way to handle this hack)
                 if pvalue=='*':
                     continue
 
