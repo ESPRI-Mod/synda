@@ -28,6 +28,7 @@ import sddenormodel
 import sdremovefacet
 import sddecode
 import sdautoextractmodel
+import sdignorecase
 import sdinference
 import sddeferredbefore
 import sddeferredafter

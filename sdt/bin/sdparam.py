@@ -213,7 +213,11 @@ def denormalize_models_list(models_list):
 
 def search_match_fast(value):
     """Same as 'search_match' func, but faster."""
-    return reversed_params[value]
+
+    if value in reversed_params:
+        return reversed_params[value]
+    else:
+        return []
 
 def search_match(value):
     """Search name(s) matching the given value."""
