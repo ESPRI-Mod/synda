@@ -33,6 +33,8 @@ def is_case_incorrect(value):
         return False
     else:
         if value.upper() in ucvalue2value:
+            # if we are here, it means value exist, but without another case
+
             return True
         else:
             # if we are here, value is likely to be incorrect, but the problem

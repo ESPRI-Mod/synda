@@ -30,6 +30,8 @@ def run(facets_groups):
     for facets_group in facets_groups:
         if sdconst.PENDING_PARAMETER in facets_group:
             new_pending_parameter=[]
+
+
             for pvalue in facets_group[sdconst.PENDING_PARAMETER]:
 
                 # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
@@ -37,10 +39,11 @@ def run(facets_groups):
                     continue
 
                 if is_case_incorrect(pvalue):
-                    v=sdparam.fix_value_case(pvalue)
-                    new_pending_parameter.append(v)
+                    fixed_value=sdparam.fix_value_case(pvalue)
+                    new_pending_parameter.append(fixed_value)
                 else:
                     new_pending_parameter.append(pvalue)
+
 
             facets_group[sdconst.PENDING_PARAMETER]=new_pending_parameter # overwrite previous value
 
