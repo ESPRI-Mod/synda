@@ -26,8 +26,7 @@ import sdapp
 import sdconst
 import sdi18n
 import sdsubparser
-from sdtools import print_stderr
-from sdtools import is_root
+import sdtools
 #from sdtools import DefaultHelpParser
 
 def set_stream_type(args):
@@ -95,8 +94,8 @@ if __name__ == '__main__':
 
     # -- permission check -- #
     if args.subcommand in (sdconst.RW_SUBCOMMANDS):
-        if not is_root():
-            print_stderr("You need to be root to perform this command.")
+        if not sdtools.is_root():
+            sdtools.print_stderr("You need to be root to perform this command.")
             sys.exit(1)
 
 
@@ -110,7 +109,7 @@ if __name__ == '__main__':
             if args.topic in subparsers.choices:
                 subparsers.choices[args.topic].print_help()
             else:
-                print_stderr('Help topic not found (%s)'%args.topic)
+                sdtools.print_stderr('Help topic not found (%s)'%args.topic)
 
         sys.exit(0)
 
@@ -140,7 +139,7 @@ if __name__ == '__main__':
         sdtiaction.actions[args.subcommand](args)
         sys.exit(0)
 
-    print_stderr('Invalid operation %s'%args.subcommand)   
-    print_stderr("Use '--help' option for more info")
+    sdtools.print_stderr('Invalid operation %s'%args.subcommand)   
+    sdtools.print_stderr("Use '--help' option for more info")
     #parser.print_help()
     sys.exit(2)
