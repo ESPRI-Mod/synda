@@ -95,7 +95,7 @@ trap "abort" SIGINT SIGTERM
 # options
 
 debug_level=0
-g__checksum_type=md5
+checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
