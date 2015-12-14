@@ -42,6 +42,8 @@ msg ()
     echo "$(curdate) - $l__code - $l__msg"
 }
 
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
 if [ $# -eq 0 ]; then
 	usage
 	exit 0

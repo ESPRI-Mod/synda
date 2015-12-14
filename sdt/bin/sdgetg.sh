@@ -63,6 +63,10 @@ abort ()
     exit 7
 }
 
+# path
+
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
 # signal
 
 trap "abort" SIGINT SIGTERM

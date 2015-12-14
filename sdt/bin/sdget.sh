@@ -84,6 +84,10 @@ abort ()
     exit 7
 }
 
+# set path
+
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
 # set flag
 
 set -o pipefail
