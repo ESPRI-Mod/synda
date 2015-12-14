@@ -132,7 +132,7 @@ def install(args,files=None):
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
 
             if not sddaemon.is_running():
-                print_stderr("The daemon is not running, to start it use 'systemctl start synda'.")
+                print_stderr("The daemon is not running. To start it, use 'systemctl start synda'.")
     else:
         if interactive:
             print_stderr('Abort.')
