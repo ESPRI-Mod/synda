@@ -107,7 +107,7 @@ unset X509_USER_PROXY
 #export X509_USER_PROXY=$ESGF_CREDENTIAL # old stuff
 
 
-conf_filename="sdt.conf"
+conf_filename="credentials.conf"
 conf_file="$conf_dir/$conf_filename"
 passwd_filename=".sdpass"
 passwd_file="$conf_dir/$passwd_filename"
