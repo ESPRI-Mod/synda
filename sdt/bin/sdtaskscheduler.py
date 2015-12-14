@@ -191,7 +191,7 @@ def event_loop():
 
         if quit==1:
             if can_leave(): # wait until all threads finish and until everything has been processed on the database I/O queue 
-                sdlog.info("SDTSCHED-001","Synchro data service stopped",stderr=True)
+                sdlog.info("SDTSCHED-001","Synda service stopped",stderr=True)
                 break
 
         time.sleep(main_loop_sleep)
