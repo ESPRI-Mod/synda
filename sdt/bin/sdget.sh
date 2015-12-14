@@ -276,6 +276,14 @@ fi
 # file redirection n checksum management
 WGET_CMD="$WGET_CMD > $local_file"
 
+wget_stderr2stdout()
+{
+    # this func gives the possibility to filter wget errmsg in downstream steps (e.g. to exclude download progress)
+
+    # we send stderr on stdout and forget about stdout (stdout is empty anyway)
+	$(`eval $WGET_CMD` 2>&1 >/dev/null) # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
+}
+
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
@@ -285,22 +293,22 @@ umask u=rw,g=rw,o=r
 wget_error_status_from_parsing=0
 wget_status=0
 if [ $debug_level -gt 0 ]; then
-	# in debug mode, we don't parse wget output
+	# in this mode, wget info are display in realtime
 
+    # display debug info on stderr
 	echo $WGET_CMD 1>&2
-
-	eval $WGET_CMD
+	wget_stderr2stdout 1>&2
 
 	wget_status=$?
     wget_pid=$!
 else
+	# in this mode, wget info are display in differed time
 
-    # we save stderr and forget about stdout (stdout is empty anyway)
-	wget_stderr=$(`eval $WGET_CMD` 2>&1 >/dev/null)
-
+	wget_errmsg=$(wget_stderr2stdout)
 	wget_status=$?
+    # | grep -v 'K .....') # hide progress
 
-	# we parse wget output to get informations on the cause of the error
+	# we parse wget output to keep only the most important informations from wget msgs
     # (infos are printed in $debug_file by 'wgetoutputparser' script)
 	if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
 		source "$wgetoutputparser"

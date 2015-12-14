@@ -26,7 +26,7 @@
 # HTTP request sent, awaiting response... 302 Moved Temporarily
 # HTTP request sent, awaiting response... 403 Forbidden
 #
-http_response_code_list=`echo "$wget_stderr" | grep "^HTTP"`
+http_response_code_list=`echo "$wget_errmsg" | grep "^HTTP"`
 
 # if some wget version, we have many messages all in one line, like this:
 #
@@ -78,7 +78,7 @@ if [ $nbr -eq 3 ]; then
         wget_error_status_from_parsing=24
 
         msg "DEB001" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"     >> $debug_file
-        echo "$wget_stderr"                                                 >> $debug_file
+        echo "$wget_errmsg"                                                 >> $debug_file
         msg "DEB002" "DEBUG END"                                            >> $debug_file
     fi
 
@@ -101,7 +101,7 @@ elif [ $nbr -eq 1 ]; then
         wget_error_status_from_parsing=23
 
         msg "DEB003" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-        echo "$wget_stderr"                                              >> $debug_file
+        echo "$wget_errmsg"                                              >> $debug_file
         msg "DEB004" "DEBUG END"                                         >> $debug_file
     fi
 
@@ -111,7 +111,7 @@ elif [ $nbr -eq 2 ]; then
     wget_error_status_from_parsing=26
 
     msg "DEB005" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-    echo "$wget_stderr"                                              >> $debug_file
+    echo "$wget_errmsg"                                              >> $debug_file
     msg "DEB006" "DEBUG END"                                         >> $debug_file
 
 else
@@ -120,7 +120,7 @@ else
     wget_error_status_from_parsing=27
 
     msg "DEB007" "DEBUG BEGIN ($wget_error_status_from_parsing,$*)"  >> $debug_file
-    echo "$wget_stderr"                                              >> $debug_file
+    echo "$wget_errmsg"                                              >> $debug_file
     msg "DEB008" "DEBUG END"                                         >> $debug_file
 
 fi
