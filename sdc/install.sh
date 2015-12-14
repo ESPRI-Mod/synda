@@ -477,6 +477,7 @@ install_st_application ()
 
     # chmod conf file
     chmod go-r "$st_conf_file"
+    chmod go-r "$st_cred_file"
 
     # create symlink in 'bin'
     cd $st_root/bin
@@ -730,6 +731,7 @@ st_url="$url_prefix/${st_archive}"
 st_root="$g__prefix/sdt"
 st_lib="$st_root/lib/sd"
 st_conf_file="$st_root/conf/sdt.conf"
+st_cred_file="$st_root/conf/credentials.conf"
 #
 sp_version=${g__version:-1.0} # set HEAD version unless vernum is specified by the user
 sp_package=sdp-${sp_version}
