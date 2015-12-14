@@ -196,7 +196,7 @@ fi
 #
 # with checksum
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
-WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O - "
+WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
 
 # set verbose mode
 if [ $debug_level -eq 3 ]; then
@@ -272,9 +272,6 @@ else
 		$TLS_ONLY \
 		$url"
 fi
-
-# file redirection n checksum management
-WGET_CMD="$WGET_CMD > $local_file"
 
 wget_stderr2stdout()
 {
