@@ -80,6 +80,7 @@ logon_script="%s/sdlogon.sh"%bin_folder
 cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 default_selection_file="%s/default.txt"%selection_default_folder
 configuration_file="%s/sdt.conf"%conf_folder
+credential_file="%s/credentials.conf"%conf_folder
 user_configuration_file=os.path.expanduser("~/.syndarc")
 
 stacktrace_log_file="%s/stacktrace.log"%log_folder
@@ -116,6 +117,10 @@ config.read(configuration_file)
 if not sdtools.is_daemon():
     if os.path.exists(user_configuration_file):
         config.read(user_configuration_file)
+
+# credential file
+if sdtools.is_root():
+    config.read(credential_file)
 
 data_folder=get_data_folder()
 db_folder=get_db_folder()
