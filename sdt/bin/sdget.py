@@ -63,9 +63,15 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False) # start a new process (fork is blocking here, so thread will wait until child is done)
 
 
-    # debug
-    #sdlog.debug("SYNDAGET-002","%s"%stderr) # unexpected errors may be hidden in stderr
-    #sdlog.debug("SYNDAGET-001","%s"%stdout) # unexpected errors may be hidden in stdout
+    # debug (unexpected errors may be hidden in stdxxx)
+    with open(sdconfig.stacktrace_log_file,'a') as fh:
+        fh.write("BEGIN '%s' script output\n"%os.path.basename(script))
+        fh.write("status: %s\n"%status)
+        fh.write("stdout:\n")
+        fh.write(stdout)
+        fh.write("stderr:\n")
+        fh.write(stderr)
+        fh.write("END '%s' script output\n"%os.path.basename(script))
 
 
     if status==0:
