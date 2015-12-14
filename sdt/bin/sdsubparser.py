@@ -29,7 +29,7 @@ def add_type_grp(parser):
 
 
 def add_ni_option(parser):
-    parser.add_argument('-N','--non_interactive',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively (useful in cron jobs)')
+    parser.add_argument('-y','--yes',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively')
 
 def add_common_option(parser,**kw):
 
@@ -44,7 +44,7 @@ def add_common_option(parser,**kw):
         parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
 
     if dry_run:
-        parser.add_argument('-y','--dry_run',action='store_true')
+        parser.add_argument('-z','--dry_run',action='store_true')
 
 def add_parameter_argument(parser):
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # we use PARAMETER and not FACET as is more generic (e.g. for title, id, etc..)

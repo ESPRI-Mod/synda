@@ -67,7 +67,7 @@ def install(args,files=None):
     Returns
         number of newly installed files
     """
-    import syndautils
+    import syndautils, sddaemon
 
     syndautils.check_daemon()
 
@@ -77,8 +77,7 @@ def install(args,files=None):
     if args.dry_run:
         return 0
 
-    # TODO
-    interactive=not args.non_interactive
+    interactive=not args.yes
 
     # Compute total files stat
     count_total=len(files)
@@ -132,12 +131,8 @@ def install(args,files=None):
             print_stderr("%i file(s) enqueued"%count_new)
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
 
-            """
-            TODO
-            import sddaemon
             if not sddaemon.is_running():
-                print_stderr("The daemon is not running. Use 'systemctl start synda' to start it.")
-            """
+                print_stderr("The daemon is not running, to start it use 'systemctl start synda'.")
     else:
         if interactive:
             print_stderr('Abort.')
@@ -240,7 +235,7 @@ def upgrade(args):
             # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
 
             files=sdsearch.run(selection=selection)
-            args.non_interactive=True
+            args.yes=True
             install(args,files=files)
 
 def replica_next(file_functional_id,args):
