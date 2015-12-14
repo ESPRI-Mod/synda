@@ -131,6 +131,13 @@ def install(args,files=None):
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
+
+            """
+            TODO
+            import sddaemon
+            if not sddaemon.is_running():
+                print_stderr("The daemon is not running. Use 'systemctl start synda' to start it.")
+            """
     else:
         if interactive:
             print_stderr('Abort.')
