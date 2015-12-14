@@ -75,7 +75,6 @@ cleanup ()
 {
     kill -TERM "$wget_pid" 1>/dev/null 2>/dev/null # kill child if still running
 	rm -f "$local_file"
-	rm -f "$g__tmpfile__checksum"
 }
 
 abort ()
@@ -169,10 +168,6 @@ fi
 
 debug_file=$logdir/debug.log
 
-csdir=$tmpdir/cs
-
-mkdir -p $csdir # create cs dir. (if missing)
-
 # wget parameters
 WGET_TRIES=1
 WGET_TIMEOUT=360
@@ -193,10 +188,6 @@ else
 	#msg "ERR005" "incorrect checksum type ($checksum_type)"
 	#exit 5
 fi
-
-# set checksum tmp file
-g__tmpfile__checksum_template=$csdir/checksum_$$_XXXXXXX # set checksum tmp file template
-g__tmpfile__checksum=$(mktemp $g__tmpfile__checksum_template) # create checksum tmp file
 
 # wget configuration
 #
@@ -283,7 +274,7 @@ else
 fi
 
 # file redirection n checksum management
-WGET_CMD="$WGET_CMD | tee $local_file | $checksum_cmd > $g__tmpfile__checksum"
+WGET_CMD="$WGET_CMD > $local_file"
 
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
@@ -344,14 +335,11 @@ if [ $wget_status -ne 0 ]; then
 else
 	# success
 
-	# retrieve checksum
-	l__checksum=$(<$g__tmpfile__checksum) # bash trick
-	rm -f "$g__tmpfile__checksum"
+	# checksum
+    cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
+    echo $cs                                     # return checksum on stdout
 
-	# return checksum on stdout
-	echo $l__checksum
-
-	msg "INF003" "transfer done - $* - $l__checksum"
+	msg "INF003" "transfer done - $* - $cs"
 
 	exit 0
 fi
