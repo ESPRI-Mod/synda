@@ -120,7 +120,8 @@ A session might go like
 
 Search for a dataset
 
-$ synda search cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815
+$ synda search cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+TODO
 new  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815
 
 
@@ -181,9 +182,4 @@ Let's see why
 
 $ tail /var/log/synda/sdt/transfer.log
 2015-12-12 00:30:36,329 INFO SDDOWNLO-102 Transfer failed (sdget_status=1,error_msg='Error occurs during download.',file_id=1,status=error,local_path=/srv/synda/sdt/cmip5/output1/NCAR/CCSM4/decadal1961/mon/seaIce/OImon/r10i2p1/v20120525/sic/sic_OImon_CCSM4_decadal1961_r10i2p1_196101-199012.nc,url=http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/NCAR/CCSM4/decadal1961/mon/seaIce/OImon/r10i2p1/sic/1/sic_OImon_CCSM4_decadal1961_r10i2p1_196101-199012.nc)
-
-
-
-
-
 """
