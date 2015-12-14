@@ -133,6 +133,8 @@ def start_transfers():
             start_transfer_thread(tr)
         elif lfae_mode=="abort":
             if os.path.isfile(tr.get_full_local_path()):
+                sdlog.info("SYNDTASK-188","Local file already exists: transfer aborted (lfae_mode=abort,local_file=%s)"%tr.get_full_local_path())
+
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
                 tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
                 tr.end_date=sdtime.now()
