@@ -181,12 +181,10 @@ elif [ "$checksum_type" = "md5" ]; then
 elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
 	checksum_cmd="md5sum  | awk '{print \$1}' "
 else
-    :
-
-    # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
-    #
-	#msg "ERR005" "incorrect checksum type ($checksum_type)"
-	#exit 5
+    # we may come file for ESGF files that do not have checksum
+    
+    # fall back to md5 checksum in this case (arbitrary)
+	checksum_cmd="md5sum  | awk '{print \$1}' "
 fi
 
 # wget configuration
