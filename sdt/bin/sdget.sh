@@ -306,8 +306,7 @@ else
 	wget_status=$?
     # | grep -v 'K .....') # hide progress
 
-	# we parse wget output to keep only the most important informations from wget msgs
-    # (infos are printed in $debug_file by 'wgetoutputparser' script)
+	# we parse wget output to keep only HTTP response code from wget msg
 	if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
 		source "$wgetoutputparser"
 	fi
