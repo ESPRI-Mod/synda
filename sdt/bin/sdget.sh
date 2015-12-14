@@ -172,19 +172,32 @@ debug_file=$logdir/debug.log
 WGET_TRIES=1
 WGET_TIMEOUT=360
 
+sha256_cmd ()
+{
+    echo "openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+}
+
+md5_cmd ()
+{
+    echo "md5sum  | awk '{print \$1}' "
+}
+
+
 # manage checksum type
 checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
-	checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+	checksum_cmd=$(sha256_cmd)
+elif [ "$checksum_type" = "SHA256" ]; then
+	checksum_cmd=$(sha256_cmd)
 elif [ "$checksum_type" = "md5" ]; then
-	checksum_cmd="md5sum  | awk '{print \$1}' "
+	checksum_cmd=$(md5_cmd)
 elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-	checksum_cmd="md5sum  | awk '{print \$1}' "
+	checksum_cmd=$(md5_cmd)
 else
     # we may come file for ESGF files that do not have checksum
     
-    # fall back to md5 checksum in this case (arbitrary)
-	checksum_cmd="md5sum  | awk '{print \$1}' "
+    # fall back to sha256 in this case (arbitrary)
+	checksum_cmd=$(sha256_cmd)
 fi
 
 # wget configuration
@@ -332,7 +345,7 @@ if [ $wget_status -ne 0 ]; then
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-	msg "ERR001" "Transfer failed with error $status - $* - $wget_status"
+	msg "ERR001" "transfer failed with error $status - $* - $wget_status"
 
 	exit $status
 else
