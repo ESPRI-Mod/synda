@@ -290,7 +290,8 @@ umask u=rw,g=rw,o=r
 wget_error_status_from_parsing=0
 wget_status=0
 if [ $debug_level -gt 0 ]; then
-	# in this mode, wget info are display in realtime
+	# - in this mode, wget info are display in realtime
+    # - we don't parse wget output here because we want as much info as possible and also because this is not compatible with realtime
 
     # display debug info on stderr
 	echo $WGET_CMD 1>&2
