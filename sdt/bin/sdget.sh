@@ -278,7 +278,7 @@ wget_stderr2stdout()
     # this func gives the possibility to filter wget errmsg in downstream steps (e.g. to exclude download progress)
 
     # we send stderr on stdout and forget about stdout (stdout is empty anyway)
-	$(`eval $WGET_CMD` 2>&1 >/dev/null) # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
+	$WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
 }
 
 # set 'cmip5' group writable
