@@ -64,6 +64,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
 
 
     # debug (unexpected errors may be hidden in stdxxx)
+    """
     with open(sdconfig.stacktrace_log_file,'a') as fh:
         fh.write("BEGIN '%s' script output\n"%os.path.basename(script))
         fh.write("status: %s\n"%status)
@@ -72,6 +73,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
         fh.write("stderr:\n")
         fh.write(stderr)
         fh.write("END '%s' script output\n"%os.path.basename(script))
+    """
 
 
     if status==0:
