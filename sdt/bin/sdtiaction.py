@@ -344,6 +344,8 @@ def facet(args):
             print_stderr('Multi-queries not supported')
 
         else:
+            # Parameter not set. In this case, we retrieve facet value list from cache.
+
             sdparam.main([args.facet_name]) # tricks to re-use sdparam CLI parser
 
     else:
@@ -351,7 +353,7 @@ def facet(args):
 
 def param(args):
     import sdparam
-    sdparam.main(args.parameter) # tricks to re-use sdparam CLI parser
+    sdparam.print_(args)
 
 def queue(args):
     import sdstatquery
