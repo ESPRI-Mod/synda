@@ -116,8 +116,9 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'remove',help='Remove dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'replica',help='Change file replica')
+    subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Change file replica')
     add_action_argument(subparser,choices=['next'])
+    subparser.add_argument('file_id',nargs='?',help='File identifier (ESGF instance_id)')
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',help='Retry transfer')
@@ -125,7 +126,6 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'search',help='Search dataset')
     add_parameter_argument(subparser)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
-    add_lsearch_option(subparser)
     add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'selection',help='Manage selection')

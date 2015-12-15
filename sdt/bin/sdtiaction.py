@@ -261,18 +261,16 @@ def replica_next(file_functional_id,args):
                 print_stderr("Local file not found")
 
 def replica(args):
-    if len(args.parameter)<1:
-        print_stderr('Incorrect argument')   
+    if args.action=="next":
+        if args.file is None:
+            import sdfiledao,sdconst
+            files=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_ERROR)
+            for file_ in files:
+                replica_next(file_.file_functional_id,args)
+        else:
+            replica_next(args.file_id,args)
     else:
-        if args.action=="next":
-            if len(args.parameter)==1:
-                import sdfiledao,sdconst
-                files=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_ERROR)
-                for file_ in files:
-                    replica_next(file_.file_functional_id,args)
-            elif len(args.parameter)==2:
-                file_functional_id=args.parameter[1]
-                replica_next(file_functional_id,args)
+        print_stderr('Incorrect argument')   
 
 def retry(args):
     import sdmodify
