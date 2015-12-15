@@ -107,7 +107,7 @@ def run(subparsers):
     parser.add_argument('-c','--columns',type=int,default=1)
 
     subparser=create_subparser(subparsers,'pexec',help='Execute post-processing task')
-    subparser.add_argument('order')
+    subparser.add_argument('order_name',help='Order name')
     add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status')
@@ -116,8 +116,8 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'remove',help='Remove dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'replica',help='Change replica')
-    add_parameter_argument(subparser)
+    subparser=create_subparser(subparsers,'replica',help='Change file replica')
+    add_action_argument(subparser,choices=['next'])
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',help='Retry transfer')

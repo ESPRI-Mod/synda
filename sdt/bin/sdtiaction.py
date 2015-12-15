@@ -264,8 +264,7 @@ def replica(args):
     if len(args.parameter)<1:
         print_stderr('Incorrect argument')   
     else:
-        action=args.parameter[0] # it's a naming mess: rename top level action as subcommand
-        if action=="next":
+        if args.action=="next":
             if len(args.parameter)==1:
                 import sdfiledao,sdconst
                 files=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_ERROR)
