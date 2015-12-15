@@ -134,7 +134,7 @@ cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.burntArea.v20120
 cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.c3PftFrac.v20120529.aggregation
 ..
 
-List dataset files for baresoilFrac variable:
+List file(s) for baresoilFrac variable:
 
 $ synda search -f cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 new  8.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529.baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
@@ -146,10 +146,8 @@ $ sudo synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2
 Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
 1 file(s) enqueued
-You can follow the download using 'synda watch' and 'synda queue' commands
-The daemon is not running. To start it, use 'systemctl start synda'.
 
-Set ESGF openid credential in synda credentials file:
+Set ESGF openid and passwd in credentials file:
 
 vi /etc/synda/sdt/credentials.conf
 
@@ -171,9 +169,10 @@ $ synda queue
 status      count  size
 done            1  8.9 MB
 
-Now the file should be available in /srv/synda/sdt
+The file is available in /srv/synda/sdt
 
-In case something goes wrong, information about the error should be available in logfiles in /var/log/synda/sdt
+In case something goes wrong, you can check the logfiles in /var/log/synda/sdt
+for information about the error.
 
 For more information, go to https://github.com/Prodiguer/synda
 or send a mail to sdipsl@ipsl.jussieu.fr
