@@ -286,7 +286,9 @@ def dataset_version(args):
         print item.name
 
 def variable_version(args):
-    assert False # there is no version for variable
+    # there is no version for variable
+
+    print_stderr('Version list feature is only available for dataset.')
 
 def file_version(args):
     print_stderr('Not implemented yet.')   

@@ -142,14 +142,14 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'test',common_option=False,help='Test file download')
     subparser.add_argument('file_url',help='file url')
 
-    subparser=create_subparser(subparsers,'update',help='Update ESGF parameter local cache')
+    subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
 
-    subparser=create_subparser(subparsers,'upgrade',help='Perform an upgrade (retrieve new version for already installed datasets)')
+    subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help='Perform an upgrade (retrieve new version for all selection files)')
     add_parameter_argument(subparser)
     add_ni_option(subparser)
 
     subparser=create_subparser(subparsers,'version',help='List all versions of a dataset')
     add_parameter_argument(subparser)
-    add_type_grp(subparser)
+    #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
 
     subparser=create_subparser(subparsers,'watch',common_option=False,help='Display running transfer')
