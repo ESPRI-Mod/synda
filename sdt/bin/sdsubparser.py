@@ -102,9 +102,9 @@ def run(subparsers):
     add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'param',common_option=False,help='Display ESGF parameters')
-    parser.add_argument('pattern1',nargs='?',default=None,help='Parameter name')
-    parser.add_argument('pattern2',nargs='?',default=None,help='Filter')
-    parser.add_argument('-c','--columns',type=int,default=1)
+    subparser.add_argument('pattern1',nargs='?',default=None,help='Parameter name')
+    subparser.add_argument('pattern2',nargs='?',default=None,help='Filter')
+    subparser.add_argument('-c','--columns',type=int,default=1)
 
     subparser=create_subparser(subparsers,'pexec',help='Execute post-processing task')
     subparser.add_argument('order_name',help='Order name')
