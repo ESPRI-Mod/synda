@@ -110,7 +110,7 @@ Synda subcommands list
 
 m0016="synda - a fast and versatile data management tool for Earth Science Grid Federation (ESGF)"
 
-m0017="action parameter"
+m0017="action"
 
 m0018="""
 Introduction to synda command

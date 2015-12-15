@@ -292,7 +292,7 @@ def daemon(args):
         if args.action=="start":
 
             if sdconfig.multiuser:
-                print_stderr("Synda daemon must be started using 'systemctl' command")
+                print_stderr("Daemon must be started using 'systemctl' command")
                 return
 
             if sddaemon.is_running():
@@ -306,7 +306,7 @@ def daemon(args):
         elif args.action=="stop":
 
             if sdconfig.multiuser:
-                print_stderr("Synda daemon must be stopped using 'systemctl' command")
+                print_stderr("Daemon must be stopped using 'systemctl' command")
                 return
 
             if sddaemon.is_running():

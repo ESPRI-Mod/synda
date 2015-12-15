@@ -66,7 +66,7 @@ def create_subparser(subparsers,subcommand,**kw):
     return subparser
 
 def run(subparsers):
-    subparser=create_subparser(subparsers,'autoremove',help='Remove old datasets versions')
+    subparser=create_subparser(subparsers,'autoremove',selection=False,no_default=False,help='Remove old datasets versions')
 
     subparser=create_subparser(subparsers,'cache',common_option=False,help='Manage cache')
     add_action_argument(subparser,choices=['init'])
@@ -74,7 +74,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate')
     add_action_argument(subparser,choices=['renew','print'])
 
-    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Start/stop the daemon')
+    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management')
     add_action_argument(subparser,choices=['start','stop','status'])
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
@@ -82,14 +82,14 @@ def run(subparsers):
     add_type_grp(subparser)
     add_dump_option(subparser)
 
-    subparser=create_subparser(subparsers,'facet',help='Facet discovery')
-    subparser.add_argument('facet_name')
+    subparser=create_subparser(subparsers,'facet',selection=False,no_default=False,help='Facet discovery')
+    subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
     subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 
-    subparser=create_subparser(subparsers,'history',help='Show history')
+    subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
     subparser=create_subparser(subparsers,'install',help='Install dataset')
     add_ni_option(subparser)
