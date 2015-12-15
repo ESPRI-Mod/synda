@@ -121,19 +121,19 @@ def run(subparsers):
     subparser.add_argument('file_id',nargs='?',help='File identifier (ESGF instance_id)')
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
-    subparser=create_subparser(subparsers,'retry',help='Retry transfer')
+    subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch error status to waiting)')
 
     subparser=create_subparser(subparsers,'search',help='Search dataset')
     add_parameter_argument(subparser)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'selection',help='Manage selection')
+    subparser=create_subparser(subparsers,'selection',common_option=False,help='Manage selection')
 
     subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset')
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
-    add_type_grp(subparser)
+    #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
     add_verbose_option(subparser)
 
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset')
