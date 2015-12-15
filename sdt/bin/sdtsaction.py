@@ -22,14 +22,7 @@ import sdprint
 from sdtools import print_stderr
 
 def list_(args):
-    """list is an alias for search in local mode.
-    (i.e. 'synda list' is equivalent to 'synda search -ln')
-
-    TODO: move local search related code in 'list' action and remove 'localsearch' option from search command (i.e. 'search' command will then only be used for remote search)
-    """
     import sddeferredafter
-
-    args.localsearch=True
 
     # add default status depending on type
     if args.type_==sdconst.SA_TYPE_FILE:
@@ -37,7 +30,22 @@ def list_(args):
     elif args.type_==sdconst.SA_TYPE_DATASET:
         sddeferredafter.add_default_parameter(args.stream,'status','complete')
 
-    search(args)
+    # branching
+    if args.type_==sdconst.SA_TYPE_FILE:
+        file_list(args)
+    elif args.type_==sdconst.SA_TYPE_AGGREGATION:
+        move_to_dataset_printing_routine=syndautils.is_one_variable_per_dataset_project(args) # HACK
+        if move_to_dataset_printing_routine:
+            # one var exist per dataset for this project
+
+            dataset_list(args)
+        else:
+            # many var exist per dataset for this project
+
+            variable_list(args)
+
+    elif args.type_==sdconst.SA_TYPE_DATASET:
+        dataset_list(args)
 
 def search(args):
 
@@ -112,88 +120,91 @@ def file_foobar(args):
 
 # o-------------------------------------------------------o
 
-def dataset_search(args):
+def dataset_list(args):
     import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',100) # add default limit
 
-    if args.localsearch:
-        import sdldataset
-        datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
-        if len(datasets)==0:
-            print "Dataset not found"
-        else:
-            sdldataset.print_list(datasets)
+    import sdldataset
+    datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
+    if len(datasets)==0:
+        print "Dataset not found"
     else:
-        import sdrdataset, sdstream
+        sdldataset.print_list(datasets)
 
-        sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
-        datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
-
-        if not args.dry_run:
-            if len(datasets)==0:
-                print "Dataset not found"
-            else:
-                if args.replica:
-                    sdrdataset.print_replica_list(datasets)
-                else:
-                    sdrdataset.print_list(datasets)
-
-def variable_search(args):
+def variable_list(args):
     import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',15) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
 
-    if args.localsearch:
-        print_stderr('Not implemented yet.')   
-        """
-        import sdldataset
-        datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
-        if len(datasets)==0:
-            print "Variable not found"
-        else:
-            sdldataset.print_list(datasets)
-        """
+    print_stderr('Not implemented yet.')   
+    """
+    import sdldataset
+    datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
+    if len(datasets)==0:
+        print "Variable not found"
     else:
-        import sdrdataset, sdrvariable
+        sdldataset.print_list(datasets)
+    """
 
-        sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
-        datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
+def file_list(args):
+    import sdlfile
+    files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
+    if len(files)==0:
+        print_stderr("File not found")   
+    else:
+        sdlfile.print_list(files)
+
+# o-------------------------------------------------------o
+
+def dataset_search(args):
+    import sddeferredafter, sdrdataset, sdstream
+
+    sddeferredafter.add_default_parameter(args.stream,'limit',100) # add default limit
+    sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
+
+    datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
+
+    if not args.dry_run:
         if len(datasets)==0:
-            print "Variable not found"
+            print "Dataset not found"
         else:
-            sdrvariable.print_list(datasets)
+            if args.replica:
+                sdrdataset.print_replica_list(datasets)
+            else:
+                sdrdataset.print_list(datasets)
+
+def variable_search(args):
+    import sddeferredafter, sdrdataset, sdrvariable
+
+    sddeferredafter.add_default_parameter(args.stream,'limit',15) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
+    sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
+
+    datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
+
+    if len(datasets)==0:
+        print "Variable not found"
+    else:
+        sdrvariable.print_list(datasets)
 
 def file_search(args):
-    # we treat this action separately from the others, as there is different
-    # constraint for this action (speed here is the most important so we
-    # retrieve only a subset of output attributes)
-
     import sdrfile, sddeferredafter
 
     # tuning: note that we don't reduce the number of field returned here.
     # Maybe change that to optimise download time / reduce bandwidth footprint.
 
+    sddeferredafter.add_default_parameter(args.stream,'limit',100)
 
-    if args.localsearch:
-        import sdlfile
-        files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
+    files=sdrfile.get_files(stream=args.stream,dry_run=args.dry_run)
+
+    if not args.dry_run:
         if len(files)==0:
             print_stderr("File not found")   
         else:
-            sdlfile.print_list(files)
-    else:
-        sddeferredafter.add_default_parameter(args.stream,'limit',100)
-        files=sdrfile.get_files(stream=args.stream,dry_run=args.dry_run)
-
-        if not args.dry_run:
-            if len(files)==0:
-                print_stderr("File not found")   
+            if args.replica:
+                sdrfile.print_replica_list(files)
             else:
-                if args.replica:
-                    sdrfile.print_replica_list(files)
-                else:
-                    sdrfile.print_list(files)
+                sdrfile.print_list(files)
 
 # o-------------------------------------------------------o
 
