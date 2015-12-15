@@ -263,6 +263,30 @@ def get_name_from_value(value):
         # if still too many match, let's raise exception
         #raise SDException("SYDPARAM-003","Parameter name cannot be infered from '%s' value (too many matches). To solve the problem, use 'name=value' syntax."%value)
 
+def print_(args):
+    p1=args.pattern1
+    p2=args.pattern2
+
+    if (p1 is None and p2 is None):
+        filter_and_print_name(params.keys())
+    elif (p1 is not None and p2 is None):
+        if p1 in params:
+            filter_and_print_value(params[p1],columns=args.columns)
+        else:
+            if p1 in mapping_keywords:
+                print_models_mapping(models)
+            else:
+                filter_and_print_name(params.keys(),pattern=p1)
+
+    elif (p1 is not None and p2 is not None):
+        if p1 in params:
+            filter_and_print_value(params[p1],columns=args.columns,pattern=p2)
+        else:
+            if p1 in mapping_keywords:
+                print_models_mapping(models,p2)
+            else:
+                sdtools.print_stderr("Parameter not found")
+
 # module init
 
 params=sddao.fetch_parameters() # load parameters list in memory
@@ -291,28 +315,7 @@ def main(argv):
     parser.add_argument('-c','--columns',type=int,default=1)
     args = parser.parse_args(args=argv)
 
-    p1=args.pattern1
-    p2=args.pattern2
-
-    if (p1 is None and p2 is None):
-        filter_and_print_name(params.keys())
-    elif (p1 is not None and p2 is None):
-        if p1 in params:
-            filter_and_print_value(params[p1],columns=args.columns)
-        else:
-            if p1 in mapping_keywords:
-                print_models_mapping(models)
-            else:
-                filter_and_print_name(params.keys(),pattern=p1)
-
-    elif (p1 is not None and p2 is not None):
-        if p1 in params:
-            filter_and_print_value(params[p1],columns=args.columns,pattern=p2)
-        else:
-            if p1 in mapping_keywords:
-                print_models_mapping(models,p2)
-            else:
-                sdtools.print_stderr("Parameter not found")
+    print_(args)
 
 if __name__ == '__main__':
     main(None)
