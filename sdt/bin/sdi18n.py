@@ -117,69 +117,64 @@ Introduction to synda command
 
 A session might go like
 
+Search a dataset:
 
-Search for a dataset
+$ synda search CMIP5 decadal1995 mon land
+new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r2i2p1.v20120608
+new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r8i2p1.v20120608
+new  cmip5.output1.MIROC.MIROC4h.decadal1995.mon.land.Lmon.r5i1p1.v20120628
+new  cmip5.output1.MRI.MRI-CGCM3.decadal1995.mon.land.Lmon.r5i1p1.v20110915
+..
 
-$ synda search cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
-TODO
-new  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815
+List dataset variables:
 
+$ synda search -v cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.baresoilFrac.v20120529.aggregation
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.burntArea.v20120529.aggregation
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.c3PftFrac.v20120529.aggregation
+..
 
-Print dataset file(s)
+List dataset files for baresoilFrac variable:
 
-$ synda search cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 -f
-new  195.2 MB  cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815.snw_LImon_HadGEM2-AO_historical_r1i1p1_186001-200512.nc
+$ synda search -f cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+new  8.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529.baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
+Mark the file for download:
 
-Install the dataset
-
-$ sudo synda install cmip5.output1.NIMR-KMA.HadGEM2-AO.historical.mon.landIce.LImon.r1i1p1.v20130815 
+$ sudo synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 1 file(s) will be added to the download queue.
-Once downloaded, 195.2 MB of additional disk space will be used.
+Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
 1 file(s) enqueued
-You can follow the download using 'synda watch' and 'synda log' commands.
+You can follow the download using 'synda watch' and 'synda queue' commands
+The daemon is not running. To start it, use 'systemctl start synda'.
 
+Set ESGF openid credential in synda credentials file:
 
-Check download progress
+vi /etc/synda/sdt/credentials.conf
 
-$ synda watch
-Daemon not running
-
-
-We see here that the daemon is not running, let 's see the log for more info
-
-$ tail /var/log/synda/sdt/transfer.log
-2015-12-11 20:02:31,844 ERROR SDTSCHED-928 OpenID not set in configuration file
-2015-12-11 20:02:31,845 ERROR SDTSCHED-920 Error occured while retrieving ESGF certificate
-2015-12-11 20:02:31,845 INFO SDDAEMON-010 Exception occured (SDTSCHED-264)
-2015-12-11 20:02:31,846 INFO SDDAEMON-034 Daemon stopped
-
-We see in the log that credentials (openid) are not set in the configuration file.
-
-Let's do it
-
-$ vi /etc/synda/sdt/sdt.conf
-
-
-Then start the daemon
+Start the daemon:
 
 $ sudo systemctl start synda
 
-
-Check download progress
-
-$ synda watch
-No current download
+Check download progress:
 
 $ synda queue
 status      count  size
-error           1  181.9 MB
+running         1  8.9 MB
 
-The last command tells us that the download failed.
+$ synda watch
+Current size    Total size    Download start date         Filename
+8.9 MB          8.9 MB        2015-12-15 10:31:53.848936  baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-Let's see why 
+$ synda queue
+status      count  size
+done            1  8.9 MB
 
-$ tail /var/log/synda/sdt/transfer.log
-2015-12-12 00:30:36,329 INFO SDDOWNLO-102 Transfer failed (sdget_status=1,error_msg='Error occurs during download.',file_id=1,status=error,local_path=/srv/synda/sdt/cmip5/output1/NCAR/CCSM4/decadal1961/mon/seaIce/OImon/r10i2p1/v20120525/sic/sic_OImon_CCSM4_decadal1961_r10i2p1_196101-199012.nc,url=http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/NCAR/CCSM4/decadal1961/mon/seaIce/OImon/r10i2p1/sic/1/sic_OImon_CCSM4_decadal1961_r10i2p1_196101-199012.nc)
+Now the file should be available in /srv/synda/sdt
+
+In case something goes wrong, information about the error should be available in logfiles in /var/log/synda/sdt
+
+For more information, go to https://github.com/Prodiguer/synda
+or send a mail to sdipsl@ipsl.jussieu.fr
 """
