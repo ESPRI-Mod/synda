@@ -113,6 +113,22 @@ m0016="synda - a fast and versatile data management tool for Earth Science Grid 
 m0017="action"
 
 m0018="""
+Mailing list:
+
+esgf-user@lists.llnl.gov
+
+
+Email:
+
+sdipsl@ipsl.jussieu.fr
+
+
+Website:
+
+https://github.com/Prodiguer/synda
+"""
+
+m0019="""
 Introduction to synda command
 
 A session might go like
@@ -169,11 +185,29 @@ $ synda queue
 status      count  size
 done            1  8.9 MB
 
-The file is available in /srv/synda/sdt
+The file should be available in /srv/synda/sdt
+
+$ find /srv -type f
+/srv/synda/sdt/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+
 
 In case something goes wrong, you can check the logfiles in /var/log/synda/sdt
 for information about the error.
 
-For more information, go to https://github.com/Prodiguer/synda
-or send a mail to sdipsl@ipsl.jussieu.fr
-"""
+
+To debug file transfer error and certificate issue, you can use the two
+commands below:
+
+$ synda certificate renew
+
+to test certificate renewal
+
+and 
+
+$ synda test <file_url>
+
+to test file download.
+
+
+%s
+"""%m0018
