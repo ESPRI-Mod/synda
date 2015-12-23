@@ -117,11 +117,9 @@ Mailing list:
 
 esgf-user@lists.llnl.gov
 
-
 Email:
 
 sdipsl@ipsl.jussieu.fr
-
 
 Website:
 
@@ -208,6 +206,7 @@ $ synda test <file_url>
 
 to test file download.
 
+For more information
 
 %s
 """%m0018
