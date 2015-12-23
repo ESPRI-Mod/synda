@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-This documents contains instructions to install the new Synda software version.
+This documents contains instructions to install new Synda version.
 
 ## Procedure
 

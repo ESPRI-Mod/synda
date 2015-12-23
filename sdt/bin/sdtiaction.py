@@ -141,7 +141,7 @@ def install(args,files=None):
 
 def intro(args):
     import sdi18n
-    print sdi18n.m0018
+    print sdi18n.m0019
 
 def remove(args):
     import sddelete,sddeletefile,syndautils
