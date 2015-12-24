@@ -56,6 +56,10 @@ def certificate(args):
         else:
             print_stderr('Not implemented yet.')   
 
+def contact(args):
+    import sdi18n
+    print sdi18n.m0018
+
 def history(args):
     import sddao
     from tabulate import tabulate
@@ -409,6 +413,7 @@ actions={
     'autoremove':autoremove,
     'cache':cache,
     'certificate':certificate, 
+    'contact':contact,
     'daemon':daemon, 
     'facet':facet,
     'history':history, 

@@ -74,6 +74,8 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate')
     add_action_argument(subparser,choices=['renew','print'])
 
+    subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
+
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management')
     add_action_argument(subparser,choices=['start','stop','status'])
 
