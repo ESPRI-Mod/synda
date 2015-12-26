@@ -18,10 +18,10 @@ sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noa
 To install synda RPM package, use
 
 ```
-sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/<package-name> -y
+sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/&lt;package-name&gt; -y
 ```
 
-where <package-name> can be one of
+where &lt;package-name&gt; can be one of
 
 * synda-3.1-1.x86_64_centos65.rpm
 * synda-3.1-1.x86_64_centos67.rpm
