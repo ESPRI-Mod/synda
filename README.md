@@ -56,13 +56,12 @@ This program is a command-line alternative to the ESGF web front-end.
 ## Platform
 
 * Linux
-* Mac
 
 ## Version
 
-Stable: 3.0
+Stable: 3.1
 
-Testing: 3.1
+Testing: 3.2
 
 ## Dependency
 
@@ -70,35 +69,13 @@ Python 2.6+
 
 ## Installation
 
-As root, install the following system packages:
+To install using RPM package, see link below
 
-Centos
+[RPM installation](sdt/doc/rpm_install.md)
 
-    yum install gcc python python-pip python-devel openssl-devel sqlite sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel
+To install from source, see link below
 
-
-Debian
-
-    apt-get install gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
-
-Then install the application (as simple user or root):
-
-    wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
-    chmod +x ./install.sh
-    ./install.sh
-
-## Configuration
-
-Add lines below in your shell configuration file (e.g. '.bashrc')
-
-    export ST_HOME=$HOME/sdt
-    export PATH=$ST_HOME/bin:$PATH
-
-Then edit $ST_HOME/conf/sdt.conf to set openid and password (ESGF credential).
-
-Note: to download file from ESGF, you need to create an openID account on one
-ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
-CMIP5-RESEARCH role.
+[Source installation](sdt/doc/src_install.md)
 
 ## Contact
 
