@@ -5,14 +5,20 @@
 
 This documents contains instructions to install Synda from RPM package.
 
+## Requirements
+
+Synda RPM package is available for RHEL6 and RHEL7.
+
+On RHEL5, you can install Synda from source only.
+
 ## Installation
 
-EPEL must be installed
+EPEL repository must be installed.
 
-To install EPEL on Centos 7, do
+To install EPEL, use
 
 ```
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+sudo yum install epel-release -y
 ```
 
 To install synda RPM package, use
@@ -34,6 +40,16 @@ where &lt;package-name&gt; can be one of
 * synda-3.1-1.x86_64_scientific67.rpm
 * synda-3.1-1.x86_64_scientific71.rpm
 
+Example
+
+To install Synda on Scientific Linux 6.7, do
+
+```
+sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/synda-3.1-1.x86_64_scientific67.rpm 
+```
+
+If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
+
 ## Configuration
 
 Edit credentials file to set ESGF openid and password
@@ -45,3 +61,11 @@ vi /etc/synda/sdt/credentials.conf
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
 CMIP5-RESEARCH role.
+
+## Usage
+
+A quickstart guide is available by running the command below
+
+```
+synda intro 
+```
