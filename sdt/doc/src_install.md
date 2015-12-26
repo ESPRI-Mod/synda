@@ -1,4 +1,4 @@
-# Synda installation from source guide
+# Synda installation from source
 
 ## Synopsis
 
