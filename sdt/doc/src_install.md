@@ -37,7 +37,11 @@ export ST_HOME=$HOME/sdt
 export PATH=$ST_HOME/bin:$PATH
 ```
 
-Then edit $ST_HOME/conf/credentials.conf to set openid and password (ESGF credential).
+Then edit credentials file to set openid and password (ESGF credential).
+
+```
+vi $ST_HOME/conf/credentials.conf
+```
 
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
