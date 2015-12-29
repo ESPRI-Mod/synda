@@ -1,4 +1,5 @@
-- Version 3.1 - DEV
+- Version 3.2 - DEV
+- Version 3.1 - 20151229
 	- multi-user
 	- daemon integrated in systemd
 	- RPM package
@@ -6,6 +7,14 @@
 	- online help
 	- parameter discovery (list parameter based on other parameters)
 	- support for free syntax in template (e.g. [realm experiment frequency]=v1 v2)
+	- default indexes set to pcmdi9
+	- add inline tutorial
+	- '-z' option replace '-y' option
+	- '-y' option replace '-N' option
+	- '--yes' option replace '--non-interactive' option
+	- openid/passwd moved from sdt.conf to credentials.conf
+	- add check to prevent normal user from running synda in write mode
+	- add ignorecase filter
 - Version 3.0 - 20150325
 	- add new local search filter (status, error_msg)
 	- add '--version' option to print version in synda command
