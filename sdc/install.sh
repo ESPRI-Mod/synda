@@ -9,10 +9,10 @@
 ##################################
 
 # Notes regarding synda versions
-# - This installer can upgrade synda 2.9+ and install synda 3.0+
-# - (to upgrade synda 2.8, use sd28to29.py script).
-# - To install synda 2.9, see synda/old/29 on orion svn.
-# - To install/upgrade synda 2.8-, see synda/old/28_and_older on orion svn.
+#  - This installer can upgrade synda 2.9+ and install synda 3.0+
+#  - To upgrade synda 2.8, use sd28to29.py script
+#  - To install synda 2.9, see synda/old/29 on orion svn.
+#  - To install/upgrade synda 2.8-, see synda/old/28_and_older on orion svn.
 
 # func
 
@@ -260,7 +260,7 @@ update_transfer_environment_post_install ()
     current_version=${1}
     new_version=${2}
 
-    if [ "$new_version" = "3.0" ]; then # in 3.1+, this is done in binary
+    if [ "$new_version" = "3.0" ]; then # in 3.1+, update mecanism is embedded in the binary
         sqlite3 $st_root/db/sdt.db "update version set version='$new_version'"
     fi
 }
@@ -724,7 +724,7 @@ url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
 # TODO: switch to this url ? => http://esgf-local.ipsl.upmc.fr/thredds/fileServer/ipsl_public/jripsl/synda/sdt-3.1.tar.gz
 #
 #
-st_version=${g__version:-3.0} # set HEAD version unless vernum is specified by the user
+st_version=${g__version:-3.1} # default version if not specified by the user
 st_package=sdt-${st_version}
 st_archive=${st_package}.tar.gz
 st_url="$url_prefix/${st_archive}"
