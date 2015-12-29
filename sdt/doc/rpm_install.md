@@ -4,10 +4,6 @@
 
 This documents contains instructions to install Synda from RPM package.
 
-This installation mode is multi-user
-
-(for single-user installation, use 'installation from source' method)
-
 ## Requirements
 
 Synda RPM packages are available for RHEL6 and RHEL7.
@@ -84,3 +80,8 @@ synda intro
 * /usr/bin/synda
 * /usr/share/python/synda/sdt
 * /usr/share/doc/synda/sdt
+
+## Note
+
+Installation mode is multi-user when installing Synda from RPM package (for
+single-user installation, see 'installation from source' method)

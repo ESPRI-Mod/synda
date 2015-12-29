@@ -4,10 +4,6 @@
 
 This documents contains instructions to install Synda from source.
 
-This installation mode is single-user
-
-(for multi-user installation, use 'installation from RPM package' method)
-
 ## Requirements
 
 Linux distribution with Python 2.6+.
@@ -65,3 +61,8 @@ CMIP5-RESEARCH role.
 * $HOME/sdt/log
 * $HOME/sdt/tmp
 * $HOME/.esg/certificates
+
+## Note
+
+Installation mode is single-user when installing Synda from source (for
+multi-user installation, see 'installation from RPM package' method)
