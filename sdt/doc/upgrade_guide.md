@@ -1,8 +1,8 @@
-# Synda upgrade guide
+# Synda upgrade guide (installation from source)
 
 ## Synopsis
 
-This documents contains instructions to install new Synda version.
+This document contains instructions to install new Synda version.
 
 ## Procedure
 
