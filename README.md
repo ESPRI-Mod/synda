@@ -37,7 +37,7 @@ Start the daemon
 
     synda daemon start
 
-Once downloaded, files are available in this location
+Once downloaded, files are available at this location
 
     $HOME/sdt/data
 
@@ -69,11 +69,11 @@ Python 2.6+
 
 ## Installation
 
-To install using RPM package, see link below
+To install using RPM package, use link below
 
 [RPM installation](sdt/doc/rpm_install.md)
 
-To install from source, see link below
+To install from source, use link below
 
 [Source installation](sdt/doc/src_install.md)
 

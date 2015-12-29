@@ -1,6 +1,10 @@
 
 # Synda installation using RPM package
 
+This installation mode is multi-user
+
+(for single-user installation, use 'installation from source' method)
+
 ## Synopsis
 
 This documents contains instructions to install Synda from RPM package.
@@ -9,7 +13,7 @@ This documents contains instructions to install Synda from RPM package.
 
 Synda RPM packages are available for RHEL6 and RHEL7.
 
-On RHEL5, you can install Synda from source.
+On RHEL5, Synda can be installed from source.
 
 ## Installation
 

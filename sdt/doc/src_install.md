@@ -1,5 +1,9 @@
 # Synda installation from source
 
+This installation mode is single-user
+
+(for multi-user installation, use 'installation from RPM package' method)
+
 ## Synopsis
 
 This documents contains instructions to install Synda from source.
