@@ -4,6 +4,10 @@
 
 This documents contains instructions to install Synda from source.
 
+## Requirements
+
+Linux distribution with Python 2.6+.
+
 ## Installation
 
 As root, install the following system packages:
@@ -46,3 +50,14 @@ vi $ST_HOME/conf/credentials.conf
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
 CMIP5-RESEARCH role.
+
+## Files location
+
+* $HOME/sdt/doc
+* $HOME/sdt/bin
+* $HOME/sdt/conf
+* $HOME/sdt/data
+* $HOME/sdt/db
+* $HOME/sdt/log
+* $HOME/sdt/tmp
+* $HOME/.esg/certificates
