@@ -14,7 +14,7 @@
 Notes
     - in this file, most module import directives are moved near the calls, so
       to improve startup time.
-    - do not import 'sdlog' at the beggining of this file, because in this
+    - do not import 'sdlog' at the beginning of this file, because in this
       case, it breaks the daemon startup (i.e. double-fork problem) !
     - do not put a dry_run test here (sdtiaction's funcs are called from other
       place too, so the dry_run test need to be done inside sdtiaction's funcs)
@@ -27,6 +27,7 @@ import sdconst
 import sdi18n
 import sdsubparser
 import sdtools
+import sdconfig
 #from sdtools import DefaultHelpParser
 
 def set_stream_type(args):
@@ -93,10 +94,11 @@ if __name__ == '__main__':
 
 
     # -- permission check -- #
-    if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
-        if not sdtools.is_root():
-            sdtools.print_stderr("You need to be root to perform this command.")
-            sys.exit(1)
+    if sdconfig.multiuser:
+        if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
+            if not sdtools.is_root():
+                sdtools.print_stderr("You need to be root to perform this command.")
+                sys.exit(1)
 
 
     # -- subcommand routing -- #
