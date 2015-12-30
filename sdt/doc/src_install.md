@@ -53,6 +53,9 @@ CMIP5-RESEARCH role.
 
 ## Files location
 
+Installing Synda from source is single-user (for multi-user installation, use
+'installation from RPM package' method)
+
 * $HOME/sdt/doc
 * $HOME/sdt/bin
 * $HOME/sdt/conf
@@ -61,8 +64,3 @@ CMIP5-RESEARCH role.
 * $HOME/sdt/log
 * $HOME/sdt/tmp
 * $HOME/.esg/certificates
-
-## Note
-
-Installation mode is single-user when installing Synda from source (for
-multi-user installation, see 'installation from RPM package' method)

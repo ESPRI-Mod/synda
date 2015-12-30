@@ -71,6 +71,9 @@ synda intro
 
 ## Files location
 
+Installing Synda from rpm package is multi-user (for single-user installation,
+see 'installation from source' method)
+
 * /etc/synda/sdt
 * /srv/synda/sdt
 * /var/lib/synda/sdt
@@ -80,8 +83,3 @@ synda intro
 * /usr/bin/synda
 * /usr/share/python/synda/sdt
 * /usr/share/doc/synda/sdt
-
-## Note
-
-Installation mode is multi-user when installing Synda from RPM package (for
-single-user installation, see 'installation from source' method)
