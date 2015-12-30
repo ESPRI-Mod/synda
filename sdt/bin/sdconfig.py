@@ -119,7 +119,10 @@ if not sdtools.is_daemon():
         config.read(user_configuration_file)
 
 # credential file
-if sdtools.is_root():
+if multiuser:
+    if sdtools.is_root():
+        config.read(credential_file)
+else:
     config.read(credential_file)
 
 data_folder=get_data_folder()
