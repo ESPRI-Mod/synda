@@ -47,11 +47,14 @@ Then run command below
 
 ### Removing a selection file
 
-Run command below
+Run command below to remove files matching the selection file
 
     synda remove -s <selection-file>
 
-Then remove the file from the '$HOME/sdt/selection' folder.
+Then manually remove the selection file from the 'selection' folder.
+
+Note: 'selection' folder location is '$HOME/sdt/selection' for single-user
+installation and '/etc/synda/sdt/selection' for multi-user installation.
 
 ## Retrieving new dataset versions for all selection files
 
