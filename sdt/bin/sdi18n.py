@@ -165,9 +165,13 @@ Set ESGF openid and passwd in credentials file:
 
 vi /etc/synda/sdt/credentials.conf
 
-Start the daemon:
+Start the daemon (multi-user installation):
 
-$ sudo systemctl start synda
+$ sudo service synda start
+
+Start the daemon (single-user installation):
+
+$ synda daemon start
 
 Check download progress:
 
@@ -187,6 +191,8 @@ The file should be available in /srv/synda/sdt
 
 $ find /srv -type f
 /srv/synda/sdt/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+
+Note: in single-user installation, files are available in $HOME/sdt/data
 
 
 In case something goes wrong, you can check the logfiles in /var/log/synda/sdt

@@ -33,14 +33,6 @@ Install a dataset
 
     synda install DATASET
 
-Start the daemon
-
-    synda daemon start
-
-Once downloaded, files are available at this location
-
-    $HOME/sdt/data
-
 ## Motivation
 
 This program is a command-line alternative to the ESGF web front-end.
@@ -73,9 +65,13 @@ To install from RPM package, see link below
 
 [RPM installation](sdt/doc/rpm_install.md)
 
+Note: RPM package installation is multi-user / system-wide and can only be performed by root user
+
 To install from source, see link below
 
 [Source installation](sdt/doc/src_install.md)
+
+Note: source installation is single-user and can be performed by normal user
 
 ## Contact
 

@@ -33,50 +33,47 @@ Example of a selection file
 
 Create a new file in '$HOME/sdt/selection' folder and set the filters.
 
-Stop the daemon
-
-    synda daemon stop
-
-Run commands below to start the discovery
+Then run command below to start the discovery
 
     synda install -s <selection-file>
-
-Then start the daemon to begin the download
-
-    synda daemon start
 
 ### Modifying a selection file
 
 Edit the file and change filters accordingly.
 
-Then run commands below
+Then run command below
 
-    synda daemon stop
     synda install -s <selection-file>
-    synda daemon start
 
 ### Removing a selection file
 
-Run commands below
+Run command below
 
-    synda daemon stop
     synda remove -s <selection-file>
 
 Then remove the file from the '$HOME/sdt/selection' folder.
 
 ## Retrieving new dataset versions for all selection files
 
-Run commands below
+Run command below
 
-    synda daemon stop
     synda upgrade
 
 ## Removing old dataset versions for all selection files
 
-Run commands below
+Run command below
 
-    synda daemon stop
     synda autoremove
+
+## Start/Stop files download
+
+In single-user installation, run command below
+
+    synda daemon [ start | stop ]
+
+In multi-user installation, run command below
+
+    service synda [ start | stop ]
 
 ## Watching download progress
 
@@ -119,7 +116,6 @@ To change the replica for all files in error, use command below
 Log files below contain useful informations about errors (log files are stored
 in '$HOME/sdt/log' folder)
 
-* 'transfer.log' contains a download status for each file.
-* 'get_data.log' contains 'sdget.sh' script log.
-* 'get_data__debug.log' contains 'wget' command log.
+* 'transfer.log' contains download status for each file.
+* 'debug.log' contains 'wget' command log.
 * 'discovery.log' contains search-api log.

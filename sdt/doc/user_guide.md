@@ -42,6 +42,10 @@ can display the download queue status with 'queue' command (see below).
 
 ### *daemon*
 
+This section is for single-user installation only
+
+(in multi-user installation, Synda daemon is installed as a service and is managed using 'service' command)
+
 #### Example of use
 
 Start the download daemon
