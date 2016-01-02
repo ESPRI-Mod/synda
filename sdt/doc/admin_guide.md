@@ -116,9 +116,12 @@ To change the replica for all files in error, use command below
 
 ### Getting more details about errors
 
-Log files below contain useful informations about errors (log files are stored
-in '$HOME/sdt/log' folder)
+Log files below contain useful informations about errors
 
 * 'transfer.log' contains download status for each file.
 * 'debug.log' contains 'wget' command log.
 * 'discovery.log' contains search-api log.
+
+Note: in single-user installation, log files are stored in '$HOME/sdt/log'
+folder. In multi-user installation, log files are stored in
+'/var/log/synda/sdt' folder.
