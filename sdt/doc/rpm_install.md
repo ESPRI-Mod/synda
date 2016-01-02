@@ -71,7 +71,7 @@ synda intro
 
 ## Files location
 
-Installing Synda from rpm package is multi-user (for single-user installation,
+Installing Synda from RPM package is multi-user (for single-user installation,
 see 'installation from source' method)
 
 * /etc/synda/sdt
