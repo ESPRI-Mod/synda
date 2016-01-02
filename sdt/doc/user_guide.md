@@ -42,7 +42,7 @@ can display the download queue status with 'queue' command (see below).
 
 ### *daemon*
 
-This section is for single-user installation only
+This command is for single-user installation only
 
 (in multi-user installation, Synda daemon is installed as a service and is managed using 'service' command)
 
@@ -128,7 +128,7 @@ Retry transfer(s) in error.
 #### Options 
 
     -r, --replica         show replica
-    -y, --dry_run         display the query sent to the ESGF Search-API web service
+    -z, --dry_run         display the query sent to the ESGF Search-API web service
 
 Listing type can be specified using options below
 
