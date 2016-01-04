@@ -73,6 +73,10 @@ To install from source, see link below
 
 Note: source installation is single-user and can be performed by normal user
 
+To install using Docker, see link below
+
+[Docker installation](https://registry.hub.docker.com/u/prodiguer/synda)
+
 ## Contact
 
 sdipsl AT ipsl DOT jussieu DOT fr
