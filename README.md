@@ -27,7 +27,7 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 Search datasets
 
-    synda search FACET..
+    synda search FACET
 
 Install a dataset
 
