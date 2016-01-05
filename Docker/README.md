@@ -12,8 +12,10 @@ Usage
 ---
 
 ```
-[user@host~]$ mkdir -p ~/synda/sdt/conf; wget -O ~/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
-[user@host~]$ vi ~/synda/sdt/conf/sdt.conf
+[user@host~]$ mkdir -p ~/synda/sdt/conf
+[user@host~]$ wget -O ~/synda/sdt/conf/sdt.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/sdt.conf
+[user@host~]$ wget -O ~/synda/sdt/conf/credentials.conf https://github.com/Prodiguer/synda/raw/master/sdt/conf/credentials.conf
+[user@host~]$ vi ~/synda/sdt/conf/credentials.conf
 ```
 
 3/ Startup container in daemon mode and mount host directories as container data volumes owned by your host user and group
