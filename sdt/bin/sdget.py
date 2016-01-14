@@ -39,12 +39,24 @@ def download(url,full_local_path,checksum_type='md5',debug_level=0):
     transfer_protocol=sdutils.get_transfer_protocol(url)
 
 
-    if (transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP
-        and sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB):
+    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
 
-        (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
-    else:
+        if sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
+            (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
+        else:
+            (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
+
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+
         (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
+
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS_ONLINE:
+
+        pass
+
+    else:
+
+        assert False
 
 
     return (status,local_checksum,killed,script_stdxxx)
