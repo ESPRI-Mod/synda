@@ -29,7 +29,7 @@ import sdconfig
 import sdutils
 import sdconst
 import sdlog
-import sdnetutils
+import sdget_urllib
 from sdtools import print_stderr
 
 def download(url,full_local_path,checksum_type='md5',debug_level=0):
@@ -42,7 +42,7 @@ def download(url,full_local_path,checksum_type='md5',debug_level=0):
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
 
         if sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
-            (status,local_checksum)=sdnetutils.download_file(url,full_local_path,checksum_type)
+            (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
         else:
             (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
 
