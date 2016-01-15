@@ -33,8 +33,7 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def download_file(url, full_local_path, checksum_type, credentials = "~/.esg/credentials.pem"):
-    import sdutils
+def download_file(url, full_local_path, credentials = "~/.esg/credentials.pem"):
 
     try:
 
@@ -59,15 +58,13 @@ def download_file(url, full_local_path, checksum_type, credentials = "~/.esg/cre
         webFile.close()
         opener.close()
 
-        local_checksum=sdutils.compute_checksum(file_fullpath,checksum_type)
-
     except Exception,e:
 
         # TODO: log error msg
 
-        return (1,None)
+        return 1
 
-    return (0,local_checksum)
+    return 0
 
 def call_web_service(request,timeout):
     start_time=SDTimer.get_time()
