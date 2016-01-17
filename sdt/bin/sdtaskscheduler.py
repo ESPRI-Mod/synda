@@ -113,7 +113,7 @@ def run_hard_tasks():
     global quit
 
     try:
-        sdtask.end_of_tasks()
+        sdtask.transfers_end()
     except FatalException,e:
         quit=1
 
@@ -122,7 +122,7 @@ def run_soft_tasks():
     """Soft tasks are not executed during application shutdown."""
 
     if sdconfig.files_download:
-        sdtask.start_transfers()
+        sdtask.transfers_begin()
 
     sdtask.delete_transfers()
 

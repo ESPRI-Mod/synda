@@ -66,7 +66,7 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
             raise
 
 @sdprofiler.timeit
-def end_of_tasks():
+def transfers_end():
     """When a task is done, DB orders are enqueued. Those orders are then executed in this function."""
 
     for i in range(8): # arbitrary
@@ -87,7 +87,7 @@ def end_of_tasks():
             raise
 
 @sdprofiler.timeit
-def start_transfers():
+def transfers_begin():
     def start_transfer(tr):
         """Retrieve next transfer to start
         
