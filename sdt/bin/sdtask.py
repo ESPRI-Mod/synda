@@ -86,6 +86,62 @@ def transfers_end():
 
             raise
 
+def prepare_transfer(tr):
+
+    # we reset values from previous try if any
+    tr.end_date=None
+    tr.error_msg=None
+    tr.status=sdconst.TRANSFER_STATUS_RUNNING
+    tr.start_date=sdtime.now()
+
+def pre_transfer_check_list(tr):
+    """
+    Return:
+        Check list status
+
+        True: Check list OK
+        False: Check list NOK
+    """
+
+    if lfae_mode=="keep":
+        # usefull mode if
+        #  - metadata needs to be regenerated without retransfering the data
+        #  - synda files are mixed with files from other sources
+
+        if os.path.isfile(tr.get_full_local_path()):
+            # file already here, mark the file as done
+
+            sdlog.info("SYNDTASK-197","Local file already exists: keep it (lfae_mode=keep,local_file=%s)"%tr.get_full_local_path())
+
+            tr.status=sdconst.TRANSFER_STATUS_DONE
+            tr.error_msg="Local file already exists: keep it (lfae_mode=keep)"
+            tr.end_date=sdtime.now()
+            sdfiledao.update_file(tr) # note: it is important not to update a running status in this case, else local file non-related with synda may be removed by synda (because of cleanup_running_transfer() func). See mail from Hans Ramthun at 20150331 for more details.
+
+            return False
+        else:
+            # file not here, start the download
+
+            return True
+    elif lfae_mode=="replace":
+        if os.path.isfile(tr.get_full_local_path()):
+            sdlog.info("SYNDTASK-187","Local file already exists: remove it (lfae_mode=replace,local_file=%s)"%tr.get_full_local_path())
+            os.remove(tr.get_full_local_path())
+
+        return True
+    elif lfae_mode=="abort":
+        if os.path.isfile(tr.get_full_local_path()):
+            sdlog.info("SYNDTASK-188","Local file already exists: transfer aborted (lfae_mode=abort,local_file=%s)"%tr.get_full_local_path())
+
+            tr.status=sdconst.TRANSFER_STATUS_ERROR
+            tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
+            tr.end_date=sdtime.now()
+            sdfiledao.update_file(tr)
+
+            return False
+        else:
+            return True
+
 @sdprofiler.timeit
 def transfers_begin():
     def start_transfer(tr):
@@ -100,48 +156,10 @@ def transfers_begin():
             th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
             th.start()
 
+        prepare_transfer(tr)
 
-        # we reset values from previous try if any
-        tr.end_date=None
-        tr.error_msg=None
-        tr.status=sdconst.TRANSFER_STATUS_RUNNING
-        tr.start_date=sdtime.now()
-
-        if lfae_mode=="keep":
-            # usefull mode if
-            #  - metadata needs to be regenerated without retransfering the data
-            #  - synda files are mixed with files from other sources
-
-            if os.path.isfile(tr.get_full_local_path()):
-                # file already here, mark the file as done
-
-                sdlog.info("SYNDTASK-197","Local file already exists: keep it (lfae_mode=keep,local_file=%s)"%tr.get_full_local_path())
-
-                tr.status=sdconst.TRANSFER_STATUS_DONE
-                tr.error_msg="Local file already exists: keep it (lfae_mode=keep)"
-                tr.end_date=sdtime.now()
-                sdfiledao.update_file(tr) # note: it is important not to update a running status in this case, else local file non-related with synda may be removed by synda (because of cleanup_running_transfer() func). See mail from Hans Ramthun at 20150331 for more details.
-            else:
-                # file not here, start the download
-
-                start_transfer_thread(tr)
-        elif lfae_mode=="replace":
-            if os.path.isfile(tr.get_full_local_path()):
-                sdlog.info("SYNDTASK-187","Local file already exists: remove it (lfae_mode=replace,local_file=%s)"%tr.get_full_local_path())
-                os.remove(tr.get_full_local_path())
-
+        if pre_transfer_check_list(tr):
             start_transfer_thread(tr)
-        elif lfae_mode=="abort":
-            if os.path.isfile(tr.get_full_local_path()):
-                sdlog.info("SYNDTASK-188","Local file already exists: transfer aborted (lfae_mode=abort,local_file=%s)"%tr.get_full_local_path())
-
-                tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
-                tr.end_date=sdtime.now()
-                sdfiledao.update_file(tr)
-            else:
-                start_transfer_thread(tr)
-
 
     new_transfer_count=max_transfer - sdstatquery.transfer_running_count() # compute how many new transfer can be started
     if new_transfer_count>0:
