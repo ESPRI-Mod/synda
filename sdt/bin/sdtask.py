@@ -142,19 +142,15 @@ def pre_transfer_check_list(tr):
         else:
             return True
 
+def start_transfer_thread(tr):
+    sdfiledao.update_file(tr)
+    th=WorkerThread(tr,eot_queue,Download)
+    th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
+    th.start()
+
 @sdprofiler.timeit
 def transfers_begin():
     def start_transfer(tr):
-        """Retrieve next transfer to start
-        
-        Note
-            if no more transfer waiting, get_transfer() raises "NoTransferWaitingException" exception
-        """
-        def start_transfer_thread(tr):
-            sdfiledao.update_file(tr)
-            th=WorkerThread(tr,eot_queue,Download)
-            th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
-            th.start()
 
         prepare_transfer(tr)
 
