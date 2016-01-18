@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script contains download high level functions."""
+"""This script contains download management funcs (default implementation).
+
+Note
+    sddmdefault means 'SynDa Download Manager default'
+"""
 
 import os
 import traceback
