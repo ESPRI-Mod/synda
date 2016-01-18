@@ -185,8 +185,8 @@ def event_loop():
 
         run_hard_tasks()
 
-        if Download.exception_occurs:
-            sdlog.error("SDTSCHED-002","Fatal exception occured in download thread",stderr=True)
+        if sdtask.fatal_exception():
+            sdlog.error("SDTSCHED-002","Fatal exception occured during download",stderr=True)
             break
 
         if quit==1:

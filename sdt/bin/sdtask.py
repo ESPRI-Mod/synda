@@ -146,6 +146,9 @@ def transfers_begin():
 def can_leave():
     return sddownload.can_leave()
 
+def fatal_exception():
+    return sddownload.fatal_exception()
+
 # init.
 
 max_transfer=sdconfig.config.getint('daemon','max_parallel_download')

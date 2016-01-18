@@ -174,6 +174,9 @@ def transfers_begin(transfers):
 def can_leave():
     return eot_queue.empty()
 
+def fatal_exception():
+    return Download.exception_occurs
+
 # module init.
 
 eot_queue=Queue.Queue() # eot means "End Of Task"
