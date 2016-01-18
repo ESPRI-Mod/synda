@@ -13,6 +13,7 @@
 
 import os
 import traceback
+import time
 import Queue
 import sdapp
 import sdlog
@@ -164,6 +165,11 @@ def transfers_end():
             #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
 
             raise
+
+def transfers_begin(transfers):
+    for tr in transfers:
+        start_transfer_thread(tr)
+        time.sleep(1) # this sleep is not to be too agressive with datanodes
 
 def can_leave():
     return eot_queue.empty()

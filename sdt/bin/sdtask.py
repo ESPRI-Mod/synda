@@ -13,7 +13,6 @@
 
 import sys
 import os
-import time
 import traceback
 import sdapp
 import sdconfig
@@ -126,6 +125,8 @@ def pre_transfer_check_list(tr):
 
 @sdprofiler.timeit
 def transfers_begin():
+    transfers=[]
+
     new_transfer_count=max_transfer - sdstatquery.transfer_running_count() # compute how many new transfer can be started
     if new_transfer_count>0:
         for i in range(new_transfer_count):
@@ -136,11 +137,11 @@ def transfers_begin():
 
                 if pre_transfer_check_list(tr):
                     sdfiledao.update_file(tr)
-                    sddownload.start_transfer_thread(tr)
+                    transfers.append(tr)
             except NoTransferWaitingException, e:
                 pass
 
-            time.sleep(1) # this sleep is not to be too agressive with datanodes
+    sddownload.transfers_begin(transfers)
 
 def can_leave():
     return sddownload.can_leave()
