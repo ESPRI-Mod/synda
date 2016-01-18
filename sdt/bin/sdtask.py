@@ -14,7 +14,6 @@
 import sys
 import os
 import time
-import Queue
 import traceback
 import sdapp
 import sdconfig
@@ -29,9 +28,8 @@ import sdeventdao
 import sdlog
 import sddb
 import sddeletefile
-from sddownload import Download,end_of_transfer
+import sddownload
 from sdexception import NoTransferWaitingException,FatalException,RemoteException
-from sdworkerutils import WorkerThread
 from sdtypes import File
 
 @sdprofiler.timeit
@@ -68,23 +66,7 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
 @sdprofiler.timeit
 def transfers_end():
     """When a task is done, DB orders are enqueued. Those orders are then executed in this function."""
-
-    for i in range(8): # arbitrary
-        try:
-            task=eot_queue.get_nowait() # raises Empty when empty
-            end_of_transfer(task)
-            eot_queue.task_done()
-        except Queue.Empty, e:
-            pass
-        except FatalException, e:
-            raise
-        except:
-
-            # debug
-            #traceback.print_exc(file=sys.stderr)
-            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
-
-            raise
+    sddownload.transfers_end()
 
 def prepare_transfer(tr):
 
@@ -142,11 +124,6 @@ def pre_transfer_check_list(tr):
         else:
             return True
 
-def start_transfer_thread(tr):
-    th=WorkerThread(tr,eot_queue,Download)
-    th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
-    th.start()
-
 @sdprofiler.timeit
 def transfers_begin():
     new_transfer_count=max_transfer - sdstatquery.transfer_running_count() # compute how many new transfer can be started
@@ -159,14 +136,16 @@ def transfers_begin():
 
                 if pre_transfer_check_list(tr):
                     sdfiledao.update_file(tr)
-                    start_transfer_thread(tr)
+                    sddownload.start_transfer_thread(tr)
             except NoTransferWaitingException, e:
                 pass
 
             time.sleep(1) # this sleep is not to be too agressive with datanodes
 
+def can_leave():
+    return sddownload.can_leave()
+
 # init.
 
-eot_queue=Queue.Queue() # eot means "End Of Task"
 max_transfer=sdconfig.config.getint('daemon','max_parallel_download')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')

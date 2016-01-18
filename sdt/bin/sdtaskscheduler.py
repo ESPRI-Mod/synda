@@ -131,7 +131,7 @@ def run_soft_tasks():
 
 @sdprofiler.timeit
 def can_leave():
-    return sdstatquery.transfer_running_count()==0 and sdtask.eot_queue.empty()
+    return sdstatquery.transfer_running_count()==0 and sdtask.can_leave()
 
 def event_loop():
     global scheduler_state

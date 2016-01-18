@@ -12,6 +12,8 @@
 """This script contains download high level functions."""
 
 import os
+import traceback
+import Queue
 import sdapp
 import sdlog
 import sdconst
@@ -22,6 +24,7 @@ import sdtime
 import sdfiledao
 import sdevent
 import sdget
+from sdworkerutils import WorkerThread
 
 class Download():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
@@ -139,6 +142,33 @@ def end_of_transfer(tr):
         sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returns fatal error.")
         raise FatalException()
 
+def start_transfer_thread(tr):
+    th=WorkerThread(tr,eot_queue,Download)
+    th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
+    th.start()
+
+def transfers_end():
+    for i in range(8): # arbitrary
+        try:
+            task=eot_queue.get_nowait() # raises Empty when empty
+            end_of_transfer(task)
+            eot_queue.task_done()
+        except Queue.Empty, e:
+            pass
+        except FatalException, e:
+            raise
+        except:
+
+            # debug
+            #traceback.print_exc(file=sys.stderr)
+            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+
+            raise
+
+def can_leave():
+    return eot_queue.empty()
+
 # module init.
 
+eot_queue=Queue.Queue() # eot means "End Of Task"
 incorrect_checksum_action=sdconfig.config.get('behaviour','incorrect_checksum_action')
