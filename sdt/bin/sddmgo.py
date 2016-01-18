@@ -18,7 +18,6 @@ Note
 import os
 import traceback
 import time
-import Queue
 import sdapp
 import sdlog
 import sdconst
@@ -147,17 +146,13 @@ def end_of_transfer(tr):
         sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returns fatal error.")
         raise FatalException()
 
-def start_transfer_thread(tr):
-    th=WorkerThread(tr,eot_queue,Download)
-    th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
-    th.start()
-
 def transfers_end():
-    for i in range(8): # arbitrary
+
+    transfers=go_get_list() # TODO: limit number of transfers returned and flush complete transfers from go (retrieve error msg if any)
+
+    for task in transfers:
         try:
-            task=eot_queue.get_nowait() # raises Empty when empty
             end_of_transfer(task)
-            eot_queue.task_done()
         except Queue.Empty, e:
             pass
         except FatalException, e:
@@ -176,12 +171,11 @@ def transfers_begin(transfers):
         time.sleep(1) # this sleep is not to be too agressive with datanodes
 
 def can_leave():
-    return eot_queue.empty()
+    return True
 
 def fatal_exception():
-    return Download.exception_occurs
+    return False
 
 # module init.
 
-eot_queue=Queue.Queue() # eot means "End Of Task"
 incorrect_checksum_action=sdconfig.config.get('behaviour','incorrect_checksum_action')
