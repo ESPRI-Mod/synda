@@ -150,19 +150,16 @@ def start_transfer_thread(tr):
 
 @sdprofiler.timeit
 def transfers_begin():
-    def start_transfer(tr):
-
-        prepare_transfer(tr)
-
-        if pre_transfer_check_list(tr):
-            start_transfer_thread(tr)
-
     new_transfer_count=max_transfer - sdstatquery.transfer_running_count() # compute how many new transfer can be started
     if new_transfer_count>0:
         for i in range(new_transfer_count):
             try:
                 tr=sddao.get_one_waiting_transfer()
-                start_transfer(tr)
+
+                prepare_transfer(tr)
+
+                if pre_transfer_check_list(tr):
+                    start_transfer_thread(tr)
             except NoTransferWaitingException, e:
                 pass
 
