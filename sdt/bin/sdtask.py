@@ -143,7 +143,6 @@ def pre_transfer_check_list(tr):
             return True
 
 def start_transfer_thread(tr):
-    sdfiledao.update_file(tr)
     th=WorkerThread(tr,eot_queue,Download)
     th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
     th.start()
@@ -159,6 +158,7 @@ def transfers_begin():
                 prepare_transfer(tr)
 
                 if pre_transfer_check_list(tr):
+                    sdfiledao.update_file(tr)
                     start_transfer_thread(tr)
             except NoTransferWaitingException, e:
                 pass
