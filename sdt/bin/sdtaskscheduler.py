@@ -30,7 +30,6 @@ import sdlogon
 import sdtask
 import sdprofiler
 import sdstatquery
-from sddownload import Download
 from sdexception import FatalException,SDException,CertificateRenewalException
 
 def terminate(signal,frame):

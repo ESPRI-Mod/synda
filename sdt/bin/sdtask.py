@@ -27,7 +27,7 @@ import sdeventdao
 import sdlog
 import sddb
 import sddeletefile
-import sddownload
+import sddmdefault
 from sdexception import NoTransferWaitingException,FatalException,RemoteException
 from sdtypes import File
 
@@ -65,7 +65,7 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
 @sdprofiler.timeit
 def transfers_end():
     """When a task is done, DB orders are enqueued. Those orders are then executed in this function."""
-    sddownload.transfers_end()
+    sddmdefault.transfers_end()
 
 def prepare_transfer(tr):
 
@@ -141,13 +141,13 @@ def transfers_begin():
             except NoTransferWaitingException, e:
                 pass
 
-    sddownload.transfers_begin(transfers)
+    sddmdefault.transfers_begin(transfers)
 
 def can_leave():
-    return sddownload.can_leave()
+    return sddmdefault.can_leave()
 
 def fatal_exception():
-    return sddownload.fatal_exception()
+    return sddmdefault.fatal_exception()
 
 # init.
 
