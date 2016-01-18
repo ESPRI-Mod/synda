@@ -28,6 +28,7 @@ import sdlog
 import sddb
 import sddeletefile
 import sddmdefault
+import sddmgo
 from sdexception import NoTransferWaitingException,FatalException,RemoteException
 from sdtypes import File
 
@@ -65,7 +66,7 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
 @sdprofiler.timeit
 def transfers_end():
     """When a task is done, DB orders are enqueued. Those orders are then executed in this function."""
-    sddmdefault.transfers_end()
+    dmngr.transfers_end()
 
 def prepare_transfer(tr):
 
@@ -141,15 +142,22 @@ def transfers_begin():
             except NoTransferWaitingException, e:
                 pass
 
-    sddmdefault.transfers_begin(transfers)
+    dmngr.transfers_begin(transfers)
 
 def can_leave():
-    return sddmdefault.can_leave()
+    return dmngr.can_leave()
 
 def fatal_exception():
-    return sddmdefault.fatal_exception()
+    return dmngr.fatal_exception()
 
 # init.
 
 max_transfer=sdconfig.config.getint('daemon','max_parallel_download')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
+
+download_managers={
+    'default':sddmdefault,
+    'globus_online':sddmgo
+}
+
+dmngr=download_managers[sdconfig.download_manager]

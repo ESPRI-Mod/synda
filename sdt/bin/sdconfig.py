@@ -148,6 +148,8 @@ http_client='wget' # wget | urllib
 
 daemon_command_name='sdtaskscheduler'
 
+download_manager='default' # default | globus_online
+
 # note that variable below only set which low_level mecanism to use to find the nearest (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
 nearest_schedule='post' # pre | post
 
