@@ -15,7 +15,7 @@ Url samples
     - http://<host>/esg-search/search?project=GeoMIP&type=File&experiment=G1&variable=rsdt&fields=*&latest=true
 
 Note
-    - 'sdremoteqbuilder' means 'SynDa remote query builder'
+    - 'sdremoteqbuilder' means 'SynDa remote Query builder'
 
 Reference
     - https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
@@ -35,33 +35,38 @@ def run(facets_groups):
 
     for facets_group in facets_groups:
 
-        assert(isinstance(facets_group,dict))
-
-        facets=sddquery.search_api_parameters(facets_group)
-
-        # set default type
-        if 'type' not in facets:
-            facets['type']=['File'] # set as list (all Search-API facets are list at this point)
-
-        # if 'fields' not set, we retrieve all attributes
-        if 'fields' not in facets:
-            facets['fields']=['*']
+        query=build_query(facets_group)
  
-        url=sdremotequtils.build_url(facets)
-
-        if 'searchapi_host' in facets_group:
-            url=url.replace(sdconst.IDXHOSTMARK,facets_group.get('searchapi_host'))
-        else:
-            # we leave the fake index host (it will be replaced with the real host later)
-            pass
-
-        query={}
-        query['url']=url
-        query['attached_parameters']=sddquery.synchro_data_parameters(facets_group)
-
         queries.append(query)
 
     return queries
+
+def build_query(facets_group):
+    assert(isinstance(facets_group,dict))
+
+    facets=sddquery.search_api_parameters(facets_group)
+
+    # set default type
+    if 'type' not in facets:
+        facets['type']=['File'] # set as list (all Search-API facets are list at this point)
+
+    # if 'fields' not set, we retrieve all attributes
+    if 'fields' not in facets:
+        facets['fields']=['*']
+
+    url=sdremotequtils.build_url(facets)
+
+    if 'searchapi_host' in facets_group:
+        url=url.replace(sdconst.IDXHOSTMARK,facets_group.get('searchapi_host'))
+    else:
+        # we leave the fake index host (it will be replaced with the real host later)
+        pass
+
+    query={}
+    query['url']=url
+    query['attached_parameters']=sddquery.synchro_data_parameters(facets_group)
+
+    return query
 
 # init.
 
