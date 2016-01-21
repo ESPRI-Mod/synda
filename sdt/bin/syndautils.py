@@ -29,37 +29,42 @@ def check_daemon():
             sys.exit(3)
 
 def get_stream(args):
-        import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
+    import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
 
-        # hack
-        if args.subcommand=='list':
-            args.no_default=True
+    # hack
+    if args.subcommand=='list':
+        args.no_default=True
 
-        buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
-        selection=sdparse.build(buffer,load_default=(not args.no_default))
-        stream=selection.to_stream()
+    buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
+    selection=sdparse.build(buffer,load_default=(not args.no_default))
+    stream=selection.to_stream()
 
-        # Set default value for nearest here
-        #
-        # TODO: make it work with all actions (e.g. search) as it only working for 'install' action for now
-        #
-        #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
-        if sdconfig.config.getboolean('behaviour','nearest'):
-            sdstream.set_scalar(stream,'nearest',True)
+    # Set default value for nearest here
+    #
+    # TODO: make it work with all actions (e.g. search) as it only working for 'install' action for now
+    #
+    #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
+    if sdconfig.config.getboolean('behaviour','nearest'):
+        sdstream.set_scalar(stream,'nearest',True)
 
-        # progress
-        if sdconfig.config.getboolean('interface','progress'):
-            sdstream.set_scalar(stream,'progress',True)
+    # progress
+    if sdconfig.config.getboolean('interface','progress'):
+        sdstream.set_scalar(stream,'progress',True)
 
-        return stream # aka facets_groups
+    sdstream.set_scalar(stream,'action',args.subcommand) # from the synda engine perspective, 'action' is more meaningful than 'subcommand'
+
+    return stream # aka facets_groups
 
 def file_full_search(args):
-    # this func systematically trigger full search (i.e. limit keyword cannot be used here)
+    """This func systematically trigger full search (i.e. limit keyword cannot be used here)."""
+    import sdsearch
 
     stream=get_stream(args)
+
     check_stream(stream)
+
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
-    import sdsearch
+
     files=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
     return files

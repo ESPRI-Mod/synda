@@ -56,7 +56,8 @@ VARIABLE_NOT_COMPLETE="not-complete"
 DEFAULT_GROUP="default"
 
 # SDSSSP means 'Synchro Data Specific Scalar Selection Parameters'
-SDSSSP=['group',
+SDSSSP=['action',
+        'group',
         'nearest',
         'keep_replica',
         'last_query',
