@@ -54,6 +54,7 @@ def build_url(facets,searchapi_host):
     return url
 
 def build_query(facets_group):
+    query={}
 
     assert(isinstance(facets_group,dict))
 
@@ -68,15 +69,29 @@ def build_query(facets_group):
 
 
     searchapi_host=facets_group.get('searchapi_host',None)
+    action=facets_group.get('action',None)
 
 
     facets=sddquery.search_api_parameters(facets_group)
 
-    url=build_url(facets,searchapi_host)
 
-    query={}
-    query['url']=url
+    query['url']=build_url(facets,searchapi_host)
+
     query['attached_parameters']=sddquery.synchro_data_parameters(facets_group)
+
+
+
+    # hack to retrieve datasets timestamps in one row
+    if action is not None:
+        if action=='install':
+
+            # force attributes for dataset timestamp retrieval
+            facets['type']=['Dataset']
+            facets['fields']=['timestamp']
+
+            query['dataset_timestamp_url']=build_url(facets,searchapi_host)
+
+
 
     return query
 

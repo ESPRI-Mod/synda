@@ -106,6 +106,8 @@ def add_files(files):
     # cannot be done in one step, because dataset 'timestamp' attribute doesn't
     # exist in file's attributes).
     #
+    # 'timestamp' is mainly (only ?) needed by sddatasetversion.compare() func
+    #
     # Indeed, this code is a hack that makes the workflow less readable
     # (i.e. 'search' then 'enqueue' then 'search' again). Maybe try to improve
     # this in the future. Still, it not as bad as if 'search' triggers 'search'

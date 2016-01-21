@@ -55,7 +55,7 @@ VARIABLE_NOT_COMPLETE="not-complete"
 #
 DEFAULT_GROUP="default"
 
-# SDSSSP means 'Synchro Data Specific Scalar Selection Parameters'
+# SDSSSP means 'SynDa Specific Scalar Selection Parameters'
 SDSSSP=['action',
         'group',
         'nearest',
@@ -73,7 +73,7 @@ SDSSSP=['action',
         'tps',
         'verbose']
 
-# SDSSP means 'Synchro Data Specific Selection Parameters'
+# SDSSP means 'SynDa Specific Selection Parameters'
 SDSSP=SDSSSP+['local_path',
               'status',
               'error_msg',
