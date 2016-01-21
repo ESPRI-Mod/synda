@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module perform do post xml parsing filtering.
+"""This module perform post xml parsing filtering.
 
 Description
     - File rejection step 1 (file rejection step 2 is done by sdreducerow module)

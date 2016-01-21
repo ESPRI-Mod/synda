@@ -9,7 +9,8 @@
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script re-process ESGF id and path to fit Synda data naming rules.
+"""This script re-process ESGF id and path to fit Synda data naming rules and
+add default value for missing attributes.
 
 Note
     This module can be used to process different metadata types (File and Dataset).

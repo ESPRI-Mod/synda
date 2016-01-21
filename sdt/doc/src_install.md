@@ -8,9 +8,9 @@ This documents contains instructions to install Synda from source.
 
 Linux distribution with Python 2.6+.
 
-## Installation
+## Dependencies
 
-As root, install the following system packages:
+Install the following system packages (as root):
 
 RHEL and derivative (Centos, Scientific Linux, Fedora..)
 
@@ -24,7 +24,9 @@ Debian and derivative (Ubuntu, Mint, LXLE..)
 apt-get install gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev
 ```
 
-Then install the application (as simple user or root):
+## Installation
+
+Install the application (as normal user or root):
 
 ```
 wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh

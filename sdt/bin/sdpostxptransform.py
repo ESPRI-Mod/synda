@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module perform do post xml parsing transformations.
+"""This module perform post xml parsing transformations.
 
 Description
     Transforms vector to scalar (change file attributes's *values* only (name stay the same)).
