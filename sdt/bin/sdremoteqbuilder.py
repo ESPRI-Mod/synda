@@ -41,8 +41,22 @@ def run(facets_groups):
 
     return queries
 
+def build_url(facets,searchapi_host):
+    url=sdremotequtils.build_url(facets)
+
+    if searchapi_host is not None:
+        url=url.replace(sdconst.IDXHOSTMARK,searchapi_host)
+    else:
+        # we leave the fake index host (it will be replaced with the real host later)
+
+        pass
+
+    return url
+
 def build_query(facets_group):
+
     assert(isinstance(facets_group,dict))
+
 
     # set default type
     if 'type' not in facets_group:
@@ -52,15 +66,13 @@ def build_query(facets_group):
     if 'fields' not in facets_group:
         facets_group['fields']=['*']
 
+
+    searchapi_host=facets_group.get('searchapi_host',None)
+
+
     facets=sddquery.search_api_parameters(facets_group)
 
-    url=sdremotequtils.build_url(facets)
-
-    if 'searchapi_host' in facets_group:
-        url=url.replace(sdconst.IDXHOSTMARK,facets_group.get('searchapi_host'))
-    else:
-        # we leave the fake index host (it will be replaced with the real host later)
-        pass
+    url=build_url(facets,searchapi_host)
 
     query={}
     query['url']=url
