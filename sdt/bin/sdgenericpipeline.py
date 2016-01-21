@@ -35,6 +35,17 @@ def run(files):
     
     files=sdpostxptransform.run(files) # cast
 
+    files=add_default_values(files)
+
+    return files
+
+def add_default_values(files):
+    """Add default value for missing generic attributes."""
+
+    for f in files:
+        if "model" not in f: # for some project, this attribute is not set (e.g. CORDEX)
+            f["model"]=None
+
     return files
 
 if __name__ == '__main__':

@@ -120,7 +120,7 @@ def HTTP_GET(url,timeout=20):
         #buf=response.text
 
     except Exception, e:
-        errmsg="HTTP query failed (url=%s,exception=%s)"%(url,str(e))
+        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-002"
 
         raise SDException(errcode,errmsg)
