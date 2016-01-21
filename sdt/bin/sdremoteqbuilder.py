@@ -44,15 +44,15 @@ def run(facets_groups):
 def build_query(facets_group):
     assert(isinstance(facets_group,dict))
 
-    facets=sddquery.search_api_parameters(facets_group)
-
     # set default type
-    if 'type' not in facets:
-        facets['type']=['File'] # set as list (all Search-API facets are list at this point)
+    if 'type' not in facets_group:
+        facets_group['type']=['File'] # set as list (all Search-API facets are list at this point)
 
     # if 'fields' not set, we retrieve all attributes
-    if 'fields' not in facets:
-        facets['fields']=['*']
+    if 'fields' not in facets_group:
+        facets_group['fields']=['*']
+
+    facets=sddquery.search_api_parameters(facets_group)
 
     url=sdremotequtils.build_url(facets)
 
