@@ -49,7 +49,7 @@ def post_pipeline(files,mode=None):
     else:
         raise SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
 
-    return files
+    return files # return list of dict here (i.e. not File object)
 
 def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
