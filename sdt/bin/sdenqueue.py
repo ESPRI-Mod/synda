@@ -206,18 +206,22 @@ def add_dataset(f):
         sdlog.info("SDENQUEU-002","create dataset (dataset_path=%s)"%(f.dataset_path))
 
         d=Dataset()
+
         d.local_path=f.dataset_local_path
         d.path=f.dataset_path
         d.path_without_version=f.dataset_path_without_version
         d.dataset_functional_id=f.dataset_functional_id
         d.template=f.dataset_template
         d.version=f.dataset_version
-        d.model=f.model
         d.project=f.project
         d.status=sdconst.DATASET_STATUS_EMPTY
         d.latest=False
         d.crea_date=sdtime.now()
         d.last_mod_date=sdtime.now()
+
+        # non-mandatory attributes
+        d.timestamp=f.dataset_timestamp if hasattr(f,'dataset_timestamp') else None
+        d.model=f.model if hasattr(f,'model') else None
 
         return sddatasetdao.add_dataset(d,commit=False)
 
