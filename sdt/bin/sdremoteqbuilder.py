@@ -41,18 +41,6 @@ def run(facets_groups):
 
     return queries
 
-def build_url(facets,searchapi_host):
-    url=sdremotequtils.build_url(facets)
-
-    if searchapi_host is not None:
-        url=url.replace(sdconst.IDXHOSTMARK,searchapi_host)
-    else:
-        # we leave the fake index host (it will be replaced with the real host later)
-
-        pass
-
-    return url
-
 def build_query(facets_group):
     query={}
 
@@ -75,7 +63,7 @@ def build_query(facets_group):
     facets=sddquery.search_api_parameters(facets_group)
 
 
-    query['url']=build_url(facets,searchapi_host)
+    query['url']=sdremotequtils.build_url(facets,searchapi_host)
 
     query['attached_parameters']=sddquery.synchro_data_parameters(facets_group)
 
@@ -87,9 +75,9 @@ def build_query(facets_group):
 
             # force attributes for dataset timestamp retrieval
             facets['type']=['Dataset']
-            facets['fields']=['timestamp']
+            facets['fields']=['timestamp','_timestamp','instance_id'] # we also add '_timestamp' as some project use this naming (e.g.ahttp://esgf-index1.ceda.ac.uk/esg-search/search?fields=timestamp,_timestamp&instance_id=cordex.output.EUR-11.DHMZ.ECMWF-ERAINT.evaluation.r1i1p1.RegCM4-2.v1.day.ps.v20150527). Note that search-API 'fields' attribute can contains non-existent fields (i.e. no error occurs in such case, fields are just ignored)
 
-            query['dataset_timestamp_url']=build_url(facets,searchapi_host)
+            query['dataset_timestamp_url']=sdremotequtils.build_url(facets,searchapi_host)
 
 
 

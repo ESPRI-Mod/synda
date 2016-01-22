@@ -77,7 +77,7 @@ def serialize_parameter__mvpp(name,values): # 'mvpp' means many values per param
     else:
         return ''
 
-def build_url(facets):
+def build_url(facets,searchapi_host):
     serialized_parameters=serialize_parameters(facets)
 
     # as parameters can contain special char, we need to encode them 
@@ -88,5 +88,12 @@ def build_url(facets):
 
     if len(url)>3500: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
         raise SDException("SDRQUUTI-001","url is too long (%i)"%len(url))
+
+    if searchapi_host is not None:
+        url=url.replace(sdconst.IDXHOSTMARK,searchapi_host)
+    else:
+        # we leave the fake index host (it will be replaced with the real host later)
+
+        pass
 
     return url
