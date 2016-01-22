@@ -153,6 +153,8 @@ download_manager='default' # default | globus_online
 # note that variable below only set which low_level mecanism to use to find the nearest (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
 nearest_schedule='post' # pre | post
 
+unknown_value_behaviour='error' # error | warning
+
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True

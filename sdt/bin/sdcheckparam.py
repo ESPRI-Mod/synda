@@ -27,6 +27,7 @@ import sdconst
 import sdconfig
 import sdprint
 import sdi18n
+from sdtools import print_stderr
 from sdexception import SDException
 
 def run(facets_groups):
@@ -85,7 +86,13 @@ def check_parameters(facets_groups):
 def check_parameter_values(name,values):
     for value in values:
         if not sdparam.exists_parameter_value(name,value):
-            raise SDException("SYDCHECK-002","Unknown value for '%s' parameter (value='%s'). %s"%(name,value,sdi18n.m0021))
+
+            msg="Unknown value '%s' for '%s' parameter. %s"%(name,value,sdi18n.m0021)
+
+            if sdconfig.unknown_value_behaviour=='warning':
+                print_stderr('WARNING: '+msg)
+            else:
+                raise SDException("SYDCHECK-002",msg)
 
 def check_coherency(facets_groups):
     for facets_group in facets_groups:
