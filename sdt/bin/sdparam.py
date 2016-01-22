@@ -19,6 +19,7 @@ import sdnormalize
 import sdcache
 import sdconst
 import sdtools
+import sdi18n
 from sdexception import SDException
 
 def handle_negated_value(name):
@@ -236,7 +237,7 @@ def get_name_from_value(value):
     names=search_match_fast(value)
 
     if len(names)==0:
-        raise SDException("SYDPARAM-002","Parameter name cannot be infered from '%s' value (value not found)"%value)
+        raise SDException("SYDPARAM-002","Parameter name cannot be infered from '%s' value (value not found). %s"%(value,sdi18n.m0020))
     elif len(names)==1:
         return names[0]
     elif len(names)>1:

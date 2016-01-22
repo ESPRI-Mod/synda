@@ -216,3 +216,14 @@ For more information
 
 %s
 """%m0018
+
+m0020="""
+This may be caused by a typo in search parameters, or by the cache containing outdated informations.
+To refresh the cache, run 'synda update' command.
+"""
+
+m0021="""
+This may be caused by a typo in the search parameters, or by the cache containing outdated informations.
+To refresh the cache, run 'synda update' command.
+You can also disable parameters checking by setting 'check_parameter=0' in configuration file.
+"""

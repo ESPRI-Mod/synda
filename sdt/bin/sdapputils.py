@@ -27,8 +27,19 @@ def print_exception(type_, value, tb):
     stderr()
 
     if value.__class__.__name__=="SDException":
-        stderr('Error code: %s'%value.code)
-        stderr('Error message: %s'%value.msg)
+        stderr()
+        stderr('==================')
+        stderr('*   Error code   *')
+        stderr('==================')
+        stderr()
+        stderr('%s'%value.code)
+        stderr()
+        stderr()
+        stderr('=====================')
+        stderr('*   Error message   *')
+        stderr('=====================')
+        stderr()
+        stderr('%s'%value.msg)
         stderr()
 
         if 'ST_DEBUG' in os.environ:
