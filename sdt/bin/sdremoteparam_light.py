@@ -58,12 +58,11 @@ def run(pname=None,host=None,facets_group={},dry_run=False):
     # force 'fields' to '*'
     facets_group['fields']=['*'] # TODO: maybe this is not needed to retrieve parameter (maybe we can set 'fields' only to 'id', or something like that)
 
-    # build url
-    url=sdremotequtils.build_url(facets_group)
-
     # set index host
     host=sdindex.get_default_index() if host is None else host
-    url=url.replace(sdconst.IDXHOSTMARK,host)
+
+    # build url
+    url=sdremotequtils.build_url(facets_group,host)
 
     if dry_run:
         print url
