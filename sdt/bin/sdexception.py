@@ -35,3 +35,7 @@ class CertificateRenewalException(SDException):
     pass
 class OpenIDProcessingException(SDException):
     pass
+class MissingDatasetTimestampUrlException(SDException):
+    pass
+class MissingTimestampException(SDException):
+    pass

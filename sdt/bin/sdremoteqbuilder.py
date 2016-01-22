@@ -28,6 +28,7 @@ import sdlog
 import sddquery
 import sdpipelineutils
 import sdremotequtils
+import sdbatchtimestamp
 import sdprint
 
 def run(facets_groups):
@@ -72,12 +73,8 @@ def build_query(facets_group):
     # hack to retrieve datasets timestamps in one row
     if action is not None:
         if action=='install':
-
-            # force attributes for dataset timestamp retrieval
-            facets['type']=['Dataset']
-            facets['fields']=['timestamp','_timestamp','instance_id'] # we also add '_timestamp' as some project use this naming (e.g.ahttp://esgf-index1.ceda.ac.uk/esg-search/search?fields=timestamp,_timestamp&instance_id=cordex.output.EUR-11.DHMZ.ECMWF-ERAINT.evaluation.r1i1p1.RegCM4-2.v1.day.ps.v20150527). Note that search-API 'fields' attribute can contains non-existent fields (i.e. no error occurs in such case, fields are just ignored)
-
-            query['dataset_timestamp_url']=sdremotequtils.build_url(facets,searchapi_host)
+            ds_timstap_facets=sdbatchtimestamp.transform_facets_for_dataset_timestamp_retrieval(facets)
+            query['dataset_timestamp_url']=sdremotequtils.build_url(ds_timstap_facets,searchapi_host)
 
 
 

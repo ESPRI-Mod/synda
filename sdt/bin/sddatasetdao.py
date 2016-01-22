@@ -19,7 +19,7 @@ import sdsqlutils
 from sdtypes import Dataset
 
 def add_dataset(dataset,commit=True,conn=sddb.conn):
-    keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model']
+    keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model', 'timestamp']
     return sdsqlutils.insert(dataset,keys_to_insert,commit,conn)
 
 def get_dataset_(not_found_raise_exception=False,**search_constraints):
