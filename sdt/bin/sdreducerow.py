@@ -41,7 +41,7 @@ def is_file_complete(file):
 
     """
     if file.get("tracking_id") is None:
-        sdlog.log("SDREDUCE-010","incorrect tracking_id (%s)"%filename)
+        sdlog.error("SDREDUCE-010","incorrect tracking_id (%s)"%filename)
         return False
     """
 

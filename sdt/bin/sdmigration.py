@@ -26,14 +26,14 @@ def MIGR0001():
 
 def execProc(proc_name):
 
-    sdlog.log("SDMIGR-INF231","routine '%s' starts"%proc_name)
+    sdlog.info("SYNDMIGR-231","routine '%s' starts"%proc_name)
 
     try:
         getattr(proc_name.upper())()
     except Exception,e:
         raise
 
-    sdlog.log("SDMIGR-INF232","routine '%s' completes successfully"%proc_name)
+    sdlog.info("SYNDMIGR-232","routine '%s' completes successfully"%proc_name)
 
 # module init
 

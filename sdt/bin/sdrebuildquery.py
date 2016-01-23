@@ -19,7 +19,7 @@ def update_model_names(conn=sddb.conn):
     """
     fix B0032 (set non_normalized_model_name)
     """
-    sdlog.log("SDMIGR-INF832","update model names..")
+    sdlog.info("SDREBUQU-832","updating model names..")
 
     c = conn.cursor()
 
@@ -55,7 +55,7 @@ def update_dataset(d,conn=sddb.conn):
 
     # check
     if c.rowcount==0:
-        raise SDException("SDMIGR-ERR828","dataset not found (dataset_id=%s)"%d.dataset_id)
+        raise SDException("SDREBUQU-828","dataset not found (dataset_id=%s)"%d.dataset_id)
 
     c.close() # note: this does not commit transaction
 

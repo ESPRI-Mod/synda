@@ -82,7 +82,7 @@ def close_in_memory_database():
 def load_table_in_memory(tablename,indexname):
     global _in_memory_conn
 
-    sdlog.log("SDDATABA-INF001","loading '%s' table"%tablename)
+    sdlog.info("SDDATABA-001","loading '%s' table"%tablename)
 
     # create a database in memory
     if _in_memory_conn is None:
@@ -106,7 +106,7 @@ def load_table_in_memory(tablename,indexname):
 
     _in_memory_conn.row_factory = sqlite3.Row
 
-    #sdlog.log("SDDATABA-INF002","table loaded")
+    sdlog.info("SDDATABA-002","table loaded")
 
 # module init
 

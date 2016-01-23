@@ -98,7 +98,7 @@ def add_selection(us):
             # same checksum
             # checksum differ
 
-            sdlog.log("SYNDATSEL-INF197","%s selection has been modified (marked for fullscan)"%us.getFilename())
+            sdlog.info("SYNDASEL-197","%s selection has been modified (marked for fullscan)"%us.getFilename())
 
 
             us.setChecksum(l__file_checksum)                  # update checksum
