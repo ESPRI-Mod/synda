@@ -41,7 +41,7 @@ def error(code,message,stdout=False,stderr=False,logfile=True):
 def critical(code,message,stdout=False,stderr=False,logfile=True):
     log(code,message,logging.CRITICAL,stdout,stderr,logfile)
 
-def log(code,message,level,stdout,stderr,logfile):
+def log(code,message,level,stdout=False,stderr=False,logfile=True):
     # check code length
     if len(code)!=12:
         raise SDException("SYNDALOG-002","%s have an incorrect length"%code)
