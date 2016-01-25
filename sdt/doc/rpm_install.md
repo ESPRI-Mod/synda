@@ -60,12 +60,12 @@ vi /etc/synda/sdt/credentials.conf
 ```
 
 Note: to download file from ESGF, you need to create an openID account on one
-ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
+ESGF identity provider website (e.g. PCMDI, BADC, DKRZ..) and subscribe to
 CMIP5-RESEARCH role.
 
 ## Usage
 
-A quickstart guide is available by running the command below
+A quickstart guide is available by running 'intro' subcommand
 
 ```
 synda intro 

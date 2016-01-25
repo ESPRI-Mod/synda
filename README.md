@@ -65,13 +65,17 @@ To install from RPM package, see link below
 
 [RPM installation](sdt/doc/rpm_install.md)
 
-Note: RPM package installation is multi-user / system-wide and can only be performed by root user
+To install from DEB package, see link below
+
+[DEB installation](sdt/doc/deb_install.md)
+
+Note: installations using system packages (DEB or RPM) are multi-user, and can only be performed by root user.
 
 To install from source, see link below
 
 [Source installation](sdt/doc/src_install.md)
 
-Note: source installation is single-user and can be performed by normal user
+Note: source installation is single-user and can be performed by normal user.
 
 To install using Docker, see link below
 
