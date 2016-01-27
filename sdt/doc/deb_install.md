@@ -13,11 +13,12 @@ Synda DEB packages are available for Debian, Ubuntu and Mint.
 Add IPSL Synda repository to /etc/apt/sources.list
 
 ```
-sudo sed -i '1i deb http://dods.ipsl.jussieu.fr/jripsl/synda/deb/repo/<distro-name>/ ipslrepo contrib' /etc/apt/sources.list
+deb http://dods.ipsl.jussieu.fr/jripsl/synda/deb/repo/<distro-name>/ ipslrepo contrib
 ```
 
 where &lt;distro-name&gt; can be one of
 
+* ubuntu14
 * ubuntu12
 * mint17
 * debian8
