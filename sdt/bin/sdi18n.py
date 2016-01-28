@@ -183,12 +183,10 @@ $ synda queue
 status      count  size
 done            1  8.9 MB
 
-The file should be available in /srv/synda/sdt
+The file should be available in $HOME/sdt/data
 
 $ find /srv -type f
-/srv/synda/sdt/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
-
-Note: in single-user installation, files are available in $HOME/sdt/data
+$HOME/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
 
 In case something goes wrong, you can check the logfiles in /var/log/synda/sdt
