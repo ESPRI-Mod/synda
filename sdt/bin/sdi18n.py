@@ -206,12 +206,8 @@ and
 
 $ synda test <file_url>
 
-to test file download.
-
-For more information
-
-%s
-"""%m0018
+to test file download
+"""
 
 m0020="""
 This may be caused by a typo in search parameters, or by the cache containing outdated informations.
