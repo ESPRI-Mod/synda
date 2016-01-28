@@ -131,6 +131,10 @@ Introduction to synda command
 
 A session might go like
 
+Set ESGF openid and passwd in credentials file:
+
+vi /etc/synda/sdt/credentials.conf
+
 Search a dataset:
 
 $ synda search CMIP5 decadal1995 mon land
@@ -155,21 +159,13 @@ new  8.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20
 
 Mark the file for download:
 
-$ sudo synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+$ synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 1 file(s) will be added to the download queue.
 Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
 1 file(s) enqueued
 
-Set ESGF openid and passwd in credentials file:
-
-vi /etc/synda/sdt/credentials.conf
-
-Start the daemon (multi-user installation):
-
-$ sudo service synda start
-
-Start the daemon (single-user installation):
+Start the daemon
 
 $ synda daemon start
 

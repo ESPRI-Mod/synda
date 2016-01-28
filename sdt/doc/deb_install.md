@@ -36,7 +36,7 @@ apt-get update
 Then install Synda package using command below
 
 ```
-sudo apt-get install synda -y
+sudo apt-get install synda --force-yes -y
 ```
 
 ## Configuration
