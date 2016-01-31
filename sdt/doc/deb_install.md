@@ -30,7 +30,7 @@ Note: DEB package are currently only available for 64 bits architecture
 Once repository is added, run command below to update package list.
 
 ```
-apt-get update
+sudo apt-get update
 ```
 
 Then install Synda package using command below
