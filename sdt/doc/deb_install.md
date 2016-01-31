@@ -10,10 +10,10 @@ Synda DEB packages are available for Debian, Ubuntu and Mint.
 
 ## Installation
 
-Add IPSL Synda repository to /etc/apt/sources.list
+Add IPSL Synda repository
 
 ```
-deb http://dods.ipsl.jussieu.fr/jripsl/synda/deb/repo/<distro-name>/ ipslrepo contrib
+echo deb http://dods.ipsl.jussieu.fr/jripsl/synda/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
 ```
 
 where &lt;distro-name&gt; can be one of
