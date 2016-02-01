@@ -23,9 +23,19 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-import sdapp
+import sdconfig
+import sdtools
 import sdconst
 from sdexception import SDException,FileNotFoundException
+
+def is_granted():
+    if sdconfig.multiuser:
+        if sdtools.is_root():
+            return True
+        else:
+            return False
+    else:
+        return True
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):
