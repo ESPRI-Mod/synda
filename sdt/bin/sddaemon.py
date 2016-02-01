@@ -33,6 +33,7 @@ import signal
 import subprocess
 #import sdapp # do no uncomment this (see note above)
 import sdconfig
+import sdutils
 from sdexception import SDException
 
 def get_daemon_status():
@@ -82,6 +83,11 @@ def main_loop():
     sdlog.info('SDDAEMON-034',"Daemon stopped")
 
 def start():
+
+    if not sdutils.is_granted():
+        print 'You need to be root to perform this command.'
+        return
+
     if not is_running():
         with context:
             try:
@@ -112,6 +118,11 @@ def start():
         print 'Daemon is already running.'
 
 def stop():
+
+    if not sdutils.is_granted():
+        print 'You need to be root to perform this command.'
+        return
+
     if is_running():
         os.kill(pidfile.read_pid(),signal.SIGTERM)
     else:

@@ -17,6 +17,7 @@ import ConfigParser
 import sdtools
 from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
+# this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
 def get_data_folder():
     if config.has_option('path','data_path'):
