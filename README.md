@@ -51,9 +51,9 @@ This program is a command-line alternative to the ESGF web front-end.
 
 ## Version
 
-* Stable: 3.1
+* Stable: 3.2
 
-* Testing: 3.2
+* Testing: 3.3
 
 ## Dependency
 

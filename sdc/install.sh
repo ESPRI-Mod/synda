@@ -724,7 +724,7 @@ url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
 # TODO: switch to this url ? => http://esgf-local.ipsl.upmc.fr/thredds/fileServer/ipsl_public/jripsl/synda/sdt-3.1.tar.gz
 #
 #
-st_version=${g__version:-3.1} # default version if not specified by the user
+st_version=${g__version:-3.2} # default version if not specified by the user
 st_package=sdt-${st_version}
 st_archive=${st_package}.tar.gz
 st_url="$url_prefix/${st_archive}"

@@ -1,4 +1,11 @@
-- Version 3.2 - DEV
+- Version 3.3 - DEV
+- Version 3.2 - 20160203
+	- DEB package
+	- Retrieve dataset timestamp in batch mode.
+	- Modify Synda scheduler to ease Globus Online integration.
+	- Prevent normal user to run admin commands in multi-user mode.
+	- Set model attribute as optional.
+	- Improve documentation.
 - Version 3.1 - 20151229
 	- multi-user
 	- daemon integrated in systemd
