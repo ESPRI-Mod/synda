@@ -51,6 +51,16 @@ If you need a distro/version that is not listed, you can open a github issue so 
 
 Note: RPM package are currently only available for 64 bits architecture
 
+## Patch
+
+Synda 3.2 RPM package contains a bug which prevent renewing certificate.
+
+Run the command below to fix it
+
+```
+sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
+```
+
 ## Configuration
 
 Edit credentials file to set ESGF openid and password
