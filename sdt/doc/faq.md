@@ -4,7 +4,7 @@
 
 Run command below
 
-    sudo /usr/share/python/synda/sdt/bin/pip install setuptools==0.10
+    sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
 
 --------------------------------------------------------
 
