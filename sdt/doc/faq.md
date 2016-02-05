@@ -1,5 +1,13 @@
 # Synda FAQ
 
+### 'pkg_resources.DistributionNotFound: setuptools>=1.0' error
+
+Run command below
+
+    sudo /usr/share/python/synda/sdt/bin/pip install setuptools==0.10
+
+--------------------------------------------------------
+
 ### 'Module argparse was already imported' error
 
 Run command below
