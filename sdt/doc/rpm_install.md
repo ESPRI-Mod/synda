@@ -56,12 +56,18 @@ Note: RPM package are currently only available for 64 bits architecture
 Edit credentials file to set ESGF openid and password
 
 ```
-vi /etc/synda/sdt/credentials.conf
+sudo vi /etc/synda/sdt/credentials.conf
 ```
 
 Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC, DKRZ..) and subscribe to
 CMIP5-RESEARCH role.
+
+Then, restart service with
+
+```
+sudo service synda restart
+```
 
 ## Usage
 
