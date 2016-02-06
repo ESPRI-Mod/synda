@@ -13,7 +13,8 @@ See https://github.com/Prodiguer/synda
 
 To select which data to download, you need to set filters. Filters are stored
 in selection files (aka template). Those selection files are stored in
-'$HOME/sdt/selection' folder.
+'$HOME/sdt/selection' folder (single-user installation) and
+/etc/synda/sdt/selection (multi-user installation).
 
 Example of a selection file
 
@@ -31,7 +32,7 @@ Example of a selection file
 
 ### Adding a selection file
 
-Create a new file in '$HOME/sdt/selection' folder and set the filters.
+Create a new selection file in the 'selection' folder and set the filters.
 
 Then run command below to start the discovery
 
@@ -52,9 +53,6 @@ Run command below to remove files matching the selection file
     synda remove -s <selection-file>
 
 Then manually remove the selection file from the 'selection' folder.
-
-Note: 'selection' folder location is '$HOME/sdt/selection' for single-user
-installation and '/etc/synda/sdt/selection' for multi-user installation.
 
 ## Retrieving new dataset versions for all selection files
 
@@ -122,6 +120,5 @@ Log files below contain useful informations about errors
 * 'debug.log' contains 'wget' command log.
 * 'discovery.log' contains search-api log.
 
-Note: in single-user installation, log files are stored in '$HOME/sdt/log'
-folder. In multi-user installation, log files are stored in
-'/var/log/synda/sdt' folder.
+Note: log files are stored in '$HOME/sdt/log' folder (single-user installation)
+and '/var/log/synda/sdt' folder (multi-user installation).
