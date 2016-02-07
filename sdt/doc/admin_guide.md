@@ -14,7 +14,7 @@ See https://github.com/Prodiguer/synda
 To select which data to download, you need to set filters. Filters are stored
 in selection files (aka template). Those selection files are stored in
 '$HOME/sdt/selection' folder (single-user installation) and
-/etc/synda/sdt/selection (multi-user installation).
+'/etc/synda/sdt/selection' (multi-user installation).
 
 Example of a selection file
 
