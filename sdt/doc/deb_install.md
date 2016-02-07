@@ -62,7 +62,7 @@ sudo service synda restart
 A quickstart guide is available by running 'intro' subcommand
 
 ```
-synda intro 
+synda intro | more
 ```
 
 ## Files location

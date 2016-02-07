@@ -58,7 +58,7 @@ CMIP5-RESEARCH role.
 A quickstart guide is available by running 'intro' subcommand
 
 ```
-synda intro 
+synda intro | more
 ```
 
 ## Files location
