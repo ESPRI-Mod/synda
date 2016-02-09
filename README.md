@@ -16,13 +16,13 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 ## Documentation
 
-[User guide](sdt/doc/user_guide.md)                             | [Admin guide](sdt/doc/admin_guide.md) |
-[Installation guide](##installation)                             | [Upgrade guide](sdt/doc/upgrade_guide.md)
+[User guide](sdt/doc/user_guide.md)                                   | [Admin guide](sdt/doc/admin_guide.md) |
+[Installation guide](https://github.com/Prodiguer/synda#installation) | [Upgrade guide](sdt/doc/upgrade_guide.md)
 
-[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda) | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
+[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
-[Faq](sdt/doc/faq.md)                                           |[Template sample](sdt/doc/TEMPLATE)    |
-[Changelog](sdt/doc/changelog)                                  |[License](sdt/doc/LICENSE)             |
+[Faq](sdt/doc/faq.md)                                                 |[Template sample](sdt/doc/TEMPLATE)    |
+[Changelog](sdt/doc/changelog)                                        |[License](sdt/doc/LICENSE)             |
 [Slides](sdt/doc/synda.odp)
 
 ## Basic usage
