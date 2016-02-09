@@ -36,14 +36,14 @@ chmod +x ./install.sh
 
 ## Configuration
 
-Add lines below in your shell configuration file (e.g. '.bashrc')
+* Add lines below in your shell configuration file (e.g. '.bashrc')
 
 ```
 export ST_HOME=$HOME/sdt
 export PATH=$ST_HOME/bin:$PATH
 ```
 
-Edit configuration file to set the new index
+* Edit configuration file to set the new index
 
 ```
 sudo vi $ST_HOME/conf/sdt.conf
@@ -63,7 +63,7 @@ indexes=pcmdi.llnl.gov
 default_index=pcmdi.llnl.gov
 ```
 
-Edit credentials file to set openid and password (ESGF credential)
+* Edit credentials file to set openid and password (ESGF credential)
 
 ```
 vi $ST_HOME/conf/credentials.conf

@@ -63,7 +63,7 @@ sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
 
 ## Configuration
 
-1. Edit configuration file to set the new index
+* Edit configuration file to set the new index
 
 ```
 sudo vi /etc/synda/sdt/sdt.conf
@@ -83,7 +83,7 @@ indexes=pcmdi.llnl.gov
 default_index=pcmdi.llnl.gov
 ```
 
-2. Edit credentials file to set ESGF openid and password
+* Edit credentials file to set ESGF openid and password
 
 ```
 sudo vi /etc/synda/sdt/credentials.conf
@@ -93,7 +93,7 @@ Note: to download file from ESGF, you need to create an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC, DKRZ..) and subscribe to
 CMIP5-RESEARCH role.
 
-3. Restart service with
+* Restart service with
 
 ```
 sudo service synda restart
