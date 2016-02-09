@@ -41,7 +41,7 @@ sudo apt-get install synda --force-yes -y
 
 ## Configuration
 
-* Edit configuration file to set the new index
+* Fix the ESGF index hostname
 
 ```
 sudo vi /etc/synda/sdt/sdt.conf

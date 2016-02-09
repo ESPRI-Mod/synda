@@ -43,7 +43,7 @@ export ST_HOME=$HOME/sdt
 export PATH=$ST_HOME/bin:$PATH
 ```
 
-* Edit configuration file to set the new index
+* Fix the ESGF index hostname
 
 ```
 sudo vi $ST_HOME/conf/sdt.conf

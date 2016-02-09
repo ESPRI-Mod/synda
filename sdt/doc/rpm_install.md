@@ -63,7 +63,7 @@ sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
 
 ## Configuration
 
-* Edit configuration file to set the new index
+* Fix the ESGF index hostname
 
 ```
 sudo vi /etc/synda/sdt/sdt.conf
