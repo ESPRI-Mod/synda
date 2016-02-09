@@ -63,6 +63,26 @@ sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
 
 ## Configuration
 
+Edit configuration file as described below to set the new index
+
+```
+sudo vi /etc/synda/sdt/sdt.conf
+```
+
+Replace
+
+<--
+indexes=pcmdi9.llnl.gov
+default_index=pcmdi9.llnl.gov
+-->
+
+with
+
+<--
+indexes=pcmdi.llnl.gov
+default_index=pcmdi.llnl.gov
+-->
+
 Edit credentials file to set ESGF openid and password
 
 ```
