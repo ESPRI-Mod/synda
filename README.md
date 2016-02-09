@@ -71,7 +71,7 @@ This program is a command-line alternative to the ESGF web front-end.
 
 Note: installations using system packages (DEB or RPM) are multi-user, and can
 only be performed by root user. Source installation is single-user and can be
-performed by normal user.
+performed by root or normal user.
 
 ## Contact
 
