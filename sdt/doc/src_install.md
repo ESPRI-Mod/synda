@@ -43,7 +43,27 @@ export ST_HOME=$HOME/sdt
 export PATH=$ST_HOME/bin:$PATH
 ```
 
-Then edit credentials file to set openid and password (ESGF credential).
+Edit configuration file to set the new index
+
+```
+sudo vi $ST_HOME/conf/sdt.conf
+```
+
+Replace
+
+```
+indexes=pcmdi9.llnl.gov
+default_index=pcmdi9.llnl.gov
+```
+
+with
+
+```
+indexes=pcmdi.llnl.gov
+default_index=pcmdi.llnl.gov
+```
+
+Edit credentials file to set openid and password (ESGF credential)
 
 ```
 vi $ST_HOME/conf/credentials.conf

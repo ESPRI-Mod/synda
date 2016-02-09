@@ -41,6 +41,26 @@ sudo apt-get install synda --force-yes -y
 
 ## Configuration
 
+Edit configuration file to set the new index
+
+```
+sudo vi /etc/synda/sdt/sdt.conf
+```
+
+Replace
+
+```
+indexes=pcmdi9.llnl.gov
+default_index=pcmdi9.llnl.gov
+```
+
+with
+
+```
+indexes=pcmdi.llnl.gov
+default_index=pcmdi.llnl.gov
+```
+
 Edit credentials file to set ESGF openid and password
 
 ```
