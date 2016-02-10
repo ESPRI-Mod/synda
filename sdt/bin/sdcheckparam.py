@@ -87,7 +87,7 @@ def check_parameter_values(name,values):
     for value in values:
         if not sdparam.exists_parameter_value(name,value):
 
-            msg="Unknown value '%s' for '%s' parameter. %s"%(name,value,sdi18n.m0021)
+            msg="Unknown value '%s' for '%s' parameter. %s"%(value,name,sdi18n.m0021)
 
             if sdconfig.unknown_value_behaviour=='warning':
                 print_stderr('WARNING: '+msg)
