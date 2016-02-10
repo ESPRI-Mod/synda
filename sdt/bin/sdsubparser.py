@@ -38,7 +38,7 @@ def add_common_option(parser,**kw):
     no_default=kw.get('no_default',True)
 
     if selection:
-        parser.add_argument('-s','--selection',default=None)
+        parser.add_argument('-s','--selection_file',default=None)
 
     if no_default:
         parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')

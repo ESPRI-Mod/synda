@@ -35,7 +35,7 @@ def get_stream(args):
     if args.subcommand=='list':
         args.no_default=True
 
-    buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection)
+    buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection_file)
     selection=sdparse.build(buffer,load_default=(not args.no_default))
     stream=selection.to_stream()
 
