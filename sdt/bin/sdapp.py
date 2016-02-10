@@ -54,9 +54,9 @@ sdapputils.set_exception_handler()
 # maybe remove the two mkdir below as it is a bit overkill
 # (those 2 paths are already created by installation script ("install.sh"))
 if not os.path.exists(sdconfig.log_folder):
-    os.mkdirs(sdconfig.log_folder)
+    os.makedirs(sdconfig.log_folder)
 if not os.path.exists(sdconfig.tmp_folder):
-    os.mkdirs(sdconfig.tmp_folder)
+    os.makedirs(sdconfig.tmp_folder)
 
 if who_am_i()=='ihm':
 
