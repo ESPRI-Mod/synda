@@ -38,7 +38,7 @@ def add_common_option(parser,**kw):
     no_default=kw.get('no_default',True)
 
     if selection:
-        parser.add_argument('-s','--selection_file',default=None)
+        parser.add_argument('-s','--selection_file',default=None) # to only show FILE instead of SELECTION_FILE in the help msg, add metavar='FILE'
 
     if no_default:
         parser.add_argument('-n','--no_default',action='store_true',help='prevent loading default value')
