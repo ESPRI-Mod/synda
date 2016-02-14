@@ -115,6 +115,7 @@ check_dependency ()
 
 check_dependencies ()
 {
+    check_dependency mktemp
     check_dependency bc
     check_dependency md5sum
     check_dependency awk
@@ -717,7 +718,7 @@ g__after_md5_conffile=
 g__before_md5_conffile=
 #
 post_install_msg= # used to display some info to the user after installation
-tmpdir=$HOME/garbage
+tmpdir=$( mktemp -d -p /tmp tmp.sdt.XXXXXXXXXX ) # use mktemp instead of hardcoded path in case different user install synda from source on a multi-user machine
 curr_dir=$PWD # used for special deployment (developper only)
 #
 url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
