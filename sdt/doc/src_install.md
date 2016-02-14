@@ -18,7 +18,7 @@ RHEL and derivative (Centos, Scientific Linux, Fedora..)
 yum install bc gcc python python-pip python-devel openssl-devel sqlite sqlite-devel libxslt-devel libxml2-devel zlib-devel libffi-devel
 ```
 
-Debian and derivative (Ubuntu, Mint, LXLE..)
+Debian and derivative (Ubuntu, Mint..)
 
 ```
 apt-get install bc gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libxslt-dev libxml2-dev libz-dev libffi-dev

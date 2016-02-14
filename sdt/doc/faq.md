@@ -1,5 +1,13 @@
 # Synda FAQ
 
+### ImportError: No module named sysconfig
+
+This error occurs when installing Synda from source with an old version of
+'install.sh' script (<20160215). Downloading the last version of install.sh
+script should fix the problem.
+
+--------------------------------------------------------
+
 ### 'pkg_resources.DistributionNotFound: setuptools>=1.0' error
 
 Run command below
