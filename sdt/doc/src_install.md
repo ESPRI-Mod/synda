@@ -46,7 +46,7 @@ export PATH=$ST_HOME/bin:$PATH
 * Fix the ESGF index hostname
 
 ```
-sudo vi $ST_HOME/conf/sdt.conf
+vi $ST_HOME/conf/sdt.conf
 ```
 
 Replace
