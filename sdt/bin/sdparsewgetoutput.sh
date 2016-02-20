@@ -51,7 +51,7 @@ http_response_code_list=`echo "$http_response_code_list" | grep -v '^HTTP reques
 nbr=`echo "$http_response_code_list" | wc -l`
 
 if [ $nbr -eq 3 ]; then
-    # it means we were redirected to the ORP, then we get redirected on the datanode, then if failed
+    # it means we were redirected to the ORP, then we get redirected on the datanode, then it failed
 
     # split
     #

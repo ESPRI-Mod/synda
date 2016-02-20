@@ -208,6 +208,7 @@ fi
 # with checksum
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
+WGETOPT="$WGETOPT --max-redirect=2 " # note: we need 2 redirects (to go the the IDP to verify user identity and come back)
 
 # set verbose mode
 if [ $debug_level -eq 3 ]; then
@@ -301,7 +302,7 @@ umask u=rw,g=rw,o=r
 wget_error_status_from_parsing=0
 wget_status=0
 if [ $debug_level -gt 0 ]; then
-	# - in this mode, wget info are display in realtime
+	# - in this mode, wget info are displayed in realtime
     # - we don't parse wget output here because we want as much info as possible and also because this is not compatible with realtime
 
     # display debug info on stderr
@@ -311,7 +312,7 @@ if [ $debug_level -gt 0 ]; then
 	wget_status=$?
     wget_pid=$!
 else
-	# in this mode, wget info are display in differed time
+	# in this mode, wget info are displayed in differed time
 
 	wget_errmsg=$(wget_stderr2stdout)
 	wget_status=$?
