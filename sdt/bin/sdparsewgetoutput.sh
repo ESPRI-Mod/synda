@@ -28,14 +28,6 @@
 #
 http_response_code_list=`echo "$wget_errmsg" | grep "^HTTP"`
 
-# if some wget version, we have many messages all in one line, like this:
-#
-#  HTTP request sent, awaiting response... 403 Forbidden
-#
-# in that case, we remove the un-interesting prefix
-#
-http_response_code_list=`echo "$http_response_code_list" | sed -e 's/HTTP request sent, awaiting response... //g'`
-
 # if some wget version, we have wget messages on separate line, like:
 #
 #  HTTP request sent, awaiting response... 
@@ -44,6 +36,14 @@ http_response_code_list=`echo "$http_response_code_list" | sed -e 's/HTTP reques
 # in that case, we remove the un-interesting line
 #
 http_response_code_list=`echo "$http_response_code_list" | grep -v '^HTTP request sent, awaiting response... $'`
+
+# if some wget version, we have many messages all in one line, like this:
+#
+#  HTTP request sent, awaiting response... 403 Forbidden
+#
+# in that case, we remove the un-interesting prefix
+#
+http_response_code_list=`echo "$http_response_code_list" | sed -e 's/HTTP request sent, awaiting response... //g'`
 
 # count how many HTTP response we have
 #
