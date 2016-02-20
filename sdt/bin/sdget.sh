@@ -61,7 +61,7 @@ curdate ()
 
 msg ()
 {
-    # display msg on stderr
+    # display message on stderr
 
     l__code="$1"
     l__msg="$2"
@@ -74,7 +74,7 @@ msg ()
 
 log ()
 {
-    # display msg in logfile
+    # display message in logfile
 
     l__code="$1"
     l__msg="$2"
@@ -86,7 +86,7 @@ log ()
 
 log_raw ()
 {
-    # display raw msg in logfile
+    # display raw message in logfile
 
     local buf="$1"
 
@@ -274,7 +274,7 @@ g__lifetime=168
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
     :
 else
-    msg "ERR004" "incorrect format (local_file=$local_file)"
+    msg "ERR004" "incorrect format ($local_file)"
     exit 3
 fi
 
@@ -295,9 +295,7 @@ mkdir -p ${local_folder}
 if touch "$local_file"; then
     rm "$local_file"
 else
-
     msg "ERR111" "local file creation error ($local_file)"
-
     exit 30
 fi
 
@@ -377,7 +375,6 @@ if [ $wget_status -ne 0 ]; then
     cleanup # remove local file (this is to not have thousand of empty files)
 
     msg "ERR001" "transfer failed with error $status - $* - $wget_status"
-
     exit $status
 else
     # success
@@ -386,7 +383,6 @@ else
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-    msg "INF003" "transfer done - $* - $cs"
-
+    msg "INF003" "transfer done - $*"
     exit 0
 fi
