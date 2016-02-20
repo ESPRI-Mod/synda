@@ -42,16 +42,16 @@
 
 usage ()
 {
-	echo ""
-	echo "Usage"
-	echo "  $0 [ -d [1|2|3] ] <src> <dest>"
-	echo ""
-	echo "Options:"
-	echo "  -c      checksum type used to compute file checksum (default md5)"
-	echo "  -d      debug level"
-	echo ""
-	echo "Example"
-	echo "  $0 http://esg01.nersc.gov/thredds/fileServer/esg_dataroot/c20c/UCT-CSAG/HadAM3P-N96/NonGHG-Hist/HadCM3-p50-est1/v1-0/mon/atmos/pr/run060/pr_Amon_HadAM3P-N96_NonGHG-Hist_HadCM3-p50-est1_v1-0_run060_200807-201110.nc /tmp/foobar.nc"
+    echo ""
+    echo "Usage"
+    echo "  $0 [ -d [1|2|3] ] <src> <dest>"
+    echo ""
+    echo "Options:"
+    echo "  -c      checksum type used to compute file checksum (default md5)"
+    echo "  -d      debug level"
+    echo ""
+    echo "Example"
+    echo "  $0 http://esg01.nersc.gov/thredds/fileServer/esg_dataroot/c20c/UCT-CSAG/HadAM3P-N96/NonGHG-Hist/HadCM3-p50-est1/v1-0/mon/atmos/pr/run060/pr_Amon_HadAM3P-N96_NonGHG-Hist_HadCM3-p50-est1_v1-0_run060_200807-201110.nc /tmp/foobar.nc"
 }
 
 curdate ()
@@ -76,8 +76,8 @@ log ()
 {
     # display msg in logfile
 
-	l__code="$1"
-	l__msg="$2"
+    l__code="$1"
+    l__msg="$2"
 
     buf="$(curdate) - $l__code - $l__msg"
 
@@ -88,7 +88,7 @@ log_raw ()
 {
     # display raw msg in logfile
 
-	local buf="$1"
+    local buf="$1"
 
     echo "$buf" >> $debug_file
 }
@@ -96,7 +96,7 @@ log_raw ()
 cleanup ()
 {
     kill -TERM "$wget_pid" 1>/dev/null 2>/dev/null # kill child if still running
-	rm -f "$local_file"
+    rm -f "$local_file"
 }
 
 abort ()
@@ -124,13 +124,13 @@ checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
-  c)	checksum_type=$OPTARG
-		;;
-  d)	debug_level=$OPTARG
-		;;
-  h)	usage
-		exit 0
-		;;
+  c)    checksum_type=$OPTARG
+        ;;
+  d)    debug_level=$OPTARG
+        ;;
+  h)    usage
+        exit 0
+        ;;
   esac
 done
 shift $(($OPTIND - 1)) # remove options
@@ -208,18 +208,18 @@ md5_cmd ()
 # manage checksum type
 checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
-	checksum_cmd=$(sha256_cmd)
+    checksum_cmd=$(sha256_cmd)
 elif [ "$checksum_type" = "SHA256" ]; then
-	checksum_cmd=$(sha256_cmd)
+    checksum_cmd=$(sha256_cmd)
 elif [ "$checksum_type" = "md5" ]; then
-	checksum_cmd=$(md5_cmd)
+    checksum_cmd=$(md5_cmd)
 elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-	checksum_cmd=$(md5_cmd)
+    checksum_cmd=$(md5_cmd)
 else
     # we may come file for ESGF files that do not have checksum
     
     # fall back to sha256 in this case (arbitrary)
-	checksum_cmd=$(sha256_cmd)
+    checksum_cmd=$(sha256_cmd)
 fi
 
 # wget configuration
@@ -247,18 +247,18 @@ if [ $debug_level -eq 3 ]; then
 elif [ $debug_level -eq 2 ]; then
     WGETOPT=" $WGETOPT -v -d "
 elif [ $debug_level -eq 1 ]; then
-	WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
+    WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
 elif [ $debug_level -eq 0 ]; then
     # level used in normal operation (no debug info displayed)
 
-	# we need this even in non-debug mode, else it hide HTTP errors
-	WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
+    # we need this even in non-debug mode, else it hide HTTP errors
+    WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
 
-	#WGETOPT=" $WGETOPT --quiet "
-	#WGETOPT=" $WGETOPT --no-verbose "
+    #WGETOPT=" $WGETOPT --quiet "
+    #WGETOPT=" $WGETOPT --no-verbose "
 
-	# so we must deal with the transfer progress.
-	# it is not a big deal as it is automatically removed from wget stdxxx during parsing
+    # so we must deal with the transfer progress.
+    # it is not a big deal as it is automatically removed from wget stdxxx during parsing
 
     :
 fi
@@ -339,54 +339,54 @@ if [ $debug_level -gt 0 ]; then
     echo $WGET_CMD 1>&2
     wget_stderr2stdout 1>&2
 
-	wget_status=$?
+    wget_status=$?
     wget_pid=$!
 else
-	# in this mode, wget info are displayed in differed time
+    # in this mode, wget info are displayed in differed time
 
-	wget_errmsg=$(wget_stderr2stdout)
-	wget_status=$?
+    wget_errmsg=$(wget_stderr2stdout)
+    wget_status=$?
     # | grep -v 'K .....') # hide progress
 
-	# we parse wget output to keep only HTTP response code from wget msg
-	if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
-		source "$wgetoutputparser"
-	fi
+    # we parse wget output to keep only HTTP response code from wget msg
+    if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
+        source "$wgetoutputparser"
+    fi
 fi
 
 ############################################
 # post-processing
 #
 if [ $wget_status -ne 0 ]; then
-	if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
-		status=29
-	else
-		# wget wrap many different errors with -1 code
-		# so we better use the code resulting from the parsing
-		#
-		#
-		# if we found some error during the parsing, we use it, else we use 1
-		#
-		if [ $wget_error_status_from_parsing -ne 0 ]; then
-			status=$wget_error_status_from_parsing
-		else
-			status=1
-		fi
-	fi
+    if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
+        status=29
+    else
+        # wget wrap many different errors with -1 code
+        # so we better use the code resulting from the parsing
+        #
+        #
+        # if we found some error during the parsing, we use it, else we use 1
+        #
+        if [ $wget_error_status_from_parsing -ne 0 ]; then
+            status=$wget_error_status_from_parsing
+        else
+            status=1
+        fi
+    fi
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-	msg "ERR001" "transfer failed with error $status - $* - $wget_status"
+    msg "ERR001" "transfer failed with error $status - $* - $wget_status"
 
-	exit $status
+    exit $status
 else
-	# success
+    # success
 
-	# checksum
+    # checksum
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-	msg "INF003" "transfer done - $* - $cs"
+    msg "INF003" "transfer done - $* - $cs"
 
-	exit 0
+    exit 0
 fi
