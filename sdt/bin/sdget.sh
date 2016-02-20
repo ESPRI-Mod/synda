@@ -63,13 +63,13 @@ msg ()
 {
     # display msg on stderr
 
-	l__code="$1"
-	l__msg="$2"
+    l__code="$1"
+    l__msg="$2"
 
     buf="$(curdate) - $l__code - $l__msg"
 
     echo $buf 1>&2             # stderr
-	#echo $buf
+    #echo $buf
 }
 
 log ()
@@ -272,16 +272,16 @@ g__lifetime=168
 
 # prevent download if path not starting with '/'
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
-	:
+    :
 else
-	msg "ERR004" " incorrect format (local_file=$local_file)"
-	exit 3
+    msg "ERR004" " incorrect format (local_file=$local_file)"
+    exit 3
 fi
 
 # check if file is already present
 if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
-	msg "ERR011" "local file already exists ($local_file)"
-	exit 2
+    msg "ERR011" "local file already exists ($local_file)"
+    exit 2
 fi
 
 # retrieve destination folder
@@ -293,26 +293,26 @@ mkdir -p ${local_folder}
 # check if we have right to create local file
 
 if touch "$local_file"; then
-	rm "$local_file"
+    rm "$local_file"
 else
 
-	msg "ERR111" "local file creation error ($local_file)"
+    msg "ERR111" "local file creation error ($local_file)"
 
-	exit 30
+    exit 30
 fi
 
 #
 if [ $USE_CERTIFICATE = "yes" ]; then
-	WGET_CMD="wget $WGETOPT \
-		--certificate=$ESGF_CREDENTIAL --private-key=$ESGF_CREDENTIAL --ca-directory=$ESGF_CERT_DIR --ca-certificate=$ESGF_CREDENTIAL \
-		$NO_CHECK_SERVER_CERTIFICATE \
-		$TLS_ONLY \
-		$url"
+    WGET_CMD="wget $WGETOPT \
+        --certificate=$ESGF_CREDENTIAL --private-key=$ESGF_CREDENTIAL --ca-directory=$ESGF_CERT_DIR --ca-certificate=$ESGF_CREDENTIAL \
+        $NO_CHECK_SERVER_CERTIFICATE \
+        $TLS_ONLY \
+        $url"
 else
-	WGET_CMD="wget $WGETOPT \
-		$NO_CHECK_SERVER_CERTIFICATE \
-		$TLS_ONLY \
-		$url"
+    WGET_CMD="wget $WGETOPT \
+        $NO_CHECK_SERVER_CERTIFICATE \
+        $TLS_ONLY \
+        $url"
 fi
 
 wget_stderr2stdout()
@@ -320,7 +320,7 @@ wget_stderr2stdout()
     # this func gives the possibility to filter wget errmsg in downstream steps (e.g. to exclude download progress)
 
     # we send stderr on stdout and forget about stdout (stdout is empty anyway)
-	$WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
+    $WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
 }
 
 # set 'cmip5' group writable
@@ -332,12 +332,12 @@ umask u=rw,g=rw,o=r
 wget_error_status_from_parsing=0
 wget_status=0
 if [ $debug_level -gt 0 ]; then
-	# - in this mode, wget info are displayed in realtime
+    # - in this mode, wget info are displayed in realtime
     # - we don't parse wget output here because we want as much info as possible and also because this is not compatible with realtime
 
     # display debug info on stderr
-	echo $WGET_CMD 1>&2
-	wget_stderr2stdout 1>&2
+    echo $WGET_CMD 1>&2
+    wget_stderr2stdout 1>&2
 
 	wget_status=$?
     wget_pid=$!
