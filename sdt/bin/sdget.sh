@@ -84,6 +84,15 @@ log ()
     echo "$buf" >> $debug_file
 }
 
+log_raw ()
+{
+    # display raw msg in logfile
+
+	local buf="$1"
+
+    echo "$buf" >> $debug_file
+}
+
 cleanup ()
 {
     kill -TERM "$wget_pid" 1>/dev/null 2>/dev/null # kill child if still running
