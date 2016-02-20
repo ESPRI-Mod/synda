@@ -66,7 +66,7 @@ msg ()
     l__code="$1"
     l__msg="$2"
 
-    buf="$(curdate) - $l__code - $l__msg"
+    buf="$l__code - $l__msg"
 
     echo $buf 1>&2             # stderr
     #echo $buf
@@ -274,7 +274,7 @@ g__lifetime=168
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
     :
 else
-    msg "ERR004" " incorrect format (local_file=$local_file)"
+    msg "ERR004" "incorrect format (local_file=$local_file)"
     exit 3
 fi
 
