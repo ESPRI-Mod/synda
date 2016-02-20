@@ -16,6 +16,13 @@ import sys
 import signal
 import sdtools
 
+def is_synda_exception(value):
+    from sdexception import SDException # note: this import must be done here (i.e. it doesn't work if done top of the file)
+
+    #return (value.__class__.__name__=="SDException") # obsolete as works only for SDException (not for child of SDException)
+
+    return issubclass(value.__class__,SDException) # works for childs and also for SDException (a class is considered a subclass of itself)
+
 def print_exception(type_, value, tb):
     import os,sys,traceback,datetime # note: those imports must be done here (i.e. it doesn't work if done top of the file)
 
@@ -26,7 +33,7 @@ def print_exception(type_, value, tb):
     stderr('*** Error occured at %s ***'%datetime.datetime.now().isoformat(" "))
     stderr()
 
-    if value.__class__.__name__=="SDException":
+    if is_synda_exception(value):
         stderr()
         stderr('==================')
         stderr('*   Error code   *')
