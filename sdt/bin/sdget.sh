@@ -23,6 +23,7 @@
 #  5 => Incorrect checksum type
 #  6 => Error occurs while retrieving the X509 certificate 
 #  7 => This script has been killed (SIGINT or SIGTERM)
+# 12 => Permission error (e.g. CMIP5 role missing)
 # 20 => 403 Forbidden
 #       (permission denied after the redirect to ORP, means user do not have permission to access data)
 # 21 => Read error (Connection timed out) in headers

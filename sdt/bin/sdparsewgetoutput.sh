@@ -69,11 +69,31 @@ if [ $nbr -eq 3 ]; then
     if [ "x$data2_http_response_code" = "x403 Forbidden" ]; then
         wget_error_status_from_parsing=20
     elif [ "x$data2_http_response_code" = "x200 OK" ]; then
+
+        # sample
+        #
+        #  302 Found
+        #  302 Found
+        #  200 OK
+
         wget_error_status_from_parsing=0
     elif [ "x$data2_http_response_code" = "xRead error (Connection timed out) in headers." ]; then
         wget_error_status_from_parsing=21
     elif [ "x$data2_http_response_code" = "xRead error (Connection reset by peer) in headers." ]; then
         wget_error_status_from_parsing=28
+    elif [ "x$data2_http_response_code" = "x302 Found" ]; then
+
+        # sample
+        #
+        #  302 Found
+        #  302 Found
+        #  302 Found
+
+        # note: this case is likely to be caused by the openid not having the
+        # necessary permission to access the data (e.g. openid not having
+        # suscribed to CMIP5 role)
+
+        wget_error_status_from_parsing=12
     else
         wget_error_status_from_parsing=24
 
