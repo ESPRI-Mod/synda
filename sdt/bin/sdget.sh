@@ -60,7 +60,7 @@ curdate ()
 
 msg ()
 {
-    # display msg on stderr and logfile
+    # display msg on stderr
 
 	l__code="$1"
 	l__msg="$2"
@@ -69,6 +69,18 @@ msg ()
 
     echo $buf 1>&2             # stderr
 	#echo $buf
+}
+
+log ()
+{
+    # display msg in logfile
+
+	l__code="$1"
+	l__msg="$2"
+
+    buf="$(curdate) - $l__code - $l__msg"
+
+    echo "$buf" >> $debug_file
 }
 
 cleanup ()
