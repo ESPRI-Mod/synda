@@ -80,6 +80,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     #
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
+    stderr=stderr.rstrip('\r\n') # chomp (download scripts return error message on stderr (one line terminated by EOL))
 
     # debug (unexpected errors may be hidden in stdxxx)
     """

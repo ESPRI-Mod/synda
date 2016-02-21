@@ -105,7 +105,7 @@ def install(args,files=None):
 
         if interactive:
             if count_total>0:
-                print_stderr('Nothing to install (files already installed).')   
+                print_stderr("Nothing to install (matching files are already installed or waiting in the download queue). To monitor transfers status and progress, use 'synda queue' command.")
             else:
                 print_stderr('Nothing to install (0 file found).')
 
@@ -381,16 +381,13 @@ def test(args):
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
-        (sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(args.file_url,tmpfile)
+        (sdget_status,local_checksum,killed,script_stderr)=sdget.download(args.file_url,tmpfile)
 
-        print_stderr(script_stdxxx)
-
-        #print_stderr("'Exit code: %i"%sdget_status)
-
-        """
         if sdget_status==0:
-            print_stderr('file location: %s'%tmpfile)
-        """
+            print_stderr('Transfer completed successfully.')
+            print_stderr('File location: %s'%tmpfile)
+        else:
+            print_stderr(script_stderr)
 
 def watch(args):
     import sdreport, sddaemon

@@ -9,9 +9,11 @@
 
 # This script retrieve a file from ESGF using HTTP protocol
 #
-# Note
+# Notes
 #  - on success, the script displays checksum on stdout.
 #    (thus be carefull not to print anything except checksum on stdout)
+#  - short error message must be printed on stderr (one line max terminated by EOL).
+#    More detailed error message (e.g. multilines) can be printed in the log file.
 #
 # Return values
 #  0 => success
@@ -376,7 +378,7 @@ if [ $wget_status -ne 0 ]; then
     log "DEB010" "Transfer failed with error $status - $* - $wget_status"
 
     if [ $status -eq 12 ]; then
-        err "Permission error (you need to susbscribe to the required role/group to access the data (e.g. cmip5-research))"
+        err "Permission error (you need to susbscribe to the required role/group to access the data (e.g. cmip5-research))."
     else
         err "Transfer failed with error $status (see sdget.sh script for details about the error)"
     fi
