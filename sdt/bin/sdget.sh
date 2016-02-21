@@ -388,6 +388,6 @@ else
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-    #log "Transfer done - $*"
+    #log "DEB020" "Transfer done - $*"
     exit 0
 fi
