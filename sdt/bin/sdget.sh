@@ -23,7 +23,7 @@
 #  5 => Incorrect checksum type
 #  6 => Error occurs while retrieving the X509 certificate 
 #  7 => This script has been killed (SIGINT or SIGTERM)
-# 12 => Permission error (e.g. CMIP5 role missing)
+# 12 => Permission error (e.g. CMIP5-RESEARCH role missing)
 # 20 => 403 Forbidden
 #       (permission denied after the redirect to ORP, means user do not have permission to access data)
 # 21 => Read error (Connection timed out) in headers
@@ -59,7 +59,7 @@ curdate ()
     date '+%F %T'
 }
 
-msg ()
+err ()
 {
     # display message on stderr
 
@@ -175,7 +175,7 @@ if [ "$multiuser" = "0" ]; then
 
     # check root folder
     if [ -z "$ST_HOME" ]; then
-        msg "Root directory not found ($ST_HOME)"
+        err "Root directory not found ($ST_HOME)"
         exit 4
     fi
 
@@ -272,13 +272,13 @@ g__lifetime=168
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
     :
 else
-    msg "Incorrect format: local file path must start with a slash ($local_file)"
+    err "Incorrect format: local file path must start with a slash ($local_file)"
     exit 3
 fi
 
 # check if file is already present
 if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
-    msg "Local file already exists ($local_file)"
+    err "Local file already exists ($local_file)"
     exit 2
 fi
 
@@ -293,7 +293,7 @@ mkdir -p ${local_folder}
 if touch "$local_file"; then
     rm "$local_file"
 else
-    msg "Local file creation error ($local_file)"
+    err "Local file creation error ($local_file)"
     exit 30
 fi
 
@@ -372,7 +372,14 @@ if [ $wget_status -ne 0 ]; then
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-    msg "Transfer failed with error $status - $* - $wget_status"
+    log "DEB010" "Transfer failed with error $status - $* - $wget_status"
+
+    if [ $status -eq 12 ]; then
+        err "Permission error (you need to susbscribe to the required role/group to access the data (e.g. cmip5-research))"
+    else
+        err "Transfer failed with error $status (see sdget.sh script for details about the error)"
+    fi
+
     exit $status
 else
     # success
@@ -381,6 +388,6 @@ else
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-    msg "Transfer done - $*"
+    #log "Transfer done - $*"
     exit 0
 fi
