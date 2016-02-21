@@ -63,18 +63,15 @@ msg ()
 {
     # display message on stderr
 
-    l__code="$1"
-    l__msg="$2"
+    buf="$1"
 
-    buf="$l__code - $l__msg"
-
-    echo $buf 1>&2             # stderr
+    echo "$buf" 1>&2  # stderr
     #echo $buf
 }
 
 log ()
 {
-    # display message in logfile
+    # display message with timestamp in logfile
 
     l__code="$1"
     l__msg="$2"
@@ -84,13 +81,14 @@ log ()
     echo "$buf" >> $debug_file
 }
 
-log_raw ()
+log_wget_output ()
 {
-    # display raw message in logfile
+    local code="$1"
+    local buf="$2"
 
-    local buf="$1"
-
+    log "$code" "WGET OUTPUT BEGIN ($wget_error_status_from_parsing,$*)"
     echo "$buf" >> $debug_file
+    log "$code" "WGET OUTPUT END"
 }
 
 cleanup ()
@@ -177,7 +175,7 @@ if [ "$multiuser" = "0" ]; then
 
     # check root folder
     if [ -z "$ST_HOME" ]; then
-        msg "ERR008" "root directory not found ($ST_HOME)"
+        msg "Root directory not found ($ST_HOME)"
         exit 4
     fi
 
@@ -270,17 +268,17 @@ TLS_ONLY=" --secure-protocol=TLSv1 "
 #TLS_ONLY=" "
 g__lifetime=168
 
-# prevent download if path not starting with '/'
+# prevent download if local file path not starting with '/'
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
     :
 else
-    msg "ERR004" "incorrect format ($local_file)"
+    msg "Incorrect format: local file path must start with a slash ($local_file)"
     exit 3
 fi
 
 # check if file is already present
 if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
-    msg "ERR011" "local file already exists ($local_file)"
+    msg "Local file already exists ($local_file)"
     exit 2
 fi
 
@@ -295,7 +293,7 @@ mkdir -p ${local_folder}
 if touch "$local_file"; then
     rm "$local_file"
 else
-    msg "ERR111" "local file creation error ($local_file)"
+    msg "Local file creation error ($local_file)"
     exit 30
 fi
 
@@ -346,7 +344,7 @@ else
     wget_status=$?
     # | grep -v 'K .....') # hide progress
 
-    # we parse wget output to keep only HTTP response code from wget msg
+    # we parse wget output to keep only HTTP response code from wget messages
     if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
         source "$wgetoutputparser"
     fi
@@ -374,7 +372,7 @@ if [ $wget_status -ne 0 ]; then
 
     cleanup # remove local file (this is to not have thousand of empty files)
 
-    msg "ERR001" "transfer failed with error $status - $* - $wget_status"
+    msg "Transfer failed with error $status - $* - $wget_status"
     exit $status
 else
     # success
@@ -383,6 +381,6 @@ else
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-    msg "INF003" "transfer done - $*"
+    msg "Transfer done - $*"
     exit 0
 fi
