@@ -39,6 +39,16 @@ Then install Synda package using command below
 sudo apt-get install synda --force-yes -y
 ```
 
+### Patch
+
+Synda 3.2 DEB package contains a bug which prevent running application under certain circumstances.
+
+Run the command below to fix it
+
+```
+sudo wget http://dods.ipsl.jussieu.fr/jripsl/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+```
+
 ## Configuration
 
 * Fix the ESGF index hostname
