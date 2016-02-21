@@ -49,7 +49,7 @@ sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/synda-3.2-1.x86_64
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
 
-Note: RPM package are currently only available for 64 bits architecture
+Note: RPM packages are currently only available for 64 bits architecture
 
 ## Patches
 

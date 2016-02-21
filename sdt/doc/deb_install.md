@@ -25,7 +25,7 @@ where &lt;distro-name&gt; can be one of
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
 
-Note: DEB package are currently only available for 64 bits architecture
+Note: DEB packages are currently only available for 64 bits architecture
 
 Once repository is added, run command below to update package list.
 
