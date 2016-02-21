@@ -85,8 +85,9 @@ log_wget_output ()
 {
     local code="$1"
     local buf="$2"
+    local script_args="$3"
 
-    log "$code" "WGET OUTPUT BEGIN ($wget_error_status_from_parsing,$*)"
+    log "$code" "WGET OUTPUT BEGIN ($wget_error_status_from_parsing,$script_args)"
     echo "$buf" >> $debug_file
     log "$code" "WGET OUTPUT END"
 }

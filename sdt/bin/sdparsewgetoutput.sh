@@ -97,7 +97,7 @@ if [ $nbr -eq 3 ]; then
     else
         wget_error_status_from_parsing=24
 
-        log_wget_output "DEB100" "$wget_errmsg"
+        log_wget_output "DEB100" "$wget_errmsg" "$*"
     fi
 
 elif [ $nbr -eq 2 ]; then
@@ -105,7 +105,7 @@ elif [ $nbr -eq 2 ]; then
 
     wget_error_status_from_parsing=26
 
-    log_wget_output "DEB200" "$wget_errmsg"
+    log_wget_output "DEB200" "$wget_errmsg" "$*"
 
 elif [ $nbr -eq 1 ]; then
     # it means it failed on the first HTTP request and no redirect occured
@@ -125,7 +125,7 @@ elif [ $nbr -eq 1 ]; then
     else
         wget_error_status_from_parsing=23
 
-        log_wget_output "DEB300" "$wget_errmsg"
+        log_wget_output "DEB300" "$wget_errmsg" "$*"
     fi
 
 else
@@ -133,5 +133,5 @@ else
 
     wget_error_status_from_parsing=27
 
-    log_wget_output "DEB400" "$wget_errmsg"
+    log_wget_output "DEB400" "$wget_errmsg" "$*"
 fi
