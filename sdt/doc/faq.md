@@ -1,5 +1,14 @@
 # Synda FAQ
 
+### sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)
+
+Run commands below
+
+    mkdir -p /srv/synda/sdt
+    sudo wget http://dods.ipsl.jussieu.fr/jripsl/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+
+--------------------------------------------------------
+
 ### ImportError: No module named sysconfig
 
 This error occurs when installing Synda from source with an old version of
