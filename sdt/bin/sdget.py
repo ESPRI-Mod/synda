@@ -34,7 +34,7 @@ from sdtools import print_stderr
 
 def download(url,full_local_path,checksum_type='md5',debug_level=0):
     killed=False
-    script_stdxxx=None
+    script_stderr=None
 
     transfer_protocol=sdutils.get_transfer_protocol(url)
 
@@ -44,11 +44,11 @@ def download(url,full_local_path,checksum_type='md5',debug_level=0):
         if sdconfig.http_client==sdconst.HTTP_CLIENT_URLLIB:
             (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
         else:
-            (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
+            (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        (status,local_checksum,killed,script_stdxxx)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
+        (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS_ONLINE:
 
@@ -59,7 +59,7 @@ def download(url,full_local_path,checksum_type='md5',debug_level=0):
         assert False
 
 
-    return (status,local_checksum,killed,script_stdxxx)
+    return (status,local_checksum,killed,script_stderr)
 
 def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug_level):
 
@@ -72,7 +72,13 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
 
     li=[script,'-c',checksum_type,'-d',str(debug_level),url,full_local_path]
 
-    (status,stdout,stderr)=sdutils.get_status_output(li,shell=False) # start a new process (fork is blocking here, so thread will wait until child is done)
+
+    # start a new process (fork is blocking here, so thread will wait until child is done)
+    #
+    # note
+    #  in the child shell script, stdout is used for the checksum and stderr for error message
+    #
+    (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
 
     # debug (unexpected errors may be hidden in stdxxx)
@@ -96,11 +102,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
 
     killed=is_killed(transfer_protocol,status)
 
-
-    script_stdxxx=stderr # memo: in the child shell script, stdout is redirected to stderr so to leave stdout for the checksum (so stderr contains both stdout and stderr)
-
-
-    return (status,local_checksum,killed,script_stdxxx)
+    return (status,local_checksum,killed,stderr)
 
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""
@@ -139,7 +141,7 @@ if __name__ == '__main__':
         if os.path.isfile(local_path):
             os.remove(local_path)
 
-        (status,local_checksum,killed,script_stdxxx)=download(url,local_path,checksum_type='md5',debug_level=0)
+        (status,local_checksum,killed,script_stderr)=download(url,local_path,checksum_type='md5',debug_level=0)
 
         if status!=0:
             if not args.quiet:

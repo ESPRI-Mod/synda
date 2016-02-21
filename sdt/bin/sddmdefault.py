@@ -51,7 +51,7 @@ class Download():
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
 
-        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
+        (tr.sdget_status,local_checksum,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
 
         if tr.sdget_status==0:
 
@@ -144,7 +144,7 @@ def end_of_transfer(tr):
 
     # check for fatal error
     if tr.sdget_status==4:
-        sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returns fatal error.")
+        sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returned fatal error.")
         raise FatalException()
 
 def start_transfer_thread(tr):
