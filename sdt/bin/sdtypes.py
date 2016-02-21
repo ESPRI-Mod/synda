@@ -142,7 +142,7 @@ class File():
 
     def __str__(self):
         if self.status==sdconst.TRANSFER_STATUS_ERROR:
-            buf="sdget_status=%s,error_msg='%s',file_id=%d,status=%s,local_path=%s,url=%s" % (self.sdget_status,self.error_msg,self.file_id,self.status,self.get_full_local_path(),self.url)
+            buf="sdget_status=%s,sdget_error_msg=%s,error_msg='%s',file_id=%d,status=%s,local_path=%s,url=%s" % (self.sdget_status,self.sdget_error_msg,self.error_msg,self.file_id,self.status,self.get_full_local_path(),self.url)
         else:
             buf="file_id=%d,status=%s,local_path=%s,url=%s" % (self.file_id,self.status,self.get_full_local_path(),self.url)
 
