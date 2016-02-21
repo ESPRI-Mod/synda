@@ -50,7 +50,7 @@ class Download():
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
 
-        (tr.sdget_status,local_checksum,killed,script_stdxxx)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
+        (tr.sdget_status,local_checksum,killed,script_stderr)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
 
         if tr.sdget_status==0:
 
