@@ -75,12 +75,21 @@ log ()
 {
     # display message with timestamp in logfile
 
-    l__code="$1"
-    l__msg="$2"
+    local code="$1"
+    local msg="$2"
 
-    buf="$(curdate) - $l__code - $l__msg"
+    local buf="$(curdate) - $code - $msg"
 
     echo "$buf" >> $debug_file
+}
+
+log_wget_output_debug ()
+{
+    # same as log_wget_output, but only log if debug mode is enabled
+
+    if [ $debug_level -gt 0 ]; then
+        log_wget_output @*
+    fi
 }
 
 log_wget_output ()
