@@ -101,7 +101,6 @@ if [ $nbr -eq 3 ]; then
         log_wget_output_debug "DEB656" "$wget_errmsg" "$*"
     else
         wget_error_status_from_parsing=24
-
         log_wget_output "DEB100" "$wget_errmsg" "$*"
     fi
 
@@ -109,7 +108,6 @@ elif [ $nbr -eq 2 ]; then
     # it means we were redirected to the ORP, then it failed on the ORP (and we never get redirected on the datanode)
 
     wget_error_status_from_parsing=26
-
     log_wget_output "DEB200" "$wget_errmsg" "$*"
 
 elif [ $nbr -eq 1 ]; then
@@ -132,7 +130,6 @@ elif [ $nbr -eq 1 ]; then
         log_wget_output_debug "DEB659" "$wget_errmsg" "$*"
     else
         wget_error_status_from_parsing=23
-
         log_wget_output "DEB300" "$wget_errmsg" "$*"
     fi
 
@@ -140,6 +137,5 @@ else
     # we shouldn't be here
 
     wget_error_status_from_parsing=27
-
     log_wget_output "DEB400" "$wget_errmsg" "$*"
 fi
