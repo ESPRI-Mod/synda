@@ -49,8 +49,10 @@ usage ()
     echo "  $0 [ -d [1|2|3] ] <src> <dest>"
     echo ""
     echo "Options:"
+    echo "  -a      always log wget output"
     echo "  -c      checksum type used to compute file checksum (default md5)"
     echo "  -d      debug level"
+    echo "  -v      verbosity (this option can be repeated multiple times)"
     echo ""
     echo "Example"
     echo "  $0 http://esg01.nersc.gov/thredds/fileServer/esg_dataroot/c20c/UCT-CSAG/HadAM3P-N96/NonGHG-Hist/HadCM3-p50-est1/v1-0/mon/atmos/pr/run060/pr_Amon_HadAM3P-N96_NonGHG-Hist_HadCM3-p50-est1_v1-0_run060_200807-201110.nc /tmp/foobar.nc"
@@ -83,11 +85,11 @@ log ()
     echo "$buf" >> $debug_file
 }
 
-log_wget_output_debug ()
+log_wget_output_debug_mode ()
 {
-    # same as log_wget_output, but only log if debug mode is enabled
+    # same as log_wget_output, but only log if asked by user
 
-    if [ $debug_level -gt 0 ]; then
+    if [ $always_log_wget_output -eq 1 ]; then
         log_wget_output @*
     fi
 }
@@ -127,13 +129,21 @@ set -o pipefail
 
 trap "abort" SIGINT SIGTERM
 
+# pre-option init.
+
+max_verbosity=3
+
 # options
 
+verbosity=0
 debug_level=0
+always_log_wget_output=0
 checksum_type=md5
-while getopts 'c:d:h' OPTION
+while getopts 'ac:d:hv' OPTION
 do
   case $OPTION in
+  a)    always_log_wget_output=1
+        ;;
   c)    checksum_type=$OPTARG
         ;;
   d)    debug_level=$OPTARG
@@ -141,9 +151,15 @@ do
   h)    usage
         exit 0
         ;;
+  v)    (( verbosity=verbosity+1 ))
+        ;;
   esac
 done
 shift $(($OPTIND - 1)) # remove options
+
+if [ $verbosity -gt 3 ]; then
+    verbosity=$max_verbosity
+fi
 
 # args
 

@@ -68,7 +68,7 @@ if [ $nbr -eq 3 ]; then
     # wget / get_data.sh error mapping
     if [ "x$data2_http_response_code" = "x403 Forbidden" ]; then
         wget_error_status_from_parsing=20
-        log_wget_output_debug "DEB652" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB652" "$wget_errmsg" "$*"
     elif [ "x$data2_http_response_code" = "x200 OK" ]; then
 
         # sample
@@ -78,13 +78,13 @@ if [ $nbr -eq 3 ]; then
         #  200 OK
 
         wget_error_status_from_parsing=0
-        log_wget_output_debug "DEB653" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB653" "$wget_errmsg" "$*"
     elif [ "x$data2_http_response_code" = "xRead error (Connection timed out) in headers." ]; then
         wget_error_status_from_parsing=21
-        log_wget_output_debug "DEB654" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB654" "$wget_errmsg" "$*"
     elif [ "x$data2_http_response_code" = "xRead error (Connection reset by peer) in headers." ]; then
         wget_error_status_from_parsing=28
-        log_wget_output_debug "DEB655" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB655" "$wget_errmsg" "$*"
     elif [ "x$data2_http_response_code" = "x302 Found" ]; then
 
         # sample
@@ -98,7 +98,7 @@ if [ $nbr -eq 3 ]; then
         # suscribed to CMIP5 role)
 
         wget_error_status_from_parsing=12
-        log_wget_output_debug "DEB656" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB656" "$wget_errmsg" "$*"
     else
         wget_error_status_from_parsing=24
         log_wget_output "DEB100" "$wget_errmsg" "$*"
@@ -117,17 +117,17 @@ elif [ $nbr -eq 1 ]; then
 
     if [ "x$data1_http_response_code" = "x403 Forbidden" ]; then
         wget_error_status_from_parsing=22
-        log_wget_output_debug "DEB657" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB657" "$wget_errmsg" "$*"
     elif [ "x$data1_http_response_code" = "xRead error (Connection timed out) in headers." ]; then
         wget_error_status_from_parsing=25
-        log_wget_output_debug "DEB658" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB658" "$wget_errmsg" "$*"
     elif [ "x$data1_http_response_code" = "x200 OK" ]; then
         # this case happens !!
         # seems that sometime, there is no redirect to ORP at all !!
         # the file can be accessed directly, without security check..
 
         wget_error_status_from_parsing=0
-        log_wget_output_debug "DEB659" "$wget_errmsg" "$*"
+        log_wget_output_debug_mode "DEB659" "$wget_errmsg" "$*"
     else
         wget_error_status_from_parsing=23
         log_wget_output "DEB300" "$wget_errmsg" "$*"
