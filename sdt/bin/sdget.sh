@@ -51,7 +51,6 @@ usage ()
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -c      checksum type used to compute file checksum (default md5)"
-    echo "  -d      debug level"
     echo "  -v      verbosity (this option can be repeated multiple times)"
     echo ""
     echo "Example"
@@ -136,7 +135,6 @@ max_verbosity=3
 # options
 
 verbosity=0
-debug_level=0
 always_log_wget_output=0
 checksum_type=md5
 while getopts 'ac:d:hv' OPTION
@@ -145,8 +143,6 @@ do
   a)    always_log_wget_output=1
         ;;
   c)    checksum_type=$OPTARG
-        ;;
-  d)    debug_level=$OPTARG
         ;;
   h)    usage
         exit 0
@@ -267,14 +263,14 @@ WGETOPT="$WGETOPT --max-redirect=2 "
 
 
 # set verbose mode
-if [ $debug_level -eq 3 ]; then
+if [ $verbosity -eq 3 ]; then
     set -x # bash debug mode (warning, this makes wget output to be duplicated 3 times)
     WGETOPT=" $WGETOPT -v -d "
-elif [ $debug_level -eq 2 ]; then
+elif [ $verbosity -eq 2 ]; then
     WGETOPT=" $WGETOPT -v -d "
-elif [ $debug_level -eq 1 ]; then
+elif [ $verbosity -eq 1 ]; then
     WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
-elif [ $debug_level -eq 0 ]; then
+elif [ $verbosity -eq 0 ]; then
     # level used in normal operation (no debug info displayed)
 
     # we need this even in non-debug mode, else it hide HTTP errors
@@ -355,11 +351,11 @@ umask u=rw,g=rw,o=r
 #
 wget_error_status_from_parsing=0
 wget_status=0
-if [ $debug_level -gt 0 ]; then
-    # - in this mode, wget info are displayed in realtime
-    # - we don't parse wget output here because we want as much info as possible and also because this is not compatible with realtime
+if [ $verbosity -gt 0 ]; then
+    # - in verbose mode, wget info are displayed in realtime
+    # - we DON'T parse wget output here because we want as much info as possible and also because this is not compatible with realtime
 
-    # display debug info on stderr
+    # display info on stderr
     echo $WGET_CMD 1>&2
     wget_stderr2stdout 1>&2
 
