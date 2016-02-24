@@ -14,6 +14,13 @@
 #    (thus be carefull not to print anything except checksum on stdout)
 #  - short error message must be printed on stderr (one line max terminated by EOL).
 #    More detailed error message (e.g. multilines) can be printed in the log file.
+#  - This script works in two different modes
+#      - NORMAL MODE (default): wget output is analyzed by 'sdparsewgetoutput.sh' script 
+#      - DEBUGGING MODE: wget output is dumped on stderr in realtime
+#          - this mode is enabled when verbose option is set
+#          - in this mode, wget output IS NOT analyzed by 'sdparsewgetoutput.sh'
+#    Note that the code returned by sdget.sh script may vary depending on which
+#    mode is used.
 #
 # Return values
 #  0 => success
@@ -50,8 +57,8 @@ usage ()
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
-    echo "  -c      checksum type used to compute file checksum (default md5)"
-    echo "  -v      verbosity (this option can be repeated multiple times)"
+    echo "  -c      checksum type - set the checksum type used to compute file checksum (default md5)"
+    echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
     echo ""
     echo "Example"
     echo "  $0 http://esg01.nersc.gov/thredds/fileServer/esg_dataroot/c20c/UCT-CSAG/HadAM3P-N96/NonGHG-Hist/HadCM3-p50-est1/v1-0/mon/atmos/pr/run060/pr_Amon_HadAM3P-N96_NonGHG-Hist_HadCM3-p50-est1_v1-0_run060_200807-201110.nc /tmp/foobar.nc"
