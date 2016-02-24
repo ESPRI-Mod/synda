@@ -43,7 +43,7 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[])
 
     parser.add_argument('-a','--attribute',required=True)
-    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
 

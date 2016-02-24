@@ -31,7 +31,7 @@ def run(files,key_list_to_keep):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to keep")
-    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
     args = parser.parse_args()
 
     files=json.load( sys.stdin )

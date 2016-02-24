@@ -84,7 +84,7 @@ explode_on_instance_id=False # keep it to False (did some benchmark and 'False' 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
-    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
     args = parser.parse_args()
 
     facets_groups=json.load(sys.stdin)

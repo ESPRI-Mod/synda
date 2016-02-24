@@ -65,7 +65,7 @@ def remove_matching_files(files,filter_name,filter_value):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
-    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
     parser.add_argument('-m','--mode',required=True)
     parser.add_argument('-s','--status',choices=sdconst.TRANSFER_STATUSES_ALL,required=True)
     args = parser.parse_args()

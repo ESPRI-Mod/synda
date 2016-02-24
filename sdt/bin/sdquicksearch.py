@@ -114,7 +114,7 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
     parser.add_argument('-c','--count',action='store_true',help='Count how many found files')
-    parser.add_argument('-f','--format',choices=['raw','line','indent'],default='indent')
+    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='indent')
     parser.add_argument('-i','--index_host')
     parser.add_argument('-m','--post_pipeline_mode',default='file')
     parser.add_argument('-y','--dry_run',action='store_true')
