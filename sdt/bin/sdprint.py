@@ -29,10 +29,32 @@ def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
             fh.write("%s\n"%json.dumps(f))
     elif format == 'indent':
         fh.write("%s\n"%json.dumps(files,indent=4, separators=(',', ': ')))
+    elif format == 'value':
+        for f in files:
+            for k,v in f.iteritems():
+                if isinstance(v,dict):
+
+                    # WARNING: breaks genericity
+                    #
+                    # dict type is not supported in this mode (so yes, it's not
+                    # very regular as this mode cannot be used for some
+                    # attributes e.g. 'attached_parameters', but there are not
+                    # many option when you want to flatten a multilevel tree
+                    # into a list..)
+                    #
+                    pass
+
+                elif isinstance(v,list):
+                    for item in v:
+                        fh.write("%s\n"%item)
+                elif isinstance(v,str):
+                    fh.write("%s\n"%v)
+
+formats=['raw','line','indent','value']
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='indent')
+    parser.add_argument('-F','--format',choices=formats,default='indent')
     args = parser.parse_args()
 
     files=json.load( sys.stdin )
