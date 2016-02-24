@@ -381,7 +381,7 @@ def test(args):
         if os.path.isfile(tmpfile):
             os.remove(tmpfile)
 
-        (sdget_status,local_checksum,killed,script_stderr)=sdget.download(args.file_url,tmpfile)
+        (sdget_status,local_checksum,killed,script_stderr)=sdget.download(args.file_url,tmpfile,debug=True)
 
         if sdget_status==0:
             print_stderr('Transfer completed successfully.')

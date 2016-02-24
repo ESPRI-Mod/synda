@@ -44,7 +44,7 @@ if __name__ == '__main__':
         if os.path.isfile(local_path):
             os.remove(local_path)
 
-        (status,local_checksum,killed,script_stdxxx)=sdget.download(url,local_path,checksum_type='md5',debug_level=0)
+        (status,local_checksum,killed,script_stdxxx)=sdget.download(url,local_path,checksum_type='md5',debug=False)
 
         if status!=0:
             print_stderr('Download failed: %s'%dn)
