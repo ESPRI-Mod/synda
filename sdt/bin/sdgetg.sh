@@ -26,11 +26,12 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -d <1|2|3|4> ] [ -c <sha256|md5> ] <src> <dest>"
+    echo "  $0 [ -v ] [ -c <sha256|md5> ] <src> <dest>"
     echo ""
     echo "Options:"
-    echo "  -c      checksum type (default md5)"
-    echo "  -d      debug level"
+    echo "  -c      checksum type - set checksum type (default md5)"
+    echo "  -d      debug"
+    echo "  -v      verbose"
     echo ""
     echo "Example"
     echo "  $0 -d 2 gsiftp://bmbf-ipcc-ar5.dkrz.de:2811//cmip5/output1/MPI-M/MPI-ESM-LR/1pctCO2/mon/ocean/Omon/r1i1p1/v20120308/soga/soga_Omon_MPI-ESM-LR_1pctCO2_r1i1p1_199001-199912.nc /tmp/sdt_test_file.nc"
@@ -72,23 +73,34 @@ trap "abort" SIGINT SIGTERM
 
 umask u=rw,g=rw,o=r # set 'cmip5' group writable
 
+# pre-option init.
+
+max_verbosity=4
+
 # retrieve options
 
-debug_level=0
+debug=0
+verbosity=0
 checksum_type=md5
 while getopts 'c:d:h' OPTION
 do
   case $OPTION in
   c)    checksum_type=$OPTARG
         ;;
-  d)    debug_level=$OPTARG
+  d)    debug=1
         ;;
   h)    usage
         exit 0
         ;;
+  v)    (( verbosity=verbosity+1 ))
+        ;;
   esac
 done
 shift $(($OPTIND - 1)) # remove options
+
+if [ $verbosity -gt 4 ]; then
+    verbosity=$max_verbosity
+fi
 
 ############################################
 # set checksum command depending on checksum type
@@ -153,6 +165,12 @@ fi
 # init
 #
 
+if [ $debug -eq 1 ]; then
+    # currently, debug option is not used in this script (we keep it here to stay sync between sdget.sh and sdgetg.sh scripts)
+
+    :
+fi
+
 multiuser="0"
 
 if [ "$multiuser" = "0" ]; then
@@ -177,11 +195,10 @@ GRIDFTP_CMD=globus-url-copy
 local_folder=`dirname $local_file` # retrieve destination folder
 
 ############################################
-# gridftp debug parameters
+# verbosity parameter
 #
-# debug mode
-if [ $debug_level -eq 4 ]; then
-    set -x # bash debug mode (warning, this make globus-url-copy output to be duplicated 3 times)
+if [ $verbosity -eq 4 ]; then
+    set -x # bash verbose mode (warning, this make globus-url-copy output to be duplicated 3 times)
 
     export GLOBUS_ERROR_OUTPUT=1
     export GLOBUS_ERROR_VERBOSE=1
@@ -189,13 +206,13 @@ if [ $debug_level -eq 4 ]; then
     export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/gridftp_debug.log
 
     GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-elif [ $debug_level -eq 3 ]; then
+elif [ $verbosity -eq 3 ]; then
     GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-elif [ $debug_level -eq 2 ]; then
+elif [ $verbosity -eq 2 ]; then
     GRIDFTP_DEBUG_OPT=" -v -vb "
-elif [ $debug_level -eq 1 ]; then
+elif [ $verbosity -eq 1 ]; then
     GRIDFTP_DEBUG_OPT=" -v "
-elif [ $debug_level -eq 0 ]; then
+elif [ $verbosity -eq 0 ]; then
     GRIDFTP_DEBUG_OPT=
 fi
 
@@ -209,7 +226,7 @@ mkdir -p ${local_folder}
 
 CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
 
-if [[ $debug_level > 0 ]]; then
+if [[ $verbosity > 0 ]]; then
     echo $CMD
     $CMD 1>&2
 else

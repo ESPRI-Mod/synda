@@ -16,8 +16,8 @@
 #    More detailed error message (e.g. multilines) can be printed in the log file.
 #  - This script works in two different modes
 #      - NORMAL MODE (default): wget output is analyzed by 'sdparsewgetoutput.sh' script 
-#      - DEBUGGING MODE: wget output is dumped on stderr in realtime
-#          - this mode is enabled when verbose option is set
+#      - VERBOSE MODE: wget output is dumped on stderr in realtime
+#          - this mode is enabled when verbose option is set (at least one '-v' option)
 #          - in this mode, wget output IS NOT analyzed by 'sdparsewgetoutput.sh'
 #    Note that the code returned by sdget.sh script may vary depending on which
 #    mode is used.
@@ -58,7 +58,7 @@ usage ()
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -c      checksum type - set the checksum type used to compute file checksum (default md5)"
-    echo "  -h      display this help"
+    echo "  -h      help - display help message"
     echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
     echo ""
     echo "Example"
@@ -142,6 +142,7 @@ max_verbosity=3
 
 # options
 
+debug=0
 verbosity=0
 always_log_wget_output=0
 checksum_type=md5
@@ -151,6 +152,8 @@ do
   a)    always_log_wget_output=1
         ;;
   c)    checksum_type=$OPTARG
+        ;;
+  d)    debug=1
         ;;
   h)    usage
         exit 0
@@ -185,6 +188,12 @@ fi
 
 # init
 
+if [ $debug -eq 1 ]; then
+    # currently, debug option is just an alias for '-a' option, but this may change in the futur
+
+    always_log_wget_output=1
+fi
+
 multiuser="0"
 
 if [ "$multiuser" = "0" ]; then
@@ -199,8 +208,6 @@ USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
 wget_pid=
-
-wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 
 # set log & tmp dir.
 if [ "$multiuser" = "0" ]; then
@@ -218,6 +225,7 @@ else
     logdir=/var/log/synda/sdt
 fi
 
+wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 debug_file=$logdir/debug.log
 
 # wget parameters
@@ -272,16 +280,16 @@ WGETOPT="$WGETOPT --max-redirect=2 "
 
 # set verbose mode
 if [ $verbosity -eq 3 ]; then
-    set -x # bash debug mode (warning, this makes wget output to be duplicated 3 times)
+    set -x # bash verbose mode (warning, this makes wget output to be duplicated 3 times)
     WGETOPT=" $WGETOPT -v -d "
 elif [ $verbosity -eq 2 ]; then
     WGETOPT=" $WGETOPT -v -d "
 elif [ $verbosity -eq 1 ]; then
     WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
 elif [ $verbosity -eq 0 ]; then
-    # level used in normal operation (no debug info displayed)
+    # level used in normal operation (non-verbose)
 
-    # we need this even in non-debug mode, else it hide HTTP errors
+    # we need this even in non-verbose mode, else it hide HTTP errors
     WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
 
     #WGETOPT=" $WGETOPT --quiet "
