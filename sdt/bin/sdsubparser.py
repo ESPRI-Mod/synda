@@ -13,6 +13,7 @@
 
 import sdi18n
 import sdconst
+import sdprint
 
 def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
