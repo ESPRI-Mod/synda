@@ -1,4 +1,7 @@
 - Version 3.3 - DEV
+	- in sdget.sh and sdgetg.sh, '-v' option replace '-d' option (verbose replace debug_level)
+	- Add new 'value' format for synda dump '-F' option.
+	- Enable debug mode when using synda test <url> command.
 - Version 3.2 - 20160203
 	- DEB package
 	- Retrieve dataset timestamp in batch mode.
