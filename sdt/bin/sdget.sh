@@ -53,11 +53,12 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -d [1|2|3] ] <src> <dest>"
+    echo "  $0 [ -v | -a ] [ -c ] [ -h ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -c      checksum type - set the checksum type used to compute file checksum (default md5)"
+    echo "  -h      display this help"
     echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
     echo ""
     echo "Example"
