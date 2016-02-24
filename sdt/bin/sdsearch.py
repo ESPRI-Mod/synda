@@ -92,7 +92,7 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
     parser.add_argument('-f','--file',default=None)
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-i','--index_host')
     parser.add_argument('-m','--post_pipeline_mode',default='file',choices=sdconst.POST_PIPELINE_MODES)
     parser.add_argument('-y','--dry_run',action='store_true')

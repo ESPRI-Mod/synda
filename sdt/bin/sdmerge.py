@@ -44,7 +44,7 @@ def run(lines):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
     lines=sys.stdin.readlines()

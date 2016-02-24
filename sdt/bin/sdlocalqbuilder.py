@@ -155,7 +155,7 @@ def serialize_parameter(name,values):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('file',nargs='?',default='-',help='Facets groups file')
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
     args = parser.parse_args()
 

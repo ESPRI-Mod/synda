@@ -69,7 +69,7 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-c','--count',action='store_true',help='Count how many files are found')
     parser.add_argument('-f','--file',default=None)
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()

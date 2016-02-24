@@ -84,7 +84,7 @@ def get_timeslice_from_filename(filename):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
     files=json.load( sys.stdin )

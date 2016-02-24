@@ -88,6 +88,6 @@ def use_file_timestamp_if_dataset_timestamp_is_missing(d):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('parameter',nargs='*',default=[])
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()

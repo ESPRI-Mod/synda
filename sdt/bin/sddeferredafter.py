@@ -81,7 +81,7 @@ def add_forced_parameter(o,name,value):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
-    parser.add_argument('-F','--format',choices=['raw','line','indent'],default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
     facets_groups=json.load( sys.stdin )
