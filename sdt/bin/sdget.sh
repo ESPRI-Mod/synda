@@ -388,7 +388,7 @@ else
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
-        wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........') # remove progress lines from wget output to prevent exceeding maximum single argument size
+        wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script') # remove progress lines from wget output to prevent exceeding maximum single argument size
         wget_status=$?
     fi
 
