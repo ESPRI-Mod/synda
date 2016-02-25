@@ -97,7 +97,7 @@ log_wget_output_debug_mode ()
     # same as log_wget_output, but only log if asked by user
 
     if [ $always_log_wget_output -eq 1 ]; then
-        log_wget_output @*
+        log_wget_output "$@"
     fi
 }
 
