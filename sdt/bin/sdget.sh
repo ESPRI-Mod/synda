@@ -148,7 +148,7 @@ debug=0
 verbosity=0
 always_log_wget_output=0
 checksum_type=md5
-while getopts 'ac:d:hsv' OPTION
+while getopts 'ac:dhsv' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1

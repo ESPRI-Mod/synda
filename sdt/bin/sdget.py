@@ -73,7 +73,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     li=[script,'-c',checksum_type,url,full_local_path]
 
     if debug:
-        li.append('-d')
+        li.insert(1,'-d')
 
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
