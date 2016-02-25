@@ -53,13 +53,13 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v | -a ] [ -c ] [ -h ] <src> <dest>"
+    echo "  $0 [ -v | -a ] [ -c ] [ -h ] [ -s ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -c      checksum type - set the checksum type used to compute file checksum (default md5)"
     echo "  -h      help - display help message"
-    echo "  -s      strip progress - strip progress from wget output"
+    echo "  -s      show progress - show wget progress"
     echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
     echo ""
     echo "Example"
@@ -143,7 +143,7 @@ max_verbosity=3
 
 # options
 
-strip_progress=0
+show_progress=0
 debug=0
 verbosity=0
 always_log_wget_output=0
@@ -160,7 +160,7 @@ do
   h)    usage
         exit 0
         ;;
-  s)    strip_progress=1
+  s)    show_progress=1
         ;;
   v)    (( verbosity=verbosity+1 ))
         ;;
@@ -384,11 +384,11 @@ if [ $verbosity -gt 0 ]; then
 else
     # in this mode, wget info are displayed in differed time
 
-    if [ $strip_progress -eq 1 ]; then
-        wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........') # remove progress lines from wget output to prevent exceeding maximum single argument size
+    if [ $show_progress -eq 1 ]; then
+        wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
-        wget_errmsg=$(wget_stderr2stdout)
+        wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........') # remove progress lines from wget output to prevent exceeding maximum single argument size
         wget_status=$?
     fi
 
