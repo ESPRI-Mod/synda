@@ -128,7 +128,7 @@ def dataset_list(args):
     import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
     if len(datasets)==0:
-        print "Dataset not found"
+        print_stderr('Dataset not found')
     else:
         sdldataset.print_list(datasets)
 
@@ -167,7 +167,7 @@ def dataset_search(args):
 
     if not args.dry_run:
         if len(datasets)==0:
-            print "Dataset not found"
+            print_stderr('Dataset not found')
         else:
             if args.replica:
                 sdrdataset.print_replica_list(datasets)
@@ -307,7 +307,7 @@ def dataset_dump(args):
             files=sdcolumnfilter.run(files,args.column)
             sdprint.print_format(files,args.format)
         else:
-            print "Dataset not found"
+            print_stderr('Dataset not found')
 
 def variable_dump(args):
     assert False # there is no dump for variable

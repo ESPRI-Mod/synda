@@ -40,6 +40,7 @@ import sddaemon
 import sdlock
 import sdconfig
 import sdremoteparam
+import sdtools
 from sdconsoleutils import ConsoleUtils
 from sdshortcut import Shortcut
 
@@ -141,7 +142,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
                 datasets=sdldataset.get_datasets(**kw)
                 if not dry_run:
                     if len(datasets)==0:
-                        print "Dataset not found"
+                        sdtools.print_stderr('Dataset not found')
                     else:
                         sdldataset.print_list(datasets)
             elif type_=='File':
@@ -153,7 +154,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
                 datasets=sdrdataset.get_datasets(**kw)
                 if not dry_run:
                     if len(datasets)==0:
-                        print "Dataset not found"
+                        sdtools.print_stderr('Dataset not found')
                     else:
                         sdrdataset.print_list(datasets)
             elif type_=='File':

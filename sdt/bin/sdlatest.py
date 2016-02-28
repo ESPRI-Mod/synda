@@ -19,6 +19,7 @@ import sdapp
 import sdlatestquery
 import sddatasetflag
 import sddatasetdao
+import sdtools
 
 def print_latest_datasets_full():
     print_latest_datasets(True)
@@ -44,4 +45,4 @@ def set_latest_flag(path):
         else:
             sddatasetflag.update_latest_flag(d,force_latest=True) # warning: this method modifies the dataset in memory (and in database too)
     else:
-        print "Dataset not found"
+        sdtools.print_stderr('Dataset not found')
