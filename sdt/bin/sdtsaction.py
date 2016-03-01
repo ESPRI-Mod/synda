@@ -123,7 +123,7 @@ def file_foobar(args):
 def dataset_list(args):
     import sddeferredafter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',100)
+    sddeferredafter.add_default_parameter(args.stream,'limit',20)
 
     import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
