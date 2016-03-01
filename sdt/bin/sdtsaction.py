@@ -123,7 +123,7 @@ def file_foobar(args):
 def dataset_list(args):
     import sddeferredafter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',100) # add default limit
+    sddeferredafter.add_default_parameter(args.stream,'limit',100)
 
     import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -148,7 +148,10 @@ def variable_list(args):
     """
 
 def file_list(args):
-    import sdlfile
+    import sddeferredafter, sdlfile
+
+    sddeferredafter.add_default_parameter(args.stream,'limit',20)
+
     files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
     if len(files)==0:
         print_stderr("File not found")   
