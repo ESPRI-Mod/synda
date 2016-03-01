@@ -42,7 +42,12 @@ def run(facets_groups):
         # build limit clause
         if 'limit' in dquery:
             limit=sddquery.get_scalar(dquery,'limit',type_=int)
-            limit_clause=' limit %i'%limit 
+
+            if limit==0:
+                limit_clause=''
+            else:
+                limit_clause=' limit %i'%limit 
+
             del dquery['limit']
         else:
             limit_clause=''
