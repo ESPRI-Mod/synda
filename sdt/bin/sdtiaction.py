@@ -16,8 +16,9 @@ Note
     so to improve startup time.
 """
 
+import sys
 from sdtools import print_stderr
-from sdexception import SDException
+from sdexception import SDException,EmptySelectionException
 
 def autoremove(args):
     import sddeletedataset
@@ -76,7 +77,12 @@ def install(args,files=None):
     syndautils.check_daemon()
 
     if files is None:
-        files=syndautils.file_full_search(args)
+
+        try:
+            files=syndautils.file_full_search(args)
+        except EmptySelectionException, e:
+            print 'No packages will be installed, upgraded, or removed.'
+            sys.exit(0)
 
     if args.dry_run:
         return 0
@@ -152,7 +158,11 @@ def remove(args):
 
     syndautils.check_daemon()
 
-    files=syndautils.file_full_search(args)
+    try:
+        files=syndautils.file_full_search(args)
+    except EmptySelectionException, e:
+        print 'No packages will be installed, upgraded, or removed.'
+        sys.exit(0)
 
     if not args.dry_run:
         import humanize, sdsimplefilter, sdconst, sdutils, sdoperation, sddeletedataset
@@ -194,9 +204,13 @@ def reset(args):
     sddeletefile.reset()
 
 def stat(args):
-
     import syndautils
-    files=syndautils.file_full_search(args)
+
+    try:
+        files=syndautils.file_full_search(args)
+    except EmptySelectionException, e:
+        print "You must specify at least one facet to perform this action."
+        sys.exit(0)
 
     if not args.dry_run:
         import sdstat

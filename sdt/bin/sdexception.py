@@ -39,3 +39,5 @@ class MissingDatasetTimestampUrlException(SDException):
     pass
 class MissingTimestampException(SDException):
     pass
+class EmptySelectionException(SDException):
+    pass

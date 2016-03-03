@@ -28,14 +28,23 @@ def check_daemon():
             print 'The daemon must be stopped before installing/removing dataset'
             sys.exit(3)
 
-def get_stream(args):
-    import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore
+def get_stream(args,raise_exception_if_empty=False):
+    import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore, sdexception
 
     # hack
     if args.subcommand=='list':
         args.no_default=True
 
     buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection_file)
+
+
+    if len(buffer.lines)==0:
+        # we come here when user selected nothing (neither from stdin neither from selection file neither from arg)
+
+        if raise_exception_if_empty:
+            raise sdexception.EmptySelectionException()
+
+
     selection=sdparse.build(buffer,load_default=(not args.no_default))
     stream=selection.to_stream()
 
@@ -59,22 +68,11 @@ def file_full_search(args):
     """This func systematically trigger full search (i.e. limit keyword cannot be used here)."""
     import sdsearch
 
-    stream=get_stream(args)
-
-    check_stream(stream)
-
+    stream=get_stream(args,raise_exception_if_empty=True)
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
-
     files=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
     return files
-
-def check_stream(stream):
-    import sdstream
-
-    if sdstream.is_empty(stream):
-        print 'No packages will be installed, upgraded, or removed.'
-        sys.exit(0)
 
 def force_type(stream,type_):
     import sddeferredbefore
