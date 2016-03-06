@@ -22,7 +22,7 @@ import sdfiledao
 import sddatasetdao
 from sdprogress import SDProgressDot
 import sdconst
-import sdstatquery
+import sddatasetquery
 import sddatasetutils
 
 def print_selections_stats():
@@ -41,7 +41,7 @@ def PROC0001():
      - also see PROC0005
     """
     for d in sddatasetdao.get_datasets():
-        datasetVersions=sdstatquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
+        datasetVersions=sddatasetquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
         if not datasetVersions.ismostrecentversionnumber(d.version): # basic test (for smarter version selection, use PROC0005 which use getoldversionsdatasets())
             print d.get_full_local_path('output{,1,2}')
 
@@ -76,7 +76,7 @@ def print_old_versions_stats():
     total_datasets=0
 
     for d in sddatasetutils.get_old_versions_datasets():
-        ds_info=sdstatquery.get_dataset_stats(d) 
+        ds_info=sddatasetquery.get_dataset_stats(d) 
         total_size+=ds_info['size'][sdconst.TRANSFER_STATUS_DONE]
         total_files+=ds_info['count'][sdconst.TRANSFER_STATUS_DONE]
         total_datasets+=1

@@ -9,9 +9,12 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains statistics SQL queries"""
+"""This module contains dataset special queries (i.e. non-dao)
 
-import humanize
+Also see
+    sddatasetdao.py
+"""
+
 import argparse
 import sdapp
 import sddb
@@ -19,35 +22,6 @@ import sdconst
 import sdsqlutils
 from sdtypes import Dataset
 from sddatasetversion import DatasetVersions
-import sddao
-
-def get_selection_stats(us,status):
-    size=0
-    count=0
-    c = sddb.conn.cursor()
-
-    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?",(status,us.getSelectionID(),))
-
-    #self.log("SDSTAT-INF110",""%(,))
-
-    rs=c.fetchone()
-    size=rs[0] if (rs[0] is not None) else 0 # this is because count(1) return 0 when not found, but sum(stuff) returns None
-    count=rs[1]
-    c.close()
-
-    return (size,count)
-
-def get_selections_stats(status):
-    size=0
-    count=0
-    c = sddb.conn.cursor()
-    c.execute("select size, count(1) from file where status=?",(status,))
-    rs=c.fetchone()
-    size=rs[0] if (rs[0] is not None) else 0 # this is because count(1) return 0 when not found, but sum(stuff) returns None
-    count=rs[1]
-    c.close()
-
-    return (size,count)
 
 def get_dataset_stats(d):
     stat={}
@@ -84,58 +58,6 @@ def get_dataset_stats(d):
 
     c.close()
     return stat
-
-def get_download_status(project):
-    li=[]
-
-    c = sddb.conn.cursor()
-
-    if project is None:
-        q="select status,count(*),sum(size) from file group by status"
-        c.execute(q)
-    else:
-        q="select status,count(*),sum(size) from file where project=? group by status"
-        c.execute(q,(project,))
-
-    rs=c.fetchone()
-    while rs!=None:
-        status=rs[0]
-        count=rs[1]
-        size=humanize.naturalsize(rs[2],gnu=False)
-
-        li.append([status,count,size])
-
-        rs=c.fetchone()
-
-    c.close()
-
-    return li
-
-def transfer_running_count(conn=sddb.conn):
-    c=conn.cursor()
-    c.execute("select count(1) from file where status = '%s'" % sdconst.TRANSFER_STATUS_RUNNING)
-    rs=c.fetchone()
-
-    if rs==None:
-        raise SDException("SDSTAQUE-002","fatal error")
-
-    count=rs[0]
-    c.close()
-    return count
-
-def count_dataset_files(d,file_status,conn=sddb.conn):
-    c = conn.cursor()
-
-    if file_status is None:
-        c.execute("select count(1) from file where dataset_id=?",(d.dataset_id,))
-    else:
-        c.execute("select count(1) from file where dataset_id=? and status=?",(d.dataset_id,file_status,))
-
-    rs=c.fetchone()
-    nbr=rs[0]
-
-    c.close()
-    return nbr
 
 def get_dataset_versions(i__d,i__compute_stats):
     datasetVersions=DatasetVersions()

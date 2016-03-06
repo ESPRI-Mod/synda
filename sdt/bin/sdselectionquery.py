@@ -89,3 +89,35 @@ def get_selections_files_count_helper():
     c.close()
 
     return selections
+
+def get_selection_stats(us,status):
+    """Not used."""
+
+    size=0
+    count=0
+    c = sddb.conn.cursor()
+
+    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?",(status,us.getSelectionID(),))
+
+    #self.log("SDSTAT-INF110",""%(,))
+
+    rs=c.fetchone()
+    size=rs[0] if (rs[0] is not None) else 0 # this is because count(1) return 0 when not found, but sum(stuff) returns None
+    count=rs[1]
+    c.close()
+
+    return (size,count)
+
+def get_selections_stats(status):
+    """Not used."""
+
+    size=0
+    count=0
+    c = sddb.conn.cursor()
+    c.execute("select size, count(1) from file where status=?",(status,))
+    rs=c.fetchone()
+    size=rs[0] if (rs[0] is not None) else 0 # this is because count(1) return 0 when not found, but sum(stuff) returns None
+    count=rs[1]
+    c.close()
+
+    return (size,count)

@@ -9,10 +9,14 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module displays files reduced informations.
+"""This module displays data selection (e.g. selection file) statistics.
 
-Note
-    This filter is intended to be chained to the file pipeline output.
+Notes
+    - This filter is intended to be chained to the file pipeline output.
+    - This filter use local data and data from ESGF to compute the delta
+
+Also see
+    sdmetric
 """
 
 import sys

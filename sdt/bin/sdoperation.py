@@ -20,7 +20,7 @@ from sdprogress import SDProgressDot
 import sdconfig
 import sdlog
 import sdlatestquery
-import sdstatquery
+import sddatasetquery
 import sdtools
 import sdutils
 import sddao
@@ -53,7 +53,7 @@ def get_recently_modified_datasets():
     for d in sdlatestquery.get_latest_datasets_to_export("CMIP5"): # currently, we only export CMIP5 project to prodiguer
 
         # retrieve how many files in the dataset
-        dataset_stats=sdstatquery.get_dataset_stats(d) 
+        dataset_stats=sddatasetquery.get_dataset_stats(d) 
 
         if dataset_stats['count']['done'] > max_files_count_per_dataset:
             # dataset contains too much files, do not process it

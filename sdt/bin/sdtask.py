@@ -19,7 +19,7 @@ import sdconfig
 import sdfiledao
 import sddao
 import sdconst
-import sdstatquery
+import sdfilequery
 import sdtime
 import sdprofiler
 import sdppproxy
@@ -128,7 +128,7 @@ def pre_transfer_check_list(tr):
 def transfers_begin():
     transfers=[]
 
-    new_transfer_count=max_transfer - sdstatquery.transfer_running_count() # compute how many new transfer can be started
+    new_transfer_count=max_transfer - sdfilequery.transfer_running_count() # compute how many new transfer can be started
     if new_transfer_count>0:
         for i in range(new_transfer_count):
             try:

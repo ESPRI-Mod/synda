@@ -29,7 +29,7 @@ import sdlog
 import sdlogon
 import sdtask
 import sdprofiler
-import sdstatquery
+import sdfilequery
 from sdexception import FatalException,SDException,CertificateRenewalException
 
 def terminate(signal,frame):
@@ -130,7 +130,7 @@ def run_soft_tasks():
 
 @sdprofiler.timeit
 def can_leave():
-    return sdstatquery.transfer_running_count()==0 and sdtask.can_leave()
+    return sdfilequery.transfer_running_count()==0 and sdtask.can_leave()
 
 def event_loop():
     global scheduler_state

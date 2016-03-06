@@ -13,7 +13,7 @@
 
 import sdapp
 import sddatasetdao
-import sdstatquery
+import sddatasetquery
 from sdexception import SDException
 
 def get_old_versions_datasets():
@@ -21,7 +21,7 @@ def get_old_versions_datasets():
     lst=[]
 
     for d in sddatasetdao.get_datasets():
-        datasetVersions=sdstatquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
+        datasetVersions=sddatasetquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
         if d.latest==False: # this version is not the latest
             if datasetVersions.exists_version_with_latest_flag_set_to_true(): # latest exists
                 if not datasetVersions.is_version_higher_than_latest(d): # version is not higher than latest

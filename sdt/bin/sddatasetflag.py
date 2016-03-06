@@ -15,7 +15,8 @@ import sdapp
 import sddb
 import sddao
 import sddatasetdao
-import sdstatquery
+import sdfilequery
+import sddatasetquery
 import sdconst
 import sddatasetutils
 import sdutils
@@ -58,7 +59,7 @@ def update_latest_flag(d,force_latest=False):
 
     assert not d.latest # this func must NOT be called if the dataset is already 'latest'
 
-    dataset_versions=sdstatquery.get_dataset_versions(d,True) # retrieves all dataset versions
+    dataset_versions=sddatasetquery.get_dataset_versions(d,True) # retrieves all dataset versions
 
     d.latest=True if force_latest else compute_latest_flag(dataset_versions,d) # set the *new* value for the 'latest' flag
 
@@ -215,8 +216,8 @@ def compute_dataset_status(d):
 
     # retrieve global infos
     #
-    total_files_count=sdstatquery.count_dataset_files(d,None)
-    total_done_files_count=sdstatquery.count_dataset_files(d,sdconst.TRANSFER_STATUS_DONE)
+    total_files_count=sdfilequery.count_dataset_files(d,None)
+    total_done_files_count=sdfilequery.count_dataset_files(d,sdconst.TRANSFER_STATUS_DONE)
 
 
     #########################
@@ -263,7 +264,7 @@ def qualitycheck_ok(dataset_versions,d):
     current_version_stats=latest_dataset.statistics
 
     # retrieve stats for candidate version for 'latest' promotion
-    candidate_stats=sdstatquery.get_dataset_stats(d)
+    candidate_stats=sddatasetquery.get_dataset_stats(d)
 
     # assert
     if latest_dataset.dataset_id==d.dataset_id:

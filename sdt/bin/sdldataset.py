@@ -18,7 +18,7 @@ import sddeferredbefore
 import sddao
 import sdfiledao
 import sddatasetdao
-import sdstatquery
+import sddatasetquery
 import sddatasetflag
 import sdlsearch
 import sddatasetutils
@@ -52,8 +52,8 @@ def _get_dataset_details(dataset_functional_id):
     """Helper func."""
     d=sddatasetdao.get_dataset(dataset_functional_id=dataset_functional_id)
 
-    d.dataset_versions=sdstatquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
-    d.stats=sdstatquery.get_dataset_stats(d) 
+    d.dataset_versions=sddatasetquery.get_dataset_versions(d,True) # retrieves all the versions of the dataset
+    d.stats=sddatasetquery.get_dataset_stats(d) 
     d.variables=sdvariable.get_variables_progress(d)
     d.files=sdfiledao.get_dataset_files(d)
 

@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains complex SQL queries."""
+"""This module contains batch mode SQL queries."""
 
 import sdapp
 from sdtypes import File

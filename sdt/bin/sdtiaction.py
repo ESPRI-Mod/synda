@@ -371,12 +371,12 @@ def param(args):
     sdparam.print_(args)
 
 def queue(args):
-    import sdstatquery
+    import sdfilequery
     from tabulate import tabulate
     from sdprogress import ProgressThread
 
     ProgressThread.start(sleep=0.1,running_message='Collecting status information.. ',end_message='') # spinner start
-    li=sdstatquery.get_download_status(args.project)
+    li=sdfilequery.get_download_status(args.project)
     ProgressThread.stop() # spinner stop
 
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")
