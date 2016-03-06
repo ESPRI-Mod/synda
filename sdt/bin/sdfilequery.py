@@ -83,6 +83,7 @@ def get_metrics(group_,metric,project_):
     # check
 
     assert group_ in ['data_node','project','model']
+    assert metric in ('rate','size')
 
     # WARNING: we don't check project_ for sql injection here. This MUST be done in the calling func. TODO: check for sql injection here
 
@@ -91,11 +92,9 @@ def get_metrics(group_,metric,project_):
     # prepare metric calculation
 
     if metric=='rate':
-        metric_calculation='cast (avg(rate) as int)'
+        metric_calculation='avg(rate)'
     elif metric=='size':
-        metric_calculation='cast (sum(size) as int)'
-    else:
-        assert False
+        metric_calculation='sum(size)'
 
 
 
