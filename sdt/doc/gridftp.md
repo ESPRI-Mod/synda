@@ -38,9 +38,11 @@ Print a list of gridftp urls
 
     synda dump protocol=gridftp variable=tas limit=1000 -f -C url
 
+<sub>
 (note that in this example, the command returns a mix of gridftp url and http
 url. This is because when gridftp protocol is not available, http protocol is
 used instead)
+</sub>
 
 Print a random gridftp url
 
