@@ -26,7 +26,7 @@ For system package installation, location is:
 
 Download a file using gridftp protocol
 
-    synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 protocol=gridftp
+    synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 pastureFrac protocol=gridftp
 
 ## Miscellaneous Information
 
