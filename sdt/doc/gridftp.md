@@ -2,7 +2,7 @@
 
 ## Installation
 
-globus-url-copy additional program is needed to transfer files over GridFtp.
+globus-url-copy additional program is needed to transfer files with GridFtp.
 
 On Debian, it is part of the 'globus-gass-copy-progs' package and can be installed with:
 
@@ -12,13 +12,13 @@ On Debian, it is part of the 'globus-gass-copy-progs' package and can be install
 
 To use gridftp as default protocol, add 'protocol=gridftp' parameter in default.txt file.
 
-Note that default.txt file location differ depending on which synda installation method has been used
+Note that default.txt file location differs depending on which synda installation method has been used.
 
-for source installation, location is 
+For source installation, location is:
 
     $ST_HOME/conf/default/default.txt
 
-for system package installation, location is
+For system package installation, location is:
 
     /etc/synda/sdt/default/default.txt
 
