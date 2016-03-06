@@ -11,10 +11,19 @@
 
 """Contains SQL utils."""
 
+import re
 import argparse
 import sdapp
 from sdexception import SDException
 import sddb
+
+def sql_injection_safe(s):
+    regex=r'[^a-zA-Z0-9_]'
+    match=re.search(regex,s)
+    if match!=None:
+        return False
+    else:
+        return True
 
 def get_object_from_resultset(rs,class_):
     kw=resultset_to_dict(rs)
@@ -144,6 +153,8 @@ def update(instance,columns_subset_without_pk,commit,conn):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('teststring')
     args = parser.parse_args()
 
-    print nextval('insertion_group_id','file')
+    #print nextval('insertion_group_id','file')
+    print sql_injection_safe(args.teststring)
