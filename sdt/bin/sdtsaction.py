@@ -22,6 +22,10 @@ import sdprint
 from sdtools import print_stderr
 
 def list_(args):
+
+    """
+    disabled as is more practical to list everything by default and filter only on user request.
+
     import sddeferredafter
 
     # add default status depending on type
@@ -29,6 +33,7 @@ def list_(args):
         sddeferredafter.add_default_parameter(args.stream,'status','done')
     elif args.type_==sdconst.SA_TYPE_DATASET:
         sddeferredafter.add_default_parameter(args.stream,'status','complete')
+    """
 
     # branching
     if args.type_==sdconst.SA_TYPE_FILE:
