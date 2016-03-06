@@ -34,16 +34,14 @@ Print gridftp url for a given file
 
     synda dump cmip5.output1.MPI-M.MPI-ESM-LR.1pctCO2.day.atmos.cfDay.r1i1p1.v20120314.albisccp_cfDay_MPI-ESM-LR_1pctCO2_r1i1p1_19700101-19891231.nc limit=1 protocol=gridftp replica=false -nf -C url
 
+Print a random gridftp url
+
+    synda dump data_node=bmbf-ipcc-ar5.dkrz.de limit=1 protocol=gridftp -nf -C url
+
 Print a list of gridftp urls
 
     synda dump protocol=gridftp variable=tas limit=1000 -f -C url
 
-<sub>
-(note that in this example, the command returns a mix of gridftp url and http
+(in this last example, the command returns a mix of gridftp url and http
 url. This is because when gridftp protocol is not available, http protocol is
 used instead)
-</sub>
-
-Print a random gridftp url
-
-    synda dump data_node=bmbf-ipcc-ar5.dkrz.de limit=1 protocol=gridftp -nf -C url
