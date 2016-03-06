@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains "query" pipeline's jobs."""
+"""This module contains "query" pipeline's jobs.
+
+Note
+    Depending on the mode (local or remote), 'query' pipeline builds SQL query or Search-API query.
+"""
 
 import re
 import os
