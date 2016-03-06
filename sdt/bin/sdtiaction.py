@@ -153,6 +153,20 @@ def intro(args):
     import sdi18n
     print sdi18n.m0019
 
+def metric(args):
+    import sdmetric,sdparam
+
+    # check
+    if args.groupby=='model':
+        if args.project not in sdparam.params['project']:
+            print_stderr("Unknown project (%s)"%args.project)
+            return
+
+    if args.metric=='size':
+        sdmetric.print_size(args.groupby,args.project)
+    elif args.metric=='rate':
+        sdmetric.print_rate(args.groupby,args.project)
+
 def remove(args):
     import sddelete,sddeletefile,syndautils
 
@@ -430,6 +444,7 @@ actions={
     'history':history, 
     'install':install, 
     'intro':intro, 
+    'metric':metric, 
     'param':param,
     'queue':queue,
     'remove':remove, 

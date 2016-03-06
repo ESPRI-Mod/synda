@@ -109,7 +109,7 @@ def get_metrics(group_,metric,project_):
 
     # execute
 
-    q='select %s, %s from file where %s group by %s'%(group_,metric_calculation,where_clause,group_)
+    q='select %s, %s as metric from file where %s group by %s order by metric desc'%(group_,metric_calculation,where_clause,group_)
 
     c.execute(q)
 
