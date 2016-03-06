@@ -73,22 +73,60 @@ def count_dataset_files(d,file_status,conn=sddb.conn):
     c.close()
     return nbr
 
-def metric():
+def get_metrics(group_,metric,project_):
+    li=[]
 
-    if rate
+    c = sddb.conn.cursor()
+
+
+
+    # check
+
+    assert group_ in ['data_node','project','model']
+
+    # WARNING: we don't check project_ for sql injection here. This MUST be done in the calling func. TODO: check for sql injection here
+
+
+
+    # prepare metric calculation
+
+    if metric=='rate':
         metric_calculation='cast (avg(rate) as int)'
-    elif size
+    elif metric=='size':
         metric_calculation='cast (sum(size) as int)'
     else:
         assert False
 
-    group_column= # data_node | project | model
-    
-    where_clause="status='done' and rate is not NULL and size is not NULL"
-    if group_column=='model':
-        where_clause+=" and project='CMIP5'"
 
-    q='select %s, %s from file where %s group by %s;'%(group_column,metric_calculation,where_clause,group_column)
+
+    # prepare where clause
+
+    where_clause="status='done' and rate is not NULL and size is not NULL"
+
+    if group_=='model':
+        where_clause+=" and project='%s'"%project_
+
+
+
+    # execute
+
+    q='select %s, %s from file where %s group by %s'%(group_,metric_calculation,where_clause,group_)
+
+    c.execute(q)
+
+    rs=c.fetchone()
+    while rs!=None:
+        group_column_value=rs[0]
+        metric_column_value=rs[1]
+
+        li.append((group_column_value,metric_column_value))
+
+        rs=c.fetchone()
+
+
+    c.close()
+
+    return li
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
