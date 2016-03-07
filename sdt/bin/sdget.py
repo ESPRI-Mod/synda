@@ -91,6 +91,22 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     #
     stderr=stderr.rstrip('\r\n')
 
+    # encoding
+    #
+    # depending on which encoding is set in the system,
+    # scripts can return utf-8, latin1, or something else.
+    #
+    # those external encoding should be converted to unicode before being
+    # processed by synda
+    #
+    # TODO
+    #     All synda input should be checked to only accept unicode
+    #     (for specific case where input encoding cannot be unicode, make
+    #     the required explicit conversion to obtain unicode)
+    #
+    #stderr=unicode(stderr, encoding='utf-8')
+    #stderr=unicode(stderr, encoding='latin1')
+
     # debug (unexpected errors may be hidden in stdxxx)
     """
     with open(sdconfig.stacktrace_log_file,'a') as fh:

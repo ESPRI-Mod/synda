@@ -102,7 +102,6 @@ if [ $verbosity -gt 4 ]; then
     verbosity=$max_verbosity
 fi
 
-############################################
 # set checksum command depending on checksum type
 checksum_cmd=
 if [ "$checksum_type" = "sha256" ]; then
@@ -120,13 +119,11 @@ else
     #exit 5
 fi
 
-############################################
 # retrieve positional arguments
 
 url="$1"
 local_file="$2"
 
-############################################
 # check arguments
 
 if [ -z "$local_file" ]; then
@@ -161,9 +158,7 @@ else
     exit 30
 fi
 
-############################################
 # init
-#
 
 if [ $debug -eq 1 ]; then
     # currently, debug option is not used in this script (we keep it here to stay sync between sdget.sh and sdgetg.sh scripts)
@@ -178,6 +173,8 @@ if [ "$multiuser" = "0" ]; then
 else
     certdirprefix=/var/tmp/synda/sdt
 fi
+
+# set locales
 
 export LANG=C
 export LC_ALL=C
@@ -194,9 +191,7 @@ GRIDFTP_CMD=globus-url-copy
 
 local_folder=`dirname $local_file` # retrieve destination folder
 
-############################################
 # verbosity parameter
-#
 if [ $verbosity -eq 4 ]; then
     set -x # bash verbose mode (warning, this make globus-url-copy output to be duplicated 3 times)
 
@@ -216,12 +211,10 @@ elif [ $verbosity -eq 0 ]; then
     GRIDFTP_DEBUG_OPT=
 fi
 
-############################################
 # create folder
 
 mkdir -p ${local_folder}
 
-############################################
 # start transfer
 
 CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
@@ -235,9 +228,8 @@ fi
 
 child_status=$?
 
-############################################
 # post-processing
-#
+
 if [ $child_status -ne 0 ]; then
     # error
 

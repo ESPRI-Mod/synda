@@ -206,8 +206,11 @@ else
     certdirprefix=/var/tmp/synda/sdt
 fi
 
+# set locales
+
 export LANG=C
 export LC_ALL=C
+
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
@@ -366,9 +369,8 @@ wget_stderr2stdout()
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
-############################################
 # start wget
-#
+
 wget_error_status_from_parsing=0
 wget_status=0
 if [ $verbosity -gt 0 ]; then
@@ -398,9 +400,8 @@ else
     fi
 fi
 
-############################################
 # post-processing
-#
+
 if [ $wget_status -ne 0 ]; then
     if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
         status=29
