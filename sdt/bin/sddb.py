@@ -11,6 +11,7 @@
 
 """This script contains database I/O routines."""
 
+import argparse
 import sqlite3
 import atexit
 import sdapp
@@ -116,3 +117,15 @@ _in_memory_conn=None
 connect()
 sddbversion.check_version(conn) # this call upgrade the database schema if database version does not match binary version
 atexit.register(disconnect)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
+    c = conn.cursor()
+    c.execute("select url from file")
+    rs=c.fetchone()
+    if rs!=None:
+        print type(rs[0])
+        print rs[0]
+    c.close()
