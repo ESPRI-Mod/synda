@@ -82,7 +82,14 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     #
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
-    stderr=stderr.rstrip('\r\n') # chomp (download scripts return error message on stderr (one line terminated by EOL))
+    # chomp (download scripts return error message on stderr (one line terminated by EOL))
+    #
+    # note
+    #     Only the last eol is chomped here. If stderr contains multiple lines
+    #     (which should not be the case), you need to use something like
+    #     '" ".join(stderr.splitlines()' to replace all the eol chars.
+    #
+    stderr=stderr.rstrip('\r\n')
 
     # debug (unexpected errors may be hidden in stdxxx)
     """
