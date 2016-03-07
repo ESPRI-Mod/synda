@@ -93,19 +93,28 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
 
     # encoding
     #
-    # depending on which encoding is set in the system,
-    # scripts can return utf-8, latin1, or something else.
+    # Depending on which encoding is set in the system, scripts can return
+    # utf-8, latin1, or something else.
     #
-    # those external encoding should be converted to unicode before being
-    # processed by synda
+    # As for now, Synda encoding is latin1 (this is enforced by setting
+    # 'LANG=C' in external script), we remove any non-latin1 character if any.
     #
     # TODO
-    #     All synda input should be checked to only accept unicode
-    #     (for specific case where input encoding cannot be unicode, make
-    #     the required explicit conversion to obtain unicode)
+    #     In the futur, Synda will move to unicode instead of latin1.
+    #     Thus, external scripts output encoding will have to be converted to
+    #     unicode before being processed by synda
     #
-    #stderr=unicode(stderr, encoding='utf-8')
-    #stderr=unicode(stderr, encoding='latin1')
+    #     All synda input should be checked to only accept unicode
+    #     (except for specific case where input encoding must be specific, in
+    #     which case we make the required explicit conversion to obtain unicode)
+    #
+    #     samples
+    #     stderr=unicode(stderr, encoding='utf-8')
+    #     stderr=unicode(stderr, encoding='latin1')
+    #
+    #
+    stderr=unicode(stderr,errors='ignore').encode('latin1')
+    
 
     # debug (unexpected errors may be hidden in stdxxx)
     """
