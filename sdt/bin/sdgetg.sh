@@ -116,7 +116,7 @@ else
 
     # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
     #
-    #err "incorrect checksum type ($checksum_type)"
+    #msg "incorrect checksum type ($checksum_type)"
     #exit 5
 fi
 
@@ -143,13 +143,13 @@ fi
 if [[ "${local_file:0:1}" = "/" ]]; then # check for starting slash
     :
 else
-    err "incorrect format (local_file=$local_file)"
+    msg "incorrect format (local_file=$local_file)"
     exit 3
 fi
 
 # check if file is already present
 if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/null to be used
-    err "local file already exists ($local_file)"
+    msg "local file already exists ($local_file)"
     exit 3
 fi
 
@@ -157,7 +157,7 @@ fi
 if touch "$local_file"; then # not that touch error msg is lost here (sent to stderr)
     rm "$local_file"
 else
-    err "local file creation error ($local_file)"
+    msg "local file creation error ($local_file)"
     exit 30
 fi
 
@@ -249,7 +249,7 @@ if [ $child_status -ne 0 ]; then
 
     cleanup_on_error # remove local file (this is to not have thousand of empty files)
 
-    err "Transfer failed with error $status - $* - $child_status"
+    msg "Transfer failed with error $status - $* - $child_status"
 
     exit $status
 else
@@ -258,7 +258,7 @@ else
     cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
     echo $cs                                     # return checksum on stdout
 
-    #err "Transfer done - $* - $cs"
+    #msg "Transfer done - $* - $cs"
 
     exit 0
 fi
