@@ -334,7 +334,7 @@ mkdir -p ${local_folder}
 
 # check if we have right to create local file
 
-if touch "$local_file"; then
+if touch "$local_file" >/dev/null 2>&1; then # note that touch error msg is removed here to prevent having the same message twice
     rm "$local_file"
 else
     err "Local file creation error ($local_file)"

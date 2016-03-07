@@ -154,7 +154,7 @@ if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/nu
 fi
 
 # check if we have right to create local file
-if touch "$local_file"; then # not that touch error msg is lost here (sent to stderr)
+if touch "$local_file" >/dev/null 2>&1; then # note that touch error msg is removed here to prevent having the same message twice
     rm "$local_file"
 else
     msg "local file creation error ($local_file)"
