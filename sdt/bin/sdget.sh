@@ -125,6 +125,11 @@ abort ()
     exit 7
 }
 
+# set locales
+
+export LANG=C
+export LC_ALL=C
+
 # set path
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
@@ -205,11 +210,6 @@ if [ "$multiuser" = "0" ]; then
 else
     certdirprefix=/var/tmp/synda/sdt
 fi
-
-# set locales
-
-export LANG=C
-export LC_ALL=C
 
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
