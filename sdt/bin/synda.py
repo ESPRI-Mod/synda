@@ -122,6 +122,28 @@ if __name__ == '__main__':
 
         stream=syndautils.get_stream(args)
 
+
+        # hack for 'show' and 'version' subcommands.
+        #
+        # description
+        #     this hack normalize 'show' and 'version' subcommands 'type_'
+        #     attribute with other type_ sensitive subcommands. Without this
+        #     hack, the next statement (i.e. "if args.type_ is None:") fails with
+        #     "AttributeError: 'Namespace' object has no attribute 'type_'".
+        #
+        # notes
+        #     - show and version subcommands type_ attribute is already strictly
+        #       defined by the parameter argument (e.g. dataset identifier, file
+        #       identifier, etc..), so we dont want the user to also be able to
+        #       set type_ attribute using options. This is why type_ group is not
+        #       present for show and version subcommands (see subparser module
+        #       for details).
+        #     - another way to normalize is to use "parser.set_defaults(type_=None)"
+        #
+        if args.subcommand in ('show','version'):
+            args.type_=None
+
+
         # infer type if not set by user
         if args.type_ is None:
             import sdtype
