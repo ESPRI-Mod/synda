@@ -55,10 +55,10 @@ def set_stream_type(args):
     # later anyway as it is forced in dedicated modules (e.g. in
     # sdrdataset, sdrfile, etc..).
     #
-    # Also note that we 'force' (i.e. not 'default') the parameter
-    # here, so to prevent user to set it. We do this because if user
-    # use '-f' option and type=Dataset, it will not do as the display
-    # type will not fit the type of data fetched from search-API).
+    # Also note that we 'force' (i.e. not 'default') the parameter here, so to
+    # prevent user to set it. We do this because if user use '-f' option and
+    # type=Dataset, the display type will not fit the type of data fetched from
+    # search-API).
     #
     if args.type_ in (sdconst.SA_TYPE_AGGREGATION,sdconst.SA_TYPE_DATASET):
         sddeferredbefore.add_forced_parameter(args.stream,'type',sdconst.SA_TYPE_DATASET)
@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
         stream=syndautils.get_stream(args)
 
-        # set default type
+        # infer type if not set by user
         if args.type_ is None:
             import sdtype
             args.type_=sdtype.infer_display_type(stream)
