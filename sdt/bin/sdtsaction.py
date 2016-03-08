@@ -291,6 +291,10 @@ def dataset_version(args):
     # i.e. dataset_functional_id (for better readability).
     dataset_functional_id=sdstream.get_scalar(stream,'dataset_id')
 
+    if dataset_functional_id is None:
+        print_stderr('Please specify a dataset name.')
+        return
+
     dataset_functional_id_without_version=syndautils.strip_dataset_version(dataset_functional_id)
     params=sdremoteparam.run(pname='version',facets_group={'type':[sdconst.SA_TYPE_DATASET],'master_id':[dataset_functional_id_without_version]},dry_run=args.dry_run)
     # TODO: func for code below
