@@ -285,7 +285,12 @@ def file_show(args):
 def dataset_version(args):
     import sdinference,sdstream,sdremoteparam
     stream=sdinference.run(args.stream)
-    dataset_functional_id=sdstream.get_scalar(stream,'dataset_id') # don't be misled about identifiers here: sdinference produces search-api key (always do) name on the right end and I use Synda style variable name on the left end (for better readability).
+
+    # don't be misled about identifiers here: sdinference produces search-api
+    # key (always do) name i.e. dataset_id, and I use Synda style variable name
+    # i.e. dataset_functional_id (for better readability).
+    dataset_functional_id=sdstream.get_scalar(stream,'dataset_id')
+
     dataset_functional_id_without_version=syndautils.strip_dataset_version(dataset_functional_id)
     params=sdremoteparam.run(pname='version',facets_group={'type':[sdconst.SA_TYPE_DATASET],'master_id':[dataset_functional_id_without_version]},dry_run=args.dry_run)
     # TODO: func for code below
