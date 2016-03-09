@@ -81,7 +81,7 @@ def force_type(stream,type_):
     # to prevent user to set it
     sddeferredbefore.add_forced_parameter(stream,'type',type_)
 
-def get_facet_early(orig_stream,name,extract_item=False):
+def get_facet_values_early(orig_stream,name,extract_item=False):
     """Get facets from a dqueries object at an early time (before any transformation of that object occured).
 
     Note
@@ -118,7 +118,7 @@ def is_one_variable_per_dataset_project(args):
     """
 
     # retrieve project from input
-    project=get_facet_early(args.stream,'project',extract_item=True)
+    project=get_facet_values_early(args.stream,'project',extract_item=True)
 
     # check
     if len(project)==0:
