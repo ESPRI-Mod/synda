@@ -283,17 +283,22 @@ def file_show(args):
 # o-------------------------------------------------------o
 
 def dataset_version(args):
-    import sdinference,sdstream,sdremoteparam
-    stream=sdinference.run(args.stream)
+    import sdremoteparam
 
     # don't be misled about identifiers here: sdinference produces search-api
-    # key (always do) name i.e. dataset_id, and I use Synda style variable name
+    # key (always do) name i.e. instance_id, and I use Synda style variable name
     # i.e. dataset_functional_id (for better readability).
-    dataset_functional_id=sdstream.get_scalar(stream,'dataset_id')
 
-    if dataset_functional_id is None:
+    li=syndautils.get_facet_values_early(args.stream,'instance_id')
+
+    if len(li)==0:
         print_stderr('Please specify a dataset name.')
         return
+    elif len(li)>1:
+        print_stderr('Too much argument. Please specify a dataset name.')
+        return
+    else:
+        dataset_functional_id=li[0]
 
     dataset_functional_id_without_version=syndautils.strip_dataset_version(dataset_functional_id)
     params=sdremoteparam.run(pname='version',facets_group={'type':[sdconst.SA_TYPE_DATASET],'master_id':[dataset_functional_id_without_version]},dry_run=args.dry_run)
