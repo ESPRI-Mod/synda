@@ -41,3 +41,5 @@ class MissingTimestampException(SDException):
     pass
 class EmptySelectionException(SDException):
     pass
+class TooMuchValueException(SDException):
+    pass
