@@ -74,10 +74,6 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 trap "abort" SIGINT SIGTERM
 
-# mask
-
-umask u=rw,g=rw,o=r # set 'cmip5' group writable
-
 # pre-option init.
 
 max_verbosity=4
@@ -155,6 +151,15 @@ if [ -e "$local_file" ]; then # use '-e' instead of '-f' to also prevent /dev/nu
     exit 3
 fi
 
+# retrieve destination folder
+local_folder=`dirname $local_file`
+
+# set 'cmip5' group writable
+umask "u=rwx,g=rwx,o=rx"
+
+# create folder if not exists
+mkdir -p ${local_folder}
+
 # check if we have right to create local file
 if touch "$local_file" >/dev/null 2>&1; then # note that touch error msg is removed here to prevent having the same message twice
     rm "$local_file"
@@ -189,8 +194,6 @@ export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
 
 GRIDFTP_CMD=globus-url-copy
 
-local_folder=`dirname $local_file` # retrieve destination folder
-
 # verbosity parameter
 if [ $verbosity -eq 4 ]; then
     set -x # bash verbose mode (warning, this make globus-url-copy output to be duplicated 3 times)
@@ -211,9 +214,8 @@ elif [ $verbosity -eq 0 ]; then
     GRIDFTP_DEBUG_OPT=
 fi
 
-# create folder
-
-mkdir -p ${local_folder}
+# set 'cmip5' group writable
+umask u=rw,g=rw,o=r
 
 # start transfer
 
