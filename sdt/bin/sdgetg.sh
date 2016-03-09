@@ -194,6 +194,8 @@ export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
 
 GRIDFTP_CMD=globus-url-copy
 
+GRIDFTP_OPT=""
+
 # verbosity parameter
 if [ $verbosity -eq 4 ]; then
     set -x # bash verbose mode (warning, this make globus-url-copy output to be duplicated 3 times)
@@ -219,7 +221,7 @@ umask u=rw,g=rw,o=r
 
 # start transfer
 
-CMD="$GRIDFTP_CMD $GRIDFTP_DEBUG_OPT $url $local_file"
+CMD="$GRIDFTP_CMD $GRIDFTP_OPT $GRIDFTP_DEBUG_OPT $url $local_file"
 
 if [[ $verbosity > 0 ]]; then
     echo $CMD
