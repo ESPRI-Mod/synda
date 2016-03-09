@@ -4,9 +4,24 @@
 
 globus-url-copy additional program is needed to transfer files with GridFtp.
 
-On Debian, it is part of the 'globus-gass-copy-progs' package and can be installed with:
+It is part of the 'globus-gass-copy-progs' package and can be installed using
+instructions below.
 
-    apt-get install globus-gass-copy-progs
+### Debian and derivative
+
+Install the package with
+
+    sudo apt-get install globus-gass-copy-progs
+
+### RHEL and derivative
+
+You need to install EPEL repository
+
+    sudo yum install epel-release -y
+
+Then install the package with
+
+    sudo yum install globus-gass-copy-progs
 
 ## Configuration
 
