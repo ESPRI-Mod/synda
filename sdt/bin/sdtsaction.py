@@ -217,6 +217,16 @@ def file_search(args):
 # o-------------------------------------------------------o
 
 def dataset_show(args):
+
+    # check
+    li=syndautils.get_facet_values_early(args.stream,'instance_id')
+    if len(li)==0:
+        print_stderr('Please specify a dataset name.')
+        return
+    elif len(li)>1:
+        print_stderr('Too many arguments.')
+        return
+
     if args.localsearch:
         import sdldataset
         dataset=sdldataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
@@ -261,6 +271,16 @@ def variable_show(args):
         """
 
 def file_show(args):
+
+    # check
+    li=syndautils.get_facet_values_early(args.stream,'instance_id')
+    if len(li)==0:
+        print_stderr('Please specify a file.')
+        return
+    elif len(li)>1:
+        print_stderr('Too many arguments.')
+        return
+
     if args.localsearch:
         import sdlfile
         file=sdlfile.get_file(stream=args.stream,dry_run=args.dry_run)
@@ -295,7 +315,7 @@ def dataset_version(args):
         print_stderr('Please specify a dataset name.')
         return
     elif len(li)>1:
-        print_stderr('Too much argument. Please specify a dataset name.')
+        print_stderr('Too many arguments.')
         return
     else:
         dataset_functional_id=li[0]
