@@ -82,14 +82,18 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     #
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
+
     # chomp (download scripts return error message on stderr (one line terminated by EOL))
     #
     # note
-    #     Only the last eol is chomped here. If stderr contains multiple lines
-    #     (which should not be the case), you need to use something like
-    #     '" ".join(stderr.splitlines()' to replace all the eol chars.
+    #     Only the last eol is chomped here.
     #
-    stderr=stderr.rstrip('\r\n')
+    #stderr=stderr.rstrip('\r\n')
+
+    # remove all eol from string (download scripts return error message on stderr (multiple lines terminated by EOL))
+    #
+    stderr=stderr.replace('\n', '<eol-n>').replace('\r', '<eol-r>')
+
 
     # encoding
     #
