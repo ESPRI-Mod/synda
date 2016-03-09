@@ -83,7 +83,7 @@ max_verbosity=4
 debug=0
 verbosity=0
 checksum_type=md5
-while getopts 'c:d:h' OPTION
+while getopts 'c:d:hv' OPTION
 do
   case $OPTION in
   c)    checksum_type=$OPTARG
