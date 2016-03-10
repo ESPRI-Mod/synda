@@ -75,7 +75,7 @@ def renew_certificate_NG(force,quiet=True):
     myproxy_clnt = MyProxyClient(hostname="myproxy.somewhere.ac.uk")
     cert, private_key = myproxy_clnt.logon(username, password, bootstrap=True)
 
-def renew_certificate(force,quiet=True):
+def renew_certificate(force,quiet=True,debug=False):
     """Renew ESGF certificate."""
 
     # TODO: move this log into the script so to print only when expired
@@ -109,6 +109,10 @@ def renew_certificate(force,quiet=True):
         sdlog.error("SYDLOGON-040","Exception occured while retrieving certificate (status=%i)"%status)
 
         raise CertificateRenewalException("SYDLOGON-001","Cannot retrieve certificate from ESGF (hostname=%s,port=%s)"%(hostname,port))
+    else:
+        if debug:
+            print_stderr("'%s' script stdxxx (debug mode)\n"%os.path.basename(sdconfig.logon_script))
+            print_stderr('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
 
 # Init.
 
@@ -118,4 +122,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    renew_certificate(True)
+    renew_certificate(True,quiet=False,debug=True)
