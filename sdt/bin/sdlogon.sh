@@ -171,7 +171,7 @@ fi
 #  myproxyclient failed with this option, so disabled for now
 # -t $g__lifetime 
 
-g__myproxy_opts="logon -T -b $MYPROXY_VERBOSE -S -s $host -p $port -l $username -o $ESGF_CREDENTIAL" # "-S" is to read pwd from stdin
+g__myproxy_opts="logon -T -b $MYPROXY_VERBOSE -s $host -p $port -l $username -o $ESGF_CREDENTIAL"
 
 # return code
 #   0 => certificate doesn't exists
@@ -201,13 +201,14 @@ certificate_is_valid ()
 #  >0 => error
 renew_certificate () 
 {
-    BUF="echo \"$g__pass\" | $MYPROXY_CMD $g__myproxy_opts"
+    BUF="$MYPROXY_CMD $g__myproxy_opts"
+    BUF_PASSWD_STDIN="echo '$g__pass' | $BUF -S " # "-S" is to read pwd from stdin
 
 	if [ "x$verbose" = "xyes" ]; then
-		echo $BUF
-		eval $BUF
+		echo $BUF # this is to prevent displaying the password on stdxxx (i.e. BUF and BUF_PASSWD_STDIN are the same except for the password)
+		eval $BUF_PASSWD_STDIN
 	else
-		eval $BUF >& /dev/null
+		eval $BUF_PASSWD_STDIN >& /dev/null
 	fi
 }
 
