@@ -164,7 +164,12 @@ twophasesearch=False # Beware before enabling this: must be well tested/reviewed
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n','--name',default=None)
+    parser.add_argument('-n','--name',default=None,help='Name of the parameter to be displayed (if not set, all parameters are displayed)')
+    parser.add_argument('--testconfigparser',action='store_true',help='Test ConfigParser')
     args = parser.parse_args()
 
-    print_(args.name)
+    if args.testconfigparser:
+        openid=sdconfig.config.get('esgf_credential','openid')
+        print openid
+    else:
+        print_(args.name)
