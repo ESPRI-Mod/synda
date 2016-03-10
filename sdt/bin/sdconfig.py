@@ -169,7 +169,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.testconfigparser:
-        openid=sdconfig.config.get('esgf_credential','openid')
+        openid=config.get('esgf_credential','openid')
         print openid
     else:
         print_(args.name)
