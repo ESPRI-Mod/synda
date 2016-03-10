@@ -373,19 +373,33 @@ install_myproxyclient ()
     rm -f ${client_file/.py/.pyc} # remove pre-compiled file
 }
 
+install_mkproxy ()
+{
+    client_dir=$st_root/lib/$PYTHON_CMD/site-packages/globusonline_transfer_api_client-*.egg/globusonline/transfer/api_client/x509_proxy/
+    mkdir $tmpdir/globusonline-transfer-api-client
+    pushd $tmpdir/globusonline-transfer-api-client
+    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
+    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
+    make
+    cp mkproxy $client_dir
+    popd
+}
+
 install_st_additional_packages ()
 {
     # install pypi python modules in virtualenv
-    $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying
+    $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying globusonline-transfer-api-client
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
         $python_pkg_install_cmd argparse
     fi
 
     install_myproxyclient
+    install_mkproxy
 
     # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
     easy_install https://github.com/pyca/pyopenssl/tarball/master # note: pip cannot be used here ('easy_install' only)
+    easy_install https://github.com/globusonline/python-nexus-client/archive/integration.zip
 }
 
 install_sp_additional_packages ()
