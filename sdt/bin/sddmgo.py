@@ -37,38 +37,6 @@ from sdworkerutils import WorkerThread
 from globusonline.transfer import api_client
 from globusonline.transfer.api_client import x509_proxy
 
-def end_of_transfer(tr):
-    # log
-    if tr.status==sdconst.TRANSFER_STATUS_DONE:
-        sdlog.info("SDDOWNLO-101","Transfer done (%s)"%str(tr))
-    elif tr.status==sdconst.TRANSFER_STATUS_WAITING:
-        # Transfer have been marked for retry
-        # (this happens for example during shutdown immediate, where
-        # all running transfers are killed, or when wget are 'stalled'
-        # and killed by watchdog)
-        
-        sdlog.info("SDDOWNLO-108","%s"%(tr.error_msg,))
-        #sdlog.info("SDDOWNLO-104","Transfer marked for retry (%s)"%str(tr))
-    else:
-        sdlog.info("SDDOWNLO-102","Transfer failed (%s)"%str(tr))
-
-    # update file
-    sdfiledao.update_file(tr)
-
-    # IMPORTANT: code below must run AFTER the file status has been saved in DB
-
-    if tr.status==sdconst.TRANSFER_STATUS_DONE:
-        sdevent.file_complete_event(tr) # trigger 'file complete' event
-
-    # TODO: maybe do some rollback here in case fatal exception occurs in 'file_complete_event'
-    #       (else, we have a file marked as 'done' with the corresponding event un-triggered)
-
-    # check for fatal error
-    if tr.sdget_status==4:
-        sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returns fatal error.")
-        raise FatalException()
-
-
 def transfers_end():
 
     _, _, access_token = api_client.goauth.get_access_token(username=globus_username, password=globus_password)
