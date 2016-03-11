@@ -1,4 +1,6 @@
 - Version 3.3 - DEV
+	- add globus online support.
+	- set gridftp port range to 50000-51000.
 	- in sdget.sh and sdgetg.sh, '-v' option replace '-d' option (verbose replace debug_level).
 	- add new 'value' format for synda dump '-F' option.
 	- enable debug mode when using synda test <url> command.
