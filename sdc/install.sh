@@ -195,6 +195,8 @@ install_python_if_needed ()
 
 check_python_installation ()
 {
+    # check if python is found and if python version is not too old
+
     if ! which $PYTHON_CMD >/dev/null 2>&1; then # true if "which" exit code is not 0
         err "INSTALL-ERR001" "python not found"
     else
@@ -275,6 +277,8 @@ init_ve ()
     fi
 
     source $ve_dir/bin/activate
+
+    check_python_installation
 }
 
 check_ve ()
@@ -371,6 +375,28 @@ install_myproxyclient ()
     fi
     sed -i "s|SERVER_CN_PREFIX = 'host/'|SERVER_CN_PREFIX = 'host/'\n\n    __name__='MyProxyServerSSLCertVerification'|" $client_file
     rm -f ${client_file/.py/.pyc} # remove pre-compiled file
+}
+
+install_sg_application ()
+{
+    # install go transfer API
+    $python_pkg_install_cmd globusonline-transfer-api-client
+
+    # install mkproxy
+    #
+    # (program written in C to create a proxy certificate from a public key)
+    #
+    client_dir=$st_root/lib/$PYTHON_CMD/site-packages/globusonline_transfer_api_client-*.egg/globusonline/transfer/api_client/x509_proxy/
+    mkdir $tmpdir/mkproxy
+    pushd $tmpdir/mkproxy
+    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
+    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
+    make
+    cp mkproxy $client_dir
+    popd
+
+    # install python-nexus-client
+    easy_install https://github.com/globusonline/python-nexus-client/archive/integration.zip
 }
 
 install_st_additional_packages ()
@@ -533,7 +559,7 @@ set_default_python_version ()
 install_transfer_module ()
 {
     # disabled, as if it failed during the first install (e.g. for a dependency problem), we still need to be able to redo the virtualenv install !
-    check_ve $st_root
+    #check_ve $st_root
 
     install_ve $st_root # beware: this call switch the current context to the new virtualenv python
     install_st_additional_packages
@@ -543,7 +569,6 @@ install_transfer_module ()
 update_transfer_module ()
 {
     init_ve $st_root
-    check_python_installation # not sure if this is still needed
 
     # TODO: replace using 'synda -V' asap
     #update_transfer_environment_pre_install $(synda -V) $st_version
@@ -560,7 +585,7 @@ update_transfer_module ()
 install_postprocessing_module ()
 {
     # disabled, as if it failed during the first install (e.g. for a dependency problem), we still need to be able to redo the virtualenv install !
-    check_ve $sp_root
+    #check_ve $sp_root
 
     install_ve $sp_root # beware: this call switch the current context to the new virtualenv python
     install_sp_additional_packages
@@ -570,10 +595,15 @@ install_postprocessing_module ()
 update_postprocessing_module ()
 {
     init_ve $sp_root
-    check_python_installation # not sure if this is still needed
     pre_install $pp_conf_file
     install_sp_application
     post_install $pp_conf_file
+}
+
+install_globusonline_module ()
+{
+    init_ve $st_root
+    install_sg_application # sg stands for 'Synda Globus'
 }
 
 create_st_symlink ()
@@ -629,7 +659,9 @@ export PATH=$(echo $PATH | tr ':' '\n' | awk '!/\/sd.\/bin/' | paste -sd:)
 g__prefix=$HOME
 g__verbose=
 g__upgrade=0
+g__transfer=0
 g__postprocessing=0
+g__globusonline=0
 g__archive=
 g__version=
 
@@ -666,6 +698,8 @@ if [ $# -ge 1 ]; then
             g__transfer=1
         elif [ $module = "postprocessing" ]; then
             g__postprocessing=1
+        elif [ $module = "globusonline" ]; then
+            g__globusonline=1
         fi
     done
 else
@@ -778,8 +812,10 @@ check_dependencies
 set_default_python_version python2.6
 set_default_python_version python2.7
 
-# install
+# main
+
 if [ $g__upgrade -eq 0 ]; then
+    # install
 
     install_python_if_needed
 
@@ -798,7 +834,14 @@ if [ $g__upgrade -eq 0 ]; then
         sp_is_running
         install_postprocessing_module
     fi
+
+    if [ $g__globusonline -eq 1 ]; then
+        st_is_running
+        install_globusonline_module
+    fi
 else
+    # upgrade
+
     if [ $g__transfer -eq 1 ]; then
         st_is_running
         update_transfer_module

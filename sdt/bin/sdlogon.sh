@@ -168,10 +168,28 @@ if [ -z "$username" ]; then
 	exit 4
 fi
 
+
+
+# myproxyclient option
+
+# currently, we set bootstrap and trustroots option everytime
+#
+# from myproxyclient documentation at http://ndg-security.ceda.ac.uk/wiki/MyProxyClient
+# -b, --bootstrap       Download trusted CA certificates
+# -T, --trustroots      Update trustroots
+#
+# notes
+#     - If bootstrap is set, connect to MyProxy server without verification of
+#       the server's SSL certificate against any CA certificates
+#     - If bootstrap is set, updateTrustRoots will be forced to True also
+
 #  myproxyclient failed with this option, so disabled for now
 # -t $g__lifetime 
 
 g__myproxy_opts="logon -T -b $MYPROXY_VERBOSE -s $host -p $port -l $username -o $ESGF_CREDENTIAL"
+
+
+
 
 # return code
 #   0 => certificate doesn't exists

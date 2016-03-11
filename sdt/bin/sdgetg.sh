@@ -34,7 +34,7 @@ usage ()
     echo "  -v      verbose"
     echo ""
     echo "Example"
-    echo "  $0 -d 2 gsiftp://bmbf-ipcc-ar5.dkrz.de:2811//cmip5/output1/MPI-M/MPI-ESM-LR/1pctCO2/mon/ocean/Omon/r1i1p1/v20120308/soga/soga_Omon_MPI-ESM-LR_1pctCO2_r1i1p1_199001-199912.nc /tmp/sdt_test_file.nc"
+    echo "  $0 -vvv gsiftp://esgf1.dkrz.de:2811//cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/pastureFrac/pastureFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc /tmp/sdt_test_file.nc"
 }
 
 curdate ()
@@ -191,6 +191,9 @@ export X509_USER_CERT=$ESGF_CREDENTIAL
 export X509_USER_KEY=$ESGF_CREDENTIAL
 export X509_USER_PROXY=$ESGF_CREDENTIAL
 export X509_CERT_DIR=$ESGF_SECURITY_ROOT/certificates
+
+export GLOBUS_TCP_PORT_RANGE=50000,51000
+#export GLOBUS_TCP_SOURCE_RANGE=50000,51000
 
 GRIDFTP_CMD=globus-url-copy
 
