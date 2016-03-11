@@ -195,6 +195,8 @@ install_python_if_needed ()
 
 check_python_installation ()
 {
+    # check if python is found and if python version is not too old
+
     if ! which $PYTHON_CMD >/dev/null 2>&1; then # true if "which" exit code is not 0
         err "INSTALL-ERR001" "python not found"
     else
@@ -275,6 +277,8 @@ init_ve ()
     fi
 
     source $ve_dir/bin/activate
+
+    check_python_installation
 }
 
 check_ve ()
@@ -555,7 +559,7 @@ set_default_python_version ()
 install_transfer_module ()
 {
     # disabled, as if it failed during the first install (e.g. for a dependency problem), we still need to be able to redo the virtualenv install !
-    check_ve $st_root
+    #check_ve $st_root
 
     install_ve $st_root # beware: this call switch the current context to the new virtualenv python
     install_st_additional_packages
@@ -565,7 +569,6 @@ install_transfer_module ()
 update_transfer_module ()
 {
     init_ve $st_root
-    check_python_installation # not sure if this is still needed
 
     # TODO: replace using 'synda -V' asap
     #update_transfer_environment_pre_install $(synda -V) $st_version
@@ -582,7 +585,7 @@ update_transfer_module ()
 install_postprocessing_module ()
 {
     # disabled, as if it failed during the first install (e.g. for a dependency problem), we still need to be able to redo the virtualenv install !
-    check_ve $sp_root
+    #check_ve $sp_root
 
     install_ve $sp_root # beware: this call switch the current context to the new virtualenv python
     install_sp_additional_packages
@@ -592,7 +595,6 @@ install_postprocessing_module ()
 update_postprocessing_module ()
 {
     init_ve $sp_root
-    check_python_installation # not sure if this is still needed
     pre_install $pp_conf_file
     install_sp_application
     post_install $pp_conf_file
@@ -601,8 +603,7 @@ update_postprocessing_module ()
 install_globusonline_module ()
 {
     init_ve $st_root
-    check_python_installation # not sure if this is still needed
-    install_sg_application
+    install_sg_application # sg stands for 'Synda Globus'
 }
 
 create_st_symlink ()
