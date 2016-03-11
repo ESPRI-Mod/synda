@@ -373,7 +373,7 @@ install_myproxyclient ()
     rm -f ${client_file/.py/.pyc} # remove pre-compiled file
 }
 
-install_globus_transfer ()
+install_sg_application ()
 {
     # install go transfer API
     $python_pkg_install_cmd globusonline-transfer-api-client
@@ -408,8 +408,6 @@ install_st_additional_packages ()
 
     # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
     easy_install https://github.com/pyca/pyopenssl/tarball/master # note: pip cannot be used here ('easy_install' only)
-
-    install_globus_transfer
 }
 
 install_sp_additional_packages ()
@@ -600,6 +598,13 @@ update_postprocessing_module ()
     post_install $pp_conf_file
 }
 
+install_globusonline_module ()
+{
+    init_ve $st_root
+    check_python_installation # not sure if this is still needed
+    install_sg_application
+}
+
 create_st_symlink ()
 {
     for f in $st_lib/*; do
@@ -653,7 +658,9 @@ export PATH=$(echo $PATH | tr ':' '\n' | awk '!/\/sd.\/bin/' | paste -sd:)
 g__prefix=$HOME
 g__verbose=
 g__upgrade=0
+g__transfer=0
 g__postprocessing=0
+g__globusonline=0
 g__archive=
 g__version=
 
@@ -690,6 +697,8 @@ if [ $# -ge 1 ]; then
             g__transfer=1
         elif [ $module = "postprocessing" ]; then
             g__postprocessing=1
+        elif [ $module = "globusonline" ]; then
+            g__globusonline=1
         fi
     done
 else
@@ -802,8 +811,10 @@ check_dependencies
 set_default_python_version python2.6
 set_default_python_version python2.7
 
-# install
+# main
+
 if [ $g__upgrade -eq 0 ]; then
+    # install
 
     install_python_if_needed
 
@@ -822,7 +833,14 @@ if [ $g__upgrade -eq 0 ]; then
         sp_is_running
         install_postprocessing_module
     fi
+
+    if [ $g__globusonline -eq 1 ]; then
+        st_is_running
+        install_globusonline_module
+    fi
 else
+    # upgrade
+
     if [ $g__transfer -eq 1 ]; then
         st_is_running
         update_transfer_module
