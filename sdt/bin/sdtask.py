@@ -65,7 +65,12 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
 
 @sdprofiler.timeit
 def transfers_end():
-    """When a task is done, DB orders are enqueued. Those orders are then executed in this function."""
+    """Process end of transfer instructions.
+    
+    When a task is done, tasks are enqueued. Those tasks are then processed by
+    this function.
+    """
+
     dmngr.transfers_end()
 
 def prepare_transfer(tr):
