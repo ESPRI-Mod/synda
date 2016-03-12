@@ -45,7 +45,7 @@ def transfers_end():
         code, reason, data = api.task(task_id, fields="status")
         status = data['status']
 
-        sdlog.debug("SDDOWNLO-???", "Checking the status of Globus transfer tasks, id: %s, status: %s" % (task_id, status))
+        sdlog.debug("SDDMGLOB-016", "Checking the status of Globus transfer tasks, id: %s, status: %s" % (task_id, status))
         for item in globus_tasks[task_id]['items']:
             tr = item['tr']
             if status == "SUCCEEDED":
@@ -53,7 +53,7 @@ def transfers_end():
                 assert tr.size is not None
 
                 if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
-                    sdlog.error("SDDOWNLO-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
+                    sdlog.error("SDDMGLOB-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
 
                 # retrieve local and remote checksum
                 checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
@@ -76,19 +76,19 @@ def transfers_end():
                             tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                             # remove file from local repository
-                            sdlog.error("SDDOWNLO-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
+                            sdlog.error("SDDMGLOB-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
                             try:
                                 os.remove(tr.get_full_local_path())
                             except Exception,e:
-                                sdlog.error("SDDOWNLO-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
+                                sdlog.error("SDDMGLOB-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
 
                         elif incorrect_checksum_action=="keep":
-                            sdlog.info("SDDOWNLO-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
+                            sdlog.info("SDDMGLOB-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
                             
                             tr.status=sdconst.TRANSFER_STATUS_DONE
 
                         else:
-                            raise SDException("SDDOWNLO-507","incorrect value (%s)"%incorrect_checksum_action)
+                            raise SDException("SDDMGLOB-507","incorrect value (%s)"%incorrect_checksum_action)
                 else:
                     # remote checksum is missing
                     # NOTE: we DON'T store the local checksum ('file' table contains only the REMOTE checksum)
@@ -98,20 +98,20 @@ def transfers_end():
                 if tr.status == sdconst.TRANSFER_STATUS_DONE:
                     tr.end_date=sdtime.now() # WARNING: this is not the real end of transfer date but the date when we ask the globus scheduler if the transfer is done.
                     tr.error_msg=""
-                    sdlog.info("SDDOWNLO-101", "Transfer done (%s)" % str(tr))
+                    sdlog.info("SDDMGLOB-101", "Transfer done (%s)" % str(tr))
 
             elif status == "FAILED":
                 tr.status = sdconst.TRANSFER_STATUS_ERROR
                 tr.error_msg = "Error occurs during download."
 
-                sdlog.info("SDDOWNLO-101", "Transfer failed (%s)" % str(tr))
+                sdlog.info("SDDMGLOB-101", "Transfer failed (%s)" % str(tr))
 
                 # Remove local file if exists
                 if os.path.isfile(tr.get_full_local_path()):
                     try:
                         os.remove(tr.get_full_local_path())
                     except Exception,e:
-                        sdlog.error("SDDOWNLO-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
+                        sdlog.error("SDDMGLOB-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 
             elif status == "INACTIVE":
                 # Reactivate both source and destination endpoints
@@ -168,7 +168,7 @@ def transfers_begin(transfers):
                 'dst_path': local_path,
                 'tr': tr
         })
-        sdlog.info("SDDOWNLO-???", "src_endpoint: %s, src_path: %s, local_path: %s" % (src_endpoint, src_path, local_path))
+        sdlog.info("SDDMGLOB-001", "src_endpoint: %s, src_path: %s, local_path: %s" % (src_endpoint, src_path, local_path))
 
     # Submit transfers
 
@@ -184,19 +184,19 @@ def transfers_begin(transfers):
             raise FatalException()
         submission_id = data['value']
         t = api_client.Transfer(submission_id, src_endpoint, dst_endpoint)
-        sdlog.info("SDDOWNLO-???", "Globus transfer, source endpoint: %s, destination endpoint: %s" % (src_endpoint, dst_endpoint))
+        sdlog.info("SDDMGLOB-004", "Globus transfer, source endpoint: %s, destination endpoint: %s" % (src_endpoint, dst_endpoint))
         for item in globus_transfers[src_endpoint]['items']:
             t.add_item(item['src_path'], item['dst_path'])
-            sdlog.info("SDDOWNLO-???", "Globus transfer item, source path: %s, destination path: %s" % (item['src_path'], item['dst_path']))
+            sdlog.info("SDDMGLOB-005", "Globus transfer item, source path: %s, destination path: %s" % (item['src_path'], item['dst_path']))
 
         # Submit the transfer
 
         code, message, data = api.transfer(t)
         if code != 202:
-            sdlog.error("SDDOWNLO-???","Error: Cannot add a transfer: (%s, %s)"% (code, message))
+            sdlog.error("SDDMGLOB-006","Error: Cannot add a transfer: (%s, %s)"% (code, message))
             raise FatalException()
         task_id = data['task_id']
-        sdlog.info("SDDOWNLO-???", "Submitted Globus task, id: %s" % task_id)
+        sdlog.info("SDDMGLOB-007", "Submitted Globus task, id: %s" % task_id)
         globus_tasks[task_id] = globus_transfers[src_endpoint]
 
 
@@ -214,7 +214,7 @@ def map_to_globus(url):
             src_path.replace(path_out, '', 1)
         if path_in:
             src_path = path_out + src_path
-    sdlog.debug("SDDOWNLO-???", "Mapped url %s to %s%s" % (url, src_endpoint, src_path))
+    sdlog.debug("SDDMGLOB-024", "Mapped url %s to %s%s" % (url, src_endpoint, src_path))
     return src_endpoint, src_path, path
 
 
@@ -229,7 +229,7 @@ def activate_endpoint(api, ep=None):
     try:
         code, reason, result = api.endpoint_activate(ep, reqs)
     except api_client.APIError as e:
-        sdlog.error("SDDOWNLO-???","Error: Cannot activate the source endpoint: (%s)"% str(e))
+        sdlog.error("SDDMGLOB-028","Error: Cannot activate the source endpoint: (%s)"% str(e))
         raise FatalException()
 
 
@@ -291,7 +291,7 @@ class LocalEndpointDict(EndpointDict):
         if self.filepath: # only if endpoints file exists
             modtime = file_modification_datetime(self.filepath)
             if force or modtime > self.modtime:
-                sdlog.debug("SDDOWNLO-???", "Loading endpoints from: %s, last modified: %s" % (self.filepath, modtime))
+                sdlog.debug("SDDMGLOB-014", "Loading endpoints from: %s, last modified: %s" % (self.filepath, modtime))
                 self.modtime = modtime
                 endpoints = {}
 
@@ -308,7 +308,7 @@ class LocalEndpointDict(EndpointDict):
                     path_out = endpoint.attrib.get('path_out', None) # optional attribute
                     path_in = endpoint.attrib.get('path_in', None)   # optional attribute
                     endpoints[ gridftp ] = Endpoint(name, path_out=path_out, path_in=path_in)
-                    sdlog.debug("SDDOWNLO-???", "Using Globus endpoint %s : %s (%s --> %s)"  % (gridftp, name, path_out, path_in))
+                    sdlog.debug("SDDMGLOB-018", "Using Globus endpoint %s : %s (%s --> %s)"  % (gridftp, name, path_out, path_in))
 
                 # switch the dictionary of endpoints after reading
                 self.endpoints = endpoints

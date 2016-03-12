@@ -46,7 +46,7 @@ class Download():
         try:
             sdlogon.renew_certificate(False)
         except Exception,e:
-            sdlog.error("SDDOWNLO-502","Exception occured while retrieving certificate (%s)"%str(e))
+            sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
@@ -60,7 +60,7 @@ class Download():
             assert tr.size is not None
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
-                sdlog.error("SDDOWNLO-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
+                sdlog.error("SDDMDEFA-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
 
             # retrieve remote checksum
             remote_checksum=tr.checksum
@@ -81,20 +81,20 @@ class Download():
                         tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                         # remove file from local repository
-                        sdlog.error("SDDOWNLO-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
+                        sdlog.error("SDDMDEFA-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
                         try:
                             os.remove(tr.get_full_local_path())
                         except Exception,e:
-                            sdlog.error("SDDOWNLO-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
+                            sdlog.error("SDDMDEFA-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
 
                     elif incorrect_checksum_action=="keep":
-                        sdlog.info("SDDOWNLO-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
+                        sdlog.info("SDDMDEFA-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
                         
                         tr.status=sdconst.TRANSFER_STATUS_DONE
                         tr.error_msg=""
 
                     else:
-                        raise SDException("SDDOWNLO-507","incorrect value (%s)"%incorrect_checksum_action)
+                        raise SDException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
             else:
                 # remote checksum is missing
 
@@ -106,7 +106,7 @@ class Download():
                 try:
                     os.remove(tr.get_full_local_path())
                 except Exception,e:
-                    sdlog.error("SDDOWNLO-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
+                    sdlog.error("SDDMDEFA-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 
             # Set status
             if killed:
@@ -119,17 +119,17 @@ class Download():
 def end_of_transfer(tr):
     # log
     if tr.status==sdconst.TRANSFER_STATUS_DONE:
-        sdlog.info("SDDOWNLO-101","Transfer done (%s)"%str(tr))
+        sdlog.info("SDDMDEFA-101","Transfer done (%s)"%str(tr))
     elif tr.status==sdconst.TRANSFER_STATUS_WAITING:
         # Transfer have been marked for retry
         # (this happens for example during shutdown immediate, where
         # all running transfers are killed, or when wget are 'stalled'
         # and killed by watchdog)
         
-        sdlog.info("SDDOWNLO-108","%s"%(tr.error_msg,))
-        #sdlog.info("SDDOWNLO-104","Transfer marked for retry (%s)"%str(tr))
+        sdlog.info("SDDMDEFA-108","%s"%(tr.error_msg,))
+        #sdlog.info("SDDMDEFA-104","Transfer marked for retry (%s)"%str(tr))
     else:
-        sdlog.info("SDDOWNLO-102","Transfer failed (%s)"%str(tr))
+        sdlog.info("SDDMDEFA-102","Transfer failed (%s)"%str(tr))
 
     # update file
     sdfiledao.update_file(tr)
@@ -144,7 +144,7 @@ def end_of_transfer(tr):
 
     # check for fatal error
     if tr.sdget_status==4:
-        sdlog.info("SDDOWNLO-147","Stopping daemon as sdget.download() returned fatal error.")
+        sdlog.info("SDDMDEFA-147","Stopping daemon as sdget.download() returned fatal error.")
         raise FatalException()
 
 def start_transfer_thread(tr):
