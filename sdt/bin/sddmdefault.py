@@ -91,7 +91,7 @@ class Download():
                         tr.status=sdconst.TRANSFER_STATUS_DONE
 
                     else:
-                        raise SDException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
+                        raise FatalException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
             else:
                 # remote checksum is missing
                 # NOTE: we DON'T store the local checksum ('file' table contains only the *remote* checksum)

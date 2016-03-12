@@ -88,7 +88,7 @@ def transfers_end():
                             tr.status=sdconst.TRANSFER_STATUS_DONE
 
                         else:
-                            raise SDException("SDDMGLOB-507","incorrect value (%s)"%incorrect_checksum_action)
+                            raise FatalException("SDDMGLOB-507","incorrect value (%s)"%incorrect_checksum_action)
                 else:
                     # remote checksum is missing
                     # NOTE: we DON'T store the local checksum ('file' table contains only the REMOTE checksum)
