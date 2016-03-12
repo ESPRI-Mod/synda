@@ -95,6 +95,7 @@ multiuser=False
 # (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
                  'post_processing':'0',
+                 'globusonline':'0',
                  'unicode_term':'0',
                  'progress':'1',
                  'onemgf':'false',
@@ -148,8 +149,6 @@ sdtc_history_file=os.path.expanduser("~/.sdtc_history")
 http_client='wget' # wget | urllib
 
 daemon_command_name='sdtaskscheduler'
-
-download_manager='default' # default | globus_online
 
 # note that variable below only set which low_level mecanism to use to find the nearest (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
 nearest_schedule='post' # pre | post

@@ -157,6 +157,8 @@ def fatal_exception():
 
 # init.
 
+download_manager='globus_online' if sdconfig.config.getboolean('module','globusonline') else 'default'
+
 max_transfer=sdconfig.config.getint('daemon','max_parallel_download')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
 
@@ -165,4 +167,4 @@ download_managers={
     'globus_online':sddmgo
 }
 
-dmngr=download_managers[sdconfig.download_manager]
+dmngr=download_managers[download_manager]
