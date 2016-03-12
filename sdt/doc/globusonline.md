@@ -2,7 +2,9 @@
 
 ## Requirement
 
-Synda must be installed from source to transfer files with Globus Online
+* Synda 3.3+
+
+* Synda must be installed from source to transfer files with Globus Online
 (not available yet with system package based installation).
 
 ## Installation
