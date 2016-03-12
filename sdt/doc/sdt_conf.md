@@ -56,14 +56,23 @@ Default: 0
 
 --------------------------------------------------------
 
-### path.data_path
+### core.data_path
 
+Override the default data path
+
+Note: the default data path is '$HOME/sdt/data' for source installation and
+'/srv/synda/sdt' for system package installation.
 
 Default: ""
 
 --------------------------------------------------------
 
-### path.db_path
+### core.db_path
+
+Override the default database path
+
+Note: the default data path is '$HOME/sdt/db' for source installation and
+'/var/lib/synda/sdt' for system package installation.
 
 Default: ""
 

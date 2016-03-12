@@ -20,16 +20,16 @@ from sdexception import SDException
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
 def get_data_folder():
-    if config.has_option('path','data_path'):
-        path=config.get('path','data_path')
+    if config.has_option('core','data_path'):
+        path=config.get('core','data_path')
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
     return "%s/data"%root_folder
 
 def get_db_folder():
-    if config.has_option('path','db_path'):
-        path=config.get('path','db_path')
+    if config.has_option('core','db_path'):
+        path=config.get('core','db_path')
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
