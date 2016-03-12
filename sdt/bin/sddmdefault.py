@@ -55,8 +55,6 @@ class Download():
 
         if tr.sdget_status==0:
 
-            tr.status=sdconst.TRANSFER_STATUS_DONE
-
             assert tr.size is not None
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
@@ -70,9 +68,9 @@ class Download():
 
                 # compare local and remote checksum
                 if remote_checksum==local_checksum:
+                    # checksum is ok
 
-                    # checksum is ok, nothing to do
-                    pass
+                    tr.status=sdconst.TRANSFER_STATUS_DONE
                 else:
                     # checksum is not ok
 
@@ -91,14 +89,18 @@ class Download():
                         sdlog.info("SDDMDEFA-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
                         
                         tr.status=sdconst.TRANSFER_STATUS_DONE
-                        tr.error_msg=""
 
                     else:
                         raise SDException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
             else:
                 # remote checksum is missing
+                # NOTE: we DON'T store the local checksum ('file' table contains only the *remote* checksum)
 
-                pass # we DON'T store the local checksum ('file' table contains only the *remote* checksum)
+                tr.status=sdconst.TRANSFER_STATUS_DONE
+
+            if tr.status == sdconst.TRANSFER_STATUS_DONE:
+                tr.error_msg=""
+                sdlog.info("SDDMDEFA-101", "Transfer done (%s)" % str(tr))
         else:
 
             # Remove file if exists
