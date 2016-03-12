@@ -253,7 +253,7 @@ def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
 
 # init.
 
-event_triggered_log_level=logging.INFO if sdconfig.config.get('daemon','post_processing')=='1' else logging.DEBUG
+event_triggered_log_level=logging.INFO if sdconfig.config.get('module','post_processing')=='1' else logging.DEBUG
 
 if __name__ == '__main__':
     # code below is used to trigger event manually

@@ -22,7 +22,7 @@ from sdtypes import Event
 def add_event(event,commit=True,conn=sddb.conn):
     keys_to_insert=['name', 'status', 'project', 'model', 'dataset_pattern', 'variable', 'filename_pattern', 'crea_date', 'priority']
 
-    if sdconfig.config.get('daemon','post_processing')=='1':
+    if sdconfig.config.get('module','post_processing')=='1':
         sdsqlutils.insert(event,keys_to_insert,commit,conn)
 
 def get_events(limit=None,conn=sddb.conn,**search_constraints):

@@ -6,6 +6,9 @@
 	- enable debug mode when using synda test <url> command.
 	- 'synda list' now list everything by default.
 	- add missing initialization in install.sh (g__transfer=0).
+	- add configuration file documentation.
+	- move post_processing parameter from daemon section to module section.
+	- rename configuration file 'path' section to 'core' section.
 - Version 3.2 - 20160203
 	- DEB package
 	- Retrieve dataset timestamp in batch mode.
