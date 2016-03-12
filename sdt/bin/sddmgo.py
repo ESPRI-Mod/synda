@@ -27,13 +27,11 @@ import sdapp
 import sdlog
 import sdconst
 from sdexception import SDException,FatalException
-import sdlogon
 import sdconfig
 import sdtime
 import sdfiledao
 import sdevent
-import sdget
-from sdworkerutils import WorkerThread
+import sdutils
 from globusonline.transfer import api_client
 from globusonline.transfer.api_client import x509_proxy
 
@@ -51,11 +49,70 @@ def transfers_end():
         for item in globus_tasks[task_id]['items']:
             tr = item['tr']
             if status == "SUCCEEDED":
+
+                assert tr.size is not None
+
+                if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
+                    sdlog.error("SDDOWNLO-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
+
+                # retrieve local and remote checksum
+                checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
+                local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
+                remote_checksum=tr.checksum # retrieve remote checksum
+
+                if remote_checksum!=None:
+                    # remote checksum exists
+
+                    # compare local and remote checksum
+                    if remote_checksum==local_checksum:
+                        # checksum is ok
+
+                        tr.status = sdconst.TRANSFER_STATUS_DONE
+                    else:
+                        # checksum is not ok
+
+                        if incorrect_checksum_action=="remove":
+                            tr.status=sdconst.TRANSFER_STATUS_ERROR
+                            tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
+
+                            # remove file from local repository
+                            sdlog.error("SDDOWNLO-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
+                            try:
+                                os.remove(tr.get_full_local_path())
+                            except Exception,e:
+                                sdlog.error("SDDOWNLO-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
+
+                        elif incorrect_checksum_action=="keep":
+                            sdlog.info("SDDOWNLO-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
+                            
+                            tr.status=sdconst.TRANSFER_STATUS_DONE
+
+                        else:
+                            raise SDException("SDDOWNLO-507","incorrect value (%s)"%incorrect_checksum_action)
+                else:
+                    # remote checksum is missing
+                    # NOTE: we DON'T store the local checksum ('file' table contains only the REMOTE checksum)
+
                     tr.status = sdconst.TRANSFER_STATUS_DONE
+
+                if tr.status == sdconst.TRANSFER_STATUS_DONE:
+                    tr.end_date=sdtime.now() # WARNING: this is not the real end of transfer date but the date when we ask the globus scheduler if the transfer is done.
+                    tr.error_msg=""
                     sdlog.info("SDDOWNLO-101", "Transfer done (%s)" % str(tr))
+
             elif status == "FAILED":
-                    tr.status = sdconst.TRANSFER_STATUS_ERROR
-                    sdlog.info("SDDOWNLO-101", "Transfer failed (%s)" % str(tr))
+                tr.status = sdconst.TRANSFER_STATUS_ERROR
+                tr.error_msg = "Error occurs during download."
+
+                sdlog.info("SDDOWNLO-101", "Transfer failed (%s)" % str(tr))
+
+                # Remove local file if exists
+                if os.path.isfile(tr.get_full_local_path()):
+                    try:
+                        os.remove(tr.get_full_local_path())
+                    except Exception,e:
+                        sdlog.error("SDDOWNLO-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
+
             elif status == "INACTIVE":
                 # Reactivate both source and destination endpoints
                 activate_endpoint(api, globus_tasks[task_id]['src_endpoint'])
@@ -63,11 +120,24 @@ def transfers_end():
             elif status == "ACTIVE":
                 pass
 
+
             # update file
             sdfiledao.update_file(tr)
 
+
             if tr.status == sdconst.TRANSFER_STATUS_DONE:
+
+                # TODO: maybe add a try/except and do some rollback here in
+                # case fatal exception occurs in 'file_complete_event' (else,
+                # we have a file marked as 'done' with the corresponding event
+                # un-triggered)
+
+                # NOTE: code below must run AFTER the file status has been
+                # saved in DB (because it makes DB queries which expect the
+                # file status to exist)
+
                 sdevent.file_complete_event(tr) # trigger 'file complete' event
+
 
         # Remove the tasks from the lists of active tasks
         if status == "SUCCEEDED" or status == "FAILED":
