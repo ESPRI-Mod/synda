@@ -7,11 +7,18 @@ Synda must be installed from source to transfer files with Globus Online
 
 ## Installation
 
-To install globusonline module in an already existing synda installation, do
+First you need to retrieve the installer
+
+    wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
+    chmod +x ./install.sh
+
+Then use one of the methods below to install the globus module
+
+### Install globusonline module over an already existing synda installation
 
     ./install.sh globusonline
 
-To install a new installation of synda and globusonline, do
+### Install a new installation of synda and globusonline
 
     ./install.sh synda globusonline
 
