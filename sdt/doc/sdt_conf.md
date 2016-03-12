@@ -2,23 +2,31 @@
 
 ### daemon.max_parallel_download
 
+Set the number of parallel download.
+
 Default: 8
 
 --------------------------------------------------------
 
-### daemon.post_processing
+### module.post_processing
+
+If true, send download completion events to the post-processing module.
 
 Default: 0
 
 --------------------------------------------------------
 
-### daemon.download_manager
+### module.globusonline
 
-Default: default
+If true, use globus online platform to download files.
+
+Default: 0
 
 --------------------------------------------------------
 
 ### post_processing.host
+
+Post-processing daemon host
 
 Default: localhost
 
@@ -26,17 +34,23 @@ Default: localhost
 
 ### post_processing.port
 
+Post-processing daemon port
+
 Default: 8090
 
 --------------------------------------------------------
 
 ### log.verbosity_level
 
+Log verbosity level
+
 Default: info
 
 --------------------------------------------------------
 
 ### log.scheduler_profiling
+
+If true, log code profiling information
 
 Default: 0
 
@@ -45,17 +59,19 @@ Default: 0
 ### path.data_path
 
 
-Default: 
+Default: ""
 
 --------------------------------------------------------
 
 ### path.db_path
 
-Default: 
+Default: ""
 
 --------------------------------------------------------
 
 ### interface.unicode_term
+
+If true, use unicode characters for progress bar.
 
 Default: 0
 
@@ -63,11 +79,15 @@ Default: 0
 
 ### interface.progress
 
+If true, show progress bar for time consuming task.
+
 Default: 0
 
 --------------------------------------------------------
 
 ### behaviour.onemgf
+
+Improve search performance (experimental).
 
 Default: false
 
@@ -75,11 +95,31 @@ Default: false
 
 ### behaviour.check_parameter
 
+If true, perform parameter typo detection (name and value).
+
+Example
+
+If behaviour.check_parameter is true,
+
+    $ synda search cmip5 taz
+
+will raises an exception and informs the user that 'taz' value is not found.
+
 Default: 1
 
 --------------------------------------------------------
 
 ### behaviour.ignorecase
+
+If true, automatically fix incorrect case
+
+Example
+
+    $ synda search MOHC-HADGEM3-RA
+
+This command normally raises an exception as the correct case should be 'MOHC-HadGEM3-RA'.
+
+But if behaviour.ignorecase is true, the model name will be automatically corrected and no exception will occur.
 
 Default: true
 
@@ -87,15 +127,17 @@ Default: true
 
 ### behaviour.nearest
 
+If true, automatically select the nearest file replica
+
 Default: false
 
 --------------------------------------------------------
 
 ### behaviour.nearest_mode
 
-Nearest replica algorithm
+Set nearest replica algorithm.
 
-(possible values are: "geolocation", "rtt")
+Possible values are: "geolocation" and "rtt"
 
 Default: geolocation
 
@@ -103,18 +145,23 @@ Default: geolocation
 
 ### behaviour.lfae_mode
 
+Set which policies to adopt when a download starts and local file already exists.
+
+Possible values are: "keep", "replace" and "abort"
+
 Default: abort
-
-'lfae' means "local file already exists"
-
-(possible values are: "keep", "replace", "abort")
 
 --------------------------------------------------------
 
 ### behaviour.incorrect_checksum_action
 
-remove => if checksum doesn't match, set transfer status to error and remove file from local repository
-keep   => if checksum doesn't match, set transfer status to done, log a warning and keep file in local repository
+Set which policies to adopt when checksum doesn't match
+
+Possible values are: "remove" and "keep"
+
+"remove": set transfer status to error and remove the downloaded file
+
+"keep": set transfer status to done, log a warning and keep the downloaded file
 
 Default: remove
 
@@ -122,11 +169,17 @@ Default: remove
 
 ### index.indexes
 
+Set the indexes list to use for large operation
+
+Note: this parameter is used for load-balancing on several indexes, to speed up large search-API requests
+
 Default: pcmdi.llnl.gov
 
 --------------------------------------------------------
 
 ### index.default_index
+
+Set the index to use in priority
 
 Default: pcmdi.llnl.gov
 
@@ -134,16 +187,24 @@ Default: pcmdi.llnl.gov
 
 ### locale.country
 
-Default: 
+Set the country in which synda is installed
+
+Note: used to compute nearest replicat when "geolocation" mode is used
+
+Default: ""
 
 --------------------------------------------------------
 
 ### globus.esgf_endpoints
+
+Set globus endpoints
 
 Default: /esg/config/esgf_endpoints.xml
 
 --------------------------------------------------------
 
 ### globus.destination_endpoint
+
+Set destination endpoint
 
 Default: destination#endpoint
