@@ -9,6 +9,8 @@
 	- add configuration file documentation.
 	- move post_processing parameter from daemon section to module section.
 	- rename configuration file 'path' section to 'core' section.
+	- do not remove ca certs when using 'synda certificate renew' option.
+	- add 'force_renew_ca_certficates' option to remove ca certs.
 - Version 3.2 - 20160203
 	- DEB package
 	- Retrieve dataset timestamp in batch mode.

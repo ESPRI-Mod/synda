@@ -76,7 +76,6 @@ shift $(($OPTIND - 1)) # remove options
 MYPROXY_CMD="${0%/*}/myproxyclient"
 MYPROXY_VERBOSE=""
 #MYPROXY_VERBOSE="--verbose"
-FORCE_RENEW_CERTIFICATE="no"
 multiuser="0"
 
 # set root folder
@@ -244,17 +243,12 @@ renew_certificate ()
 	fi
 }
 
-# when testing certificate, remove current certificate
 if [ "x$force_renew"  = "x1" ]; then
 	rm -f $ESGF_CREDENTIAL
 fi
 
 if [ $force_renew_ca_certficates -eq 1 ]; then
 	rm -rf $ESGF_CERT_DIR
-fi
-
-if [ $FORCE_RENEW_CERTIFICATE = "yes" ]; then
-	renew_certificate
 fi
 
 certificate_exists
