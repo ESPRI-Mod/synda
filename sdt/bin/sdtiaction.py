@@ -43,10 +43,9 @@ def certificate(args):
         sdlogon.print_certificate()
     else:
         if args.action=="renew":
-
             if sdlogon.is_openid_set():
                 try:
-                    sdlogon.renew_certificate(True,quiet=False)
+                    sdlogon.renew_certificate(True,quiet=False,debug=False,force_renew_ca_certificates=args.force_renew_ca_certificates)
                     print_stderr('Certificate successfully renewed.')   
                 except Exception,e:
                     print_stderr('Error occurs while renewing certificate (%s)'%str(e))
