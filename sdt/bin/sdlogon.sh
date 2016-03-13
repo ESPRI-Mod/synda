@@ -170,11 +170,13 @@ fi
 
 
 
-# myproxyclient option
+# myproxyclient options
 
-# currently, we set bootstrap and trustroots option everytime
+# from myproxyclient documentation
 #
-# from myproxyclient documentation at http://ndg-security.ceda.ac.uk/wiki/MyProxyClient
+#  - http://ndg-security.ceda.ac.uk/wiki/MyProxyClient
+#  - lib/python2.7/site-packages/myproxy/client.py
+#
 # -b, --bootstrap       Download trusted CA certificates
 # -T, --trustroots      Update trustroots
 #
@@ -186,8 +188,17 @@ fi
 #  myproxyclient failed with this option, so disabled for now
 # -t $g__lifetime 
 
-g__myproxy_opts="logon -T -b $MYPROXY_VERBOSE -s $host -p $port -l $username -o $ESGF_CREDENTIAL"
+# currently, we set trustroots option everytime
 
+g__myproxy_opts="logon -T $MYPROXY_VERBOSE -s $host -p $port -l $username -o $ESGF_CREDENTIAL"
+
+# currently, we set bootstrap option everytime # TODO: change this to set only the first time (i.e. if .esg/certificates is empty)
+
+bootstrap=1
+
+if [ $bootstrap -eq 1 ]; then
+    g__myproxy_opts="$g__myproxy_opts -b "
+fi
 
 
 
