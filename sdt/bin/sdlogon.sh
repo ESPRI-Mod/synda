@@ -50,7 +50,7 @@ if [ $# -eq 0 ]; then
 fi
 
 verbose="no"
-force_renew=0
+force_renew_certficate=0
 force_renew_ca_certficates=0
 port=7512
 host=pcmdi9.llnl.gov
@@ -61,7 +61,7 @@ do
 		;;
   p)	port=$OPTARG
 		;;
-  r)	force_renew=1
+  r)	force_renew_certficate=1
 		;;
   u)	username=$OPTARG
 		;;
@@ -215,6 +215,7 @@ certificate_exists ()
 		return 0
 	fi
 }
+
 # return code
 #   0 => certificate isn't valid
 #   1 => certificate is valid
@@ -227,6 +228,7 @@ certificate_is_valid ()
 		return 0
 	fi
 }
+
 # return code
 #   0 => success
 #  >0 => error
@@ -243,7 +245,7 @@ renew_certificate ()
 	fi
 }
 
-if [ "x$force_renew"  = "x1" ]; then
+if [ "x$force_renew_certficate"  = "x1" ]; then
 	rm -f $ESGF_CREDENTIAL
 fi
 

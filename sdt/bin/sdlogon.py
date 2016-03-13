@@ -75,7 +75,7 @@ def renew_certificate_NG(force,quiet=True):
     myproxy_clnt = MyProxyClient(hostname="myproxy.somewhere.ac.uk")
     cert, private_key = myproxy_clnt.logon(username, password, bootstrap=True)
 
-def renew_certificate(force,quiet=True,debug=False):
+def renew_certificate(force_renew_certficate,quiet=True,debug=False,force_renew_ca_certficates=False):
     """Renew ESGF certificate."""
 
     # TODO: move this log into the script so to print only when expired
@@ -91,8 +91,11 @@ def renew_certificate(force,quiet=True,debug=False):
     if not quiet:
         argv.append('-v')
 
-    if force is True:
+    if force_renew_certficate:
         argv.append('-r')
+
+    if force_renew_ca_certficates:
+        argv.append('-x')
 
     (status,stdout,stderr)=sdutils.get_status_output(argv)
     if status!=0:
