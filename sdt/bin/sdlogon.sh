@@ -50,8 +50,8 @@ if [ $# -eq 0 ]; then
 fi
 
 verbose="no"
-force_renew_certficate=0
-force_renew_ca_certficates=0
+force_renew_certificate=0
+force_renew_ca_certificates=0
 port=7512
 host=pcmdi9.llnl.gov
 while getopts 'h:p:ru:vx' OPTION
@@ -61,13 +61,13 @@ do
 		;;
   p)	port=$OPTARG
 		;;
-  r)	force_renew_certficate=1
+  r)	force_renew_certificate=1
 		;;
   u)	username=$OPTARG
 		;;
   v)	verbose="yes"
 		;;
-  x)	force_renew_ca_certficates=1
+  x)	force_renew_ca_certificates=1
 		;;
   esac
 done
@@ -245,11 +245,11 @@ renew_certificate ()
 	fi
 }
 
-if [ "x$force_renew_certficate"  = "x1" ]; then
+if [ "x$force_renew_certificate"  = "x1" ]; then
 	rm -f $ESGF_CREDENTIAL
 fi
 
-if [ $force_renew_ca_certficates -eq 1 ]; then
+if [ $force_renew_ca_certificates -eq 1 ]; then
 	rm -rf $ESGF_CERT_DIR
 fi
 
