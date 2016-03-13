@@ -51,9 +51,10 @@ fi
 
 verbose="no"
 force_renew=0
+force_renew_ca_certficates=0
 port=7512
 host=pcmdi9.llnl.gov
-while getopts 'h:p:ru:v' OPTION
+while getopts 'h:p:ru:vx' OPTION
 do
   case $OPTION in
   h)	host=$OPTARG
@@ -65,6 +66,8 @@ do
   u)	username=$OPTARG
 		;;
   v)	verbose="yes"
+		;;
+  x)	force_renew_ca_certficates=1
 		;;
   esac
 done
@@ -244,6 +247,9 @@ renew_certificate ()
 # when testing certificate, remove current certificate
 if [ "x$force_renew"  = "x1" ]; then
 	rm -f $ESGF_CREDENTIAL
+fi
+
+if [ $force_renew_ca_certficates -eq 1 ]; then
 	rm -rf $ESGF_CERT_DIR
 fi
 
