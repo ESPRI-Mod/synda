@@ -26,26 +26,22 @@ Then use one of the methods below to install the globus module
 
 ## Configuration
 
-Synda Configuration Files
+### sdt/conf/credentials.conf:
 
-sdt/lib/sd/sdconfig.py:
-
-    #download_manager='default' # default | globus_online                                                              
-    download_manager='globus_online'
-
-sdt/conf/credentials.conf:
+    [module]
+    globusonline=1
 
     [globus]
     username=
     password=
 
-sdt/conf/sdt.conf:
+### sdt/conf/sdt.conf:
 
     [globus]
     destination_endpoint = destination#endpoint
     esgf_endpoints = /esg/config/esgf_endpoints.xml
 
-ESGF Configuration Files
+### ESGF Configuration Files
 
     /esg/config/esgf_endpoints.xml:
 
