@@ -1,4 +1,6 @@
-# Synda configuration file
+# Configuration parameter reference
+
+This document describes each parameter used in "std.conf" file to configure Synda.
 
 ### daemon.max_parallel_download
 
