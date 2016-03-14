@@ -26,7 +26,7 @@ Then use one of the methods below to install the globus module
 
 ## Configuration
 
-### sdt/conf/credentials.conf:
+### sdt/conf/credentials.conf
 
     [module]
     globusonline=1
@@ -35,15 +35,13 @@ Then use one of the methods below to install the globus module
     username=
     password=
 
-### sdt/conf/sdt.conf:
+### sdt/conf/sdt.conf
 
     [globus]
     destination_endpoint = destination#endpoint
     esgf_endpoints = /esg/config/esgf_endpoints.xml
 
-### ESGF Configuration Files
-
-    /esg/config/esgf_endpoints.xml:
+### /esg/config/esgf_endpoints.xml
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <endpoints xmlns="http://www.esgf.org/whitelist">
