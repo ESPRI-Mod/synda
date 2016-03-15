@@ -9,7 +9,11 @@
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script compute local path for both file and dataset."""
+"""This module compute local path for both file and dataset.
+
+Note
+    This module is only used in the file pipeline, not in the dataset pipeline.
+"""
 
 import os
 import sys
@@ -28,6 +32,8 @@ def run(files):
 
     files=transform_local_path_product(files)
     files=transform_local_path_project(files)
+
+    files=local_path_custom_transform(files)
 
     files=add_file_local_path(files)
 
@@ -91,6 +97,21 @@ def transform_local_path_project(files):
             project=extract_project(path)
 
             f["dataset_local_path"]=re.sub('^'+project,project.upper(),path)
+    return files
+
+def local_path_custom_transform(files):
+    """
+    Note
+        'sdreducecol' filter must be disabled when using this func
+    """
+
+    # Example
+    #
+    #for f in files:
+    #    if f['project']=='CORDEX':
+    #        custom_dataset_template='cordex/%(product)s/%(domain)s/%(institute)s/%(driving_model)s/%(experiment)s/%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s'
+    #        f["dataset_local_path"]=custom_dataset_template%f
+
     return files
 
 def transform_local_path_product(files):
