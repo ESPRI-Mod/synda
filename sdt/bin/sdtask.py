@@ -27,8 +27,6 @@ import sdeventdao
 import sdlog
 import sddb
 import sddeletefile
-import sddmdefault
-import sddmgo
 from sdexception import NoTransferWaitingException,FatalException,RemoteException
 from sdtypes import File
 
@@ -149,6 +147,18 @@ def transfers_begin():
 
     dmngr.transfers_begin(transfers)
 
+def get_download_manager():
+    download_manager='globus_online' if sdconfig.config.getboolean('module','globusonline') else 'default'
+
+    if download_manager=='globus_online':
+        import sddmgo
+        return sddmgo
+    elif download_manager=='default':
+        import sddmdefault
+        return sddmdefault
+    else:
+        assert False
+
 def can_leave():
     return dmngr.can_leave()
 
@@ -157,14 +167,7 @@ def fatal_exception():
 
 # init.
 
-download_manager='globus_online' if sdconfig.config.getboolean('module','globusonline') else 'default'
-
 max_transfer=sdconfig.config.getint('daemon','max_parallel_download')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
 
-download_managers={
-    'default':sddmdefault,
-    'globus_online':sddmgo
-}
-
-dmngr=download_managers[download_manager]
+dmngr=get_download_manager()
