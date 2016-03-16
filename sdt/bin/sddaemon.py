@@ -24,6 +24,8 @@ Note
 """
 
 import os
+import grp
+import pwd
 import time
 import daemon
 import daemon.pidfile
@@ -34,6 +36,7 @@ import subprocess
 #import sdapp # do no uncomment this (see note above)
 import sdconfig
 import sdutils
+import sdtools
 from sdexception import SDException
 
 def get_daemon_status():
@@ -132,11 +135,24 @@ def terminate(signum, frame):
     import sdtaskscheduler # must be here because of double-fork (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
     sdtaskscheduler.terminate(signum, frame)
 
+def set_daemon_process_identity(context,user,group):
+    uid=pwd.getpwnam(user).pw_uid
+    gid=grp.getgrnam(group).gr_gid
+
+    context.uid = uid
+    context.gid = gid
+
 # init.
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,)
 context.signal_map={ signal.SIGTERM: terminate, }
+
+if sdtools.is_root():
+    user=sdconfig.config.get('daemon','user')
+    group=sdconfig.config.get('daemon','group')
+    if user and group:
+        set_daemon_process_identity(context,user,group)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

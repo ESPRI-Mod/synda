@@ -94,6 +94,8 @@ multiuser=False
 # TODO: replace default options DICTIONNARY below with a default options FILE
 # (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
+                 'user':'',
+                 'group':'',
                  'post_processing':'0',
                  'globusonline':'0',
                  'unicode_term':'0',
