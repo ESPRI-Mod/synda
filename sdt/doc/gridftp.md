@@ -19,7 +19,7 @@ You need to install EPEL repository
 
     sudo yum install epel-release -y
 
-Then install the package with
+then install the package with
 
     sudo yum install globus-gass-copy-progs
 
