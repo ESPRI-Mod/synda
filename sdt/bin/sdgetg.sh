@@ -104,20 +104,30 @@ if [ $verbosity -gt 4 ]; then
 fi
 
 # set checksum command depending on checksum type
-checksum_cmd=
-if [ "$checksum_type" = "sha256" ]; then
-    checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-elif [ "$checksum_type" = "md5" ]; then
-    checksum_cmd="md5sum  | awk '{print \$1}' "
-elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-    checksum_cmd="md5sum  | awk '{print \$1}' "
-else
-    :
 
-    # do not raise error here anymore, as some ESGF files do not have checksum (but we still want to retrieve them)
-    #
-    #msg "incorrect checksum type ($checksum_type)"
-    #exit 5
+MD5_checksum_type ()
+{
+    checksum_cmd="md5sum  | awk '{print \$1}' "
+}
+
+SHA256_checksum_type ()
+{
+    checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+}
+
+if [ "$checksum_type" = "sha256" ]; then
+    SHA256_checksum_type
+elif [ "$checksum_type" = "SHA256" ]; then
+    SHA256_checksum_type
+elif [ "$checksum_type" = "md5" ]; then
+    MD5_checksum_type
+elif [ "$checksum_type" = "MD5" ]; then
+    MD5_checksum_type
+else
+    # we may come file for ESGF files that do not have checksum
+
+    # if checksum type is unknown, default to sha256 (arbitrary)
+    SHA256_checksum_type
 fi
 
 # retrieve positional arguments
