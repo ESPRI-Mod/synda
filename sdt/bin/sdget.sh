@@ -262,16 +262,13 @@ elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercas
     checksum_cmd=$(md5_cmd)
 else
     # we may come file for ESGF files that do not have checksum
-    
+
     # fall back to sha256 in this case (arbitrary)
     checksum_cmd=$(sha256_cmd)
 fi
 
 # wget configuration
-#
-# without checksum
-# WGETOPT=" --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
-#
+ 
 # with checksum
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
