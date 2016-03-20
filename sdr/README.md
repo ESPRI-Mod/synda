@@ -1,3 +1,3 @@
 # Synda REPL
 
-'Synda REPL' module is a shell for the 'Synda transfer' module (experimental).
+Synda REPL module is a shell for Synda transfer module (experimental).
