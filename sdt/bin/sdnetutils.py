@@ -19,6 +19,7 @@ from sdtypes import Response
 from sdexception import SDException
 from sdtime import SDTimer
 import sdlog
+import sdconfig
 import sdpoodlefix
 import httplib
 
@@ -71,6 +72,16 @@ def call_web_service(request,timeout):
     buf=HTTP_GET(request.get_url(),timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
 
+    # HACK
+    #
+    # This is to prevent fatal error when document contain mixed encodings
+    #
+    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
+    #
+    if sdconfig.fix_encoding:
+        import sdencoding
+        buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
+
     try:
         result=sdxml.parse_metadata(buf)
     except Exception,e:
@@ -81,7 +92,18 @@ def call_web_service(request,timeout):
         sdlog.info('SDNETUTI-001','XML parsing error (exception=%s). Most of the time, this error is due to a network error.'%str(e))
 
         # debug
-        # (if the error is not due to a network error (e.g. internet connection problem), raise the original exception below and set the debug mode to see the stacktrace.
+        #
+        # TODO: maybe always enable this
+        #
+        #import traceback,sdconfig
+        #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+
+        # debug
+        #
+        # (if the error is not due to a network error (e.g. internet connection
+        # problem), raise the original exception below and set the debug mode
+        # to see the stacktrace.
+        #
         #raise
 
         raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
