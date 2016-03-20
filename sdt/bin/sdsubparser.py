@@ -13,6 +13,7 @@
 
 import argparse
 import sdi18n
+import sdcliex
 import sdconst
 import sdprint
 
@@ -146,7 +147,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch error status to waiting)')
 
-    subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdi18n.m0002('synda search'))
+    subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdcliex.search('synda search'))
     add_parameter_argument(subparser)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_type_grp(subparser)

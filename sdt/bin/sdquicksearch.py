@@ -34,6 +34,7 @@ import sdconst
 import sdconfig
 import sdnetutils
 import sdi18n
+import sdcliex
 import sdprint
 import sdsqueries
 from sdprogress import ProgressThread
@@ -109,7 +110,7 @@ def ws_call(query):
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use\n%s"""%sdi18n.m0002(prog))
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use\n%s"""%sdcliex.search(prog))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 

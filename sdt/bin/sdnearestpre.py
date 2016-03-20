@@ -24,6 +24,7 @@ import sdconfig
 import sdremoteparam
 from sdexception import SDException
 import sdi18n
+import sdcliex
 import sdpipeline
 import sdnearestutils
 
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
   %s -d %s
 %s
-    """%(prog,'esg-datanode.jpl.nasa.gov',sdi18n.m0002(prog)))
+    """%(prog,'esg-datanode.jpl.nasa.gov',sdcliex.search(prog)))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-d', '--datanode',help='e.g. esgnode2.nci.org.au')

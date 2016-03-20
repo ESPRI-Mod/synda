@@ -34,6 +34,7 @@ import sddeletefile
 import sdparam
 import sdreport
 import sdi18n
+import sdcliex
 import sddeferredafter
 import sdsessionparam
 import sddaemon
@@ -211,7 +212,7 @@ class UserConsole(BaseConsole,ConsoleUtils,Shortcut):
     def help_param(self):
         print sdi18n.m0006('param [ facet_name | pattern ] [ pattern ]','List ESGF facets',example=sdi18n.m0004('param'))
     def help_search(self):
-        print sdi18n.m0006('search [FILTER]... [ limit ]','Search file(s)',example=sdi18n.m0002('search'),note=sdi18n.m0005)
+        print sdi18n.m0006('search [FILTER]... [ limit ]','Search file(s)',example=sdcliex.search('search'),note=sdi18n.m0005)
     def help_admin(self):
         print sdi18n.m0006('admin',"Switch to 'admin' mode")
 

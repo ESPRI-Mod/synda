@@ -24,6 +24,7 @@ import sdapp
 import sdpipeline
 import sdrun
 import sdi18n
+import sdcliex
 import sdprint
 import sdconst
 import sdtools
@@ -87,7 +88,7 @@ if __name__ == '__main__':
   %s -f file
   cat file | %s
 %s
-"""%(prog,prog,sdi18n.m0002(prog)))
+"""%(prog,prog,sdcliex.search(prog)))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 

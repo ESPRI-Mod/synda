@@ -20,6 +20,7 @@ import argparse
 import sdapp
 import sdconst
 import sdi18n
+import sdcliex
 import sdpipeline
 import sddenormodel
 import sdremoteparam_light
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
 %s
-    """%sdi18n.m0002(prog))
+    """%sdcliex.search(prog))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-H','--host',help='Index hostname')

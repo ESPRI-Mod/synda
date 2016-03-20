@@ -21,6 +21,7 @@ import sdapp
 import sdpipeline
 import sdutils
 import sdi18n
+import sdcliex
 import sddb
 import humanize
 import sdsqlutils
@@ -64,7 +65,7 @@ if __name__ == '__main__':
   %s -f file
   cat file | %s
 %s
-"""%(prog,prog,sdi18n.m0002(prog)))
+"""%(prog,prog,sdcliex.search(prog)))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-c','--count',action='store_true',help='Count how many files are found')

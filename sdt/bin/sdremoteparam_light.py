@@ -30,6 +30,7 @@ import sdremotequtils
 import sdnetutils
 import sdindex
 import sdi18n
+import sdcliex
 
 def run(pname=None,host=None,facets_group={},dry_run=False):
     """
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
 %s
-    """%sdi18n.m0002(prog))
+    """%sdcliex.search(prog))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-H','--host',help='Index hostname')

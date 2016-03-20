@@ -19,6 +19,7 @@ import sdapp
 import sdquicksearch
 from sdtypes import File
 import sdi18n
+import sdcliex
 import sdconst
 import sddeferredbefore
 
@@ -86,7 +87,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser( formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
 %s
-"""%sdi18n.m0002(prog))
+"""%sdcliex.search(prog))
     parser.add_argument('parameter',nargs='+',help=sdi18n.m0001)
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()

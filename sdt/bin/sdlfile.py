@@ -17,6 +17,7 @@ import humanize
 from tabulate import tabulate
 import sdlsearch
 import sdi18n
+import sdcliex
 import sddeferredbefore
 
 def get_files(stream=None,parameter=[],dry_run=False):
@@ -69,7 +70,7 @@ if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
 %s
-"""%sdi18n.m0002(prog))
+"""%sdcliex.search(prog))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-g', '--debug',action='store_true')
