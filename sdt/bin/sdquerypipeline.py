@@ -11,8 +11,9 @@
 
 """This module contains "query" pipeline's jobs.
 
-Note
-    Depending on the mode (local or remote), 'query' pipeline builds SQL query or Search-API query.
+Notes
+    - Depending on the mode (local or remote), 'query' pipeline builds SQL query or Search-API query.
+    - This pipeline is used to retrieve file or dataset from search-API (to retrieve parameters, see sdparampipeline).
 """
 
 import re
@@ -32,7 +33,6 @@ from sdexception import SDException
 import sdnearestpre
 import sdparampipeline
 import sdtps
-import sdonemgf_pre
 import sdconfig
 import sdprint
 
@@ -44,7 +44,14 @@ def run(facets_groups,parallel=True,index_host=None,dry_run=False,query_type='re
         if sdconfig.dataset_filter_mecanism_in_file_context=='dataset_id':
             facets_groups=sdcompletedatasetid.run(facets_groups) # beware: this trigger a search-api call
 
-        facets_groups=sdonemgf_pre.run(facets_groups,dry_run=False)
+    
+        # EXT_FILE_PRE
+        #
+        # load extensions here
+        #
+        # TODO
+
+
         facets_groups=sdindexhost.run(facets_groups,parallel=parallel,index_host=index_host,dry_run=dry_run)
         #facets_groups=sdexplode.run(facets_groups) # ,facet_to_explode='filename'
 

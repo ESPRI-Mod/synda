@@ -11,8 +11,9 @@
 
 """This module contains 'param' pipeline's tasks.
 
-Note
-    This pipeline run *before* the main search-api call.
+Notes
+    - This pipeline run *before* the main search-api call.
+    - This pipeline is used to retrieve parameter from search-API (i.e. not file nor dataset).
 """
 
 import sys
@@ -27,7 +28,6 @@ import sdvalueinputalias
 import sddenormodel
 import sdremovefacet
 import sddecode
-import sdautoextractmodel
 import sdignorecase
 import sdinference
 import sddeferredbefore
@@ -44,7 +44,13 @@ def run(facets_groups):
     facets_groups=sdinference.run(facets_groups)
     facets_groups=sddeferredafter.run(facets_groups)
     facets_groups=sddecode.run(facets_groups)
-    facets_groups=sdautoextractmodel.run(facets_groups) # we extract the model here so to be able to automatically lock the model
+
+    # EXT_PARAM
+    #
+    # load extensions here
+    #
+    # TODO
+
     facets_groups=sdlocal2remote.run(facets_groups)
     facets_groups=sdvalueinputalias.run(facets_groups)
     facets_groups=sdremovefacet.run(facets_groups)

@@ -31,7 +31,6 @@ import sdlocalpath
 import sdcheck_dataset_template
 import sdremoveaggregation
 import sdcomplete
-#import sdonemgf_post
 import sdshrink
 import sdprint
 import sdlog
@@ -61,7 +60,14 @@ def run(**kw):
     for f in files:
         sdlog.debug("SDFIPIPE-005","%s"%f['url'],stdout=True)
 
-    #files=sdonemgf_post.run(files) # BEWARE: this module do not respect 'KISS' principle (it updates global value by altering the sdtc console session context). You can disable it to keep things simple (it's only there for tuning purpose).
+    
+    # EXT_FILE_POST
+    #
+    # load extensions here
+    #
+    # TODO
+
+
     files=sdcomplete.run(files)
 
     files=sdstatusfilter.run(files)
