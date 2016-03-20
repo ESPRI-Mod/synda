@@ -1,0 +1,2 @@
+import sdonemgf_post
+files=sdonemgf_post.run(files) # BEWARE: this module do not respect 'KISS' principle (it updates global value by altering the sdtc console session context). You can disable it to keep things simple (it's only there for tuning purpose).

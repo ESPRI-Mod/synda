@@ -1,0 +1,2 @@
+import sdautoextractmodel
+facets_groups=sdautoextractmodel.run(facets_groups) # we extract the model here so to be able to automatically lock the model
