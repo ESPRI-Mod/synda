@@ -108,7 +108,6 @@ default_options={'max_parallel_download':'8',
                  'lfae_mode':'abort',
                  'indexes':'esgf-node.ipsl.fr,esgf-data.dkrz.de,esgf-index1.ceda.ac.uk',
                  'default_index':'esgf-node.ipsl.fr',
-                 'onemgf':'false',
                  'nearest':'false',
                  'nearest_mode':'geolocation',
                  'incorrect_checksum_action':'remove'}
