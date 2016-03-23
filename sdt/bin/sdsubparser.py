@@ -167,6 +167,8 @@ def run(subparsers):
     subparser.add_argument('file_url',help='file url')
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
+    subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
+    subparser.add_argument('-p','--project',help='Retrieve project specific parameters for the specified project')
 
     subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help='Perform an upgrade (retrieve new version for all selection files)')
     add_parameter_argument(subparser)

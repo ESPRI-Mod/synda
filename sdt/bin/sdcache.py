@@ -149,16 +149,20 @@ def select_project(project_list):
 def get_parameters_from_searchapi(host,project,dry_run=False):
     """Method used to retrieve parameters list from search-API
 
-    sample queries
+    Sample queries
         http://esg-datanode.jpl.nasa.gov/esg-search/search?facets=model&limit=0 
         http://esg-datanode.jpl.nasa.gov/esg-search/search?facets=*&limit=0
 
-    Note: 
+    Note
         for now, parameters based processing like parameters caching,
         parameters checking and parameters inference are not project aware
         (i.e. the url retrieve all parameters regardless of the project).
         There is a 'project' parameter in this func, but it's only used
         for the third query.
+
+    TODO
+        maybe run the third query for every project, so to have the full list
+        of parameter.
     """
     #sdtools.print_stderr("Using '%s' index"%host)
 

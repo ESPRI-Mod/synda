@@ -427,7 +427,7 @@ def watch(args):
 def update(args):
     print_stderr("Retrieving parameters from ESGF...")
     import sdcache
-    sdcache.run(reload=True)
+    sdcache.run(reload=True,host=args.index_host,project=args.project)
     print_stderr("Parameters are up-to-date.")
 
 # init.
