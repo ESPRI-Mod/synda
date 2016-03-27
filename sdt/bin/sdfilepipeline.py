@@ -48,7 +48,22 @@ def run(**kw):
     files=sdtimefilter.run(files)
     files=sdprepare_dataset_attr.run(files)
     #files=sdcheck_dataset_template.run(files)
-    files=sdreducecol.run(files)
+
+    # we do not remove the number of column here anymore
+    #
+    # Notes
+    #     - not reducing the number of column here may slightly diminish
+    #       performance (memory, cpu). But as we do need those informations (e.g.
+    #       description, variable_long_name, facets..), we have no choice.
+    #     - we need to keep those informations even if they are not essential,
+    #       as we will need them soon to provide more descriptive informations to
+    #       the user (e.g. description, variable_long_name..)
+    #     - we need to keep all facets so the user can build custom local path
+    #       (see local_path_custom_transform() func for more info)
+    #     - we will now remove those column downstream (but only for 'dump' action)
+    #
+    #files=sdreducecol.run(files)
+
     files=sdprepare_file_attr.run(files)
     files=sdlocalpath.run(files)
 
