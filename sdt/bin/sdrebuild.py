@@ -93,6 +93,8 @@ def set_model_when_empty():
 def set_timestamp_when_empty__BATCH_MODE_1():
     """
     Retrieve *all* datasets from ESGF, then update local timestamp.
+
+    Not used.
     """
     datasets=sddump.dump_ESGF(['type=Dataset','searchapi_host=esgf-data.dkrz.de'],'timestamp')
 

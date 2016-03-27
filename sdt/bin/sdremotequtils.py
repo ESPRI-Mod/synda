@@ -60,7 +60,7 @@ def serialize_parameter__ovpp(name,values): # 'ovpp' means one value per paramet
     else:
         return ""
 
-def serialize_parameter__mvpp(name,values): # 'mvpp' means many values per parameter
+def serialize_parameter__mvpp(name,values): # 'mvpp' means 'many values per parameter'
     """Serialize one parameter
 
     Example

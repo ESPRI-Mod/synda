@@ -13,7 +13,9 @@
 
 Notes
     - Depending on the mode (local or remote), 'query' pipeline builds SQL query or Search-API query.
-    - This pipeline is used to retrieve file or dataset from search-API (to retrieve parameters, see sdparampipeline).
+    - This pipeline is used to retrieve file or dataset from search-API.
+    - This pipeline run *before* the main search-api call.
+    - This pipeline use sdparampipeline module.
 """
 
 import re
