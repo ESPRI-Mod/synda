@@ -15,8 +15,6 @@ import sys
 import argparse
 import json
 import sdapp
-from sdtypes import File
-import sdlog
 import sdprint
 import sdtools
 
@@ -48,7 +46,7 @@ def remove_unused_fields(files):
 def remove_facets(files):
     """
     Note
-     'variable', 'project' and 'model' facets are kept.
+        - 'variable', 'project' and 'model' facets are kept.
     """
     for file in files:
         for k in [ 'realm'
