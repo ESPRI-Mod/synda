@@ -358,7 +358,16 @@ def file_dump(args):
     import sdrfile, sddeferredafter, sdcolumnfilter, sdreducecol
 
     sddeferredafter.add_default_parameter(args.stream,'limit',100)
-    post_pipeline_mode=None if args.raw_mode else 'file'
+
+
+    if args.raw_mode
+        post_pipeline_mode=None
+
+        args.all=True # we force '--all' option when '--raw_mode' option is set
+    else:
+        post_pipeline_mode='file'
+
+
     files=sdrfile.get_files(stream=args.stream,post_pipeline_mode=post_pipeline_mode,dry_run=args.dry_run)
 
 
