@@ -130,7 +130,6 @@ if multiuser:
     security_dir="%s/.esg"%tmp_folder
 else:
     security_dir="%s/.esg"%os.environ['HOME']
-fi
 
 # credential file
 if multiuser:
