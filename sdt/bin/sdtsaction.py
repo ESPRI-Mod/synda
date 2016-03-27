@@ -360,7 +360,7 @@ def file_dump(args):
     sddeferredafter.add_default_parameter(args.stream,'limit',100)
 
 
-    if args.raw_mode
+    if args.raw_mode:
         post_pipeline_mode=None
 
         args.all=True # we force '--all' option when '--raw_mode' option is set
