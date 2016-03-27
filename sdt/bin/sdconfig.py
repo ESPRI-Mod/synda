@@ -122,6 +122,10 @@ if not sdtools.is_daemon():
         config.read(user_configuration_file)
 
 # set security_dir
+#
+# TODO
+#     may use tmp_folder for both to improve consistency (if HOME is used in multi-user mode, it can be root or daemon unprivileged user which increase complexity)
+#
 if multiuser:
     security_dir="%s/.esg"%tmp_folder
 else:
