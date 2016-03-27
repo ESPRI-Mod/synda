@@ -111,7 +111,7 @@ elif [ $nbr -eq 2 ]; then
     log_wget_output "DEB200" "$wget_errmsg" "$*"
 
 elif [ $nbr -eq 1 ]; then
-    # it means it failed on the first HTTP request and no redirect occured
+    # it means no redirect to ORP occured
 
     data1_http_response_code=$http_response_code_list
 
