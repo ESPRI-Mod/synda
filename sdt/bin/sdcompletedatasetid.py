@@ -49,7 +49,7 @@ import sdquicksearch
 def run(facets_groups):
     for facets_group in facets_groups:
         if 'dataset_id' in facets_group:
-            dataset_id_list=facets_group['dataset_id'] # dataset_id is a list of values
+            dataset_id_list=facets_group['dataset_id'] # This is normal: dataset_id IS a list of values (MEMO: this module is used to build the query (i.e. not used after the search-api call))
 
             new_values=[]
 
@@ -60,7 +60,7 @@ def run(facets_groups):
                     instance_id=dataset_id # meaningfull as instance_id is dataset_id without data_node
                     new_values.append(instance_id_to_dataset_id(instance_id,facets_group))
 
-            facets_group['dataset_id']=new_values
+            facets_group['dataset_id']=new_values # This is normal: dataset_id IS a list of values (MEMO: this module is used to build the query (i.e. not used after the search-api call))
 
     return facets_groups
 

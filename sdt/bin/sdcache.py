@@ -125,7 +125,7 @@ def remove_unused_parameters(parameters):
     """Remove unused parameters.
 
     Note
-        If Those parameters are used in the future, remove this func.
+        If those parameters are used in the future, remove this func.
     """
 
     if 'cf_standard_name' in parameters:
