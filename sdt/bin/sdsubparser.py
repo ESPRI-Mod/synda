@@ -56,6 +56,7 @@ def add_action_argument(parser,choices=None):
     parser.add_argument('action',nargs='?',default=None,choices=choices,help=sdi18n.m0017)
 
 def add_dump_option(parser):
+    parser.add_argument('-A','--all',action='store_true',help='Show all attributes')
     parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
     parser.add_argument('-C','--column',type=lambda s: s.split(','),default=[],help="set column(s) to be used with 'dump' action")
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw',help="set format to be used with 'dump' action")

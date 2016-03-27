@@ -355,11 +355,22 @@ def variable_dump(args):
     assert False # there is no dump for variable
 
 def file_dump(args):
-    import sdrfile, sddeferredafter, sdcolumnfilter
+    import sdrfile, sddeferredafter, sdcolumnfilter, sdreducecol
 
     sddeferredafter.add_default_parameter(args.stream,'limit',100)
     post_pipeline_mode=None if args.raw_mode else 'file'
     files=sdrfile.get_files(stream=args.stream,post_pipeline_mode=post_pipeline_mode,dry_run=args.dry_run)
+
+
+    if args.all:
+        # do not hide any attribute
+
+        pass
+    else:
+        # hide non essential attributes
+
+        files=sdreducecol.run(files)
+
 
     if not args.dry_run:
         if len(files)>0:
