@@ -54,7 +54,8 @@ force_renew_certificate=0
 force_renew_ca_certificates=0
 port=7512
 host=pcmdi9.llnl.gov
-while getopts 'h:p:ru:vx' OPTION
+security_dir=/tmp/.esg
+while getopts 'h:p:rs:u:vx' OPTION
 do
   case $OPTION in
   h)	host=$OPTARG
@@ -62,6 +63,8 @@ do
   p)	port=$OPTARG
 		;;
   r)	force_renew_certificate=1
+		;;
+  s)	security_dir=$OPTARG
 		;;
   u)	username=$OPTARG
 		;;
@@ -90,14 +93,8 @@ else
     conf_dir="/etc/synda/sdt"
 fi
 
-if [ "$multiuser" = "0" ]; then
-    certdirprefix=$HOME
-else
-    certdirprefix=/var/tmp/synda/sdt
-fi
-
-export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
-export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
+export ESGF_CREDENTIAL=$security_dir/credentials.pem
+export ESGF_CERT_DIR=$security_dir/certificates
 
 # we unset X509_USER_PROXY to prevent error below (i.e. to ignore X509_USER_PROXY if already set by user)
 #
@@ -138,7 +135,7 @@ set_X509_CERT_DIR ()
 	# it may be related with X509_CERT_DIR
 	# you can try to set it to the values below:
 	# - ""
-	# - $certdirprefix/.esg/certificates
+	# - $security_dir/certificates
 	# - /etc/grid-security/certificates
 
 
@@ -153,7 +150,7 @@ set_X509_CERT_DIR ()
 
 
 	#export X509_CERT_DIR=/etc/grid-security/certificates
-	export X509_CERT_DIR=$certdirprefix/.esg/certificates
+	export X509_CERT_DIR=$security_dir/certificates
 }
 
 set_X509_CERT_DIR
