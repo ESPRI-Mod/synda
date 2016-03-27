@@ -121,6 +121,13 @@ if not sdtools.is_daemon():
     if os.path.exists(user_configuration_file):
         config.read(user_configuration_file)
 
+# set security_dir
+if multiuser:
+    security_dir="%s/.esg"%tmp_folder
+else:
+    security_dir="%s/.esg"%os.environ['HOME']
+fi
+
 # credential file
 if multiuser:
     if sdtools.is_root():
