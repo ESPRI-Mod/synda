@@ -13,7 +13,7 @@
 
 Notes
     - This pipeline run *before* the main search-api call.
-    - This pipeline is used to retrieve parameter from search-API (i.e. not file nor dataset).
+    - This pipeline is used by sdquerypipeline
 """
 
 import sys
