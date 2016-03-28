@@ -131,6 +131,10 @@ if multiuser:
 else:
     security_dir="%s/.esg"%os.environ['HOME']
 
+# set x509 paths
+esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
+esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
+
 # credential file
 if multiuser:
     if sdtools.is_root():
