@@ -37,6 +37,7 @@ import subprocess
 import sdconfig
 import sdutils
 import sdtools
+import sdfilepermission
 from sdexception import SDException
 
 def get_daemon_status():
@@ -135,24 +136,34 @@ def terminate(signum, frame):
     import sdtaskscheduler # must be here because of double-fork (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
     sdtaskscheduler.terminate(signum, frame)
 
-def set_daemon_process_identity(context,user,group):
-    uid=pwd.getpwnam(user).pw_uid
-    gid=grp.getgrnam(group).gr_gid
-
-    context.uid = uid
-    context.gid = gid
-
 # init.
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,)
 context.signal_map={ signal.SIGTERM: terminate, }
 
+
+# run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
+
 if sdtools.is_root():
+
+    # retrieve user from configuration file
     user=sdconfig.config.get('daemon','user')
     group=sdconfig.config.get('daemon','group')
+
     if user and group:
-        set_daemon_process_identity(context,user,group)
+
+        # retrieve numeric uid/gid
+        uid=pwd.getpwnam(user).pw_uid
+        gid=grp.getgrnam(group).gr_gid
+
+        # be sure file permission works for unprivileged user
+        sdfilepermission.run(uid,gid)
+
+        # set_daemon process identity
+        context.uid = uid
+        context.gid = gid
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
