@@ -15,3 +15,4 @@ pycountry
 python-jsonrpc
 python-daemon==1.6.1
 retrying
+setuptools==19.7
