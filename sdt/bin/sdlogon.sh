@@ -231,6 +231,9 @@ certificate_is_valid ()
 #  >0 => error
 renew_certificate () 
 {
+    # we need a mkdir here to prevent 'No such file or directory' myproxyclient error (see TAGFERE5435 for more info)
+    mkdir -p $security_dir
+
     BUF="$MYPROXY_CMD $g__myproxy_opts"
     BUF_PASSWD_STDIN="echo '$g__pass' | $BUF -S " # "-S" is to read pwd from stdin
 
