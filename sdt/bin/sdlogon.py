@@ -83,11 +83,7 @@ def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew
 
     (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
 
-    argv=[sdconfig.logon_script]
-    argv.append('-h %s'%hostname)
-    argv.append('-p %s'%port)
-    argv.append('-s %s'%sdconfig.security_dir)
-    argv.append('-u %s'%username)
+    argv=[sdconfig.logon_script,'-h',hostname,'-p',port,'-s',sdconfig.security_dir,'-u',username]
 
     if not quiet:
         argv.append('-v')
