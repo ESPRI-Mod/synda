@@ -15,6 +15,12 @@ import sys
 import os
 import re
 
+def is_root():
+    if os.geteuid() == 0:
+        return True
+    else:
+        return False
+
 def print_module_variables(variables):
     """Func used when using a python module to store configuration parameters."""
     li=[]

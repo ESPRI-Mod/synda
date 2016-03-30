@@ -23,12 +23,16 @@ Note
 import argparse
 import signal
 import os
+import grp
+import pwd
 import daemon
 import daemon.pidfile
 import traceback
 import time
 #import spapp # do no uncomment this (see note above)
+import sptools
 import spconfig
+import spfilepermission
 from spexception import SPException
 
 def get_daemon_status():
@@ -70,6 +74,12 @@ def main_loop():
     splog.info('SPDAEMON-034',"Daemon stopped")
 
 def start():
+
+    # run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
+    if sptools.is_root():
+        if user and group:
+            unprivileged_user_mode()
+
     if not is_running():
 
         # Code below is for a 'while loop' based daemon
@@ -114,12 +124,29 @@ def terminate(signum, frame):
     quit=1
     """
 
+def unprivileged_user_mode():
+
+    # retrieve numeric uid/gid
+    uid=pwd.getpwnam(user).pw_uid
+    gid=grp.getgrnam(group).gr_gid
+
+    # be sure file permission works for unprivileged user
+    spfilepermission.run(uid,gid)
+
+    # set_daemon process identity
+    context.uid = uid
+    context.gid = gid
+
 # init.
 
 # quit=0 #  this line is for a 'while loop' based daemon
 pidfile=daemon.pidfile.PIDLockFile(spconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=spconfig.tmp_folder, pidfile=pidfile,)
 context.signal_map={ signal.SIGTERM: terminate, }
+
+# retrieve unprivileged user from configuration file if any
+user=spconfig.config.get('daemon','user')
+group=spconfig.config.get('daemon','group')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
