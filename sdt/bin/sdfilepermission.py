@@ -51,6 +51,10 @@ def chown_folder(uid,gid):
 def chown_file(uid,gid):
 
     # proxy cert file
+    li=[sdconfig.credential_file]
+    chown_files(li,uid,gid)
+
+    # proxy cert file
     li=[sdconfig.esgf_x509_proxy]
     chown_files(li,uid,gid)
 
