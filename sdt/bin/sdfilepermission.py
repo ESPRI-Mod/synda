@@ -88,7 +88,8 @@ def chown_files(files,uid,gid):
         'files' can contain regular file or directory.
     """
     for file_ in files:
-        os.chown(file_,uid,gid)
+        if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
+            os.chown(file_,uid,gid)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
