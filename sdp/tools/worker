@@ -304,13 +304,13 @@ def stop_daemon(pidfile):
     else:
         print 'Daemon is already stopped.'
 
-def start_daemon(args):
+def start_daemon(args,logfile):
     global quit
 
     # run daemon as unprivileged user (if run as root and unprivileged user is set)
     if is_root():
         if user and group:
-            unprivileged_user_mode()
+            unprivileged_user_mode(logfile)
 
     if not is_running():
         quit=False
@@ -320,8 +320,6 @@ def start_daemon(args):
             try:
 
                 # init logging
-                logdir=get_log_dir(args)
-                logfile=get_logfile(logdir,'worker.log')
                 init_logger(logfile) # must be done after the double fork
 
                 # start job processing
@@ -346,7 +344,7 @@ def chown_files(files,uid,gid):
         if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
             os.chown(file_,uid,gid)
 
-def unprivileged_user_mode():
+def unprivileged_user_mode(logfile):
 
     # retrieve numeric uid/gid
     uid=pwd.getpwnam(user).pw_uid
@@ -402,8 +400,11 @@ if __name__ == '__main__':
         context=daemon.DaemonContext(working_directory=tmp_folder, pidfile=pidfile,)
         context.signal_map={ signal.SIGTERM: stop, }
 
+        logdir=get_log_dir(args)
+        logfile=get_logfile(logdir,'worker.log')
+
         if args.action == 'start':
-            start_daemon(args)
+            start_daemon(args,logfile)
         elif args.action == 'stop':
             stop_daemon(pidfile)
         elif args.action == 'status':
