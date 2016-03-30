@@ -24,13 +24,8 @@ def run(uid,gid):
 def chown_folder(uid,gid):
 
     # tmp folder
-    #
-    # no need as this folder is 777 anyway
-    #
-    """
     li=[sdconfig.tmp_folder]
     chown_files(li,uid,gid)
-    """
 
     # security folder
     li=[sdconfig.security_dir]
