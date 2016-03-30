@@ -92,6 +92,16 @@ def start():
         print 'You need to be root to perform this command.'
         return
 
+
+    # run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
+    if sdtools.is_root():
+        # retrieve user from configuration file
+        user=sdconfig.config.get('daemon','user')
+        group=sdconfig.config.get('daemon','group')
+        if user and group:
+            setuid(user,group,context)
+
+
     if not is_running():
         with context:
             try:
@@ -153,19 +163,6 @@ def setuid(user,group,context):
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,)
 context.signal_map={ signal.SIGTERM: terminate, }
-
-
-# run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
-
-if sdtools.is_root():
-
-    # retrieve user from configuration file
-    user=sdconfig.config.get('daemon','user')
-    group=sdconfig.config.get('daemon','group')
-
-    if user and group:
-
-        setuid(user,group,context)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
