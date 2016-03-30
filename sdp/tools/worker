@@ -387,9 +387,11 @@ if __name__ == '__main__':
 
         signal.signal(signal.SIGTERM, stop)
 
-        # init logging
+        # build log path
         logdir=default_logdir if args.logdir is None else args.logdir
         logfile=get_logfile(logdir,get_unique_filename())
+
+        # init logging
         init_logger(logfile)
 
         run(args)
@@ -400,6 +402,7 @@ if __name__ == '__main__':
         context=daemon.DaemonContext(working_directory=tmp_folder, pidfile=pidfile,)
         context.signal_map={ signal.SIGTERM: stop, }
 
+        # build log path
         logdir=get_log_dir(args)
         logfile=get_logfile(logdir,'worker.log')
 
