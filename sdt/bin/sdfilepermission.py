@@ -77,7 +77,7 @@ def ls(path,filter_='*'):
 
     for file_ in glob.glob( os.path.join(path, filter_) ):
         if not os.path.isdir(file_): # exclude sub-dirs
-            files.append(file)
+            files.append(file_)
 
     return files
 

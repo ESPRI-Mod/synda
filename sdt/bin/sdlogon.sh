@@ -156,7 +156,7 @@ set_X509_CERT_DIR ()
 set_X509_CERT_DIR
 
 # check passwd
-if [ $g__pass = "pwd" ]; then
+if [ "$g__pass" = "pwd" ]; then
     msg "ERR019" "ESGF passwd not set"
     exit 4
 fi
