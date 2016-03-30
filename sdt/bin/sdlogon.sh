@@ -17,16 +17,16 @@
 
 usage ()
 {
-	echo ""
-	echo "Usage"
-	echo "  $0  [ -h <host> ]  [ -p <port> ] [ -u <username> ] [ -v ]"
-	echo ""
-	echo "Options:"
-	echo "  -h      myproxy host"
-	echo "  -p      myproxy port"
-	echo "  -u      username"
-	echo "  -r      force renew certificate even if valid"
-	echo "  -v      verbose"
+    echo ""
+    echo "Usage"
+    echo "  $0  [ -h <host> ]  [ -p <port> ] [ -u <username> ] [ -v ]"
+    echo ""
+    echo "Options:"
+    echo "  -h      myproxy host"
+    echo "  -p      myproxy port"
+    echo "  -u      username"
+    echo "  -r      force renew certificate even if valid"
+    echo "  -v      verbose"
 }
 
 curdate ()
@@ -36,8 +36,8 @@ curdate ()
 
 msg ()
 {
-	l__code="$1"
-	l__msg="$2"
+    l__code="$1"
+    l__msg="$2"
 
     echo "$(curdate) - $l__code - $l__msg"
 }
@@ -45,8 +45,8 @@ msg ()
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 if [ $# -eq 0 ]; then
-	usage
-	exit 0
+    usage
+    exit 0
 fi
 
 verbose="no"
@@ -58,20 +58,20 @@ security_dir=/tmp/.esg
 while getopts 'h:p:rs:u:vx' OPTION
 do
   case $OPTION in
-  h)	host=$OPTARG
-		;;
-  p)	port=$OPTARG
-		;;
-  r)	force_renew_certificate=1
-		;;
-  s)	security_dir=$OPTARG
-		;;
-  u)	username=$OPTARG
-		;;
-  v)	verbose="yes"
-		;;
-  x)	force_renew_ca_certificates=1
-		;;
+  h)    host=$OPTARG
+        ;;
+  p)    port=$OPTARG
+        ;;
+  r)    force_renew_certificate=1
+        ;;
+  s)    security_dir=$OPTARG
+        ;;
+  u)    username=$OPTARG
+        ;;
+  v)    verbose="yes"
+        ;;
+  x)    force_renew_ca_certificates=1
+        ;;
   esac
 done
 shift $(($OPTIND - 1)) # remove options
@@ -131,40 +131,40 @@ fi
 
 set_X509_CERT_DIR ()
 {
-	# if you have the error "self signed certificate in certificate chain"
-	# it may be related with X509_CERT_DIR
-	# you can try to set it to the values below:
-	# - ""
-	# - $security_dir/certificates
-	# - /etc/grid-security/certificates
+    # if you have the error "self signed certificate in certificate chain"
+    # it may be related with X509_CERT_DIR
+    # you can try to set it to the values below:
+    # - ""
+    # - $security_dir/certificates
+    # - /etc/grid-security/certificates
 
 
-	# also if you have error below, try without setting "X509_CERT_DIR" env. var.
-	#
-	# Error authenticating: GSS Major Status: Authentication Failed
-	# GSS Minor Status Error Chain:
-	# globus_gss_assist: Error during context initialization
-	# OpenSSL Error: a_verify.c:168: in library: asn1 encoding routines, function ASN1_item_verify: EVP lib
-	# OpenSSL Error: fips_rsa_eay.c:748: in library: rsa routines, function RSA_EAY_PUBLIC_DECRYPT: padding check failed
-	# OpenSSL Error: rsa_pk1.c:100: in library: rsa routines, function RSA_padding_check_PKCS1_type_1: block type is not 01
+    # also if you have error below, try without setting "X509_CERT_DIR" env. var.
+    #
+    # Error authenticating: GSS Major Status: Authentication Failed
+    # GSS Minor Status Error Chain:
+    # globus_gss_assist: Error during context initialization
+    # OpenSSL Error: a_verify.c:168: in library: asn1 encoding routines, function ASN1_item_verify: EVP lib
+    # OpenSSL Error: fips_rsa_eay.c:748: in library: rsa routines, function RSA_EAY_PUBLIC_DECRYPT: padding check failed
+    # OpenSSL Error: rsa_pk1.c:100: in library: rsa routines, function RSA_padding_check_PKCS1_type_1: block type is not 01
 
 
-	#export X509_CERT_DIR=/etc/grid-security/certificates
-	export X509_CERT_DIR=$security_dir/certificates
+    #export X509_CERT_DIR=/etc/grid-security/certificates
+    export X509_CERT_DIR=$security_dir/certificates
 }
 
 set_X509_CERT_DIR
 
 # check passwd
 if [ $g__pass = "pwd" ]; then
-	msg "ERR019" "ESGF passwd not set"
-	exit 4
+    msg "ERR019" "ESGF passwd not set"
+    exit 4
 fi
 
 # check username 
 if [ -z "$username" ]; then
-	msg "ERR019" "ESGF username not set"
-	exit 4
+    msg "ERR019" "ESGF username not set"
+    exit 4
 fi
 
 
@@ -206,11 +206,11 @@ fi
 #   1 => certificate exists
 certificate_exists () 
 {
-	if [ -f $ESGF_CREDENTIAL ]; then
-		return 1
-	else
-		return 0
-	fi
+    if [ -f $ESGF_CREDENTIAL ]; then
+        return 1
+    else
+        return 0
+    fi
 }
 
 # return code
@@ -218,12 +218,12 @@ certificate_exists ()
 #   1 => certificate is valid
 certificate_is_valid () 
 {
-	openssl x509 -checkend 500 -noout -in $ESGF_CREDENTIAL # checks whether the cert expires in the next 500 seconds
-	if [ $? = 0 ]; then
-		return 1
-	else
-		return 0
-	fi
+    openssl x509 -checkend 500 -noout -in $ESGF_CREDENTIAL # checks whether the cert expires in the next 500 seconds
+    if [ $? = 0 ]; then
+        return 1
+    else
+        return 0
+    fi
 }
 
 # return code
@@ -237,49 +237,49 @@ renew_certificate ()
     BUF="$MYPROXY_CMD $g__myproxy_opts"
     BUF_PASSWD_STDIN="echo '$g__pass' | $BUF -S " # "-S" is to read pwd from stdin
 
-	if [ "x$verbose" = "xyes" ]; then
-		echo $BUF # this is to prevent displaying the password on stdxxx (i.e. BUF and BUF_PASSWD_STDIN are the same except for the password)
-		eval $BUF_PASSWD_STDIN
-	else
-		eval $BUF_PASSWD_STDIN >& /dev/null
-	fi
+    if [ "x$verbose" = "xyes" ]; then
+        echo $BUF # this is to prevent displaying the password on stdxxx (i.e. BUF and BUF_PASSWD_STDIN are the same except for the password)
+        eval $BUF_PASSWD_STDIN
+    else
+        eval $BUF_PASSWD_STDIN >& /dev/null
+    fi
 }
 
 if [ "x$force_renew_certificate"  = "x1" ]; then
-	rm -f $ESGF_CREDENTIAL
+    rm -f $ESGF_CREDENTIAL
 fi
 
 if [ $force_renew_ca_certificates -eq 1 ]; then
-	rm -rf $ESGF_CERT_DIR
+    rm -rf $ESGF_CERT_DIR
 fi
 
 certificate_exists
 if [ $? -eq 1 ]; then
-	certificate_is_valid
-	if [ $? -eq 1 ]; then
+    certificate_is_valid
+    if [ $? -eq 1 ]; then
         :
         #msg "INF006" "Certificate is valid, nothing to do"
-	else
-		renew_certificate
-	fi
+    else
+        renew_certificate
+    fi
 else
-	renew_certificate
+    renew_certificate
 fi
 
 
 # check (second pass => if it fails again, then fatal error)
 certificate_exists
 if [ $? -eq 0 ]; then
-	msg "ERR009" "Error occured while retrieving certificate"
-	exit 4
+    msg "ERR009" "Error occured while retrieving certificate"
+    exit 4
 else
     chmod 600 $ESGF_CREDENTIAL # needed by globus-url-copy
 
-	certificate_is_valid
-	if [ $? -eq 0 ]; then
-		msg "ERR010" "Error occurs while retrieving certificate"
-		exit 4
-	fi
+    certificate_is_valid
+    if [ $? -eq 0 ]; then
+        msg "ERR010" "Error occurs while retrieving certificate"
+        exit 4
+    fi
 fi
 
 exit 0
