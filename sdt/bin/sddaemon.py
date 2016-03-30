@@ -93,13 +93,17 @@ def start():
         return
 
 
+
     # run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
     if sdtools.is_root():
+
         # retrieve user from configuration file
         user=sdconfig.config.get('daemon','user')
         group=sdconfig.config.get('daemon','group')
+
         if user and group:
             unprivileged_user_mode(user,group,context)
+
 
 
     if not is_running():
