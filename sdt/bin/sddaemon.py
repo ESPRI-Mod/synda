@@ -99,7 +99,7 @@ def start():
         user=sdconfig.config.get('daemon','user')
         group=sdconfig.config.get('daemon','group')
         if user and group:
-            setuid(user,group,context)
+            unprivileged_user_mode(user,group,context)
 
 
     if not is_running():
@@ -146,7 +146,7 @@ def terminate(signum, frame):
     import sdtaskscheduler # must be here because of double-fork (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
     sdtaskscheduler.terminate(signum, frame)
 
-def setuid(user,group,context):
+def unprivileged_user_mode(user,group,context):
     # retrieve numeric uid/gid
     uid=pwd.getpwnam(user).pw_uid
     gid=grp.getgrnam(group).gr_gid
