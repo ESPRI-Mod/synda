@@ -136,6 +136,18 @@ def terminate(signum, frame):
     import sdtaskscheduler # must be here because of double-fork (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
     sdtaskscheduler.terminate(signum, frame)
 
+def setuid(user,group,context):
+    # retrieve numeric uid/gid
+    uid=pwd.getpwnam(user).pw_uid
+    gid=grp.getgrnam(group).gr_gid
+
+    # be sure file permission works for unprivileged user
+    sdfilepermission.run(uid,gid)
+
+    # set_daemon process identity
+    context.uid = uid
+    context.gid = gid
+
 # init.
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
@@ -153,17 +165,7 @@ if sdtools.is_root():
 
     if user and group:
 
-        # retrieve numeric uid/gid
-        uid=pwd.getpwnam(user).pw_uid
-        gid=grp.getgrnam(group).gr_gid
-
-        # be sure file permission works for unprivileged user
-        sdfilepermission.run(uid,gid)
-
-        # set_daemon process identity
-        context.uid = uid
-        context.gid = gid
-
+        setuid(user,group,context)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
