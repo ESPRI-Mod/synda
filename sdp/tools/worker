@@ -12,6 +12,7 @@
 """Postprocessing worker."""
 
 import os
+import pwd
 import grp
 import getpass
 import imp
@@ -96,13 +97,17 @@ def check_user_group(username):
         raise Exception('Incorrect group (user running this script must be in cmip5 group).')
 
 def check_username(username):
+    """
+    Obsolete.
+    """
+
     if username in ['root']:
         raise Exception('Incorrect user (this script must be run as normal user).')
 
 def check_user():
     username=getpass.getuser()
 
-    check_username(username)
+    #check_username(username) # obsolete as we may now want to start the daemon as root for unprivileged-mode (i.e. root + setuid)
     check_user_group(username)
 
 def get_unique_filename():
@@ -275,6 +280,12 @@ def get_log_dir(args):
 
     return logdir
 
+def is_root():
+    if os.geteuid() == 0:
+        return True
+    else:
+        return False
+
 def daemon_status():
     if is_running():
         return "Daemon running"
@@ -295,6 +306,11 @@ def stop_daemon(pidfile):
 
 def start_daemon(args):
     global quit
+
+    # run daemon as unprivileged user (if run as root and unprivileged user is set)
+    if is_root():
+        if user and group:
+            unprivileged_user_mode()
 
     if not is_running():
         quit=False
@@ -320,6 +336,30 @@ def start_daemon(args):
     else:
         print 'Daemon is already running.'
 
+def chown_files(files,uid,gid):
+    """Perform chown on all files.
+    
+    Note
+        'files' can contain regular file or directory.
+    """
+    for file_ in files:
+        if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
+            os.chown(file_,uid,gid)
+
+def unprivileged_user_mode():
+
+    # retrieve numeric uid/gid
+    uid=pwd.getpwnam(user).pw_uid
+    gid=grp.getgrnam(group).gr_gid
+
+    # be sure file permission works for unprivileged user
+    li=[stacktrace_log_file,logfile]
+    chown_files(li,uid,gid)
+
+    # set_daemon process identity
+    context.uid = uid
+    context.gid = gid
+
 # script init.
 
 VERSION = '{0} {1}-{2}-{3}'.format('v1.0', '2015', '01', '21')
@@ -329,6 +369,10 @@ tmp_folder='/tmp'
 default_logdir='%s/worker_log'%tmp_folder
 pid_file="%s/sp_worker.pid"%tmp_folder
 stacktrace_log_file="/tmp/worker_stacktrace.log"
+
+# daemon unprivileged user
+user=None
+group=None
 
 if __name__ == '__main__':
     args=_get_args()
