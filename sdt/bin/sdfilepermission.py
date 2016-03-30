@@ -56,7 +56,7 @@ def chown_file(uid,gid):
 
     # CA certificates
     li=ls(sdconfig.esgf_x509_cert_dir)
-    chown_files(li)
+    chown_files(li,uid,gid)
     
     # db file
     li=[sdconfig.db_file]
@@ -64,7 +64,7 @@ def chown_file(uid,gid):
 
     # log
     li=ls(sdconfig.log_folder)
-    chown_files(li)
+    chown_files(li,uid,gid)
 
 def ls(path,filter_='*'):
     """Return full path files list inside the given folder.
@@ -76,7 +76,7 @@ def ls(path,filter_='*'):
     files=[]
 
     for file_ in glob.glob( os.path.join(path, filter_) ):
-        if not os.path.isdir(file): # exclude sub-dirs
+        if not os.path.isdir(file_): # exclude sub-dirs
             files.append(file)
 
     return files
