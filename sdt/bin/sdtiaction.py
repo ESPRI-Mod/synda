@@ -293,7 +293,7 @@ def replica_next(file_functional_id,args):
 
 def replica(args):
     if args.action=="next":
-        if args.file is None:
+        if args.file_id is None:
             import sdfiledao,sdconst
             files=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_ERROR)
             for file_ in files:

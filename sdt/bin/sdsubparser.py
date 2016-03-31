@@ -141,7 +141,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'remove',help='Remove dataset')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Change file replica')
+    subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Move to next replica',example=sdcliex.replica())
     add_action_argument(subparser,choices=['next'])
     subparser.add_argument('file_id',nargs='?',help='File identifier (ESGF instance_id)')
 

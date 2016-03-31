@@ -84,7 +84,8 @@ def remove():
     return buf
 
 def replica():
-    buf=""""""
+    buf="""  synda replica next
+  synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""
     return buf
 
 def reset():
