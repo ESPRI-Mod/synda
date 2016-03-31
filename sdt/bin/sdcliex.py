@@ -76,7 +76,9 @@ def pexec():
     return buf
 
 def queue():
-    buf=""""""
+    buf="""  synda queue obs4MIPs
+  synda queue CMIP5
+  synda queue"""
     return buf
 
 def remove():
