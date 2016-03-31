@@ -153,7 +153,6 @@ if __name__ == '__main__':
 
         set_stream_type(args)
 
-        import sdtsaction
         sdtsaction.actions[args.subcommand](args)
 
         sys.exit(0)
