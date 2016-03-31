@@ -80,7 +80,8 @@ def queue():
     return buf
 
 def remove():
-    buf=""""""
+    buf="""  synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+  synda remove CMIP5 MIROC-ESM historicalNat mon"""
     return buf
 
 def replica():

@@ -138,7 +138,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status')
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
 
-    subparser=create_subparser(subparsers,'remove',help='Remove dataset')
+    subparser=create_subparser(subparsers,'remove',help='Remove dataset',example=sdcliex.remove())
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Move to next replica',example=sdcliex.replica())
