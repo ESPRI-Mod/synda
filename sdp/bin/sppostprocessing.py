@@ -21,7 +21,7 @@ import splog
 import spdb
 import spconst
 import sptime
-import spppp
+import sppipeline
 import spppprdao
 import spjobrdao
 import spconfig
@@ -38,7 +38,7 @@ def all_variable_complete(dataset_pattern,conn):
     return True
 
 def build_ppprun(pipeline,status,project,model,dataset_pattern,variable):
-    pipeline=spppp.get_pipeline(pipeline)
+    pipeline=sppipeline.get_pipeline(pipeline)
 
     # retrieve first pipeline state (note that code below is not reentrant/threadsafe: it works only because execution mode is serial (i.e. non parallel))
     pipeline.reset()
@@ -91,7 +91,7 @@ def add_ppprun(pipeline,status,project,model,dataset_pattern,variable,conn):
                 raise SPException('SPPOSTPR-450','Unknown pipeline (%s)'%pipeline)
 
             # retrieve pipeline definition (note that code below is not reentrant/threadsafe: it works only because execution mode is serial (i.e. non parallel))
-            pipeline=spppp.get_pipeline(pipeline)
+            pipeline=sppipeline.get_pipeline(pipeline)
             pipeline.reset()
             state=pipeline.get_current_state().source
             transition=pipeline.get_current_state().transition
@@ -122,7 +122,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         ppprun=spppprdao.get_one_waiting_ppprun(job_class,pipeline,order,conn) # raise exception if no job found
 
         # retrieve job metadata from pipeline definition
-        pipeline=spppp.get_pipeline(ppprun.pipeline)
+        pipeline=sppipeline.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
 
         generic_args=Bunch(project=ppprun.project,
@@ -135,7 +135,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         #  - job_class and transition are the same (transition is from the finite state machine view, and job_class is from the job consumer view).
         #  - transition must be set in the job, because we need it when doing insertion in jobrun table.
         job=JOBRun(job_class=ppprun.transition,
-                args=pipeline.get_current_state().transition.get_args(generic_args)
+                args=pipeline.get_current_state().transition.get_args(generic_args),
                 error_msg=None,
                 transition=ppprun.transition,
                 start_date=sptime.now(),
@@ -178,7 +178,7 @@ def job_done(job): # note: this method name does not implied that the job comple
         job.status=spconst.JOB_STATUS_DONE
 
         # compute new state
-        pipeline=spppp.get_pipeline(ppprun.pipeline)
+        pipeline=sppipeline.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
         pipeline.next(job.transition_return_code) # as job is done, we move to the next state (next state always exist at this point, else what the point of the job ?)
 

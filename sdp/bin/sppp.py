@@ -12,7 +12,7 @@
 """Pipeline loader.
 
 Note
-    'sppp' stands for 'Synda Post-Processing Pipeline'
+    'sppipeline' stands for 'Synda Post-processing pipeline'
 """
 
 import sys

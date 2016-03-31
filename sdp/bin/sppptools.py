@@ -21,7 +21,7 @@ Note
 import argparse
 from sppostprocessingutils import render,view
 from spexception import StateNotFoundException
-import spppp
+import sppipeline
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser.add_argument('-v','--viewer',action='store_true')
     args = parser.parse_args()
 
-    pipeline=spppp.get_pipeline('IPSL_001')
+    pipeline=sppipeline.get_pipeline('IPSL_001')
 
     if args.list is not None:
 
