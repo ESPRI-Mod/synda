@@ -153,7 +153,7 @@ def run(subparsers):
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'selection',common_option=False,help='Manage selection')
+    subparser=create_subparser(subparsers,'selection',common_option=False,help='List selection files')
 
     subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset',example=sdcliex.show())
     add_parameter_argument(subparser)
