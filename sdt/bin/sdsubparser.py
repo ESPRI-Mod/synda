@@ -161,7 +161,7 @@ def run(subparsers):
     #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
     add_verbose_option(subparser)
 
-    subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset')
+    subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'test',common_option=False,help='Test file download',example=sdcliex.test())
