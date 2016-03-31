@@ -121,7 +121,8 @@ def selection():
     return buf
 
 def show():
-    buf=""""""
+    buf="""  synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+  synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430"""
     return buf
 
 def stat():

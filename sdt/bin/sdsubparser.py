@@ -155,7 +155,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'selection',common_option=False,help='Manage selection')
 
-    subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset')
+    subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset',example=sdcliex.show())
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
     #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
