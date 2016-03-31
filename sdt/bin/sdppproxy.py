@@ -73,4 +73,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    get_service().test(1,2)
+    print get_service().test1(1,2)
