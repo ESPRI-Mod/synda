@@ -24,19 +24,6 @@ def autoremove(args):
     import sddeletedataset
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
-def cache(args):
-    """
-    Deprecated: use 'update' subcommand instead
-    """
-    if args.action is None:
-        pass
-    else:
-        if args.action=="init":
-            print_stderr("Retrieving parameters from ESGF...")
-            import sdcache
-            sdcache.run(reload=True)
-            print_stderr("Parameters are up-to-date.")
-
 def certificate(args):
     import sdlogon
     if args.action is None:
@@ -435,7 +422,6 @@ def update(args):
 # TODO: rename as subcommands
 actions={
     'autoremove':autoremove,
-    'cache':cache,
     'certificate':certificate, 
     'contact':contact,
     'daemon':daemon, 
