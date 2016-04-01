@@ -60,7 +60,9 @@ def intro():
     return buf
 
 def list():
-    buf=""""""
+    buf="""  synda list 5 -f
+  synda list 5 -d
+"""
     return buf
 
 def metric():

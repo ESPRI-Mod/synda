@@ -117,7 +117,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
-    subparser=create_subparser(subparsers,'list',help='List installed dataset')
+    subparser=create_subparser(subparsers,'list',help='List installed dataset',example=sdcliex.list())
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
