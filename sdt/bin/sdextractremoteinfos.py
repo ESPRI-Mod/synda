@@ -94,6 +94,8 @@ def print_large_files(project,sample_size=2000):
     largest of the project, just of the subset).
     """
 
+    files=get_sorted_files(project,sample_size)
+
     # print the 10 largest
     for file_ in files[-10:]:
         print_files(file_)
