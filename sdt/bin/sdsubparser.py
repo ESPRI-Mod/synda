@@ -126,7 +126,7 @@ def run(subparsers):
     subparser.add_argument('--metric','-m',choices=['rate','size'],default='rate',help='Metric name')
     subparser.add_argument('--project','-p',default='CMIP5',help="Project name (must be used with '--groupby=model' else ignored)")
 
-    subparser=create_subparser(subparsers,'param',common_option=False,help='Display ESGF parameters')
+    subparser=create_subparser(subparsers,'param',common_option=False,help='Display ESGF parameters',example=sdcliex.param())
     subparser.add_argument('pattern1',nargs='?',default=None,help='Parameter name')
     subparser.add_argument('pattern2',nargs='?',default=None,help='Filter')
     subparser.add_argument('-c','--columns',type=int,default=1)
