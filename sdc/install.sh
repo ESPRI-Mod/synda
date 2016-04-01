@@ -720,6 +720,11 @@ start_redir_stdxxx
 start_spinner
 
 # check
+if [[ "$g__version" == *-* ]]; then
+    err "INSTALL-ERR119" "Incorrect version number"
+fi
+
+# check
 # (having more than one package specified with '-e' option is a bit tricky to handle, so this check prevent it for now)
 if [ -n "$g__archive" ]; then
     # archive have been specified
