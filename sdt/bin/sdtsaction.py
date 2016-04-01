@@ -272,14 +272,30 @@ def variable_show(args):
 
 def file_show(args):
 
+
     # check
-    li=syndautils.get_facet_values_early(args.stream,'instance_id')
+
+    li=syndautils.get_facet_values_early(args.stream,'instance_id') # check if 'instance_id' exists
     if len(li)==0:
-        print_stderr('Please specify a file.')
-        return
+        # 'instance_id' is not found on cli
+
+        li=syndautils.get_facet_values_early(args.stream,'title') # check if 'title' exists
+        if len(li)==0:
+            # 'title' is not found on cli
+
+            # no identifier found, we stop the processing
+            print_stderr('Please specify a file identifier (id or filename).')
+            return
+
+        elif len(li)>1:
+            print_stderr('Too many arguments.')
+            return
     elif len(li)>1:
         print_stderr('Too many arguments.')
         return
+
+
+    # main
 
     if args.localsearch:
         import sdlfile
