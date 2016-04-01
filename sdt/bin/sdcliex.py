@@ -36,7 +36,12 @@ def daemon():
     return buf
 
 def dump():
-    buf=""""""
+    buf="""  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value
+  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
+  synda dump CMIP5 IPSL mon atmos 1 -d -F indent
+  synda dump -R CMIP5 1 -f -F indent
+  synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
+  synda dump -R CMIP5 1 -f -F value -C url_http,url_gridftp"""
     return buf
 
 def facet():

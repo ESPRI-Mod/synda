@@ -97,7 +97,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management')
     add_action_argument(subparser,choices=['start','stop','status'])
 
-    subparser=create_subparser(subparsers,'dump',help='Display raw metadata')
+    subparser=create_subparser(subparsers,'dump',help='Display raw metadata',example=sdcliex.dump())
     add_parameter_argument(subparser)
     add_type_grp(subparser)
     add_dump_option(subparser)
