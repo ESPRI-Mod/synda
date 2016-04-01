@@ -64,7 +64,8 @@ def list():
     return buf
 
 def metric():
-    buf=""""""
+    buf="""  synda metric -g data_node -m rate -p CMIP5
+  synda metric -g project -m size"""
     return buf
 
 def param():

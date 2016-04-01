@@ -121,7 +121,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
-    subparser=create_subparser(subparsers,'metric',common_option=False,help='Display performance and disk usage metrics')
+    subparser=create_subparser(subparsers,'metric',common_option=False,help='Display performance and disk usage metrics',example=sdcliex.metric())
     subparser.add_argument('--groupby','-g',choices=['data_node','project','model'],default='data_node',help='Group-by clause')
     subparser.add_argument('--metric','-m',choices=['rate','size'],default='rate',help='Metric name')
     subparser.add_argument('--project','-p',default='CMIP5',help="Project name (must be used with '--groupby=model' else ignored)")
