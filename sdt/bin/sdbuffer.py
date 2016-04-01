@@ -18,7 +18,7 @@ import sdconst
 import sdconfig
 import sdtools
 from sdtypes import Buffer
-from sdexception import SDException
+from sdexception import SDException,FileNotFoundException
 
 def get_selection_file_buffer(path=None,parameter=[]):
     """Retrieve input facets from file, stdin or command line argument and returns a Buffer object.
@@ -31,7 +31,7 @@ def get_selection_file_buffer(path=None,parameter=[]):
     # coherence check
     if path is not None and len(parameter)>0:
         # both file and parameter, raise exception
-        raise SDException("SYDUTILS-001","Incorrect arguments (path=%s, parameter=%s)"%(path,parameter))
+        raise SDException("SDBUFFER-001","Incorrect arguments (path=%s, parameter=%s)"%(path,parameter))
 
 
     # mode decision
@@ -78,6 +78,9 @@ def get_selection_file_buffer(path=None,parameter=[]):
 
     elif mode=='file':
         path=sdconfig.find_selection_file(path)
+
+        if not os.path.isfile(path):
+            raise FileNotFoundException('SDBUFFER-002','File not found (%s)'%path)
 
         with open(path, 'r') as fh:
 
