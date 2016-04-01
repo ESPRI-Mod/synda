@@ -52,7 +52,9 @@ def history():
     return buf
 
 def install():
-    buf=""""""
+    buf="""  synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+  synda install sfcWind_ARC-44_ECMWF-ERAINT_evaluation_r1i1p1_AWI-HIRHAM5_v1_sem_197903-198011.nc
+  synda stat MPI-ESM-LR rcp26"""
     return buf
 
 def intro():
@@ -136,7 +138,8 @@ def show():
 
 def stat():
     buf="""  synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
-  synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622"""
+  synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
+  synda stat MPI-ESM-LR rcp26"""
     return buf
 
 def test():
