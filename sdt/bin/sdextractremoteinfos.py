@@ -16,6 +16,7 @@ import humanize
 import sdapp
 import sdquicksearch
 import sdsample
+import sdtools
 
 def print_small_dataset(project,sample_size=2000):
     """This func retrieves a bunch of datasets and returns the smallest (not the smallest of the project, just of the subset)."""
@@ -99,12 +100,20 @@ def print_large_files(project,sample_size=2000):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d','--dataset',action='store_true',help='Print small datasets sample')
-    parser.add_argument('-f','--file',action='store_true',help='Print small files sample')
+    parser.add_argument('-a','--action',choices=['small','large'],default='small')
+    parser.add_argument('-d','--dataset',action='store_true',help='Print datasets sample')
+    parser.add_argument('-f','--file',action='store_true',help='Print files sample')
     parser.add_argument('-p','--project',default='CMIP5')
+    parser.add_argument('-s','--sample_size',default=2000)
     args = parser.parse_args()
 
-    if args.dataset:
-        print_small_dataset(args.project)
-    elif args.file:
-        print_small_files(args.project)
+    if args.action=='small':
+        if args.dataset:
+            print_small_dataset(args.project,args.sample_size)
+        elif args.file:
+            print_small_files(args.project,args.sample_size)
+    elif args.action=='large':
+        if args.dataset:
+            sdtools.print_stderr('Not implemented')
+        elif args.file:
+            print_large_files(args.project,args.sample_size)
