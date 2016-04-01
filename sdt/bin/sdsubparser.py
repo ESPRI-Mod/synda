@@ -88,7 +88,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'cache',common_option=False,help='Manage cache')
     add_action_argument(subparser,choices=['init'])
 
-    subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate')
+    subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate',example=sdcliex.certificate())
     add_action_argument(subparser,choices=['renew','print'])
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
