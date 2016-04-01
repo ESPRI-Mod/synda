@@ -70,7 +70,7 @@ def metric():
 def param():
     buf="""  synda param institute | column
   synda param institute NA
-  synda param"""
+  synda param | column"""
     return buf
 
 def pexec():
