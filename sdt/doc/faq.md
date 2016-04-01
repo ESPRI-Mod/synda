@@ -21,7 +21,7 @@ script should fix the problem.
 
 Run command below
 
-    sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
+    sudo /usr/share/python/synda/sdt/bin/pip install setuptools==19.7
 
 --------------------------------------------------------
 
