@@ -16,6 +16,7 @@
 	- add 'force_renew_ca_certficates' option to remove ca certs.
 	- remove 'cache' subcommand.
 	- remove 'sdreducecol' filter from sdfilepipeline module.
+	- Fix 'pkg_resources.DistributionNotFound: setuptools>=1.0' bug.
 - Version 3.2 - 20160203
 	- DEB package
 	- Retrieve dataset timestamp in batch mode.
