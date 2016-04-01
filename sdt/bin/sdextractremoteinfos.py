@@ -47,9 +47,7 @@ def print_small_dataset(project,sample_size=2000):
         print "%s" % humanize.naturalsize(smallest['size'],gnu=False)
         print
 
-def print_small_files(project,sample_size=2000):
-    """This func retrieves a bunch of files and returns the smallest (not the smallest of the project, just of the subset)."""
-
+def get_sorted_files(project,sample_size,sort_key='size'):
     result=sdsample.get_sample_files(project,sample_size)
     if result.num_result>0:
 
@@ -57,25 +55,47 @@ def print_small_files(project,sample_size=2000):
 
         # cast str to int
         for f in files:
-            if 'size' not in f:
-                print "'size' attribute missing for '%s' project"%project
+            if sort_key not in f:
+                print "'%s' attribute missing for '%s' project"%(sort_key,project)
                 print
 
                 return # stops processing this project
             else:
-                f['size']=int(f['size'])
+                f[sort_key]=int(f[sort_key])
 
         # sort
-        files=sorted(files, key=lambda x: x['size'])
+        files=sorted(files, key=lambda x: x[sort_key])
 
-        # print the 10 smallest
-        for i in range(10):
-            file=files[i]
+        return files
 
-            print "%s" % project
-            print "%s" % file['id']
-            print "%s" % humanize.naturalsize(file['size'],gnu=False)
-            print
+    else:
+        return []
+
+def print_files(file_):
+    print "%s" % file_['project']
+    print "%s" % file_['id']
+    print "%s" % humanize.naturalsize(file_['size'],gnu=False)
+    print
+
+def print_small_files(project,sample_size=2000):
+    """This func retrieves a bunch of files and returns the smallest (not the
+    smallest of the project, just of the subset).
+    """
+
+    files=get_sorted_files(project,sample_size)
+
+    # print the 10 smallest
+    for file_ in files[:10]:
+        print_files(file_)
+
+def print_large_files(project,sample_size=2000):
+    """This func retrieves a bunch of files and returns the largest (not the
+    largest of the project, just of the subset).
+    """
+
+    # print the 10 largest
+    for file_ in files[-10:]:
+        print_files(file_)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
