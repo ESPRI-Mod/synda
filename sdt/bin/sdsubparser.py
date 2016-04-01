@@ -102,7 +102,7 @@ def run(subparsers):
     add_type_grp(subparser)
     add_dump_option(subparser)
 
-    subparser=create_subparser(subparsers,'facet',selection=False,no_default=False,help='Facet discovery')
+    subparser=create_subparser(subparsers,'facet',help='Facet discovery')
     subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
