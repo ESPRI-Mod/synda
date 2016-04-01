@@ -40,7 +40,9 @@ def dump():
     return buf
 
 def facet():
-    buf=""""""
+    buf="""  synda facet experiment MPI-ESM-LR | column
+  synda facet variable MPI-ESM-LR | column
+  synda facet experiment fddtalk MPI-ESM-LR"""
     return buf
 
 def help():
