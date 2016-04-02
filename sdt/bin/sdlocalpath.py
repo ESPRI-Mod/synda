@@ -33,9 +33,6 @@ def run(files):
     files=transform_local_path_product(files)
     files=transform_local_path_project(files)
 
-    files=local_path_custom_transform(files)
-    files=local_path_homemade_transform(files)
-
     files=add_file_local_path(files)
 
     return files
@@ -59,6 +56,21 @@ def get_dataset_local_path(f):
         path="%(dataset_path)s"%f # note that we don't add var folder here (we do ot only for the file local path)
     elif fmt=="tree":
         path="%(dataset_path)s"%f
+    elif fmt=="custom":
+
+        # note: 'sdreducecol' filter must be disabled when using this format
+
+        custom_dataset_template=sdpostpipelineutils.get_attached_parameter(f,'local_path_drs_template')
+        if custom_dataset_template is not None:
+            path=custom_dataset_template%f
+        else:
+            raise SDException('SDLOCALP-014',"'local_path_drs_template' must be set when 'local_path_format' is set to 'custom'.")
+
+    elif fmt=="homemade":
+
+        # note: 'sdreducecol' filter must be disabled when using this format
+
+        path=local_path_homemade_transform(f)
     elif fmt=="notree":
         path=""
     else:
@@ -72,6 +84,10 @@ def get_file_local_path(f):
     if fmt=="treevar":
         path="%(dataset_local_path)s/%(variable)s/%(filename)s" % f
     elif fmt=="tree":
+        path="%(dataset_local_path)s/%(filename)s"%f
+    elif fmt=="custom":
+        path="%(dataset_local_path)s/%(filename)s"%f
+    elif fmt=="homemade":
         path="%(dataset_local_path)s/%(filename)s"%f
     elif fmt=="notree":
         path="%(filename)s"%f
@@ -100,34 +116,21 @@ def transform_local_path_project(files):
             f["dataset_local_path"]=re.sub('^'+project,project.upper(),path)
     return files
 
-def local_path_custom_transform(files):
-    """
-    Note
-        'sdreducecol' filter must be disabled when using this func
-    """
-
-    # Example
-    #
-    #for f in files:
-    #    if f['project']=='CORDEX':
-    #        custom_dataset_template='cordex/%(product)s/%(domain)s/%(institute)s/%(driving_model)s/%(experiment)s/%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s'
-    #        f["dataset_local_path"]=custom_dataset_template%f
-
-def local_path_homemade_transform(files):
+def local_path_homemade_transform(f):
     """
     This is to implement complex rules to build local_path (rules which cannot
-    fit in local_path_custom_transform() func).
-
-    Note
-        'sdreducecol' filter must be disabled when using this func
+    fit even using custom format).
 
     TODO
         Make a plugin of this func
     """
 
     # user code goes here
+    #
+    # sample
+    path="%(dataset_path)s"%f
 
-    return files
+    return path
 
 def transform_local_path_product(files):
     for f in files:

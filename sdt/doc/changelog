@@ -16,14 +16,16 @@
 	- add 'force_renew_ca_certficates' option to remove ca certs.
 	- remove 'cache' subcommand.
 	- remove 'sdreducecol' filter from sdfilepipeline module.
-	- Fix 'pkg_resources.DistributionNotFound: setuptools>=1.0' bug.
+	- fix 'pkg_resources.DistributionNotFound: setuptools>=1.0' bug.
+	- move common method from Dataset and File class to BaseType class.
+	- localpath DRS can be customized by user in configuration file (local_path_drs_template).
 - Version 3.2 - 20160203
 	- DEB package
-	- Retrieve dataset timestamp in batch mode.
-	- Modify Synda scheduler to ease Globus Online integration.
-	- Prevent normal user to run admin commands in multi-user mode.
-	- Set model attribute as optional.
-	- Improve documentation.
+	- retrieve dataset timestamp in batch mode.
+	- modify Synda scheduler to ease Globus Online integration.
+	- prevent normal user to run admin commands in multi-user mode.
+	- set model attribute as optional.
+	- improve documentation.
 - Version 3.1 - 20151229
 	- multi-user
 	- daemon integrated in systemd
