@@ -75,6 +75,12 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     if debug:
         li.insert(1,'-d')
 
+    # hpss & parse_wget_output hack
+    hpss=sdconfig.config.getboolean('download','hpss')
+    if hpss:
+        li.insert(1,'-p')
+        li.insert(2,'0')
+
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
     # note
