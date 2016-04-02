@@ -134,10 +134,7 @@ class Selection():
             # this loop processes main selection facets
             return [self.facets]
 
-class File():
-    def __init__(self,**kwargs):
-        self.__dict__.update( kwargs )
-
+class BaseType():
     def get_full_local_path(self):
 
         # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
@@ -145,6 +142,10 @@ class File():
             assert self.local_path[0]!='/'
 
         return os.path.join(sdconfig.data_folder,self.local_path)
+
+class File(BaseType):
+    def __init__(self,**kwargs):
+        self.__dict__.update( kwargs )
 
     def __str__(self):
         if self.status==sdconst.TRANSFER_STATUS_ERROR:
@@ -154,17 +155,9 @@ class File():
 
         return buf
 
-class Dataset():
+class Dataset(BaseType):
     def __init__(self,**kw):
         self.__dict__.update(kw)
-
-    def get_full_local_path(self):
-
-        # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
-        if len(self.local_path)>0:
-            assert self.local_path[0]!='/'
-
-        return os.path.join(sdconfig.data_folder,self.local_path)
 
     def get_full_local_path_without_version(self):
         return re.sub('/[^/]+$','',self.get_full_local_path())
