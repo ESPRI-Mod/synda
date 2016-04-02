@@ -1,30 +1,5 @@
-# Synda upgrade guide (installation from source)
+# Synda Upgrade Guide
 
-## Synopsis
-
-This document contains instructions to install new Synda version.
-
-## Procedure
-
-### Pre-upgrade
-
-Backup $ST_HOME folder (e.g. $HOME/sdt)
-
-### Upgrade
-
-Run commands below:
-
-    mkdir inst_tmpdir
-    cd $inst_tmpdir
-    wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
-    chmod +x install.sh
-    ./install.sh -u transfer
-
-### Post-upgrade
-
-As configuration files located in $ST_HOME/conf may have been reinitialized
-during upgrade, you need to check if parameters are still correctly set (e.g.
-openid, password..).
-
-Note: you can use a diff program to compare post-upgrade configuration files
-over pre-upgrade configuration files (from the backup).
+* [Upgrade source installation](upgrade_src.md)
+* [Upgrade RPM package installation](upgrade_rpm.md)
+* [Upgrade DEB package installation](upgrade_deb.md)
