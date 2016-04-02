@@ -63,7 +63,11 @@ def build(buffer,load_default=None):
     # load default (file containing default parameters for all projects)
     default_selection=load_default_file(sdconfig.default_selection_file,load_default)
 
-    # ISSUE BELOW: we don't look for the project in pending parameter, which mean porject level default feature doesn't work when we only use value (i.e. without the name (e.g. synda search GeoMIP) # TAG5433453
+    # ISSUE BELOW
+    #
+    # we don't look for the project in pending parameter, which mean porject
+    # level default feature doesn't work when we only use value (i.e. without
+    # the name (e.g. synda search GeoMIP) # TAG5433453
 
     # retrieve project
     if 'project' in selection.facets:
