@@ -63,11 +63,20 @@ def build(buffer,load_default=None):
     # load default (file containing default parameters for all projects)
     default_selection=load_default_file(sdconfig.default_selection_file,load_default)
 
-    # ISSUE BELOW
+    # WARNING
     #
-    # we don't look for the project in pending parameter, which mean porject
-    # level default feature doesn't work when we only use value (i.e. without
-    # the name (e.g. synda search GeoMIP) # TAG5433453
+    # For project level default file to be loaded, the following must be true
+    #     - project must be specified in cli parameter or in the selection file or 
+    #       in the global default file.
+    #     - project must be specified using name=value notation.
+    #       i.e. pending value syntax doesn't work.
+    #       This is because if we want to use pending syntax here, we have to
+    #       use sdinference and query the database to retrieve ESGF parameters.
+    #       Doing those things here may raise circular dependencies
+    #       as well as making the whole thing very complex.
+    #       To summarize:
+    #           - synda search project=GeoMIP => this works   (i.e. load project level default file)
+    #           - synda search GeoMIP         => this doesn't (i.e. doesn't load project level default file)
 
     # retrieve project
     if 'project' in selection.facets:
