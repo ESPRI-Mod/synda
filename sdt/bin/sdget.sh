@@ -414,26 +414,36 @@ else
 fi
 
 
-# post-processing
+
+
+# parse wget output
 
 if [ $parse_wget_output -eq 1 ]; then
     source "$wgetoutputparser" # we parse wget output to keep only HTTP response code from wget messages
 fi
 
+
+# post-processing
+
 if [ $wget_status -ne 0 ]; then
+
     if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
         status=29
     else
 
-        # wget wrap many different errors with -1 code
-        # so we better use the code resulting from the parsing
-        #
-        #
-        # if we found some error during the parsing, we use it, else we use 1
-        #
-        if [ $wget_error_status_from_parsing -ne 0 ]; then
+        if [ $parse_wget_output -eq 1 ]; then
+
+            # assert
+            if [ $wget_error_status_from_parsing -eq 0 ]; then
+                err "Assert error: incorrect value for 'wget_error_status_from_parsing'"
+            fi
+
+            # wget wrap many different errors with -1 code, so we better use the code resulting from the parsing
             status=$wget_error_status_from_parsing
+
         else
+            # no wget output parsing, so no error details (wget wrap many different errors with -1 code)
+
             status=1
         fi
     fi
