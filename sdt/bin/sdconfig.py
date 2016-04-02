@@ -111,6 +111,7 @@ multiuser=False
 default_options={'max_parallel_download':'8',
                  'user':'',
                  'group':'',
+                 'hpss':'0',
                  'post_processing':'0',
                  'globusonline':'0',
                  'unicode_term':'0',
