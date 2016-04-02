@@ -9,7 +9,7 @@
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script checks if there is a match between dataset id and dataset template filled with facets values."""
+"""This script checks if there is a match between dataset_functional_id and dataset template filled with facets values."""
 
 import os
 import sys
