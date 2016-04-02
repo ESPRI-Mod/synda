@@ -267,10 +267,6 @@ fi
 
 WGET_TRIES=1
 WGET_TIMEOUT=360
-MAX_REDIRECT=2
- 
-WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
-WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
 
 # limit redirect retry to ease output parsing
 #
@@ -278,6 +274,11 @@ WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
 #  - the message "2 redirections exceeded." is printed in debug.log file, this is normal
 #  - we need 2 redirects (to go the the IDP to verify user identity and come back)
 #
+MAX_REDIRECT=2
+ 
+WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
+WGETOPT="$WGETOPT --timeout=$WGET_TIMEOUT --tries=$WGET_TRIES -O $local_file "
+
 WGETOPT="$WGETOPT --max-redirect=$MAX_REDIRECT "
 
 
