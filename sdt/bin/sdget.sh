@@ -153,7 +153,8 @@ debug=0
 verbosity=0
 always_log_wget_output=0
 checksum_type=md5
-while getopts 'ac:dhsv' OPTION
+parse_wget_output=1
+while getopts 'ac:dhp:sv' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1
@@ -164,6 +165,8 @@ do
         ;;
   h)    usage
         exit 0
+        ;;
+  p)    parse_wget_output=$OPTARG
         ;;
   s)    show_progress=1
         ;;
@@ -263,14 +266,13 @@ else
     checksum_cmd=$(sha256_cmd)
 fi
 
+
 # wget configuration
 
 WGET_TIMEOUT=360
 
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT -O $local_file --timeout=$WGET_TIMEOUT"
-
-parse_wget_output=1
 
 if [ $parse_wget_output -eq 1 ]; then
 
