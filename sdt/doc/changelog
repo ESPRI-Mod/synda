@@ -20,6 +20,7 @@
 	- remove 'sdreducecol' filter from sdfilepipeline module.
 	- fix 'pkg_resources.DistributionNotFound: setuptools>=1.0' bug.
 	- move common method from Dataset and File class to BaseType class.
+	- move 'max_parallel_download' from 'daemon' to 'download' section.
 - Version 3.2 - 20160203
 	- DEB package
 	- retrieve dataset timestamp in batch mode.
