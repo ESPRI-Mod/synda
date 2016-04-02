@@ -4,7 +4,7 @@ This document describes each parameter used in "std.conf" file to configure Synd
 
 ### daemon.user
 
-Set the daemon user.
+Set daemon user.
 
 Note: the daemon must be started by root for this parameter to work.
 
@@ -14,7 +14,7 @@ Default: ""
 
 ### daemon.group
 
-Set the daemon group.
+Set daemon group.
 
 Note: the daemon must be started by root for this parameter to work.
 
