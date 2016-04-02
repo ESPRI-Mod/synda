@@ -15,6 +15,7 @@ Note
     This module contains only instantiable classes (i.e. no static class)
 """
 
+import os
 import sys
 import traceback
 import re
@@ -138,7 +139,12 @@ class File():
         self.__dict__.update( kwargs )
 
     def get_full_local_path(self):
-        return "%s/%s"%(sdconfig.data_folder,self.local_path)
+
+        # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
+        if len(self.local_path)>0:
+            assert self.local_path[0]!='/'
+
+        return os.path.join(sdconfig.data_folder,self.local_path)
 
     def __str__(self):
         if self.status==sdconst.TRANSFER_STATUS_ERROR:
@@ -153,7 +159,12 @@ class Dataset():
         self.__dict__.update(kw)
 
     def get_full_local_path(self):
-        return "%s/%s"%(sdconfig.data_folder,self.local_path)
+
+        # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
+        if len(self.local_path)>0:
+            assert self.local_path[0]!='/'
+
+        return os.path.join(sdconfig.data_folder,self.local_path)
 
     def get_full_local_path_without_version(self):
         return re.sub('/[^/]+$','',self.get_full_local_path())
