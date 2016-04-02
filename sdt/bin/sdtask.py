@@ -167,7 +167,7 @@ def fatal_exception():
 
 # init.
 
-max_transfer=sdconfig.config.getint('daemon','max_parallel_download')
+max_transfer=sdconfig.config.getint('download','max_parallel_download')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
 
 dmngr=get_download_manager()
