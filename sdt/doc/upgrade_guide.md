@@ -23,8 +23,8 @@ Run commands below:
 ### Post-upgrade
 
 As configuration files located in $ST_HOME/conf may have been reinitialized
-during installation, you need to check if parameters are still correctly set
-(e.g. openid).
+during upgrade, you need to check if parameters are still correctly set (e.g.
+openid, password..).
 
 Note: you can use a diff program to compare post-upgrade configuration files
-over backuped pre-upgrade configuration files.
+over pre-upgrade configuration files (from the backup).
