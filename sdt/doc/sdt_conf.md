@@ -2,11 +2,39 @@
 
 This document describes each parameter used in "std.conf" file to configure Synda.
 
-### daemon.max_parallel_download
+### daemon.user
+
+Set the daemon user.
+
+Note: the daemon must be started by root for this parameter to work.
+
+Default: ""
+
+--------------------------------------------------------
+
+### daemon.group
+
+Set the daemon group.
+
+Note: the daemon must be started by root for this parameter to work.
+
+Default: ""
+
+--------------------------------------------------------
+
+### download.max_parallel_download
 
 Set the number of parallel download.
 
 Default: 8
+
+--------------------------------------------------------
+
+### download.hpss
+
+Gives HPSS service some time to move data from tape to disk.
+
+Default: 0
 
 --------------------------------------------------------
 
