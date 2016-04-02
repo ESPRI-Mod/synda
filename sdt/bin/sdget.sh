@@ -125,6 +125,16 @@ abort ()
     exit 7
 }
 
+sha256_cmd ()
+{
+    echo "openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
+}
+
+md5_cmd ()
+{
+    echo "md5sum  | awk '{print \$1}' "
+}
+
 # set locales
 
 export LANG=C
@@ -237,16 +247,6 @@ fi
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 debug_file=$logdir/debug.log
-
-sha256_cmd ()
-{
-    echo "openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-}
-
-md5_cmd ()
-{
-    echo "md5sum  | awk '{print \$1}' "
-}
 
 
 # manage checksum type
@@ -399,6 +399,8 @@ if [ $verbosity -gt 0 ]; then
 
     wget_status=$?
     wget_pid=$!
+
+    parse_wget_output=0 # disable wget output parsing in verbose mode
 else
     # in this mode, wget info are displayed in differed time
 
@@ -409,14 +411,14 @@ else
         wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script') # remove progress lines from wget output to prevent exceeding maximum single argument size
         wget_status=$?
     fi
-
-    # we parse wget output to keep only HTTP response code from wget messages
-    if [ $parse_wget_output -eq 1 ]; then
-        source "$wgetoutputparser"
-    fi
 fi
 
+
 # post-processing
+
+if [ $parse_wget_output -eq 1 ]; then
+    source "$wgetoutputparser" # we parse wget output to keep only HTTP response code from wget messages
+fi
 
 if [ $wget_status -ne 0 ]; then
     if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
