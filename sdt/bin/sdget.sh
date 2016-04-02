@@ -422,6 +422,7 @@ if [ $wget_status -ne 0 ]; then
     if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
         status=29
     else
+
         # wget wrap many different errors with -1 code
         # so we better use the code resulting from the parsing
         #
