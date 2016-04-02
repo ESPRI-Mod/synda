@@ -34,6 +34,7 @@ def run(files):
     files=transform_local_path_project(files)
 
     files=local_path_custom_transform(files)
+    files=local_path_homemade_transform(files)
 
     files=add_file_local_path(files)
 
@@ -111,6 +112,20 @@ def local_path_custom_transform(files):
     #    if f['project']=='CORDEX':
     #        custom_dataset_template='cordex/%(product)s/%(domain)s/%(institute)s/%(driving_model)s/%(experiment)s/%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s'
     #        f["dataset_local_path"]=custom_dataset_template%f
+
+def local_path_homemade_transform(files):
+    """
+    This is to implement complex rules to build local_path (rules which cannot
+    fit in local_path_custom_transform() func).
+
+    Note
+        'sdreducecol' filter must be disabled when using this func
+
+    TODO
+        Make a plugin of this func
+    """
+
+    # user code goes here
 
     return files
 
