@@ -89,14 +89,18 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
 
-    # chomp (download scripts return error message on stderr (one line terminated by EOL))
+    # download scripts may
+    #   - return error message on stderr, one line terminated by EOL
+    #   - return error message on stderr, multiple lines, each terminated by EOL
+
+    # first, we chomp
     #
     # note
-    #     Only the last eol is chomped here.
+    #     only the last eol is chomped here.
     #
-    #stderr=stderr.rstrip('\r\n')
+    stderr=stderr.rstrip('\r\n')
 
-    # remove all eol from string (download scripts return error message on stderr (multiple lines terminated by EOL))
+    # then we replace all eol from string but the last (which has already been chomped)
     #
     stderr=stderr.replace('\n', '<eol-n>').replace('\r', '<eol-r>')
 
