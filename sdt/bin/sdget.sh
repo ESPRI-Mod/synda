@@ -274,6 +274,14 @@ parse_wget_output=1
 
 if [ $parse_wget_output -eq 1 ]; then
 
+    # Notes
+    #     - currently, wget output parsing work only if "--tries" is set to 1
+    #     - but if "--tries" is set to 1, HPSS data access doesn't work
+    #       anymore, as it needs some retry to handle the tape delay mecanism
+    #
+    # TODO
+    #     also make wget output parsing works when "--tries" is set to 1
+
     WGET_TRIES=1
 
     # limit redirect retry to ease output parsing
@@ -401,7 +409,7 @@ else
     fi
 
     # we parse wget output to keep only HTTP response code from wget messages
-    if [ "$WGET_TRIES" = "1" ]; then # (currently, wget output parsing work only if "--tries" is set to 1)
+    if [ $parse_wget_output -eq 1 ]; then
         source "$wgetoutputparser"
     fi
 fi
