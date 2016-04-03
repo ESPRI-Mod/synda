@@ -45,6 +45,10 @@ def chown_folder(uid,gid):
 
 def chown_file(uid,gid):
 
+    # pid files
+    li=[sdconfig.daemon_pid_file,sdconfig.ihm_pid_file]
+    chown_files(li,uid,gid)
+
     # proxy cert file
     li=[sdconfig.credential_file]
     chown_files(li,uid,gid)
