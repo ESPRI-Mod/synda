@@ -453,9 +453,14 @@ if [ $wget_status -ne 0 ]; then
     log "DEB010" "Transfer failed with error $status - $* - $wget_status"
 
     if [ $status -eq 12 ]; then
+        # when we are here, we are pretty sure it's a 'Permission error' thanks to wget stderr output parsing
+
         err "Permission error (you need to susbscribe to the required role/group to access the data (e.g. cmip5-research))."
     else
-        err "Transfer failed with error $status (see sdget.sh script for details about the error)"
+        # when we are here, we are not sure it's a 'Permission error' (it can be any error), but as 'Permission error'
+        # is the most frequent error, we advise the user the verify that point.
+ 
+        err "Transfer failed with error $status (did you suscribe to the required role/group ? (e.g. cmip5_research, cordex_research))"
     fi
 
     exit $status
