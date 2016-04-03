@@ -22,6 +22,7 @@
 	- move common method from Dataset and File class to BaseType class.
 	- set 'prevent_daemon_and_modification' to false for source installation.
 	- move 'max_parallel_download' from 'daemon' to 'download' section.
+	- create ihm_pid_file only if mutually exclusive lock is enabled.
 	- increase daemon sqlite timeout from 120s to 12000s.
 	- do not parse wget output by default and increase wget '--tries' to prevent hpss failure.
 - Version 3.2 - 20160203
