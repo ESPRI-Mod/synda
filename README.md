@@ -74,9 +74,12 @@ This program is a command-line alternative to the ESGF web front-end.
 
 [Docker installation](https://registry.hub.docker.com/u/prodiguer/synda)
 
-Note: installations using system packages (DEB or RPM) are multi-user, and can
-only be performed by root user. Source installation is single-user and can be
-performed by root or normal user.
+Notes:
+
+* installations using system packages (DEB or RPM) are multi-user, and can
+  only be performed by root user. Source installation is single-user and can be
+  performed by root or normal user.
+* installation guides for old Synda versions can be found [here](sdt/doc/old_version_installation_guide)
 
 ## Contact
 
