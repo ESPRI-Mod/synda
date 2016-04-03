@@ -19,11 +19,11 @@ Remove previous package version using command below:
 
     yum erase synda
 
-Install new package version using [this guide](install_deb.md)
+Install new package version using [this guide](rpm_install.md)
 
 ### Post-upgrade
 
-As configuration files located in $ST_HOME/conf may have been reinitialized
+As configuration files located in /etc/synda/sdt have been reinitialized
 during upgrade, you need to check if parameters are still correctly set (e.g.
 openid, password..).
 
