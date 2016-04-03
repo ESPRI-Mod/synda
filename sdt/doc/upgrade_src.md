@@ -8,14 +8,14 @@ This document contains instructions to install new Synda version.
 
 ### Pre-upgrade
 
-Backup $ST_HOME folder (e.g. $HOME/sdt)
+Backup $ST_HOME folder ($HOME/sdt)
 
 ### Upgrade
 
 Run commands below:
 
     mkdir inst_tmpdir
-    cd $inst_tmpdir
+    cd inst_tmpdir
     wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
     chmod +x install.sh
     ./install.sh -u transfer

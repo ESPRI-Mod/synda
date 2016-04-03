@@ -1,24 +1,23 @@
-# Synda upgrade guide (installation from source)
+# Synda upgrade guide (Debian package installation)
 
 ## Synopsis
 
-This document contains instructions to install new Synda version.
+This document contains instructions to upgrade to new Synda version using Debian package.
 
 ## Procedure
 
 ### Pre-upgrade
 
-Backup $ST_HOME folder (e.g. $HOME/sdt)
+Backup /etc/synda/sdt and /var/log/synda/sdt folders
 
 ### Upgrade
 
-Run commands below:
+Remove previous package version using command below:
 
-    mkdir inst_tmpdir
-    cd $inst_tmpdir
-    wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
-    chmod +x install.sh
-    ./install.sh -u transfer
+    dpkg -P synda
+
+Install new package version using [this guide](sdt/doc/install_deb.md)
+
 
 ### Post-upgrade
 
