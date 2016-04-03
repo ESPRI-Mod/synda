@@ -1,4 +1,4 @@
-# Synda installation using RPM package
+# Synda RPM package installation guide
 
 ## Synopsis
 
@@ -51,49 +51,7 @@ If you need a distro/version that is not listed, you can open a github issue so 
 
 Note: RPM packages are currently only available for 64 bits architecture
 
-## Patches
-
-### Patch 1
-
-Synda 3.2 RPM package contains a bug which prevent renewing certificate.
-
-Run the command below to fix it
-
-```
-sudo /usr/share/python/synda/sdt/bin/pip install setuptools==1.0
-```
-
-### Patch 2
-
-Synda 3.2 RPM package contains a bug which prevent running application under certain circumstances.
-
-Run the command below to fix it
-
-```
-sudo wget http://dods.ipsl.jussieu.fr/jripsl/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
-```
-
 ## Configuration
-
-* Fix the ESGF index hostname
-
-```
-sudo vi /etc/synda/sdt/sdt.conf
-```
-
-Replace
-
-```
-indexes=pcmdi9.llnl.gov
-default_index=pcmdi9.llnl.gov
-```
-
-with
-
-```
-indexes=pcmdi.llnl.gov
-default_index=pcmdi.llnl.gov
-```
 
 * Edit credentials file to set ESGF openid and password
 

@@ -1,4 +1,4 @@
-# Synda installation from source
+# Synda installation from source guide
 
 ## Synopsis
 
@@ -41,26 +41,6 @@ chmod +x ./install.sh
 ```
 export ST_HOME=$HOME/sdt
 export PATH=$ST_HOME/bin:$PATH
-```
-
-* Fix the ESGF index hostname
-
-```
-vi $ST_HOME/conf/sdt.conf
-```
-
-Replace
-
-```
-indexes=pcmdi9.llnl.gov
-default_index=pcmdi9.llnl.gov
-```
-
-with
-
-```
-indexes=pcmdi.llnl.gov
-default_index=pcmdi.llnl.gov
 ```
 
 * Edit credentials file to set openid and password (ESGF credential)

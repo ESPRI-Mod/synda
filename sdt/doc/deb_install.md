@@ -1,4 +1,4 @@
-# Synda installation using DEB package
+# Synda DEB package installation guide
 
 ## Synopsis
 
@@ -39,37 +39,7 @@ Then install Synda package using command below
 sudo apt-get install synda --force-yes -y
 ```
 
-### Patch
-
-Synda 3.2 DEB package contains a bug which prevent running application under certain circumstances.
-
-Run the command below to fix it
-
-```
-sudo wget http://dods.ipsl.jussieu.fr/jripsl/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
-```
-
 ## Configuration
-
-* Fix the ESGF index hostname
-
-```
-sudo vi /etc/synda/sdt/sdt.conf
-```
-
-Replace
-
-```
-indexes=pcmdi9.llnl.gov
-default_index=pcmdi9.llnl.gov
-```
-
-with
-
-```
-indexes=pcmdi.llnl.gov
-default_index=pcmdi.llnl.gov
-```
 
 * Edit credentials file to set ESGF openid and password
 
