@@ -22,8 +22,9 @@ import sdconfig
 import sdtools
 
 def cleanup():
-    if os.path.isfile(sdconfig.ihm_pid_file):
-        os.unlink(sdconfig.ihm_pid_file)
+    if sdconfig.prevent_daemon_and_ihm or sdconfig.prevent_ihm_and_ihm:
+        if os.path.isfile(sdconfig.ihm_pid_file):
+            os.unlink(sdconfig.ihm_pid_file)
 
     # hack
     #
@@ -65,7 +66,8 @@ if who_am_i()=='ihm':
     if sdconfig.prevent_ihm_and_ihm:
         sdapputils.singleton_check(sdconfig.ihm_pid_file)
 
-    sdapputils.create_IHM_pid_file(sdconfig.ihm_pid_file)
+    if sdconfig.prevent_daemon_and_ihm or sdconfig.prevent_ihm_and_ihm:
+        sdapputils.create_IHM_pid_file(sdconfig.ihm_pid_file)
 
     # configure non-daemon start/stop routines 
     # (daemon start/stop routines are configured directly in sdtaskscheduler module)
