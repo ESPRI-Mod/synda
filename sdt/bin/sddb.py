@@ -35,9 +35,13 @@ def connect():
     # more info here => http://www.sqlite.org/faq.html#q5
     #
     if sdtools.is_daemon():
-        # we increase the sqlite default timeout so we are able to use sqlite3
-        # to run manual query without stopping the daemon
-        timeout=120 # TODO => use 86400 / 24h here
+
+        # we increase the sqlite default timeout for the daemon,
+        # so it doesn't exit on timeout error when we are running
+        # huge query in the IHM (e.g. synda install CMIP5)
+        #
+        timeout=12000 # 200mn # TODO maybe use 86400 / 24h here
+
     else:
         # we increase the sqlite default timeout so we are able to use sqlite3
         # to run manual query without stopping the daemon
