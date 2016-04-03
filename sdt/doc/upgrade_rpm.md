@@ -1,24 +1,25 @@
-# Synda upgrade guide (installation from source)
+# Synda RPM package upgrade guide
 
 ## Synopsis
 
-This document contains instructions to install new Synda version.
+This document contains instructions to upgrade Synda version using RPM package.
 
 ## Procedure
 
 ### Pre-upgrade
 
-Backup $ST_HOME folder (e.g. $HOME/sdt)
+Backup folders below
+
+    /etc/synda/sdt
+    /var/log/synda/sdt
 
 ### Upgrade
 
-Run commands below:
+Remove previous package version using command below:
 
-    mkdir inst_tmpdir
-    cd $inst_tmpdir
-    wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
-    chmod +x install.sh
-    ./install.sh -u transfer
+    yum erase synda
+
+Install new package version using [this guide](install_deb.md)
 
 ### Post-upgrade
 

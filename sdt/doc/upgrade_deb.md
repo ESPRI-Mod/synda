@@ -1,14 +1,17 @@
-# Synda upgrade guide (Debian package installation)
+# Synda Debian package upgrade guide
 
 ## Synopsis
 
-This document contains instructions to upgrade to new Synda version using Debian package.
+This document contains instructions to upgrade Synda version using Debian package.
 
 ## Procedure
 
 ### Pre-upgrade
 
-Backup /etc/synda/sdt and /var/log/synda/sdt folders
+Backup folders below
+
+    /etc/synda/sdt
+    /var/log/synda/sdt
 
 ### Upgrade
 
@@ -16,8 +19,7 @@ Remove previous package version using command below:
 
     dpkg -P synda
 
-Install new package version using [this guide](sdt/doc/install_deb.md)
-
+Install new package version using [this guide](install_deb.md)
 
 ### Post-upgrade
 
