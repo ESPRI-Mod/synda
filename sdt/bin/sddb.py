@@ -36,15 +36,21 @@ def connect():
     #
     if sdtools.is_daemon():
 
-        # we increase the sqlite default timeout for the daemon,
+        # we set a high sqlite timeout value for the daemon,
         # so it doesn't exit on timeout error when we are running
-        # huge query in the IHM (e.g. synda install CMIP5)
+        # huge query in Synda IHM (e.g. synda install CMIP5)
+        #
+        # by doing so, so we are able to use Synda IHM and sqlite3
+        # to run manual query without stopping the daemon.
         #
         timeout=12000 # 200mn # TODO maybe use 86400 / 24h here
 
     else:
-        # we increase the sqlite default timeout so we are able to use sqlite3
-        # to run manual query without stopping the daemon
+
+        # we do not need to set a high sqlite timeout value for Synda IHM,
+        # as daemon do not perform huge queries, so Synda IHM do not have
+        # to wait for long until the sqlite lock is release.
+
         timeout=120 # 2 mn
 
     # Note
