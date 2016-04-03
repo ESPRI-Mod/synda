@@ -20,8 +20,10 @@
 	- remove 'sdreducecol' filter from sdfilepipeline module.
 	- fix 'pkg_resources.DistributionNotFound: setuptools>=1.0' bug.
 	- move common method from Dataset and File class to BaseType class.
+	- set 'prevent_daemon_and_modification' to false for source installation.
 	- move 'max_parallel_download' from 'daemon' to 'download' section.
-	- do not parse wget output by default so to prevent hpss failure.
+	- increase daemon sqlite timeout from 120s to 12000s.
+	- do not parse wget output by default and increase wget '--tries' to prevent hpss failure.
 - Version 3.2 - 20160203
 	- DEB package
 	- retrieve dataset timestamp in batch mode.

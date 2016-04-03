@@ -166,7 +166,7 @@ check_path(root_folder)
 check_path(selections_folder)
 check_path(data_folder)
 
-prevent_daemon_and_modification=True # prevent modification while daemon is running
+prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
