@@ -18,7 +18,7 @@ Backup folders below
 
 Remove previous package version using command below:
 
-    dpkg -P synda
+    sudo dpkg -P synda
 
 Install new package version using [this guide](deb_install.md)
 
