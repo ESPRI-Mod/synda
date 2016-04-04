@@ -1,10 +1,10 @@
-# Globus Online Howto
+# Globus Howto
 
 ## Requirement
 
 * Synda 3.3+
 
-* Synda must be installed from source to transfer files with Globus Online
+* Synda must be installed from source to transfer files with Globus
 (not available yet with system package based installation).
 
 ## Installation
@@ -16,26 +16,26 @@ First you need to retrieve the installer
 
 Then use one of the methods below to install the globus module
 
-### Install globusonline module over an already existing synda installation
+### Install globus module over an already existing synda installation
 
-    ./install.sh globusonline
+    ./install.sh globus
 
-### Install a new installation of synda and globusonline
+### Install a new installation of synda and globus
 
-    ./install.sh synda globusonline
+    ./install.sh synda globus
 
 ## Configuration
 
 ### sdt/conf/credentials.conf
-
-    [module]
-    globusonline=1
 
     [globus]
     username=
     password=
 
 ### sdt/conf/sdt.conf
+
+    [module]
+    globus=1
 
     [globus]
     destination_endpoint = destination#endpoint

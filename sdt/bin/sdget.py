@@ -50,7 +50,7 @@ def download(url,full_local_path,checksum_type='md5',debug=False):
 
         (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug)
 
-    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS_ONLINE:
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS:
 
         pass
 

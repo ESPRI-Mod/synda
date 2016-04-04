@@ -386,7 +386,7 @@ install_sg_application ()
     #
     # (program written in C to create a proxy certificate from a public key)
     #
-    client_dir=$st_root/lib/$PYTHON_CMD/site-packages/globusonline_transfer_api_client-*.egg/globusonline/transfer/api_client/x509_proxy/
+    client_dir=$st_root/lib/$PYTHON_CMD/site-packages/globusonline/transfer/api_client/x509_proxy/
     mkdir $tmpdir/mkproxy
     pushd $tmpdir/mkproxy
     wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
@@ -600,7 +600,7 @@ update_postprocessing_module ()
     post_install $pp_conf_file
 }
 
-install_globusonline_module ()
+install_globus_module ()
 {
     init_ve $st_root
     install_sg_application # sg stands for 'Synda Globus'
@@ -661,7 +661,7 @@ g__verbose=
 g__upgrade=0
 g__transfer=0
 g__postprocessing=0
-g__globusonline=0
+g__globus=0
 g__archive=
 g__version=
 
@@ -698,8 +698,8 @@ if [ $# -ge 1 ]; then
             g__transfer=1
         elif [ $module = "postprocessing" ]; then
             g__postprocessing=1
-        elif [ $module = "globusonline" ]; then
-            g__globusonline=1
+        elif [ $module = "globus" ]; then
+            g__globus=1
         fi
     done
 else
@@ -840,9 +840,9 @@ if [ $g__upgrade -eq 0 ]; then
         install_postprocessing_module
     fi
 
-    if [ $g__globusonline -eq 1 ]; then
+    if [ $g__globus -eq 1 ]; then
         st_is_running
-        install_globusonline_module
+        install_globus_module
     fi
 else
     # upgrade

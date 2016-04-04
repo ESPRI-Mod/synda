@@ -46,9 +46,9 @@ Default: 0
 
 --------------------------------------------------------
 
-### module.globusonline
+### module.globus
 
-If true, use globus online platform to download files.
+If true, use globus platform to download files.
 
 Default: 0
 
