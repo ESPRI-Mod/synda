@@ -600,7 +600,7 @@ update_postprocessing_module ()
     post_install $pp_conf_file
 }
 
-install_globus_module ()
+install_globustransfer_module ()
 {
     init_ve $st_root
     install_sg_application # sg stands for 'Synda Globus'
@@ -842,7 +842,7 @@ if [ $g__upgrade -eq 0 ]; then
 
     if [ $g__globustransfer -eq 1 ]; then
         st_is_running
-        install_globus_module
+        install_globustransfer_module
     fi
 else
     # upgrade
