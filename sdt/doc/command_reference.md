@@ -25,6 +25,7 @@ optional arguments:
                         Force renew CA certificates
 
 examples
+
     synda certificate renew
     synda certificate print
 
@@ -77,6 +78,7 @@ optional arguments:
                         set format to be used with 'dump' action
 
 examples
+
     synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
     synda dump CMIP5 IPSL mon atmos 1 -d -F indent
     synda dump -R CMIP5 1 -f -F indent
@@ -102,6 +104,7 @@ optional arguments:
   -z, --dry_run
 
 examples
+
     synda facet experiment MPI-ESM-LR | column
     synda facet variable MPI-ESM-LR | column
     synda facet experiment fddtalk MPI-ESM-LR
@@ -174,6 +177,7 @@ optional arguments:
   -v, --variable
 
 examples
+
     synda list 5 -f
     synda list 5 -d
 
@@ -194,6 +198,7 @@ optional arguments:
                         Project name (must be used with '--groupby=model' else ignored)
 
 examples
+
     synda metric -g data_node -m rate -p CMIP5
     synda metric -g project -m size
 
@@ -212,6 +217,7 @@ optional arguments:
   -c COLUMNS, --columns COLUMNS
 
 examples
+
     synda param institute | column
     synda param institute NA
     synda param | column
@@ -249,6 +255,7 @@ optional arguments:
   -h, --help  show this help message and exit
 
 examples
+
     synda queue obs4MIPs
     synda queue CMIP5
     synda queue
@@ -270,6 +277,7 @@ optional arguments:
   -z, --dry_run
 
 examples
+
     synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
     synda remove CMIP5 MIROC-ESM historicalNat mon
 
@@ -288,6 +296,7 @@ optional arguments:
   -z, --dry_run
 
 examples
+
     synda replica next
     synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 
@@ -332,6 +341,7 @@ optional arguments:
   -v, --variable
 
 examples
+
     synda search experiment=rcp45,rcp85 model=CCSM4
     synda search project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
     synda search project=CMIP5 realm=atmos
@@ -378,6 +388,7 @@ optional arguments:
   --verbose             verbose mode
 
 examples
+
     synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
     synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430
 
@@ -398,6 +409,7 @@ optional arguments:
   -z, --dry_run
 
 examples
+
     synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
     synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
     synda stat MPI-ESM-LR rcp26
@@ -415,6 +427,7 @@ optional arguments:
   -h, --help  show this help message and exit
 
 examples
+
     synda test http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
     synda test http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
 
@@ -462,6 +475,7 @@ optional arguments:
   -z, --dry_run
 
 examples
+
     synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
     synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426
 
