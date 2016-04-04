@@ -698,7 +698,7 @@ if [ $# -ge 1 ]; then
             g__transfer=1
         elif [ $module = "postprocessing" ]; then
             g__postprocessing=1
-        elif [ $module = "globus" ]; then
+        elif [ $module = "globustransfer" ]; then
             g__globustransfer=1
         fi
     done
