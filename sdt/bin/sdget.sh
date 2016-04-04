@@ -460,7 +460,7 @@ if [ $wget_status -ne 0 ]; then
         # when we are here, we are not sure it's a 'Permission error' (it can be any error), but as 'Permission error'
         # is the most frequent error, we advise the user the verify that point.
  
-        err "Transfer failed with error $status (did you suscribe to the required role/group ? (e.g. cmip5_research, cordex_research))"
+        err "Transfer failed with error $status (did you subscribe to the required role/group ? (e.g. cmip5_research, cordex_research))"
     fi
 
     exit $status
