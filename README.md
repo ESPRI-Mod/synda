@@ -20,6 +20,8 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [User guide](sdt/doc/user_guide.md)                                   | [Admin guide](sdt/doc/admin_guide.md)
 
+[Command reference](sdt/doc/command_reference.md)
+
 [Configuration parameter reference](sdt/doc/sdt_conf.md)
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
