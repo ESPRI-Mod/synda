@@ -661,7 +661,7 @@ g__verbose=
 g__upgrade=0
 g__transfer=0
 g__postprocessing=0
-g__globus=0
+g__globustransfer=0
 g__archive=
 g__version=
 
@@ -699,7 +699,7 @@ if [ $# -ge 1 ]; then
         elif [ $module = "postprocessing" ]; then
             g__postprocessing=1
         elif [ $module = "globus" ]; then
-            g__globus=1
+            g__globustransfer=1
         fi
     done
 else
@@ -840,7 +840,7 @@ if [ $g__upgrade -eq 0 ]; then
         install_postprocessing_module
     fi
 
-    if [ $g__globus -eq 1 ]; then
+    if [ $g__globustransfer -eq 1 ]; then
         st_is_running
         install_globus_module
     fi
