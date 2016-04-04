@@ -74,7 +74,7 @@ This program is a command-line alternative to the ESGF web front-end.
 
 [Source installation](sdt/doc/src_install.md)
 
-[Docker installation](https://registry.hub.docker.com/u/prodiguer/synda)
+[Docker installation](https://registry.hub.docker.com/r/prodiguer/synda)
 
 Notes:
 
