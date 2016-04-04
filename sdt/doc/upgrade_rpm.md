@@ -18,7 +18,7 @@ Backup folders below
 
 Remove previous package version using command below:
 
-    yum erase synda
+    sudo yum erase synda
 
 Install new package version using [this guide](rpm_install.md)
 
