@@ -12,6 +12,7 @@ Backup folders below
 
     /etc/synda/sdt
     /var/log/synda/sdt
+    /var/lib/synda/sdt
 
 ### Upgrade
 
