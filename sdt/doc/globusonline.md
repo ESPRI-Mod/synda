@@ -1,10 +1,10 @@
-# Globus Howto
+# Globus Transfer Howto
 
 ## Requirement
 
 * Synda 3.3+
 
-* Synda must be installed from source to transfer files with Globus
+* Synda must be installed from source to transfer files with Globus Transfer
 (not available yet with system package based installation).
 
 ## Installation
@@ -16,13 +16,13 @@ First you need to retrieve the installer
 
 Then use one of the methods below to install the globus module
 
-### Install globus module over an already existing synda installation
+### Install globustransfer module over an already existing synda installation
 
-    ./install.sh globus
+    ./install.sh globustransfer
 
-### Install a new installation of synda and globus
+### Install a new installation of synda and globustransfer
 
-    ./install.sh synda globus
+    ./install.sh synda globustransfer
 
 ## Configuration
 
@@ -35,7 +35,7 @@ Then use one of the methods below to install the globus module
 ### sdt/conf/sdt.conf
 
     [module]
-    globus=1
+    globustransfer=1
 
     [globus]
     destination_endpoint = destination#endpoint
