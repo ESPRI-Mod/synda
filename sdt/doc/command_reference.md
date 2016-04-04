@@ -25,8 +25,8 @@ optional arguments:
                         Force renew CA certificates
 
 examples
-  synda certificate renew
-  synda certificate print
+    synda certificate renew
+    synda certificate print
 
 ## contact
 
@@ -77,12 +77,12 @@ optional arguments:
                         set format to be used with 'dump' action
 
 examples
-  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
-  synda dump CMIP5 IPSL mon atmos 1 -d -F indent
-  synda dump -R CMIP5 1 -f -F indent
-  synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
-  synda dump -R CMIP5 1 -f -F value -C url_http,url_gridftp
-  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value
+    synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
+    synda dump CMIP5 IPSL mon atmos 1 -d -F indent
+    synda dump -R CMIP5 1 -f -F indent
+    synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
+    synda dump -R CMIP5 1 -f -F value -C url_http,url_gridftp
+    synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value
 
 ## facet
 
@@ -102,9 +102,9 @@ optional arguments:
   -z, --dry_run
 
 examples
-  synda facet experiment MPI-ESM-LR | column
-  synda facet variable MPI-ESM-LR | column
-  synda facet experiment fddtalk MPI-ESM-LR
+    synda facet experiment MPI-ESM-LR | column
+    synda facet variable MPI-ESM-LR | column
+    synda facet experiment fddtalk MPI-ESM-LR
 
 ## help
 
@@ -174,8 +174,8 @@ optional arguments:
   -v, --variable
 
 examples
-  synda list 5 -f
-  synda list 5 -d
+    synda list 5 -f
+    synda list 5 -d
 
 ## metric
 
@@ -194,8 +194,8 @@ optional arguments:
                         Project name (must be used with '--groupby=model' else ignored)
 
 examples
-  synda metric -g data_node -m rate -p CMIP5
-  synda metric -g project -m size
+    synda metric -g data_node -m rate -p CMIP5
+    synda metric -g project -m size
 
 ## param
 
@@ -212,9 +212,9 @@ optional arguments:
   -c COLUMNS, --columns COLUMNS
 
 examples
-  synda param institute | column
-  synda param institute NA
-  synda param | column
+    synda param institute | column
+    synda param institute NA
+    synda param | column
 
 ## pexec
 
@@ -249,9 +249,9 @@ optional arguments:
   -h, --help  show this help message and exit
 
 examples
-  synda queue obs4MIPs
-  synda queue CMIP5
-  synda queue
+    synda queue obs4MIPs
+    synda queue CMIP5
+    synda queue
 
 ## remove
 
@@ -270,8 +270,8 @@ optional arguments:
   -z, --dry_run
 
 examples
-  synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
-  synda remove CMIP5 MIROC-ESM historicalNat mon
+    synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+    synda remove CMIP5 MIROC-ESM historicalNat mon
 
 ## replica
 
@@ -288,8 +288,8 @@ optional arguments:
   -z, --dry_run
 
 examples
-  synda replica next
-  synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+    synda replica next
+    synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 
 ## reset
 
@@ -332,23 +332,23 @@ optional arguments:
   -v, --variable
 
 examples
-  synda search experiment=rcp45,rcp85 model=CCSM4
-  synda search project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
-  synda search project=CMIP5 realm=atmos
-  synda search realm=atmos project=CMIP5
-  synda search atmos 50
-  synda search MIROC rcp45 2
-  synda search CCSM4 rcp45 atmos mon r1i1p1
-  synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
-  synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
-  synda search clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
-  synda search pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
-  synda search c20c.UCT-CSAG.HadAM3P-N96.NonGHG-Hist.HadCM3-p50-est1.v1-0.mon.atmos.run060.v20140528
-  synda search title=rlds_bced_1960_1999_gfdl-esm2m_rcp8p5_2051-2060.nc searchapi_host=esg.pik-potsdam.de
-  synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-  synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
-  synda search dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-  synda search cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+    synda search experiment=rcp45,rcp85 model=CCSM4
+    synda search project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
+    synda search project=CMIP5 realm=atmos
+    synda search realm=atmos project=CMIP5
+    synda search atmos 50
+    synda search MIROC rcp45 2
+    synda search CCSM4 rcp45 atmos mon r1i1p1
+    synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
+    synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
+    synda search clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
+    synda search pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
+    synda search c20c.UCT-CSAG.HadAM3P-N96.NonGHG-Hist.HadCM3-p50-est1.v1-0.mon.atmos.run060.v20140528
+    synda search title=rlds_bced_1960_1999_gfdl-esm2m_rcp8p5_2051-2060.nc searchapi_host=esg.pik-potsdam.de
+    synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
+    synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
+    synda search dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
+    synda search cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 
 ## selection
 
@@ -378,8 +378,8 @@ optional arguments:
   --verbose             verbose mode
 
 examples
-  synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
-  synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430
+    synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+    synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430
 
 ## stat
 
@@ -398,9 +398,9 @@ optional arguments:
   -z, --dry_run
 
 examples
-  synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
-  synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
-  synda stat MPI-ESM-LR rcp26
+    synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
+    synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
+    synda stat MPI-ESM-LR rcp26
 
 ## test
 
@@ -415,8 +415,8 @@ optional arguments:
   -h, --help  show this help message and exit
 
 examples
-  synda test http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
-  synda test http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
+    synda test http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+    synda test http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
 
 ## update
 
@@ -462,8 +462,8 @@ optional arguments:
   -z, --dry_run
 
 examples
-  synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
-  synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426
+    synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
+    synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426
 
 ## watch
 
