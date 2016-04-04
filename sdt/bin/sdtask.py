@@ -148,12 +148,12 @@ def transfers_begin():
     dmngr.transfers_begin(transfers)
 
 def get_download_manager():
-    download_manager='globus_online' if sdconfig.config.getboolean('module','globusonline') else 'default'
+    download_manager='globustransfer_dm' if sdconfig.config.getboolean('module','globustransfer') else 'default_dm'
 
-    if download_manager=='globus_online':
+    if download_manager=='globustransfer_dm':
         import sddmgo
         return sddmgo
-    elif download_manager=='default':
+    elif download_manager=='default_dm':
         import sddmdefault
         return sddmdefault
     else:

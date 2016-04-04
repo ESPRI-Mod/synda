@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains Globus Online file transfer functions."""
+"""This module contains Globus Transfer file transfer functions."""
 
 import os
 import sys
@@ -29,7 +29,7 @@ def download_file(url,local_path,checksum_type):
     return (status,local_checksum)
 
 def file_transfer_synchronous_wrapper(source_file,dest_file):
-    """Synchronous wrapper for Globus online file transfer function."""
+    """Synchronous wrapper for Globus Transfer file transfer function."""
 
     try:
         code, reason, result = api.transfer_submission_id()
