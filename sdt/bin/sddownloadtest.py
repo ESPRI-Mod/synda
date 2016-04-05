@@ -28,25 +28,45 @@ from sdtools import print_stderr
 def run(files):
     for f in files:
 
+        # check
+
         assert 'url' in f
         assert 'data_node' in f
+        assert 'local_path' in f
+
+
+        # prepare attributes
 
         url=f['url']
         dn=f['data_node']
+        local_path=f['local_path']
 
         #local_path='/tmp/test.nc'
-        local_path='%s/test.nc'%sdconfig.tmp_folder
+        #local_path='%s/test.nc'%sdconfig.tmp_folder
+
+
+        # check
 
         if os.path.isfile(local_path):
-            os.remove(local_path)
+            #os.remove(local_path)
+            print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
+            continue
+
+
+        # transfer
 
         #(status,local_checksum,killed,script_stderr)=sdget.download(url,local_path,checksum_type='md5',debug=False)
         (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
 
+
+        # post-transfer
+
+        attribute_to_show_in_msg=local_path # local_path | dn | ..
+
         if status!=0:
-            print_stderr('Download failed: %s'%dn)
+            print_stderr('Download failed (%s)'%attribute_to_show_in_msg)
         else:
-            print_stderr('File successfully downloaded: %s'%dn)
+            print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -54,7 +74,6 @@ if __name__ == '__main__':
 
     files=json.load( sys.stdin )
 
-    #run(files)
-    print files
+    run(files)
 
     sys.exit(0)
