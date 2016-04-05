@@ -20,8 +20,8 @@ import os
 import sys
 import json
 import sdapp
-import sdget
 import sdconfig
+import sdget
 import sdget_urllib
 from sdtools import print_stderr
 
@@ -40,6 +40,7 @@ def run(files):
         if os.path.isfile(local_path):
             os.remove(local_path)
 
+        #(status,local_checksum,killed,script_stderr)=sdget.download(url,local_path,checksum_type='md5',debug=False)
         (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
 
         if status!=0:
@@ -53,6 +54,7 @@ if __name__ == '__main__':
 
     files=json.load( sys.stdin )
 
-    run(files)
+    #run(files)
+    print files
 
     sys.exit(0)
