@@ -11,6 +11,8 @@
 
 """This module contains network functions."""
 
+import sys
+import traceback
 from os.path import expanduser, join
 import urllib2
 #import requests
@@ -65,7 +67,6 @@ def download_file(url, local_path):
 
     except Exception,e:
 
-        import traceback
         traceback.print_exc(file=sys.stderr)
 
         return 1
@@ -100,7 +101,7 @@ def call_web_service(request,timeout):
         #
         # TODO: maybe always enable this
         #
-        #import traceback,sdconfig
+        #import sdconfig
         #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
 
         # debug
