@@ -135,7 +135,7 @@ def compute_checksum(file_fullpath,checksum_type="md5"):
             d = hashlib.md5()
         elif checksum_type=="MD5":
             d = hashlib.md5()
-        elif checksum_type=="sha256":
+        elif checksum_type in ('SHA256','sha256'):
             d = hashlib.sha256()
         else:
             raise SDException("SYDUTILS-422","incorrect checksum_type (%s,%s)"%(file_fullpath,checksum_type))
