@@ -62,6 +62,9 @@ def socket2disk_progress(socket,f):
         #print "Read %s bytes"%len(data)
 
 def download_file_helper(url, local_path):
+    f=None
+    socket=None
+    opener=None
 
     try:
 
@@ -90,24 +93,26 @@ def download_file_helper(url, local_path):
         socket2disk_basic(socket,f)
         #socket2disk_progress(socket,f)
 
-        
-        # cleanup
-
-        f.close()
-        socket.close()
-        opener.close()
+        return 0
 
     except Exception,e:
 
         # remove the local file if something goes wrong
         os.unlink(local_path)
 
-        # debug
+        # TODO: re-raise exception here and print exception upstream
         traceback.print_exc(file=sys.stderr)
 
         return 1
 
-    return 0
+    finally:
+
+        if f is not None:
+            f.close()
+        if socket is not None:
+            socket.close()
+        if opener is not None:
+            opener.close()
 
 # init.
 
