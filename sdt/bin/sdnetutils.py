@@ -34,34 +34,39 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def download_file(url, full_local_path, credentials = "~/.esg/credentials.pem"):
+def download_file(url, local_path):
 
     try:
 
         # setup HTTP handler
-        certFile = expanduser(credentials)
-        opener = urllib2.build_opener(HTTPSClientAuthHandler(certFile,certFile))
+
+        opener = urllib2.build_opener(HTTPSClientAuthHandler(esgf_x509_proxy,esgf_x509_proxy))
         opener.add_handler(urllib2.HTTPCookieProcessor())
+
         
         # download file
-        localFile=open( full_local_path, 'w')
-        webFile=opener.open(url)
+
+        f=open(local_path, 'w')
+        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'o', or 'object' is better)
 
         # TODO
         # JRA: modify below to add checksum & huge file support (i.e. file that doesn't fit in memory)
         #https://gist.github.com/brianewing/994303
         #http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
 
-        localFile.write(webFile.read())
+        f.write(socket.read())
+
         
         # cleanup
-        localFile.close()
-        webFile.close()
+
+        f.close()
+        socket.close()
         opener.close()
 
     except Exception,e:
 
-        # TODO: log error msg
+        import traceback
+        traceback.print_exc(file=sys.stderr)
 
         return 1
 
