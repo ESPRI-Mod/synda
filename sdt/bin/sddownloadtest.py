@@ -23,26 +23,29 @@ import sdapp
 import sdconfig
 import sdget
 import sdget_urllib
+from sdtypes import File
 from sdtools import print_stderr
 
 def run(files):
-    for f in files:
+    for file_ in files:
 
         # check
 
-        assert 'url' in f
-        assert 'data_node' in f
-        assert 'local_path' in f
+        assert 'url' in file_
+        assert 'data_node' in file_
+        assert 'local_path' in file_
+
+
+        # cast
+
+        f=File(**file_)
 
 
         # prepare attributes
 
-        url=f['url']
-        dn=f['data_node']
-        local_path=f['local_path']
-
         #local_path='/tmp/test.nc'
         #local_path='%s/test.nc'%sdconfig.tmp_folder
+        local_path=f.get_full_local_path()
 
 
         # check
@@ -55,13 +58,13 @@ def run(files):
 
         # transfer
 
-        #(status,local_checksum,killed,script_stderr)=sdget.download(url,local_path,checksum_type='md5',debug=False)
-        (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
+        #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,af.checksum_type,False)
+        (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type)
 
 
         # post-transfer
 
-        attribute_to_show_in_msg=local_path # local_path | dn | ..
+        attribute_to_show_in_msg=local_path # local_path | f.data_node | ..
 
         if status!=0:
             print_stderr('Download failed (%s)'%attribute_to_show_in_msg)
