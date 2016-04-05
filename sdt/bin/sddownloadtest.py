@@ -22,14 +22,10 @@ import json
 import sdapp
 import sdget
 import sdconfig
+import sdget_urllib
 from sdtools import print_stderr
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
-
-    files=json.load( sys.stdin )
-
+def run(files):
     for f in files:
 
         assert 'url' in f
@@ -44,11 +40,19 @@ if __name__ == '__main__':
         if os.path.isfile(local_path):
             os.remove(local_path)
 
-        (status,local_checksum,killed,script_stdxxx)=sdget.download(url,local_path,checksum_type='md5',debug=False)
+        (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
 
         if status!=0:
             print_stderr('Download failed: %s'%dn)
         else:
             print_stderr('File successfully downloaded: %s'%dn)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
+    files=json.load( sys.stdin )
+
+    run(files)
 
     sys.exit(0)
