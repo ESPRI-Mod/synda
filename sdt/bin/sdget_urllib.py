@@ -33,6 +33,29 @@ def run(url,full_local_path,checksum_type):
 
     return (status,local_checksum)
 
+def socket2file_basic(socket,f):
+
+    # notes
+    #     - without progress
+    #     - without largefile support (i.e. may be slow for file that doesn't fit in memory (i.e. swap))
+    #
+    f.write(socket.read())
+
+def socket2file_progress(socket,f):
+
+    chunk = 4096
+    while 1:
+        data = socket.read(chunk)
+
+        if not data:
+            #print "done."
+            break
+
+        f.write(data)
+
+        SDProgressDot.print_char()
+        #print "Read %s bytes"%len(data)
+
 def download_file(url, local_path):
 
     try:
@@ -60,29 +83,8 @@ def download_file(url, local_path):
         # for better performance, add on-the-fly checksum using link below
         # https://gist.github.com/brianewing/994303 - TAG45H5K345H3
 
-        # basic way
-        #
-        # notes
-        #     - without progress
-        #     - without largefile support (i.e. may be slow for file that doesn't fit in memory (i.e. swap))
-        #
-        f.write(socket.read())
-
-        # advanced way (with progress, with largefile support)
-        """
-        chunk = 4096
-        while 1:
-            data = socket.read(chunk)
-
-            if not data:
-                #print "done."
-                break
-
-            f.write(data)
-
-            SDProgressDot.print_char()
-            #print "Read %s bytes"%len(data)
-        """
+        socket2file_basic(socket,f)
+        #socket2file_progress(socket,f)
 
         
         # cleanup
