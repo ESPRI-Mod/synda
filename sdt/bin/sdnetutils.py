@@ -57,13 +57,26 @@ def download_file(url, local_path):
         
         # download file
 
-        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'o', or 'object' is better)
+        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'response' or 'urlfile' or 'o' or 'object' is better)
 
         # TODO
         # JRA: modify below to add checksum & huge file support (i.e. file that doesn't fit in memory)
-        #https://gist.github.com/brianewing/994303
-        #http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
+        # https://gist.github.com/brianewing/994303
+        # http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
 
+        """
+        data_list = []
+        chunk = 4096
+        while 1:
+            data = socket.read(chunk)
+            if not data:
+                print "done."
+                break
+            data_list.append(data)
+            print "Read %s bytes"%len(data)
+        """
+
+        # basic way (no progress)
         f.write(socket.read())
 
         
