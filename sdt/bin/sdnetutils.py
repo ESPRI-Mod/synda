@@ -50,7 +50,7 @@ def download_file(url, local_path):
 
         destdir=os.path.dirname(local_path)
         if not os.path.exists(destdir):
-            os.mkdirs(destdir)
+            os.makedirs(destdir)
 
         f=open(local_path, 'w')
 
@@ -75,6 +75,10 @@ def download_file(url, local_path):
 
     except Exception,e:
 
+        # remove the local file if something goes wrong
+        os.unlink(local_path)
+
+        # debug
         traceback.print_exc(file=sys.stderr)
 
         return 1
