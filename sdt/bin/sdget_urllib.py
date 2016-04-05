@@ -22,18 +22,23 @@ import sdutils
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
 
-def run(url,full_local_path,checksum_type):
+def run(url,local_path,checksum_type):
 
-    status=download_file(url,full_local_path)
+    # create folder if missing
+    destdir=os.path.dirname(local_path)
+    if not os.path.exists(destdir):
+        os.makedirs(destdir)
+
+    status=download_file_helper(url,local_path)
 
     if status==0:
-        local_checksum=sdutils.compute_checksum(full_local_path,checksum_type)
+        local_checksum=sdutils.compute_checksum(local_path,checksum_type)
     else:
         local_checksum=None
 
     return (status,local_checksum)
 
-def socket2file_basic(socket,f):
+def socket2disk_basic(socket,f):
 
     # notes
     #     - without progress
@@ -41,7 +46,7 @@ def socket2file_basic(socket,f):
     #
     f.write(socket.read())
 
-def socket2file_progress(socket,f):
+def socket2disk_progress(socket,f):
 
     chunk = 4096
     while 1:
@@ -56,7 +61,7 @@ def socket2file_progress(socket,f):
         SDProgressDot.print_char()
         #print "Read %s bytes"%len(data)
 
-def download_file(url, local_path):
+def download_file_helper(url, local_path):
 
     try:
 
@@ -68,9 +73,6 @@ def download_file(url, local_path):
 
         # prepare local file
 
-        destdir=os.path.dirname(local_path)
-        if not os.path.exists(destdir):
-            os.makedirs(destdir)
 
         f=open(local_path, 'w')
 
@@ -83,8 +85,8 @@ def download_file(url, local_path):
         # for better performance, add on-the-fly checksum using link below
         # https://gist.github.com/brianewing/994303 - TAG45H5K345H3
 
-        socket2file_basic(socket,f)
-        #socket2file_progress(socket,f)
+        socket2disk_basic(socket,f)
+        #socket2disk_progress(socket,f)
 
         
         # cleanup
