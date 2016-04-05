@@ -13,7 +13,7 @@
 
 import sys
 import traceback
-from os.path import expanduser, join
+import os
 import urllib2
 #import requests
 import sdxml
@@ -42,13 +42,21 @@ def download_file(url, local_path):
 
         # setup HTTP handler
 
-        opener = urllib2.build_opener(HTTPSClientAuthHandler(esgf_x509_proxy,esgf_x509_proxy))
+        opener = urllib2.build_opener(HTTPSClientAuthHandler(sdconfig.esgf_x509_proxy,sdconfig.esgf_x509_proxy))
         opener.add_handler(urllib2.HTTPCookieProcessor())
+
+
+        # prepare local file
+
+        destdir=os.path.dirname(local_path)
+        if not os.path.exists(destdir):
+            os.mkdirs(destdir)
+
+        f=open(local_path, 'w')
 
         
         # download file
 
-        f=open(local_path, 'w')
         socket=opener.open(url) # 'socket' name is arbitrary (maybe 'o', or 'object' is better)
 
         # TODO
