@@ -22,7 +22,7 @@ import sdutils
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
 
-def run(url,local_path,checksum_type):
+def download_file(url,local_path,checksum_type):
 
     # create folder if missing
     destdir=os.path.dirname(local_path)
@@ -71,15 +71,17 @@ def download_file_helper(url, local_path):
         opener.add_handler(urllib2.HTTPCookieProcessor())
 
 
-        # prepare local file
-
+        # open local file
 
         f=open(local_path, 'w')
 
-        
-        # download file
+
+        # open socket
 
         socket=opener.open(url) # 'socket' name is arbitrary (maybe 'response' or 'urlfile' or 'o' or 'object' is better)
+
+        
+        # download file
 
         # TODO
         # for better performance, add on-the-fly checksum using link below
