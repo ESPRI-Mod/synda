@@ -12,8 +12,8 @@
 """This module contains network functions."""
 
 import sys
-import traceback
 import os
+import traceback
 import urllib2
 #import requests
 import sdxml
@@ -35,68 +35,6 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
             return self.do_open(self.getConnection, req)
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
-
-def download_file(url, local_path):
-
-    try:
-
-        # setup HTTP handler
-
-        opener = urllib2.build_opener(HTTPSClientAuthHandler(sdconfig.esgf_x509_proxy,sdconfig.esgf_x509_proxy))
-        opener.add_handler(urllib2.HTTPCookieProcessor())
-
-
-        # prepare local file
-
-        destdir=os.path.dirname(local_path)
-        if not os.path.exists(destdir):
-            os.makedirs(destdir)
-
-        f=open(local_path, 'w')
-
-        
-        # download file
-
-        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'response' or 'urlfile' or 'o' or 'object' is better)
-
-        # TODO
-        # JRA: modify below to add checksum & huge file support (i.e. file that doesn't fit in memory)
-        # https://gist.github.com/brianewing/994303
-        # http://stackoverflow.com/questions/1517616/stream-large-binary-files-with-urllib2-to-file
-
-        """
-        data_list = []
-        chunk = 4096
-        while 1:
-            data = socket.read(chunk)
-            if not data:
-                print "done."
-                break
-            data_list.append(data)
-            print "Read %s bytes"%len(data)
-        """
-
-        # basic way (no progress)
-        f.write(socket.read())
-
-        
-        # cleanup
-
-        f.close()
-        socket.close()
-        opener.close()
-
-    except Exception,e:
-
-        # remove the local file if something goes wrong
-        os.unlink(local_path)
-
-        # debug
-        traceback.print_exc(file=sys.stderr)
-
-        return 1
-
-    return 0
 
 def call_web_service(request,timeout):
     start_time=SDTimer.get_time()

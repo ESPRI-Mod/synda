@@ -59,7 +59,7 @@ def run(files):
         # transfer
 
         #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,af.checksum_type,False)
-        (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type)
+        (status,local_checksum)=sdget_urllib.run(f.url,local_path,f.checksum_type)
 
 
         # post-transfer
