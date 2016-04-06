@@ -87,7 +87,7 @@ def data_parts(socket,chunksize=1024):
 
         yield data
 
-def socket2disk_progressbar_and_rate(socket,f):
+def socket2disk_progressbar_and_rate(socket,f): # TODO: rename this method to be more generic (i.e. it also supports percent display)
     total_length = socket.headers.get('content-length') # TODO: rename to total_size
     bytes_so_far = 0 # how much data have been downloaded
     progressbar_size=50
