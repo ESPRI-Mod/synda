@@ -88,25 +88,25 @@ def data_parts(socket,chunksize=1024):
         yield data
 
 def socket2disk_progressbar_and_rate(socket,f):
-    total_length = socket.headers.get('content-length') # TODO: rename to total_size
+    total_size = socket.headers.get('content-length')
     bytes_so_far = 0 # how much data have been downloaded
     progressbar_size=50
     start = time.time()
     i=0
 
-    if total_length is None:
+    if total_size is None:
         # no content length header
 
         assert False # if happens, use size from ESGF metadata
     else:
-        total_length=int(total_length)
+        total_size=int(total_size)
 
         for data in data_parts(socket,chunksize=(16*1024)):
             f.write(data)
 
             # compute metrics
             bytes_so_far += len(data)
-            progressbar_done = int(progressbar_size * bytes_so_far / total_length) # ratio reduced to progressbar_size
+            progressbar_done = int(progressbar_size * bytes_so_far / total_size) # ratio reduced to progressbar_size
             rate=bytes_so_far//(time.time() - start)
 
             # human readable unit
@@ -129,24 +129,24 @@ def socket2disk_progressbar_and_rate(socket,f):
         print ''
 
 def socket2disk_percent(socket,f):
-    total_length = socket.headers.get('content-length') # TODO: rename to total_size
+    total_size = socket.headers.get('content-length')
     bytes_so_far = 0 # how much data have been downloaded
     start = time.time()
     i=0
 
-    if total_length is None:
+    if total_size is None:
         # no content length header
 
         assert False # if happens, use size from ESGF metadata
     else:
-        total_length=int(total_length)
+        total_size=int(total_size)
 
         for data in data_parts(socket,chunksize=(16*1024)):
             f.write(data)
 
             # compute metrics
             bytes_so_far += len(data)
-            percent = float(bytes_so_far) / total_length
+            percent = float(bytes_so_far) / total_size
 
             # human readable unit
             percent = round(percent*100, 2)
@@ -158,7 +158,7 @@ def socket2disk_percent(socket,f):
 
                 # percent
                 # TODO: print 100% in the last display (i.e. instead of having 99.98%)
-                sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_length // 1024 // 1024), percent))
+                sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_size // 1024 // 1024), percent))
 
                 # prevent cursor from blinking
                 sys.stdout.flush()
