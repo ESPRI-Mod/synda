@@ -17,6 +17,7 @@ import time
 import traceback
 import argparse
 import urllib2
+import shutil
 import sdapp
 import sdconfig
 import sdutils
@@ -44,8 +45,15 @@ def socket2disk_basic(socket,f):
     # notes
     #     - without progress
     #     - without largefile support (i.e. may be slow for file that doesn't fit in memory (i.e. swap))
-    #
+
     f.write(socket.read())
+
+def socket2disk_largefile(socket,f):
+
+    # notes
+    #     - without progress
+
+    shutil.copyfileobj(socket, f)
 
 def socket2disk_progressbar(socket,f):
     chunksize=4096
@@ -114,11 +122,16 @@ def socket2disk_progressbar_and_rate(socket,f):
         print ''
 
 """
-   
-   percent = float(bytes_so_far) / total_size
-   percent = round(percent*100, 2)
-   sys.stdout.write("Downloaded %d of %d bytes (%0.2f%%)\r" %
-       (bytes_so_far, total_size, percent))
+Other progress display
+
+percent = float(bytes_so_far) / total_size
+percent = round(percent*100, 2)
+sys.stdout.write("Downloaded %d of %d bytes (%0.2f%%)\r" %
+(bytes_so_far, total_size, percent))
+
+percent = float(bytes_so_far) / total_size
+percent = round(percent*100, 2)
+sys.stdout.write("Downloaded %d of %d bytes (%0.2f%%)\r" % (bytes_so_far, total_size, percent))
 """
 
 def download_file_helper(url, local_path):
@@ -136,7 +149,7 @@ def download_file_helper(url, local_path):
 
         # open local file
 
-        f=open(local_path, 'w')
+        f=open(local_path, 'wb') # TODO: rename f to fp
 
 
         # open socket
@@ -151,6 +164,7 @@ def download_file_helper(url, local_path):
         # https://gist.github.com/brianewing/994303 - TAG45H5K345H3
 
         #socket2disk_basic(socket,f)
+        #socket2disk_largefile(socket,f)
         #socket2disk_progressbar(socket,f)
         socket2disk_progressbar_and_rate(socket,f)
 
