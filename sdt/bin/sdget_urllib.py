@@ -87,7 +87,7 @@ def data_parts(socket,chunksize=1024):
 
         yield data
 
-def socket2disk_progressbar_and_rate(socket,f): # TODO: rename this method to be more generic (i.e. it also supports percent display)
+def socket2disk_progressbar_and_rate(socket,f):
     total_length = socket.headers.get('content-length') # TODO: rename to total_size
     bytes_so_far = 0 # how much data have been downloaded
     progressbar_size=50
@@ -108,22 +108,57 @@ def socket2disk_progressbar_and_rate(socket,f): # TODO: rename this method to be
             bytes_so_far += len(data)
             progressbar_done = int(progressbar_size * bytes_so_far / total_length) # ratio reduced to progressbar_size
             rate=bytes_so_far//(time.time() - start)
-            percent = float(bytes_so_far) / total_length
 
             # human readable unit
             rate=rate//1024
-            percent = round(percent*100, 2)
+
 
             # display
-            if i%9==0:
+
+            if i%9==0: # prevent too much screen refresh
+
+                # progressbar
+                # TODO: print full bar in the last display (i.e. instead of having the last sprite missing)
+                sys.stdout.write("\r[%s%s] %s KiB/s" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
+
+                # prevent cursor from blinking
+                sys.stdout.flush()
+
+            i+=1
+
+        print ''
+
+def socket2disk_percent(socket,f):
+    total_length = socket.headers.get('content-length') # TODO: rename to total_size
+    bytes_so_far = 0 # how much data have been downloaded
+    start = time.time()
+    i=0
+
+    if total_length is None:
+        # no content length header
+
+        assert False # if happens, use size from ESGF metadata
+    else:
+        total_length=int(total_length)
+
+        for data in data_parts(socket,chunksize=(16*1024)):
+            f.write(data)
+
+            # compute metrics
+            bytes_so_far += len(data)
+            percent = float(bytes_so_far) / total_length
+
+            # human readable unit
+            percent = round(percent*100, 2)
+
+
+            # display
+
+            if i%9==0: # prevent too much screen refresh
 
                 # percent
                 # TODO: print 100% in the last display (i.e. instead of having 99.98%)
-                #sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_length // 1024 // 1024), percent))
-
-                # progressbar
-                sys.stdout.write("\r[%s%s] %s KiB/s" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
-
+                sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_length // 1024 // 1024), percent))
 
                 # prevent cursor from blinking
                 sys.stdout.flush()
@@ -165,6 +200,7 @@ def download_file_helper(url, local_path):
         #socket2disk_largefile(socket,f)
         #socket2disk_progressbar(socket,f)
         socket2disk_progressbar_and_rate(socket,f)
+        #socket2disk_percent(socket,f)
 
         return 0
 
