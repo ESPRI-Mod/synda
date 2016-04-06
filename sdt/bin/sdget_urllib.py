@@ -13,6 +13,7 @@
 
 import os
 import sys
+import time
 import traceback
 import argparse
 import urllib2
@@ -46,9 +47,9 @@ def socket2disk_basic(socket,f):
     #
     f.write(socket.read())
 
-def socket2disk_progress(socket,f):
-
+def socket2disk_progressbar(socket,f):
     chunk = 4096
+
     while 1:
         data = socket.read(chunk)
 
@@ -60,6 +61,43 @@ def socket2disk_progress(socket,f):
 
         SDProgressDot.print_char()
         #print "Read %s bytes"%len(data)
+
+def data_parts(socket):
+    chunk=1024
+
+    while True:
+        data = socket.read(chunk)
+
+        if not data:
+            break
+
+        yield data
+
+def socket2disk_progressbar_and_rate(socket,f):
+    chunk=1024
+    total_length = socket.headers.get('content-length')
+    count = 0 # how much data have been downloaded
+    progressbar_size=50
+    start = time.clock()
+
+    if total_length is None:
+        # no content length header
+
+        assert False # if happens, use size from ESGF metadata
+    else:
+        total_length=int(total_length)
+
+        for data in data_parts(socket):
+            f.write(data)
+
+            # compute metrics
+            count += len(data)
+            progressbar_done = int(progressbar_size * count / total_length) # ratio reduced to progressbar_size
+            rate=count//(time.clock() - start)
+
+            # display
+            sys.stdout.write("\r[%s%s] %s bps" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
+            print ''
 
 def download_file_helper(url, local_path):
     f=None
@@ -81,7 +119,7 @@ def download_file_helper(url, local_path):
 
         # open socket
 
-        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'response' or 'urlfile' or 'o' or 'object' is better)
+        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'web_file' is better, as opener.open return a file-like object (from https://docs.python.org/2/library/urllib2.html#module-urllib2). Other candidate are  'response','urlfile','o','object')
 
         
         # download file
@@ -90,8 +128,9 @@ def download_file_helper(url, local_path):
         # for better performance, add on-the-fly checksum using link below
         # https://gist.github.com/brianewing/994303 - TAG45H5K345H3
 
-        socket2disk_basic(socket,f)
-        #socket2disk_progress(socket,f)
+        #socket2disk_basic(socket,f)
+        #socket2disk_progressbar(socket,f)
+        socket2disk_progressbar_and_rate(socket,f)
 
         return 0
 
