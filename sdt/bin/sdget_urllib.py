@@ -88,7 +88,7 @@ def data_parts(socket,chunksize=1024):
         yield data
 
 def socket2disk_progressbar_and_rate(socket,f):
-    total_length = socket.headers.get('content-length')
+    total_length = socket.headers.get('content-length') # TODO: rename to total_size
     bytes_so_far = 0 # how much data have been downloaded
     progressbar_size=50
     start = time.time()
@@ -108,31 +108,29 @@ def socket2disk_progressbar_and_rate(socket,f):
             bytes_so_far += len(data)
             progressbar_done = int(progressbar_size * bytes_so_far / total_length) # ratio reduced to progressbar_size
             rate=bytes_so_far//(time.time() - start)
+            percent = float(bytes_so_far) / total_length
 
             # human readable unit
             rate=rate//1024
+            percent = round(percent*100, 2)
 
             # display
             if i%9==0:
+
+                # percent
+                # TODO: print 100% in the last display (i.e. instead of having 99.98%)
+                #sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_length // 1024 // 1024), percent))
+
+                # progressbar
                 sys.stdout.write("\r[%s%s] %s KiB/s" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
-                sys.stdout.flush() # prevent cursor from blinking
+
+
+                # prevent cursor from blinking
+                sys.stdout.flush()
 
             i+=1
 
         print ''
-
-"""
-Other progress display
-
-percent = float(bytes_so_far) / total_size
-percent = round(percent*100, 2)
-sys.stdout.write("Downloaded %d of %d bytes (%0.2f%%)\r" %
-(bytes_so_far, total_size, percent))
-
-percent = float(bytes_so_far) / total_size
-percent = round(percent*100, 2)
-sys.stdout.write("Downloaded %d of %d bytes (%0.2f%%)\r" % (bytes_so_far, total_size, percent))
-"""
 
 def download_file_helper(url, local_path):
     f=None
