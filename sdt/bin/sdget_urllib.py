@@ -48,10 +48,10 @@ def socket2disk_basic(socket,f):
     f.write(socket.read())
 
 def socket2disk_progressbar(socket,f):
-    chunk = 4096
+    chunksize=4096
 
     while 1:
-        data = socket.read(chunk)
+        data = socket.read(chunksize)
 
         if not data:
             #print "done."
@@ -62,11 +62,17 @@ def socket2disk_progressbar(socket,f):
         SDProgressDot.print_char()
         #print "Read %s bytes"%len(data)
 
-def data_parts(socket):
-    chunk=1024
+def data_parts(socket,chunksize=1024):
+    """
+    Chunksize examples
+        1024
+        8192
+        16*1024
+        208*1024 (this one is to fit value in /proc/sys/net/core/rmem_default)
+    """
 
     while True:
-        data = socket.read(chunk)
+        data = socket.read(chunksize)
 
         if not data:
             break
@@ -74,7 +80,6 @@ def data_parts(socket):
         yield data
 
 def socket2disk_progressbar_and_rate(socket,f):
-    chunk=1024
     total_length = socket.headers.get('content-length')
     count = 0 # how much data have been downloaded
     progressbar_size=50
@@ -87,7 +92,7 @@ def socket2disk_progressbar_and_rate(socket,f):
     else:
         total_length=int(total_length)
 
-        for data in data_parts(socket):
+        for data in data_parts(socket,chunksize=212992):
             f.write(data)
 
             # compute metrics
@@ -97,7 +102,8 @@ def socket2disk_progressbar_and_rate(socket,f):
 
             # display
             sys.stdout.write("\r[%s%s] %s bps" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
-            print ''
+
+        print ''
 
 def download_file_helper(url, local_path):
     f=None
