@@ -47,6 +47,74 @@ def contact(args):
     import sdi18n
     print sdi18n.m0018
 
+def daemon(args):
+    import sddaemon,sdconfig
+
+    if args.action is None:
+        sddaemon.print_daemon_status()
+    else:
+        if args.action=="start":
+
+            if sdconfig.multiuser:
+                print_stderr("Daemon must be started using 'systemctl' command")
+                return
+
+            if sddaemon.is_running():
+                print_stderr("Daemon already started")
+            else:
+                try:
+                    sddaemon.start()
+                    print_stderr("Daemon successfully started")
+                except SDException,e:
+                    print_stderr('error occured',e.msg)
+        elif args.action=="stop":
+
+            if sdconfig.multiuser:
+                print_stderr("Daemon must be stopped using 'systemctl' command")
+                return
+
+            if sddaemon.is_running():
+                try:
+                    sddaemon.stop()
+                    print_stderr("Daemon successfully stopped")
+                except SDException,e:
+                    print_stderr('error occured',e.msg)
+            else:
+                print_stderr("Daemon already stopped")
+        elif args.action=="status":
+            sddaemon.print_daemon_status()
+
+def facet(args):
+    import sdparam,sdremoteparam,syndautils,sdinference
+
+    facets_groups=syndautils.get_stream(args)
+    facets_groups=sdinference.run(facets_groups)
+
+
+    if sdparam.exists_parameter_name(args.facet_name): # first, we check in cache so to quickly return if facet is unknown
+
+        if len(facets_groups)==1:
+            # facet selected: retrieve parameters from ESGF
+
+            facets_group=facets_groups[0]
+
+            params=sdremoteparam.run(pname=args.facet_name,facets_group=facets_group,dry_run=args.dry_run)
+
+            # TODO: func for code below
+            items=params.get(args.facet_name,[])
+            for item in items:
+                print item.name
+        elif len(facets_groups)>1:
+            print_stderr('Multi-queries not supported')
+
+        else:
+            # Parameter not set. In this case, we retrieve facet value list from cache.
+
+            sdparam.main([args.facet_name]) # tricks to re-use sdparam CLI parser
+
+    else:
+        print_stderr('Unknown facet')   
+
 def history(args):
     import sddao
     from tabulate import tabulate
@@ -297,74 +365,6 @@ def retry(args):
         print_stderr("%i file(s) marked for retry."%nbr)
     else:
         print_stderr("No transfer in error")
-
-def daemon(args):
-    import sddaemon,sdconfig
-
-    if args.action is None:
-        sddaemon.print_daemon_status()
-    else:
-        if args.action=="start":
-
-            if sdconfig.multiuser:
-                print_stderr("Daemon must be started using 'systemctl' command")
-                return
-
-            if sddaemon.is_running():
-                print_stderr("Daemon already started")
-            else:
-                try:
-                    sddaemon.start()
-                    print_stderr("Daemon successfully started")
-                except SDException,e:
-                    print_stderr('error occured',e.msg)
-        elif args.action=="stop":
-
-            if sdconfig.multiuser:
-                print_stderr("Daemon must be stopped using 'systemctl' command")
-                return
-
-            if sddaemon.is_running():
-                try:
-                    sddaemon.stop()
-                    print_stderr("Daemon successfully stopped")
-                except SDException,e:
-                    print_stderr('error occured',e.msg)
-            else:
-                print_stderr("Daemon already stopped")
-        elif args.action=="status":
-            sddaemon.print_daemon_status()
-
-def facet(args):
-    import sdparam,sdremoteparam,syndautils,sdinference
-
-    facets_groups=syndautils.get_stream(args)
-    facets_groups=sdinference.run(facets_groups)
-
-
-    if sdparam.exists_parameter_name(args.facet_name): # first, we check in cache so to quickly return if facet is unknown
-
-        if len(facets_groups)==1:
-            # facet selected: retrieve parameters from ESGF
-
-            facets_group=facets_groups[0]
-
-            params=sdremoteparam.run(pname=args.facet_name,facets_group=facets_group,dry_run=args.dry_run)
-
-            # TODO: func for code below
-            items=params.get(args.facet_name,[])
-            for item in items:
-                print item.name
-        elif len(facets_groups)>1:
-            print_stderr('Multi-queries not supported')
-
-        else:
-            # Parameter not set. In this case, we retrieve facet value list from cache.
-
-            sdparam.main([args.facet_name]) # tricks to re-use sdparam CLI parser
-
-    else:
-        print_stderr('Unknown facet')   
 
 def param(args):
     import sdparam
