@@ -20,13 +20,14 @@ import os
 import sys
 import json
 import sdapp
+import sdconst
 import sdconfig
 import sdget
 import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
     for file_ in files:
 
         # check
@@ -59,7 +60,7 @@ def run(files):
         # transfer
 
         #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,af.checksum_type,False)
-        (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type)
+        (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type,timeout)
 
 
         # post-transfer

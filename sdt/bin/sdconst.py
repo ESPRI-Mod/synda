@@ -113,6 +113,7 @@ LOGFILE_CONSUMER='transfer.log'
 CHUNKSIZE=9000
 
 SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)
+DIRECT_DOWNLOAD_HTTP_TIMEOUT=30 # Direct download HTTP timeout (time to wait for HTTP response)
 #
 PARAM_TYPE_CONTROLLED='param_type_controlled'
 PARAM_TYPE_FREE='param_type_free'

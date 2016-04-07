@@ -19,19 +19,20 @@ import argparse
 import urllib2
 import shutil
 import sdapp
+import sdconst
 import sdconfig
 import sdutils
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
 
-def download_file(url,local_path,checksum_type):
+def download_file(url,local_path,checksum_type,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
     # create folder if missing
     destdir=os.path.dirname(local_path)
     if not os.path.exists(destdir):
         os.makedirs(destdir)
 
-    status=download_file_helper(url,local_path)
+    status=download_file_helper(url,local_path,timeout)
 
     if status==0:
         local_checksum=sdutils.compute_checksum(local_path,checksum_type)
@@ -167,7 +168,7 @@ def socket2disk_percent(socket,f):
 
         print ''
 
-def download_file_helper(url, local_path):
+def download_file_helper(url,local_path,timeout):
     f=None
     socket=None
     opener=None
@@ -187,7 +188,7 @@ def download_file_helper(url, local_path):
 
         # open socket
 
-        socket=opener.open(url) # 'socket' name is arbitrary (maybe 'web_file' is better, as opener.open return a file-like object (from https://docs.python.org/2/library/urllib2.html#module-urllib2). Other candidate are  'response','urlfile','o','object')
+        socket=opener.open(url,timeout=timeout) # 'socket' name is arbitrary (maybe 'web_file' is better, as opener.open return a file-like object (from https://docs.python.org/2/library/urllib2.html#module-urllib2). Other candidate are  'response','urlfile','o','object')
 
         
         # download file

@@ -133,10 +133,10 @@ def get(args):
 
             print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-            sddirectdownload.run(files)
+            sddirectdownload.run(files,args.timeout)
 
         else:
-            print_stderr("File not found")   
+            print_stderr("File not found")
     else:
         for f in files:
             size=humanize.naturalsize(f['size'],gnu=False)
