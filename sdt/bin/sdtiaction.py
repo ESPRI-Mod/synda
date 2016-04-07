@@ -140,7 +140,7 @@ def get(args):
     else:
         for f in files:
             size=humanize.naturalsize(f['size'],gnu=False)
-            print '%-20s %s'%(size,f['filename'])
+            print '%-12s %s'%(size,f['filename'])
 
 def history(args):
     import sddao

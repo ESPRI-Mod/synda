@@ -18,6 +18,7 @@ import traceback
 import argparse
 import urllib2
 import shutil
+import humanize
 import sdapp
 import sdconst
 import sdconfig
@@ -157,6 +158,8 @@ def socket2disk_percent(socket,f):
 
             # human readable unit
             percent = round(percent*100, 2)
+            human_total_size=humanize.naturalsize(total_size,gnu=False)
+            human_bytes_so_far=humanize.naturalsize(bytes_so_far,gnu=False)
 
             # handle last display (i.e. print 100% in the last display instead of having 99.98%)
             if bytes_so_far==total_size:
@@ -169,7 +172,7 @@ def socket2disk_percent(socket,f):
                 or last_display):
 
                 # percent
-                sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_size // 1024 // 1024), percent))
+                sys.stdout.write("Downloaded %s of %s (%0.2f%%)\r" % (human_bytes_so_far, human_total_size, percent))
 
                 # prevent cursor from blinking
                 sys.stdout.flush()
