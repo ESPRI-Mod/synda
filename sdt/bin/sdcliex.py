@@ -51,6 +51,15 @@ def facet():
   synda facet experiment fddtalk MPI-ESM-LR"""
     return buf
 
+def get():
+    buf="""  synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
+  synda get sfcWind_ARC-44_ECMWF-ERAINT_evaluation_r1i1p1_AWI-HIRHAM5_v1_sem_197903-198011.nc
+  synda get clcalipso_cfDay_NICAM-09_aqua4K_r1i1p1_00000101-00000330.nc
+  synda get CORDEX 1
+  synda get CMIP5 fx 1
+  synda get uo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc wmo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc"""
+    return buf
+
 def help():
     buf=""""""
     return buf

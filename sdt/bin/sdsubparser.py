@@ -103,6 +103,9 @@ def run(subparsers):
     subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
+    subparser=create_subparser(subparsers,'get',help='Dataset direct download (download in foreground without using the daemon)',example=sdcliex.get())
+    add_parameter_argument(subparser)
+
     subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 

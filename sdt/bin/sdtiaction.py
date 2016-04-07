@@ -115,6 +115,33 @@ def facet(args):
     else:
         print_stderr('Unknown facet')   
 
+def get(args):
+    import sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize
+
+    stream=syndautils.get_stream(args)
+
+    sddeferredafter.add_default_parameter(stream,'limit',5)
+
+    files=sdrfile.get_files(stream=stream,post_pipeline_mode='file')
+
+    if not args.dry_run:
+        if len(files)>0:
+
+            # compute metric
+            total_size=sum(f.size for f in files)
+            total_size=humanize.naturalsize(total_size,gnu=False)
+
+            print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
+
+            sddirectdownload.run(files)
+
+        else:
+            print_stderr("File not found")   
+    else:
+        for f in files:
+            size=humanize.naturalsize(f.size,gnu=False)
+            print '%-20s %s'%(size,f.filename)
+
 def history(args):
     import sddao
     from tabulate import tabulate
@@ -426,6 +453,7 @@ actions={
     'contact':contact,
     'daemon':daemon, 
     'facet':facet,
+    'get':get,
     'history':history, 
     'install':install, 
     'intro':intro, 
