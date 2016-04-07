@@ -93,6 +93,7 @@ def socket2disk_progressbar_and_rate(socket,f):
     bytes_so_far = 0 # how much data have been downloaded
     progressbar_size=50
     start = time.time()
+    last_display=False
     i=0
 
     if total_size is None:
@@ -113,13 +114,17 @@ def socket2disk_progressbar_and_rate(socket,f):
             # human readable unit
             rate=rate//1024
 
+            # print complete progressbar in the last display (i.e. prevent missing sprite in the end of the progressbar)
+            if bytes_so_far==total_size:
+                progressbar_done=progressbar_size
+                last_display=True
 
             # display
 
-            if i%9==0: # prevent too much screen refresh
+            if (i%9==0 # prevent too much screen refresh
+                or last_display):
 
                 # progressbar
-                # TODO: print full bar in the last display (i.e. instead of having the last sprite missing)
                 sys.stdout.write("\r[%s%s] %s KiB/s" % ('=' * progressbar_done, ' ' * (progressbar_size - progressbar_done), rate))
 
                 # prevent cursor from blinking
@@ -133,6 +138,7 @@ def socket2disk_percent(socket,f):
     total_size = socket.headers.get('content-length')
     bytes_so_far = 0 # how much data have been downloaded
     start = time.time()
+    last_display=False
     i=0
 
     if total_size is None:
@@ -152,13 +158,17 @@ def socket2disk_percent(socket,f):
             # human readable unit
             percent = round(percent*100, 2)
 
+            # handle last display (i.e. print 100% in the last display instead of having 99.98%)
+            if bytes_so_far==total_size:
+                percent=100
+                last_display=True
 
             # display
 
-            if i%9==0: # prevent too much screen refresh
+            if (i%9==0 # prevent too much screen refresh
+                or last_display):
 
                 # percent
-                # TODO: print 100% in the last display (i.e. instead of having 99.98%)
                 sys.stdout.write("Downloaded %d of %d Mebibytes (%0.2f%%)\r" % ((bytes_so_far // 1024 // 1024), (total_size // 1024 // 1024), percent))
 
                 # prevent cursor from blinking
