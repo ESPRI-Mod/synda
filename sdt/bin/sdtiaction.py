@@ -128,7 +128,7 @@ def get(args):
         if len(files)>0:
 
             # compute metric
-            total_size=sum(f.size for f in files)
+            total_size=sum(int(f['size']) for f in files)
             total_size=humanize.naturalsize(total_size,gnu=False)
 
             print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
@@ -139,8 +139,8 @@ def get(args):
             print_stderr("File not found")   
     else:
         for f in files:
-            size=humanize.naturalsize(f.size,gnu=False)
-            print '%-20s %s'%(size,f.filename)
+            size=humanize.naturalsize(f['size'],gnu=False)
+            print '%-20s %s'%(size,f['filename'])
 
 def history(args):
     import sddao
