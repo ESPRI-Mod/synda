@@ -6,11 +6,11 @@ This document describes each parameter used in "std.conf" file to configure Synd
 
 Set daemon user.
 
-Note: the daemon must be started by root for this parameter to work.
-
 Type: string
 
 Default: ""
+
+Note: the daemon must be started by root for this parameter to work.
 
 --------------------------------------------------------
 
@@ -18,11 +18,11 @@ Default: ""
 
 Set daemon group.
 
-Note: the daemon must be started by root for this parameter to work.
-
 Type: string
 
 Default: ""
+
+Note: the daemon must be started by root for this parameter to work.
 
 --------------------------------------------------------
 
@@ -246,11 +246,11 @@ Default: remove
 
 Set the indexes list to use for large operation
 
-Note: this parameter is used for load-balancing on several indexes, to speed up large search-API requests
-
 Type: string
 
 Default: pcmdi.llnl.gov
+
+Note: this parameter is used for load-balancing on several indexes, to speed up large search-API requests
 
 --------------------------------------------------------
 
@@ -268,11 +268,11 @@ Default: pcmdi.llnl.gov
 
 Set the country in which synda is installed
 
-Note: used to compute nearest replicat when "geolocation" mode is used
-
 Type: string
 
 Default: ""
+
+Note: used to compute nearest replicat when "geolocation" mode is used
 
 --------------------------------------------------------
 
