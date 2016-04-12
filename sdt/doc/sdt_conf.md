@@ -112,7 +112,7 @@ Override the default data path
 
 Type: string
 
-Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt' for system package installation.
+Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt/data' for system package installation.
 
 --------------------------------------------------------
 

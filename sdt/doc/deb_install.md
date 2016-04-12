@@ -71,7 +71,8 @@ Installing Synda from DEB package is multi-user (for single-user installation,
 see 'installation from source' method)
 
 * /etc/synda/sdt
-* /srv/synda/sdt
+* /srv/synda/sdt/data
+* /srv/synda/sdt/sandbox
 * /var/lib/synda/sdt
 * /var/tmp/synda/sdt
 * /var/tmp/synda/sdt/.esg/certificates
