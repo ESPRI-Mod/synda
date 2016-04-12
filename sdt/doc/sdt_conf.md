@@ -8,6 +8,8 @@ Set daemon user.
 
 Note: the daemon must be started by root for this parameter to work.
 
+Type: string
+
 Default: ""
 
 --------------------------------------------------------
@@ -18,6 +20,8 @@ Set daemon group.
 
 Note: the daemon must be started by root for this parameter to work.
 
+Type: string
+
 Default: ""
 
 --------------------------------------------------------
@@ -25,6 +29,8 @@ Default: ""
 ### download.max_parallel_download
 
 Set the number of parallel download.
+
+Type: int
 
 Default: 8
 
@@ -34,6 +40,8 @@ Default: 8
 
 Gives HPSS service some time to move data from tape to disk.
 
+Type: boolean
+
 Default: 0
 
 --------------------------------------------------------
@@ -41,6 +49,8 @@ Default: 0
 ### module.post_processing
 
 If true, send download completion events to the post-processing module.
+
+Type: boolean
 
 Default: 0
 
@@ -50,6 +60,8 @@ Default: 0
 
 If true, use Globus Transfer platform to download files.
 
+Type: boolean
+
 Default: 0
 
 --------------------------------------------------------
@@ -57,6 +69,8 @@ Default: 0
 ### post_processing.host
 
 Post-processing daemon host
+
+Type: string
 
 Default: localhost
 
@@ -66,6 +80,8 @@ Default: localhost
 
 Post-processing daemon port
 
+Type: int
+
 Default: 8090
 
 --------------------------------------------------------
@@ -73,6 +89,8 @@ Default: 8090
 ### log.verbosity_level
 
 Log verbosity level
+
+Type: string
 
 Default: info
 
@@ -82,6 +100,8 @@ Default: info
 
 If true, log code profiling information
 
+Type: boolean
+
 Default: 0
 
 --------------------------------------------------------
@@ -89,6 +109,8 @@ Default: 0
 ### core.data_path
 
 Override the default data path
+
+Type: string
 
 Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt' for system package installation.
 
@@ -98,6 +120,8 @@ Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt' for syste
 
 Override the default database path
 
+Type: string
+
 Default: '$HOME/sdt/db' for source installation and '/var/lib/synda/sdt' for system package installation.
 
 --------------------------------------------------------
@@ -105,6 +129,8 @@ Default: '$HOME/sdt/db' for source installation and '/var/lib/synda/sdt' for sys
 ### interface.unicode_term
 
 If true, use unicode characters for progress bar.
+
+Type: boolean
 
 Default: 0
 
@@ -114,6 +140,8 @@ Default: 0
 
 If true, show progress bar for time consuming task.
 
+Type: boolean
+
 Default: 0
 
 --------------------------------------------------------
@@ -121,6 +149,8 @@ Default: 0
 ### behaviour.onemgf
 
 Improve search performance (experimental).
+
+Type: boolean
 
 Default: false
 
@@ -138,6 +168,8 @@ If behaviour.check_parameter is true,
 
 will raises an exception and informs the user that 'taz' value is not found.
 
+Type: boolean
+
 Default: 1
 
 --------------------------------------------------------
@@ -154,6 +186,8 @@ This command normally raises an exception as the correct case should be 'MOHC-Ha
 
 But if behaviour.ignorecase is true, the model name will be automatically corrected and no exception will occur.
 
+Type: boolean
+
 Default: true
 
 --------------------------------------------------------
@@ -161,6 +195,8 @@ Default: true
 ### behaviour.nearest
 
 If true, automatically select the nearest file replica
+
+Type: boolean
 
 Default: false
 
@@ -172,6 +208,8 @@ Set nearest replica algorithm.
 
 Possible values are: "geolocation" and "rtt"
 
+Type: string
+
 Default: geolocation
 
 --------------------------------------------------------
@@ -181,6 +219,8 @@ Default: geolocation
 Set which policies to adopt when a download starts and local file already exists.
 
 Possible values are: "keep", "replace" and "abort"
+
+Type: string
 
 Default: abort
 
@@ -196,6 +236,8 @@ Possible values are: "remove" and "keep"
 
 "keep": set transfer status to done, log a warning and keep the downloaded file
 
+Type: string
+
 Default: remove
 
 --------------------------------------------------------
@@ -206,6 +248,8 @@ Set the indexes list to use for large operation
 
 Note: this parameter is used for load-balancing on several indexes, to speed up large search-API requests
 
+Type: string
+
 Default: pcmdi.llnl.gov
 
 --------------------------------------------------------
@@ -213,6 +257,8 @@ Default: pcmdi.llnl.gov
 ### index.default_index
 
 Set the index to use in priority
+
+Type: string
 
 Default: pcmdi.llnl.gov
 
@@ -224,6 +270,8 @@ Set the country in which synda is installed
 
 Note: used to compute nearest replicat when "geolocation" mode is used
 
+Type: string
+
 Default: ""
 
 --------------------------------------------------------
@@ -232,6 +280,8 @@ Default: ""
 
 Set globus endpoints
 
+Type: string
+
 Default: /esg/config/esgf_endpoints.xml
 
 --------------------------------------------------------
@@ -239,5 +289,7 @@ Default: /esg/config/esgf_endpoints.xml
 ### globus.destination_endpoint
 
 Set destination endpoint
+
+Type: string
 
 Default: destination#endpoint
