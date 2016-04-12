@@ -106,6 +106,7 @@ default_options={'max_parallel_download':'8',
                  'post_processing':'0',
                  'globustransfer':'0',
                  'data_path':'',
+                 'sandbox_path':'',
                  'db_path':'',
                  'unicode_term':'0',
                  'progress':'1',
@@ -154,6 +155,7 @@ else:
 data_folder=get_path('data_path',"%s/data"%root_folder)
 db_folder=get_path('db_path',"%s/db"%root_folder)
 db_file="%s/sdt.db"%db_folder
+sandbox_folder=get_path('sandbox_path',"%s/sandbox"%root_folder)
 
 check_path(root_folder)
 check_path(selections_folder)
