@@ -21,14 +21,14 @@ from sdexception import SDException
 
 def get_data_folder():
     path=config.get('core','data_path')
-    if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
+    if len(path)>0:
         return path
 
     return "%s/data"%root_folder
 
 def get_db_folder():
     path=config.get('core','db_path')
-    if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
+    if len(path)>0:
         return path
 
     return "%s/db"%root_folder
