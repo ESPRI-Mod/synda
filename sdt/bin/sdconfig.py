@@ -20,7 +20,6 @@ from sdexception import SDException
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
 def get_data_folder():
-    if config.has_option('core','data_path'):
         path=config.get('core','data_path')
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
@@ -28,7 +27,6 @@ def get_data_folder():
     return "%s/data"%root_folder
 
 def get_db_folder():
-    if config.has_option('core','db_path'):
         path=config.get('core','db_path')
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
@@ -114,6 +112,8 @@ default_options={'max_parallel_download':'8',
                  'hpss':'0',
                  'post_processing':'0',
                  'globustransfer':'0',
+                 'data_path':'',
+                 'db_path':'',
                  'unicode_term':'0',
                  'progress':'1',
                  'onemgf':'false',
