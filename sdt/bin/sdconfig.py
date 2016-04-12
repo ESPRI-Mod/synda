@@ -19,19 +19,12 @@ from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
-def get_data_folder():
-    path=config.get('core','data_path')
+def get_path(name,default_value):
+    path=config.get('core',name)
     if len(path)>0:
         return path
-
-    return "%s/data"%root_folder
-
-def get_db_folder():
-    path=config.get('core','db_path')
-    if len(path)>0:
-        return path
-
-    return "%s/db"%root_folder
+    else:
+        return default_value
 
 def get_project_default_selection_file(project):
     path="%s/default_%s.txt"%(selection_default_folder,project)
@@ -158,8 +151,8 @@ if multiuser:
 else:
     config.read(credential_file)
 
-data_folder=get_data_folder()
-db_folder=get_db_folder()
+data_folder=get_path('data_path',"%s/data"%root_folder)
+db_folder=get_path('db_path',"%s/db"%root_folder)
 db_file="%s/sdt.db"%db_folder
 
 check_path(root_folder)
