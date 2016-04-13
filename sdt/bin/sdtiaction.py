@@ -118,7 +118,6 @@ def facet(args):
 def get(args):
     import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize
 
-    sdlogon.renew_certificate(False)
 
     stream=syndautils.get_stream(args)
 
@@ -126,6 +125,8 @@ def get(args):
     sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
 
     files=sdrfile.get_files(stream=stream,post_pipeline_mode='file')
+
+    sdlogon.renew_certificate(False)
 
     if not args.dry_run:
         if len(files)>0:
