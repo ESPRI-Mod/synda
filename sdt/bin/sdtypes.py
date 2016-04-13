@@ -135,13 +135,13 @@ class Selection():
             return [self.facets]
 
 class BaseType():
-    def get_full_local_path(self):
+    def get_full_local_path(self,prefix=sdconfig.data_folder):
 
         # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
         if len(self.local_path)>0:
             assert self.local_path[0]!='/'
 
-        return os.path.join(sdconfig.data_folder,self.local_path)
+        return os.path.join(prefix,self.local_path)
 
 class File(BaseType):
     def __init__(self,**kwargs):
