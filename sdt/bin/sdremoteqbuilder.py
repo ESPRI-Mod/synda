@@ -14,8 +14,9 @@
 Url samples
     - http://<host>/esg-search/search?project=GeoMIP&type=File&experiment=G1&variable=rsdt&fields=*&latest=true
 
-Note
+Notes
     - 'sdremoteqbuilder' means 'SynDa remote Query builder'
+    - 'url' in this module has nothing to do with 'url' in sdlocalvalue2remotevalue module
 
 Reference
     - https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API

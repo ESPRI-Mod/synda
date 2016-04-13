@@ -31,6 +31,7 @@ import sdbuffer
 import sdcompletedatasetid
 import sdindexhost
 import sdremote2local
+import sdlocalvalue2remotevalue
 from sdexception import SDException
 import sdnearestpre
 import sdparampipeline
@@ -43,8 +44,15 @@ def run(facets_groups,parallel=True,index_host=None,dry_run=False,query_type='re
 
     if query_type=='remote':
 
+
+
+        # both filters below transform attributes to fit search-api special syntax (e.g. suffix added to id and url, using '|' as delimiter)
+
         if sdconfig.dataset_filter_mecanism_in_file_context=='dataset_id':
             facets_groups=sdcompletedatasetid.run(facets_groups) # beware: this trigger a search-api call
+
+        facets_groups=sdlocalvalue2remotevalue.run(facets_groups)
+
 
     
         # EXT_FILE_PRE
