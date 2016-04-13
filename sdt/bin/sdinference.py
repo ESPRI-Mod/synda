@@ -23,6 +23,7 @@ Notes
       type), use syndautils.infer_type() func.
     - Some processing done in this module overlap with sdcheckparam module, but
       most don't, so both module are required.
+    - This filter is idempotent (i.e. same result if applied many times)
 """
 
 import sys
@@ -48,7 +49,7 @@ def run(facets_groups):
             for pvalue in pending_parameters:
 
                 # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
-                # (TODO: find a beter way to handle this hack)
+                # (TODO: find a better way to handle this hack)
                 if pvalue=='*':
                     continue
 
@@ -64,6 +65,8 @@ def run(facets_groups):
 def infere_parameter_name(pvalue,type_):
     if pvalue.isdigit():
         pname='limit'
+    elif sdidtest.is_url(pvalue):
+        pname='url'
     elif sdidtest.is_file_functional_id(pvalue):
 
         # Use ESGF free text 'query' parameter
