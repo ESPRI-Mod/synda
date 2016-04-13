@@ -142,30 +142,28 @@ def get(args):
     else:
         # search-api operator needed
 
-        pass
-
-    files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
+        files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
 
 
-    sdlogon.renew_certificate(False)
+        sdlogon.renew_certificate(False)
 
-    if not args.dry_run:
-        if len(files)>0:
+        if not args.dry_run:
+            if len(files)>0:
 
-            # compute metric
-            total_size=sum(int(f['size']) for f in files)
-            total_size=humanize.naturalsize(total_size,gnu=False)
+                # compute metric
+                total_size=sum(int(f['size']) for f in files)
+                total_size=humanize.naturalsize(total_size,gnu=False)
 
-            print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
+                print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-            sddirectdownload.run(files,args.timeout)
+                sddirectdownload.run(files,args.timeout)
 
+            else:
+                print_stderr("File not found")
         else:
-            print_stderr("File not found")
-    else:
-        for f in files:
-            size=humanize.naturalsize(f['size'],gnu=False)
-            print '%-12s %s'%(size,f['filename'])
+            for f in files:
+                size=humanize.naturalsize(f['size'],gnu=False)
+                print '%-12s %s'%(size,f['filename'])
 
 def history(args):
     import sddao
