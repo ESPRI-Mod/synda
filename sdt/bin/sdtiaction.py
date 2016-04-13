@@ -135,12 +135,14 @@ def get(args):
     # if url is set by user, we DON'T call search-api operator. Instead, we
     # download the url directly.
 
-    #if 'url' in stream
-    # search-api operator not needed
+    if 'url' in 'TODO':
+        # search-api operator not needed
 
-    #TODO
-    #else:
-    # search-api operator needed
+        pass
+    else:
+        # search-api operator needed
+
+        pass
 
     files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
 
