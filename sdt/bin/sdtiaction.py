@@ -124,7 +124,26 @@ def get(args):
     sddeferredafter.add_default_parameter(stream,'limit',5)
     sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
 
-    files=sdrfile.get_files(stream=stream,post_pipeline_mode='file')
+    stream=sdinference.run(stream)
+
+    # BEWARE
+    #
+    # when set in CLI parameter, url is usually an ESGF facet, and as so should
+    # be sent to the search-api as other facets
+    # BUT
+    # we want a special behaviour here (i.e. with 'synda get' command) with url:
+    # if url is set by user, we DON'T call search-api operator. Instead, we
+    # download the url directly.
+
+    #if 'url' in stream
+    # search-api operator not needed
+
+    #TODO
+    #else:
+    # search-api operator needed
+
+    files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
+
 
     sdlogon.renew_certificate(False)
 
