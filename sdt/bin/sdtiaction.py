@@ -116,7 +116,9 @@ def facet(args):
         print_stderr('Unknown facet')   
 
 def get(args):
-    import sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize
+    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize
+
+    sdlogon.renew_certificate(False)
 
     stream=syndautils.get_stream(args)
 
