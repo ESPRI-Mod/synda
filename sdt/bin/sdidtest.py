@@ -77,6 +77,18 @@ def is_file_local_path(arg):
 
     return True
 
+def is_url(arg):
+    if arg.startswith('irods://'):
+        return True
+    if arg.startswith('http://'):
+        return True
+    if arg.startswith('https://'):
+        return True
+    if arg.startswith('gsiftp://'):
+        return True
+
+    return False
+
 # o-------------------------------------o
 
 def get_last_field (arg,delim):
