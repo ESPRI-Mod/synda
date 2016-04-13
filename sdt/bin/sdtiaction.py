@@ -121,6 +121,7 @@ def get(args):
     stream=syndautils.get_stream(args)
 
     sddeferredafter.add_default_parameter(stream,'limit',5)
+    sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
 
     files=sdrfile.get_files(stream=stream,post_pipeline_mode='file')
 

@@ -46,7 +46,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
         #local_path='/tmp/test.nc'
         #local_path='%s/test.nc'%sdconfig.tmp_folder
-        local_path=f.get_full_local_path()
+        local_path=f.get_full_local_path(prefix=sdconfig.sandbox_folder)
 
 
         # check
