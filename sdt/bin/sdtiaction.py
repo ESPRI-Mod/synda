@@ -121,10 +121,7 @@ def get(args):
 
     stream=syndautils.get_stream(args)
 
-    sddeferredafter.add_default_parameter(stream,'limit',5)
-    sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
-
-    stream=sdinference.run(stream)
+    sdlogon.renew_certificate(False)
 
     # BEWARE
     #
@@ -135,17 +132,14 @@ def get(args):
     # if url is set by user, we DON'T call search-api operator. Instead, we
     # download the url directly.
 
-    if 'url' in 'TODO':
-        # search-api operator not needed
+    li=syndautils.get_facet_values_early(stream,'url')
+    if len(li)==0:
+        # no url in stream: switch to search-api operator mode
 
-        pass
-    else:
-        # search-api operator needed
+        sddeferredafter.add_default_parameter(stream,'limit',5)
+        sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
 
         files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
-
-
-        sdlogon.renew_certificate(False)
 
         if not args.dry_run:
             if len(files)>0:
@@ -164,6 +158,12 @@ def get(args):
             for f in files:
                 size=humanize.naturalsize(f['size'],gnu=False)
                 print '%-12s %s'%(size,f['filename'])
+
+    elif len(li)>0:
+        # url in stream: search-api operator not needed (download url directly)
+
+        for url in li:
+            pass # FIXME
 
 def history(args):
     import sddao
