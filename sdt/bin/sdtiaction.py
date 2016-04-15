@@ -450,27 +450,6 @@ def queue(args):
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")
     #sddaemon.print_daemon_status()
 
-def test(args):
-    import os,sdlogon,sdget
-
-    sdlogon.renew_certificate(False)
-
-    if args.file_url is None:
-        print_stderr('Incorrect argument')   
-    else:
-        tmpfile='/tmp/sdt_test_file.nc'
-
-        if os.path.isfile(tmpfile):
-            os.remove(tmpfile)
-
-        (sdget_status,local_checksum,killed,script_stderr)=sdget.download(args.file_url,tmpfile,debug=True)
-
-        if sdget_status==0:
-            print_stderr('Transfer completed successfully.')
-            print_stderr('File location: %s'%tmpfile)
-        else:
-            print_stderr(script_stderr)
-
 def watch(args):
     import sdreport, sddaemon
 
@@ -507,7 +486,6 @@ actions={
     'retry':retry,
     'selection':selection, 
     'stat':stat, 
-    'test':test,
     'update':update,
     'upgrade':upgrade,
     'watch':watch

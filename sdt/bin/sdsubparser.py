@@ -165,9 +165,6 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'test',common_option=False,help='Test file download',example=sdcliex.test())
-    subparser.add_argument('file_url',help='file url')
-
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     subparser.add_argument('-p','--project',help='Retrieve project specific parameters for the specified project')
