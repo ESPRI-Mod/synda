@@ -75,7 +75,7 @@ def create_subparser(subparsers,subcommand,**kw):
         epilog=None
 
 
-    subparser = subparsers.add_parser(subcommand,help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawTextHelpFormatter)
+    subparser = subparsers.add_parser(subcommand,usage=kw.get('usage',None),help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawTextHelpFormatter)
 
     if kw.get('common_option',True):
         add_common_option(subparser,**kw)
@@ -103,7 +103,7 @@ def run(subparsers):
     subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'get',no_default=False,help='Dataset direct download (download in foreground without using the daemon)',example=sdcliex.get())
+    subparser=create_subparser(subparsers,'get',no_default=False,help='Direct download (download in foreground without using the daemon)',example=sdcliex.get())
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     add_parameter_argument(subparser)
 
