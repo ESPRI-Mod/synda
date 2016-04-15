@@ -116,7 +116,7 @@ def facet(args):
         print_stderr('Unknown facet')   
 
 def get(args):
-    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize
+    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdget
 
 
     stream=syndautils.get_stream(args)
@@ -160,10 +160,28 @@ def get(args):
                 print '%-12s %s'%(size,f['filename'])
 
     elif len(li)>0:
-        # url in stream: search-api operator not needed (download url directly)
+        # url(s) found in stream: search-api operator not needed (download url directly)
+
+        # TODO: to improve genericity, maybe merge this block into the previous one (i.e. url CAN be used as a search key in the search-api (but not irods url))
 
         for url in li:
-            pass # FIXME
+            filename=os.path.basename(url)
+            local_path=os.path.join(sdconfig.sandbox_folder,filename)
+
+            if os.path.isfile(local_path):
+
+                #os.remove(tmpfile)
+
+                print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
+                continue
+
+            (sdget_status,local_checksum,killed,script_stderr)=sdget.download(url,local_path,debug=True)
+
+            if sdget_status==0:
+                print_stderr('Transfer completed successfully.')
+                print_stderr('File location: %s'%local_path)
+            else:
+                print_stderr(script_stderr)
 
 def history(args):
     import sddao
