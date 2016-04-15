@@ -132,8 +132,8 @@ def get(args):
     # if url is set by user, we DON'T call search-api operator. Instead, we
     # download the url directly.
 
-    li=syndautils.get_facet_values_early(stream,'url')
-    if len(li)==0:
+    urls=syndautils.get_facet_values_early(stream,'url')
+    if len(urls)==0:
         # no url in stream: switch to search-api operator mode
 
         sddeferredafter.add_default_parameter(stream,'limit',5)
@@ -159,17 +159,18 @@ def get(args):
                 size=humanize.naturalsize(f['size'],gnu=False)
                 print '%-12s %s'%(size,f['filename'])
 
-    elif len(li)>0:
+    elif len(urls)>0:
         # url(s) found in stream: search-api operator not needed (download url directly)
 
         # TODO: to improve genericity, maybe merge this block into the previous one (i.e. url CAN be used as a search key in the search-api (but not irods url))
 
         files=[]
-        for url in li:
+        for url in urls:
+
             filename=os.path.basename(url)
             local_path=os.path.join(sdconfig.sandbox_folder,filename)
 
-            f=sdtypes.File(local_path=,url=,) # FIXME
+            f=sdtypes.File(local_path=local_path,url=url)
 
             files.append(f)
             
