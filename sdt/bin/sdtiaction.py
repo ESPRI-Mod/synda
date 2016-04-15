@@ -174,7 +174,7 @@ def get(args):
 
             files.append(f)
             
-        sddirectdownload.run(files,args.timeout)
+        sddirectdownload.run(files,timeout=args.timeout,force=args.force)
 
 def history(args):
     import sddao

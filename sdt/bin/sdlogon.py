@@ -70,7 +70,10 @@ def renew_certificate_with_retry(force,quiet=True):
     renew_certificate(force,quiet)
 
 def renew_certificate_NG(force,quiet=True):
-    """Renew ESGF certificate."""
+    """Renew ESGF certificate.
+
+    Not used yet.
+    """
     from myproxy.client import MyProxyClient
     myproxy_clnt = MyProxyClient(hostname="myproxy.somewhere.ac.uk")
     cert, private_key = myproxy_clnt.logon(username, password, bootstrap=True)

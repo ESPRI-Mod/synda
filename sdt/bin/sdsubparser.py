@@ -104,6 +104,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'get',no_default=False,help='Direct download (download in foreground without using the daemon)',example=sdcliex.get())
+    subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     add_parameter_argument(subparser)
 

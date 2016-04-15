@@ -27,7 +27,7 @@ import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True,force=False):
     for file_ in files:
 
         # check
@@ -52,9 +52,12 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=Tr
         # check
 
         if os.path.isfile(local_path):
-            #os.remove(local_path)
-            print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
-            continue
+
+            if force:
+                os.remove(local_path)
+            else:
+                print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
+                continue
 
 
         # transfer
