@@ -164,7 +164,16 @@ def get(args):
 
         # TODO: to improve genericity, maybe merge this block into the previous one (i.e. url CAN be used as a search key in the search-api (but not irods url))
 
-        pass
+        files=[]
+        for url in li:
+            filename=os.path.basename(url)
+            local_path=os.path.join(sdconfig.sandbox_folder,filename)
+
+            f=sdtypes.File(local_path=,url=,) # FIXME
+
+            files.append(f)
+            
+        sddirectdownload.run(files,args.timeout)
 
 def history(args):
     import sddao
