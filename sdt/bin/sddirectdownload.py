@@ -27,13 +27,13 @@ import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True):
     for file_ in files:
 
         # check
 
         assert 'url' in file_
-        assert 'data_node' in file_
+        #assert 'data_node' in file_
         assert 'local_path' in file_
 
 
@@ -59,7 +59,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
         # transfer
 
-        #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,af.checksum_type,False)
+        #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug)
         (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type,timeout)
 
 
@@ -69,6 +69,9 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
         if status!=0:
             print_stderr('Download failed (%s)'%attribute_to_show_in_msg)
+
+            if verbose:
+                print_stderr(script_stderr)
         else:
             print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
 

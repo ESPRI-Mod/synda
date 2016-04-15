@@ -170,7 +170,7 @@ def get(args):
             filename=os.path.basename(url)
             local_path=os.path.join(sdconfig.sandbox_folder,filename)
 
-            f=sdtypes.File(local_path=local_path,url=url)
+            f=sdtypes.File(local_path=local_path,url=url,checksum_type='SHA256') # set checksum_type here to SHA256 is arbitrary
 
             files.append(f)
             
