@@ -140,7 +140,7 @@ def get(args):
         sddeferredafter.add_default_parameter(stream,'limit',5)
         sddeferredafter.add_forced_parameter(stream,'local_path_format','notree')
 
-        files=sdrfile.get_files(stream=stream,post_pipeline_mode='file') # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
+        files=sdrfile.get_files(stream=stream,post_pipeline_mode='file',dry_run=args.dry_run) # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
 
         if not args.dry_run:
             if len(files)>0:
