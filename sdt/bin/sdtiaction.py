@@ -116,7 +116,7 @@ def facet(args):
         print_stderr('Unknown facet')   
 
 def get(args):
-    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdtypes
+    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdconst
 
     stream=syndautils.get_stream(args)
 
@@ -171,7 +171,7 @@ def get(args):
             filename=os.path.basename(url)
             local_path=os.path.join(sdconfig.sandbox_folder,filename)
 
-            f=sdtypes.File(local_path=local_path,url=url,checksum_type='SHA256') # set checksum_type here to SHA256 is arbitrary
+            f=dict(local_path=local_path,url=url,checksum_type='SHA256') # set checksum_type here to SHA256 is arbitrary
 
             files.append(f)
             
