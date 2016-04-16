@@ -27,7 +27,7 @@ import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,debug=True,verbose=True):
     for file_ in files:
 
         # check

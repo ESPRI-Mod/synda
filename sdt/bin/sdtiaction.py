@@ -151,7 +151,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                sddirectdownload.run(files,args.timeout,force=args.force,http_client=http_client)
+                sddirectdownload.run(files,args.timeout,args.force,http_client)
 
             else:
                 print_stderr("File not found")
@@ -175,7 +175,7 @@ def get(args):
 
             files.append(f)
             
-        sddirectdownload.run(files,timeout=args.timeout,force=args.force,http_client=http_client)
+        sddirectdownload.run(files,args.timeout,args.force,http_client)
 
 def history(args):
     import sddao
