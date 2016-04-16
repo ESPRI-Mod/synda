@@ -169,7 +169,7 @@ def get(args):
         for url in urls:
 
             filename=os.path.basename(url)
-            local_path=os.path.join(sdconfig.sandbox_folder,filename)
+            local_path=filename
 
             f=dict(local_path=local_path,url=url,checksum_type='SHA256') # set checksum_type here to SHA256 is arbitrary
 
