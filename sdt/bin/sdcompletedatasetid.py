@@ -66,7 +66,17 @@ def run(facets_groups):
 
 def instance_id_to_dataset_id(instance_id,facets_group):
     if "data_node" in facets_group:
-        return "%s|%s"%(instance_id,facets_group['data_node'])
+
+        # This block handles cases like this one
+        #  synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601 esgf2.dkrz.de
+
+        li=facets_group['data_node']
+
+        assert len(li)==1 # arbitrary (TODO: maybe this is too restrictive)
+
+        dnode=li[0]
+
+        return "%s|%s"%(instance_id,dnode)
     else:
         replica=facets_group['replica'] if "replica" in facets_group else None
 
