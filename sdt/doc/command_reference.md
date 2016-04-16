@@ -123,7 +123,8 @@ examples
 Direct download (download files in foreground without using the daemon)
 
 ```
-usage: synda get [-h] [-s SELECTION_FILE] [-z] [--timeout TIMEOUT]
+usage: synda get [-h] [-s SELECTION_FILE] [-z] [--force] [--timeout TIMEOUT]
+                 [--wget]
                  [parameter [parameter ...]]
 
 positional arguments:
@@ -133,8 +134,10 @@ optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -z, --dry_run
+  --force, -f           Overwrite local file if exists
   --timeout TIMEOUT, -t TIMEOUT
                         HTTP timeout
+  --wget, -w            Use wget instead of urllib2 as HTTP client
 
 examples
   synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
