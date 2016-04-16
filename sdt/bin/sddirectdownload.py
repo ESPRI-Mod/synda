@@ -27,7 +27,7 @@ import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True,force=False):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=True,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB):
     for file_ in files:
 
         # check
@@ -62,8 +62,12 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=Tr
 
         # transfer
 
-        #(status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug)
-        (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type,timeout)
+        if http_client==sdconst.HTTP_CLIENT_WGET:
+            (status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug)
+        elif http_client==sdconst.HTTP_CLIENT_URLLIB:
+            (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type,timeout)
+        else:
+            assert False
 
 
         # post-transfer
@@ -74,7 +78,8 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,debug=True,verbose=Tr
             print_stderr('Download failed (%s)'%attribute_to_show_in_msg)
 
             if verbose:
-                print_stderr(script_stderr)
+                if http_client==sdconst.HTTP_CLIENT_WGET:
+                    print_stderr(script_stderr)
         else:
             print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
 

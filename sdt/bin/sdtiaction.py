@@ -118,10 +118,11 @@ def facet(args):
 def get(args):
     import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdtypes
 
-
     stream=syndautils.get_stream(args)
 
     sdlogon.renew_certificate(False)
+
+    http_client=sdconst.HTTP_CLIENT_WGET if args.wget else sdconst.HTTP_CLIENT_URLLIB
 
     # BEWARE
     #
@@ -150,7 +151,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                sddirectdownload.run(files,args.timeout)
+                sddirectdownload.run(files,args.timeout,force=args.force,http_client=http_client)
 
             else:
                 print_stderr("File not found")
@@ -174,7 +175,7 @@ def get(args):
 
             files.append(f)
             
-        sddirectdownload.run(files,timeout=args.timeout,force=args.force)
+        sddirectdownload.run(files,timeout=args.timeout,force=args.force,http_client=http_client)
 
 def history(args):
     import sddao
