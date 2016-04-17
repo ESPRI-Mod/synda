@@ -32,7 +32,7 @@ import sdlog
 import sdget_urllib
 from sdtools import print_stderr
 
-def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT):
+def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT):
     killed=False
     script_stderr=None
 
@@ -60,12 +60,7 @@ def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdc
 
         assert False
 
-    if status==0:
-        local_checksum=sdutils.compute_checksum(full_local_path,checksum_type)
-    else:
-        local_checksum=None
-
-    return (status,local_checksum,killed,script_stderr)
+    return (status,killed,script_stderr)
 
 def run_download_script(url,full_local_path,transfer_protocol,debug,timeout):
 
@@ -189,7 +184,7 @@ if __name__ == '__main__':
         if os.path.isfile(local_path):
             os.remove(local_path)
 
-        (status,local_checksum,killed,script_stderr)=download(url,local_path,checksum_type='md5',debug=True)
+        (status,killed,script_stderr)=download(url,local_path,debug=True)
 
         if status!=0:
             if not args.quiet:
