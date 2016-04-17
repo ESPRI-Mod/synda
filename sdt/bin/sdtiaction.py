@@ -124,6 +124,14 @@ def get(args):
 
     http_client=sdconst.HTTP_CLIENT_WGET if args.wget else sdconst.HTTP_CLIENT_URLLIB
 
+    # local_path
+    #
+    # 'synda get' subcommand currently force local_path to the following construct:
+    # '<dest_folder>/<filename>' (i.e. you can't use DRS tree in-between). This may
+    # change in the future.
+    #
+    local_path_prefix=args.dest_folder
+
     # BEWARE
     #
     # when set in CLI parameter, url is usually an ESGF facet, and as so should
@@ -151,7 +159,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                sddirectdownload.run(files,args.timeout,args.force,http_client)
+                sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix)
 
             else:
                 print_stderr("File not found")
@@ -175,7 +183,7 @@ def get(args):
 
             files.append(f)
             
-        sddirectdownload.run(files,args.timeout,args.force,http_client)
+        sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix)
 
 def history(args):
     import sddao

@@ -16,6 +16,7 @@ import sdi18n
 import sdcliex
 import sdconst
 import sdprint
+import sdconfig
 
 def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
@@ -104,6 +105,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'get',no_default=False,help='Direct download (download in foreground without using the daemon)',example=sdcliex.get())
+    subparser.add_argument('--dest_folder','-d',default=sdconfig.sandbox_folder,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--wget','-w',action='store_true',help='Use wget instead of urllib2 as HTTP client')
