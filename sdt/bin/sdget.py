@@ -32,7 +32,7 @@ import sdlog
 import sdget_urllib
 from sdtools import print_stderr
 
-def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdconfig.http_client):
+def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT):
     killed=False
     script_stderr=None
 
@@ -42,15 +42,15 @@ def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdc
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
 
         if http_client==sdconst.HTTP_CLIENT_URLLIB:
-            (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type)
+            (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
-            (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug)
+            (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout)
         else:
             assert False
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug)
+        (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
 
@@ -63,7 +63,7 @@ def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdc
 
     return (status,local_checksum,killed,script_stderr)
 
-def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug):
+def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout):
 
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
         script=sdconfig.data_download_script_http        
@@ -72,7 +72,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     else:
         assert False
 
-    li=[script,'-c',checksum_type,url,full_local_path]
+    li=[script,'-t',str(timeout),'-c',checksum_type,url,full_local_path]
 
     if debug:
         li.insert(1,'-d')
