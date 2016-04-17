@@ -42,7 +42,7 @@ Gives HPSS service some time to move data from tape to disk.
 
 Type: boolean
 
-Default: 0
+Default: 1
 
 --------------------------------------------------------
 
