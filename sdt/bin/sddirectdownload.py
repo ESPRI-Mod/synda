@@ -22,11 +22,12 @@ import json
 import sdapp
 import sdconst
 import sdconfig
+import sdutils
 import sdget
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,debug=True,verbose=True):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,debug=True,verbose=True):
     for file_ in files:
 
         # check
@@ -34,6 +35,11 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
         assert 'url' in file_
         #assert 'data_node' in file_
         assert 'local_path' in file_
+
+        if verify_checksum:
+            # TODO
+            assert 'checksum_type' in file_
+            assert 'checksum' in file_
 
 
         # cast
@@ -61,7 +67,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # transfer
 
-        (status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug,http_client,timeout)
+        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout)
 
 
         # post-transfer
@@ -75,7 +81,15 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                 if http_client==sdconst.HTTP_CLIENT_WGET:
                     print_stderr(script_stderr)
         else:
-            print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
+
+            if verify_checksum:
+                local_checksum=sdutils.compute_checksum(local_path,f.checksum_type)
+                if local_checksum==f.checksum:
+                    print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg) # TODO: add 'checksum verified' message
+                else:
+                    print_stderr('Checksum error (%s)'%attribute_to_show_in_msg)
+            else:
+                print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
