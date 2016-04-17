@@ -172,7 +172,7 @@ def get(args):
         # url(s) found in stream: search-api operator not needed (download url directly)
 
         if args.verify_checksum:
-            print_stderr("To use checksum verification, file id must be used instead of file url.")
+            print_stderr("To perform checksum verification, file id must be used instead of file url.")
             return
 
         # TODO: to improve genericity, maybe merge this block into the previous one (i.e. url CAN be used as a search key in the search-api (but not irods url))
