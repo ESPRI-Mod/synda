@@ -108,6 +108,7 @@ def run(subparsers):
     subparser.add_argument('--verify_checksum','-c',action='store_true',help='Compare remote and local checksum')
     subparser.add_argument('--dest_folder','-d',default=sdconfig.sandbox_folder,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
+    subparser.add_argument('--network_bandwidth_test','-n',action='store_true',help='Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--wget','-w',action='store_true',help='Use wget instead of urllib2 as HTTP client')
     add_parameter_argument(subparser)

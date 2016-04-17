@@ -118,6 +118,10 @@ def facet(args):
 def get(args):
     import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdconst
 
+    if args.verify_checksum and args.network_bandwidth_test:
+        print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
+        return
+
     stream=syndautils.get_stream(args)
 
     sdlogon.renew_certificate(False)
@@ -159,7 +163,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum)
+                sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test)
 
             else:
                 print_stderr("File not found")
@@ -187,7 +191,7 @@ def get(args):
 
             files.append(f)
             
-        sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,False)
+        sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,False,args.network_bandwidth_test)
 
 def history(args):
     import sddao
