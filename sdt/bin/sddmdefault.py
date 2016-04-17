@@ -51,7 +51,7 @@ class Download():
 
         checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
 
-        (tr.sdget_status,local_checksum,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type)
+        (tr.sdget_status,local_checksum,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type,False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT)
 
         if tr.sdget_status==0:
 
