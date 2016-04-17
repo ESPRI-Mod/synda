@@ -36,10 +36,12 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
         #assert 'data_node' in file_
         assert 'local_path' in file_
 
+
         if verify_checksum:
-            # TODO
-            assert 'checksum_type' in file_
-            assert 'checksum' in file_
+            if checksum_attrs_ok(file_):
+                missing_remote_checksum_attrs=False
+            else:
+                missing_remote_checksum_attrs=True
 
 
         # cast
@@ -81,15 +83,26 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                 if http_client==sdconst.HTTP_CLIENT_WGET:
                     print_stderr(script_stderr)
         else:
+            print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
 
             if verify_checksum:
-                local_checksum=sdutils.compute_checksum(local_path,f.checksum_type)
-                if local_checksum==f.checksum:
-                    print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg) # TODO: add 'checksum verified' message
+                if missing_remote_checksum_attrs:
+                    print_stderr('Warning: missing remote checksum attributes prevented checksum verification (%s)'%attribute_to_show_in_msg)
                 else:
-                    print_stderr('Checksum error (%s)'%attribute_to_show_in_msg)
-            else:
-                print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
+
+                    remote_checksum=f.checksum
+                    local_checksum=sdutils.compute_checksum(local_path,f.checksum_type)
+
+                    if local_checksum==remote_checksum:
+                        print_stderr('Checksum OK (%s)'%attribute_to_show_in_msg)
+                    else:
+                        print_stderr('Checksum ERROR (%s)'%attribute_to_show_in_msg)
+
+def checksum_attrs_ok(file_):
+    if 'checksum_type' in file_ and 'checksum' in file_:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
