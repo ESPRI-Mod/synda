@@ -62,12 +62,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # transfer
 
-        if http_client==sdconst.HTTP_CLIENT_WGET:
-            (status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug)
-        elif http_client==sdconst.HTTP_CLIENT_URLLIB:
-            (status,local_checksum)=sdget_urllib.download_file(f.url,local_path,f.checksum_type,timeout)
-        else:
-            assert False
+        (status,local_checksum,killed,script_stderr)=sdget.download(f.url,local_path,f.checksum_type,debug,http_client,timeout)
 
 
         # post-transfer
