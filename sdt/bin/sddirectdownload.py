@@ -27,7 +27,7 @@ import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,debug=True,verbose=True):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,debug=True,verbose=True):
     for file_ in files:
 
         # check
@@ -46,7 +46,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         #local_path='/tmp/test.nc'
         #local_path='%s/test.nc'%sdconfig.tmp_folder
-        local_path=f.get_full_local_path(prefix=sdconfig.sandbox_folder)
+        local_path=f.get_full_local_path(prefix=local_path_prefix)
 
 
         # check
