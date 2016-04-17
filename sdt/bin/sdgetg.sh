@@ -31,6 +31,7 @@ usage ()
     echo "Options:"
     echo "  -c      checksum type - set checksum type (default md5)"
     echo "  -d      debug"
+    echo "  -t      timeout"
     echo "  -v      verbose"
     echo ""
     echo "Example"
@@ -83,6 +84,7 @@ max_verbosity=4
 debug=0
 verbosity=0
 checksum_type=md5
+timeout=360 # not used for now (but needed to keep the same public interface as sdget.sh)
 while getopts 'c:d:hv' OPTION
 do
   case $OPTION in
@@ -92,6 +94,8 @@ do
         ;;
   h)    usage
         exit 0
+        ;;
+  t)    timeout=$OPTARG
         ;;
   v)    (( verbosity=verbosity+1 ))
         ;;
