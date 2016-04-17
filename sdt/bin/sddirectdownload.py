@@ -27,7 +27,8 @@ import sdget
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,debug=True,verbose=True):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,network_bandwidth_test=False,debug=True,verbose=True):
+
     for file_ in files:
 
         # check
@@ -58,13 +59,21 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # check
 
-        if os.path.isfile(local_path):
+        if not network_bandwidth_test:
 
-            if force:
-                os.remove(local_path)
-            else:
-                print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
-                continue
+            if os.path.isfile(local_path):
+
+                if force:
+                    os.remove(local_path)
+                else:
+                    print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
+                    continue
+
+
+        # special case
+
+        if network_bandwidth_test:
+            local_path='/dev/null'
 
 
         # transfer
@@ -74,29 +83,31 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # post-transfer
 
-        attribute_to_show_in_msg=local_path # local_path | f.data_node | ..
-
         if status!=0:
-            print_stderr('Download failed (%s)'%attribute_to_show_in_msg)
+            print_stderr('Download failed (%s)'%f.url)
 
             if verbose:
                 if http_client==sdconst.HTTP_CLIENT_WGET:
                     print_stderr(script_stderr)
         else:
-            print_stderr('File successfully downloaded (%s)'%attribute_to_show_in_msg)
+
+            if network_bandwidth_test:
+                return
+
+            print_stderr('File successfully downloaded (%s)'%local_path)
 
             if verify_checksum:
                 if missing_remote_checksum_attrs:
-                    print_stderr('Warning: missing remote checksum attributes prevented checksum verification (%s)'%attribute_to_show_in_msg)
+                    print_stderr('Warning: missing remote checksum attributes prevented checksum verification (%s)'%local_path)
                 else:
 
                     remote_checksum=f.checksum
                     local_checksum=sdutils.compute_checksum(local_path,f.checksum_type)
 
                     if local_checksum==remote_checksum:
-                        print_stderr('Checksum OK (%s)'%attribute_to_show_in_msg)
+                        print_stderr('Checksum OK (%s)'%local_path)
                     else:
-                        print_stderr('Checksum ERROR (%s)'%attribute_to_show_in_msg)
+                        print_stderr('Checksum ERROR (%s)'%local_path)
 
 def checksum_attrs_ok(file_):
     if 'checksum_type' in file_ and 'checksum' in file_:
