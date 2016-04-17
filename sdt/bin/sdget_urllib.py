@@ -25,6 +25,7 @@ import sdconfig
 import sdutils
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
+from sdexception import SDException
 
 def download_file(url,local_path,checksum_type,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
@@ -223,8 +224,12 @@ def download_file_helper(url,local_path,timeout):
         # remove the local file if something goes wrong
         os.unlink(local_path)
 
-        # TODO: re-raise exception here and print exception upstream
-        traceback.print_exc(file=sys.stderr)
+        # debug
+        # (print low-level exception stack)
+        #traceback.print_exc(file=sys.stderr)
+
+        # tranform low level into SDException
+        raise SDException('SYNDGEUL-001',str(e))
 
         return 1
 
