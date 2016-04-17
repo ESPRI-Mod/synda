@@ -159,7 +159,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix)
+                sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum)
 
             else:
                 print_stderr("File not found")
@@ -179,11 +179,11 @@ def get(args):
             filename=os.path.basename(url)
             local_path=filename
 
-            f=dict(local_path=local_path,url=url,checksum_type='SHA256') # set checksum_type here to SHA256 is arbitrary
+            f=dict(local_path=local_path,url=url)
 
             files.append(f)
             
-        sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix)
+        sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,False)
 
 def history(args):
     import sddao

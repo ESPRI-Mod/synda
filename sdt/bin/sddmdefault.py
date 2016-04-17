@@ -28,6 +28,7 @@ import sdconfig
 import sdtime
 import sdfiledao
 import sdevent
+import sdutils
 import sdget
 from sdworkerutils import WorkerThread
 
@@ -49,9 +50,7 @@ class Download():
             sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise
 
-        checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
-
-        (tr.sdget_status,local_checksum,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),checksum_type,False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT)
+        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT)
 
         if tr.sdget_status==0:
 
@@ -65,6 +64,10 @@ class Download():
 
             if remote_checksum!=None:
                 # remote checksum exists
+
+                # compute local checksum
+                checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5' # arbitrary fallback to 'md5'
+                local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
 
                 # compare local and remote checksum
                 if remote_checksum==local_checksum:
