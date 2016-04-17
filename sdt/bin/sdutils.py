@@ -127,7 +127,7 @@ def replace_product(path,new_product):
         path=path.replace('/'+product+'/','/'+new_product+'/')
     return path
 
-def compute_checksum(file_fullpath,checksum_type="md5"):
+def compute_checksum(file_fullpath,checksum_type="md5",blocksize=(1024*64)):
     with open(file_fullpath, mode='rb') as f:
 
         d=None
@@ -140,7 +140,7 @@ def compute_checksum(file_fullpath,checksum_type="md5"):
         else:
             raise SDException("SYDUTILS-422","incorrect checksum_type (%s,%s)"%(file_fullpath,checksum_type))
 
-        for buf in iter(partial(f.read, 128), b''):
+        for buf in iter(partial(f.read, blocksize), b''):
             d.update(buf)
     return d.hexdigest()
 
@@ -192,7 +192,16 @@ def cast(value,dest_type_):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('-b','--blocksize',type=int,default=(1024*64))
+    parser.add_argument('-f','--file',required=True)
+    parser.add_argument('-t','--checksum_type',default='sha256')
     args = parser.parse_args()
 
+    # test
+
+    compute_checksum(args.file,args.checksum_type,args.blocksize)
+
+    """
     res=query_yes_no('test ?', default="yes")
     print res
+    """
