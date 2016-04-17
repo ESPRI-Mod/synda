@@ -9,10 +9,6 @@
 
 # This script retrieves a file from ESGF using GRID-FTP protocol
 
-# Note
-#  This script displays checksum on stdout.
-#  (so don't print anything except the checksum on stdout)
-#
 # Return values
 #   0  success
 #   1  error
@@ -26,10 +22,9 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v ] [ -c <sha256|md5> ] <src> <dest>"
+    echo "  $0 [ -v ] [ -t timeout ] <src> <dest>"
     echo ""
     echo "Options:"
-    echo "  -c      checksum type - set checksum type (default md5)"
     echo "  -d      debug"
     echo "  -t      timeout"
     echo "  -v      verbose"
@@ -83,13 +78,10 @@ max_verbosity=4
 
 debug=0
 verbosity=0
-checksum_type=md5
 timeout=360 # not used for now (but needed to keep the same public interface as sdget.sh)
-while getopts 'c:d:hv' OPTION
+while getopts 'dht:v' OPTION
 do
   case $OPTION in
-  c)    checksum_type=$OPTARG
-        ;;
   d)    debug=1
         ;;
   h)    usage
@@ -105,33 +97,6 @@ shift $(($OPTIND - 1)) # remove options
 
 if [ $verbosity -gt 4 ]; then
     verbosity=$max_verbosity
-fi
-
-# set checksum command depending on checksum type
-
-MD5_checksum_type ()
-{
-    checksum_cmd="md5sum  | awk '{print \$1}' "
-}
-
-SHA256_checksum_type ()
-{
-    checksum_cmd="openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-}
-
-if [ "$checksum_type" = "sha256" ]; then
-    SHA256_checksum_type
-elif [ "$checksum_type" = "SHA256" ]; then
-    SHA256_checksum_type
-elif [ "$checksum_type" = "md5" ]; then
-    MD5_checksum_type
-elif [ "$checksum_type" = "MD5" ]; then
-    MD5_checksum_type
-else
-    # we may come file for ESGF files that do not have checksum
-
-    # if checksum type is unknown, default to sha256 (arbitrary)
-    SHA256_checksum_type
 fi
 
 # retrieve positional arguments
@@ -267,9 +232,6 @@ if [ $child_status -ne 0 ]; then
     exit $status
 else
     # success
-
-    cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
-    echo $cs                                     # return checksum on stdout
 
     #msg "Transfer done - $* - $cs"
 

@@ -42,15 +42,15 @@ def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdc
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
 
         if http_client==sdconst.HTTP_CLIENT_URLLIB:
-            (status,local_checksum)=sdget_urllib.download_file(url,full_local_path,checksum_type,timeout)
+            status=sdget_urllib.download_file(url,full_local_path,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
-            (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout)
+            (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout)
         else:
             assert False
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        (status,local_checksum,killed,script_stderr)=run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout)
+        (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
 
@@ -60,10 +60,14 @@ def download(url,full_local_path,checksum_type='md5',debug=False,http_client=sdc
 
         assert False
 
+    if status==0:
+        local_checksum=sdutils.compute_checksum(full_local_path,checksum_type)
+    else:
+        local_checksum=None
 
     return (status,local_checksum,killed,script_stderr)
 
-def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debug,timeout):
+def run_download_script(url,full_local_path,transfer_protocol,debug,timeout):
 
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
         script=sdconfig.data_download_script_http        
@@ -72,7 +76,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     else:
         assert False
 
-    li=[script,'-t',str(timeout),'-c',checksum_type,url,full_local_path]
+    li=[script,'-t',str(timeout),url,full_local_path]
 
     if debug:
         li.insert(1,'-d')
@@ -86,7 +90,7 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
     # note
-    #  in the child shell script, stdout is used for the checksum and stderr for error message
+    #  in the child shell script, stderr for error message
     #
     (status,stdout,stderr)=sdutils.get_status_output(li,shell=False)
 
@@ -144,16 +148,9 @@ def run_download_script(url,full_local_path,checksum_type,transfer_protocol,debu
         fh.write("END '%s' script output\n"%os.path.basename(script))
     """
 
-
-    if status==0:
-        local_checksum=stdout.rstrip(os.linesep) # if success (status==0), stdout contains only checksum
-    else:
-        local_checksum=None
-
-
     killed=is_killed(transfer_protocol,status)
 
-    return (status,local_checksum,killed,stderr)
+    return (status,killed,stderr)
 
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""

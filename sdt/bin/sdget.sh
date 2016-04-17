@@ -10,8 +10,6 @@
 # This script retrieve a file from ESGF using HTTP protocol
 #
 # Notes
-#  - on success, the script displays checksum on stdout.
-#    (thus be carefull not to print anything except checksum on stdout)
 #  - short error message must be printed on stderr (one line max terminated by EOL).
 #    More detailed error message (e.g. multilines) can be printed in the log file.
 #  - This script works in two different modes
@@ -29,7 +27,6 @@
 #  3 => Incorrect arguments
 #  4 => Incorrect environment
 #       (fatal error, make the daemon to stop)
-#  5 => Incorrect checksum type
 #  6 => Error occurs while retrieving the X509 certificate 
 #  7 => This script has been killed (SIGINT or SIGTERM)
 # 12 => Permission error (e.g. CMIP5-RESEARCH role missing)
@@ -53,11 +50,10 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v | -a ] [ -c ] [ -h ] [ -s ] <src> <dest>"
+    echo "  $0 [ -v | -a ] [ -h ] [ -s ] [ -t timeout ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
-    echo "  -c      checksum type - set the checksum type used to compute file checksum (default md5)"
     echo "  -h      help - display help message"
     echo "  -s      show progress - show wget progress"
     echo "  -t      timeout - wget timeout"
@@ -163,15 +159,12 @@ show_progress=0
 debug=0
 verbosity=0
 always_log_wget_output=0
-checksum_type=md5
 parse_wget_output=1
 wget_timeout=360
-while getopts 'ac:dhp:sv' OPTION
+while getopts 'adhp:st:v' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1
-        ;;
-  c)    checksum_type=$OPTARG
         ;;
   d)    debug=1
         ;;
@@ -251,24 +244,6 @@ fi
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 debug_file=$logdir/debug.log
-
-
-# manage checksum type
-checksum_cmd=
-if [ "$checksum_type" = "sha256" ]; then
-    checksum_cmd=$(sha256_cmd)
-elif [ "$checksum_type" = "SHA256" ]; then
-    checksum_cmd=$(sha256_cmd)
-elif [ "$checksum_type" = "md5" ]; then
-    checksum_cmd=$(md5_cmd)
-elif [ "$checksum_type" = "MD5" ]; then # HACK: some checksum types are uppercase
-    checksum_cmd=$(md5_cmd)
-else
-    # we may come file for ESGF files that do not have checksum
-
-    # fall back to sha256 in this case (arbitrary)
-    checksum_cmd=$(sha256_cmd)
-fi
 
 
 # wget configuration
@@ -469,10 +444,7 @@ if [ $wget_status -ne 0 ]; then
 else
     # success
 
-    # checksum
-    cs=$(eval "cat $local_file | $checksum_cmd") # compute checksum (eval is needed as checksum_cmd contains pipe)
-    echo $cs                                     # return checksum on stdout
-
     #log "DEB020" "Transfer done - $*"
+
     exit 0
 fi

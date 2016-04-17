@@ -23,7 +23,6 @@ import sdapp
 import sdconst
 import sdconfig
 import sdget
-import sdget_urllib
 from sdtypes import File
 from sdtools import print_stderr
 

@@ -22,12 +22,11 @@ import humanize
 import sdapp
 import sdconst
 import sdconfig
-import sdutils
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
 from sdexception import SDException
 
-def download_file(url,local_path,checksum_type,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
+def download_file(url,local_path,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
 
     # create folder if missing
     destdir=os.path.dirname(local_path)
@@ -36,12 +35,7 @@ def download_file(url,local_path,checksum_type,timeout=sdconst.DIRECT_DOWNLOAD_H
 
     status=download_file_helper(url,local_path,timeout)
 
-    if status==0:
-        local_checksum=sdutils.compute_checksum(local_path,checksum_type)
-    else:
-        local_checksum=None
-
-    return (status,local_checksum)
+    return status
 
 def socket2disk_basic(socket,f):
 
@@ -206,10 +200,6 @@ def download_file_helper(url,local_path,timeout):
 
         
         # download file
-
-        # TODO
-        # for better performance, add on-the-fly checksum using link below
-        # https://gist.github.com/brianewing/994303 - TAG45H5K345H3
 
         #socket2disk_basic(socket,f)
         #socket2disk_largefile(socket,f)
