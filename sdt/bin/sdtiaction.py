@@ -57,7 +57,7 @@ def daemon(args):
 
             if sdconfig.multiuser:
                 print_stderr("Daemon must be started using 'systemctl' command")
-                return
+                return 1
 
             if sddaemon.is_running():
                 print_stderr("Daemon already started")
@@ -71,7 +71,7 @@ def daemon(args):
 
             if sdconfig.multiuser:
                 print_stderr("Daemon must be stopped using 'systemctl' command")
-                return
+                return 1
 
             if sddaemon.is_running():
                 try:
@@ -211,7 +211,12 @@ def history(args):
     li=[d.values() for d in sddao.get_history_lines()] # listofdict to listoflist
     print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
 
-def install(args,files=None):
+def install(args):
+    (status,newly_installed_files_count)=install_helper(args)
+
+    return status
+
+def install_helper(args,files=None):
     """
     Returns
         number of newly installed files
@@ -228,8 +233,9 @@ def install(args,files=None):
             print 'No packages will be installed, upgraded, or removed.'
             sys.exit(0)
 
+    # in dry-run mode, we stop here
     if args.dry_run:
-        return 0
+        return (0,0)
 
     interactive=not args.yes
 
@@ -259,7 +265,7 @@ def install(args,files=None):
             else:
                 print_stderr('Nothing to install (0 file found).')
 
-        return 0
+        return (0,0)
 
     # ask user for confirmation
     if interactive:
@@ -291,7 +297,7 @@ def install(args,files=None):
         if interactive:
             print_stderr('Abort.')
 
-    return count_new
+    return (0,count_new)
 
 def intro(args):
     import sdi18n
@@ -304,7 +310,7 @@ def metric(args):
     if args.groupby=='model':
         if args.project not in sdparam.params['project']:
             print_stderr("Unknown project (%s)"%args.project)
-            return
+            return 1
 
     if args.metric=='size':
         sdmetric.print_size(args.groupby,args.project)
@@ -412,7 +418,7 @@ def upgrade(args):
 
             files=sdsearch.run(selection=selection)
             args.yes=True
-            install(args,files=files)
+            (status,newly_installed_files_count)=install_helper(args,files=files)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
