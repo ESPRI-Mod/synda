@@ -120,7 +120,7 @@ def get(args):
 
     if args.verify_checksum and args.network_bandwidth_test:
         print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
-        return
+        return 1
 
     stream=syndautils.get_stream(args)
 
@@ -165,21 +165,22 @@ def get(args):
 
                 status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test)
 
+                if status!=0:
+                    return 1
+
             else:
                 print_stderr("File not found")
-
-                status=1
+                return 1
         else:
             for f in files:
                 size=humanize.naturalsize(f['size'],gnu=False)
                 print '%-12s %s'%(size,f['filename'])
 
-            status=0
     elif len(urls)>0:
         # url(s) found in stream: search-api operator not needed (download url directly)
 
         if args.verify_checksum:
-            print_stderr("To perform checksum verification, file id must be used instead of file url.")
+            print_stderr("To perform checksum verification, ESGF file identifier (e.g. title, id, tracking id..)  must be used instead of file url.")
             return 1
 
         # TODO: to improve genericity, maybe merge this block into the previous one (i.e. url CAN be used as a search key in the search-api (but not irods url))
@@ -196,10 +197,13 @@ def get(args):
             
         status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,False,args.network_bandwidth_test)
 
+        if status!=0:
+            return 1
+
     else:
         assert False
 
-    return status
+    return 0
 
 def history(args):
     import sddao
