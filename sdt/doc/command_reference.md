@@ -123,8 +123,9 @@ examples
 Direct download (download files in foreground without using the daemon)
 
 ```
-usage: synda get [-h] [-s SELECTION_FILE] [-z] [--force] [--timeout TIMEOUT]
-                 [--wget]
+usage: synda get [-h] [-s SELECTION_FILE] [-z] [--verify_checksum]
+                 [--dest_folder DEST_FOLDER] [--force]
+                 [--network_bandwidth_test] [--timeout TIMEOUT] [--wget]
                  [parameter [parameter ...]]
 
 positional arguments:
@@ -134,7 +135,13 @@ optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -z, --dry_run
+  --verify_checksum, -c
+                        Compare remote and local checksum
+  --dest_folder DEST_FOLDER, -d DEST_FOLDER
+                        Destination folder
   --force, -f           Overwrite local file if exists
+  --network_bandwidth_test, -n
+                        Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.
   --timeout TIMEOUT, -t TIMEOUT
                         HTTP timeout
   --wget, -w            Use wget instead of urllib2 as HTTP client
