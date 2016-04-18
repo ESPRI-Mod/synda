@@ -159,8 +159,14 @@ if __name__ == '__main__':
 
     import sdtiaction
     if args.subcommand in sdtiaction.actions.keys():
-        sdtiaction.actions[args.subcommand](args)
-        sys.exit(0)
+        status=sdtiaction.actions[args.subcommand](args)
+
+        # hack
+        # TODO: review all return code in sdtiaction module
+        if not isinstance(status,int):
+            status=0 # arbitrary
+
+        sys.exit(status)
 
     sdtools.print_stderr('Invalid operation %s'%args.subcommand)   
     sdtools.print_stderr("Use '--help' option for more info")
