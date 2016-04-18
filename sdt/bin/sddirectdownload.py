@@ -9,11 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script run download test on each url and display download status.
-
-Note
-    Return code is always 0
-"""
+"""This script download files sequentially in foreground (without using the daemon)."""
 
 import argparse
 import os
@@ -28,6 +24,12 @@ from sdtypes import File
 from sdtools import print_stderr
 
 def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,network_bandwidth_test=False,debug=True,verbose=True):
+    """
+    Returns:
+        0 if all files downloaded successfully
+        1 if error occurs during download
+    """
+    failed_count=0
 
     for file_ in files:
 
@@ -84,6 +86,8 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
         # post-transfer
 
         if status!=0:
+            failed_count+=1
+
             print_stderr('Download failed (%s)'%f.url)
 
             if verbose:
@@ -98,6 +102,8 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
             if verify_checksum:
                 if missing_remote_checksum_attrs:
+                    failed_count+=1
+
                     print_stderr('Warning: missing remote checksum attributes prevented checksum verification (%s)'%local_path)
                 else:
 
@@ -107,7 +113,14 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                     if local_checksum==remote_checksum:
                         print_stderr('Checksum OK (%s)'%local_path)
                     else:
+                        failed_count+=1
+
                         print_stderr('Checksum ERROR (%s)'%local_path)
+
+    if failed_count>0:
+        return 1
+    else:
+        return 0
 
 def checksum_attrs_ok(file_):
     if 'checksum_type' in file_ and 'checksum' in file_:
@@ -120,7 +133,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     files=json.load( sys.stdin )
-
-    run(files)
-
-    sys.exit(0)
+    status=run(files)
+    sys.exit(status)
