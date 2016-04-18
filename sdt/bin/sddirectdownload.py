@@ -26,8 +26,8 @@ from sdtools import print_stderr
 def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,network_bandwidth_test=False,debug=True,verbose=True):
     """
     Returns:
-        0 if all files downloaded successfully
-        1 if error occurs during download
+        0 if all transfers complete successfully
+        1 if error occurs
     """
     failed_count=0
 
@@ -68,7 +68,10 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                 if force:
                     os.remove(local_path)
                 else:
-                    print_stderr('WARNING: download cancelled as local file already exists (%s)'%local_path)
+                    print_stderr('Warning: download cancelled as local file already exists (%s)'%local_path)
+
+                    failed_count+=1
+
                     continue
 
 
@@ -113,7 +116,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                     else:
                         failed_count+=1
 
-                        print_stderr('Checksum ERROR (%s)'%local_path)
+                        print_stderr("Error: local checksum don't match remote checksum (%s)"%local_path)
             else:
                 print_stderr('File successfully downloaded, no checksum verification (%s)'%local_path)
 
