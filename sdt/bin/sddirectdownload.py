@@ -27,7 +27,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
     """
     Returns:
         0 if all transfers complete successfully
-        1 if error occurs
+        1 if one or more transfer(s) didn't complete successfully
     """
     failed_count=0
 
