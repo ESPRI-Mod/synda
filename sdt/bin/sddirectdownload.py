@@ -98,8 +98,6 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
             if network_bandwidth_test:
                 return
 
-            print_stderr('File successfully downloaded (%s)'%local_path)
-
             if verify_checksum:
                 if missing_remote_checksum_attrs:
                     failed_count+=1
@@ -111,11 +109,13 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
                     local_checksum=sdutils.compute_checksum(local_path,f.checksum_type)
 
                     if local_checksum==remote_checksum:
-                        print_stderr('Checksum OK (%s)'%local_path)
+                        print_stderr('File successfully downloaded, checksum OK (%s)'%local_path)
                     else:
                         failed_count+=1
 
                         print_stderr('Checksum ERROR (%s)'%local_path)
+            else:
+                print_stderr('File successfully downloaded, no checksum verification (%s)'%local_path)
 
     if failed_count>0:
         return 1
