@@ -173,7 +173,7 @@ def get(args):
                                             debug=True,
                                             verbose=True,
                                             show_progress=True,
-                                            hpss=True)
+                                            hpss=args.hpss)
 
                 if status!=0:
                     return 1
@@ -215,7 +215,7 @@ def get(args):
                                     debug=True,
                                     verbose=True,
                                     show_progress=True,
-                                    hpss=True)
+                                    hpss=args.hpss)
 
         if status!=0:
             return 1

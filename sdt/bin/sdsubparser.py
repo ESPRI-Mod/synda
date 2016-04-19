@@ -111,6 +111,11 @@ def run(subparsers):
     subparser.add_argument('--network_bandwidth_test','-n',action='store_true',help='Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--wget','-w',action='store_true',help='Use wget instead of urllib2 as HTTP client')
+    #
+    subparser.add_argument('--hpss',dest='hpss',action='store_true')
+    subparser.add_argument('--no-hpss',dest='hpss',action='store_false')
+    subparser.set_defaults(hpss=False) # maybe use sdconfig.config.getboolean('download','hpss') as default
+    #
     add_parameter_argument(subparser)
 
     subparser=subparsers.add_parser('help',help='Show help')
