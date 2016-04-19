@@ -50,12 +50,12 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v | -a ] [ -h ] [ -p parse_wget_output ] [ -s ] [ -t timeout ] <src> <dest>"
+    echo "  $0 [ -v | -a ] [ -h ] [ -p parse_output ] [ -s ] [ -t timeout ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -h      help - display help message"
-    echo "  -p      parse_wget_output"
+    echo "  -p      parse_output"
     echo "  -s      show progress - show wget progress"
     echo "  -t      timeout - wget timeout"
     echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
@@ -160,7 +160,7 @@ show_progress=0
 debug=0
 verbosity=0
 always_log_wget_output=0
-parse_wget_output=1
+parse_output=1
 wget_timeout=360
 while getopts 'adhp:st:v' OPTION
 do
@@ -172,7 +172,7 @@ do
   h)    usage
         exit 0
         ;;
-  p)    parse_wget_output=$OPTARG
+  p)    parse_output=$OPTARG
         ;;
   s)    show_progress=1
         ;;
@@ -252,7 +252,7 @@ debug_file=$logdir/debug.log
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
 WGETOPT="$WGETOPT -O $local_file --timeout=$wget_timeout"
 
-if [ $parse_wget_output -eq 1 ]; then
+if [ $parse_output -eq 1 ]; then
 
     # Notes
     #     - currently, wget output parsing work only if "--tries" is set to 1
@@ -378,7 +378,7 @@ if [ $verbosity -gt 0 ]; then
     wget_status=$?
     wget_pid=$!
 
-    parse_wget_output=0 # disable wget output parsing in verbose mode
+    parse_output=0 # disable wget output parsing in verbose mode
 else
     # in this mode, wget info are displayed in differed time
 
@@ -396,7 +396,7 @@ fi
 
 # parse wget output
 
-if [ $parse_wget_output -eq 1 ]; then
+if [ $parse_output -eq 1 ]; then
     source "$wgetoutputparser" # we parse wget output to keep only HTTP response code from wget messages
 fi
 
@@ -409,7 +409,7 @@ if [ $wget_status -ne 0 ]; then
         status=29
     else
 
-        if [ $parse_wget_output -eq 1 ]; then
+        if [ $parse_output -eq 1 ]; then
 
             # assert
             if [ $wget_error_status_from_parsing -eq 0 ]; then
