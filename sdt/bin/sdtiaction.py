@@ -163,7 +163,7 @@ def get(args):
 
                 print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
 
-                status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test)
+                status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test,True,True,True)
 
                 if status!=0:
                     return 1
@@ -195,7 +195,7 @@ def get(args):
 
             files.append(f)
             
-        status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test)
+        status=sddirectdownload.run(files,args.timeout,args.force,http_client,local_path_prefix,args.verify_checksum,args.network_bandwidth_test,True,True,True)
 
         if status!=0:
             return 1
