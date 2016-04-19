@@ -112,8 +112,8 @@ def run(subparsers):
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--wget','-w',action='store_true',help='Use wget instead of urllib2 as HTTP client')
     #
-    subparser.add_argument('--hpss',dest='hpss',action='store_true')
-    subparser.add_argument('--no-hpss',dest='hpss',action='store_false')
+    subparser.add_argument('--hpss',dest='hpss',action='store_true',help="Enable 'hpss' flag")
+    subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")
     subparser.set_defaults(hpss=False) # maybe use sdconfig.config.getboolean('download','hpss') as default
     #
     add_parameter_argument(subparser)
