@@ -83,7 +83,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # transfer
 
-        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout)
+        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbose)
 
 
         # post-transfer

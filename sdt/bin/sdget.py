@@ -32,7 +32,7 @@ import sdlog
 import sdget_urllib
 from sdtools import print_stderr
 
-def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT):
+def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbose=False):
     killed=False
     script_stderr=None
 
@@ -44,13 +44,13 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
         if http_client==sdconst.HTTP_CLIENT_URLLIB:
             status=sdget_urllib.download_file(url,full_local_path,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
-            (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout)
+            (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose)
         else:
             assert False
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout)
+        (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
 
@@ -62,7 +62,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     return (status,killed,script_stderr)
 
-def run_download_script(url,full_local_path,transfer_protocol,debug,timeout):
+def run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose):
 
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
         script=sdconfig.data_download_script_http        
@@ -75,6 +75,11 @@ def run_download_script(url,full_local_path,transfer_protocol,debug,timeout):
 
     if debug:
         li.insert(1,'-d')
+
+    """
+    if verbose:
+        li.insert(1,'-vv')
+    """
 
     # hpss & parse_wget_output hack
     hpss=sdconfig.config.getboolean('download','hpss')
