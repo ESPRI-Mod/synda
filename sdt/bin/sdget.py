@@ -32,7 +32,7 @@ import sdlog
 import sdget_urllib
 from sdtools import print_stderr
 
-def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbose=False,show_progress=False,hpss=False):
+def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,show_progress=False,hpss=False):
     killed=False
     script_stderr=None
 
@@ -45,7 +45,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
             status=sdget_urllib.download_file(url,full_local_path,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
 
-            li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbose,hpss)
+            li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbosity,hpss)
 
             (status,script_stderr)=run_download_script(li,show_progress)
 
@@ -56,7 +56,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbose,hpss)
+        li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbosity,hpss)
 
         (status,script_stderr)=run_download_script(li,show_progress)
 
@@ -168,17 +168,31 @@ def is_killed(transfer_protocol,status):
     else:
         assert False
 
-def prepare_args(url,full_local_path,script,debug,timeout,verbose,hpss):
+def build_verbosity_option(verbosity):
+    """
+    sample
+        0 => None
+        2 => '-vv'
+        4 => '-vvvv'
+    """
+
+    if verbosity > 0:
+        buf='v'*verbosity
+        buf='-%s'%buf
+        return buf
+    else:
+        return None
+
+def prepare_args(url,full_local_path,script,debug,timeout,verbosity,hpss):
 
     li=[script,'-t',str(timeout),url,full_local_path]
 
     if debug:
         li.insert(1,'-d')
 
-    """
-    if verbose:
-        li.insert(1,'-vv')
-    """
+    verbosity_option=build_verbosity_option(verbosity)
+    if verbosity_option is not None:
+        li.insert(1,verbosity_option)
 
     if hpss:
         li.insert(1,'-p')
