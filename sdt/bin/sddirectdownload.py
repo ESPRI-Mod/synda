@@ -31,7 +31,7 @@ def run(files,
         verify_checksum=False,
         network_bandwidth_test=False,
         debug=True,
-        verbosity=2,
+        verbosity=0,
         show_progress=True,
         hpss=False):
     """
