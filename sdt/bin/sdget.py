@@ -47,7 +47,9 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
             li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbose)
 
-            (status,killed,script_stderr)=run_download_script(li,transfer_protocol)
+            (status,script_stderr)=run_download_script(li)
+
+            killed=is_killed(transfer_protocol,status)
 
         else:
             assert False
@@ -56,7 +58,9 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
         li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbose)
 
-        (status,killed,script_stderr)=run_download_script(li,transfer_protocol)
+        (status,script_stderr)=run_download_script(li)
+
+        killed=is_killed(transfer_protocol,status)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
 
@@ -68,10 +72,10 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     return (status,killed,script_stderr)
 
-def run_download_script(li,transfer_protocol):
-    return run_download_script_BUFSTDXXX(li,transfer_protocol)
+def run_download_script(li):
+    return run_download_script_BUFSTDXXX(li)
 
-def run_download_script_BUFSTDXXX(li,transfer_protocol):
+def run_download_script_BUFSTDXXX(li):
 
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
@@ -134,9 +138,7 @@ def run_download_script_BUFSTDXXX(li,transfer_protocol):
         fh.write("END '%s' script output\n"%os.path.basename(script))
     """
 
-    killed=is_killed(transfer_protocol,status)
-
-    return (status,killed,stderr)
+    return (status,stderr)
 
 def is_killed(transfer_protocol,status):
     """This func return True if child process has been killed."""
