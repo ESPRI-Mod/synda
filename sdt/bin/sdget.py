@@ -44,13 +44,19 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
         if http_client==sdconst.HTTP_CLIENT_URLLIB:
             status=sdget_urllib.download_file(url,full_local_path,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
-            (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose)
+
+            li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbose)
+
+            (status,killed,script_stderr)=run_download_script(li,transfer_protocol)
+
         else:
             assert False
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
-        (status,killed,script_stderr)=run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose)
+        li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbose)
+
+        (status,killed,script_stderr)=run_download_script(li,transfer_protocol)
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
 
@@ -62,30 +68,9 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     return (status,killed,script_stderr)
 
-def run_download_script(url,full_local_path,transfer_protocol,debug,timeout,verbose):
 
-    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
-        script=sdconfig.data_download_script_http        
-    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
-        script=sdconfig.data_download_script_gridftp
-    else:
-        assert False
+def run_download_script(li,transfer_protocol):
 
-    li=[script,'-t',str(timeout),url,full_local_path]
-
-    if debug:
-        li.insert(1,'-d')
-
-    """
-    if verbose:
-        li.insert(1,'-vv')
-    """
-
-    # hpss & parse_wget_output hack
-    hpss=sdconfig.config.getboolean('download','hpss')
-    if hpss:
-        li.insert(1,'-p')
-        li.insert(2,'0')
 
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
@@ -169,6 +154,26 @@ def is_killed(transfer_protocol,status):
         return False # TODO
     else:
         assert False
+
+def prepare_args(url,full_local_path,script,debug,timeout,verbose):
+
+    li=[script,'-t',str(timeout),url,full_local_path]
+
+    if debug:
+        li.insert(1,'-d')
+
+    """
+    if verbose:
+        li.insert(1,'-vv')
+    """
+
+    # hpss & parse_wget_output hack
+    hpss=sdconfig.config.getboolean('download','hpss')
+    if hpss:
+        li.insert(1,'-p')
+        li.insert(2,'0')
+
+    return li
 
 # init.
 
