@@ -74,9 +74,16 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
 def run_download_script(li,show_progress):
     if show_progress:
-        assert False
+        return run_download_script_RTSTDXXX(li)
     else:
         return run_download_script_BUFSTDXXX(li)
+
+def run_download_script_RTSTDXXX(li):
+
+    # start a new process (fork is blocking here, so thread will wait until child is done)
+    status=sdutils.get_status(li,shell=False)
+
+    return (status,None)
 
 def run_download_script_BUFSTDXXX(li):
 

@@ -93,8 +93,8 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
             print_stderr('Download failed (%s)'%f.url)
 
-            if verbose:
-                if http_client==sdconst.HTTP_CLIENT_WGET:
+            if not show_progress: # if show_progress mode, stderr is already display (because child stderr is binded to parent stderr)
+                if script_stderr is not None:
                     print_stderr(script_stderr)
         else:
 
