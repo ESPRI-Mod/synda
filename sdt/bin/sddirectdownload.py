@@ -23,7 +23,7 @@ import sdget
 from sdtypes import File
 from sdtools import print_stderr
 
-def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,network_bandwidth_test=False,debug=True,verbose=True,show_progress=True):
+def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_client=sdconst.HTTP_CLIENT_URLLIB,local_path_prefix=sdconfig.sandbox_folder,verify_checksum=False,network_bandwidth_test=False,debug=True,verbose=True,show_progress=True,hpss=False):
     """
     Returns:
         0 if all transfers complete successfully
@@ -83,7 +83,7 @@ def run(files,timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,force=False,http_clie
 
         # transfer
 
-        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbose,show_progress)
+        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbose,show_progress,hpss)
 
 
         # post-transfer

@@ -50,7 +50,7 @@ class Download():
             sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise
 
-        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,False,False)
+        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,False,False,hpss)
 
         if tr.sdget_status==0:
 
@@ -188,5 +188,6 @@ def fatal_exception():
 
 # module init.
 
+hpss=sdconfig.config.getboolean('download','hpss') # hpss & parse_output hack
 eot_queue=Queue.Queue() # eot means "End Of Task"
 incorrect_checksum_action=sdconfig.config.get('behaviour','incorrect_checksum_action')
