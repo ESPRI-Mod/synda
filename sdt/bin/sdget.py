@@ -68,9 +68,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     return (status,killed,script_stderr)
 
-
 def run_download_script(li,transfer_protocol):
-
 
     # start a new process (fork is blocking here, so thread will wait until child is done)
     #
