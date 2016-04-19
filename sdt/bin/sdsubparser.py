@@ -22,6 +22,7 @@ def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
 
 def add_verbose_option(parser):
+    # TODO: use this => parser.add_argument('--verbosity','-v', action='count', default=0)
     parser.add_argument('--verbose',action='store_true',help='verbose mode')
 
 def add_type_grp(parser):
@@ -116,6 +117,7 @@ def run(subparsers):
     subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")
     subparser.set_defaults(hpss=False) # maybe use sdconfig.config.getboolean('download','hpss') as default
     #
+    subparser.add_argument('--verbosity','-v', action='count', default=0)
     add_parameter_argument(subparser)
 
     subparser=subparsers.add_parser('help',help='Show help')

@@ -171,7 +171,7 @@ def get(args):
                                             verify_checksum=args.verify_checksum,
                                             network_bandwidth_test=args.network_bandwidth_test,
                                             debug=True,
-                                            verbose=True,
+                                            verbose=args.verbosity,
                                             show_progress=True,
                                             hpss=args.hpss)
 
@@ -213,7 +213,7 @@ def get(args):
                                     verify_checksum=args.verify_checksum,
                                     network_bandwidth_test=args.network_bandwidth_test,
                                     debug=True,
-                                    verbose=True,
+                                    verbose=args.verbosity,
                                     show_progress=True,
                                     hpss=args.hpss)
 
