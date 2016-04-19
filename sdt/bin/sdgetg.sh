@@ -22,10 +22,11 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v ] [ -t timeout ] <src> <dest>"
+    echo "  $0 [ -v ] [ -p parseoutput ] [ -t timeout ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -d      debug"
+    echo "  -p      parseoutput"
     echo "  -t      timeout"
     echo "  -v      verbose"
     echo ""
@@ -77,15 +78,18 @@ max_verbosity=4
 # retrieve options
 
 debug=0
+parseoutput=0 # not used for now (but needed to keep the same public interface as sdget.sh)
 verbosity=0
 timeout=360 # not used for now (but needed to keep the same public interface as sdget.sh)
-while getopts 'dht:v' OPTION
+while getopts 'dhp:t:v' OPTION
 do
   case $OPTION in
   d)    debug=1
         ;;
   h)    usage
         exit 0
+        ;;
+  p)    parseoutput=$OPTARG
         ;;
   t)    timeout=$OPTARG
         ;;

@@ -50,11 +50,12 @@ usage ()
 {
     echo ""
     echo "Usage"
-    echo "  $0 [ -v | -a ] [ -h ] [ -s ] [ -t timeout ] <src> <dest>"
+    echo "  $0 [ -v | -a ] [ -h ] [ -p parse_wget_output ] [ -s ] [ -t timeout ] <src> <dest>"
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
     echo "  -h      help - display help message"
+    echo "  -p      parse_wget_output"
     echo "  -s      show progress - show wget progress"
     echo "  -t      timeout - wget timeout"
     echo "  -v      verbose - set verbosity level (this option can be repeated multiple times)"
