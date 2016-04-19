@@ -80,6 +80,25 @@ def query_yes_no(question, default="yes"):
             sys.stdout.write("Please respond with 'yes' or 'no' "
                              "(or 'y' or 'n').\n")
 
+def get_status(args, **kwargs):
+    """
+    Args:
+        args (list): command + arguments
+
+    Notes
+        - handle exit status conversion and raise exception if child didn't complete normally
+        - subprocess stdxxx bind to parent sdtxxx
+        - subprocess stdxxx are displayed in realtime on terminal
+    """
+
+    kwargs['universal_newlines']=False
+
+    p = subprocess.Popen(args, **kwargs)
+
+    p.wait()
+
+    return p.returncode
+
 def get_status_output(args, **kwargs):
     """
     Args:
@@ -87,7 +106,6 @@ def get_status_output(args, **kwargs):
 
     Notes
         - handle exit status conversion and raise exception if child didn't complete normally
-        - as 'commands' module is deprecated, use this func as replacement
         - also note that with this func, stderr and stdout are retrieved separately
           (was not the case in 'commands' module)
         - also note that there is a 'getstatusoutput' func in subprocess
