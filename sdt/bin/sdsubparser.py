@@ -117,7 +117,7 @@ def run(subparsers):
     subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")
     subparser.set_defaults(hpss=False) # maybe use sdconfig.config.getboolean('download','hpss') as default
     #
-    subparser.add_argument('--verbosity','-v', action='count', default=0)
+    subparser.add_argument('--verbosity','-v', action='count', default=2)
     add_parameter_argument(subparser)
 
     subparser=subparsers.add_parser('help',help='Show help')

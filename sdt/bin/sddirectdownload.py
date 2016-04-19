@@ -31,7 +31,7 @@ def run(files,
         verify_checksum=False,
         network_bandwidth_test=False,
         debug=True,
-        verbose=True,
+        verbosity=2,
         show_progress=True,
         hpss=False):
     """
@@ -93,7 +93,7 @@ def run(files,
 
         # transfer
 
-        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbose,show_progress,hpss)
+        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbosity,show_progress,hpss)
 
 
         # post-transfer
