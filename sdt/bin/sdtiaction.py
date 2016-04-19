@@ -168,11 +168,12 @@ def get(args):
                                             args.force,
                                             http_client,
                                             local_path_prefix,
-                                            args.verify_checksum,
-                                            args.network_bandwidth_test,
-                                            True,
-                                            True,
-                                            True)
+                                            verify_checksum=args.verify_checksum,
+                                            network_bandwidth_test=args.network_bandwidth_test,
+                                            debug=True,
+                                            verbose=True,
+                                            show_progress=True,
+                                            hpss=True)
 
                 if status!=0:
                     return 1
@@ -209,11 +210,12 @@ def get(args):
                                     args.force,
                                     http_client,
                                     local_path_prefix,
-                                    args.verify_checksum,
-                                    args.network_bandwidth_test,
-                                    True,
-                                    True,
-                                    True)
+                                    verify_checksum=args.verify_checksum,
+                                    network_bandwidth_test=args.network_bandwidth_test,
+                                    debug=True,
+                                    verbose=True,
+                                    show_progress=True,
+                                    hpss=True)
 
         if status!=0:
             return 1
