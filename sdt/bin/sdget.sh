@@ -360,6 +360,15 @@ wget_stderr2stdout()
     $WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
 }
 
+# this filter removes non-fatal error messages (i.e. the file gets downloaded successfully no matter those errors)
+# more info: https://esgf.github.io/esgf-swt/wget/2016/01/19/Failed-to-open-cert.html
+MATCH_NON_FATAL_ERROR="^ERROR: Failed to open cert"
+
+stdout_filter ()
+{
+    grep -v "$MATCH_NON_FATAL_ERROR"
+}
+
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
@@ -373,7 +382,7 @@ if [ $verbosity -gt 0 ]; then
 
     # display info on stderr
     echo $WGET_CMD 1>&2
-    wget_stderr2stdout 1>&2
+    wget_stderr2stdout 1>&2 # | stdout_filter (filter not used as it will disturb wget_status and wget_pid)
 
     wget_status=$?
     wget_pid=$!
