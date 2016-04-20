@@ -113,7 +113,6 @@ log_wget_output ()
 
 cleanup ()
 {
-    kill -TERM "$wget_pid" 1>/dev/null 2>/dev/null # kill child if still running
     rm -f "$local_file"
 }
 
@@ -225,7 +224,6 @@ fi
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
-wget_pid=
 
 # set log & tmp dir.
 if [ "$multiuser" = "0" ]; then
@@ -382,10 +380,9 @@ if [ $verbosity -gt 0 ]; then
 
     # display info on stderr
     echo $WGET_CMD 1>&2
-    wget_stderr2stdout 1>&2 # | stdout_filter (filter not used as it will disturb wget_status and wget_pid)
+    wget_stderr2stdout 1>&2 # | stdout_filter (filter not used as it will disturb wget_status)
 
     wget_status=$?
-    wget_pid=$!
 
     parse_output=0 # disable wget output parsing in verbose mode
 else
