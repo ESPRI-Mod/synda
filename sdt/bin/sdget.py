@@ -28,7 +28,6 @@ import sdapp
 import sdconfig
 import sdutils
 import sdconst
-import sdlog
 import sdget_urllib
 from sdtools import print_stderr
 

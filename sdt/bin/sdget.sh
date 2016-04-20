@@ -10,15 +10,24 @@
 # This script retrieve a file from ESGF using HTTP protocol
 #
 # Notes
-#  - short error message must be printed on stderr (one line max terminated by EOL).
-#    More detailed error message (e.g. multilines) can be printed in the log file.
 #  - This script works in two different modes
-#      - NORMAL MODE (default): wget output is analyzed by 'sdparsewgetoutput.sh' script 
-#      - VERBOSE MODE: wget output is dumped on stderr in realtime
-#          - this mode is enabled when verbose option is set (at least one '-v' option)
+#      - NORMAL MODE (default)
+#          - verbosity is set to 0 in this mode
+#          - wget output is analyzed by 'sdparsewgetoutput.sh' script 
+#          - nothing is written on stdout
+#          - short error message is printed on stderr (one line max terminated by EOL),
+#            so to be logged and/or inserted in DB on the python side
+#            More detailed error message (e.g. multilines) can be printed in the log file.
+#      - VERBOSE MODE
+#          - this mode is enabled when verbosity is equal or greater than 1 (at least one '-v' option)
+#          - many infos are dumped on stderr in realtime (wget output (including download progress), sdget.sh msg)
 #          - in this mode, wget output IS NOT analyzed by 'sdparsewgetoutput.sh'
-#    Note that the code returned by sdget.sh script may vary depending on which
-#    mode is used.
+#          - verbosity level overview 
+#              - 0
+#              - 1
+#              - 2
+#              - 3
+#  - the code returned by sdget.sh script may vary depending on which mode is used.
 #
 # Return values
 #  0 => success
@@ -380,9 +389,18 @@ if [ $verbosity -gt 0 ]; then
 
     # display info on stderr
     echo $WGET_CMD 1>&2
-    wget_stderr2stdout 1>&2 # | stdout_filter (filter not used as it will disturb wget_status)
 
-    wget_status=$?
+    if [ $verbosity -eq 1 ]; then
+        
+        # when verbosity is 1, some non-important error message are removed from output
+        # (to see those messages, set verbosity to 2)
+
+        wget_stderr2stdout | stdout_filter 1>&2
+        wget_status=${PIPESTATUS[0]}
+    elif [ $verbosity -gt 1 ]; then
+        wget_stderr2stdout 1>&2
+        wget_status=$?
+    fi
 
     parse_output=0 # disable wget output parsing in verbose mode
 else
