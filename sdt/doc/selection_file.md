@@ -21,7 +21,9 @@ Example of a selection file
 
 A selection file accepts the four following line formats
 
-### realm, frequency = variable(s)
+### realm frequency and variable(s)
+
+Definition
 
     variable[<realm>][<frequency>]=<variable1> <variable2> ...
 
@@ -33,7 +35,9 @@ Note
 
 * space is used as variable delimiter
 
-### facet(s) = variable(s)
+### facet(s) and variable(s)
+
+Definition
 
     variable[<facet1> <facet2> <facet3> ...]=<variable1> <variable2> ...
 
@@ -45,7 +49,9 @@ Note
 
 * space is used as facets and variables delimiter
 
-### name = value
+### name and value
+
+Definition
 
     <name>=<value>
 
@@ -53,7 +59,9 @@ Example
 
     experiment=rcp26
 
-### value
+### standalone value
+
+Definition
 
     <value>
 
