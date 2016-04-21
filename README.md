@@ -18,9 +18,13 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)          | [Admin guide](sdt/doc/admin_guide.md)
 
+[Selection file](sdt/doc/selection_file.md)
+
 [Command reference](sdt/doc/command_reference.md)
 
 [Configuration parameter reference](sdt/doc/sdt_conf.md)
+
+[Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md)
 
 [Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
