@@ -74,9 +74,9 @@ Example
 * Blank line are ignored.
 * Selection files may include comments, prefixed by specific characters (#)
 
-## Selection file parameters
+## Selection file parameter
 
-See [Selection file parameter reference](selection_file_parameter_reference.md)
+See [selection file parameter reference](selection_file_parameter_reference.md)
 
 ## Selection file management
 
