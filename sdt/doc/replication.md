@@ -14,7 +14,10 @@ See [Installation guide](https://github.com/Prodiguer/synda#installation)
 
 See [Selection file](selection_file.md)
 
-Note: you can create many selection files (e.g. one per project)
+Notes: 
+
+* You can create many selection files (e.g. one per project)
+* Selection file(s) must be stored in the 'selection' folder
 
 ## File discovery
 
@@ -40,7 +43,7 @@ In multi-user installation, run command below
 
 ### Stop
 
-To start the download, Synda service must be stopped.
+To stop the download, Synda service must be stopped.
 
 In single-user installation, run command below
 
