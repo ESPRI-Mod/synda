@@ -28,8 +28,6 @@ Type: string
 
 Default: "http"
 
---------------------------------------------------------
-
 #### searchapi_host
 
 Set which ESGF index to use.
@@ -37,8 +35,6 @@ Set which ESGF index to use.
 Type: string
 
 Default: <index.default_index> from sdt.conf file (or random index from <index.indexes> in parallel mode)
-
---------------------------------------------------------
 
 #### priority
 
@@ -64,15 +60,11 @@ This parameter select local files using local path.
 
 Type: string
 
---------------------------------------------------------
-
 #### error_msg
 
 This parameter select local files using error message.
 
 Type: string
-
---------------------------------------------------------
 
 #### insertion_group_id
 
@@ -80,15 +72,11 @@ This parameter select local files using insertion group identifier.
 
 Type: integer
 
---------------------------------------------------------
-
 #### status
 
 This parameter select local files using download status.
 
 Type: string
-
---------------------------------------------------------
 
 #### sdget_status
 
@@ -110,8 +98,6 @@ Type: string
 
 Default: "treevar"
 
---------------------------------------------------------
-
 #### local_path_product_format
 
 If set to 'normal', product folders (e.g. 'output1' and 'output2') are kept in
@@ -123,15 +109,11 @@ Type: string
 
 Default: "normal"
 
---------------------------------------------------------
-
 #### local_path_project_format
 
 If set to 'uc', local path project folder is converted to uppercase.
 
 Type: string
-
---------------------------------------------------------
 
 #### local_path_drs_template
 
