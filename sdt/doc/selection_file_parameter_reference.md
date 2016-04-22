@@ -12,10 +12,18 @@ Those parameters are specific to Synda and cannot be used directly with the Sear
 
 This section contains the following sub-groups:
 
-* Synda local search parameter
 * Synda remote search parameter
+* Synda local search parameter
 * Synda download parameter
 * Synda formatting parameter
+
+### Synda remote search parameter
+
+#### timeslice
+
+This parameter select files using filename timestamp.
+
+Type: string
 
 ### Synda local search parameter
 
@@ -56,16 +64,6 @@ Type: string
 This parameter select local files using sdget_status.
 
 Type: integer
-
-### Synda remote search parameter
-
-#### timeslice
-
-This parameter select files using filename timestamp.
-
-Type: string
-
---------------------------------------------------------
 
 ### Synda download parameter
 
