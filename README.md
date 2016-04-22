@@ -22,7 +22,7 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [Command reference](sdt/doc/command_reference.md)
 
-[Configuration parameter reference](sdt/doc/sdt_conf.md)
+[Configuration parameter reference](sdt/doc/configuration_parameter_reference.md)
 
 [Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md)
 
