@@ -34,7 +34,7 @@ Set which ESGF index to use.
 
 Type: string
 
-Default: <index.default_index> from sdt.conf file (or random index from <index.indexes> in parallel mode)
+Default: &lt;index.default_index&gt; from sdt.conf file (or random index from &lt;index.indexes&gt; in parallel mode)
 
 #### priority
 
