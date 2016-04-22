@@ -29,7 +29,7 @@ If set to 'notree', all files are stored in the same folder.
 
 Type: string
 
-Default: ""
+Default: "treevar"
 
 --------------------------------------------------------
 
@@ -42,7 +42,7 @@ merged into one folder called 'output' and products sub-folders are merged.
 
 Type: string
 
-Default: ""
+Default: "normal"
 
 --------------------------------------------------------
 
@@ -52,8 +52,6 @@ If set to 'uc', local path project folder is converted to uppercase.
 
 Type: string
 
-Default: ""
-
 --------------------------------------------------------
 
 #### local_path_drs_template
@@ -61,8 +59,6 @@ Default: ""
 Contain the local path custom template.
 
 Type: string
-
-Default: ""
 
 ### Synda local search parameter
 
@@ -72,8 +68,6 @@ This parameter select local files using local path.
 
 Type: string
 
-Default: ""
-
 --------------------------------------------------------
 
 #### error_msg
@@ -82,17 +76,13 @@ This parameter select local files using error message.
 
 Type: string
 
-Default: ""
-
 --------------------------------------------------------
 
 #### insertion_group_id
 
 This parameter select local files using insertion group identifier.
 
-Type: string
-
-Default: ""
+Type: integer
 
 --------------------------------------------------------
 
@@ -102,17 +92,13 @@ This parameter select local files using download status.
 
 Type: string
 
-Default: ""
-
 --------------------------------------------------------
 
 #### sdget_status
 
 This parameter select local files using sdget_status.
 
-Type: string
-
-Default: ""
+Type: integer
 
 ### Synda remote search parameter
 
@@ -121,8 +107,6 @@ Default: ""
 This parameter select files using filename timestamp.
 
 Type: string
-
-Default: ""
 
 --------------------------------------------------------
 
@@ -145,7 +129,7 @@ Set daemon group.
 
 Type: string
 
-Default: ""
+Default: <index.default_index> from sdt.conf file (or random index from <index.indexes> in parallel mode)
 
 --------------------------------------------------------
 
