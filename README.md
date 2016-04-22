@@ -18,11 +18,11 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)          | [Admin guide](sdt/doc/admin_guide.md)
 
-[Selection file](sdt/doc/selection_file.md)
-
 [Command reference](sdt/doc/command_reference.md)
 
 [Configuration parameter reference](sdt/doc/configuration_parameter_reference.md)
+
+[Selection file](sdt/doc/selection_file.md)
 
 [Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md)
 
