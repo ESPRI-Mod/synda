@@ -18,7 +18,15 @@ Example of a selection file
     variable[seaIce][mon]=sic evap
     variable[ocnBgchem][mon]=dissic fbddtalk
 
-Note: selection file are also called 'template'
+Note:
+
+* selection file is sometime called 'template' or 'selection form'
+
+This next parts of this document are organized in 3 main sections
+
+* Selection file format
+* Selection file parameter
+* Selection file management
 
 ## Selection file format
 
