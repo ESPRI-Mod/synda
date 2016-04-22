@@ -15,7 +15,7 @@ This section contains the following sub-groups:
 * Synda formatting parameter
 * Synda local search parameter
 * Synda remote search parameter
-* Synda meta parameter
+* Synda download parameter
 
 ### Synda formatting parameter
 
@@ -110,7 +110,7 @@ Type: string
 
 --------------------------------------------------------
 
-### Synda meta parameter
+### Synda download parameter
 
 #### protocol
 
@@ -125,7 +125,7 @@ Default: "http"
 
 #### searchapi_host
 
-Set daemon group.
+Set which ESGF index to use.
 
 Type: string
 
