@@ -12,10 +12,41 @@ Those parameters are specific to Synda and cannot be used directly with the Sear
 
 This section contains the following sub-groups:
 
+* Synda download parameter
 * Synda remote search parameter
 * Synda local search parameter
-* Synda download parameter
 * Synda formatting parameter
+
+### Synda download parameter
+
+#### protocol
+
+Select which protocol to use to download the data. Currently, the two supported
+protocols are http and gridftp.
+
+Type: string
+
+Default: "http"
+
+--------------------------------------------------------
+
+#### searchapi_host
+
+Set which ESGF index to use.
+
+Type: string
+
+Default: <index.default_index> from sdt.conf file (or random index from <index.indexes> in parallel mode)
+
+--------------------------------------------------------
+
+#### priority
+
+Set download priority.
+
+Type: integer
+
+Default: 1000
 
 ### Synda remote search parameter
 
@@ -64,37 +95,6 @@ Type: string
 This parameter select local files using sdget_status.
 
 Type: integer
-
-### Synda download parameter
-
-#### protocol
-
-Select which protocol to use to download the data. Currently, the two supported
-protocols are http and gridftp.
-
-Type: string
-
-Default: "http"
-
---------------------------------------------------------
-
-#### searchapi_host
-
-Set which ESGF index to use.
-
-Type: string
-
-Default: <index.default_index> from sdt.conf file (or random index from <index.indexes> in parallel mode)
-
---------------------------------------------------------
-
-#### priority
-
-Set download priority.
-
-Type: integer
-
-Default: 1000
 
 ### Synda formatting parameter
 
