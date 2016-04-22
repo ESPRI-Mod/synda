@@ -22,7 +22,7 @@ Note:
 
 * selection file is sometime called 'template' or 'selection form'
 
-This next parts of this document are organized in 3 main sections
+Next parts of this document are organized in 3 main sections
 
 * Selection file format
 * Selection file parameter
