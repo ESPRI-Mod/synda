@@ -21,7 +21,11 @@ This section contains the following sub-groups:
 
 #### local_path_format
 
-Set daemon group.
+Set local path format. If set to 'treevar', the dataset DRS is used to build the
+local path and a folder is added to group files by variable. If set to 'tree',
+the dataset DRS is used to build the local path. If set to 'custom', the local
+path is built based on template defined in <local_path_drs_template> variable.
+If set to 'notree', all files are stored in the same folder.
 
 Type: string
 
@@ -31,7 +35,10 @@ Default: ""
 
 #### local_path_product_format
 
-Set daemon group.
+If set to 'normal', product folders (e.g. 'output1' and 'output2') are kept in
+local path. If set to 'remove', product folders level are removed from local
+path and products sub-folders are merged. If set to 'merge', product folders are
+merged into one folder called 'output' and products sub-folders are merged.
 
 Type: string
 
@@ -41,7 +48,7 @@ Default: ""
 
 #### local_path_project_format
 
-Set daemon group.
+If set to 'uc', local path project folder is converted to uppercase.
 
 Type: string
 
@@ -51,7 +58,7 @@ Default: ""
 
 #### local_path_drs_template
 
-Set daemon group.
+Contain the local path custom template.
 
 Type: string
 
