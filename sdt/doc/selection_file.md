@@ -1,9 +1,10 @@
 # Selection file
 
-To select which data to download, you need to set filters. Filters are stored
-in selection files (aka template). Those selection files are stored in
-'$HOME/sdt/selection' folder (single-user installation) or
-'/etc/synda/sdt/selection' (multi-user installation).
+A selection file contain parameters to define which data you want to download
+from ESGF archive, how to download it and how to store the data.
+
+Those selection files are stored in '$HOME/sdt/selection' folder (single-user
+installation) or '/etc/synda/sdt/selection' (multi-user installation).
 
 Example of a selection file
 
@@ -16,6 +17,8 @@ Example of a selection file
     variable[land][mon]=mrsos,nppRoot,nep
     variable[seaIce][mon]=sic evap
     variable[ocnBgchem][mon]=dissic fbddtalk
+
+Note: selection file are also called 'template'
 
 ## Selection file format
 
