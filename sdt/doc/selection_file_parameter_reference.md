@@ -8,7 +8,7 @@ Those parameters are described [here](https://github.com/ESGF/esgf.github.io/wik
 
 ## Synda parameter
 
-Those parameters are specific to Synda and cannot be used directly with the Search-api.
+Note: those parameters are specific to Synda and cannot be used directly with the Search-api.
 
 This section contains the following sub-groups:
 
@@ -21,7 +21,7 @@ This section contains the following sub-groups:
 
 #### protocol
 
-Select which protocol to use to download the data. Currently, the two supported
+Select which protocol to use to download the data. The two currently supported
 protocols are http and gridftp.
 
 Type: string
@@ -30,7 +30,7 @@ Default: "http"
 
 #### searchapi_host
 
-Set which ESGF index to use.
+Set which ESGF index to use for files discovery.
 
 Type: string
 
