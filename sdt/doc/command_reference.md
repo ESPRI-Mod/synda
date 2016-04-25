@@ -41,9 +41,11 @@ Available subcommands are:
     version      List all versions of a dataset
     watch        Display running transfer
 
-Each subcommand is detailed below:
+Each subcommand is detailed in the next section.
 
-## autoremove
+## Subcommands description
+
+### autoremove
 
 Remove old datasets versions
 
@@ -55,7 +57,7 @@ optional arguments:
   -z, --dry_run
 ```
 
-## certificate
+### certificate
 
 Manage X509 certificate
 
@@ -75,7 +77,7 @@ examples
   synda certificate print
 ```
 
-## contact
+### contact
 
 Print contact information
 
@@ -86,7 +88,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## daemon
+### daemon
 
 Daemon management
 
@@ -100,7 +102,7 @@ optional arguments:
   -h, --help           show this help message and exit
 ```
 
-## dump
+### dump
 
 Display raw metadata
 
@@ -137,7 +139,7 @@ examples
   synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value
 ```
 
-## facet
+### facet
 
 Facet discovery
 
@@ -161,7 +163,7 @@ examples
   synda facet experiment fddtalk MPI-ESM-LR
 ```
 
-## get
+### get
 
 Direct download (download files in foreground without using the daemon)
 
@@ -206,7 +208,7 @@ examples
   synda get cmip5.output2.MPI-M.MPI-ESM-P.past1000.mon.ocean.Omon.r1i1p1.v20131203.rhopoto_Omon_MPI-ESM-P_past1000_r1i1p1_179001-179912.nc
 ```
 
-## help
+### help
 
 Show help
 
@@ -220,7 +222,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## history
+### history
 
 Show history
 
@@ -231,7 +233,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## install
+### install
 
 Install dataset
 
@@ -250,7 +252,7 @@ optional arguments:
   -y, --yes             assume "yes" as answer to all prompts and run non-interactively
 ```
 
-## intro
+### intro
 
 Print introduction to synda command
 
@@ -261,7 +263,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## list
+### list
 
 List installed dataset
 
@@ -287,7 +289,7 @@ examples
   synda list 5 -d
 ```
 
-## metric
+### metric
 
 Display performance and disk usage metrics
 
@@ -309,7 +311,7 @@ examples
   synda metric -g project -m size
 ```
 
-## param
+### param
 
 Display ESGF parameters
 
@@ -330,7 +332,7 @@ examples
   synda param | column
 ```
 
-## pexec
+### pexec
 
 Execute post-processing task
 
@@ -352,7 +354,7 @@ optional arguments:
   -v, --variable
 ```
 
-## queue
+### queue
 
 Display download queue status
 
@@ -371,7 +373,7 @@ examples
   synda queue
 ```
 
-## remove
+### remove
 
 Remove dataset
 
@@ -393,7 +395,7 @@ examples
   synda remove CMIP5 MIROC-ESM historicalNat mon
 ```
 
-## replica
+### replica
 
 Move to next replica
 
@@ -413,7 +415,7 @@ examples
   synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 ```
 
-## reset
+### reset
 
 Remove all 'waiting' and 'error' transfers
 
@@ -424,7 +426,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## retry
+### retry
 
 Retry transfer (switch status from error to waiting)
 
@@ -435,7 +437,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## search
+### search
 
 Search dataset
 
@@ -478,7 +480,7 @@ examples
   synda search cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 ```
 
-## selection
+### selection
 
 List selection files
 
@@ -489,7 +491,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## show
+### show
 
 Display detailed information about dataset
 
@@ -513,7 +515,7 @@ examples
   synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430
 ```
 
-## stat
+### stat
 
 Display summary information about dataset
 
@@ -536,7 +538,7 @@ examples
   synda stat MPI-ESM-LR rcp26
 ```
 
-## update
+### update
 
 Update ESGF parameter local cache
 
@@ -551,7 +553,7 @@ optional arguments:
                         Retrieve project specific parameters for the specified project
 ```
 
-## upgrade
+### upgrade
 
 Perform an upgrade (retrieve new version for all selection files)
 
@@ -567,7 +569,7 @@ optional arguments:
   -y, --yes      assume "yes" as answer to all prompts and run non-interactively
 ```
 
-## version
+### version
 
 List all versions of a dataset
 
@@ -589,7 +591,7 @@ examples
   synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426
 ```
 
-## watch
+### watch
 
 Display running transfer
 
