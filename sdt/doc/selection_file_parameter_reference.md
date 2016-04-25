@@ -144,3 +144,9 @@ Type: string
 Contain the local path custom template.
 
 Type: string
+
+Example:
+
+    local_path_drs_template=%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
+
+Note: to enable this parameter, 'local_path_format' parameter must be set to 'custom'
