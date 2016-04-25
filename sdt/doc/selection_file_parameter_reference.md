@@ -60,7 +60,7 @@ Example:
 
 #### local_path
 
-Select files matching local path
+Select files matching &lt;local_path&gt;
 
 Type: string
 
@@ -70,7 +70,7 @@ Example:
 
 #### error_msg
 
-Select files matching error message
+Select files matching &lt;error_msg&gt;
 
 Type: string
 
@@ -80,7 +80,7 @@ Example:
 
 #### insertion_group_id
 
-Select files matching insertion group identifier
+Select files matching &lt;insertion_group_id&gt;
 
 Type: integer
 
@@ -90,7 +90,7 @@ Example:
 
 #### status
 
-Select files matching download status
+Select files matching download &lt;status&gt;
 
 Type: string
 
@@ -100,7 +100,7 @@ Example:
 
 #### sdget_status
 
-Select files matching sdget_status
+Select files matching &lt;sdget_status&gt;
 
 Type: integer
 
@@ -115,7 +115,7 @@ Example:
 Set local path format. If set to 'treevar', the dataset DRS is used to build the
 local path and a folder is added to group files by variable. If set to 'tree',
 the dataset DRS is used to build the local path. If set to 'custom', the local
-path is built based on template defined in <local_path_drs_template> variable.
+path is built based on template defined in &lt;local_path_drs_template&gt; variable.
 If set to 'notree', all files are stored in the same folder.
 
 Type: string
