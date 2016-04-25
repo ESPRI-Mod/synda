@@ -48,41 +48,65 @@ Default: 1000
 
 #### timeslice
 
-This parameter select files using filename timestamp.
+Select files inside timeslice
 
 Type: string
+
+Example:
+
+    synda search atmos mon tasmin CMIP5 CNRM-CM5 timeslice=197001-198512 -f 
 
 ### Synda local search parameter
 
 #### local_path
 
-This parameter select local files using local path.
+Select files matching local path
 
 Type: string
+
+Example:
+
+    synda list local_path=CMIP5/output1/NCAR/CCSM4/rcp60/mon/land/Lmon/r1i1p1
 
 #### error_msg
 
-This parameter select local files using error message.
+Select files matching error message
 
 Type: string
+
+Example:
+
+    synda list "error_msg=local file already exists," -f
 
 #### insertion_group_id
 
-This parameter select local files using insertion group identifier.
+Select files matching insertion group identifier
 
 Type: integer
+
+Example:
+
+    synda list insertion_group_id=71 -f
 
 #### status
 
-This parameter select local files using download status.
+Select files matching download status
 
 Type: string
 
+Example:
+
+    synda list status=error -f
+
 #### sdget_status
 
-This parameter select local files using sdget_status.
+Select files matching sdget_status
 
 Type: integer
+
+Example:
+
+    synda list sdget_status=1 -f
 
 ### Synda formatting parameter
 
