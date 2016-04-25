@@ -1,4 +1,47 @@
-# Command reference
+# *synda* command reference
+
+## Synopsis
+
+    synda SUBCOMMAND [args]
+
+## Description
+
+*synda* is the command-line client of Synda. Its functionality is offered via a
+collection of task-specific subcommands, most of which accept a number of
+options for fine-grained control of the program's behavior.
+
+Available subcommands are:
+
+    autoremove   Remove old datasets versions
+    certificate  Manage X509 certificate
+    contact      Print contact information
+    daemon       Daemon management
+    dump         Display raw metadata
+    facet        Facet discovery
+    get          Direct download (download in foreground without using the daemon)
+    help         Show help
+    history      Show history
+    install      Install dataset
+    intro        Print introduction to synda command
+    list         List installed dataset
+    metric       Display performance and disk usage metrics
+    param        Display ESGF parameters
+    pexec        Execute post-processing task
+    queue        Display download queue status
+    remove       Remove dataset
+    replica      Move to next replica
+    reset        Remove all 'waiting' and 'error' transfers
+    retry        Retry transfer (switch error status to waiting)
+    search       Search dataset
+    selection    List selection files
+    show         Display detailed information about dataset
+    stat         Display summary information about dataset
+    update       Update ESGF parameter local cache
+    upgrade      Perform an upgrade (retrieve new version for all selection files)
+    version      List all versions of a dataset
+    watch        Display running transfer
+
+Each subcommand is detailed below:
 
 ## autoremove
 
@@ -383,7 +426,7 @@ optional arguments:
 
 ## retry
 
-Retry transfer (switch error status to waiting)
+Retry transfer (switch status from error to waiting)
 
 ```
 usage: synda retry [-h]
