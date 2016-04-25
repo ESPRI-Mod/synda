@@ -48,7 +48,7 @@ Default: 1000
 
 #### timeslice
 
-Select files inside timeslice
+Select files inside &lt;timeslice&gt;
 
 Type: string
 
