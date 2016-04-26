@@ -2,7 +2,7 @@
 
 ## Installation
 
-globus-url-copy additional program is needed to transfer files with GridFtp.
+*globus-url-copy* additional program is needed to transfer files with GridFtp.
 
 It is part of the 'globus-gass-copy-progs' package and can be installed using
 instructions below.
