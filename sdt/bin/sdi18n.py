@@ -181,7 +181,7 @@ to test certificate renewal
 
 and 
 
-$ synda test <file_url>
+$ synda get <file_url>
 
 to test file download
 """
