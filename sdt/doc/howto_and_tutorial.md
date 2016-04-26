@@ -1,7 +1,13 @@
 # Howto & Tutorial
 
-* [Replicate a large number of files](replication.md)
-* [Download the nearest replica](download_nearest_replica.md)
-* [Select which ESGF indexes to use](select_indexes.md)
+Howto:
+
+* [Replication Howto](replication.md)
+* [Nearest replica Howto](download_nearest_replica.md)
+* [ESGF indexes Howto](select_indexes.md)
 * [GridFtp Howto](gridftp.md)
 * [Globus Transfer Howto](globustransfer.md)
+
+Tutorial:
+
+* [Async Download Tutorial](async_download_tutorial.md)
