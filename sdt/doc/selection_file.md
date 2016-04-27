@@ -18,9 +18,10 @@ Example of a selection file
     variable[seaIce][mon]=sic evap
     variable[ocnBgchem][mon]=dissic fbddtalk
 
-Note:
+Notes:
 
 * selection file is sometime called 'template' or 'selection form'
+* other selection file examples can be found [here](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
 
 Next parts of this document are organized in 3 main sections
 
