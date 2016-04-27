@@ -30,7 +30,7 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [Faq](sdt/doc/faq.md)                                                 |
 [Changelog](sdt/doc/changelog)                                        |[License](sdt/doc/LICENSE)             |
-[Slides](sdt/doc/synda.odp)
+[Slide](sdt/doc/synda.odp)
 
 ## Basic usage
 
