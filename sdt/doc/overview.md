@@ -34,7 +34,7 @@ To download a dataset in daemon mode (asynchronous)
 
 ## Notes
 
-For more information about direct mode download, see links below
+For more information about direct mode download, see link below
 
 * [Direct Mode Download Guide](sync_download_guide.md)
 
