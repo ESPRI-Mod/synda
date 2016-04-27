@@ -64,10 +64,10 @@ Install a file
     synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
 Install files using facets stored in an file. This example use
-'sample_selection_1.txt' file which is available in the selection sample folder
+'sample_selection_01.txt' file which is available in the selection sample folder
 ($HOME/sdt/selection/sample).
 
-    <-- 'sample_selection_1.txt'
+    <-- 'sample_selection_01.txt'
     project="CMIP5"
     model="CNRM-CM5 CSIRO-Mk3-6-0"
     experiment="historical amip"
@@ -79,7 +79,7 @@ Install files using facets stored in an file. This example use
     variable[ocnBgchem][mon]="dissic fbddtalk"
     -->
 
-    synda install -s sample_selection_1.txt
+    synda install -s sample_selection_01.txt
 
 ### Start/Stop files download
 
