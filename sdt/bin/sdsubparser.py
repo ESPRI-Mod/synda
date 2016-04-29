@@ -57,6 +57,28 @@ def add_parameter_argument(parser):
 def add_action_argument(parser,choices=None):
     parser.add_argument('action',nargs='?',default=None,choices=choices,help=sdi18n.m0017)
 
+def build_epilog_section(title,body):
+
+    if body is not None:
+        return """%s\n%s\n"""%(title,body)
+    else:
+        return None
+
+def build_epilog(kw):
+    """This func build sections used in argparse 'epilog' feature."""
+    li=[]
+
+    example=kw.get('example',None)
+    note=kw.get('note',None)
+
+    if example:
+        li.append(build_epilog_section('examples',example))
+
+    if note:
+        li.append(build_epilog_section('notes',note))
+
+    return '\n'.join(li)
+
 def add_dump_option(parser):
     parser.add_argument('-A','--all',action='store_true',help='Show all attributes')
     parser.add_argument('-R','--raw_mode',action='store_true',help='dump original metadata')
@@ -65,17 +87,7 @@ def add_dump_option(parser):
 
 def create_subparser(subparsers,subcommand,**kw):
 
-    # prepare example
-    #
-    # note
-    #     currently, 'epilog' is only used to display 'example' section, but other section may be added there too
-    #
-    example=kw.get('example',None)
-    if example is not None:
-        epilog="""examples\n%s\n"""%example
-    else:
-        epilog=None
-
+    epilog=build_epilog(kw)
 
     subparser = subparsers.add_parser(subcommand,usage=kw.get('usage',None),help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawTextHelpFormatter)
 
@@ -93,7 +105,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
-    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management')
+    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',note=sdi18n.m0023)
     add_action_argument(subparser,choices=['start','stop','status'])
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata',example=sdcliex.dump())
@@ -125,7 +137,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
-    subparser=create_subparser(subparsers,'install',help='Install dataset')
+    subparser=create_subparser(subparsers,'install',help='Install dataset',note=sdi18n.m0022)
     add_ni_option(subparser)
     add_parameter_argument(subparser)
 
@@ -140,7 +152,7 @@ def run(subparsers):
     subparser.add_argument('--metric','-m',choices=['rate','size'],default='rate',help='Metric name')
     subparser.add_argument('--project','-p',default='CMIP5',help="Project name (must be used with '--groupby=model' else ignored)")
 
-    subparser=create_subparser(subparsers,'param',common_option=False,help='Display ESGF parameters',example=sdcliex.param())
+    subparser=create_subparser(subparsers,'param',common_option=False,help='Print ESGF facets',example=sdcliex.param())
     subparser.add_argument('pattern1',nargs='?',default=None,help='Parameter name')
     subparser.add_argument('pattern2',nargs='?',default=None,help='Filter')
     subparser.add_argument('-c','--columns',type=int,default=1)
@@ -160,7 +172,7 @@ def run(subparsers):
     subparser.add_argument('file_id',nargs='?',help='File identifier (ESGF instance_id)')
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
-    subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch error status to waiting)')
+    subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch status from error to waiting)')
 
     subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdcliex.search('synda search'))
     add_parameter_argument(subparser)

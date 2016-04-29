@@ -20,9 +20,17 @@ or stored in a file
 
 ## Usage
 
+To list facets
+
+    synda param
+
+To list facet values
+
+    synda param FACET
+
 To search datasets
 
-    synda search FACETS
+    synda search FACET..
 
 To download a dataset in direct mode (synchronous)
 

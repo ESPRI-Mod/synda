@@ -196,3 +196,13 @@ This may be caused by a typo in the search parameters, or by the cache containin
 To refresh the cache, run 'synda update' command.
 You can also disable parameters checking by setting 'check_parameter=0' in configuration file.
 """
+
+m0022="""  'install' command is asynchronous, the transfer is handled by a
+  background process. To check when the download is complete, use 'synda 
+  queue' command.
+"""
+
+m0023="""  This command is for source installation only (in system package
+  installation, Synda daemon is installed as a service and is managed
+  using 'service' command).
+"""
