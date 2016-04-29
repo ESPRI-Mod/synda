@@ -16,7 +16,7 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 ## Documentation
 
-[Overview](sdt/doc/overview.md)
+[Overview](sdt/doc/overview.md)                                       | [Faq](sdt/doc/faq.md)
 
 [Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)
 
@@ -27,8 +27,6 @@ Template file examples are given in the 'selection/sample' sub-folder.
 [Selection file](sdt/doc/selection_file.md)                           | [Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md) | [Selection file example](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
 
 [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
-
-[Faq](sdt/doc/faq.md)
 
 [Project](sdt/doc/project.md)
 
