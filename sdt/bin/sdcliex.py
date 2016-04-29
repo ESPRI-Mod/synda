@@ -96,10 +96,10 @@ def metric():
     return buf
 
 def param():
-    buf="""  synda param institute | column
+    buf="""  synda param | column
+  synda param institute | column
   synda param institute NA
-  synda param project
-  synda param | column"""
+  synda param project"""
     return buf
 
 def pexec():
