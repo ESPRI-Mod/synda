@@ -26,11 +26,11 @@ Template file examples are given in the 'selection/sample' sub-folder.
 
 [Selection file](sdt/doc/selection_file.md)                           | [Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md) | [Selection file example](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
 
-[Wiki](https://forge.ipsl.jussieu.fr/prodiguer/wiki/docs/synda)       | [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
+[Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
-[Faq](sdt/doc/faq.md)                                                 |
-[Changelog](sdt/doc/changelog)                                        |[License](sdt/doc/LICENSE)             |
-[Slide](sdt/doc/synda.odp)
+[Faq](sdt/doc/faq.md)
+
+[Project](sdt/doc/project.md)
 
 ## Basic usage
 
