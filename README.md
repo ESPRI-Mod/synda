@@ -5,14 +5,13 @@
 *Synda* is a command line tool to search and download files from the Earth
 System Grid Federation (ESGF) archive.
 
-The user defines one or many templates. Each of them have a list of
-facets (variables, frequencies, experiments, ensemble, model..). Using
-these templates, the program explore the ESGF archive and dowload all
-the corresponding available files. The program may be run regularly to
-download the possible new files. Typically each template is associated
-with an analysis (cfmip template, downscaling template and so on).
-Create as many template_name.txt as you want in the 'selection' folder.
-Template file examples are given in the 'selection/sample' sub-folder. 
+The user defines one or many templates (aka selection file). Each of them have
+a list of facets (variables, frequencies, experiments, ensemble, model..).
+Using these templates, the program explore the ESGF archive and download all
+the corresponding available files. The program may be run regularly to download
+the possible new files. Typically each template is associated with an analysis
+(cfmip template, downscaling template and so on). Create as many
+template_name.txt as you want in the 'selection' folder.
 
 ## Documentation
 
