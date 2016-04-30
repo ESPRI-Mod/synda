@@ -13,6 +13,16 @@ the possible new files. Typically each template is associated with an analysis
 (cfmip template, downscaling template and so on). Create as many
 template_name.txt as you want in the 'selection' folder.
 
+## Usage
+
+Search datasets
+
+    synda search FACET
+
+Install a dataset
+
+    synda install DATASET
+
 ## Documentation
 
 [Overview](sdt/doc/overview.md)                                       | [Faq](sdt/doc/faq.md)
@@ -28,16 +38,6 @@ template_name.txt as you want in the 'selection' folder.
 [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
 [Project](sdt/doc/project.md)
-
-## Basic usage
-
-Search datasets
-
-    synda search FACET
-
-Install a dataset
-
-    synda install DATASET
 
 ## Motivation
 
