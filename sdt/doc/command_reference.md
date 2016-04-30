@@ -468,6 +468,7 @@ examples
   synda search atmos 50
   synda search MIROC rcp45 2
   synda search CCSM4 rcp45 atmos mon r1i1p1
+  synda search variable=tas institute!=MPI-M
   synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
   synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
   synda search clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc

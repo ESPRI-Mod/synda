@@ -141,6 +141,7 @@ def search(prog):
   %s atmos 50
   %s MIROC rcp45 2
   %s CCSM4 rcp45 atmos mon r1i1p1
+  %s variable=tas institute!=MPI-M
   %s title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
   %s title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
   %s clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
@@ -151,29 +152,7 @@ def search(prog):
   %s tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
   %s dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
   %s http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
-  %s cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""%((prog,)*21)
-
-
-    """
-    TODO:
-
-     project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
-     realm=atmos project=CMIP5
-     atmos 5
-     MIROC rcp45 2
-     CCSM4 rcp45 atmos mon r1i1p1
-     c20c.UCT-CSAG.HadAM3P-N96.NonGHG-Hist.HadCM3-p50-est1.v1-0.mon.atmos.run060.v20140528
-     title=rlds_bced_1960_1999_gfdl-esm2m_rcp8p5_2051-2060.nc searchapi_host=esg.pik-potsdam.de
-     tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-     tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
-     dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-     title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
-     title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
-     clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
-     pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
-     cmip5.output1.IPSL.IPSL-CM5A-LR.abrupt4xCO2.fx.land.fx.r0i0p0.v20110726.sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc
-     variable=tas institute!=MPI-M
-    """
+  %s cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""%((prog,)*22)
 
     return buf
 
