@@ -23,11 +23,23 @@ def run(files):
     pretty_label={'done':'installed'} # this is have a listing like dpkg/apt-get
 
     for file_ in files:
-        f=File(**file_)
 
-        size=humanize.naturalsize(f.size,gnu=False)
+        if 'status' in file_:
+            # this case is to print file after the file pipeline 
 
-        print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),f.filename,size)
+            f=File(**file_)
+
+            size=humanize.naturalsize(f.size,gnu=False)
+
+            print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),size,f.filename)
+        else:
+            # this case is to print file in a early step (before 'status' has been retrieved from local db)
+
+            f=File(**file_)
+
+            size=humanize.naturalsize(f.size,gnu=False)
+
+            print "%-8s %s"%(size,f.filename)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
