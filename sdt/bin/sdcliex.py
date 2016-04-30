@@ -137,7 +137,7 @@ def search(prog):
   %s CMIP5 frequency=day atmos tas -d
   %s CMIP5 frequency=day atmos tas -v
   %s CMIP5 frequency=day atmos tas -f
-  %s project=ISI-MIP%20Fast%20Track searchapi_host=esg.pik-potsdam.de
+  %s project=ISI-MIP%%20Fast%%20Track searchapi_host=esg.pik-potsdam.de
   %s atmos 50
   %s MIROC rcp45 2
   %s CCSM4 rcp45 atmos mon r1i1p1

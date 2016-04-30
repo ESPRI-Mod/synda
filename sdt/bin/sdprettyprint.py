@@ -11,7 +11,9 @@
 
 """This module contains specific printing routines."""
 
+import sys
 import argparse
+import json
 import sdapp
 import humanize
 from sdtypes import File
@@ -31,6 +33,6 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	args = parser.parse_args()
 
-    files=json.load( sys.stdin )
+    files=json.load(sys.stdin)
 
     run(files)
