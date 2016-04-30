@@ -33,13 +33,14 @@ def run(files):
 
             print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),size,f.filename)
         else:
-            # this case is to print file in a early step (before 'status' has been retrieved from local db)
+            # this case is to print file in a early step (before 'status' has
+            # been retrieved from local db and before filename has been added)
 
             f=File(**file_)
 
             size=humanize.naturalsize(f.size,gnu=False)
 
-            print "%-8s %s"%(size,f.filename)
+            print "%-8s %s"%(size,f.title)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
