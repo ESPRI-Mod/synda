@@ -54,7 +54,7 @@ def run(facets_groups,parallel=True,index_host=None,dry_run=False,query_type='re
         facets_groups=sdlocalvalue2remotevalue.run(facets_groups)
 
 
-    
+
         # EXT_FILE_PRE
         #
         # load extensions here

@@ -52,6 +52,9 @@ def serialize_parameter__ovpp(name,values): # 'ovpp' means one value per paramet
             "variable=tasmin&variable=tasmax"
     """
     l=[]
+
+    assert isinstance(values,list)
+
     for v in values:
         l.append(name+"="+v)
 

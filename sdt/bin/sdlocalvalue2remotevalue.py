@@ -22,19 +22,30 @@ import json
 import sdapp
 import sdprint
 
+def local_urls_to_remote_urls(local_urls):
+    remote_urls=[]
+
+    for local_url in local_urls:
+
+        # FIXME TAGF44JK4JR4
+        #'|application/gridftp|GridFTP'
+        #'|application/opendap-html|OPENDAP'
+        suffix='|application/netcdf|HTTPServer'
+
+        remote_url='%s%s'%(local_url,suffix)
+
+        remote_urls.append(remote_url)
+
+    return remote_urls
+
 def run(facets_groups):
     for facets_group in facets_groups:
 
         if 'url' in facets_group:
 
-            url=facets_group['url']
+            urls=facets_group['url'] # memo: facet in facets_group are array
 
-            # FIXME TAGF44JK4JR4
-            #'|application/gridftp|GridFTP'
-            #'|application/opendap-html|OPENDAP'
-            suffix='|application/netcdf|HTTPServer'
-
-            facets_group['url']='%s%s'%(url,suffix)
+            facets_group['url']=local_urls_to_remote_urls(urls)
 
     return facets_groups
 
