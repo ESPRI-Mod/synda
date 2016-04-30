@@ -498,6 +498,25 @@ def queue(args):
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")
     #sddaemon.print_daemon_status()
 
+def update(args):
+    print_stderr("Retrieving parameters from ESGF...")
+    import sdcache
+    sdcache.run(reload=True,host=args.index_host,project=args.project)
+    print_stderr("Parameters are up-to-date.")
+
+def variable(args):
+    import sdparam,sdremoteparam,syndautils,sdinference
+
+    params=sdremoteparam.run(pname='variable,cf_standard_name,variable_long_name',dry_run=args.dry_run)
+
+    print params
+    # TODO: func for code below
+    """
+    items=params.get(args.facet_name,[])
+    for item in items:
+        print item.name
+    """
+
 def watch(args):
     import sdreport, sddaemon
 
@@ -505,12 +524,6 @@ def watch(args):
         sdreport.print_running_transfers()
     else:
         print_stderr('Daemon not running')
-
-def update(args):
-    print_stderr("Retrieving parameters from ESGF...")
-    import sdcache
-    sdcache.run(reload=True,host=args.index_host,project=args.project)
-    print_stderr("Parameters are up-to-date.")
 
 # init.
 
@@ -536,5 +549,6 @@ actions={
     'stat':stat, 
     'update':update,
     'upgrade':upgrade,
+    'variable':variable,
     'watch':watch
 }

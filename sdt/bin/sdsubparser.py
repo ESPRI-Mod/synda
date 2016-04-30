@@ -198,6 +198,9 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
 
+    subparser=create_subparser(subparsers,'variable',common_option=False,help='Show variables list')
+    add_parameter_argument(subparser)
+
     subparser=create_subparser(subparsers,'version',help='List all versions of a dataset',example=sdcliex.version())
     add_parameter_argument(subparser)
     #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
