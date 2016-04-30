@@ -43,14 +43,6 @@ Install a dataset
 
 This program is a command-line alternative to the ESGF web front-end.
 
-## Main features
-
-* Simple data installation using an apt-get like command
-* Parallel downloads
-* Incremental process (download only what's new)
-* Download history stored in a db
-* Transfer priority
-
 ## Platform
 
 * Linux
