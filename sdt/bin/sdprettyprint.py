@@ -30,9 +30,9 @@ def run(files):
         print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),f.filename,size)
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser()
-	args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
 
-    files=json.load(sys.stdin)
+    files=json.load( sys.stdin )
 
     run(files)
