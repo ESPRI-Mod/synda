@@ -13,15 +13,23 @@ the possible new files. Typically each template is associated with an analysis
 (cfmip template, downscaling template and so on). Create as many
 template_name.txt as you want in the 'selection' folder.
 
-## Usage
+## Basic usage
 
-Search datasets
+Search data
 
-    synda search FACET
+    synda search 20160101-20161231 "Air Temperature" -f
 
-Install a dataset
+Download data
 
-    synda install DATASET
+    synda get tasmax_day_FGOALS-s2_piControl_r1i1p1_20160101-20161231.nc
+
+## Advanced usage
+
+To manage a large number of files, prefer the apt-get like mode 
+
+    synda install 20130101-20161231 "Air Temperature"
+
+    synda remove 20140101-20151231 "Air Temperature"
 
 ## Documentation
 

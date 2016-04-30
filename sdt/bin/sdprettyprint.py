@@ -12,17 +12,24 @@
 """This module contains specific printing routines."""
 
 import sdapp
+import humanize
 from sdtypes import File
 
 def run(files):
     
     pretty_label={'done':'installed'} # this is have a listing like dpkg/apt-get
 
-    for file in files:
-        f=File(**file)
-        print "%-12s %s"%(pretty_label.get(f.status,f.status),f.filename)
+    for file_ in files:
+        f=File(**file_)
+
+        size=humanize.naturalsize(f.size,gnu=False)
+
+        print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),f.filename,size)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
-	parser.add_argument('path')
 	args = parser.parse_args()
+
+    files=json.load( sys.stdin )
+
+    run(files)
