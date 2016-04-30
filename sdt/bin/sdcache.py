@@ -125,7 +125,18 @@ def remove_unused_parameters(parameters):
     """Remove unused parameters.
 
     Note
-        If those parameters are used in the future, remove this func.
+        If those parameters are used in the future, you may remove this func,
+        but note that duplicates will occur because of that.
+
+        e.g.
+        sqlite> select * from param where value='wind_speed';
+        cf_standard_name|wind_speed
+        variable|wind_speed
+        
+        and this will show the warning below as a consequence
+
+        $ synda search CMIP5 wind_speed| more
+        WARNING: 'wind_speed' value has been associated with 'cf_standard_name' facet.
     """
 
     if 'cf_standard_name' in parameters:
