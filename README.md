@@ -29,7 +29,7 @@ To manage a large number of files, prefer the apt-get like mode
 
     synda install 20130101-20161231 "Air Temperature"
 
-    synda remove 20140101-20151231 "Air Temperature"
+    synda remove 20130101-20151231 "Air Temperature"
 
 ## Documentation
 
