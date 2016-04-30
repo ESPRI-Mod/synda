@@ -462,7 +462,7 @@ optional arguments:
 
 examples
   synda search experiment=rcp45,rcp85 model=CCSM4
-  synda search project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
+  synda search project=ISI-MIP%20Fast%20Track searchapi_host=esg.pik-potsdam.de
   synda search project=CMIP5 realm=atmos
   synda search realm=atmos project=CMIP5
   synda search atmos 50

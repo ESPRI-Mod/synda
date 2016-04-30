@@ -137,7 +137,7 @@ def search(prog):
   %s CMIP5 frequency=day atmos tas -d
   %s CMIP5 frequency=day atmos tas -v
   %s CMIP5 frequency=day atmos tas -f
-  %s project=ISI-MIP%%20Fasttrack searchapi_host=esg.pik-potsdam.de
+  %s project=ISI-MIP%20Fast%20Track searchapi_host=esg.pik-potsdam.de
   %s atmos 50
   %s MIROC rcp45 2
   %s CCSM4 rcp45 atmos mon r1i1p1
@@ -157,23 +157,22 @@ def search(prog):
     """
     TODO:
 
-    synda search project=CMIP5 realm=atmos
-    synda search project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
-    synda search realm=atmos project=CMIP5
-    synda search atmos 5
-    synda search MIROC rcp45 2
-    synda search CCSM4 rcp45 atmos mon r1i1p1
-    synda search c20c.UCT-CSAG.HadAM3P-N96.NonGHG-Hist.HadCM3-p50-est1.v1-0.mon.atmos.run060.v20140528
-    synda search title=rlds_bced_1960_1999_gfdl-esm2m_rcp8p5_2051-2060.nc searchapi_host=esg.pik-potsdam.de
-    synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-    synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
-    synda search dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
-    synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
-    synda search title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
-    synda search clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
-    synda search pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
-    synda search cmip5.output1.IPSL.IPSL-CM5A-LR.abrupt4xCO2.fx.land.fx.r0i0p0.v20110726.sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc
-    synda search variable=tas institute!=MPI-M
+     project=ISI-MIP%20Fasttrack searchapi_host=esg.pik-potsdam.de
+     realm=atmos project=CMIP5
+     atmos 5
+     MIROC rcp45 2
+     CCSM4 rcp45 atmos mon r1i1p1
+     c20c.UCT-CSAG.HadAM3P-N96.NonGHG-Hist.HadCM3-p50-est1.v1-0.mon.atmos.run060.v20140528
+     title=rlds_bced_1960_1999_gfdl-esm2m_rcp8p5_2051-2060.nc searchapi_host=esg.pik-potsdam.de
+     tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
+     tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
+     dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
+     title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc project=EUCLIPSE
+     title=rlds_Amon_MPI-ESM-LR_amip_r1i1p1_1979-2008.nc
+     clt_day_CanESM2_esmControl_r1i1p1_19010101-22501231.nc
+     pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
+     cmip5.output1.IPSL.IPSL-CM5A-LR.abrupt4xCO2.fx.land.fx.r0i0p0.v20110726.sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc
+     variable=tas institute!=MPI-M
     """
 
     return buf
