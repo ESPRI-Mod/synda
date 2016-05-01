@@ -1,4 +1,5 @@
 - Version 3.4 - 
+	- add 'synda variable' command
 	- set data folder default value to /srv/synda/sdt/data (system package installation only).
 	- dataset direct download (download in foreground without using the daemon).
 	- add 'synda get' subcommand.

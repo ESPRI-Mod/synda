@@ -5,27 +5,17 @@
 *Synda* is a command line tool to search and download files from the Earth
 System Grid Federation (ESGF) archive.
 
-The user defines one or many templates (aka selection file). Each of them have
-a list of facets (variables, frequencies, experiments, ensemble, model..).
-Using these templates, the program explore the ESGF archive and download all
-the corresponding available files. The program may be run regularly to download
-the possible new files. Typically each template is associated with an analysis
-(cfmip template, downscaling template and so on). Create as many
-template_name.txt as you want in the 'selection' folder.
+## Usage
 
-## Basic usage
-
-Search data
+Search file
 
     synda search 20160101-20161231 "Air Temperature" -f
 
-Download data
+Download file
 
     synda get tasmax_day_FGOALS-s2_piControl_r1i1p1_20160101-20161231.nc
 
-## Advanced usage
-
-To manage a large number of files, prefer the apt-get like mode 
+Manage a large number of files asynchronously using apt-get like command
 
     synda install 20130101-20161231 "Air Temperature"
 
