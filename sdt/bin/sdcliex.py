@@ -188,7 +188,8 @@ def variable():
   synda variable wind_speed
   synda variable Near-Surface Wind Speed
   synda variable Dissolved Inorganic Carbon Concentration
-  synda variable cell_area"""
+  synda variable cell_area
+  export COLUMNS ; synda variable -s | cut -c 1-20 | column | less"""
     return buf
 
 def version():
