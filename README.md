@@ -15,7 +15,7 @@ Download file
 
     synda get tasmax_day_FGOALS-s2_piControl_r1i1p1_20160101-20161231.nc
 
-Manage a large number of files with install/remove commands
+Manage a large number of files with install / remove commands
 
     synda install CMIP5 CNRM-CM5 tas areacello
 
