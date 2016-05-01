@@ -555,28 +555,20 @@ def variable(args):
         # search-api 'query' feature to do the job.
         #
         query=sdutils.parameter_to_query(args.parameter)
-        files=sdsample.call_searchapi_light(query=query,dry_run=args.dry_run)
+        file_=sdsample.get_one_file(query=query,dry_run=args.dry_run)
 
         if not args.dry_run:
 
-            if len(files)==0:
+            if file_ is None:
 
                 print 'Variable not found.'
 
-            elif len(files)==1:
-
-                file_=files[0] # indice 0 is because we retrieve one file only (with 'limit=1')
-
-                if len(file_['variable'])>1:
-                    print "WARNING: 'variable' attribute contains too much values ('%s')."%file_['title']
-                else:
-                    print 'short name:       ',file_['variable'][0]
-                    print 'standard name:    ',file_['cf_standard_name'][0]
-                    print 'long name:        ',file_['variable_long_name'][0]
-                    print 'unit:             ',file_['variable_units'][0]
-
             else:
-                assert False
+
+                print 'short name:       ',file_['variable'][0]
+                print 'standard name:    ',file_['cf_standard_name'][0]
+                print 'long name:        ',file_['variable_long_name'][0]
+                print 'unit:             ',file_['variable_units'][0]
 
 def watch(args):
     import sdreport, sddaemon

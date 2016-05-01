@@ -208,11 +208,9 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     # TODO: 
     #   Maybe do this for each project (to retrieve project specific attributes)
     #
-    files=sdsample.call_searchapi_light(host,project)
+    file_=sdsample.get_one_file(host,project)
 
-    assert len(files)==1 # just in case
-
-    file_=files[0] # indice 0 is because we retrieve one file only (with 'limit=1')
+    assert file_ is not None # just in case
 
 
     # WARNING
