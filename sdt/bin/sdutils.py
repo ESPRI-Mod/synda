@@ -145,6 +145,20 @@ def replace_product(path,new_product):
         path=path.replace('/'+product+'/','/'+new_product+'/')
     return path
 
+def parameter_to_query(parameter):
+    """This func prepare parameter before sending it to the search-api operator (i.e. we replace sdinference with search-api query)."""
+
+    assert isinstance(parameter,list)
+
+    query=' '.join(parameter) # if empty list, query is set to ''
+
+    if len(query)>0:
+        query=query.replace(" ","%20")
+    else:
+        query=None
+
+    return query
+
 def compute_checksum(file_fullpath,checksum_type="md5",blocksize=(1024*64)):
     with open(file_fullpath, mode='rb') as f:
 

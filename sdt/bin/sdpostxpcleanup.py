@@ -28,7 +28,7 @@ def run(files):
     (keep,reject)=filter(files)
 
     if len(reject)>0:
-        sdlog.info("SDPOSXPC-001","%i malformed file(s) found"%len(reject))
+        sdlog.info("SDPOSXPC-001","%i anomalies found"%len(reject))
 
     return keep
 
@@ -54,7 +54,7 @@ def filter(files):
                 else:
                     reject.append(f)
 
-                    sdlog.warning("SDPOSXPC-002","WARNING: '%s' file is malformed ('variable' attribute contains too much values)."%f['id'],stderr=True)
+                    sdlog.warning("SDPOSXPC-002","WARNING: 'variable' attribute contains too much values ('%s')."%f['id'],stderr=True)
 
         elif type_=='Dataset':
             # currently, there is no reject rules for Dataset type, so we keep all of them

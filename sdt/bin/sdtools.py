@@ -154,10 +154,8 @@ def extract_digit(li):
 
 def split_values(values):
 
-
     # cleaning (trim spaces on both ends)
     values=values.strip()
-
 
     # build regex
     if ',' in values:
