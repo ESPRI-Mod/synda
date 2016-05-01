@@ -10,4 +10,4 @@ Howto:
 
 Tutorial:
 
-* [Async Download Tutorial](async_download_tutorial.md)
+* [Download Tutorial](download_tutorial.md)

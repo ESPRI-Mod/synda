@@ -32,21 +32,15 @@ To search datasets
 
     synda search FACET..
 
-To download a dataset in direct mode (synchronous)
+To download a dataset
 
     synda get DATASET
 
-To download a dataset in daemon mode (asynchronous)
+To download a dataset with tracking info
 
     synda install DATASET
 
-## Notes
+## See also
 
-For more information about direct mode download, see link below
-
-* [Direct Mode Download Guide](sync_download_guide.md)
-
-For more information about async mode download, see links below
-
-* [Async Download Guide](async_download_guide.md)
-* [Async Download Tutorial](async_download_tutorial.md)
+* [Download Guide](download_guide.md)
+* [Download Tutorial](download_tutorial.md)
