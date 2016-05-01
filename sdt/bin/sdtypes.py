@@ -231,7 +231,7 @@ class Item():
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
 class Request():
-    def __init__(self,url=None,pagination=True):
+    def __init__(self,url=None,pagination=True,limit=sdconst.CHUNKSIZE):
         self._url=url
         self.pagination=pagination
 
@@ -240,7 +240,7 @@ class Request():
                 raise SDException("SDATYPES-008","assert error (url=%s)"%self._url)
 
         self.offset=0
-        self.limit=sdconst.CHUNKSIZE
+        self.limit=limit
 
     def get_limit_filter(self):
         if self.pagination:
