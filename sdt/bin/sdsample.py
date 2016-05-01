@@ -26,13 +26,10 @@ from sdtypes import Request
 def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_run=None):
     """Return one sample file with all attributes."""
 
-    # we retrieve N files, then we loop until we find a correct one (in step TAG4325345)
-    limit_filter='&limit=10' # arbitrary (increase value to increase chance of finding a well-formed file)
-
     project_filter='' if project is None else "&project=%s"%project
     query_filter='' if query is None else "&query=%s"%query
 
-    url='http://%s/esg-search/search?type=File%s%s%s&fields=*'%(host,limit_filter,project_filter,query_filter)
+    url='http://%s/esg-search/search?type=File%s%s&fields=*'%(host,project_filter,query_filter)
 
     if dry_run:
 
@@ -44,17 +41,29 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
 
         # FIXME: replace this func with SearchAPIProxy
         # or replace each call with this => files=sdrfile.get_files(stream=stream,post_pipeline_mode='file',dry_run=args.dry_run)
-        request=Request(url=url,pagination=False)
+        request=Request(url=url,pagination=False,limit=50) # limit is arbitrary
         result=sdnetutils.call_web_service(request,60) # return Response object
 
+        # we loop until we find a correct file (i.e. well-formed)
         well_formed_file=None
-        for file_ in result.files: # TAG4325345
-            if len(file_['variable'])==1:
-                well_formed_file=file_
+        for i in range(20): # arbitrary
+            for file_ in result.files:
+                if len(file_['variable'])==1:
+                    well_formed_file=file_
+                    break
+                else:
+                    #print "WARNING: 'variable' attribute contains too much values ('%s')."%file_['title']
+                    pass
+
+            if well_formed_file is not None:
                 break
+
+            request.offset+=500
+
+            if request.offset<result.num_found:
+                result=sdnetutils.call_web_service(request,60) # return Response object
             else:
-                #print "WARNING: 'variable' attribute contains too much values ('%s')."%file_['title']
-                pass
+                break
 
         return well_formed_file
 
