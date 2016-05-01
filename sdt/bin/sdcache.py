@@ -20,7 +20,7 @@ import sdlog
 import sdindex
 import sdsqlutils
 import sddb
-import sdnetutils
+import sdproxy
 import sdremoteparam_light
 import sdtools
 from sdtypes import Request,Item
@@ -208,12 +208,11 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     # TODO: 
     #   Maybe do this for each project (to retrieve project specific attributes)
     #
-    project_filter='' if project is None else "&project=%s"%project
-    url='http://%s/esg-search/search?limit=1%s&type=File&fields=*'%(host,project_filter)
-    request=Request(url=url,pagination=False)
-    result=sdnetutils.call_web_service(request,60) # return Response object
+    files=sdproxy.call_searchapi_light(host,project)
 
-    assert len(result.files)==1 # just in case
+    assert len(files)==1 # just in case
+
+    file_=files[0] # indice 0 is because we retrieve one file only (with 'limit=1')
 
 
     # WARNING
@@ -225,7 +224,7 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     #       altered result (e.g. url_http is returned instead of url)
 
 
-    for attribute_name in result.files[0]: # indice 0 is because we retrieve one file only (with 'limit=1')
+    for attribute_name in file_:
         if attribute_name not in params:
             params[attribute_name]=[None]
 
