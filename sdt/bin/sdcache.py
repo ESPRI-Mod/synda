@@ -20,9 +20,9 @@ import sdlog
 import sdindex
 import sdsqlutils
 import sddb
-import sdproxy
 import sdremoteparam_light
 import sdtools
+import sdsample
 from sdtypes import Request,Item
 from sdexception import SDException
 
@@ -208,7 +208,7 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     # TODO: 
     #   Maybe do this for each project (to retrieve project specific attributes)
     #
-    files=sdproxy.call_searchapi_light(host,project)
+    files=sdsample.call_searchapi_light(host,project)
 
     assert len(files)==1 # just in case
 

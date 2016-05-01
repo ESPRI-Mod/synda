@@ -20,24 +20,6 @@ import sdconst
 import sdlog
 import sdtools
 import sdconfig
-import sdindex
-
-# FIXME: replace this func with SearchAPIProxy
-# or replace each call with this => files=sdrfile.get_files(stream=stream,post_pipeline_mode='file',dry_run=args.dry_run)
-def call_searchapi_light(host=sdindex.get_default_index(),project=None,query=None,dry_run=None):
-    """Return one sample file with all attributes."""
-
-    project_filter='' if project is None else "&project=%s"%project
-    query_filter='' if query is None else "&query=%s"%query
-    url='http://%s/esg-search/search?limit=1%s%s&type=File&fields=*'%(host,project_filter,query_filter)
-
-    if dry_run:
-        print url
-    else:
-        request=Request(url=url,pagination=False)
-        result=sdnetutils.call_web_service(request,60) # return Response object
-
-        return result.files
 
 # not a singleton
 class SearchAPIProxy():
