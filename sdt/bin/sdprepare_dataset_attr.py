@@ -24,14 +24,21 @@ import json
 import sdapp
 from sdexception import SDException
 import sdlog
+import sdidtest
 import sdconst
 import sdprint
 
 def run(files):
+
     files=add_default_values(files)
     files=rename_dataset_attributes(files)
     files=remove_datanode_from_dataset_id(files)
-    add_dataset_extra_information(files)
+
+    # order matters in filters below
+    files=remove_malformed_dataset_functional_id(files)
+    files=add_dataset_extra_information(files)
+    files=remove_malformed_dataset_version(files)
+
     return files
 
 def add_default_values(files):
@@ -63,10 +70,31 @@ def remove_datanode_from_dataset_id(files):
         f["dataset_functional_id"]=f["dataset_functional_id"].split('|')[0]     
     return files
 
+def remove_malformed_dataset_functional_id(files):
+    """Remove files with malformed dataset_functional_id.
+
+    Note
+        If this func fails to extract dataset version from dataset_functional_id, file
+        is rejected.
+    """
+    keep=[]
+    reject=[] # not used
+
+    for f in files:
+        m=re.search("^(.*)\.([^.]*)$",f["dataset_functional_id"])
+        if m!=None:
+            keep.append(f)
+        else:
+            sdlog.warning("SDPREPAR-002","Incorrect dataset_functional_id ('%s')"%(f["dataset_functional_id"],),stderr=False)
+            reject.append(f)
+
+    return keep
+
 def add_dataset_extra_information(files):
     """
-    BEWARE: we expect in this func that the last field of the "dataset_functional_id" is
-            the dataset version, no matter what the project is.
+    Note
+        we expect in this func that the last field of the "dataset_functional_id" is
+        the dataset version, no matter what the project is.
     """
     for f in files:
         f["dataset_path"]=f["dataset_functional_id"].replace('.','/')
@@ -76,8 +104,22 @@ def add_dataset_extra_information(files):
             f["dataset_path_without_version"]=m.group(1)
             f["dataset_version"]=m.group(2)
         else:
-            sdlog.warning("SDPREPAR-002","WARNING: incorrect dataset_functional_id ('%s')"%(f["dataset_path"],),stderr=True)
-            assert False
+            assert False # we shouldn't be here as this case is already handled in remove_malformed_dataset_functional_id()
+
+    return files
+
+def remove_malformed_dataset_version(files):
+    keep=[]
+    reject=[] # not used
+
+    for f in files:
+        if sdidtest.is_version_number(f["dataset_version"]):
+            keep.append(f)
+        else:
+            sdlog.warning("SDPREPAR-003","Incorrect dataset version ('%s')"%(f["dataset_functional_id"],),stderr=False)
+            reject.append(f)
+
+    return keep
 
 if __name__ == '__main__':
 
