@@ -505,7 +505,7 @@ def update(args):
     print_stderr("Parameters are up-to-date.")
 
 def variable(args):
-    import sdremoteparam,sdutils,sdsample
+    import sdremoteparam,sdutils,sdproxy_light
 
     # currently, mode (list or show) is determined by
     # parameter existency. This may change in the future
@@ -555,7 +555,7 @@ def variable(args):
         # search-api 'query' feature to do the job.
         #
         query=sdutils.parameter_to_query(args.parameter)
-        file_=sdsample.get_one_file(query=query,dry_run=args.dry_run)
+        file_=sdproxy_light.get_one_file(query=query,dry_run=args.dry_run)
 
         if not args.dry_run:
 
