@@ -55,7 +55,7 @@ def get_selections_filescount():
         rs=c.fetchone()
 
         if rs is None:
-            raise SDException("SDSTAT-ERR240","Selection not found (%i)"%selection_id)
+            raise SDException("SDSTAT-240","Selection not found (%i)"%selection_id)
 
         filename=rs[0]
         selections[selection_id]['FILENAME']=filename

@@ -76,7 +76,8 @@ def add_dataset_extra_information(files):
             f["dataset_path_without_version"]=m.group(1)
             f["dataset_version"]=m.group(2)
         else:
-            raise SDException("SDPREPAR-ERR002","incorrect dataset_functional_id (%s)"%(f["dataset_path"],))
+            sdlog.warning("SDPREPAR-002","WARNING: incorrect dataset_functional_id ('%s')"%(f["dataset_path"],),stderr=True)
+            assert False
 
 if __name__ == '__main__':
 

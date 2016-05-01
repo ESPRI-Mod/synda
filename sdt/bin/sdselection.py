@@ -92,7 +92,7 @@ def add_selection(us):
 
             else:
 
-                raise SDException("SYNDATSEL-ERR071","unknown status")
+                raise SDException("SYNDATSEL-071","unknown status")
 
         else:
             # same checksum
@@ -116,7 +116,7 @@ def bind_file_to_selection():
     try:
         sddao.insertselectiontransferjunction(file,self._conn)
     except Exception,e:
-        self.log("SYNDATF-ERR044","fatal error (selection_id=%s,transfer_id=%i)"%(u_s.getSelectionID(),file.getTransferID()))
+        self.log("SYNDATF-044","fatal error (selection_id=%s,transfer_id=%i)"%(u_s.getSelectionID(),file.getTransferID()))
         raise
 
 def set_selection(selection_filenames):
@@ -144,7 +144,7 @@ def selection_builder(filename):
     # check if file exists in "selection" folder
     fullpath_file="%s/%s"%(g__selection_folder,filename)
     if not os.path.exists(fullpath_file):
-        raise SDException("SYNDATSEL-ERR099","file not found: %s (use \"-l\" option to list available selections)"%fullpath_file)
+        raise SDException("SYNDATSEL-099","file not found: %s (use \"-l\" option to list available selections)"%fullpath_file)
 
     # create selection object (from file)
     us=Selection(filename=filename,logger=getLogger())
