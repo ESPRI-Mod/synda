@@ -17,7 +17,7 @@ Download file
 
 Manage a large number of files with install / remove commands
 
-    synda install CMIP5 CNRM-CM5 tas areacello
+    synda install CMIP5 CNRM-CM5 tas pr areacello
 
     synda remove areacello
 
