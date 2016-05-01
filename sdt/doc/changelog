@@ -4,6 +4,7 @@
 	- dataset direct download (download in foreground without using the daemon).
 	- add 'synda get' subcommand.
 	- remove 'synda test' subcommand ('synda test' is replaced by 'synda get').
+	- disable parameter checking by default
 - Version 3.3 - 20160404
 	- localpath DRS can be customized by user in configuration file (local_path_drs_template).
 	- add hpss configuration parameter to retry transfer on error.

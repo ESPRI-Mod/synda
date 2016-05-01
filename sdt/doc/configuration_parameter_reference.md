@@ -180,7 +180,7 @@ will raises an exception and informs the user that 'taz' value is not found.
 
 Type: boolean
 
-Default: 1
+Default: 0
 
 --------------------------------------------------------
 

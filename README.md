@@ -15,11 +15,11 @@ Download file
 
     synda get tasmax_day_FGOALS-s2_piControl_r1i1p1_20160101-20161231.nc
 
-Manage a large number of files asynchronously using apt-get like command
+Manage a large number of files with install/remove commands
 
-    synda install 20130101-20161231 "Air Temperature"
+    synda install CMIP5 CNRM-CM5 tas areacello
 
-    synda remove 20130101-20151231 "Air Temperature"
+    synda remove areacello
 
 ## Documentation
 
