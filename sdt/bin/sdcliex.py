@@ -180,6 +180,17 @@ def upgrade():
     buf=""""""
     return buf
 
+def variable():
+    buf="""  synda variable
+  synda variable -S
+  synda variable -s
+  synda variable sfcWind
+  synda variable wind_speed
+  synda variable Near-Surface Wind Speed
+  synda variable Dissolved Inorganic Carbon Concentration
+  synda variable cell_area"""
+    return buf
+
 def version():
     buf="""  synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
   synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426"""

@@ -54,8 +54,8 @@ def add_common_option(parser,**kw):
 def add_parameter_argument(parser):
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001) # we use PARAMETER and not FACET as is more generic (e.g. for title, id, etc..)
 
-def add_action_argument(parser,choices=None):
-    parser.add_argument('action',nargs='?',default=None,choices=choices,help=sdi18n.m0017)
+def add_action_argument(parser,choices=None,default=None):
+    parser.add_argument('action',nargs='?',default=default,choices=choices,help=sdi18n.m0017)
 
 def build_epilog_section(title,body):
 
@@ -198,8 +198,11 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
 
-    subparser=create_subparser(subparsers,'variable',common_option=False,help='Show variables list')
+    subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())
     add_parameter_argument(subparser)
+    subparser.add_argument('-l','--long_name',action='store_true')
+    subparser.add_argument('-s','--short_name',action='store_true')
+    subparser.add_argument('-S','--standard_name',action='store_true')
 
     subparser=create_subparser(subparsers,'version',help='List all versions of a dataset',example=sdcliex.version())
     add_parameter_argument(subparser)
