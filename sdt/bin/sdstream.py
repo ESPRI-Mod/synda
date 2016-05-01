@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains stream (aka facets_groups) related functions."""
+"""This module contains stream (aka facets_groups) related functions.
+
+Note
+    A stream is a group of dquery
+"""
 
 import sddquery
 

@@ -11,8 +11,9 @@
 
 """This module contains dquery (aka deserialized query aka facets_group) related functions.
 
-Note
-    sddquery means 'SynDa Deserialized query'
+Notes
+    - sddquery means 'SynDa Deserialized query'
+    - A stream is a group of dquery
 """
 
 import sdconst
@@ -51,10 +52,18 @@ def get_scalar(facets_group,name,default=None,type_=None):
     if name in facets_group:
         value=facets_group[name]
 
-        if len(value)>1:
-            raise SDException("SDDQUERY-001","Too much values for '%s' parameter (value='%s')"%(name,str(value)))
 
-        v=value[0]
+        if isinstance(value,list):
+
+            if len(value)>1:
+                raise SDException("SDDQUERY-001","Too much values for '%s' parameter (value='%s')"%(name,str(value)))
+
+            v=value[0]
+
+        else:
+
+            v=value
+
 
         casted_value=sdutils.cast(v,type_)
 

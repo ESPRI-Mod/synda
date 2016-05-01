@@ -26,6 +26,7 @@ import sddquery
 import sdconst
 import sdconfig
 import sdprint
+import sddquery
 import sdi18n
 from sdtools import print_stderr
 from sdexception import SDException
@@ -43,7 +44,7 @@ def check_replica_not_set_when_using_nearestpost(facets_groups):
 
     for dquery in facets_groups:
         if sdconfig.nearest_schedule=='post':
-            if 'nearest' in dquery:
+            if sddquery.get_scalar(dquery,'nearest',False,bool):
                 if 'replica' in dquery:
                     raise SDException('SYDCHECK-010',"'replica' facet must not be set when using 'sdnearestpost' module")
 
