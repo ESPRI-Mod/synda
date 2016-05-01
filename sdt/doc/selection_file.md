@@ -1,7 +1,15 @@
 # Selection file
 
-A selection file contain parameters to define which data you want to download
+A selection file contains parameters to define which data you want to download
 from ESGF archive, how to download it and how to store the data.
+
+The user defines one or many selection files. Each of them have a list of
+facets (variables, frequencies, experiments, ensemble, model..). Using them,
+the program explore the ESGF archive and download all the corresponding
+available files. The program may be run regularly to download the possible new
+files. Typically each file is associated with an analysis (cfmip, downscaling
+and so on). Create as many selection files as you want in the 'selection'
+folder.
 
 Those selection files are stored in '$HOME/sdt/selection' folder (single-user
 installation) or '/etc/synda/sdt/selection' (multi-user installation).
@@ -20,8 +28,8 @@ Example of a selection file
 
 Notes:
 
-* selection file is sometime called 'template' or 'selection form'
-* other selection file examples can be found [here](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
+* many selection file examples can be found [here](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
+* selection files are sometimes called 'template' or 'selection form'
 
 Next parts of this document are organized in 3 main sections
 
