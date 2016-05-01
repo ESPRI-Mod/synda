@@ -26,6 +26,12 @@ LEVELS = {'debug': logging.DEBUG,
           'error': logging.ERROR,
           'critical': logging.CRITICAL}
 
+LABELS = {logging.DEBUG: 'debug',
+          logging.INFO: 'info',
+          logging.WARNING: 'warning',
+          logging.ERROR: 'error',
+          logging.CRITICAL: 'critical'}
+
 def die(code,msg):
 	critical(code,msg)
 	sys.exit(1)
@@ -59,8 +65,13 @@ def log(code,message,level,stdout=False,stderr=False,logfile=True):
         logger.log(level,message,extra={'code' : code})
 
 def get_verbosity_level():
-    level=sdconfig.config.get('log','verbosity_level')
-    return LEVELS[level] # string to int conversion
+    label=sdconfig.config.get('log','verbosity_level')
+    level=LEVELS[label] # string to int conversion
+    return level
+
+def get_verbosity_label(level):
+    label=LEVELS[level] # int to string conversion
+    return label
 
 def create_logger(name,filename):
     FORMAT = '%(asctime)-15s %(levelname)s %(code)s %(message)s'
