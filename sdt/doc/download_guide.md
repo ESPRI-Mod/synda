@@ -1,37 +1,57 @@
 # Download Guide
 
-# Synopsis
+## Synopsis
 
-This document describes how to download files from ESGF archives using async
-mode (aka daemon mode).
+This document describes how to download files using Synda.
 
-## Usage
+## Introduction
 
-To search for datasets, use
+There are two way of downloading data with Synda: using 'synda get' command, and
+using 'synda install' command.
 
-    synda search FACETS
+'synda get' is similar to *wget* command while 'synda install' is similar
+to 'apt-get' command (but asynchronous).
 
-To install a dataset
+'synda get' is handy to quickly download a few files, while synda install is
+intended to manage a large number of files.
 
-    synda install DATASET
+The differences between 'synda get' and 'synda install' are listed below:
 
-To remove a dataset
+'synda get':
 
-    synda remove DATASET
+* no tracking
+* no parallel download
+* no daemon involved
+* synchronous
+
+'synda install':
+
+* tracking
+* parallel download
+* asynchronous
+* use daemon to manage download
+
+The next sections will detail both commands.
+
+## Download files using 'synda get' command
+
+### Usage
+
+    synda get DATASET
 
 #### Example of use
 
 Install a dataset
 
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda install cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
 
 Install a variable
 
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda install cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
 
 Install a file
 
-    synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
+    synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
 Install files using facets stored in an file. This example use
 'sample_selection_01.txt' file which is available in the selection sample folder
@@ -50,16 +70,6 @@ Install files using facets stored in an file. This example use
     -->
 
     synda install -s sample_selection_01.txt
-
-### Start/Stop files download
-
-In single-user installation, run command below
-
-    synda daemon [ start | stop ]
-
-In multi-user installation, run command below
-
-    service synda [ start | stop ]
 
 ### Error management
 
@@ -82,53 +92,13 @@ Log files below contain useful informations about errors
 Note: log files are stored in '$HOME/sdt/log' folder (single-user installation)
 and '/var/log/synda/sdt' folder (multi-user installation).
 
+## Download files using 'synda install' command
 
-* [synda-get](direct_download_guide.md)
-* [synda-install](download_and_tracking_guide.md)
- (useful to manage a large number of files)
-# Direct Download Guide
-
-## Synopsis
-
-This document describes how to download files from ESGF archives using direct
-mode (aka synchronous mode).
-
-## Usage
-## General
-
-Synda downloads files using HTTP or GridFtp protocol.
-
-Search criteria called facets are used to select which files to download.
-
-Search criteria can be set on command line
-
-    synda search atmos fx CMIP5
-
-or stored in a file
-
-    synda search -s FILE
-
-## Usage
-
-To search for datasets, use
-
-    synda search FACETS
+### Usage
 
 To install a dataset
 
     synda install DATASET
-
-To remove a dataset
-
-    synda remove DATASET
-
-## Download files using direct mode (synchronous)
-
-TODO
-
-## Download files using daemon mode (asynchronous)
-
-### *install*
 
     synda install [args] [options]
 
@@ -137,19 +107,20 @@ This command installs file(s) matching given search criteria.
 Note that two versions of the same dataset can be installed side by side (i.e.
 versions are not mutualy exclusive).
 
-#### Example of use
+
+### Example
 
 Install a dataset
 
-    synda install cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
 
 Install a variable
 
-    synda install cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
 
 Install a file
 
-    synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
+    synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
 Install files using facets stored in an file. This example use
 'sample_selection_01.txt' file which is available in the selection sample folder
