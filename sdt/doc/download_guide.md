@@ -37,34 +37,37 @@ The next sections will detail both commands.
 
 ### Usage
 
-    synda get DATASET
+    synda get [ ID ] [ FACET ]...
+
+By default, the downloaded file(s) will be stored in the *sandbox* directory. A
+different folder can be specified using '-d' option.
 
 #### Example
 
 Install a dataset
 
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
-
-Install a variable
-
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
 
 Install a file
 
-    synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
+    synda get orog_fx_CanCM4_decadal1972_r0i0p0.nc
 
 ### Error management
 
 If download fails, you can search for another replica using '-r' option
 
-    synda search -r DATASET
+    synda search -r  [ ID ] [ FACET ]...
 
 then retry the download with the *data_node* parameter to specify which replica to
 use.
 
-    synda search -r DATASET
+    synda search -r [ ID ] [ FACET ]...
 
 #### Example
+
+    synda search -r orog_fx_CanCM4_decadal1972_r0i0p0.nc
+
+    synda get -f orog_fx_CanCM4_decadal1972_r0i0p0.nc data_node=esgf2.dkrz.de 
 
 ## Download files using 'synda install' command
 
@@ -86,11 +89,11 @@ versions are not mutualy exclusive).
 
 Install a dataset
 
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda get cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
 
 Install a variable
 
-    synda get cmip5.output1.CCCma.CanESM2.historicalMisc.day.atmos.day.r2i1p4.v2
+    synda get cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
 
 Install a file
 
