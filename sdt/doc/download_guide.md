@@ -42,8 +42,6 @@ The next sections will detail both commands.
 By default, the downloaded file(s) will be stored in the [*sandbox* directory](https://github.com/Prodiguer/synda/blob/master/sdt/doc/configuration_parameter_reference.md#coresandbox_path). 
 A different folder can be specified using '-d' option.
 
-Note: *sandbox* directory location is defined here
-
 #### Example
 
 Install a dataset

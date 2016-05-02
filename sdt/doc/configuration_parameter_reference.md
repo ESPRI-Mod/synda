@@ -128,7 +128,7 @@ Default: '$HOME/sdt/db' for source installation and '/var/lib/synda/sdt' for sys
 
 ### core.sandbox_path
 
-Override the default sandbox path
+Override the sandbox directory default path
 
 Type: string
 
