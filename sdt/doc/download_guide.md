@@ -133,9 +133,9 @@ To change the replica for all files in error, use command below
 
 Log files below contain useful informations about errors
 
-* 'transfer.log' contains download status for each file.
-* 'debug.log' contains 'wget' command log.
-* 'discovery.log' contains search-api log.
+* *discovery.log* contains informations regarding discovery.
+* *transfer.log* contains informations regarding download.
+* *debug.log* contains low-level download informations.
 
-Note: log files are stored in '$HOME/sdt/log' folder (single-user installation)
-and '/var/log/synda/sdt' folder (multi-user installation).
+Note: log files are stored in '$HOME/sdt/log' folder (source installation) and
+'/var/log/synda/sdt' folder (system package installation).
