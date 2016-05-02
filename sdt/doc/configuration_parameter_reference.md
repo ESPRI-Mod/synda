@@ -108,7 +108,7 @@ Default: 0
 
 ### core.data_path
 
-Override the default data path
+Override the data directory default path
 
 Type: string
 
