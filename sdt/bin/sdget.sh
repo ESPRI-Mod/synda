@@ -131,16 +131,6 @@ abort ()
     exit 7
 }
 
-sha256_cmd ()
-{
-    echo "openssl dgst -sha256 | awk '{if (NF==2) print \$2 ; else print \$1}' "
-}
-
-md5_cmd ()
-{
-    echo "md5sum  | awk '{print \$1}' "
-}
-
 wgetprogressfilter ()
 {
     local flag=false c count cr=$'\r' nl=$'\n'
