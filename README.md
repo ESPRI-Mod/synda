@@ -27,7 +27,7 @@ Manage a large number of files with install / remove commands
 
 [Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)
 
-[Download Guide](download_guide.md)
+[Download Guide](sdt/doc/download_guide.md)
 
 [Command reference](sdt/doc/command_reference.md)
 
