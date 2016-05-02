@@ -131,6 +131,7 @@ abort ()
     exit 7
 }
 
+# from http://stackoverflow.com/questions/4686464/how-to-show-wget-progress-bar-only
 wgetprogressfilter ()
 {
     local flag=false c count cr=$'\r' nl=$'\n'
