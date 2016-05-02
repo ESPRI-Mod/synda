@@ -39,7 +39,7 @@ The next sections will detail both commands.
 
     synda get [ ID ] [ FACET ]...
 
-By default, the downloaded file(s) will be stored in the [*sandbox* directory](https://github.com/Prodiguer/synda/blob/master/sdt/doc/configuration_parameter_reference.md#coresandbox_path). 
+By default, the downloaded file(s) will be stored in the [*sandbox* directory](configuration_parameter_reference.md#coresandbox_path). 
 A different folder can be specified using '-d' option.
 
 #### Example
@@ -73,17 +73,10 @@ use.
 
 ### Usage
 
-To install a dataset
+    synda install [ ID ] [ FACET ]...
 
-    synda install DATASET
-
-    synda install [args] [options]
-
-This command installs file(s) matching given search criteria. 
-
-Note that two versions of the same dataset can be installed side by side (i.e.
-versions are not mutualy exclusive).
-
+This command adds matching file(s) in the download queue. A background process
+(i.e. Synda daemon) will then download files
 
 ### Example
 
@@ -99,9 +92,9 @@ Install a file
 
     synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
-Install files using facets stored in an file. This example use
-'sample_selection_01.txt' file which is available in the selection sample folder
-($HOME/sdt/selection/sample).
+Install a data set using a [*selection file*](selection_file.md)
+
+    synda install -s sample_selection_01.txt
 
     <-- 'sample_selection_01.txt'
     project="CMIP5"
@@ -115,7 +108,9 @@ Install files using facets stored in an file. This example use
     variable[ocnBgchem][mon]="dissic fbddtalk"
     -->
 
-    synda install -s sample_selection_01.txt
+Install files using facets stored in an file. This example use
+'sample_selection_01.txt' file which is available in the selection sample folder
+($HOME/sdt/selection/sample).
 
 ### Start/Stop files download
 
