@@ -59,9 +59,11 @@ The file should be available in $HOME/sdt/data
     $ find /srv -type f
     $HOME/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-
 In case something goes wrong, you can check the logfiles in /var/log/synda/sdt
 for information about the error.
+
+Note: log files are stored in '$HOME/sdt/log' folder (source installation) and
+'/var/log/synda/sdt' folder (system package installation).
 
 To debug file transfer error and certificate issue, you can use the two
 commands below:
@@ -69,8 +71,6 @@ commands below:
     $ synda certificate renew
 
 to test certificate renewal
-
-and 
 
     $ synda get <file_url>
 
