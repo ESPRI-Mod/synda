@@ -76,7 +76,8 @@ use.
     synda install [ ID ] [ FACET ]...
 
 This command adds matching file(s) in the download queue. A background process
-(i.e. Synda daemon) will then download files
+(Synda daemon) checks the download queue every few minutes and download the
+files.
 
 ### Example
 
@@ -92,7 +93,7 @@ Install a file
 
     synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
-Install a data set using a [*selection file*](selection_file.md)
+Install files matching facets stored in a [*selection file*](selection_file.md)
 
     synda install -s sample_selection_01.txt
 
@@ -107,10 +108,6 @@ Install a data set using a [*selection file*](selection_file.md)
     variable[seaIce][mon]="sic evap"
     variable[ocnBgchem][mon]="dissic fbddtalk"
     -->
-
-Install files using facets stored in an file. This example use
-'sample_selection_01.txt' file which is available in the selection sample folder
-($HOME/sdt/selection/sample).
 
 ### Start/Stop files download
 
