@@ -129,7 +129,7 @@ To change the replica for all files in error, use command below
 
     synda replica next
 
-#### Getting more details about errors
+#### Getting informations about errors
 
 Log files below contain useful informations about errors
 
