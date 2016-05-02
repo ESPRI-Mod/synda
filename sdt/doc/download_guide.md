@@ -111,11 +111,11 @@ Install files matching facets stored in a [*selection file*](selection_file.md)
 
 ### Start/Stop files download
 
-In single-user installation, run command below
+In source installation, run command below
 
     synda daemon [ start | stop ]
 
-In multi-user installation, run command below
+In system package installation, run command below
 
     service synda [ start | stop ]
 
