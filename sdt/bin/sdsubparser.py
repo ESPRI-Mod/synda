@@ -123,7 +123,7 @@ def run(subparsers):
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
     subparser.add_argument('--network_bandwidth_test','-n',action='store_true',help='Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
-    subparser.add_argument('--wget','-w',action='store_true',help='Use wget instead of urllib2 as HTTP client')
+    subparser.add_argument('--urllib2','-u',action='store_true',help='Use urllib2 instead of wget as HTTP client')
     #
     subparser.add_argument('--hpss',dest='hpss',action='store_true',help="Enable 'hpss' flag")
     subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")

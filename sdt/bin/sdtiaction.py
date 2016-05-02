@@ -126,7 +126,7 @@ def get(args):
 
     sdlogon.renew_certificate(False)
 
-    http_client=sdconst.HTTP_CLIENT_WGET if args.wget else sdconst.HTTP_CLIENT_URLLIB
+    http_client=sdconst.HTTP_CLIENT_URLLIB if args.urllib2 else sdconst.HTTP_CLIENT_WGET
 
     # local_path
     #
