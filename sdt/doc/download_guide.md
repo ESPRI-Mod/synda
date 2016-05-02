@@ -28,8 +28,8 @@ The differences between *synda get* and *synda install* are listed below:
 
 * tracking
 * parallel download
-* asynchronous
 * use daemon to manage download
+* asynchronous
 
 The next sections will detail both commands.
 
@@ -75,8 +75,10 @@ use.
 
     synda install [ ID ] [ FACET ]...
 
-This command adds matching file(s) in the download queue. Synda background
-process see new files have been added to the queue and download the files.
+This command adds matching file(s) in the download queue and store tracking
+informations in the local database.
+
+A background process checks the download queue regularly and download the files.
 
 The downloaded files are stored in the [*data* directory](configuration_parameter_reference.md#coredata_path).
 
