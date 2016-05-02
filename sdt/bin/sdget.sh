@@ -381,7 +381,7 @@ wget_stderr2stdout()
 # more info: https://esgf.github.io/esgf-swt/wget/2016/01/19/Failed-to-open-cert.html
 MATCH_NON_FATAL_ERROR="^ERROR: Failed to open cert"
 
-stdout_filter ()
+remove_non_fatal_error ()
 {
     grep -v "$MATCH_NON_FATAL_ERROR"
 }
@@ -413,7 +413,7 @@ if [ $verbosity -gt 0 ]; then
         # when verbosity is 1, some non-important error message are removed from output
         # (to see those messages, set verbosity to 2)
 
-        wget_stderr2stdout | stdout_filter 1>&2
+        wget_stderr2stdout | remove_non_fatal_error 1>&2
         wget_status=${PIPESTATUS[0]}
     elif [ $verbosity -gt 1 ]; then
         wget_stderr2stdout 1>&2
