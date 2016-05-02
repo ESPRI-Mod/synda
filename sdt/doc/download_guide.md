@@ -6,25 +6,25 @@ This document describes how to download files using Synda.
 
 ## Introduction
 
-There are two way of downloading data with Synda: using 'synda get' command, and
-using 'synda install' command.
+There are two way of downloading data with Synda: using *synda get* command, and
+using *synda install* command.
 
-'synda get' is similar to *wget* command while 'synda install' is similar
-to 'apt-get' command (but asynchronous).
+*synda get* is similar to *wget* command while *synda install* is similar
+to *apt-get* command (but asynchronous).
 
-'synda get' is handy to quickly download a few files, while synda install is
+*synda get* is handy to quickly download a few files, while synda install is
 intended to manage a large number of files.
 
-The differences between 'synda get' and 'synda install' are listed below:
+The differences between *synda get* and *synda install* are listed below:
 
-'synda get':
+*synda get*:
 
 * no tracking
 * no parallel download
 * no daemon involved
 * synchronous
 
-'synda install':
+*synda install*:
 
 * tracking
 * parallel download
