@@ -386,6 +386,14 @@ stdout_filter ()
     grep -v "$MATCH_NON_FATAL_ERROR"
 }
 
+strip_dot_progress ()
+{
+
+    # remove progress lines from wget output to prevent exceeding maximum single argument size (i.e. when storing wget output into 'wget_errmsg' variable)
+    grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script'
+
+}
+
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
@@ -420,7 +428,7 @@ else
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
-        wget_errmsg=$(wget_stderr2stdout | grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script') # remove progress lines from wget output to prevent exceeding maximum single argument size
+        wget_errmsg=$( wget_stderr2stdout | strip_dot_progress )
         wget_status=$?
     fi
 fi
