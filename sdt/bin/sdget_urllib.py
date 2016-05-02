@@ -212,7 +212,8 @@ def download_file_helper(url,local_path,timeout):
     except Exception,e:
 
         # remove the local file if something goes wrong
-        os.unlink(local_path)
+        if os.path.exists(local_path):
+            os.unlink(local_path)
 
         # debug
         # (print low-level exception stack)
