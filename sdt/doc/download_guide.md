@@ -39,7 +39,7 @@ The next sections will detail both commands.
 
     synda get [ ID ] [ FACET ]...
 
-By default, the downloaded file(s) will be stored in the [*sandbox* directory](configuration_parameter_reference.md#coresandbox_path). 
+The downloaded file(s) are stored in the [*sandbox* directory](configuration_parameter_reference.md#coresandbox_path). 
 A different folder can be specified using '-d' option.
 
 #### Example
@@ -75,9 +75,10 @@ use.
 
     synda install [ ID ] [ FACET ]...
 
-This command adds matching file(s) in the download queue. A background process
-(Synda daemon) checks the download queue every few minutes and download the
-files.
+This command adds matching file(s) in the download queue. Synda background
+process see new files have been added to the queue and download the files.
+
+The downloaded files are stored in the [*date* directory](configuration_parameter_reference.md#coredata_path).
 
 ### Example
 
