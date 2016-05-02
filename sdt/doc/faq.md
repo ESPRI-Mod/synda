@@ -1,5 +1,13 @@
 # Synda FAQ
 
+### <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)>
+
+Run commands below
+
+    synda certificate renew -x
+
+--------------------------------------------------------
+
 ### sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)
 
 Run commands below
