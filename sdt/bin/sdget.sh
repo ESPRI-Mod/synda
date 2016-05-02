@@ -174,7 +174,7 @@ max_verbosity=3
 
 # options
 
-show_progress=0
+show_dot_progress=0
 debug=0
 verbosity=0
 always_log_wget_output=0
@@ -192,7 +192,7 @@ do
         ;;
   p)    parse_output=$OPTARG
         ;;
-  s)    show_progress=1
+  s)    show_dot_progress=1
         ;;
   t)    wget_timeout=$OPTARG
         ;;
@@ -424,7 +424,7 @@ if [ $verbosity -gt 0 ]; then
 else
     # in this mode, wget info are displayed in differed time
 
-    if [ $show_progress -eq 1 ]; then
+    if [ $show_dot_progress -eq 1 ]; then
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
