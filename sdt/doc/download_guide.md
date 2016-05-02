@@ -83,15 +83,15 @@ files.
 
 Install a dataset
 
-    synda get cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+    synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
 
 Install a variable
 
-    synda get cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
+    synda install cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
 
 Install a file
 
-    synda get cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
+    synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
 Install files matching facets stored in a [*selection file*](selection_file.md)
 
