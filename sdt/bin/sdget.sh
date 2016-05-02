@@ -141,6 +141,26 @@ md5_cmd ()
     echo "md5sum  | awk '{print \$1}' "
 }
 
+wgetprogressfilter ()
+{
+    local flag=false c count cr=$'\r' nl=$'\n'
+    while IFS='' read -d '' -rn 1 c
+    do
+        if $flag; then
+            printf '%c' "$c"
+        else
+            if [[ $c != $cr && $c != $nl ]]; then
+                count=0
+            else
+                ((count++))
+                if ((count > 1)); then
+                    flag=true
+                fi
+            fi
+        fi
+    done
+}
+
 # set locales
 
 export LANG=C
