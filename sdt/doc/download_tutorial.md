@@ -65,13 +65,10 @@ for information about the error.
 Note: log files are stored in '$HOME/sdt/log' folder (source installation) and
 '/var/log/synda/sdt' folder (system package installation).
 
-To debug file transfer error and certificate issue, you can use the commands
-below:
-
-Test certificate renewal
+To debug certificate issue, use
 
     $ synda certificate renew
 
-Test file download
+To debug file transfer error, use
 
     $ synda get <file_url>
