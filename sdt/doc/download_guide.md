@@ -78,7 +78,7 @@ use.
 This command adds matching file(s) in the download queue. Synda background
 process see new files have been added to the queue and download the files.
 
-The downloaded files are stored in the [*date* directory](configuration_parameter_reference.md#coredata_path).
+The downloaded files are stored in the [*data* directory](configuration_parameter_reference.md#coredata_path).
 
 ### Example
 
