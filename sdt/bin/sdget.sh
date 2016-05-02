@@ -23,10 +23,10 @@
 #          - many infos are dumped on stderr in realtime (wget output (including download progress), sdget.sh msg)
 #          - in this mode, wget output IS NOT analyzed by 'sdparsewgetoutput.sh'
 #          - verbosity level overview 
-#              - 0
-#              - 1
-#              - 2
-#              - 3
+#              - 0 - no info displayed except if transfer fails
+#              - 1 - info displayed and progress dot
+#              - 2 - debug info displayed and progress bar
+#              - 3 - debug info displayed and progress bar and bash '-x' mode enabled in this script
 #  - the code returned by sdget.sh script may vary depending on which mode is used.
 #
 # Return values
@@ -175,7 +175,7 @@ max_verbosity=3
 
 # options
 
-show_dot_progress=0
+show_progress_dot=0
 debug=0
 verbosity=0
 always_log_wget_output=0
@@ -193,7 +193,7 @@ do
         ;;
   p)    parse_output=$OPTARG
         ;;
-  s)    show_dot_progress=1
+  s)    show_progress_dot=1
         ;;
   t)    wget_timeout=$OPTARG
         ;;
@@ -425,7 +425,7 @@ if [ $verbosity -gt 0 ]; then
 else
     # in this mode, wget info are displayed in differed time
 
-    if [ $show_dot_progress -eq 1 ]; then
+    if [ $show_progress_dot -eq 1 ]; then
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
