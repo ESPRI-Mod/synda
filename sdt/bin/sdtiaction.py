@@ -118,6 +118,11 @@ def facet(args):
 def get(args):
     import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdconst
 
+    # hack
+    # see TAG43534FSFS
+    if args.quiet:
+        args.verbosity=0
+
     if args.verify_checksum and args.network_bandwidth_test:
         print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
         return 1

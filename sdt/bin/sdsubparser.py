@@ -122,14 +122,15 @@ def run(subparsers):
     subparser.add_argument('--dest_folder','-d',default=sdconfig.sandbox_folder,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
     subparser.add_argument('--network_bandwidth_test','-n',action='store_true',help='Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.')
+    subparser.add_argument('--quiet','-q', action='store_true')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--urllib2','-u',action='store_true',help='Use urllib2 instead of wget as HTTP client')
+    subparser.add_argument('--verbosity','-v', action='count', default=1) # as default verbosity is 1, the only way to disable verbosity (i.e. set it to 0) is to use '--quiet' option. TAG43534FSFS
     #
     subparser.add_argument('--hpss',dest='hpss',action='store_true',help="Enable 'hpss' flag")
     subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")
     subparser.set_defaults(hpss=False) # maybe use sdconfig.config.getboolean('download','hpss') as default
     #
-    subparser.add_argument('--verbosity','-v', action='count', default=0)
     add_parameter_argument(subparser)
 
     subparser=subparsers.add_parser('help',help='Show help')
