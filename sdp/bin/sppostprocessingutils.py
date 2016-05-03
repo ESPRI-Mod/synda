@@ -177,7 +177,7 @@ class Transition():
         # Override this method to customize job arguments
 
         # filter not to send all generic args
-        args = { k: kw[k] for k in ['project'] } # only send project
+        args = dict( (k, kw[k]) for k in ['project'] )  # only send project
 
         return args
 

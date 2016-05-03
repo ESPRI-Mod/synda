@@ -15,6 +15,7 @@ Note
     'sppipeline' stands for 'Synda Post-processing pipeline'
 """
 
+import os
 import sys
 import copy
 import imp
