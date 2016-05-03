@@ -24,9 +24,10 @@
 #          - in this mode, wget output IS NOT analyzed by 'sdparsewgetoutput.sh'
 #          - verbosity level overview 
 #              - 0 - no info displayed except if transfer fails
-#              - 1 - info displayed and progress dot
-#              - 2 - debug info displayed and progress bar
-#              - 3 - debug info displayed and progress bar and bash '-x' mode enabled in this script
+#              - 1 - pre-transfer info not displayed and progress bar and post-transfer info displayed (beware: this mode may hide some error messages)
+#              - 2 - info displayed and progress dot
+#              - 3 - debug info displayed and progress bar
+#              - 4 - debug info displayed and progress bar and bash '-x' mode enabled in this script
 #  - the code returned by sdget.sh script may vary depending on which mode is used.
 #
 # Return values
@@ -171,7 +172,7 @@ trap "abort" SIGINT SIGTERM
 
 # pre-option init.
 
-max_verbosity=3
+max_verbosity=4
 
 # options
 
@@ -295,13 +296,15 @@ fi
 
 
 # set verbose mode
-if [ $verbosity -eq 3 ]; then
+if [ $verbosity -eq 4 ]; then
     set -x # bash verbose mode (warning, this makes wget output to be duplicated 3 times)
     WGETOPT=" $WGETOPT -v -d "
-elif [ $verbosity -eq 2 ]; then
+elif [ $verbosity -eq 3 ]; then
     WGETOPT=" $WGETOPT -v -d "
-elif [ $verbosity -eq 1 ]; then
+elif [ $verbosity -eq 2 ]; then
     WGETOPT=" $WGETOPT -v " # note that progress are displayed in verbose mode
+elif [ $verbosity -eq 1 ]; then
+    WGETOPT=" $WGETOPT -v --progress=bar:force:noscroll " # progress bar
 elif [ $verbosity -eq 0 ]; then
     # level used in normal operation (non-verbose)
 
@@ -410,13 +413,20 @@ if [ $verbosity -gt 0 ]; then
     echo $WGET_CMD 1>&2
 
     if [ $verbosity -eq 1 ]; then
+
+        # when verbosity is 1, most messages are removed from output, even important error message, so do not use this level in routine, only to do some benchmark and bandwidth test (to see all messages, set verbosity to 3)
+
+        wget_stderr2stdout | wgetprogressfilter 1>&2
+        wget_status=${PIPESTATUS[0]}
+
+    elif [ $verbosity -eq 2 ]; then
         
-        # when verbosity is 1, some non-important error message are removed from output
-        # (to see those messages, set verbosity to 2)
+        # when verbosity is 2, some non-important error message are removed from output (to see all messages, set verbosity to 3)
 
         wget_stderr2stdout | remove_non_fatal_error 1>&2
         wget_status=${PIPESTATUS[0]}
-    elif [ $verbosity -gt 1 ]; then
+
+    elif [ $verbosity -gt 2 ]; then
         wget_stderr2stdout 1>&2
         wget_status=$?
     fi
