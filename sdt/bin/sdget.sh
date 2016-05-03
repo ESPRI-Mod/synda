@@ -414,9 +414,14 @@ if [ $verbosity -gt 0 ]; then
 
     if [ $verbosity -eq 1 ]; then
 
-        # when verbosity is 1, most messages are removed from output, even
-        # important error messages, so do not use this level to solve transfer
-        # problem, only to do some benchmark and bandwidth test
+        # notes
+        #   - when verbosity is 1, most messages are removed from output, even
+        #     important error messages, so do not use this level to solve transfer
+        #     problem.
+        #   - this level is useful do some benchmark and bandwidth test in a
+        #     reliable environment (i.e. without transfer error)
+        #   - this level can still be used safely in routine as the return code signals
+        #     error, even if wget stderr is removed.
 
         # to see all wget messages, prefer switching to verbosity level 3
 
