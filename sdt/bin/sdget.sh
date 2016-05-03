@@ -409,9 +409,6 @@ if [ $verbosity -gt 0 ]; then
     # - in verbose mode, wget info are displayed in realtime
     # - we DON'T parse wget output here because we want as much info as possible and also because this is not compatible with realtime
 
-    # display info on stderr
-    echo $WGET_CMD 1>&2
-
     if [ $verbosity -eq 1 ]; then
 
         # notes
@@ -429,6 +426,9 @@ if [ $verbosity -gt 0 ]; then
         wget_status=${PIPESTATUS[0]}
 
     elif [ $verbosity -eq 2 ]; then
+
+        # display wget cmd on stderr
+        echo $WGET_CMD 1>&2
         
         # when verbosity is 2, some non-important error message are removed from output
 
@@ -438,6 +438,10 @@ if [ $verbosity -gt 0 ]; then
         wget_status=${PIPESTATUS[0]}
 
     elif [ $verbosity -ge 3 ]; then
+
+        # display wget cmd on stderr
+        echo $WGET_CMD 1>&2
+
         wget_stderr2stdout 1>&2
         wget_status=$?
     fi
