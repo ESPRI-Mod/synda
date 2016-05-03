@@ -117,7 +117,7 @@ def run(subparsers):
     subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'get',no_default=False,help='Direct download (download in foreground without using the daemon)',example=sdcliex.get())
+    subparser=create_subparser(subparsers,'get',no_default=False,help='Download dataset',example=sdcliex.get())
     subparser.add_argument('--verify_checksum','-c',action='store_true',help='Compare remote and local checksum')
     subparser.add_argument('--dest_folder','-d',default=sdconfig.sandbox_folder,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
