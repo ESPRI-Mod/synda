@@ -56,7 +56,7 @@ class Download():
                                                                    http_client=sdconst.HTTP_CLIENT_WGET,
                                                                    timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,
                                                                    verbosity=0,
-                                                                   show_progress=False,
+                                                                   buffered=True,
                                                                    hpss=hpss)
 
         if tr.sdget_status==0:

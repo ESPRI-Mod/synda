@@ -172,7 +172,7 @@ def get(args):
                                             network_bandwidth_test=args.network_bandwidth_test,
                                             debug=True,
                                             verbosity=args.verbosity,
-                                            show_progress=True,
+                                            buffered=False,
                                             hpss=args.hpss)
 
                 if status!=0:
@@ -214,7 +214,7 @@ def get(args):
                                     network_bandwidth_test=args.network_bandwidth_test,
                                     debug=True,
                                     verbosity=args.verbosity,
-                                    show_progress=True,
+                                    buffered=False,
                                     hpss=args.hpss)
 
         if status!=0:

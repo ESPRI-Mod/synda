@@ -32,7 +32,7 @@ def run(files,
         network_bandwidth_test=False,
         debug=True,
         verbosity=0,
-        show_progress=True,
+        buffered=False,
         hpss=False):
     """
     Returns:
@@ -93,7 +93,7 @@ def run(files,
 
         # transfer
 
-        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbosity,show_progress,hpss)
+        (status,killed,script_stderr)=sdget.download(f.url,local_path,debug,http_client,timeout,verbosity,buffered,hpss)
 
 
         # post-transfer
@@ -103,7 +103,10 @@ def run(files,
 
             print_stderr('Download failed (%s)'%f.url)
 
-            if not show_progress: # if show_progress mode, stderr is already display (because child stderr is binded to parent stderr)
+            if buffered: # in non-buffered mode, stderr is already display (because child stderr is binded to parent stderr)
+
+                # currently, we don't come here but we may need in the futur so we keep this block
+
                 if script_stderr is not None:
                     print_stderr(script_stderr)
         else:

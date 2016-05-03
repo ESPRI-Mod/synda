@@ -31,7 +31,7 @@ import sdconst
 import sdget_urllib
 from sdtools import print_stderr
 
-def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,show_progress=False,hpss=False):
+def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,buffered=True,hpss=False):
     killed=False
     script_stderr=None
 
@@ -46,7 +46,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
             li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbosity,hpss)
 
-            (status,script_stderr)=run_download_script(li,show_progress)
+            (status,script_stderr)=run_download_script(li,buffered)
 
             killed=is_killed(transfer_protocol,status)
 
@@ -57,7 +57,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
         li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbosity,hpss)
 
-        (status,script_stderr)=run_download_script(li,show_progress)
+        (status,script_stderr)=run_download_script(li,buffered)
 
         killed=is_killed(transfer_protocol,status)
 
@@ -71,11 +71,11 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     return (status,killed,script_stderr)
 
-def run_download_script(li,show_progress):
-    if show_progress:
-        return run_download_script_RTSTDXXX(li)
-    else:
+def run_download_script(li,buffered):
+    if buffered:
         return run_download_script_BUFSTDXXX(li)
+    else:
+        return run_download_script_RTSTDXXX(li)
 
 def run_download_script_RTSTDXXX(li):
 
