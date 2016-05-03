@@ -226,9 +226,12 @@ Default: geolocation
 
 ### behaviour.lfae_mode
 
-Set which policies to adopt when a download starts and local file already exists.
-
-Possible values are: "keep", "replace" and "abort"
+Set which policies to adopt when a download starts and local file already
+exists ('lfae' means 'Local File Already Exist). Possible values are: "keep",
+"replace" and "abort". When set to "keep", local file is used instead of the
+remote file. When set to "replace", the remote file overwrites the local file.
+When set to "abort", the transfer is cancelled (the transfer status is set to
+'error') and the local file is kept.
 
 Type: string
 
