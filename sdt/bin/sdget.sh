@@ -415,17 +415,19 @@ if [ $verbosity -gt 0 ]; then
     if [ $verbosity -eq 1 ]; then
 
         # when verbosity is 1, most messages are removed from output, even
-        # important error message, so do not use this level in routine, only to
-        # do some benchmark and bandwidth test (to see all messages, set
-        # verbosity to 3)
+        # important error messages, so do not use this level to solve transfer
+        # problem, only to do some benchmark and bandwidth test
+
+        # to see all wget messages, prefer switching to verbosity level 3
 
         wget_stderr2stdout | wgetprogressfilter 1>&2
         wget_status=${PIPESTATUS[0]}
 
     elif [ $verbosity -eq 2 ]; then
         
-        # when verbosity is 2, some non-important error message are removed
-        # from output (to see all messages, set verbosity to 3)
+        # when verbosity is 2, some non-important error message are removed from output
+
+        # to see all wget messages, prefer switching to verbosity level 3
 
         wget_stderr2stdout | remove_non_fatal_error 1>&2
         wget_status=${PIPESTATUS[0]}
@@ -440,6 +442,9 @@ else
     # in this mode, wget info are displayed in differed time
 
     if [ $show_progress_dot -eq 1 ]; then
+
+        # this case is not widely used (only when run this script manually for debugging purpose)
+
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
