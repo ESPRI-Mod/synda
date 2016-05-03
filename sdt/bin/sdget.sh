@@ -414,14 +414,18 @@ if [ $verbosity -gt 0 ]; then
 
     if [ $verbosity -eq 1 ]; then
 
-        # when verbosity is 1, most messages are removed from output, even important error message, so do not use this level in routine, only to do some benchmark and bandwidth test (to see all messages, set verbosity to 3)
+        # when verbosity is 1, most messages are removed from output, even
+        # important error message, so do not use this level in routine, only to
+        # do some benchmark and bandwidth test (to see all messages, set
+        # verbosity to 3)
 
         wget_stderr2stdout | wgetprogressfilter 1>&2
         wget_status=${PIPESTATUS[0]}
 
     elif [ $verbosity -eq 2 ]; then
         
-        # when verbosity is 2, some non-important error message are removed from output (to see all messages, set verbosity to 3)
+        # when verbosity is 2, some non-important error message are removed
+        # from output (to see all messages, set verbosity to 3)
 
         wget_stderr2stdout | remove_non_fatal_error 1>&2
         wget_status=${PIPESTATUS[0]}
