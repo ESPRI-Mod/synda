@@ -99,7 +99,7 @@ do
 done
 shift $(($OPTIND - 1)) # remove options
 
-if [ $verbosity -gt 4 ]; then
+if [ $verbosity -gt 3 ]; then
     verbosity=$max_verbosity
 fi
 
@@ -183,7 +183,7 @@ GRIDFTP_CMD=globus-url-copy
 GRIDFTP_OPT=""
 
 # verbosity parameter
-if [ $verbosity -eq 4 ]; then
+if [ $verbosity -eq 3 ]; then
     set -x # bash verbose mode (warning, this make globus-url-copy output to be duplicated 3 times)
 
     export GLOBUS_ERROR_OUTPUT=1
@@ -192,12 +192,10 @@ if [ $verbosity -eq 4 ]; then
     export GLOBUS_GSI_AUTHZ_DEBUG_FILE=/tmp/gridftp_debug.log
 
     GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
-elif [ $verbosity -eq 3 ]; then
-    GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
 elif [ $verbosity -eq 2 ]; then
-    GRIDFTP_DEBUG_OPT=" -v -vb "
+    GRIDFTP_DEBUG_OPT=" -v -vb -dbg "
 elif [ $verbosity -eq 1 ]; then
-    GRIDFTP_DEBUG_OPT=" -v "
+    GRIDFTP_DEBUG_OPT=" -v -vb "
 elif [ $verbosity -eq 0 ]; then
     GRIDFTP_DEBUG_OPT=
 fi
