@@ -50,7 +50,14 @@ class Download():
             sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise
 
-        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,tr.get_full_local_path(),False,sdconst.HTTP_CLIENT_WGET,sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,0,False,hpss)
+        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
+                                                                   tr.get_full_local_path(),
+                                                                   debug=False,
+                                                                   http_client=sdconst.HTTP_CLIENT_WGET,
+                                                                   timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,
+                                                                   verbosity=0,
+                                                                   show_progress=False,
+                                                                   hpss=hpss)
 
         if tr.sdget_status==0:
 

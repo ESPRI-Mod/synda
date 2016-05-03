@@ -430,7 +430,7 @@ if [ $verbosity -gt 0 ]; then
         wget_stderr2stdout | remove_non_fatal_error 1>&2
         wget_status=${PIPESTATUS[0]}
 
-    elif [ $verbosity -gt 2 ]; then
+    elif [ $verbosity -ge 3 ]; then
         wget_stderr2stdout 1>&2
         wget_status=$?
     fi
