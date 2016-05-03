@@ -38,6 +38,7 @@ def run(host=None,reload=False,project=None):
     parameters=get_parameters_from_searchapi(host,project)
     parameters=remove_unused_parameters(parameters)
     parameters=add_system_parameters(parameters) # overwrite occurs here, it's normal (e.g. for 'type' parameter)
+    add_special_parameters(parameters)
 
     if reload:
         sdlog.info("SDDCACHE-001","Reloading parameters (index=%s)"%host)
@@ -118,6 +119,30 @@ def add_system_parameters(parameters):
     parameters['query']=[None]
     parameters['limit']=[None]
     parameters['fields']=[None]
+
+    return parameters
+
+def add_special_parameters(parameters):
+
+    # we add url here to prevent this error:
+    #
+    #<--
+    #$ synda search url=http://esgf2.dkrz.de/thredds/fileServer/cmip5/output1/ICHEC/EC-EARTH/decadal1965/mon/seaIce/OImon/r8i1p1/v20120801/sic/sic_OImon_EC-EARTH_decadal1965_r8i1p1_196511-197610.nc
+    #*** Error occured at 2016-05-03 21:50:01.029034 ***
+    #==================
+    #*   Error code   *
+    #==================
+    #SYDCHECK-008
+    #=====================
+    #*   Error message   *
+    #=====================
+    #Unknown parameter name: url
+    #-->
+    #
+    # we need to insert it manually, because 'url' doesn't appear in file's attributes nor in search-api parameter
+    # but it CAN be as a search key e.g. http://esgf-data.dkrz.de/esg-search/search?url=http://esgf2.dkrz.de/thredds/fileServer/cmip5/output1/ICHEC/EC-EARTH/decadal1965/mon/seaIce/OImon/r8i1p1/v20120801/sic/sic_OImon_EC-EARTH_decadal1965_r8i1p1_196511-197610.nc|application/netcdf|HTTPServer&fields=*&distrib=true&limit=100&type=File&format=application%2Fsolr%2Bxml&offset=0
+    #
+    parameters['url']=[None]
 
     return parameters
 
