@@ -125,7 +125,7 @@ def run(subparsers):
     subparser.add_argument('--quiet','-q', action='store_true')
     subparser.add_argument('--timeout','-t',type=int,default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,help='HTTP timeout')
     subparser.add_argument('--urllib2','-u',action='store_true',help='Use urllib2 instead of wget as HTTP client')
-    subparser.add_argument('--verbosity','-v', action='count', default=1) # as default verbosity is 1, the only way to disable verbosity (i.e. set it to 0) is to use '--quiet' option. TAG43534FSFS
+    subparser.add_argument('--verbosity','-v', action='count', default=1) #  TAG43534FSFS. As default verbosity is 1, the only way to disable verbosity (i.e. set it to 0) is to use '--quiet' option. Also note that as default is 1 for an argparse 'count' option, '-v' triggers the value 2, not 1, and '-vv' triggers the value 3, not 2: this is normal. To summarize, what we do here is map 'unset' to 1, map [-vvvvvvv...] to the range [2-N], and add '--quiet' option to trigger verbosity level 0.
     #
     subparser.add_argument('--hpss',dest='hpss',action='store_true',help="Enable 'hpss' flag")
     subparser.add_argument('--no-hpss',dest='hpss',action='store_false',help="Disable 'hpss' flag (Default)")
