@@ -1,10 +1,18 @@
-- Version 3.4 - 
+- Version 3.5 - 
+- Version 3.4 - 20160504
 	- add 'synda variable' command
-	- set data folder default value to /srv/synda/sdt/data (system package installation only).
-	- dataset direct download (download in foreground without using the daemon).
 	- add 'synda get' subcommand.
 	- remove 'synda test' subcommand ('synda test' is replaced by 'synda get').
+	- add urllib2 based download impl.
+	- add sandbox folder for untracked data.
+	- set data folder default value to /srv/synda/sdt/data (system package installation only).
 	- disable parameter checking by default
+	- insert event in db even if post-processing module is disabled.
+	- improve obs4MIPs project support.
+	- user documentation reorganization.
+	- add parameter reference documentation.
+	- add command reference documentation.
+	- add selection file documentation.
 - Version 3.3 - 20160404
 	- localpath DRS can be customized by user in configuration file (local_path_drs_template).
 	- add hpss configuration parameter to retry transfer on error.
