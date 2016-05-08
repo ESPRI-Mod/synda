@@ -4,10 +4,20 @@ This document describes most important files and folders used in Synda.
 
 ### credentials.conf
 
-vi $HOME/sdt/conf/credentials.conf
-vi /etc/synda/sdt/credentials.conf
+Contains user credentials (e.g. ESGF openid)
+
+location:
+$HOME/sdt/conf/credentials.conf
+/etc/synda/sdt/credentials.conf
 /etc/synda/sdt/credentials.conf
 
+--------------------------------------------------------
+
+### data
+
+Contains ESGF files downloaded in tracking mode
+
+$HOME/sdt/data
 Set daemon user.
 
 Type: string
@@ -18,9 +28,10 @@ Note: the daemon must be started by root for this parameter to work.
 
 --------------------------------------------------------
 
-### data
+### sandbox
 
-$HOME/sdt/data
+Contains ESGF files downloaded in no-tracking mode
+
 $HOME/sdt/data
 Set daemon user.
 
