@@ -10,4 +10,4 @@ Howto:
 
 Tutorial:
 
-* [Download Tutorial](download_tutorial.md)
+* [ESGF Archive Download Tutorial](download_tutorial.md)
