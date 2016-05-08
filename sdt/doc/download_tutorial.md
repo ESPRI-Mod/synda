@@ -2,9 +2,9 @@
 
 A session might go like
 
-Set ESGF openid and passwd in credentials file:
+Set ESGF openid and passwd in [*credentials file*](files.md):
 
-    vi /etc/synda/sdt/credentials.conf
+    vi credentials.conf
 
 Search a dataset:
 
@@ -54,16 +54,13 @@ Check download progress:
     status      count  size
     done            1  8.9 MB
 
-The file should be available in $HOME/sdt/data
+The file should be available in [*data folder*](files.md)
 
-    $ find /srv -type f
+    $ find data -type f
     $HOME/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-In case something goes wrong, you can check the logfiles in /var/log/synda/sdt
+In case something goes wrong, you can check [*log files*](files.md)
 for information about the error.
-
-Note: log files are stored in '$HOME/sdt/log' folder (source installation) and
-'/var/log/synda/sdt' folder (system package installation).
 
 To debug certificate issue, you can use
 

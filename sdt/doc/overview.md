@@ -42,5 +42,5 @@ To download a dataset with tracking info
 
 ## See also
 
-* [Download Guide](download_guide.md)
+* [User Guide](user_guide.md)
 * [Download Tutorial](download_tutorial.md)
