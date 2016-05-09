@@ -25,6 +25,10 @@ Explore metadata
 
     synda dump tas GFDL-ESM2M -F line -f -C size,filename 
 
+    synda variable | less
+
+    synda variable wind_speed_of_gust
+
     export COLUMNS ; synda variable -s | cut -c 1-20 | column | less
 
 ## Documentation

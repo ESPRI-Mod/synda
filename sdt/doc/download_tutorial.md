@@ -57,7 +57,7 @@ Check download progress:
 The file should be available in [*data folder*](files.md#data)
 
     $ find data -type f
-    $HOME/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+    data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
 In case something goes wrong, you can check [*log files*](files.md#log)
 for information about the error.
