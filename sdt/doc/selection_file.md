@@ -11,8 +11,8 @@ files. Typically each file is associated with an analysis (cfmip, downscaling
 and so on). Create as many selection files as you want in the 'selection'
 folder.
 
-Those selection files are stored in '$HOME/sdt/selection' folder (single-user
-installation) or '/etc/synda/sdt/selection' (multi-user installation).
+Those selection files are stored in *$HOME/sdt/selection* folder (source
+installation) or */etc/synda/sdt/selection* (system package installation).
 
 Example of a selection file
 
