@@ -73,3 +73,12 @@ This folder contains selection files.
 
 Location is *$HOME/sdt/selection* for source installation and
 */etc/synda/sdt/selection* for system package installation.
+
+--------------------------------------------------------
+
+### default
+
+This folder contains selection parameters default values.
+
+Location is *$HOME/sdt/conf/default* for source installation and
+*/etc/synda/sdt/default* for system package installation.
