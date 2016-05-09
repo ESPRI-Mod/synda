@@ -1,6 +1,6 @@
 # Synda FAQ
 
-### <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)>
+### urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
 
 Run commands below
 

@@ -37,7 +37,7 @@ Explore metadata
 
 [Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)
 
-[User Guide](sdt/doc/user_guide.md)
+[User guide](sdt/doc/user_guide.md)
 
 [Command reference](sdt/doc/command_reference.md)
 
