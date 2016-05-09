@@ -25,7 +25,7 @@ system package installation.
 
 This folder contains ESGF files downloaded in non-tracking mode.
 
-**Location:** *$HOME/sdt/sandbox* for source installation and */srv/synda/sdt/sandbox* for
+Location: *$HOME/sdt/sandbox* for source installation and */srv/synda/sdt/sandbox* for
 system package installation.
 
 --------------------------------------------------------
@@ -38,12 +38,6 @@ Log files are stored in '$HOME/sdt/log' folder (source installation) and
 '/var/log/synda/sdt' folder (system package installation).
 in $HOME/sdt/log
 Set daemon user.
-
-Type: string
-
-Default: ""
-
-Note: 
 
 --------------------------------------------------------
 
