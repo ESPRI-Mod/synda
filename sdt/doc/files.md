@@ -1,6 +1,6 @@
 # Synda Files 
 
-This document describes most important files and folders
+This document describes most important files in use in Synda
 
 ### credentials.conf
 
