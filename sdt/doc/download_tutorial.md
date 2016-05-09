@@ -2,7 +2,7 @@
 
 A session might go like
 
-Set ESGF openid and passwd in [*credentials file*](files.md):
+Set ESGF openid and passwd in [*credentials file*](files.md#credentialsconf):
 
     vi credentials.conf
 
@@ -54,12 +54,12 @@ Check download progress:
     status      count  size
     done            1  8.9 MB
 
-The file should be available in [*data folder*](files.md)
+The file should be available in [*data folder*](files.md#data)
 
     $ find data -type f
     $HOME/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-In case something goes wrong, you can check [*log files*](files.md)
+In case something goes wrong, you can check [*log files*](files.md#log)
 for information about the error.
 
 To debug certificate issue, you can use
