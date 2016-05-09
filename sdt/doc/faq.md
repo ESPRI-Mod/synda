@@ -47,19 +47,17 @@ Unset all X509 environment variables and remove '~/.esg' directory.
 
 --------------------------------------------------------
 
-### 'OpenSL: error:14094416:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown' error
+### 'OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown' error
 
-This signals that the server does not trust the certificate issued by the MyProxy CA
+This signals that the server does not trust the certificate issued by the
+MyProxy CA.
 
-You might need to re-install the set of trusted ESGF certificates:
+Run commands below
 
-* remove everything in the directory ~/.esg/*
-* run the wget script to download a new set of trusted certificates
+    synda certificate renew -x
 
-If this doesn't help, contact the ESGF users mailing list to notify an ESGF
-administrators there might be a problem with the server certificate
-
-More info: https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs
+If this doesn't help, you can find more info
+[here](https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs)
 
 --------------------------------------------------------
 
