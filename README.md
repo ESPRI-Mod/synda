@@ -35,15 +35,15 @@ Explore metadata
 
 [Overview](sdt/doc/overview.md)                                       | [Faq](sdt/doc/faq.md)
 
-[Installation guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)
+[Installation Guide](#installation)                                   | [Upgrade guide](sdt/doc/upgrade_guide.md)
 
-[User guide](sdt/doc/user_guide.md)
+[User Guide](sdt/doc/user_guide.md)
 
-[Command reference](sdt/doc/command_reference.md)
+[Command Reference](sdt/doc/command_reference.md)
 
-[Configuration parameter reference](sdt/doc/configuration_parameter_reference.md)
+[Configuration Parameter Reference](sdt/doc/configuration_parameter_reference.md)
 
-[Selection file](sdt/doc/selection_file.md)                           | [Selection file parameter reference](sdt/doc/selection_file_parameter_reference.md) | [Selection file example](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
+[Selection File](sdt/doc/selection_file.md)                           | [Selection File Parameter Reference](sdt/doc/selection_file_parameter_reference.md) | [Selection File Example](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
 
 [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
