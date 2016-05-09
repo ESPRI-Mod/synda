@@ -4,11 +4,10 @@ This document describes most important files and folders
 
 ### credentials.conf
 
-Contains user credentials (e.g. ESGF openid)
+This file contains user credentials (e.g. ESGF openid)
 
-location:
-$HOME/sdt/conf/credentials.conf
-/etc/synda/sdt/credentials.conf
+Location is *$HOME/sdt/conf/credentials.conf* for source installation and
+*/etc/synda/sdt/credentials.conf* for system package installation.
 
 --------------------------------------------------------
 
@@ -16,7 +15,7 @@ $HOME/sdt/conf/credentials.conf
 
 This folder contains ESGF files downloaded in tracking mode.
 
-**Location:** *$HOME/sdt/data* for source installation and */srv/synda/sdt/data* for
+Location is *$HOME/sdt/data* for source installation and */srv/synda/sdt/data* for
 system package installation.
 
 --------------------------------------------------------
@@ -25,7 +24,7 @@ system package installation.
 
 This folder contains ESGF files downloaded in non-tracking mode.
 
-Location: *$HOME/sdt/sandbox* for source installation and */srv/synda/sdt/sandbox* for
+Location is *$HOME/sdt/sandbox* for source installation and */srv/synda/sdt/sandbox* for
 system package installation.
 
 --------------------------------------------------------
@@ -34,10 +33,5 @@ system package installation.
 
 This folder contains log files.
 
-Log files are stored in '$HOME/sdt/log' folder (source installation) and
-'/var/log/synda/sdt' folder (system package installation).
-in $HOME/sdt/log
-Set daemon user.
-
---------------------------------------------------------
-
+Location is *$HOME/sdt/log* for source installation and
+*/var/log/synda/sdt* for system package installation.
