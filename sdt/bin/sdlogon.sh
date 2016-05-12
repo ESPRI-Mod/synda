@@ -27,6 +27,7 @@ usage ()
     echo "  -u      username"
     echo "  -r      force renew certificate even if valid"
     echo "  -v      verbose"
+    echo "  -x      force renew CA certificates"
 }
 
 curdate ()
