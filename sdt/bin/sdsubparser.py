@@ -101,6 +101,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate',example=sdcliex.certificate())
     add_action_argument(subparser,choices=['renew','print'])
+    subparser.add_argument('-d','--debug',action='store_true',help='Display debug message')
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
