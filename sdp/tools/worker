@@ -298,13 +298,13 @@ def stop_daemon(pidfile):
     else:
         print 'Daemon is already stopped.'
 
-def start_daemon(args,logfile):
+def start_daemon(args):
     global quit
 
     # run daemon as unprivileged user (if run as root and unprivileged user is set)
     if is_root():
         if user and group:
-            unprivileged_user_mode(logfile,'daemon')
+            unprivileged_user_mode('daemon')
 
     if not is_running():
         quit=False
@@ -338,7 +338,7 @@ def chown_files(files,uid,gid):
         if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
             os.chown(file_,uid,gid)
 
-def unprivileged_user_mode(logfile,mode):
+def unprivileged_user_mode(mode):
 
     # retrieve numeric uid/gid
     uid=pwd.getpwnam(user).pw_uid
@@ -400,7 +400,7 @@ if __name__ == '__main__':
         # run as unprivileged user (if run as root and unprivileged user is set)
         if is_root():
             if user and group:
-                unprivileged_user_mode(logfile,'interactive')
+                unprivileged_user_mode('interactive')
 
         # init logging
         init_logger(logfile)
@@ -418,7 +418,7 @@ if __name__ == '__main__':
         logfile=get_logfile(logdir,'worker.log')
 
         if args.action == 'start':
-            start_daemon(args,logfile)
+            start_daemon(args)
         elif args.action == 'stop':
             stop_daemon(pidfile)
         elif args.action == 'status':
