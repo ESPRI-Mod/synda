@@ -92,25 +92,17 @@ def get_status_output(args, **kwargs):
     stdout, stderr = p.communicate()
     return p.returncode, stdout, stderr
 
-def check_user_group(username):
+def check_user_group():
+    if user is None:
+        username=getpass.getuser()
+    else:
+        username=user
+
     groups = [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
+
     if 'cmip5' not in groups:
         sys.stderr.write('Warning: user running this script is not in cmip5 group\n')
         #raise Exception('Incorrect group (user running this script must be in cmip5 group).')
-
-def check_username(username):
-    """
-    Obsolete.
-    """
-
-    if username in ['root']:
-        raise Exception('Incorrect user (this script must be run as normal user).')
-
-def check_user():
-    username=getpass.getuser()
-
-    #check_username(username) # obsolete as we may now want to start the daemon as root for unprivileged-mode (i.e. root + setuid)
-    check_user_group(username)
 
 def get_unique_filename():
     return "worker-%s-%i.log"%(datetime.datetime.now().strftime("%Y%m%d-%H%M%S"),os.getpid())
@@ -312,7 +304,7 @@ def start_daemon(args,logfile):
     # run daemon as unprivileged user (if run as root and unprivileged user is set)
     if is_root():
         if user and group:
-            unprivileged_user_mode(logfile)
+            unprivileged_user_mode(logfile,'daemon')
 
     if not is_running():
         quit=False
@@ -346,7 +338,7 @@ def chown_files(files,uid,gid):
         if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
             os.chown(file_,uid,gid)
 
-def unprivileged_user_mode(logfile):
+def unprivileged_user_mode(logfile,mode):
 
     # retrieve numeric uid/gid
     uid=pwd.getpwnam(user).pw_uid
@@ -356,9 +348,21 @@ def unprivileged_user_mode(logfile):
     li=[stacktrace_log_file,logfile]
     chown_files(li,uid,gid)
 
-    # set_daemon process identity
-    context.uid = uid
-    context.gid = gid
+    if mode=='daemon':
+
+        # set daemon process identity
+        context.uid = uid
+        context.gid = gid
+
+    elif mode=='interactive':
+
+        # set current process identity
+        os.setgid(gid)
+        os.setuid(uid)
+
+    else:
+
+        assert False
 
 # script init.
 
@@ -376,7 +380,7 @@ group=None
 
 if __name__ == '__main__':
     args=_get_args()
-    check_user()
+    check_user_group()
 
     url='https://%s:%s/jsonrpc'%(args.host,args.port)
 
@@ -392,6 +396,11 @@ if __name__ == '__main__':
         # build log path
         logdir=default_logdir if args.logdir is None else args.logdir
         logfile=get_logfile(logdir,get_unique_filename())
+
+        # run as unprivileged user (if run as root and unprivileged user is set)
+        if is_root():
+            if user and group:
+                unprivileged_user_mode(logfile,'interactive')
 
         # init logging
         init_logger(logfile)
