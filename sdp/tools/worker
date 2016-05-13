@@ -345,7 +345,7 @@ def unprivileged_user_mode(mode):
     gid=grp.getgrnam(group).gr_gid
 
     # be sure file permission works for unprivileged user
-    li=[stacktrace_log_file,logfile]
+    li=[logdir,stacktrace_log_file,logfile]
     chown_files(li,uid,gid)
 
     if mode=='daemon':
