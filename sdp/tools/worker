@@ -192,7 +192,8 @@ def process_jobs(service,args):
         result=service.get_job(job_class=args.job_class,pipeline=args.pipeline,order='fifo')
         job=result['job']
         while job and (quit==False): # loop until no more job waiting
-            logging.info('Processing {0}'.format(job['full_path_variable']))
+            serialized_job_attrs=','.join(['%s=%s'%(k,v) for k,v in job.iteritems()])
+            logging.info('Processing job ({0})'.format(serialized_job_attrs))
             if args.debug:
                 print str(job)
                 job['error']=False

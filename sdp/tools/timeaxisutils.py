@@ -9,7 +9,7 @@
 #  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
 ##################################
 
-"""This script deserialize timeaxis runlog.
+"""This script deserialize log blob (jobrun.runlog) produced by 'timeaxis' script.
 
 Description
     When timeaxis job run, many debug informations are stored in 'runlog' column using a serialized format.

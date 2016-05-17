@@ -45,7 +45,7 @@ def is_duplicate(output1_path,output2_path):
 def run(job):
     logging.info('is_duplicate.py start')
 
-    (path_output1,path_output2)=get_output12_dataset_paths(job['full_path_variable'])
+    (path_output1,path_output2)=get_output12_dataset_paths(job['variable'])
     if is_duplicate(path_output1,path_output2):
         job['transition_return_code']=1
     else:
