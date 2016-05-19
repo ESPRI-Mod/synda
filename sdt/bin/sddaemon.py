@@ -129,13 +129,14 @@ def start():
 def stop():
 
     if not sdutils.is_granted():
-        print 'You need to be root to perform this command.'
+        sdtools.print_stderr('You need to be root to perform this command.')
         return
 
     if is_running():
         os.kill(pidfile.read_pid(),signal.SIGTERM)
+        #sdtools.print_stderr("Daemon process didn't exit successfully.")
     else:
-        print 'Daemon is already stopped.'
+        sdtools.print_stderr('Daemon is already stopped.')
 
 def terminate(signum, frame):
     import sdtaskscheduler # must be here because of double-fork (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
