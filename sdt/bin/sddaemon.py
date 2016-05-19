@@ -29,6 +29,7 @@ import pwd
 import time
 import daemon
 import daemon.pidfile
+import psutil
 import traceback
 import argparse
 import signal
@@ -133,8 +134,14 @@ def stop():
         return
 
     if is_running():
-        os.kill(pidfile.read_pid(),signal.SIGTERM)
-        #sdtools.print_stderr("Daemon process didn't exit successfully.")
+
+        pid=pidfile.read_pid()
+
+        if psutil.pid_exists(pid):
+            os.kill(pid,signal.SIGTERM)
+        else:
+            sdtools.print_stderr("Warning: pidfile exists without corresponding process (most often, this is caused by an unexpected system restart).")
+ 
     else:
         sdtools.print_stderr('Daemon is already stopped.')
 
