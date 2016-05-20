@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
