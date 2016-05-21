@@ -53,11 +53,13 @@ def daemon(args):
     if args.action is None:
         sddaemon.print_daemon_status()
     else:
-        if args.action=="start":
 
+        if args.action in ['start','stop']:
             if sdconfig.multiuser:
-                print_stderr("Daemon must be started using 'systemctl' command")
+                print_stderr("When synda is installed with system package, daemon must be managed using 'systemctl' command")
                 return 1
+
+        if args.action=="start":
 
             if sddaemon.is_running():
                 print_stderr("Daemon already started")
@@ -68,10 +70,6 @@ def daemon(args):
                 except SDException,e:
                     print_stderr('error occured',e.msg)
         elif args.action=="stop":
-
-            if sdconfig.multiuser:
-                print_stderr("Daemon must be stopped using 'systemctl' command")
-                return 1
 
             if sddaemon.is_running():
                 try:
