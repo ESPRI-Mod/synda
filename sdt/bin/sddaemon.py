@@ -24,6 +24,7 @@ Note
 """
 
 import os
+import sys
 import grp
 import pwd
 import time
@@ -89,10 +90,6 @@ def main_loop():
 
 def start():
 
-    if not sdutils.is_granted():
-        print 'You need to be root to perform this command.'
-        return
-
     # run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
     if sdtools.is_root():
         if user and group:
@@ -128,11 +125,6 @@ def start():
         print 'Daemon is already running.'
 
 def stop():
-
-    if not sdutils.is_granted():
-        sdtools.print_stderr('You need to be root to perform this command.')
-        return
-
     if is_running():
 
         pid=pidfile.read_pid()
@@ -140,7 +132,13 @@ def stop():
         if psutil.pid_exists(pid):
             os.kill(pid,signal.SIGTERM)
         else:
-            sdtools.print_stderr("Warning: pidfile exists without corresponding process (most often, this is caused by an unexpected system restart).")
+            import sdlog # sdlog import must not be at the top of this file, because of double-fork
+
+            sdlog.error('SDDAEMON-014',"Warning: daemon pidfile exists but daemon process doesn't exist. Most often, this is caused by an unexpected system restart (e.g. kernel panic).")
+
+            # remove orphan pidfile
+            sdlog.info('SDDAEMON-016',"Removing orphan daemon pidfile (%s)."%sdconfig.daemon_pid_file)
+            os.unlink(sdconfig.daemon_pid_file)
  
     else:
         sdtools.print_stderr('Daemon is already stopped.')
@@ -176,6 +174,11 @@ if __name__ == "__main__":
     parser.add_argument('action')
     args = parser.parse_args()
 
+    if args.action in ['start','stop']:
+        if not sdutils.is_granted():
+            sdtools.print_stderr('You need to be root to perform this command.')
+            sys.exit(1)
+
     if args.action == 'start':
         start()
 
@@ -184,7 +187,7 @@ if __name__ == "__main__":
         #if not is_running():
         #    import sdlog
         #    sdlog.info("SDDAEMON-222" "Error occurs during transfer daemon startup, see log files for details",stderr=True)
-        #    os.exit(2)
+        #    sys.exit(2)
 
     elif args.action == 'stop':
         stop()
