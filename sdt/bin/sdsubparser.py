@@ -154,6 +154,9 @@ def run(subparsers):
     subparser.add_argument('--metric','-m',choices=['rate','size'],default='rate',help='Metric name')
     subparser.add_argument('--project','-p',default='CMIP5',help="Project name (must be used with '--groupby=model' else ignored)")
 
+    subparser=create_subparser(subparsers,'open',common_option=False,help='Open netcdf file',example=sdcliex.param())
+    add_parameter_argument(subparser)
+
     subparser=create_subparser(subparsers,'param',common_option=False,help='Print ESGF facets',example=sdcliex.param())
     subparser.add_argument('pattern1',nargs='?',default=None,help='Parameter name')
     subparser.add_argument('pattern2',nargs='?',default=None,help='Filter')

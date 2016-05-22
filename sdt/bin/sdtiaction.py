@@ -106,7 +106,7 @@ def facet(args):
             print_stderr('Multi-queries not supported')
 
         else:
-            # Parameter not set. In this case, we retrieve facet value list from cache.
+            # Parameter not set. In this case, we retrieve facet values list from cache.
 
             sdparam.main([args.facet_name]) # tricks to re-use sdparam CLI parser
 
@@ -485,6 +485,50 @@ def retry(args):
     else:
         print_stderr("No transfer in error")
 
+def open_(args):
+    import sdview
+
+
+    # check
+
+    li=syndautils.get_facet_values_early(args.stream,'instance_id') # check if 'instance_id' exists
+    if len(li)==0:
+        # 'instance_id' is not found on cli
+
+        li=syndautils.get_facet_values_early(args.stream,'title') # check if 'title' exists
+        if len(li)==0:
+            # 'title' is not found on cli
+
+            # no identifier found, we stop the processing
+            print_stderr('Please specify a file identifier (id or filename).')
+            return
+
+        elif len(li)>1:
+            print_stderr('Too many arguments.')
+            return
+    elif len(li)>1:
+        print_stderr('Too many arguments.')
+        return
+
+
+    # main
+
+    import sdlfile
+    file_=sdlfile.get_file(stream=args.stream)
+
+    if file_ is None:
+
+        import sdrfile
+        file_=sdrfile.get_file(stream=args.stream)
+
+        if file is None:
+            print_stderr("File not found")
+        else:
+            sdview.open_(facets_groups)
+
+    else:
+        sdview.open_(facets_groups)
+
 def param(args):
     import sdparam
     sdparam.print_(args)
@@ -595,6 +639,7 @@ actions={
     'install':install, 
     'intro':intro, 
     'metric':metric, 
+    'open':open_,
     'param':param,
     'queue':queue,
     'remove':remove, 
