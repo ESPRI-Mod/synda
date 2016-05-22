@@ -486,7 +486,7 @@ def retry(args):
         print_stderr("No transfer in error")
 
 def open_(args):
-    import sdview
+    import sdview,syndautils
 
 
     # check
@@ -501,14 +501,14 @@ def open_(args):
 
             # no identifier found, we stop the processing
             print_stderr('Please specify a file identifier (id or filename).')
-            return
+            return 1
 
         elif len(li)>1:
             print_stderr('Too many arguments.')
-            return
+            return 1
     elif len(li)>1:
         print_stderr('Too many arguments.')
-        return
+        return 1
 
 
     # main
@@ -523,11 +523,16 @@ def open_(args):
 
         if file is None:
             print_stderr("File not found")
+
+            return 2
         else:
             sdview.open_(facets_groups)
 
     else:
         sdview.open_(facets_groups)
+
+
+    return 0
 
 def param(args):
     import sdparam
