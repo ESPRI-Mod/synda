@@ -488,14 +488,16 @@ def retry(args):
 def open_(args):
     import sdview,syndautils
 
+    stream=syndautils.get_stream(args)
+
 
     # check
 
-    li=syndautils.get_facet_values_early(args.stream,'instance_id') # check if 'instance_id' exists
+    li=syndautils.get_facet_values_early(stream,'instance_id') # check if 'instance_id' exists
     if len(li)==0:
         # 'instance_id' is not found on cli
 
-        li=syndautils.get_facet_values_early(args.stream,'title') # check if 'title' exists
+        li=syndautils.get_facet_values_early(stream,'title') # check if 'title' exists
         if len(li)==0:
             # 'title' is not found on cli
 
@@ -514,12 +516,12 @@ def open_(args):
     # main
 
     import sdlfile
-    file_=sdlfile.get_file(stream=args.stream)
+    file_=sdlfile.get_file(stream=stream)
 
     if file_ is None:
 
         import sdrfile
-        file_=sdrfile.get_file(stream=args.stream)
+        file_=sdrfile.get_file(stream=stream)
 
         if file is None:
             print_stderr("File not found")
