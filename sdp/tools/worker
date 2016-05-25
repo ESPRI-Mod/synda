@@ -165,9 +165,8 @@ def run_job(job,args):
             assert ' ' not in k
             assert ' ' not in v
 
-            option='--%s %s'%(k,v)
-
-            script_input_parameters.append(option)
+            script_input_parameters.append('--%s'%k)
+            script_input_parameters.append(v)
 
         (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh')]+script_input_parameters,shell=False)
         logging.debug('Script return code: {0}\n'.format(status))
