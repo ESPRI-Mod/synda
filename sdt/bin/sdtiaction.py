@@ -486,7 +486,7 @@ def retry(args):
         print_stderr("No transfer in error")
 
 def open_(args):
-    import sdview,syndautils
+    import sdview,syndautils,sdsandbox
 
     stream=syndautils.get_stream(args)
 
@@ -513,7 +513,7 @@ def open_(args):
         return 1
 
 
-    # main
+    # discovery
 
     import sdlfile
     file_=sdlfile.get_file(stream=stream)
@@ -523,15 +523,36 @@ def open_(args):
         import sdrfile
         file_=sdrfile.get_file(stream=stream)
 
-        if file is None:
+        if file_ is None:
             print_stderr("File not found")
 
             return 2
-        else:
-            sdview.open_(facets_groups)
 
+
+    # cast
+
+    f=File(**file_)
+
+
+    # check if file exists locally
+
+    if f.status==sdconst.TRANSFER_STATUS_DONE:
+        local_file=f.get_full_local_path(prefix=sdconfig.sandbox_folder)
+    elif sdsandbox.file_exists(f.filename):
+        local_file=sdsandbox.get_file_path(f.filename)
     else:
-        sdview.open_(facets_groups)
+        local_file=None
+
+
+    # download (if not done already)
+
+    if local_file is None:
+        FIXME
+
+
+    # open file in external viewer
+
+    sdview.open_(local_file)
 
 
     return 0

@@ -16,7 +16,7 @@ Note
 
 Dependencies
     pip install pexpect
-    aptitude install grads
+    aptitude install grads | yum install grads
 """
 
 import sys
@@ -37,7 +37,7 @@ def extract_variable_name_from_filename(filename):
 
     return variable
 
-def open(filename):
+def open_(filename):
     cmd='grads -l -g 1000x600+70+0'
 
     # open external viewer
@@ -59,4 +59,4 @@ if __name__ == '__main__':
     parser.add_argument('-f','--filename')
     args = parser.parse_args()
 
-    open(args.filename)
+    open_(args.filename)
