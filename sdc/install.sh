@@ -460,16 +460,8 @@ retrieve_archive ()
     url=${1}
 
     if [ -n "$g__archive" ]; then
-        # when we come here, means that we run this script from 'SDC' (i.e. developer source tree) dir
-        # (this case is for developer, not end-user).
-
-        # This is to prevent having to send the package to the web server
+        # This case is used to prevent having to send the package to the web server
         # (useful when no internet access and want to do some local deployment for test)
-
-        # this is to make the use of full path as well as relative path possible for
-        # archive location (we need to "cd" to the place we were, when the user ran the
-        # install.sh script)
-        cd $curr_dir/../sdt
 
         # check
         if [ ! -f "$g__archive" ]; then
@@ -739,7 +731,7 @@ fi
 # check
 # (having more than one package specified with '-d' option is a bit tricky to handle, so this check prevent it for now)
 if [ -n "$g__version" ]; then
-    # version have been specified
+    # version has been specified
 
     if [ $# -gt 1 ]; then
         # means more than one module have been asked to be installed
@@ -758,7 +750,6 @@ g__before_md5_conffile=
 #
 post_install_msg= # used to display some info to the user after installation
 tmpdir=$( mktemp -d -p /tmp tmp.sdt.XXXXXXXXXX ) # use mktemp instead of hardcoded path in case different user install synda from source on a multi-user machine
-curr_dir=$PWD # used for special deployment (developper only)
 #
 url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda
 # TODO: switch to this url ? => http://esgf-local.ipsl.upmc.fr/thredds/fileServer/ipsl_public/jripsl/synda/sdt-3.1.tar.gz
