@@ -486,7 +486,8 @@ def retry(args):
         print_stderr("No transfer in error")
 
 def open_(args):
-    import sdview,syndautils,sdsandbox
+    import sdview,syndautils,sdsandbox,sdtypes,sdconst
+
 
     stream=syndautils.get_stream(args)
 
@@ -531,13 +532,13 @@ def open_(args):
 
     # cast
 
-    f=File(**file_)
+    f=sdtypes.File(**file_)
 
 
     # check if file exists locally
 
     if f.status==sdconst.TRANSFER_STATUS_DONE:
-        local_file=f.get_full_local_path(prefix=sdconfig.sandbox_folder)
+        local_file=f.get_full_local_path()
     elif sdsandbox.file_exists(f.filename):
         local_file=sdsandbox.get_file_path(f.filename)
     else:
@@ -547,7 +548,10 @@ def open_(args):
     # download (if not done already)
 
     if local_file is None:
-        FIXME
+        status=sddirectdownload.run([file_], verbosity=1)
+
+        if status!=0:
+            return 1
 
 
     # open file in external viewer
