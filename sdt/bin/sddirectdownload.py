@@ -26,7 +26,7 @@ from sdtools import print_stderr
 def run(files,
         timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,
         force=False,
-        http_client=sdconst.HTTP_CLIENT_URLLIB,
+        http_client=sdconst.HTTP_CLIENT_WGET,
         local_path_prefix=sdconfig.sandbox_folder,
         verify_checksum=False,
         network_bandwidth_test=False,
