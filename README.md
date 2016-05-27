@@ -80,7 +80,7 @@ This program is a command-line alternative to the ESGF web front-end.
 Notes:
 
 * Source installation can be performed by root or normal user.
-* When using system package installation, many *synda* commands cannot be executed by normal user (e.g. sudo must be used to execute '*synda get*' command).
+* When using system package installation, many *synda* commands cannot be executed by normal user (e.g. sudo must be used to execute "synda get" command).
 * Installation guides for old *synda* versions can be found [here](sdt/doc/old_version_installation_guide)
 
 ## Contact
