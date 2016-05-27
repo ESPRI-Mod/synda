@@ -102,6 +102,21 @@ def get_functional_identifiers(facets_group):
 
     return li
 
+def extract_variable_name_from_filename(filename):
+    """
+    Not used
+    """
+
+    rege=re.compile("^([^_]+)_.+$")
+
+    rege_result=rege.match(filename) # sample => sfcWind_day_HadGEM2-ES_piControl_r1i1p1_19091201-19191130.nc
+    if rege_result!=None:
+        variable=rege_result.group(1) # sample => sfcWind
+    else:
+        assert False
+
+    return variable
+
 # module init.
 
 if __name__ == '__main__':

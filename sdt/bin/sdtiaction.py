@@ -556,7 +556,7 @@ def open_(args):
 
     # open file in external viewer
 
-    sdview.open_(local_file)
+    sdview.open_(local_file,f.variable)
 
 
     return 0
