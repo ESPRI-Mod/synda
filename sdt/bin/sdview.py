@@ -38,7 +38,7 @@ def open_(file_path,variable):
 
     # display variable
     child.expect('ga->')
-    child.sendline('d %s'%variable_name)
+    child.sendline('d %s'%variable)
 
     child.interact()
 

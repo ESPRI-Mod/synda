@@ -538,16 +538,16 @@ def open_(args):
     # check if file exists locally
 
     if f.status==sdconst.TRANSFER_STATUS_DONE:
-        local_file=f.get_full_local_path()
+        file_local_path=f.get_full_local_path()
     elif sdsandbox.file_exists(f.filename):
-        local_file=sdsandbox.get_file_path(f.filename)
+        file_local_path=sdsandbox.get_file_path(f.filename)
     else:
-        local_file=None
+        file_local_path=None
 
 
     # download (if not done already)
 
-    if local_file is None:
+    if file_local_path is None:
         status=sddirectdownload.run([file_], verbosity=1)
 
         if status!=0:
@@ -556,7 +556,7 @@ def open_(args):
 
     # open file in external viewer
 
-    sdview.open_(local_file,f.variable)
+    sdview.open_(file_local_path,f.variable)
 
 
     return 0
