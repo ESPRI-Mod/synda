@@ -155,4 +155,4 @@ LIGHT_FIELDS='instance_id,id,type,data_node,variable'
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 
-ADMIN_SUBCOMMANDS=['autoremove','certificate','get','install','pexec','remove','reset','retry','update','upgrade']
+ADMIN_SUBCOMMANDS=['autoremove','certificate','get','install','open','pexec','remove','reset','retry','update','upgrade']
