@@ -39,6 +39,16 @@ Then install Synda package using command below
 sudo apt-get install synda --force-yes -y
 ```
 
+## Patch
+
+Synda 3.4 DEB package contains a bug which prevent displaying error messages under certain circumstances.
+
+Run the command below to fix it
+
+```
+sudo sed -i -e "s/install/get','install/" /usr/share/python/synda/sdt/bin/sdconst.py
+```
+
 ## Configuration
 
 * Edit credentials file to set ESGF openid and password

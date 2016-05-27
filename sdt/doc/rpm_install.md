@@ -51,6 +51,16 @@ If you need a distro/version that is not listed, you can open a github issue so 
 
 Note: RPM packages are currently only available for 64 bits architecture
 
+## Patch
+
+Synda 3.4 RPM package contains a bug which prevent displaying error messages under certain circumstances.
+
+Run the command below to fix it
+
+```
+sudo sed -i -e "s/install/get','install/" /usr/share/python/synda/sdt/bin/sdconst.py
+```
+
 ## Configuration
 
 * Edit credentials file to set ESGF openid and password
