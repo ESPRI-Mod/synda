@@ -1,5 +1,13 @@
 # Synda FAQ
 
+### NoSectionError: No section: 'esgf_credential'
+
+Run commands below
+
+    sudo sed -i -e "s/install/get','install/" /usr/share/python/synda/sdt/bin/sdconst.py 
+
+--------------------------------------------------------
+
 ### urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
 
 Run commands below
