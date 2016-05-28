@@ -26,8 +26,8 @@ import re
 import pexpect
 import sdapp
 
-def open_(file_path,variable):
-    cmd='grads -l -g 1000x600+70+0'
+def open_(file_path,variable,geometry='1000x600+70+0'):
+    cmd='grads -l -g %s'%geometry
 
     # open external viewer
     child = pexpect.spawn(cmd)

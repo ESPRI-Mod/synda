@@ -556,7 +556,7 @@ def open_(args):
 
     # open file in external viewer
 
-    sdview.open_(file_local_path,f.variable)
+    sdview.open_(file_local_path,f.variable,args.geometry)
 
 
     return 0

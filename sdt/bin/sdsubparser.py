@@ -155,6 +155,7 @@ def run(subparsers):
     subparser.add_argument('--project','-p',default='CMIP5',help="Project name (must be used with '--groupby=model' else ignored)")
 
     subparser=create_subparser(subparsers,'open',no_default=False,help='Open netcdf file',example=sdcliex.open())
+    subparser.add_argument('--geometry','-g',default='1200x700+0+0',help='Window geometry')
     add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'param',common_option=False,help='Print ESGF facets',example=sdcliex.param())
