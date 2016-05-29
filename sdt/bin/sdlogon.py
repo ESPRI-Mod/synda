@@ -16,12 +16,13 @@ import os
 import argparse
 from retrying import retry
 import sdapp
-from sdexception import SDException,CertificateRenewalException
 import sdconfig
 import sdopenid
 import sdutils
 import sdlog
+import sdmyproxy
 from sdtools import print_stderr
+from sdexception import SDException,CertificateRenewalException
 
 def print_certificate():
     import os, sdutils
@@ -69,17 +70,24 @@ def renew_certificate_with_retry(force,quiet=True):
     """
     renew_certificate(force,quiet)
 
-def renew_certificate_NG(force,quiet=True):
-    """Renew ESGF certificate.
+def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
+    """Renew ESGF certificateusing sdmyproxy module."""
 
-    Not used yet.
-    """
-    from myproxy.client import MyProxyClient
-    myproxy_clnt = MyProxyClient(hostname="myproxy.somewhere.ac.uk")
-    cert, private_key = myproxy_clnt.logon(username, password, bootstrap=True)
+    # extract info from openid
+    (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
 
-def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
-    """Renew ESGF certificate."""
+    # retrieve password
+    password=sdconfig.config.get('esgf_credential','password')
+
+    # main
+    try:
+        sdmyproxy.run(hostname,port,username,force_renew_certificate,force_renew_ca_certificates,password)
+    except Exception,e:
+        sdlog.error("SDMYPROX-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
+        raise
+
+def renew_certificate_old(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
+    """Renew ESGF certificate using 'sdlogon.sh' script."""
 
     # TODO: move this log into the script so to print only when expired
     #sdlog.info("SYDLOGON-002","Renew certificate..")

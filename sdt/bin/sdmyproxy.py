@@ -25,7 +25,7 @@ import sdlog
 import sdutils
 import sdconfig
 from myproxy.client import MyProxyClient
-from sdexception import PasswordNotSetException,UsernameNotSetException
+from sdexception import PasswordNotSetException,UsernameNotSetException,CertificateRenewalException
 
 def get_passwd_from_passwd_file():
     passwd=None
@@ -50,13 +50,11 @@ def run(host,port,username,force_renew_certificate=False,force_renew_ca_certific
     # check password
     if password == "pwd":
         sdlog.error("SDMYPROX-019","ESGF password not set")
-FIXME
         raise PasswordNotSetException()
 
     # check username
     if username is None:
         sdlog.error("SDMYPROX-020","ESGF username not set")
-FIXME
         raise UsernameNotSetException()
 
     if force_renew_certificate:
@@ -79,13 +77,13 @@ FIXME
     # check (second pass => if it fails again, then fatal error)
     if not certificate_exists():
         sdlog.error("SDMYPROX-009","Error occured while retrieving certificate")
-        raise FIXME
+        raise CertificateRenewalException()
     else:
-        FIXME os.chmod(sdconfig.esgf_x509_proxy,600)  # needed by globus-url-copy
+        os.chmod(sdconfig.esgf_x509_proxy,0600) # needed by globus-url-copy
 
         if not certificate_is_valid():
             sdlog.error("SDMYPROX-010","Error occurs while retrieving certificate")
-            raise FIXME
+            raise CertificateRenewalException()
 
 def certificate_exists ():
     if os.path.isfile(sdconfig.esgf_x509_proxy):
@@ -106,6 +104,8 @@ def certificate_is_valid ():
         return False
 
 def renew_certificate (host,port,username):
+
+    sdlog.info("SDMYPROX-002","Renew certificate..")
 
     # we need a mkdir here to prevent 'No such file or directory' myproxyclient error (see TAGFERE5435 for more info)
     os.makedirs(sdconfig.security_dir)
@@ -143,9 +143,6 @@ def renew_certificate (host,port,username):
                                            bootstrap=bootstrap,
                                            updateTrustRoots=updateTrustRoots,
                                            authnGetTrustRootsCall=authnGetTrustRootsCall)
-
-FIXME
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 if __name__ == '__main__':
 

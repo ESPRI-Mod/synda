@@ -43,3 +43,7 @@ class EmptySelectionException(SDException):
     pass
 class TooMuchValueException(SDException):
     pass
+class PasswordNotSetException(SDException):
+    pass
+class UsernameNotSetException(SDException):
+    pass
