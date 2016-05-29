@@ -127,7 +127,9 @@ else
     fi
 
     esgf_credential_section=$(cat $conf_file | awk 'BEGIN{esgf_credential=0}{if ($0 ~ /^\[esgf_credential\]/) {esgf_credential=1;next}; if ((esgf_credential==1) && ($0 ~ /^\[/)) {esgf_credential=0;next}; if (esgf_credential==1) print $0}') # extract 'esgf_credential' section content
+    esgf_credential_section=$( echo "$esgf_credential_section" | sed 's/=/_RPLSTR_/2g' ) # TAG4534JK534 BEGINS (prevent password '=' character collision with delimiter)
     g__pass=$(echo "$esgf_credential_section" | awk -F '=' '{ if (! ($0 ~ /^;/) && ! ($0 ~ /^#/) && $0 ~ /password/) print $2}' ) # what we do here is read 'password' and ignore comment if any (i.e. line starting with ';' or '#').
+    g__pass=$(echo "$g__pass" | sed 's/_RPLSTR_/=/g' ) # TAG4534JK534 ENDS (restore '=' character)
 fi
 
 set_X509_CERT_DIR ()
@@ -164,7 +166,7 @@ fi
 
 # check username 
 if [ -z "$username" ]; then
-    msg "ERR019" "ESGF username not set"
+    msg "ERR020" "ESGF username not set"
     exit 4
 fi
 
