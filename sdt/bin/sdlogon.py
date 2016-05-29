@@ -70,7 +70,14 @@ def renew_certificate_with_retry(force,quiet=True):
     """
     renew_certificate(force,quiet)
 
-def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
+def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
+
+    if sdconfig.use_myproxy_module:
+        renew_certificate_new(force_renew_certificate,quiet,debug,force_renew_ca_certificates)
+    else:
+        renew_certificate_old(force_renew_certificate,quiet,debug,force_renew_ca_certificates)
+
+def renew_certificate_new(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
     """Renew ESGF certificateusing sdmyproxy module."""
 
     # extract info from openid

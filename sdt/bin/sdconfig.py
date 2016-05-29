@@ -181,6 +181,9 @@ nearest_schedule='post' # pre | post
 
 unknown_value_behaviour='error' # error | warning
 
+# this is to switch between 'sdmyproxy.py' and 'sdlogon.sh'
+use_myproxy_module=False
+
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
