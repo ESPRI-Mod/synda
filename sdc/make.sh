@@ -55,6 +55,13 @@ upload ()
 {
     local file_=${1}
 
+    if [ -z "$SYNDA_WEBHOST" ]; then
+        echo "Error: SYNDA_WEBHOST is not set"
+        exit 1
+    fi
+
+    webhost=$SYNDA_WEBHOST
+
     scp $file_ $webhost
 }
 
@@ -142,13 +149,8 @@ fi
 #    echo "Error: SYNDA_SRC_ROOT is not set"
 #    exit 1
 #fi
-if [ -z "$SYNDA_WEBHOST" ]; then
-    echo "Error: SYNDA_WEBHOST is not set"
-    exit 1
-fi
 
 # init
-webhost=$SYNDA_WEBHOST
 #src_snapshot_root=$SYNDA_SRC_ROOT # obsolete
 src_snapshot_root=$(dirname $(pwd))
 
