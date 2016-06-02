@@ -358,14 +358,13 @@ install_ve ()
     source $ve_dest_dir/bin/activate
 }
 
-install_myproxyclient ()
+fix_myproxyclient ()
 {
-    $python_pkg_install_cmd myproxyclient==1.3.1
+    # Fix error below:
+    # <---
+    # AttributeError: 'MyProxyServerSSLCertVerification' object has no attribute '__name__'
+    # --->
 
-    # fix error below which occur with MyProxyClient-1.3.1-py2.7
-    #
-    #   AttributeError: 'MyProxyServerSSLCertVerification' object has no attribute '__name__'
-    #
     if [ "$python_pkg_install_cmd" = "easy_install" ]; then
         client_file=$st_root/lib/$PYTHON_CMD/site-packages/MyProxyClient*.egg/myproxy/client.py
     elif [ "$python_pkg_install_cmd" = "pip install" ]; then
@@ -408,7 +407,10 @@ install_st_additional_packages ()
         $python_pkg_install_cmd argparse
     fi
 
-    install_myproxyclient
+    $python_pkg_install_cmd myproxyclient
+
+    # disabled as this fix seems not needed anymore
+    #fix_myproxyclient
 
     # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
     easy_install https://github.com/pyca/pyopenssl/tarball/master # note: pip cannot be used here ('easy_install' only)
