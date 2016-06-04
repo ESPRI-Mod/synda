@@ -70,9 +70,9 @@ def run(host,port,username,force_renew_certificate=False,force_renew_ca_certific
             #sdlog.error("SDMYPROX-006","Certificate is valid, nothing to do")
             pass
         else:
-            renew_certificate(host,port,username)
+            renew_certificate(host,port,username,password)
     else:
-        renew_certificate(host,port,username)
+        renew_certificate(host,port,username,password)
 
     # check (second pass => if it fails again, then fatal error)
     if not certificate_exists():
@@ -103,12 +103,13 @@ def certificate_is_valid ():
     else:
         return False
 
-def renew_certificate (host,port,username):
+def renew_certificate (host,port,username,password):
 
     sdlog.info("SDMYPROX-002","Renew certificate..")
 
     # we need a mkdir here to prevent 'No such file or directory' myproxyclient error (see TAGFERE5435 for more info)
-    os.makedirs(sdconfig.security_dir)
+    if not os.path.isdir(sdconfig.security_dir):
+        os.makedirs(sdconfig.security_dir)
 
     # currently, we set bootstrap option everytime
     #
@@ -139,10 +140,10 @@ def renew_certificate (host,port,username):
 
     # main
     myproxy_clnt = MyProxyClient(hostname=host,port=port)
-    cert, private_key = myproxy_clnt.logon(username, password, 
-                                           bootstrap=bootstrap,
-                                           updateTrustRoots=updateTrustRoots,
-                                           authnGetTrustRootsCall=authnGetTrustRootsCall)
+    myproxy_clnt.logon(username, password,
+                       bootstrap=bootstrap,
+                       updateTrustRoots=updateTrustRoots,
+                       authnGetTrustRootsCall=authnGetTrustRootsCall)
 
 if __name__ == '__main__':
 
