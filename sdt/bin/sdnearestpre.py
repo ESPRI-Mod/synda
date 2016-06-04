@@ -19,7 +19,6 @@ Notes
 import os
 import argparse
 import json
-import sdnetutils
 import sdconfig
 import sdremoteparam
 from sdexception import SDException

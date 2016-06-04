@@ -9,12 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module submit a selection over each indexes and store results for each of them.
+"""This module is used to check if a selection gives the same result for each ESGF indexes.
 
-This module is used to check if a selection gives the same result for each indexes.
-
-Note
-    sdcmpindexes stands for "SynDa compare indexes"
+Notes
+    - This module submit a selection over each indexes and store results for each of them.
+    - sdcmpindexes stands for "SynDa compare indexes"
 """
 
 import sys
