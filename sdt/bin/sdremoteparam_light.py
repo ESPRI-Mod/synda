@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module builds search-API parameter query.
+"""This module builds and submit search-API *parameter* query.
 
 Reference
     - https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
