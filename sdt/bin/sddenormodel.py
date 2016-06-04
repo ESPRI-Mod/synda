@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""Denormalize model names as search-API don't understand normalized model name."""
+"""Denormalize model names as search-API don't understand normalized model name.
+
+Example
+    'CESM1-CAM5-1-FV2' become 'CESM1(CAM5.1,FV2)'
+"""
 
 import sys
 import argparse

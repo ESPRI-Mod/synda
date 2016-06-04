@@ -9,7 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains normalization functions."""
+"""This module contains model normalization functions.
+
+Example
+     'CESM1(CAM5.1,FV2)' become 'CESM1-CAM5-1-FV2'
+"""
 
 import string
 import sdapp
@@ -18,9 +22,6 @@ def normalize_model_name(model_name):
     """Replace special characters with hyphen.
 
     Model names differ from search-API and DRS. text below described the mapping rule between both naming spaces
-
-    Example
-         CESM1(CAM5.1,FV2) <=> CESM1-CAM5-1-FV2
 
         i.e.
             this returns row
