@@ -43,6 +43,21 @@ def certificate(args):
         else:
             print_stderr('Not implemented yet.')   
 
+def check(args):
+    import sddump
+
+    if args.action=="dataset_version":
+
+        datasets=sddump.dump_ESGF(['type=Dataset','project=CMIP5','experiment=historical'],'version',dry_run=args.dry_run)
+
+        # FIXME
+
+        if not args.dry_run:
+            print '%i files retrieved'%len(datasets)
+
+    else:
+        Assert False
+
 def contact(args):
     import sdi18n
     print sdi18n.m0018
@@ -663,6 +678,7 @@ def watch(args):
 actions={
     'autoremove':autoremove,
     'certificate':certificate, 
+    'check':check, 
     'contact':contact,
     'daemon':daemon, 
     'facet':facet,

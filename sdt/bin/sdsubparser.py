@@ -104,6 +104,9 @@ def run(subparsers):
     subparser.add_argument('-d','--debug',action='store_true',help='Display debug message')
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
+    subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check())
+    add_action_argument(subparser,choices=['dataset_version'])
+
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',note=sdi18n.m0023)

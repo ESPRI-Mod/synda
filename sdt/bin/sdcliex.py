@@ -28,6 +28,10 @@ def certificate():
   synda certificate print"""
     return buf
 
+def check():
+    buf="""  synda check dataset_version"""
+    return buf
+
 def contact():
     buf=""""""
     return buf
