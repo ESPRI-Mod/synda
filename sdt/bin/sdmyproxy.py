@@ -148,10 +148,10 @@ def renew_certificate (host,port,username,password):
                                  proxyCertLifetime=43200) # 12 hours
 
     # credname=credname
-    myproxy_clnt.logon(username, password,
-                       bootstrap=bootstrap,
-                       updateTrustRoots=updateTrustRoots,
-                       authnGetTrustRootsCall=authnGetTrustRootsCall)
+    creds=myproxy_clnt.logon(username, password,
+                             bootstrap=bootstrap,
+                             updateTrustRoots=updateTrustRoots,
+                             authnGetTrustRootsCall=authnGetTrustRootsCall)
 
 
     # store cert on disk
