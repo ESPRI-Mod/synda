@@ -64,7 +64,6 @@ def call_web_service(url,timeout):
         #
         # TODO: maybe always enable this
         #
-        #import sdconfig
         #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
 
         # debug
