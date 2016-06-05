@@ -36,9 +36,9 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def call_web_service(request,timeout):
+def call_web_service(url,timeout):
     start_time=SDTimer.get_time()
-    buf=HTTP_GET(request.get_url(),timeout)
+    buf=HTTP_GET(url,timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
 
     # HACK

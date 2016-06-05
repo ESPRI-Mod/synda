@@ -42,7 +42,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
 
         # this code cannot use SearchAPIProxy as we need to modify the offset in a non usual way
         request=Request(url=url,pagination=False,limit=50) # limit is arbitrary
-        result=sdnetutils.call_web_service(request,60) # return Response object
+        result=sdnetutils.call_web_service(request.get_url(),60) # return Response object
 
         # we loop until we find a correct file (i.e. well-formed)
         well_formed_file=None
@@ -61,7 +61,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
             request.offset+=500
 
             if request.offset<result.num_found:
-                result=sdnetutils.call_web_service(request,60) # return Response object
+                result=sdnetutils.call_web_service(request.get_url(),60) # return Response object
             else:
                 break
 

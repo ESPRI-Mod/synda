@@ -59,7 +59,7 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-100","Search-API call started (%s)."%request.get_url())
 
         try:
-            result=sdnetutils.call_web_service(request,sdconst.SEARCH_API_HTTP_TIMEOUT) # returns Response object
+            result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # returns Response object
         except:
 
             # if exception occurs in sdnetutils.call_web_service() method, all
