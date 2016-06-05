@@ -46,17 +46,22 @@ def certificate(args):
 def check(args):
     import sddump
 
-    if args.action=="dataset_version":
+    if args.action is None:
+        print_stderr('Please specify a check to perform.')   
+    elif args.action=="dataset_version":
 
         datasets=sddump.dump_ESGF(['type=Dataset','project=CMIP5','experiment=historical'],'version',dry_run=args.dry_run)
 
-        # FIXME
-
         if not args.dry_run:
+
+            # FIXME
+
             print '%i files retrieved'%len(datasets)
 
     else:
         assert False
+
+    return 0
 
 def contact(args):
     import sdi18n
