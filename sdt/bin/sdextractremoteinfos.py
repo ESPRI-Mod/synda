@@ -74,7 +74,7 @@ def get_sorted_files(project,sample_size,sort_key='size'):
 
 def print_files(file_):
     print "%s" % file_['project']
-    print "%s" % file_['id']
+    print "%s" % file_['file_functional_id']
     print "%s" % humanize.naturalsize(file_['size'],gnu=False)
     print
 

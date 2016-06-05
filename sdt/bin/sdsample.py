@@ -38,7 +38,7 @@ def get_sample_datasets(project,limit):
 def get_sample_files(project,limit):
     """This func retrieves a list of sample files for the given project."""
 
-    result=sdquicksearch.run(parameter=['type=File','project=%s'%project,"limit=%s"%limit],post_pipeline_mode=None)
+    result=sdquicksearch.run(parameter=['type=File','project=%s'%project,"limit=%s"%limit],post_pipeline_mode='file')
     return result
 
 def print_local_samples():
