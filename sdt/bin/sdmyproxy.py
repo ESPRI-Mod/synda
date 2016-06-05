@@ -9,12 +9,13 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script logon into ESGF using X509 certificate.
+"""This module retrieves a X509 certificate from ESGF 'Myproxy' server.
 
 Notes
-    - X509 proxy certificate is retrieved from a MyProxy server.
     - Myproxy library used in this script is 'myproxyclient' from NDG stack
-      (for info about myproxyclient, see http://ndg-security.ceda.ac.uk/wiki/MyProxyClient)
+    - informations about myproxyclient are available here
+        - http://ndg-security.ceda.ac.uk/wiki/MyProxyClient)
+        - https://pythonhosted.org/MyProxyClient/myproxy.client.MyProxyClient-class.html
 """
 
 import os
@@ -119,9 +120,10 @@ def renew_certificate (host,port,username,password):
 
     # currently, we set trustroots option everytime
     updateTrustRoots=True
-    authnGetTrustRootsCall=True
+    authnGetTrustRootsCall=False
 
 
+    # TODO: maybe add option in 'synda certificate' to use specify another path for cadir (for debugging purpose)
     #ROOT_TRUSTROOT_DIR = '/etc/grid-security/certificates'
     #USER_TRUSTROOT_DIR = '~/.globus/certificates'
 
@@ -129,21 +131,29 @@ def renew_certificate (host,port,username,password):
     # set env.
 
     os.environ['ESGF_CREDENTIAL']=sdconfig.esgf_x509_proxy
+    os.environ['X509_USER_PROXY']=sdconfig.esgf_x509_proxy
     os.environ['ESGF_CERT_DIR']=sdconfig.esgf_x509_cert_dir
     os.environ['X509_CERT_DIR']=sdconfig.esgf_x509_cert_dir
 
-    if 'X509_USER_PROXY' in os.environ:
-        del os.environ['X509_USER_PROXY']
     #if 'GLOBUS_LOCATION' in os.environ:
     #    del os.environ['GLOBUS_LOCATION']
 
 
-    # main
-    myproxy_clnt = MyProxyClient(hostname=host,port=port)
+    # proxyCertLifetime=lifetime
+    myproxy_clnt = MyProxyClient(hostname=host,
+                                 port=port,
+                                 caCertDir=sdconfig.esgf_x509_cert_dir)
+
+    # credname=credname
     myproxy_clnt.logon(username, password,
                        bootstrap=bootstrap,
                        updateTrustRoots=updateTrustRoots,
                        authnGetTrustRootsCall=authnGetTrustRootsCall)
+
+    fout = open(sdconfig.esgf_x509_proxy, 'w')
+    for cred in creds:
+        fout.write(cred)
+    fout.close()
 
 if __name__ == '__main__':
 
