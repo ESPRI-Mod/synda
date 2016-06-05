@@ -131,10 +131,11 @@ def renew_certificate (host,port,username,password):
     # set env.
 
     os.environ['ESGF_CREDENTIAL']=sdconfig.esgf_x509_proxy
-    os.environ['X509_USER_PROXY']=sdconfig.esgf_x509_proxy
     os.environ['ESGF_CERT_DIR']=sdconfig.esgf_x509_cert_dir
     os.environ['X509_CERT_DIR']=sdconfig.esgf_x509_cert_dir
 
+    if 'X509_USER_PROXY' in os.environ: 
+        del os.environ['X509_USER_PROXY']
     #if 'GLOBUS_LOCATION' in os.environ:
     #    del os.environ['GLOBUS_LOCATION']
 
