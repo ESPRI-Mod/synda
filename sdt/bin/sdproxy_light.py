@@ -32,8 +32,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
 
     else:
 
-        # FIXME: replace this func with SearchAPIProxy
-        # or replace each call with this => files=sdrfile.get_files(stream=stream,post_pipeline_mode='file',dry_run=args.dry_run)
+        # this code cannot use SearchAPIProxy as we need to modify the offset in a non usual way
         request=Request(url=url,pagination=False,limit=50) # limit is arbitrary
         result=sdnetutils.call_web_service(request,60) # return Response object
 
