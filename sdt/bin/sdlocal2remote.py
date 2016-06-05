@@ -25,6 +25,7 @@ import sdprint
 
 name_rules={
     'frequency' :'time_frequency',
+    'datanode' :'data_node',
     'filename' :'title',
     'file_functional_id' :'instance_id',
     'dataset_functional_id' :'dataset_id'
