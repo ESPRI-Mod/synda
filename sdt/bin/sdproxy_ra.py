@@ -9,13 +9,21 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains light routine to access search-api service."""
+"""This module contains light routine to access search-api service in random access mode.
+
+Notes
+    - this module force offset value to quickly move across a search-api
+      resultset (without having to retrieve all the resultset from the server).
+    - 'sdproxy_ra' means SynDa PROXY Random Access.
+    - it maybe interesting to compare performance between random access and
+      sequential access (i.e. between this sdproxy_ra.get_one_file() and
+      sdsample.get_sample_files() funcs).
+"""
 
 import sdindex
 import sdnetutils
 from sdtypes import Request
 
-# FIXME: maybe use get_sample_files() func here
 def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_run=None):
     """Return one sample file with all attributes."""
 

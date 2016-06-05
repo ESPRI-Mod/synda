@@ -22,7 +22,7 @@ import sdsqlutils
 import sddb
 import sdremoteparam_light
 import sdtools
-import sdproxy_light
+import sdproxy_ra
 from sdtypes import Request,Item
 from sdexception import SDException
 
@@ -233,7 +233,7 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     # TODO: 
     #   Maybe do this for each project (to retrieve project specific attributes)
     #
-    file_=sdproxy_light.get_one_file(host,project)
+    file_=sdproxy_ra.get_one_file(host,project)
 
     assert file_ is not None # just in case
 
