@@ -56,7 +56,7 @@ def check(args):
             print '%i files retrieved'%len(datasets)
 
     else:
-        Assert False
+        assert False
 
 def contact(args):
     import sdi18n
