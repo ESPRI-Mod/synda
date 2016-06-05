@@ -139,16 +139,21 @@ def renew_certificate (host,port,username,password):
     #    del os.environ['GLOBUS_LOCATION']
 
 
-    # proxyCertLifetime=lifetime
+    # main
+
     myproxy_clnt = MyProxyClient(hostname=host,
                                  port=port,
-                                 caCertDir=sdconfig.esgf_x509_cert_dir)
+                                 caCertDir=sdconfig.esgf_x509_cert_dir,
+                                 proxyCertLifetime=43200) # 12 hours
 
     # credname=credname
     myproxy_clnt.logon(username, password,
                        bootstrap=bootstrap,
                        updateTrustRoots=updateTrustRoots,
                        authnGetTrustRootsCall=authnGetTrustRootsCall)
+
+
+    # store cert on disk
 
     fout = open(sdconfig.esgf_x509_proxy, 'w')
     for cred in creds:
