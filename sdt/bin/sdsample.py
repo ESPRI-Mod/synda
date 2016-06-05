@@ -32,7 +32,7 @@ def get_dataset_id_samples():
 def get_sample_datasets(project,limit):
     """This func retrieves a list of sample datasets for the given project."""
 
-    result=sdquicksearch.run(parameter=['type=Dataset','project=%s'%project,"limit=%s"%limit],post_pipeline_mode=None)
+    result=sdquicksearch.run(parameter=['type=Dataset','project=%s'%project,"limit=%s"%limit],post_pipeline_mode='dataset')
     return result
 
 def get_sample_files(project,limit):

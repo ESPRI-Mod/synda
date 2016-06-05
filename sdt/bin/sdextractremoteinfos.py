@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module provides informations regarding ESGF archive."""
+"""This module extract informations from ESGF archive such as datasets with small size, large files, etc.."""
 
 import argparse
 import humanize
@@ -44,7 +44,7 @@ def print_small_dataset(project,sample_size=2000):
                smallest=d
 
         print "%s" % project
-        print "%s" % smallest['id']
+        print "%s" % smallest['dataset_functional_id']
         print "%s" % humanize.naturalsize(smallest['size'],gnu=False)
         print
 
