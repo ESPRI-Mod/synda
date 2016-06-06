@@ -1,11 +1,5 @@
 pyOpenSSL
-
-# TODO: see install.sh
-#https://github.com/pyca/pyopenssl/tarball/master
-
-# beware: in install.sh, myproxyclient is installed using a specific version and patched
 myproxyclient
-
 psutil
 humanize
 lxml==3.3.5
