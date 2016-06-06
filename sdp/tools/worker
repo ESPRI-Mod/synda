@@ -205,9 +205,13 @@ def process_jobs(service,args):
                 break
             result = service.get_job(job_class=args.job_class,pipeline=args.pipeline,order='fifo')
             job = result['job']
-        if not quit and not args.one_item_only:
-            logging.info('No jobs to process.')
-            raise NoMoreJobToProcessException()
+        if not quit:
+            if args.one_item_only:
+                if not job:
+                    logging.info('No jobs to process.')
+            else:
+                logging.info('No more jobs to process.')
+                raise NoMoreJobToProcessException()
     except NoMoreJobToProcessException:
         raise
     except InternalError,e:
