@@ -376,6 +376,13 @@ fix_myproxyclient ()
     rm -f ${client_file/.py/.pyc} # remove pre-compiled file
 }
 
+fix_pyopenssl ()
+{
+    # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
+
+    easy_install https://github.com/pyca/pyopenssl/tarball/master # note: pip cannot be used here ('easy_install' only)
+}
+
 install_sg_application ()
 {
     # install go transfer API
@@ -409,11 +416,11 @@ install_st_additional_packages ()
 
     $python_pkg_install_cmd myproxyclient
 
-    # disabled as this fix seems not needed anymore
+    # disabled as this fix is not needed anymore (see TAG5453H5J34HJ4J4H5HJ32HJ)
     #fix_myproxyclient
 
-    # this is to prevent "AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET'" error
-    easy_install https://github.com/pyca/pyopenssl/tarball/master # note: pip cannot be used here ('easy_install' only)
+    # disabled as this fix is not needed anymore (relates to pyopenssl 0.14, now latest version of pyopenssl is 0.16)
+    #fix_pyopenssl
 }
 
 install_sp_additional_packages ()
