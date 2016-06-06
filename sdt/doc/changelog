@@ -1,6 +1,7 @@
 - Version 3.5 - 
 	- add 'open' action.
 	- ergonomy improvements.
+	- use myproxyclient latest version.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
