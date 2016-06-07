@@ -458,7 +458,7 @@ post_install ()
     # check if conf files were modified
     g__after_md5_conffile=$(md5sum $conf_file | awk '{print $1}')
     if [ "$g__before_md5_conffile" != "$g__after_md5_conffile" ]; then
-        post_install_msg="$post_install_msg\n\nWARNING: $conf_file has been reinitialized to default values\nA copy of the original file have been saved in /tmp"
+        post_install_msg="$post_install_msg\n\nWARNING: $conf_file has been reinitialized to default values\nA copy of the original file has been saved in /tmp"
     fi
 }
 
@@ -728,7 +728,7 @@ fi
 # check
 # (having more than one package specified with '-e' option is a bit tricky to handle, so this check prevent it for now)
 if [ -n "$g__archive" ]; then
-    # archive have been specified
+    # archive has been specified
 
     if [ $# -gt 1 ]; then
         # means more than one module are to be installed
@@ -743,7 +743,7 @@ if [ -n "$g__version" ]; then
     # version has been specified
 
     if [ $# -gt 1 ]; then
-        # means more than one module have been asked to be installed
+        # means more than one module has been asked to be installed
 
         err "INSTALL-ERR218" "'-d' option cannot be used for more than one module"
     fi
