@@ -62,37 +62,40 @@ def upgrade_db(conn,current_db_version,new_db_version):
 
 def upgrade_35(conn):
 
-    # put schema upgrade code if any
+    conn.execute("alter table history add column (selection_file_checksum TEXT)")
+    conn.execute("alter table history add column (selection_file TEXT)")
+
+    conn.commit()
 
     sddbversionutils.update_db_version(conn,'3.5')
 
 def upgrade_34(conn):
 
-    # put schema upgrade code if any
+    # put schema upgrade code here if any
 
     sddbversionutils.update_db_version(conn,'3.4')
 
 def upgrade_33(conn):
 
-    # put schema upgrade code if any
+    # put schema upgrade code here if any
 
     sddbversionutils.update_db_version(conn,'3.3')
 
 def upgrade_32(conn):
 
-    # put schema upgrade code if any
+    # put schema upgrade code here if any
 
     sddbversionutils.update_db_version(conn,'3.2')
 
 def upgrade_31(conn):
 
-    # put schema upgrade code if any
+    # put schema upgrade code here if any
 
     sddbversionutils.update_db_version(conn,'3.1')
 
 def upgrade_30(conn):
 
-    # put schema upgrade code if any
+    # put schema upgrade code here if any
 
     sddbversionutils.update_db_version(conn,'3.0')
 

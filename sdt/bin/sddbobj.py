@@ -53,7 +53,7 @@ def create_tables(conn):
 
     conn.execute("create table if not exists param (name TEXT, value TEXT)")
     conn.execute("create table if not exists version (version TEXT)")
-    conn.execute("create table if not exists history (history_id INTEGER PRIMARY KEY, action TEXT, selection_filename TEXT, crea_date TEXT, insertion_group_id INT)")
+    conn.execute("create table if not exists history (history_id INTEGER PRIMARY KEY, action TEXT, selection_filename TEXT, crea_date TEXT, insertion_group_id INT, selection_file_checksum TEXT, selection_file TEXT)")
 
     conn.execute("create table if not exists event (event_id INTEGER PRIMARY KEY, name TEXT, status TEXT, project TEXT, model TEXT, dataset_pattern TEXT, variable TEXT, filename_pattern TEXT, crea_date TEXT, priority INT)")
 
