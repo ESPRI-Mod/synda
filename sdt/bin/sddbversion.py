@@ -62,8 +62,8 @@ def upgrade_db(conn,current_db_version,new_db_version):
 
 def upgrade_35(conn):
 
-    conn.execute("alter table history add column (selection_file_checksum TEXT)")
-    conn.execute("alter table history add column (selection_file TEXT)")
+    conn.execute("alter table history add column selection_file_checksum TEXT")
+    conn.execute("alter table history add column selection_file TEXT")
 
     conn.commit()
 
