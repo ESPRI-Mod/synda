@@ -33,7 +33,7 @@ def add_type_grp(parser):
     type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
 
 
-def add_ni_option(parser):
+def add_ni_option(parser): # 'ni' means 'Non-Interactive'
     parser.add_argument('-y','--yes',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively')
 
 def add_common_option(parser,**kw):
@@ -142,9 +142,10 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
-    subparser=create_subparser(subparsers,'install',help='Install dataset',note=sdi18n.m0022)
+    subparser=create_subparser(subparsers,'install',help='Install dataset',note=sdi18n.m0022,example=sdcliex.install())
     add_ni_option(subparser)
     add_parameter_argument(subparser)
+    subparser.add_argument('--incremental','-i', action='store_true',help='Install files which appeared since last run (experimental)')
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
@@ -206,6 +207,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help='Perform an upgrade (retrieve new version for all selection files)')
     add_parameter_argument(subparser)
     add_ni_option(subparser)
+    subparser.add_argument('--incremental','-i', action='store_true',help='Install files which appeared since last run (experimental)')
 
     subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())
     add_parameter_argument(subparser)

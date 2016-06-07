@@ -260,15 +260,15 @@ def install(args):
     return status
 
 def install_helper(args,files=None):
-    """
-    Returns
-        number of newly installed files
-    """
     import syndautils, sddaemon
 
     syndautils.check_daemon()
 
     if files is None:
+
+        if args.incremental and not args.selection_file:
+            print_stderr("ERROR: 'selection_file' option is not set (a selection file must be used when 'incremental' option is set)")
+            return (1,0)
 
         try:
             files=syndautils.file_full_search(args)

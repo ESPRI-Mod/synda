@@ -65,11 +65,17 @@ def get_stream(args,raise_exception_if_empty=False):
     return stream # aka facets_groups
 
 def file_full_search(args):
-    """This func systematically trigger full search (i.e. limit keyword cannot be used here)."""
+    """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
     import sdsearch
 
     stream=get_stream(args,raise_exception_if_empty=True)
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
+
+    if args.subcommand in ('install'): # prevent 'remove' and 'stat' subcommands (maybe 'stat' will be used later)
+        if args.incremental:
+            #args.selection_file
+            pass # FIXME
+
     files=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
     return files
