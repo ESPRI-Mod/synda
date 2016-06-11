@@ -20,6 +20,8 @@ import sdtime
 import sdfiledao
 import sddatasetdao
 
+_HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id"
+
 # --- parameter table --- #
 
 def add_parameter_value(name,value,commit=True,conn=sddb.conn):
@@ -140,13 +142,17 @@ def add_history_line(action,selection_filename=None,insertion_group_id=None,conn
 def get_history_lines(conn=sddb.conn):
     li=[]
     c = conn.cursor()
-    c.execute("select action,crea_date,selection_filename,insertion_group_id from history")
+    query="select %s from history"%_HISTORY_COLUMNS
+    c.execute(query)
     rs=c.fetchone()
     while rs!=None:
         li.append(sdsqlutils.resultset_to_dict(rs))
         rs=c.fetchone()
     c.close()
     return li
+
+def get_latest_history_line():
+    pass # FIXME
 
 # --- orphans tables --- #
 
