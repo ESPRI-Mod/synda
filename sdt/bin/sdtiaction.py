@@ -44,20 +44,21 @@ def certificate(args):
             print_stderr('Not implemented yet.')   
 
 def check(args):
-    import sddump
+    import sddump,sdtypes
 
     if args.action is None:
         print_stderr('Please specify a check to perform.')   
     elif args.action=="dataset_version":
 
-        datasets=sddump.dump_ESGF(['type=Dataset','project=CMIP5','experiment=historical','realm=atmos'],fields='master_id,version',dry_run=args.dry_run)
+        datasets=sddump.dump_ESGF(['type=Dataset','model=HadCM3','project=CMIP5','experiment=historical','realm=atmos'],fields='master_id,version,timestamp',dry_run=args.dry_run)
 
         if not args.dry_run:
 
             print '%i files retrieved'%len(datasets)
 
-            for d in datasets:
-                print d
+            for dataset in datasets:
+                d=sdtypes.Dataset(**dataset)
+                print '%s %s %s'%(d.version,d.timestamp,d.master_id)
 
     else:
         assert False
