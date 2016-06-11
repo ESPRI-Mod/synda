@@ -286,9 +286,9 @@ def get(args):
     return 0
 
 def history(args):
-    import sddao
+    import sdhistorydao
     from tabulate import tabulate
-    li=[d.values() for d in sddao.get_all_history_lines()] # listofdict to listoflist
+    li=[d.values() for d in sdhistorydao.get_all_history_lines()] # listofdict to listoflist
     print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
 
 def install(args):
