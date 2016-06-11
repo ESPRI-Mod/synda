@@ -44,7 +44,7 @@ def certificate(args):
             print_stderr('Not implemented yet.')   
 
 def check(args):
-    import sddump,sdtypes
+    import sddump,sdtypes,sddatasetversion
 
     if args.action is None:
         print_stderr('Please specify a check to perform.')   
@@ -54,11 +54,46 @@ def check(args):
 
         if not args.dry_run:
 
+            datasets_grouped_by_master_id={}
+
             print '%i files retrieved'%len(datasets)
 
+
+            # group dataset by 'master_id'
+            #
+            # MEMO
+            #     'master_id' is the dataset identifier without 'version' item
+
             for dataset in datasets:
+
                 d=sdtypes.Dataset(**dataset)
-                print '%s %s %s'%(d.version,d.timestamp,d.master_id)
+
+                # debug
+                #print '%s %s %s'%(d.version,d.timestamp,d.master_id)
+
+                if d.master_id in datasets_grouped_by_master_id:
+
+                    # retrieve DatasetVersions object
+                    dv=datasets_grouped_by_master_id[d.master_id]
+
+                    # add dataset version into DatasetVersions object
+                    dv.add_dataset_version(d)
+                else:
+
+                    # create DatasetVersions object
+                    dv=sddatasetversion.DatasetVersions()
+
+                    # add dataset version into DatasetVersions object
+                    dv.add_dataset_version(d)
+
+                    # add DatasetVersions object into global structure ('master_id' indexed)
+                    datasets_grouped_by_master_id[d.master_id]=dv
+
+
+            # print how many version exist for each dataset
+
+            for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
+                print '%s => %i'%(master_id,dataset_versions.count())
 
     else:
         assert False
