@@ -50,13 +50,14 @@ def check(args):
         print_stderr('Please specify a check to perform.')   
     elif args.action=="dataset_version":
 
-        datasets=sddump.dump_ESGF(['type=Dataset','project=CMIP5','experiment=historical','realm=atmos'],'version',dry_run=args.dry_run)
+        datasets=sddump.dump_ESGF(['type=Dataset','project=CMIP5','experiment=historical','realm=atmos'],fields='master_id,version',dry_run=args.dry_run)
 
         if not args.dry_run:
 
-            # FIXME
-
             print '%i files retrieved'%len(datasets)
+
+            for d in datasets:
+                print d
 
     else:
         assert False
