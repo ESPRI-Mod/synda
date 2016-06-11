@@ -36,7 +36,33 @@ def get_all_history_lines(conn=sddb.conn):
     c.close()
     return li
 
-def get_latest_history_line():
-    pass # FIXME
+def get_history_lines(selection_filename,action,conn=sddb.conn):
+    li=[]
+    c = conn.cursor()
+
+    query="select %s from history where selection_filename = ? and action = ?"%_HISTORY_COLUMNS
+    c.execute(query,(selection_filename,action))
+
+    rs=c.fetchone()
+    while rs!=None:
+        li.append(sdsqlutils.resultset_to_dict(rs))
+        rs=c.fetchone()
+    c.close()
+
+    return li
+
+def get_latest_history_line(selection_filename,action,conn=sddb.conn):
+    c = conn.cursor()
+
+    query="select %s from history where selection_filename = ? and action = ? order by crea_date DESC LIMIT 1"%_HISTORY_COLUMNS
+    c.execute(query,(selection_filename,action))
+    rs=c.fetchone()
+
+    assert rs is not None # existency test must be done before calling this func
+
+    di=sdsqlutils.resultset_to_dict(rs)
+    c.close()
+
+    return di
 
 # module init.
