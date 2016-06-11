@@ -23,15 +23,15 @@ import sdsearch
 def run():
     pass
 
-def dump_ESGF(parameter,attribute,dry_run=False):
-    """This func dumps attribute for all ESGF matching files/datasets.
+def dump_ESGF(parameter,fields='instance_id,timestamp',dry_run=False):
+    """This func dumps fields for all ESGF matching files/datasets.
 
-    Initially designed to batch update attribute in Synda
+    Initially designed to batch update attribute in Synda database
     (e.g. when a new attribute is decided to be stored in Synda,
     all already downloaded files metadata must be updated).
     """
 
-    parameter.append("fields=instance_id,%s"%attribute)
+    parameter.append("fields=%s"%fields)
     parameter.append("replica=false")
 
     files=sdsearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=dry_run)
@@ -42,12 +42,12 @@ if __name__ == '__main__':
 
     parser.add_argument('parameter',nargs='*',default=[])
 
-    parser.add_argument('-a','--attribute',required=True)
+    parser.add_argument('-f','--fields',default='instance_id,timestamp')
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
 
-    files=dump_ESGF(args.parameter,args.attribute,dry_run=args.dry_run)
+    files=dump_ESGF(args.parameter,args.fields,dry_run=args.dry_run)
 
     if not args.dry_run:
         sdprint.print_format(files,args.format)
