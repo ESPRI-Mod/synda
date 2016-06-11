@@ -24,7 +24,7 @@ def add_history_line(action,selection_filename=None,insertion_group_id=None,conn
     c.close()
     conn.commit()
 
-def get_history_lines(conn=sddb.conn):
+def get_all_history_lines(conn=sddb.conn):
     li=[]
     c = conn.cursor()
     query="select %s from history"%_HISTORY_COLUMNS
