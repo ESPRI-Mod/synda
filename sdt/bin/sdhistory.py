@@ -9,9 +9,23 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains local repository changelog routines."""
+"""This module contains local repository changelog routines.
+
+Note
+    Local repository changelog is stored in 'history' table.
+"""
 
 import sdapp
-import sddb
+import sdhistorydao
 
-# DEV
+def previous_run_exists(selection_filename,action):
+    li=sdhistorydao.get_history_lines(selection_filename=selection_filename,action=action)
+
+    if len(li)>0:
+        return True
+    else:
+        return False
+
+def get_previous_run(selection_filename,action):
+    di=sdhistorydao.get_latest_history_line(selection_filename=selection_filename,action=action)
+    return di

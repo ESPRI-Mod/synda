@@ -66,7 +66,7 @@ def get_stream(args,raise_exception_if_empty=False):
 
 def file_full_search(args):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
-    import sdsearch,sdlog
+    import sdsearch,sdlog,sdhistory
 
     stream=get_stream(args,raise_exception_if_empty=True)
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
@@ -75,15 +75,17 @@ def file_full_search(args):
 
     # incremental mode management (experimental)
 
-    if args.subcommand in ('install'): # prevent 'remove' and 'stat' subcommands (maybe 'stat' will be used later)
+    if args.subcommand in ('install',): # prevent 'remove' and 'stat' subcommands (maybe 'stat' will be used later)
         if args.incremental:
 
             sdlog.info('SYNUTILS-002','Starting file discovery (incremental mode enabled)')
 
-            if sdhistory.previous_run_exists():
+            selection_filename=os.path.basename(args.selection_file)
+
+            if sdhistory.previous_run_exists(selection_filename,'install'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
-                previous_run=sdhistory.get_previous_run()
+                previous_run=sdhistory.get_previous_run(selection_filename,'install')
 
 
                 # add incremental mode filters
@@ -98,7 +100,7 @@ def file_full_search(args):
                 # more info
                 #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
 
-                stream.set_scalar('from',previous_run.FIXME)
+                stream.set_scalar('from',previous_run['crea_date'])
 
                 # this filter is only used to test 'incremental mode' feature
                 if args.timestamp_right_boundary is not None:
