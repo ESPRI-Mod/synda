@@ -110,10 +110,13 @@ def check(args):
                 try:
                     dataset_versions.version_consistency_check()
                 except sdexception.IncorrectVersionFormatException,e:
-                    print 'Inconsistency detected: incorrect version format (%s)'%master_id
+                    print 'Inconsistency detected: incorrect version format (master_id=%s,version=%s)'%(master_id,str(dataset_versions.get_sorted_versions()))
 
+                    # debug
+                    """
                     for d_v in dataset_versions.get_sorted_versions():
                         print d_v
+                    """
 
                     errors+=1
                 except sdexception.MixedVersionFormatException,e:
