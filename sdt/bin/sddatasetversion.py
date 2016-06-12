@@ -183,14 +183,14 @@ class DatasetVersions():
     def version_format_check(self):
         """Verify version format regularity."""
 
-        version_formats=[]
+        version_formats=set() # use set() instead of list to prevent duplicate
         for d in self._dataset_versions:
             if self.is_short_version_format(d.version):
-                version_formats.append(_VERSION_FORMAT_SHORT)
+                version_formats.add(_VERSION_FORMAT_SHORT)
             elif self.is_long_version_format(d.version):
-                version_formats.append(_VERSION_FORMAT_LONG)
+                version_formats.add(_VERSION_FORMAT_LONG)
             elif self.is_long_version_with_prefix_format(d.version):
-                version_formats.append(_VERSION_FORMAT_LONG_WITH_PREFIX)
+                version_formats.add(_VERSION_FORMAT_LONG_WITH_PREFIX)
             else:
                 raise SDException('SDDATVER-004','Incorrect version format (%s)'%d.version)
 

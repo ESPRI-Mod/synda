@@ -107,7 +107,7 @@ def check(args):
                 except MixedVersionFormatException,e:
                     print 'Inconsistency detected: mixed version format (%s)'%master_id
 
-                    for d_v in dataset_versions.get_versions():
+                    for d_v in dataset_versions.get_sorted_versions():
                         print d_v
                 except IncorrectVTCException,e:
                     print 'Inconsistency detected: incorrect correlation for version and timestamp (%s)'%master_id
