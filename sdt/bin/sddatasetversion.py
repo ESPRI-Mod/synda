@@ -173,7 +173,11 @@ class DatasetVersions():
         dataset_versions=sorted(self._dataset_versions, key=lambda dataset_version: dataset_version.version)
         return dataset_versions
 
-    def get_dataset_versions(self):
+    def get_sorted_versions(self):
+        li=self.get_versions()
+        return sorted(li)
+
+    def get_versions(self):
         return [d.version for d in self._dataset_versions]
 
     def version_format_check(self):
@@ -191,17 +195,21 @@ class DatasetVersions():
                 raise SDException('SDDATVER-004','Incorrect version format (%s)'%d.version)
 
         if len(version_formats)!=1: # only one version format must be use for a dataset (i.e. short and long format should not be mixed)
-            raise MixedVersionFormatException()
+            raise MixedVersionFormatException('SDDATVER-005','Mixed version format')
 
     def version_and_timestamp_correlation_check(self):
         """Verify that timestamp monotonicity follows version monotonicity
         (i.e. if version increase, timestamp must increase too)."""
 
+        # debug
+        #print self.get_sorted_versions()
+        #print self.get_dataset_versions_SORT_BY_VERSION()
+
         li=[]
         for d in self.get_dataset_versions_SORT_BY_VERSION():
             
             # debug
-            print d.version
+            #print d.version
 
             li.append(d.version)
 
@@ -209,6 +217,8 @@ class DatasetVersions():
             raise IncorrectVTCException()
 
     def version_consistency_check(self):
+
+        assert len(self._dataset_versions)>0
 
         try:
             self.version_format_check()

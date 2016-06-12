@@ -99,12 +99,18 @@ def check(args):
 
             for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
 
+                # debug
+                print 'Perform dataset_version quality check on %s'%master_id
+
                 try:
                     dataset_versions.version_consistency_check()
                 except MixedVersionFormatException,e:
-                    print 'Inconsistency detected (%s)'%master_id
+                    print 'Inconsistency detected: mixed version format (%s)'%master_id
+
+                    for d_v in dataset_versions.get_versions():
+                        print d_v
                 except IncorrectVTCException,e:
-                    print 'Inconsistency detected (%s)'%master_id
+                    print 'Inconsistency detected: incorrect correlation for version and timestamp (%s)'%master_id
                 
 
     else:
