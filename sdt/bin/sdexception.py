@@ -51,3 +51,5 @@ class MixedVersionFormatException(SDException):
     pass
 class IncorrectVTCException(SDException): # VTC means 'Version Timestamp Correlation'
     pass
+class IncorrectVersionFormatException(SDException):
+    pass

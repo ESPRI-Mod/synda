@@ -18,7 +18,7 @@ Note
 
 import sys
 from sdtools import print_stderr
-from sdexception import SDException,EmptySelectionException,IncorrectVTCException,MixedVersionFormatException
+import sdexception
 
 def autoremove(args):
     import sddeletedataset
@@ -109,14 +109,21 @@ def check(args):
 
                 try:
                     dataset_versions.version_consistency_check()
-                except MixedVersionFormatException,e:
+                except sdexception.IncorrectVersionFormatException,e:
+                    print 'Inconsistency detected: incorrect version format (%s)'%master_id
+
+                    for d_v in dataset_versions.get_sorted_versions():
+                        print d_v
+
+                    errors+=1
+                except sdexception.MixedVersionFormatException,e:
                     print 'Inconsistency detected: mixed version format (%s)'%master_id
 
                     for d_v in dataset_versions.get_sorted_versions():
                         print d_v
 
                     errors+=1
-                except IncorrectVTCException,e:
+                except sdexception.IncorrectVTCException,e:
                     print 'Inconsistency detected: incorrect correlation for version and timestamp (%s)'%master_id
 
                     errors+=1
@@ -153,7 +160,7 @@ def daemon(args):
                 try:
                     sddaemon.start()
                     print_stderr("Daemon successfully started")
-                except SDException,e:
+                except sdexception.SDException,e:
                     print_stderr('error occured',e.msg)
         elif args.action=="stop":
 
@@ -161,7 +168,7 @@ def daemon(args):
                 try:
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
-                except SDException,e:
+                except sdexception.SDException,e:
                     print_stderr('error occured',e.msg)
             else:
                 print_stderr("Daemon already stopped")
@@ -338,7 +345,7 @@ def install_helper(args,files=None):
 
         try:
             files=syndautils.file_full_search(args)
-        except EmptySelectionException, e:
+        except sdexception.EmptySelectionException, e:
             print 'No packages will be installed, upgraded, or removed.'
             sys.exit(0)
 
@@ -433,7 +440,7 @@ def remove(args):
 
     try:
         files=syndautils.file_full_search(args)
-    except EmptySelectionException, e:
+    except sdexception.EmptySelectionException, e:
         print 'No packages will be installed, upgraded, or removed.'
         sys.exit(0)
 
@@ -481,7 +488,7 @@ def stat(args):
 
     try:
         files=syndautils.file_full_search(args)
-    except EmptySelectionException, e:
+    except sdexception.EmptySelectionException, e:
         print "You must specify at least one facet to perform this action."
         sys.exit(0)
 

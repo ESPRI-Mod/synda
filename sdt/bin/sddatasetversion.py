@@ -13,7 +13,7 @@
 
 import sdapp
 import sdmath
-from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException
+from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException,IncorrectVersionFormatException
 
 _VERSION_FORMAT_SHORT='short' # e.g. 'v1'
 _VERSION_FORMAT_LONG='long' # e.g. '20120101'
@@ -192,7 +192,7 @@ class DatasetVersions():
             elif self.is_long_version_with_prefix_format(d.version):
                 version_formats.add(_VERSION_FORMAT_LONG_WITH_PREFIX)
             else:
-                raise SDException('SDDATVER-004','Incorrect version format (%s)'%d.version)
+                raise IncorrectVersionFormatException('SDDATVER-004','Incorrect version format (master_id=%s,version=%s)'%(d.master_id,d.version))
 
         if len(version_formats)!=1: # only one version format must be use for a dataset (i.e. short and long format should not be mixed)
             raise MixedVersionFormatException('SDDATVER-005','Mixed version format')
