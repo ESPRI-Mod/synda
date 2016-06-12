@@ -50,13 +50,17 @@ def check(args):
         print_stderr('Please specify a check to perform.')   
     elif args.action=="dataset_version":
 
-        datasets=sddump.dump_ESGF(['type=Dataset','model=HadCM3','project=CMIP5','experiment=historical','realm=atmos'],fields='master_id,version,timestamp',dry_run=args.dry_run)
+        #subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
+        #subset_filter=['model=HadCM3','project=CMIP5']
+        subset_filter=['project=CMIP5']
+
+        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields='master_id,version,timestamp',dry_run=args.dry_run)
 
         if not args.dry_run:
 
             datasets_grouped_by_master_id={}
 
-            print '%i files retrieved'%len(datasets)
+            print '%i datasets retrieved'%len(datasets)
 
 
             # group dataset by 'master_id'
