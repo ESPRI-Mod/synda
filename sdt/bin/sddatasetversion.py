@@ -16,7 +16,8 @@ import sdmath
 from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException
 
 _VERSION_FORMAT_SHORT='short' # e.g. 'v1'
-_VERSION_FORMAT_LONG='long' # e.g. 'v20120101'
+_VERSION_FORMAT_LONG='long' # e.g. '20120101'
+_VERSION_FORMAT_LONG_WITH_PREFIX='long_with_prefix' # e.g. 'v20120101'
 
 class DatasetVersions():
     """Manage dataset version.
@@ -157,12 +158,18 @@ class DatasetVersions():
             return False
 
     def is_long_version_format(self,version):
+        if len(version)==8:
+            return True
+        else:
+            return False
+
+    def is_long_version_with_prefix_format(self,version):
         if len(version)==9:
             return True
         else:
             return False
 
-    def get_dataset_versions_SORT_BY_VERSION():
+    def get_dataset_versions_SORT_BY_VERSION(self):
         dataset_versions=sorted(self._dataset_versions, key=lambda dataset_version: dataset_version.version)
         return dataset_versions
 
@@ -174,12 +181,14 @@ class DatasetVersions():
 
         version_formats=[]
         for d in self._dataset_versions:
-            if is_short_version_format(version):
+            if self.is_short_version_format(d.version):
                 version_formats.append(_VERSION_FORMAT_SHORT)
-            elif:
+            elif self.is_long_version_format(d.version):
                 version_formats.append(_VERSION_FORMAT_LONG)
+            elif self.is_long_version_with_prefix_format(d.version):
+                version_formats.append(_VERSION_FORMAT_LONG_WITH_PREFIX)
             else:
-                assert False
+                raise SDException('SDDATVER-004','Incorrect version format (%s)'%d.version)
 
         if len(version_formats)!=1: # only one version format must be use for a dataset (i.e. short and long format should not be mixed)
             raise MixedVersionFormatException()
@@ -206,11 +215,11 @@ class DatasetVersions():
         except MixedVersionFormatException,e:
             raise
         except:
-            assert False
+            raise
 
         try:
-            version_and_timestamp_correlation_check()
+            self.version_and_timestamp_correlation_check()
         except IncorrectVTCException,e:
             raise
         except:
-            assert False
+            raise

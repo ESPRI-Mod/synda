@@ -18,7 +18,7 @@ Note
 
 import sys
 from sdtools import print_stderr
-from sdexception import SDException,EmptySelectionException
+from sdexception import SDException,EmptySelectionException,IncorrectVTCException,MixedVersionFormatException
 
 def autoremove(args):
     import sddeletedataset
@@ -90,10 +90,22 @@ def check(args):
                     datasets_grouped_by_master_id[d.master_id]=dv
 
 
+            # debug
             # print how many version exist for each dataset
-
+            """
             for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
                 print '%s => %i'%(master_id,dataset_versions.count())
+            """
+
+            for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
+
+                try:
+                    dataset_versions.version_consistency_check()
+                except MixedVersionFormatException,e:
+                    print 'Inconsistency detected (%s)'%master_id
+                except IncorrectVTCException,e:
+                    print 'Inconsistency detected (%s)'%master_id
+                
 
     else:
         assert False
