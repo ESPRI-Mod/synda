@@ -97,10 +97,11 @@ def check(args):
                 print '%s => %i'%(master_id,dataset_versions.count())
             """
 
+            errors=0
             for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
 
                 # debug
-                print 'Perform dataset_version quality check on %s'%master_id
+                #print 'Perform dataset_version quality check on %s'%master_id
 
                 try:
                     dataset_versions.version_consistency_check()
@@ -109,9 +110,15 @@ def check(args):
 
                     for d_v in dataset_versions.get_sorted_versions():
                         print d_v
+
+                    errors+=1
                 except IncorrectVTCException,e:
                     print 'Inconsistency detected: incorrect correlation for version and timestamp (%s)'%master_id
+
+                    errors+=1
                 
+            if errors==0:
+                print 'No inconsistency detected'
 
     else:
         assert False
