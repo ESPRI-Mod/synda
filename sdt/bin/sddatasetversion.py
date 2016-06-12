@@ -12,7 +12,11 @@
 """This module contains dataset versions management code."""
 
 import sdapp
-from sdexception import SDException
+import sdmath
+from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException
+
+_VERSION_FORMAT_SHORT='short' # e.g. 'v1'
+_VERSION_FORMAT_LONG='long' # e.g. 'v20120101'
 
 class DatasetVersions():
     """Manage dataset version.
@@ -145,3 +149,68 @@ class DatasetVersions():
 
         else:
             return d_a.version > d_b.version
+
+    def is_short_version_format(self,version):
+        if len(version)==2:
+            return True
+        else:
+            return False
+
+    def is_long_version_format(self,version):
+        if len(version)==9:
+            return True
+        else:
+            return False
+
+    def get_dataset_versions_SORT_BY_VERSION():
+        dataset_versions=sorted(self._dataset_versions, key=lambda dataset_version: dataset_version.version)
+        return dataset_versions
+
+    def get_dataset_versions(self):
+        return [d.version for d in self._dataset_versions]
+
+    def version_format_check(self):
+        """Verify version format regularity."""
+
+        version_formats=[]
+        for d in self._dataset_versions:
+            if is_short_version_format(version):
+                version_formats.append(_VERSION_FORMAT_SHORT)
+            elif:
+                version_formats.append(_VERSION_FORMAT_LONG)
+            else:
+                assert False
+
+        if len(version_formats)!=1: # only one version format must be use for a dataset (i.e. short and long format should not be mixed)
+            raise MixedVersionFormatException()
+
+    def version_and_timestamp_correlation_check(self):
+        """Verify that timestamp monotonicity follows version monotonicity
+        (i.e. if version increase, timestamp must increase too)."""
+
+        li=[]
+        for d in self.get_dataset_versions_SORT_BY_VERSION():
+            
+            # debug
+            print d.version
+
+            li.append(d.version)
+
+        if not sdmath.monotone_increasing(li):
+            raise IncorrectVTCException()
+
+    def version_consistency_check(self):
+
+        try:
+            self.version_format_check()
+        except MixedVersionFormatException,e:
+            raise
+        except:
+            assert False
+
+        try:
+            version_and_timestamp_correlation_check()
+        except IncorrectVTCException,e:
+            raise
+        except:
+            assert False

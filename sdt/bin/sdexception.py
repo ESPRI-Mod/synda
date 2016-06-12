@@ -47,3 +47,7 @@ class PasswordNotSetException(SDException):
     pass
 class UsernameNotSetException(SDException):
     pass
+class MixedVersionFormatException(SDException):
+    pass
+class IncorrectVTCException(SDException): # VTC means 'Version Timestamp Correlation'
+    pass
