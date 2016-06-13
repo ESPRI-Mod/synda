@@ -124,9 +124,19 @@ def dataset_complete_event(project,model,dataset,commit=True):
                 else:
                     sdlog.warning("SYDEVENT-032","Event not triggered as one product is latest while the other product is not") # TODO: is this the right way to handle this case ?
         else:
+            # only one product exists for this dataset
+
+            # not sure if this code is required.
+            # basically, it says that if only one product is present (output1 or output2)
+            # then the 'output12' is considered ready to be triggered
+            # (i.e. output12 does not require output1 and output2 to be present,
+            # it only require that if there are, they must both be complete)
+            #
             dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
             dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
+            FIXME
+            #
             if dataset.latest:
                 latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
             else:
