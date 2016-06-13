@@ -48,6 +48,23 @@ def check(args):
 
     if args.action is None:
         print_stderr('Please specify a check to perform.')   
+
+    elif args.action=="file_variable":
+
+        subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
+        #subset_filter=['model=HadCM3','project=CMIP5']
+        #subset_filter=['project=CMIP5']
+
+        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='master_id,version,timestamp',dry_run=args.dry_run)
+
+        if not args.dry_run:
+            print '%i file(s) retrieved'%len(files)
+
+            for file_ in files:
+
+                # debug
+                print file_['variable']
+
     elif args.action=="dataset_version":
 
         #subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
@@ -58,9 +75,8 @@ def check(args):
 
         if not args.dry_run:
 
-            datasets_grouped_by_master_id={}
 
-            print '%i datasets retrieved'%len(datasets)
+            print '%i dataset(s) retrieved'%len(datasets)
 
 
             # group dataset by 'master_id'
@@ -68,6 +84,7 @@ def check(args):
             # MEMO
             #     'master_id' is the dataset identifier without 'version' item
 
+            datasets_grouped_by_master_id={}
             for dataset in datasets:
 
                 d=sdtypes.Dataset(**dataset)
@@ -101,6 +118,7 @@ def check(args):
                 print '%s => %i'%(master_id,dataset_versions.count())
             """
 
+            # main
             errors=0
             for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
 
