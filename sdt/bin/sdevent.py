@@ -65,11 +65,11 @@ def file_complete_event(tr):
 def variable_complete_event(project,model,dataset,variable):
     sdlog.log("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable),event_triggered_log_level)
 
-    # cascade 1
+    # cascade 1 (trigger dataset event)
     if dataset.status==sdconst.DATASET_STATUS_COMPLETE:
         dataset_complete_event(project,model,dataset) # trigger 'dataset complete' event
 
-    # cascade 2
+    # cascade 2 (trigger variable output12 event)
     if project=='CMIP5':
 
         assert '/output/' not in dataset.path
@@ -105,6 +105,7 @@ def variable_complete_output12_event(project,model,dataset_pattern,variable,comm
 def dataset_complete_event(project,model,dataset,commit=True):
     sdlog.log("SYDEVENT-004","'dataset_complete_event' triggered (%s)"%dataset.dataset_functional_id,event_triggered_log_level)
 
+    # cascade 1 (trigger dataset output12 event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -131,6 +132,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
             else:
                 non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
+
     # <<<--- 'latest' flag management related code begin
 
     # store current 'latest' flag state
@@ -155,7 +157,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
     # --->>> 'latest' flag management related code end
 
 
-    # cascade 2
+    # cascade 2 (trigger dataset latest event)
     if (not old_latest) and new_latest:
         dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
