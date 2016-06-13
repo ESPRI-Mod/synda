@@ -105,7 +105,51 @@ def variable_complete_output12_event(project,model,dataset_pattern,variable,comm
 def dataset_complete_event(project,model,dataset,commit=True):
     sdlog.log("SYDEVENT-004","'dataset_complete_event' triggered (%s)"%dataset.dataset_functional_id,event_triggered_log_level)
 
-    # cascade 1 (trigger dataset output12 event)
+    # not used for now
+    """
+    event=Event(name=sdconst.EVENT_DATASET_COMPLETE)
+    event.project=project
+    event.model=model
+    event.dataset_pattern=dataset_pattern
+    event.variable=''
+    event.filename_pattern=''
+    event.crea_date=sdtime.now()
+    event.priority=sdconst.DEFAULT_PRIORITY
+    sdeventdao.add_event(event,commit=commit)
+    """
+
+    # <<<--- 'latest' flag management related code begin
+
+    # store current 'latest' flag state
+    old_latest=dataset.latest
+
+    # TODO: check if we we switch latest flag independently for each product (meaning output1 latest can be 1 while output2 latest is 0)
+    # tag4342342
+
+    # compute new 'latest' flag
+    if not old_latest:
+        # old state is not latest
+
+        sddatasetflag.update_latest_flag(dataset) # warning: this method modifies the dataset object in memory (and in database too)
+    else:
+        # nothing to do concerning the 'latest' flag as the current dataset is already the latest
+        # (the latest flag can only be switched off (i.e. to False) by *other* datasets versions, not by himself !!!)
+        pass
+
+    # store new 'latest' flag state
+    new_latest=dataset.latest
+
+    # --->>> 'latest' flag management related code end
+
+
+    # cascade 1 (trigger dataset latest event)
+    if (not old_latest) and new_latest:
+        # latest flag has been switched from false to true
+
+        dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
+
+
+    # cascade 2 (trigger dataset complete output12 event) and cascade 3 (trigger dataset complete output12 event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -141,35 +185,6 @@ def dataset_complete_event(project,model,dataset,commit=True):
                 latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
             else:
                 non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
-
-
-    # <<<--- 'latest' flag management related code begin
-
-    # store current 'latest' flag state
-    old_latest=dataset.latest
-
-    # TODO: check if we we switch latest flag independently for each product (meaning output1 latest can be 1 while output2 latest is 0)
-    # tag4342342
-
-    # compute new 'latest' flag
-    if not old_latest:
-        # old state is not latest
-
-        sddatasetflag.update_latest_flag(dataset) # warning: this method modifies the dataset in memory (and in database too)
-    else:
-        # nothing to do concerning the 'latest' flag as the current dataset is already the latest
-        # (the latest flag can only be switched off (i.e. to False) by *other* datasets versions, not by himself !!!)
-        pass
-
-    # store new 'latest' flag state
-    new_latest=dataset.latest
-
-    # --->>> 'latest' flag management related code end
-
-
-    # cascade 2 (trigger dataset latest event)
-    if (not old_latest) and new_latest:
-        dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
 def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     sdlog.log("SYDEVENT-005","'dataset_complete_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
