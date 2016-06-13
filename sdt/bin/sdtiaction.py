@@ -55,15 +55,23 @@ def check(args):
         #subset_filter=['model=HadCM3','project=CMIP5']
         #subset_filter=['project=CMIP5']
 
-        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='master_id,version,timestamp',dry_run=args.dry_run)
+        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='instance_id,variable',dry_run=args.dry_run)
 
         if not args.dry_run:
             print '%i file(s) retrieved'%len(files)
 
+            errors=0
             for file_ in files:
 
                 # debug
-                print file_['variable']
+                #print file_['variable']
+
+                if len(file_['variable'])>1:
+                    print 'File contains many variables (%s,%s)'%(instance_id,str(variable))
+                    errors+=1
+
+            if errors==0:
+                print 'No inconsistency detected'
 
     elif args.action=="dataset_version":
 

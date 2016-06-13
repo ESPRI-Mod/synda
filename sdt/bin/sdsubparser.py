@@ -109,7 +109,7 @@ def run(subparsers):
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
     subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check())
-    add_action_argument(subparser,choices=['dataset_version'])
+    add_action_argument(subparser,choices=['dataset_version','file_variable'])
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
