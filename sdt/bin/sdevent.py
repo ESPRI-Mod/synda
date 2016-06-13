@@ -149,7 +149,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
         dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
 
-    # cascade 2 (trigger dataset complete output12 event) and cascade 3 (trigger dataset complete output12 event)
+    # cascade 2 (trigger dataset output12 event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -203,6 +203,23 @@ def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     """
 
     pass
+
+def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
+
+    sdlog.log("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+
+    # not used
+    """
+    event=Event(name=sdconst.EVENT_OUTPUT12_DATASET_LATEST)
+    event.project=project
+    event.model=model
+    event.dataset_pattern=dataset_pattern
+    event.variable=''
+    event.filename_pattern=''
+    event.crea_date=sdtime.now()
+    event.priority=sdconst.DEFAULT_PRIORITY
+    sdeventdao.add_event(event,commit=commit)
+    """
 
 def latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     # this event means one latest dataset has been completed (i.e. was latest before and still is)
@@ -261,22 +278,6 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
             dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
-def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
-
-    sdlog.log("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
-
-    # not used
-    """
-    event=Event(name=sdconst.EVENT_OUTPUT12_DATASET_LATEST)
-    event.project=project
-    event.model=model
-    event.dataset_pattern=dataset_pattern
-    event.variable=''
-    event.filename_pattern=''
-    event.crea_date=sdtime.now()
-    event.priority=sdconst.DEFAULT_PRIORITY
-    sdeventdao.add_event(event,commit=commit)
-    """
 
 # init.
 
