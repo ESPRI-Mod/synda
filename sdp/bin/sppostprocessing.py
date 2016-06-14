@@ -26,10 +26,10 @@ import spppprdao
 import spjobrdao
 import spconfig
 
-def all_variable_complete(dataset_pattern,conn):
+def all_variable_complete(variable_pipeline,dataset_pattern,conn):
 
     # retrieve pipeline runs
-    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline='IPSL_001',conn=conn)
+    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline=variable_pipeline,conn=conn)
 
     for ppprun in li: # loop over the different runs of the same pipeline
         if ppprun.status!=spconst.PPPRUN_STATUS_DONE:
@@ -190,26 +190,26 @@ def job_done(job): # note: this method name does not implied that the job comple
         spppprdao.update_ppprun(ppprun,conn)
         spjobrdao.add_jobrun(job,conn)
 
-FIXME
-
-        # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
-        if ppprun.pipeline=='IPSL_001': # this block must be executed at the end of IPSL_001 pipeline
-            if ppprun.status==spconst.PPPRUN_STATUS_DONE:
-                if all_variable_complete(ppprun.dataset_pattern,conn):
-                    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline='IPSL_002',conn=conn)
-                    if len(li)==1:
-                        dataset_ppprun=li[0]
-                        if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-
-                            dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
-                            dataset_ppprun.last_mod_date=sptime.now()
-
-                            spppprdao.update_ppprun(dataset_ppprun,conn)
-
+        trigger_dataset_pipeline('IPSL_001','IPSL_002',ppprun,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
 
         conn.commit()
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
+
+def trigger_dataset_pipeline(variable_pipeline,dataset_pipeline,ppprun,conn):
+
+    if ppprun.pipeline==variable_pipeline: # this block must be executed at the end of variable pipeline
+        if ppprun.status==spconst.PPPRUN_STATUS_DONE:
+            if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
+                li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
+                if len(li)==1:
+                    dataset_ppprun=li[0]
+                    if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+
+                        dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
+                        dataset_ppprun.last_mod_date=sptime.now()
+
+                        spppprdao.update_ppprun(dataset_ppprun,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
