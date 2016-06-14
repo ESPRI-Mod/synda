@@ -65,6 +65,17 @@ def file_complete_event(tr):
 def variable_complete_event(project,model,dataset,variable):
     sdlog.log("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable),event_triggered_log_level)
 
+    if project!='CMIP5': # CMIP5 use a special event (output12 based)
+        event=Event(name=sdconst.EVENT_VARIABLE_COMPLETE)
+        event.project=project
+        event.model=model
+        event.dataset_pattern=dataset_pattern
+        event.variable=variable
+        event.filename_pattern=''
+        event.crea_date=sdtime.now()
+        event.priority=sdconst.DEFAULT_PRIORITY
+        sdeventdao.add_event(event,commit=commit)
+
     # cascade 1 (trigger dataset event)
     if dataset.status==sdconst.DATASET_STATUS_COMPLETE:
         dataset_complete_event(project,model,dataset) # trigger 'dataset complete' event
@@ -142,14 +153,21 @@ def dataset_complete_event(project,model,dataset,commit=True):
     # --->>> 'latest' flag management related code end
 
 
-    # cascade 1 (trigger dataset latest event)
+    # cascade 1 (trigger dataset latest switch event)
     if (not old_latest) and new_latest:
         # latest flag has been switched from false to true
 
         dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
 
-    # cascade 2 (trigger output12 dataset complete event)
+    # cascade 2 (trigger latest dataset complete event)
+    if dataset.latest:
+        latest_dataset_complete_event(project,model,dataset_pattern,commit=commit)
+    else:
+        non_latest_dataset_complete_event(project,model,dataset_pattern,commit=commit)
+
+
+    # cascade 3 (trigger output12 dataset complete event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -173,7 +191,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
             dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
 
-    # cascade 3 (trigger latest output12 dataset complete event)
+    # cascade 4 (trigger latest output12 dataset complete event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -201,6 +219,45 @@ def dataset_complete_event(project,model,dataset,commit=True):
                 latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=commit)
             else:
                 non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
+
+def latest_dataset_complete_event(project,model,dataset_pattern,commit=True):
+    # this event means latest dataset has been completed (beware: no 'latest switch' event here: was latest before and still is)
+
+    sdlog.log("SYDEVENT-045","'latest_dataset_complete_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+
+    if project!='CMIP5': # CMIP5 use a special event (output12 based)
+
+        event=Event(name=sdconst.EVENT_LATEST_DATASET_COMPLETE)
+        event.project=project
+        event.model=model
+        event.dataset_pattern=dataset_pattern
+        event.variable=''
+        event.filename_pattern=''
+        event.crea_date=sdtime.now()
+        event.priority=sdconst.DEFAULT_PRIORITY
+        sdeventdao.add_event(event,commit=commit)
+
+def non_latest_dataset_complete_event(project,model,dataset_pattern,commit=True):
+    # this event means one non-latest dataset has been completed (beware: no 'latest switch' event here: was not latest before and still isn't)
+
+    sdlog.log("SYDEVENT-048","'non_latest_dataset_complete_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+
+    if project!='CMIP5': # CMIP5 use a special event (output12 based)
+
+        # not used for now
+        """
+        event=Event(name=sdconst.EVENT_NON_LATEST_DATASET_COMPLETE)
+        event.project=project
+        event.model=model
+        event.dataset_pattern=dataset_pattern
+        event.variable=''
+        event.filename_pattern=''
+        event.crea_date=sdtime.now()
+        event.priority=sdconst.DEFAULT_PRIORITY
+        sdeventdao.add_event(event,commit=commit)
+        """
+
+        pass
 
 def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     sdlog.log("SYDEVENT-005","'dataset_complete_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
