@@ -62,7 +62,7 @@ def file_complete_event(tr):
     if sdvariable.is_variable_complete(tr.dataset.dataset_id,tr.variable):
         variable_complete_event(tr.project,tr.model,tr.dataset,tr.variable) # trigger 'variable complete' event
 
-def variable_complete_event(project,model,dataset,variable):
+def variable_complete_event(project,model,dataset,variable,commit=True):
     sdlog.log("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable),event_triggered_log_level)
 
     # not used for now
