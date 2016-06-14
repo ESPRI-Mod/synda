@@ -70,33 +70,10 @@ def add_ppprun(pipeline,status,project,model,dataset_pattern,variable,conn):
         else:
             ppprun=pppruns[0]
 
-            # check existing pipeline state (if state do not allow us to restart it, we raise PipelineRunningException)
-            if pipeline=='IPSL_001':
-                if ppprun.status==spconst.PPPRUN_STATUS_DONE:
-                    pass
-                else:
-                    raise PipelineRunningException()
-                helper(pipeline,ppprun,status,conn)
-            elif pipeline=='IPSL_002':
-                if ppprun.status==spconst.PPPRUN_STATUS_DONE:
-                    pass
-                elif ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-                    if ppprun.state=='S1100': # be sure we are at the beginning of the pipe (as 'pausing' is a status that may occurs anywhere in the pipeline). TODO: replace hardcoded S1100 with pipeline first state (as state name can change in the future)
-                        # note that in this case, we update the pipe, but it doesn't hange anything as the pipe is already in the right state, 
-                        pass
-                    else:
-                        raise PipelineRunningException()
-                else:
-                    raise PipelineRunningException()
-                helper(pipeline,ppprun,status,conn)
-            elif pipeline=='CDF_001':
-                #splog.info("SPPOSTPR-282","PEXEC: nothing to do")
-                pass
-            elif pipeline=='CDF_002':
-                #splog.info("SPPOSTPR-284","PEXEC: Nothing to do")
-                pass
+            if ppprun.status in [spconst.PPPRUN_STATUS_PAUSE,spconst.PPPRUN_STATUS_DONE]: # check existing pipeline state (if state do not allow us to restart it, we raise PipelineRunningException). This is to prevent a reset on a running pipeline. 'waiting' is not accepted to prevent race condition (job starting just while we are here) => TBC.
+                restart_pipeline(ppprun,status,conn)
             else:
-                raise SPException('SPPOSTPR-450','Unknown pipeline (%s)'%pipeline)
+                raise PipelineRunningException()
 
     else:
         ppprun=build_ppprun(pipeline,status,project,model,dataset_pattern,variable)
@@ -213,6 +190,7 @@ def job_done(job): # note: this method name does not implied that the job comple
         spppprdao.update_ppprun(ppprun,conn)
         spjobrdao.add_jobrun(job,conn)
 
+FIXME
 
         # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
         if ppprun.pipeline=='IPSL_001': # this block must be executed at the end of IPSL_001 pipeline
@@ -233,10 +211,10 @@ def job_done(job): # note: this method name does not implied that the job comple
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
-def helper(pipeline,ppprun,status,conn): # FIXME: find a better name
+def restart_pipeline(ppprun,status,conn):
 
     # retrieve pipeline definition (note that code below is not reentrant/threadsafe: it works only because execution mode is serial (i.e. non parallel))
-    p=sppipeline.get_pipeline(pipeline)
+    p=sppipeline.get_pipeline(ppprun.pipeline)
     p.reset()
     state=p.get_current_state().source
     transition=p.get_current_state().transition

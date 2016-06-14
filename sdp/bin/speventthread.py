@@ -31,6 +31,25 @@ def create_pipeline(pipeline,status,e,conn):
         splog.warning('SPEVENTT-012',"Event status set to anomaly")
         e.status=spconst.EVENT_STATUS_ANOMALY # mark events as anomaly (this event has been inhibited and may need to be manually switched to 'new'. also most often it's not necessary (i.e. it has been inhibited because another identical event was preceding it))
 
+def get_dependency(e,conn):
+    dependent_pipeline=None
+
+    if e.name=='cdf_variable':
+
+        if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+            pipeline='IPSL_001'
+            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
+                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
+        else:
+            pipeline='IPSL_003'
+            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
+                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
+
+    else:
+        assert False
+
+    return dependent_pipeline
+
 def process_event(e,conn):
     if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
         pipeline='IPSL_001'
@@ -46,42 +65,31 @@ def process_event(e,conn):
         assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
-    elif e.name==spconst.EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE:
+    elif e.name=='cdf_variable':
 
-        # not implemented yet
-        raise SPException("SPEVENTT-006","Unsupported event (%s)"%str(e))
-
-        #pipeline='IPSL_003'
-        #assert e.variable == ''
-        #create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
-
-    elif e.name==spconst.EVENT_PEXEC_001: # order_name
-
-        dependent_pipeline=None
-        if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-            pipeline='IPSL_001'
-            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,e.variable=variable,conn=conn)
-        else:
-            pipeline='IPSL_003'
-            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,e.variable=variable,conn=conn)
-
+        dependent_pipeline=get_dependency(e,conn)
         if dependent_pipeline is not None:
             if dependent_pipeline.status=PPPRUN_STATUS_DONE:
 
-                # insert variable pipeline
-                pipeline='CDF_001'
-                create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
+                status=spconst.PPPRUN_STATUS_WAITING
 
-                # insert dataset pipeline
-                pipeline='CDF_002'
-                e.variable='' # WART
-                create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn) # called for each variable, but duplicate dataset are ignored(i.e. for some project, a dataset is a group of variable)
             else:
-                splog.info('SPEVENTT-010','Dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
+                splog.info('SPEVENTT-010','Create with PAUSE status as dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
+
+                status=spconst.PPPRUN_STATUS_PAUSE
         else:
-            splog.info('SPEVENTT-018',"Dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
+            splog.info('SPEVENTT-018',"Create with PAUSE status as dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
+
+            status=spconst.PPPRUN_STATUS_PAUSE
+
+        pipeline='CDF_001'
+        create_pipeline(pipeline,status,e,conn)
+
+    elif e.name=='cdf_dataset':
+
+        pipeline='CDF_002'
+        assert e.variable == ''
+        create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn) # called for each variable, but duplicate dataset are ignored(i.e. for some project, a dataset is a group of variable)
 
     else:
         raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))
