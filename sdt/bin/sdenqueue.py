@@ -24,7 +24,7 @@ import sdapp
 import sdlog
 import sddb
 import sdsimplefilter
-import sddao
+import sdhistorydao
 import sdfiledao
 import sddatasetdao
 import sdutils
@@ -55,7 +55,7 @@ def run(files):
 
         ProgressThread.stop() # spinner stop
 
-        sddao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id)
+        sdhistorydao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id)
 
     sdlog.info("SDENQUEU-001","%i new files added (total size=%i,selection=%s)"%(count,total_size,selection_filename))
 

@@ -15,7 +15,7 @@ import argparse
 import sdapp
 import sddeletefile
 import sdlog
-import sddao
+import sdhistorydao
 import sdfiledao
 import sdconst
 
@@ -27,7 +27,7 @@ def delete_insertion_group(insertion_group_id):
             sddeletefile.deferred_delete(f.file_functional_id)
             sdlog.info("SDINSGRP-001","File marked for deletion (%s)"%f.file_functional_id)
         print "%i file(s) marked for deletion"%len(files)
-        sddao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
+        sdhistorydao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
     else:
         print "Nothing to delete"
 

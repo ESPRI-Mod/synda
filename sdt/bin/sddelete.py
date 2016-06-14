@@ -16,7 +16,7 @@ import os
 import json
 import argparse
 import sdapp
-import sddao
+import sdhistorydao
 import sdpostpipelineutils
 import sdsimplefilter
 import sdconst
@@ -41,7 +41,7 @@ def run(files):
         for file in files:
             sddeletefile.deferred_delete(file['file_functional_id'])
 
-        sddao.add_history_line(sdconst.ACTION_DELETE,selection_filename)
+        sdhistorydao.add_history_line(sdconst.ACTION_DELETE,selection_filename)
 
         sdlog.info("SDDELETE-929","%i files marked for deletion (selection=%s)"%(count,selection_filename))
 
