@@ -149,7 +149,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
         dataset_latest_event(project,model,dataset.path,commit=commit) # trigger 'dataset_latest' event
 
 
-    # cascade 2 (trigger dataset output12 event)
+    # cascade 2 (trigger output12 dataset complete event)
     if project=='CMIP5':
         (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
         if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
@@ -160,7 +160,28 @@ def dataset_complete_event(project,model,dataset,commit=True):
             if d1.status==sdconst.DATASET_STATUS_COMPLETE and d2.status==sdconst.DATASET_STATUS_COMPLETE:
                 dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
                 dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
+        else:
+            # only one product exists for this dataset
 
+            # not sure if this code is required.
+            # basically, it says that if only one product is present (output1 or output2)
+            # then the 'output12' is considered ready to be triggered
+            # (i.e. output12 does not require output1 and output2 to be present,
+            # it only require that if there are, they must both be complete)
+            #
+            dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
+            dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
+
+
+    # cascade 3 (trigger latest output12 dataset complete event)
+    if project=='CMIP5':
+        (ds_path_output1,ds_path_output2)=sdproduct.get_output12_dataset_paths(dataset.path)
+        if sddatasetdao.exists_dataset(path=ds_path_output1) and sddatasetdao.exists_dataset(path=ds_path_output2):
+
+            d1=sddatasetdao.get_dataset(path=ds_path_output1)
+            d2=sddatasetdao.get_dataset(path=ds_path_output2)
+
+            if d1.status==sdconst.DATASET_STATUS_COMPLETE and d2.status==sdconst.DATASET_STATUS_COMPLETE:
                 if d1.latest and d2.latest:
                     latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=commit)
                 elif not d1.latest and not d2.latest:
@@ -175,11 +196,6 @@ def dataset_complete_event(project,model,dataset,commit=True):
             # then the 'output12' is considered ready to be triggered
             # (i.e. output12 does not require output1 and output2 to be present,
             # it only require that if there are, they must both be complete)
-            #
-            dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset.local_path)
-            dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
-
-            FIXME
             #
             if dataset.latest:
                 latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=commit)
@@ -243,6 +259,19 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
     # this event means one dataset has been granted latest (i.e. was not latest before and now is)
 
     sdlog.log("SYDEVENT-008","'dataset_latest_event' triggered (%s)"%dataset_path,event_triggered_log_level)
+
+    # not used for now
+    """
+    event=Event(name=sdconst.EVENT_DATASET_LATEST)
+    event.project=project
+    event.model=model
+    event.dataset_pattern=dataset_pattern
+    event.variable=''
+    event.filename_pattern=''
+    event.crea_date=sdtime.now()
+    event.priority=sdconst.DEFAULT_PRIORITY
+    sdeventdao.add_event(event,commit=commit)
+    """
 
     # cascade
     if project=='CMIP5':
