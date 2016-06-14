@@ -40,6 +40,15 @@ def process_event(e,conn):
         assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
 
+    elif e.name==spconst.EVENT_VARIABLE_COMPLETE:
+        pipeline='IPSL_001'
+        create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
+
+    elif e.name==spconst.EVENT_LATEST_DATASET_COMPLETE:
+        pipeline='IPSL_002'
+        assert e.variable == ''
+        create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
+
     elif e.name==spconst.EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE:
 
         # not implemented yet
