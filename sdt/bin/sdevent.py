@@ -256,15 +256,15 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
 
             if d1.latest and d2.latest:
                 dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
-                dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
+                output12_dataset_latest_event(project,model,dataset_pattern,commit=commit) # trigger event
         else:
             dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
-            dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
+            output12_dataset_latest_event(project,model,dataset_pattern,commit=commit) # trigger event
 
-def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
+def output12_dataset_latest_event(project,model,dataset_pattern,commit=True):
     # this event means output12 dataset has been granted latest
 
-    sdlog.log("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+    sdlog.log("SYDEVENT-009","'output12_dataset_latest_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
 
     # not used
     """
