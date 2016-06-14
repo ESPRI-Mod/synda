@@ -9,6 +9,8 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
+EVENT_PEXEC_001='pexec_001' # FIXME: move into configuration file
+#
 EVENT_VARIABLE_COMPLETE='variable_complete'
 EVENT_DATASET_COMPLETE='dataset_complete'
 EVENT_DATASET_LATEST='dataset_latest'
@@ -148,7 +150,7 @@ PENDING_PARAMETER='pending_parameter' # this parameter contains unnamed paramete
 SELECTION_FROM_CMDLINE='cli'
 SELECTION_FROM_STDIN='stdin'
 #
-PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX']
+PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 
 # Light fields are used to retrieve just the necessary fields, so to limit the bandwidth footprint.
 #

@@ -101,9 +101,11 @@ def dump(args):
 
 def pexec(args):
 
-    # remove when switching to subcommand
-    assert len(args.parameter)==1 # hack
-    args.order_name=args.parameter[0]
+    # HACK
+    if args.order_name=sdconst.EVENT_PEXEC_001:
+        args.type_=sdconst.SA_TYPE_AGGREGATION
+    else:
+        assert False
 
     if args.type_==sdconst.SA_TYPE_FILE:
         file_pexec(args)

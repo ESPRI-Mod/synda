@@ -173,7 +173,8 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'pexec',help='Execute post-processing task')
     subparser.add_argument('order_name',help='Order name')
-    add_type_grp(subparser)
+    #obsolete
+    #add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=sdcliex.queue())
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
