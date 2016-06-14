@@ -162,7 +162,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
                 dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
                 if d1.latest and d2.latest:
-                    latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
+                    latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=commit)
                 elif not d1.latest and not d2.latest:
                     non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
                 else:
@@ -182,7 +182,7 @@ def dataset_complete_event(project,model,dataset,commit=True):
             FIXME
             #
             if dataset.latest:
-                latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
+                latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=commit)
             else:
                 non_latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=commit)
 
@@ -204,10 +204,10 @@ def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
 
     pass
 
-def latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
-    # this event means one latest dataset has been completed (i.e. was latest before and still is)
+def latest_output12_dataset_complete_event(project,model,dataset_pattern,commit=True):
+    # this event means latest output12 dataset has been completed (beware: no 'latest switch' event here: was latest before and still is)
 
-    sdlog.log("SYDEVENT-006","'latest_dataset_complete_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+    sdlog.log("SYDEVENT-006","'latest_output12_dataset_complete_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
 
     event=Event(name=sdconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE)
     event.project=project
@@ -300,7 +300,7 @@ if __name__ == '__main__':
         assert args.model is not None
         assert args.dataset_pattern is not None
 
-        latest_dataset_complete_output12_event(args.project,args.model,args.dataset_pattern,commit=True)
+        latest_output12_dataset_complete_event(args.project,args.model,args.dataset_pattern,commit=True)
     elif args.name == 'file_complete_event':
 
         assert args.file_functional_id is not None
