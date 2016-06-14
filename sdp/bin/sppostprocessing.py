@@ -76,6 +76,7 @@ def add_ppprun(pipeline,status,project,model,dataset_pattern,variable,conn):
                     pass
                 else:
                     raise PipelineRunningException()
+                helper(pipeline,ppprun,status,conn)
             elif pipeline=='IPSL_002':
                 if ppprun.status==spconst.PPPRUN_STATUS_DONE:
                     pass
@@ -87,25 +88,16 @@ def add_ppprun(pipeline,status,project,model,dataset_pattern,variable,conn):
                         raise PipelineRunningException()
                 else:
                     raise PipelineRunningException()
+                helper(pipeline,ppprun,status,conn)
+            elif pipeline=='CDF_001':
+                #splog.info("SPPOSTPR-282","PEXEC: nothing to do")
+                pass
+            elif pipeline=='CDF_002':
+                #splog.info("SPPOSTPR-284","PEXEC: Nothing to do")
+                pass
             else:
                 raise SPException('SPPOSTPR-450','Unknown pipeline (%s)'%pipeline)
 
-            # retrieve pipeline definition (note that code below is not reentrant/threadsafe: it works only because execution mode is serial (i.e. non parallel))
-            pipeline=sppipeline.get_pipeline(pipeline)
-            pipeline.reset()
-            state=pipeline.get_current_state().source
-            transition=pipeline.get_current_state().transition
-
-            # set new values
-            ppprun.state=state
-            ppprun.transition=transition.name
-            ppprun.status=status
-            ppprun.error_msg=None
-            ppprun.last_mod_date=sptime.now()
-
-            # save
-            spppprdao.update_ppprun(ppprun,conn)
-            splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
     else:
         ppprun=build_ppprun(pipeline,status,project,model,dataset_pattern,variable)
         id_=spppprdao.add_ppprun(ppprun,conn) # autoincrement field is stored in 'id_'. Not used for now.
@@ -240,6 +232,25 @@ def job_done(job): # note: this method name does not implied that the job comple
         conn.commit()
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
+
+def helper(pipeline,ppprun,status,conn): # FIXME: find a better name
+
+    # retrieve pipeline definition (note that code below is not reentrant/threadsafe: it works only because execution mode is serial (i.e. non parallel))
+    p=sppipeline.get_pipeline(pipeline)
+    p.reset()
+    state=p.get_current_state().source
+    transition=p.get_current_state().transition
+
+    # set new values
+    ppprun.state=state
+    ppprun.transition=transition.name
+    ppprun.status=status
+    ppprun.error_msg=None
+    ppprun.last_mod_date=sptime.now()
+
+    # save
+    spppprdao.update_ppprun(ppprun,conn)
+    splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
 
 class Execute():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
