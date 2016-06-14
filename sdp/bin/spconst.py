@@ -11,6 +11,8 @@
 
 import spapp
 
+EVENT_PEXEC_001='pexec_001' # FIXME: move into configuration file
+#
 EVENT_VARIABLE_COMPLETE='variable_complete'
 EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
 #
@@ -46,3 +48,5 @@ PARAM_TYPE_CONTROLLED='param_type_controlled'
 PARAM_TYPE_FREE='param_type_free'
 #
 DEFAULT_PRIORITY=1000
+#
+PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']

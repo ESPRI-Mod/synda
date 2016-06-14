@@ -16,6 +16,7 @@ import time
 import traceback
 import splog
 import speventdao
+import spppprdao
 import spconfig
 import spconst
 import spdb
@@ -53,6 +54,34 @@ def process_event(e,conn):
         #pipeline='IPSL_003'
         #assert e.variable == ''
         #create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
+
+    elif e.name==spconst.EVENT_PEXEC_001: # order_name
+
+        dependent_pipeline=None
+        if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+            pipeline='IPSL_001'
+            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
+                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,e.variable=variable,conn=conn)
+        else:
+            pipeline='IPSL_003'
+            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
+                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,e.variable=variable,conn=conn)
+
+        if dependent_pipeline is not None:
+            if dependent_pipeline.status=PPPRUN_STATUS_DONE:
+
+                # insert variable pipeline
+                pipeline='CDF_001'
+                create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
+
+                # insert dataset pipeline
+                pipeline='CDF_002'
+                e.variable='' # WART
+                create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn) # called for each variable, but duplicate dataset are ignored(i.e. for some project, a dataset is a group of variable)
+            else:
+                splog.info('SPEVENTT-010','Dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
+        else:
+            splog.info('SPEVENTT-018',"Dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
 
     else:
         raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))

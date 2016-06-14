@@ -17,7 +17,7 @@ from sppostprocessingutils import PostProcessingPipeline,State,Transition
 def get_pipeline():
     return ppp
 
-def set_variable_path_type(kw):
+def set_variable_path_type(kw): # FIXME: naming not clear
     assert kw.variable!='' # additional check just in case
     kw.path_type='variable'
 
