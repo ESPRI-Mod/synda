@@ -687,6 +687,36 @@ def param(args):
     import sdparam
     sdparam.print_(args)
 
+def pexec(args):
+    import sdstream, sdrdataset, sdrvariable, sddeferredafter, sdpporder, sddb
+
+    if args.order_name=='cdf':
+
+        # use search-api operator to build datasets list
+        datasets=sdrdataset.get_datasets(stream=args.stream) # FIXME: replace with sdsearch for unlimited result (i.e. > 8000 datasets)
+
+        if len(datasets)>0:
+            for d in datasets:
+                if d['status']==sdconst.DATASET_STATUS_COMPLETE:
+
+                    # first, send cdf variable event
+                    # (note: total number of variable event is given by: "total+=#variable for each ds")
+
+                    for v in d['variable']:
+                        sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],variable=v,commit=False)
+
+                    # second, send cdf dataset event
+
+                    sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],commit=False)
+
+            sddb.conn.commit()
+
+            print_stderr("Post-processing task successfully submitted")   
+        else:
+            print_stderr('Dataset not found')
+    else:
+        assert False
+
 def queue(args):
     import sdfilequery
     from tabulate import tabulate
@@ -796,6 +826,7 @@ actions={
     'metric':metric, 
     'open':open_,
     'param':param,
+    'pexec':pexec, 
     'queue':queue,
     'remove':remove, 
     'replica':replica,

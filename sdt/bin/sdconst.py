@@ -9,8 +9,6 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-EVENT_PEXEC_001='pexec_001' # FIXME: move into configuration file
-#
 EVENT_VARIABLE_COMPLETE='variable_complete'
 EVENT_DATASET_COMPLETE='dataset_complete'
 EVENT_DATASET_LATEST='dataset_latest'

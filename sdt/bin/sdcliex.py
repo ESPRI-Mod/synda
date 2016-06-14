@@ -113,7 +113,7 @@ def param():
     return buf
 
 def pexec():
-    buf=""""""
+    buf="""  synda pexec -s cdf_test.txt cdf"""
     return buf
 
 def queue():

@@ -99,21 +99,6 @@ def dump(args):
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
-def pexec(args):
-
-    # HACK
-    if args.order_name=sdconst.EVENT_PEXEC_001:
-        args.type_=sdconst.SA_TYPE_AGGREGATION
-    else:
-        assert False
-
-    if args.type_==sdconst.SA_TYPE_FILE:
-        file_pexec(args)
-    elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        variable_pexec(args)
-    elif args.type_==sdconst.SA_TYPE_DATASET:
-        dataset_pexec(args)
-
 # o=======================================================o
 
 def dataset_foobar(args):
@@ -406,60 +391,6 @@ def file_dump(args):
         else:
             print_stderr("File not found")   
 
-# o-------------------------------------------------------o
-
-def dataset_pexec(args):
-    import sdrdataset, sddeferredafter, sdstream, sdpporder, sddb
-
-    sddeferredafter.add_default_parameter(args.stream,'limit',8000) # add default limit
-
-    datasets=sdrdataset.get_datasets(stream=args.stream)
-
-    if len(datasets)>0:
-        for d in datasets:
-            if d['status']==sdconst.DATASET_STATUS_COMPLETE:
-                sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],commit=False)
-        sddb.conn.commit()
-
-        print_stderr("Post-processing task successfully submitted")   
-    else:
-        print_stderr('Dataset not found')   
-
-def variable_pexec(args):
-    import sdrdataset, sdrvariable, sddeferredafter, sdpporder, sddb
-
-    sddeferredafter.add_default_parameter(args.stream,'limit', 8000) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
-
-    datasets=sdrdataset.get_datasets(stream=args.stream)
-
-    if len(datasets)>0:
-        for d in datasets:
-            if d['status']==sdconst.DATASET_STATUS_COMPLETE: # TODO: use VARIABLE_COMPLETE here !
-                for v in d['variable']:
-                    sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],variable=v,commit=False)
-        sddb.conn.commit()
-
-        print_stderr("Post-processing task successfully submitted")   
-    else:
-        print_stderr('Variable not found')   
-
-def file_pexec(args):
-    import sdrfile, sddeferredafter, sdpporder, sddb
-
-    sddeferredafter.add_default_parameter(args.stream,'limit',8000)
-
-    files=sdrfile.get_files(stream=args.stream)
-
-    if len(files)>0:
-        for f in files:
-            if f['status']==sdconst.TRANSFER_STATUS_DONE:
-                sdpporder.submit(args.order_name,sdconst.SA_TYPE_FILE,f['project'],f['model'],f['dataset_local_path'],variable=f['variable'],filename=f['filename'],commit=False)
-        sddb.conn.commit()
-
-        print_stderr("Post-processing task successfully submitted")   
-    else:
-        print_stderr("File not found")   
-
 # init.
 
 dataset_light_fields=sdconst.LIGHT_FIELDS
@@ -469,7 +400,6 @@ file_light_fields=sdconst.LIGHT_FIELDS
 actions={
     'dump':dump,
     'list':list_, 
-    'pexec':pexec, 
     'search':search, 
     'show':show,
     'version':version
