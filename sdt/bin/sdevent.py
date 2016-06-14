@@ -204,23 +204,6 @@ def dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
 
     pass
 
-def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
-
-    sdlog.log("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
-
-    # not used
-    """
-    event=Event(name=sdconst.EVENT_OUTPUT12_DATASET_LATEST)
-    event.project=project
-    event.model=model
-    event.dataset_pattern=dataset_pattern
-    event.variable=''
-    event.filename_pattern=''
-    event.crea_date=sdtime.now()
-    event.priority=sdconst.DEFAULT_PRIORITY
-    sdeventdao.add_event(event,commit=commit)
-    """
-
 def latest_dataset_complete_output12_event(project,model,dataset_pattern,commit=True):
     # this event means one latest dataset has been completed (i.e. was latest before and still is)
 
@@ -278,6 +261,23 @@ def dataset_latest_event(project,model,dataset_path,commit=True):
             dataset_pattern=sdproduct.replace_output12_product_with_wildcard(dataset_path)
             dataset_latest_output12_event(project,model,dataset_pattern,commit=commit) # trigger event
 
+def dataset_latest_output12_event(project,model,dataset_pattern,commit=True):
+    # this event means output12 dataset has been granted latest
+
+    sdlog.log("SYDEVENT-009","'dataset_latest_output12_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
+
+    # not used
+    """
+    event=Event(name=sdconst.EVENT_OUTPUT12_DATASET_LATEST)
+    event.project=project
+    event.model=model
+    event.dataset_pattern=dataset_pattern
+    event.variable=''
+    event.filename_pattern=''
+    event.crea_date=sdtime.now()
+    event.priority=sdconst.DEFAULT_PRIORITY
+    sdeventdao.add_event(event,commit=commit)
+    """
 
 # init.
 
