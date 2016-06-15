@@ -36,4 +36,4 @@ t1=Transition(name='latest',destination='S2120',get_args=f1)
 s1=State(name='S2110',transition=t1,initial=True)
 s2=State(name='S2120',transition=None)
 
-ppp.add(s1,s2,s3,s4)
+ppp.add(s1,s2)
