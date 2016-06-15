@@ -20,6 +20,7 @@ import spppprdao
 import spconfig
 import spconst
 import spdb
+from sptypes import PPPRun
 import sppostprocessing
 from spexception import SPException,PipelineRunningException
 
@@ -69,7 +70,7 @@ def process_event(e,conn):
 
         dependent_pipeline=get_dependency(e,conn)
         if dependent_pipeline is not None:
-            if dependent_pipeline.status=PPPRUN_STATUS_DONE:
+            if dependent_pipeline.status==PPPRUN_STATUS_DONE:
 
                 status=spconst.PPPRUN_STATUS_WAITING
 
