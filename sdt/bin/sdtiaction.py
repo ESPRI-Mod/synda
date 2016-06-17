@@ -688,34 +688,47 @@ def param(args):
     sdparam.print_(args)
 
 def pexec(args):
-    import sdstream, sdrdataset, sdrvariable, sddeferredafter, sdpporder, sddb
+    import sdsearch, sdpporder, sddb, syndautils, sdconst
 
     if args.order_name=='cdf':
 
         # use search-api operator to build datasets list
-        datasets=sdrdataset.get_datasets(stream=args.stream) # FIXME: replace with sdsearch for unlimited result (i.e. > 8000 datasets)
+        stream=syndautils.get_stream(args)
+        sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
 
-        if len(datasets)>0:
+        dataset_found_count=0
+        order_variable_count=0
+        order_dataset_count=0
+        for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
+            
+            datasets=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
             for d in datasets:
                 if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
-                    # first, send cdf variable event
+                    # first, send cdf variable order
                     # (note: total number of variable event is given by: "total+=#variable for each ds")
-
                     for v in d['variable']:
-                        sdpporder.submit(args.order_name,sdconst.SA_TYPE_AGGREGATION,d['project'],d['model'],d['local_path'],variable=v,commit=False)
+                        if v in facets_group['variable']: # TAG45345JK3J53K
+                            order_variable_count+=1
+                            sdpporder.submit('cdf_variable',d['project'],d['model'],d['local_path'],variable=v,commit=False)
 
-                    # second, send cdf dataset event
+                    # second, send cdf dataset order
+                    order_dataset_count+=1
+                    sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
 
-                    sdpporder.submit(args.order_name,sdconst.SA_TYPE_DATASET,d['project'],d['model'],d['local_path'],commit=False)
+            dataset_found_count+=len(datasets)
 
-            sddb.conn.commit()
+        sddb.conn.commit()
 
-            print_stderr("Post-processing task successfully submitted")   
+        if dataset_found_count>0:
+            if order_dataset_count==0:
+                print_stderr("Dataset not downloaded: operation cancelled")   
+            else:
+                print_stderr("Post-processing task successfully submitted (order_dataset_count=%d,order_variable_count=%d)"%(order_dataset_count,order_variable_count))
         else:
             print_stderr('Dataset not found')
     else:
-        assert False
+        print_stderr("Invalid order name ('%s')"%args.order_name)
 
 def queue(args):
     import sdfilequery
