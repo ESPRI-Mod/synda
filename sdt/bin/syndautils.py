@@ -62,16 +62,34 @@ def get_stream(subcommand=None,parameter=[],selection_file=None,no_default=True,
 
 def file_full_search(args):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
-    import sdsearch,sdlog,sdhistory
+    import sdsearch,sdlog,sdhistory,sdstream
 
     stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
 
 
 
+    if args.timestamp_left_boundary and args.incremental:
+        raise sdexception.SDException('SYNUTILS-003',"Incorrect argument: 'timestamp_left_boundary' and 'incremental' are mutually exlusive options")
+
+
+
+
+
+
+
     # incremental mode management (experimental)
 
-    if args.subcommand in ('install',): # prevent 'remove' and 'stat' subcommands (maybe 'stat' will be used later)
+    if args.subcommand in ('install','stat'): # prevent incremental mode for 'remove' subcommand
+
+
+        # those filters are mainly used to test 'incremental mode' feature
+        if args.timestamp_left_boundary is not None:
+            sdstream.set_scalar(stream,'from',args.timestamp_left_boundary)
+        if args.timestamp_right_boundary is not None:
+            sdstream.set_scalar(stream,'to',args.timestamp_right_boundary)
+
+
         if args.incremental:
 
             sdlog.info('SYNUTILS-002','Starting file discovery (incremental mode enabled)')
@@ -96,12 +114,7 @@ def file_full_search(args):
                 # more info
                 #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
 
-                stream.set_scalar('from',previous_run['crea_date'])
-
-                # this filter is only used to test 'incremental mode' feature
-                if args.timestamp_right_boundary is not None:
-                    stream.set_scalar('to',args.timestamp_right_boundary)
-
+                sdstream.set_scalar(stream,'from',previous_run['crea_date'])
 
             else:
                 sdlog.info('SYNUTILS-008','No previous run found')

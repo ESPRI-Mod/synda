@@ -38,7 +38,10 @@ def add_ni_option(parser): # 'ni' means 'Non-Interactive'
 
 def add_incremental_mode_argument(parser):
     parser.add_argument('-i','--incremental', action='store_true',help='Install files which appeared since last run (experimental)')
-    parser.add_argument('--timestamp_right_boundary',help=argparse.SUPPRESS) # timestamp right boundary filter (hidden option to test 'incremental' feature)
+
+    # redundant with 'parameter', but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
+    parser.add_argument('--timestamp_left_boundary',help=argparse.SUPPRESS) # timestamp left boundary filter (hidden option mainly used for debug)
+    parser.add_argument('--timestamp_right_boundary',help=argparse.SUPPRESS) # timestamp right boundary filter (hidden option mainly used for debug)
 
 def add_common_option(parser,**kw):
 
@@ -203,6 +206,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
+    add_incremental_mode_argument(subparser)
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
