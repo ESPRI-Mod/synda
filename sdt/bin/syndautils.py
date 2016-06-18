@@ -28,14 +28,10 @@ def check_daemon():
             print 'The daemon must be stopped before installing/removing dataset'
             sys.exit(3)
 
-def get_stream(args,raise_exception_if_empty=False):
+def get_stream(subcommand=None,parameter=[],selection_file=None,no_default=False,raise_exception_if_empty=False):
     import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore, sdexception
 
-    # hack
-    if args.subcommand in ('list','get','open'):
-        args.no_default=True
-
-    buffer=sdbuffer.get_selection_file_buffer(parameter=args.parameter,path=args.selection_file)
+    buffer=sdbuffer.get_selection_file_buffer(parameter=parameter,path=selection_file)
 
 
     if len(buffer.lines)==0:
@@ -45,7 +41,7 @@ def get_stream(args,raise_exception_if_empty=False):
             raise sdexception.EmptySelectionException()
 
 
-    selection=sdparse.build(buffer,load_default=(not args.no_default))
+    selection=sdparse.build(buffer,load_default=(not no_default))
     stream=selection.to_stream()
 
     # Set default value for nearest here
@@ -60,7 +56,7 @@ def get_stream(args,raise_exception_if_empty=False):
     if sdconfig.config.getboolean('interface','progress'):
         sdstream.set_scalar(stream,'progress',True)
 
-    sdstream.set_scalar(stream,'action',args.subcommand) # from the synda engine perspective, 'action' is more meaningful than 'subcommand'
+    sdstream.set_scalar(stream,'action',subcommand) # from the synda engine perspective, 'action' is more meaningful than 'subcommand'
 
     return stream # aka facets_groups
 
@@ -68,7 +64,7 @@ def file_full_search(args):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
     import sdsearch,sdlog,sdhistory
 
-    stream=get_stream(args,raise_exception_if_empty=True)
+    stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
 
 
