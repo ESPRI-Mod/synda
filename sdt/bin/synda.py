@@ -120,7 +120,7 @@ if __name__ == '__main__':
     if args.subcommand in sdtsaction.actions.keys():
         import syndautils
 
-        stream=syndautils.get_stream(args)
+        stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
 
 
         # hack for 'show' and 'version' subcommands.
