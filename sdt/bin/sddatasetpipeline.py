@@ -17,6 +17,7 @@ import json
 import sdapp
 import sdconfig
 import sdprepare_dataset_attr
+import sdlocalpath
 import sdshrink
 import sdremoveaggregation
 import sdcomplete
@@ -30,6 +31,7 @@ def run(**kw):
     check_type(files)
     files=sdremoveaggregation.run(files)
     files=sdprepare_dataset_attr.run(files)
+    files=sdlocalpath.run(files,mode='dataset')
     files=sdshrink.run(files)
     files=sdcomplete.run(files)
     files=sdstatusfilter.run(files)

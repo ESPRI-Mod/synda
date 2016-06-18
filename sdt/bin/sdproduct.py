@@ -11,6 +11,16 @@
 
 """Contains product related routines."""
 
+def remove_product(path):
+    for product in ['/output/','/output1/','/output2/']:
+        path=path.replace(product,"/")
+    return path
+
+def replace_output12_product_with_output_product(path):
+    for product in ['/output1/','/output2/']:
+        path=path.replace(product,"/output/")
+    return path
+
 def replace_output12_product_with_wildcard(path):
     for product in ['/output1/','/output2/']:
         path=path.replace(product,"/*/")
