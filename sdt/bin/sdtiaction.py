@@ -51,11 +51,16 @@ def check(args):
 
     elif args.action=="file_variable":
 
-        subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
+        #subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
         #subset_filter=['model=HadCM3','project=CMIP5']
         #subset_filter=['project=CMIP5']
 
-        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='instance_id,variable',dry_run=args.dry_run)
+        #subset_filter=['time_frequency=day','model=EC-EARTH','project=CMIP5','experiment=rcp85','realm=atmos']
+
+        subset_filter=['model=CNRM-CM5','project=specs','realm=atmos','variable=tas']
+        #subset_filter=['project=specs']
+
+        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='title,instance_id,variable',dry_run=args.dry_run)
 
         if not args.dry_run:
             print '%i file(s) retrieved'%len(files)
@@ -67,7 +72,7 @@ def check(args):
                 #print file_['variable']
 
                 if len(file_['variable'])>1:
-                    print 'File contains many variables (%s,%s)'%(instance_id,str(variable))
+                    print 'File contains many variables (%s,%s)'%(file_['title'],str(file_['variable']))
                     errors+=1
 
             if errors==0:
