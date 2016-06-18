@@ -190,7 +190,9 @@ def job_done(job): # note: this method name does not implied that the job comple
         spppprdao.update_ppprun(ppprun,conn)
         spjobrdao.add_jobrun(job,conn)
 
-        trigger_dataset_pipeline('IPSL_001','IPSL_002',ppprun,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
+        if ppprun.pipeline in ['IPSL_001','CDF_001']: # TODO: move this in external pipeline configuration file
+            dependent_pipeline='IPSL_002' if ppprun.pipeline=='IPSL_001' else 'CDF_002' # TODO: move this in external pipeline configuration file
+            trigger_dataset_pipeline(ppprun.pipeline,dependent_pipeline,ppprun,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
 
         conn.commit()
     finally:
