@@ -207,7 +207,7 @@ def daemon(args):
 def facet(args):
     import sdparam,sdremoteparam,syndautils,sdinference
 
-    facets_groups=syndautils.get_stream(args)
+    facets_groups=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
     facets_groups=sdinference.run(facets_groups)
 
 
@@ -247,7 +247,7 @@ def get(args):
         print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
         return 1
 
-    stream=syndautils.get_stream(args)
+    stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
     sdlogon.renew_certificate(False)
 
@@ -611,7 +611,7 @@ def open_(args):
     import sdview,syndautils,sdsandbox,sdtypes,sdconst
 
 
-    stream=syndautils.get_stream(args)
+    stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
 
     # check
@@ -693,7 +693,7 @@ def pexec(args):
     if args.order_name=='cdf':
 
         # use search-api operator to build datasets list
-        stream=syndautils.get_stream(args)
+        stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
         sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
 
         dataset_found_count=0
