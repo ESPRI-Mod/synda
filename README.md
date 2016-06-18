@@ -17,7 +17,7 @@ Search file
 
     synda search rcp85 3hr query=209101010300-209601010000 -f 
 
-    synda search query=20160101-20161231 "Air Temperature" -f
+    synda search 20160101-20161231 "Air Temperature" -f
 
 Download file
 

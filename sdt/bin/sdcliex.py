@@ -143,6 +143,8 @@ def retry():
 def search(prog):
     buf="""  %s cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
   %s rcp85 3hr timeslice=20050101-21001231 -f
+  %s rcp85 3hr query=209101010300-209601010000 -f 
+  %s 20160101-20161231 "Air Temperature" -f
   %s experiment=rcp45,rcp85 model=CCSM4
   %s project=CMIP5 realm=atmos
   %s realm=atmos project=CMIP5
