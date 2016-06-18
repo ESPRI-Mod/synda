@@ -7,7 +7,13 @@ System Grid Federation (ESGF) archive.
 
 ## Usage
 
+Search dataset
+
+    synda search cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
+
 Search file
+
+    synda search rcp85 3hr timeslice=20050101-21001231 -f
 
     synda search 20160101-20161231 "Air Temperature" -f
 
