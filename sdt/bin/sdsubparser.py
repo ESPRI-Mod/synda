@@ -37,7 +37,7 @@ def add_ni_option(parser): # 'ni' means 'Non-Interactive'
     parser.add_argument('-y','--yes',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively')
 
 def add_incremental_mode_argument(parser):
-    parser.add_argument('--incremental','-i', action='store_true',help='Install files which appeared since last run (experimental)')
+    parser.add_argument('-i','--incremental', action='store_true',help='Install files which appeared since last run (experimental)')
     parser.add_argument('--timestamp_right_boundary',help=argparse.SUPPRESS) # timestamp right boundary filter (hidden option to test 'incremental' feature)
 
 def add_common_option(parser,**kw):
@@ -153,7 +153,8 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
-    subparser=create_subparser(subparsers,'list',help='List installed dataset',example=sdcliex.list())
+    subparser=create_subparser(subparsers,'list',no_default=False,help='List installed dataset',example=sdcliex.list()) # here no_default is a flag to decide if we show no_default option or not
+    subparser.set_defaults(no_default=True) # here no_default is the real option
     add_parameter_argument(subparser)
     add_type_grp(subparser)
 
