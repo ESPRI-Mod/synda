@@ -73,15 +73,17 @@ def build(buffer,load_default=None):
     #   in the global default file"
 
 
-    # retrieve project
-
+    # retrieve projects
     projects=get_projects(selection)
+
+    # retrieve default projects
+    default_projects=get_default_projects(default_selection)
+
+    # 
     if len(projects)==0:
         # project not present in CLI nor in 'selection file'
 
         # let's try if project is set in default file
-        default_projects=get_default_projects(default_selection)
-
         if len(default_projects)==0:
             project=None # no project set
         elif len(default_projects)==1:
@@ -90,12 +92,15 @@ def build(buffer,load_default=None):
             print_too_many_projects_set_warning(default_projects)
             project=None # too many project: do not load project level default value
 
-    elif len(projects)==1:
-        project=projects[0]
+    elif len(projects)>0:
 
-    elif len(projects)>1:
-        print_too_many_projects_set_warning(projects)
-        project=None # too many project: do not load project level default value
+            
+
+        if len(projects)==1:
+            project=projects[0]
+        elif len(projects)>1:
+            print_too_many_projects_set_warning(projects)
+            project=None # too many project: do not load project level default value
 
 
     # load project default (file containing default parameters for the project)
