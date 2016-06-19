@@ -94,6 +94,11 @@ def build(buffer,load_default=None):
 
     elif len(projects)>0:
 
+        # When project(s) are present in CLI or 'selection file',
+        # project(s) from default file are ignored.
+        # (see #34 for more info)
+        if len(default_projects)>0:
+            del default_selection.facets['project']
             
 
         if len(projects)==1:
