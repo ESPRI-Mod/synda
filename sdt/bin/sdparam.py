@@ -257,6 +257,12 @@ def get_name_from_value(value):
             if len(names)==1:
                 return names[0]
 
+        # item below is not used very often, so let's try without it
+        if 'driving_model_ensemble_member' in names:
+            names.remove('driving_model_ensemble_member')
+            if len(names)==1:
+                return names[0]
+
         # if still too many match, print a warning and return the first one
         sdtools.print_stderr("WARNING: '%s' value has been associated with '%s' facet."%(value,names[0]))
         return names[0]
