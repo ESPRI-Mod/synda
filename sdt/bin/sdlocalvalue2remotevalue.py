@@ -21,19 +21,30 @@ import argparse
 import json
 import sdapp
 import sdprint
+import sdutils
+import sdconst
 
 def local_urls_to_remote_urls(local_urls):
     remote_urls=[]
 
     for local_url in local_urls:
 
-        # FIXME TAGF44JK4JR4
-        #'|application/gridftp|GridFTP'
-        #'|application/opendap-html|OPENDAP'
-        suffix='|application/netcdf|HTTPServer'
+        protocol=sdutils.get_transfer_protocol(local_url)
+
+        gridftp_suffix='|application/gridftp|GridFTP'
+        opendap_suffix='|application/opendap-html|OPENDAP'
+        http_suffix='|application/netcdf|HTTPServer'
+
+        if protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+            suffix=gridftp_suffix
+        elif protocol==sdconst.TRANSFER_PROTOCOL_OPENDAP:
+            suffix=opendap_suffix
+        elif protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
+            suffix=http_suffix
+        else:
+            suffix=http_suffix # if unknown, default to HTTP
 
         remote_url='%s%s'%(local_url,suffix)
-
         remote_urls.append(remote_url)
 
     return remote_urls
