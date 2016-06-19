@@ -693,9 +693,10 @@ def param(args):
     sdparam.print_(args)
 
 def pexec(args):
-    import sdsearch, sdpporder, sddb, syndautils, sdconst
+    import sdsearch, sdpporder, sddb, syndautils, sdconst, sdpostpipelineutils, sdhistorydao
 
     if args.order_name=='cdf':
+        selection_filename=None
 
         # use search-api operator to build datasets list
         stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
@@ -707,6 +708,12 @@ def pexec(args):
         for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
             
             datasets=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
+
+            # WART
+            # (gets overwritten at each iteration, but not a big deal as always the same value)
+            if selection_filename is None: # this is to keep the first found value (i.e. if last facets_group is empty but not the previous ones do not keep the last one (which would be None))
+                selection_filename=sdpostpipelineutils.get_attached_parameter__global(datasets,'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+
             for d in datasets:
                 if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
@@ -729,6 +736,8 @@ def pexec(args):
             if order_dataset_count==0:
                 print_stderr("Dataset not downloaded: operation cancelled")   
             else:
+                sdhistorydao.add_history_line(sdconst.ACTION_PEXEC,selection_filename)
+
                 print_stderr("Post-processing task successfully submitted (order_dataset_count=%d,order_variable_count=%d)"%(order_dataset_count,order_variable_count))
         else:
             print_stderr('Dataset not found')
