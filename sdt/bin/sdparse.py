@@ -86,7 +86,7 @@ def build(buffer,load_default=None):
     elif 'project' in default_selection.facets:
         project=default_selection.facets['project'][0]
     else:
-        project='CMIP5'
+        project=None
 
     # load project default (file containing default parameters for the project)
     project_default_selection=load_default_file(sdconfig.get_project_default_selection_file(project),load_default)
