@@ -25,6 +25,7 @@ import sdbuffer
 import sdconst
 import sdprint
 import sdi18n
+import syndautils
 
 def build(buffer,load_default=None):
     """This func builds selection and set default values.
@@ -63,30 +64,39 @@ def build(buffer,load_default=None):
     # load default (file containing default parameters for all projects)
     default_selection=load_default_file(sdconfig.default_selection_file,load_default)
 
-    # WARNING
-    #
-    # TAG53453545
+
+    # NOTE
     #
     # For project level default file to be loaded, the following must be true
-    #     - project must be specified in cli parameter or in the selection file or 
-    #       in the global default file.
-    #     - project must be specified using name=value notation.
-    #       i.e. pending value syntax doesn't work.
-    #       This is because if we want to use pending syntax here, we have to
-    #       use sdinference and query the database to retrieve ESGF parameters.
-    #       Doing those things here may raise circular dependencies
-    #       as well as making the whole thing very complex.
-    #       To summarize:
-    #           - synda search project=GeoMIP => this works   (i.e. load project level default file)
-    #           - synda search GeoMIP         => this doesn't (i.e. doesn't load project level default file)
+    #
+    #   "project must be specified in cli parameter or in the selection file or 
+    #   in the global default file"
+
 
     # retrieve project
-    if 'project' in selection.facets:
-        project=selection.facets['project'][0]
-    elif 'project' in default_selection.facets:
-        project=default_selection.facets['project'][0]
-    else:
-        project=None
+
+    projects=get_projects(selection)
+    if len(projects)==0:
+        # project not present in CLI nor in 'selection file'
+
+        # let's try if project is set in default file
+        default_projects=get_default_projects(default_selection)
+
+        if len(default_projects)==0:
+            project=None # no project set
+        elif len(default_projects)==1:
+            project=default_projects[0]
+        elif len(default_projects)>1:
+            print_too_many_projects_set_warning(default_projects)
+            project=None # too many project: do not load project level default value
+
+    elif len(projects)==1:
+        project=projects[0]
+
+    elif len(projects)>1:
+        print_too_many_projects_set_warning(projects)
+        project=None # too many project: do not load project level default value
+
 
     # load project default (file containing default parameters for the project)
     project_default_selection=load_default_file(sdconfig.get_project_default_selection_file(project),load_default)
@@ -98,6 +108,48 @@ def build(buffer,load_default=None):
     project_default_selection.parent=default_selection         # set default_selection as parent of project_default_selection
 
     return selection
+
+def print_too_many_projects_set_warning(projects):
+    sdtools.print_stderr('WARNING: several projects set: project default values file not loaded %s'%str(projects))
+
+def get_default_projects(default_selection):
+    projects=[]
+    if 'project' in default_selection.facets:
+        projects+=default_selection.facets['project']
+    return projects
+
+def get_projects(selection):
+    """This method returns project (pending and non-pending) from CLI parameter or selection file."""
+    project=[]
+
+    # project with keyname
+
+    if 'project' in selection.facets:
+        project+=selection.facets['project']
+
+
+    # project without keyname
+
+    # WARNING
+    #
+    # The code below uses sdinference and query the database to retrieve ESGF parameters.
+    # Doing those things here may raise circular dependencies
+    # as well as making the whole thing very complex.
+    #
+    # We do this to make this syntax work (i.e. project value without key)
+    #   synda search GeoMIP
+    #
+    # Note that this syntax always works (i.e. load the project level default file), even without this code.
+    #   synda search project=GeoMIP
+    #
+    #
+    pending_projects=syndautils.get_facet_values_early([selection.facets],'project') # project without keyname
+
+    li=pending_projects+project
+
+    li=list(set(li)) # remove duplicate
+
+    return li
 
 def load_default_file(path,load_default):
     selection=Selection()
