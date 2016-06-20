@@ -11,13 +11,13 @@ Search dataset
 
     synda search cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
 
+    synda search rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z
+
 Search file
 
     synda search rcp85 3hr timeslice=20050101-21001231 -f
 
-    synda search rcp85 3hr query=209101010300-209601010000 -f 
-
-    synda search 20160101-20161231 "Air Temperature" -f
+    synda search timeslice=00100101-20501231 model=GFDL-ESM2M "Air Temperature" -f
 
 Download file
 
