@@ -21,7 +21,7 @@ import sdprint
 from sdtools import print_stderr
 
 def list_(args):
-    import sdactionutils
+    import sdearlystreamutils
 
     """
     disabled as is more practical to list everything by default and filter only on user request.
@@ -39,7 +39,7 @@ def list_(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_list(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args.stream) # HACK
+        move_to_dataset_printing_routine=sdearlystreamutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
@@ -53,7 +53,7 @@ def list_(args):
         dataset_list(args)
 
 def search(args):
-    import sdactionutils
+    import sdearlystreamutils
 
     if args.replica:
         import sdstream, sddeferredafter
@@ -63,7 +63,7 @@ def search(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_search(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args.stream) # HACK
+        move_to_dataset_printing_routine=sdearlystreamutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
@@ -205,10 +205,10 @@ def file_search(args):
 # o-------------------------------------------------------o
 
 def dataset_show(args):
-    import sdactionutils
+    import sdearlystreamutils
 
     # check
-    li=sdactionutils.get_facet_values_early(args.stream,'instance_id')
+    li=sdearlystreamutils.get_facet_values_early(args.stream,'instance_id')
     if len(li)==0:
         print_stderr('Please specify a dataset name.')
         return
@@ -260,16 +260,16 @@ def variable_show(args):
         """
 
 def file_show(args):
-    import sdactionutils
+    import sdearlystreamutils
 
 
     # check
 
-    li=sdactionutils.get_facet_values_early(args.stream,'instance_id') # check if 'instance_id' exists
+    li=sdearlystreamutils.get_facet_values_early(args.stream,'instance_id') # check if 'instance_id' exists
     if len(li)==0:
         # 'instance_id' is not found on cli
 
-        li=sdactionutils.get_facet_values_early(args.stream,'title') # check if 'title' exists
+        li=sdearlystreamutils.get_facet_values_early(args.stream,'title') # check if 'title' exists
         if len(li)==0:
             # 'title' is not found on cli
 
@@ -309,13 +309,13 @@ def file_show(args):
 # o-------------------------------------------------------o
 
 def dataset_version(args):
-    import sdremoteparam,syndautils,sdactionutils
+    import sdremoteparam,syndautils,sdearlystreamutils
 
     # don't be misled about identifiers here: sdinference produces search-api
     # key (always do) name i.e. instance_id, and I use Synda style variable name
     # i.e. dataset_functional_id (for better readability).
 
-    li=sdactionutils.get_facet_values_early(args.stream,'instance_id')
+    li=sdearlystreamutils.get_facet_values_early(args.stream,'instance_id')
 
     if len(li)==0:
         print_stderr('Please specify a dataset name.')

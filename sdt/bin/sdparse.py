@@ -25,7 +25,7 @@ import sdbuffer
 import sdconst
 import sdprint
 import sdi18n
-import sdactionutils
+import sdearlystreamutils
 
 def build(buffer,load_default=None):
     """This func builds selection and set default values.
@@ -153,7 +153,7 @@ def get_projects(selection):
     #   synda search project=GeoMIP
     #
     #
-    pending_projects=sdactionutils.get_facet_values_early([selection.facets],'project') # project without keyname
+    pending_projects=sdearlystreamutils.get_facet_values_early([selection.facets],'project') # project without keyname
 
     li=pending_projects+project
 
