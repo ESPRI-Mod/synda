@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""Parse selection file (and default files)."""
+"""Parse selection buffer (and default files)."""
 
 import sys
 import os
@@ -25,7 +25,7 @@ import sdbuffer
 import sdconst
 import sdprint
 import sdi18n
-import syndautils
+import sdactionutils
 
 def build(buffer,load_default=None):
     """This func builds selection and set default values.
@@ -153,7 +153,7 @@ def get_projects(selection):
     #   synda search project=GeoMIP
     #
     #
-    pending_projects=syndautils.get_facet_values_early([selection.facets],'project') # project without keyname
+    pending_projects=sdactionutils.get_facet_values_early([selection.facets],'project') # project without keyname
 
     li=pending_projects+project
 

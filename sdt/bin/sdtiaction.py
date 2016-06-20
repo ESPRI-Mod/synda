@@ -241,7 +241,7 @@ def facet(args):
         print_stderr('Unknown facet')   
 
 def get(args):
-    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdconst
+    import sdlogon, sdrfile, sddeferredafter, sddirectdownload, syndautils, humanize, sdconfig, os, sdconst, sdactionutils
 
     # hack
     # see TAG43534FSFS
@@ -275,7 +275,7 @@ def get(args):
     # if url is set by user, we DON'T call search-api operator. Instead, we
     # download the url directly.
 
-    urls=syndautils.get_facet_values_early(stream,'url')
+    urls=sdactionutils.get_facet_values_early(stream,'url')
     if len(urls)==0:
         # no url in stream: switch to search-api operator mode
 
@@ -613,7 +613,7 @@ def retry(args):
         print_stderr("No transfer in error")
 
 def open_(args):
-    import sdview,syndautils,sdsandbox,sdtypes,sdconst
+    import sdview,syndautils,sdsandbox,sdtypes,sdconst,sdactionutils
 
 
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
@@ -621,11 +621,11 @@ def open_(args):
 
     # check
 
-    li=syndautils.get_facet_values_early(stream,'instance_id') # check if 'instance_id' exists
+    li=sdactionutils.get_facet_values_early(stream,'instance_id') # check if 'instance_id' exists
     if len(li)==0:
         # 'instance_id' is not found on cli
 
-        li=syndautils.get_facet_values_early(stream,'title') # check if 'title' exists
+        li=sdactionutils.get_facet_values_early(stream,'title') # check if 'title' exists
         if len(li)==0:
             # 'title' is not found on cli
 
