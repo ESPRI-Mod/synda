@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains startup helper.
+"""This module contains early stream routines.
 
 Notes
     - In this file, module import directives are moved near the calls, so to improve startup time.
@@ -65,7 +65,7 @@ def get_facet_values_early(orig_stream,name,extract_item=False):
 
     return li
 
-def is_one_variable_per_dataset_project(args):
+def is_one_variable_per_dataset_project(stream):
     """This func is a HACK.
 
     HACK description
@@ -75,7 +75,7 @@ def is_one_variable_per_dataset_project(args):
     """
 
     # retrieve project from input
-    project=get_facet_values_early(args.stream,'project',extract_item=True)
+    project=get_facet_values_early(stream,'project',extract_item=True)
 
     # check
     if len(project)==0:

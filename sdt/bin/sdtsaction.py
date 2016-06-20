@@ -39,7 +39,7 @@ def list_(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_list(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args) # HACK
+        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
@@ -63,7 +63,7 @@ def search(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_search(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args) # HACK
+        move_to_dataset_printing_routine=sdactionutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
