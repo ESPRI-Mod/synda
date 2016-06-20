@@ -20,10 +20,6 @@ Remove previous package version
 
     sudo dpkg -P synda
 
-Update packages list
-
-    sudo apt-get update
-
 Install new package version using [this guide](deb_install.md)
 
 ### Post-upgrade
