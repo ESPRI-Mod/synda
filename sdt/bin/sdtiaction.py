@@ -254,7 +254,11 @@ def get(args):
 
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
-    sdlogon.renew_certificate(False)
+    if sdlogon.is_openid_set():
+        sdlogon.renew_certificate(False)
+    else:
+        print_stderr('Error: OpenID not set in configuration file.')   
+        return 1
 
     http_client=sdconst.HTTP_CLIENT_URLLIB if args.urllib2 else sdconst.HTTP_CLIENT_WGET
 

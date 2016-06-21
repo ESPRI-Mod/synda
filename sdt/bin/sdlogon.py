@@ -78,7 +78,7 @@ def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew
         renew_certificate_old(force_renew_certificate,quiet,debug,force_renew_ca_certificates)
 
 def renew_certificate_new(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
-    """Renew ESGF certificateusing sdmyproxy module."""
+    """Renew ESGF certificate using sdmyproxy module."""
 
     # extract info from openid
     (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
