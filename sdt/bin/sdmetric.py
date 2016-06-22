@@ -29,10 +29,13 @@ def format_size(size):
     size_mib='% 4.2f'%size_mib    # set float precision
     return size_mib
 
-def print_rate(groupby,project_):
+def print_rate(groupby,project_,dry_run=False):
 
     # retrieve metrics from local database
-    li=sdfilequery.get_metrics(groupby,'rate',project_)
+    li=sdfilequery.get_metrics(groupby,'rate',project_,dry_run=dry_run)
+
+    if dry_run:
+        return
 
     # prepare
     unit='MiB/s'                               # prepare unit
@@ -42,10 +45,13 @@ def print_rate(groupby,project_):
     # print
     print tabulate(li,headers=headers,tablefmt="plain",numalign="decimal")
 
-def print_size(groupby,project_):
+def print_size(groupby,project_,dry_run=False):
 
     # retrieve metrics from local database
-    li=sdfilequery.get_metrics(groupby,'size',project_)
+    li=sdfilequery.get_metrics(groupby,'size',project_,dry_run=dry_run)
+
+    if dry_run:
+        return
 
     # prepare
     headers=[groupby.title(),'Size']                                      # prepare headers

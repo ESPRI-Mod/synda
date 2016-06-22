@@ -467,9 +467,9 @@ def metric(args):
             return 1
 
     if args.metric=='size':
-        sdmetric.print_size(args.groupby,args.project)
+        sdmetric.print_size(args.groupby,args.project,dry_run=args.dry_run)
     elif args.metric=='rate':
-        sdmetric.print_rate(args.groupby,args.project)
+        sdmetric.print_rate(args.groupby,args.project,dry_run=args.dry_run)
 
 def remove(args):
     import sddelete,sddeletefile,syndautils

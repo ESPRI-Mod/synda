@@ -19,11 +19,13 @@ import humanize
 import argparse
 import sdapp
 import sddb
+from sdtools import print_stderr
 import sdconst
 
 def transfer_running_count(conn=sddb.conn):
     c=conn.cursor()
-    c.execute("select count(1) from file where status = '%s'" % sdconst.TRANSFER_STATUS_RUNNING)
+    q="select count(1) from file where status = '%s'" % sdconst.TRANSFER_STATUS_RUNNING
+    c.execute(q)
     rs=c.fetchone()
 
     if rs==None:
@@ -73,7 +75,7 @@ def count_dataset_files(d,file_status,conn=sddb.conn):
     c.close()
     return nbr
 
-def get_metrics(group_,metric,project_):
+def get_metrics(group_,metric,project_,dry_run=False):
     li=[]
 
     c = sddb.conn.cursor()
@@ -110,6 +112,13 @@ def get_metrics(group_,metric,project_):
     # execute
 
     q='select %s, %s as metric from file where %s group by %s order by metric desc'%(group_,metric_calculation,where_clause,group_)
+
+
+
+    if dry_run:
+        print_stderr('%s'%q)   
+        return []
+
 
     c.execute(q)
 
