@@ -61,6 +61,8 @@ class Download():
 
         if tr.sdget_status==0:
 
+HERE
+
             assert tr.size is not None
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):

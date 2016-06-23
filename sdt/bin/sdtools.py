@@ -175,9 +175,10 @@ def split_values(values):
     return values_list
 
 def compute_rate(size,duration):
-    """Unit: bytes / seconds.
+    """Compute rate.
 
-    Not used.
+    Note
+        Unit: bytes / seconds.
     """
     if duration==0:
         return 0
