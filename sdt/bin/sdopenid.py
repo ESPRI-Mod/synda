@@ -25,7 +25,7 @@ import sdnetutils
 
 XRI_NS = 'xri://$xrd*($v*2.0)'
 MYPROXY_URN = 'urn:esg:security:myproxy-service'
-ESGF_OPENID_REXP = r'https://.*/esgf-idp/openid/(.*)'
+ESGF_OPENID_REXP = r'https://.*/([^/]+)$'
 MYPROXY_URI_REXP = r'socket://([^:]*):?(\d+)?'
 
 def extract_info_from_openid(openid):
