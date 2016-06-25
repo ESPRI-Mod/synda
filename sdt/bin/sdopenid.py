@@ -31,6 +31,12 @@ MYPROXY_URI_REXP = r'socket://([^:]*):?(\d+)?'
 def extract_info_from_openid(openid):
     """Retrieve username,host,port informations from ESGF openID."""
 
+    # openid check (see #44 for more info)
+    for openid_host in invalid_openids:
+        if openid_host in openid:
+            sdlog.warning("SDOPENID-210","Invalid openid (%s)"%openid)
+    
+
     try:
         xrds_buf=sdnetutils.HTTP_GET(openid,timeout=10)
         (hostname,port)=parse_XRDS(xrds_buf)
@@ -74,6 +80,10 @@ def parse_openid(openid):
         raise SDException('SDOPENID-001','Incorrect format')
 
     return username
+
+# init.
+
+invalid_openids=['earthsystemgrid.org']
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
