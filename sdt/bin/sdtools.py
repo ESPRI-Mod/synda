@@ -177,11 +177,15 @@ def split_values(values):
 def compute_rate(size,duration):
     """Compute rate.
 
-    Note
-        Unit: bytes / seconds.
+    Args:
+        size: (bytes)
+        duration: (seconds)
+
+    Returns:
+        Rate in bytes per seconds.
     """
-    if duration==0:
-        return 0
+    if duration<1:
+        return size
     else:
         return size / duration
 

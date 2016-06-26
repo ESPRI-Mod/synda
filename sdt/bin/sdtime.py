@@ -20,14 +20,19 @@ def compute_duration(start_date,end_date):
     Returns:
         duration (int): transfer duration in seconds
 
-    WARNING: 
-        this method returns 0 when transfer takes very short time (because we
-        don't use milliseconds grained but seconds grained here..).
+    Note: 
+        This method returns 1 second as the smallest value
+        (even if transfer takes less than 1 second).
     """
     if (start_date==None) or (end_date==None):
-        return 0
+        return 1
     else:
-        return compute_time_delta(start_date,end_date)
+        duration=compute_time_delta(start_date,end_date)
+
+        if duration==0:
+            return 1
+        else:
+            return duration
 
 def compute_time_delta(start_date,end_date):
     format = '%Y-%m-%d %H:%M:%S.%f'
