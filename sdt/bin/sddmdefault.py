@@ -29,6 +29,7 @@ import sdtime
 import sdfiledao
 import sdevent
 import sdutils
+import sdtools
 import sdget
 from sdworkerutils import WorkerThread
 
@@ -39,6 +40,11 @@ class Download():
     def run(cls,tr):
         cls.start_transfer_script(tr)
         tr.end_date=sdtime.now()
+
+        # compute metrics
+        if tr.status==sdconst.TRANSFER_STATUS_DONE:
+            tr.duration=sdtime.compute_duration(tr.start_date,tr.end_date)
+            tr.rate=sdtools.compute_rate(tr.size,tr.duration)
 
     @classmethod
     def start_transfer_script(cls,tr):
@@ -60,8 +66,6 @@ class Download():
                                                                    hpss=hpss)
 
         if tr.sdget_status==0:
-
-HERE
 
             assert tr.size is not None
 
