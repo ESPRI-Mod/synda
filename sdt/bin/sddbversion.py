@@ -65,6 +65,10 @@ def upgrade_35(conn):
     conn.execute("alter table history add column selection_file_checksum TEXT")
     conn.execute("alter table history add column selection_file TEXT")
 
+    conn.execute("update file set duration=cast(((julianday(end_date) - julianday(start_date)) * 86400.0) as integer) where status = 'done'")
+    conn.execute("update file set duration=1 where duration=0 and status='done'")
+    conn.execute("update file set rate=size/duration where status='done'")
+
     conn.commit()
 
     sddbversionutils.update_db_version(conn,'3.5')
