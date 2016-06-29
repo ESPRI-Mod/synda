@@ -183,7 +183,7 @@ def daemon(args):
 
         if args.action in ['start','stop']:
             if sdconfig.multiuser:
-                print_stderr("When synda is installed with system package, daemon must be managed using 'systemctl' command")
+                print_stderr("When synda is installed with system package, daemon must be managed using 'service' command")
                 return 1
 
         if args.action=="start":
