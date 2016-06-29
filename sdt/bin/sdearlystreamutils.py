@@ -52,12 +52,19 @@ def get_facet_values_early(orig_stream,name,extract_item=False):
 
     assert name!='type' # type cannot be inferred using this func (use infer_type() func instead)
 
+
     stream=copy.deepcopy(orig_stream) # this is not to modify the original stream at this point
 
+    # note that A and B block order is important here
+    # (if B is done before A, pending identifiers (e.g. dataset_functional_id)
+    # will not be scanned by sdextractitem).
+
+    # A
     stream=sddeferredbefore.run(stream)
     stream=sdinference.run(stream) # this is to resolve pending parameter
     stream=sddeferredafter.run(stream)
 
+    # B
     if extract_item:
         stream=sdextractitem.run(stream,name) # we extract item from identifier if present
 

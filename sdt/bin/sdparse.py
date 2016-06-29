@@ -70,7 +70,7 @@ def build(buffer,load_default=None):
     # For project level default file to be loaded, the following must be true
     #
     #   "project must be specified in cli parameter or in the selection file or 
-    #   in the global default file"
+    #   in the global default file" or inside an identifier (e.g. dataset_functional_id)
 
 
     # retrieve projects
@@ -129,7 +129,8 @@ def get_default_projects(default_selection):
     return projects
 
 def get_projects(selection):
-    """This method returns project (pending and non-pending) from CLI parameter or selection file."""
+    """This method returns project (standalone pending, standalone non-pending
+    or as part of an identifier) from CLI parameter or selection file."""
     project=[]
 
     # project with keyname
@@ -153,7 +154,7 @@ def get_projects(selection):
     #   synda search project=GeoMIP
     #
     #
-    pending_projects=sdearlystreamutils.get_facet_values_early([selection.facets],'project') # project without keyname
+    pending_projects=sdearlystreamutils.get_facet_values_early([selection.facets],'project',extract_item=True) # project without keyname or project as part of an identifier.
 
     li=pending_projects+project
 
