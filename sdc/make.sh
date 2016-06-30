@@ -62,7 +62,7 @@ upload ()
 
     webhost=$SYNDA_WEBHOST
 
-    scp $file_ $webhost
+    scp -C $file_ $webhost
 }
 
 get_archive_name ()
