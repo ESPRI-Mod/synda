@@ -1,4 +1,3 @@
-
 # ESGF replication howto
 
 ## Introduction

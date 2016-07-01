@@ -77,9 +77,6 @@ synda intro | more
 
 ## Files location
 
-Installing Synda from DEB package is multi-user (for single-user installation,
-see 'installation from source' method)
-
 * /etc/synda/sdt
 * /srv/synda/sdt/data
 * /srv/synda/sdt/sandbox

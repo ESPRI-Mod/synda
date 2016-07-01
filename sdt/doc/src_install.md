@@ -63,9 +63,6 @@ synda intro | more
 
 ## Files location
 
-Installing Synda from source is single-user (for multi-user installation, use
-'installation from system package' method)
-
 * $HOME/sdt/doc
 * $HOME/sdt/bin
 * $HOME/sdt/conf
