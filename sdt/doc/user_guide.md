@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-This document describes how to download files using Synda.
+This document describes how to download files with Synda.
 
 ## Introduction
 

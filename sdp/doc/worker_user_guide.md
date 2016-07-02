@@ -1,4 +1,4 @@
-# Worker script User Guide
+# *sdw* User Guide
 
 ## Configuration
 
