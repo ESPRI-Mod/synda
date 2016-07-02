@@ -23,7 +23,10 @@ def get_data_folder():
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
-    return  "%s/data"%root_folder
+    if not system_pkg_install:
+        return  "%s/data"%root_folder
+    else:
+        return  "/srv/synda/sdp/data"
 
 def get_db_folder():
     if config.has_option('path','db_path'):
@@ -31,7 +34,10 @@ def get_db_folder():
         if len(path)>0: # would be better to test with None (to do that, try using 'allow_no_value' when configuring ConfigParser)
             return path
 
-    return  "%s/db"%root_folder
+    if not system_pkg_install:
+        return  "%s/db"%root_folder
+    else:
+        return  "/var/lib/synda/sdp"
 
 def check_path(path):
     if not os.path.exists(path):
@@ -39,15 +45,23 @@ def check_path(path):
 
 # init module.
 
-if 'SP_HOME' not in os.environ:
-    raise SPException('SPCONFIG-010',"'SP_HOME' not set")
+system_pkg_install=False
 
-root_folder=os.environ['SP_HOME']
-tmp_folder="%s/tmp"%root_folder
-log_folder="%s/log"%root_folder
+if not system_pkg_install:
+    if 'SP_HOME' not in os.environ:
+        raise SPException('SPCONFIG-010',"'SP_HOME' not set")
+
+    root_folder=os.environ['SP_HOME']
+    tmp_folder="%s/tmp"%root_folder
+    log_folder="%s/log"%root_folder
+    conf_folder="%s/conf"%root_folder
+else:
+    root_folder='/usr/share/python/synda/sdp'
+    tmp_folder='/var/tmp/synda/sdp'
+    log_folder='/var/log/synda/sdt'
+    conf_folder='/etc/synda/sdt'
+
 bin_folder="%s/bin"%root_folder
-conf_folder="%s/conf"%root_folder
-script_folder="%s/script"%root_folder
 pipeline_folder="%s/pipeline"%conf_folder
 
 cleanup_tree_script="%s/spcleanup_tree.sh"%bin_folder
