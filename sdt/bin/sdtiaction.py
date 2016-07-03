@@ -267,7 +267,11 @@ def get(args):
             oid=sdconfig.openid
             pwd=sdconfig.password
         else:
-            print_stderr('Error: OpenID not set in configuration file.')   
+            if is_special_user():
+                print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.credential_file)   
+            else:
+                print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.user_credential_file)   
+
             return 1
 
     # retrieve certificate

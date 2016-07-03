@@ -18,6 +18,14 @@ import os
 import re
 import argparse
 
+def is_file_read_access_OK(path):
+    try:
+        with open(path) as fh:
+            pass
+        return True
+    except:
+        return False
+
 def trace(tracefile,scriptname,status,stdout,stderr):
     with open(tracefile,'a') as fh:
         fh.write("'%s' script returned an error\n"%scriptname)

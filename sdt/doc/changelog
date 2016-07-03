@@ -1,4 +1,7 @@
 - Version 3.5 - 
+	- add ~/.sdt/conf/credentials.conf
+	- add ~/.sdt/conf/sdt.conf
+	- remove ~/.syndarc
 	- add 'open' action.
 	- ergonomy improvements.
 	- use myproxyclient latest version.
