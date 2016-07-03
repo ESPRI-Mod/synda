@@ -214,8 +214,8 @@ fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 
 # aliases
-FIXME => trigger error if not file owner
 openid=config.get('esgf_credential','openid')
+password=config.get('esgf_credential','password')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

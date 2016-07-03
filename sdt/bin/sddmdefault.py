@@ -51,7 +51,7 @@ class Download():
 
         # renew certificate if needed
         try:
-            sdlogon.renew_certificate(force_renew_certificate=False)
+            sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
         except Exception,e:
             sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise

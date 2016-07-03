@@ -38,7 +38,7 @@ def print_certificate():
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
 @retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, SDException)) # 50000 => 50 seconds
-def renew_certificate_with_retry_highfreq():
+def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificate=False,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
@@ -49,10 +49,10 @@ def renew_certificate_with_retry_highfreq():
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(force_renew_certificate=False,quiet=True)
+    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate,quiet=quiet)
 
 @retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, SDException)) # 1800000 => 30mn, 86400000 => 24 hours
-def renew_certificate_with_retry(force,quiet=True):
+def renew_certificate_with_retry(openid,password,force_renew_certificate=False,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
@@ -66,13 +66,9 @@ def renew_certificate_with_retry(force,quiet=True):
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(force_renew_certificate=force,quiet=quiet)
+    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate,quiet=quiet)
 
-def renew_certificate(force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
-
-    # retrieve openid and password
-    openid=sdconfig.config.get('esgf_credential','openid')
-    password=sdconfig.config.get('esgf_credential','password')
+def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
 
     # extract info from openid
     (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
@@ -137,6 +133,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    renew_certificate(force_renew_certificate=True,quiet=False,debug=True)
+    renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True,quiet=False,debug=True)
 
     print_stderr("Certificate successfully renewed")

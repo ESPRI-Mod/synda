@@ -157,13 +157,13 @@ def event_loop():
                 #     retry, which may be a few hours..). Because currently, synda is not aware
                 #     of sdt.conf changes while running.
                 #
-                #sdlogon.renew_certificate_with_retry(True)
-                #sdlogon.renew_certificate_with_retry_highfreq()
+                #sdlogon.renew_certificate_with_retry(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
+                #sdlogon.renew_certificate_with_retry_highfreq(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
 
 
                 # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
                 #
-                sdlogon.renew_certificate(force_renew_certificate=True)
+                sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
 
 
             else:

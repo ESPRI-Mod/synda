@@ -32,7 +32,7 @@ def certificate(args):
         if args.action=="renew":
             if sdconfig.is_openid_set():
                 try:
-                    sdlogon.renew_certificate(force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
+                    sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
                     print_stderr('Certificate successfully renewed.')   
                 except Exception,e:
                     print_stderr('Error occurs while renewing certificate (%s)'%str(e))
@@ -255,7 +255,7 @@ def get(args):
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
     if sdconfig.is_openid_set():
-        sdlogon.renew_certificate(force_renew_certificate=False)
+        sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
     else:
         print_stderr('Error: OpenID not set in configuration file.')   
         return 1
