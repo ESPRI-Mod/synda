@@ -254,11 +254,25 @@ def get(args):
 
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
-    if sdconfig.is_openid_set():
-        sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
+
+    if args.openid and args.password:
+        # use credential from CLI
+
+        oid=args.openid
+        pwd=args.password
     else:
-        print_stderr('Error: OpenID not set in configuration file.')   
-        return 1
+        # use credential from file
+
+        if sdconfig.is_openid_set():
+            oid=sdconfig.openid
+            pwd=sdconfig.password
+        else:
+            print_stderr('Error: OpenID not set in configuration file.')   
+            return 1
+
+    # retrieve certificate
+    sdlogon.renew_certificate(oid,pwd,force_renew_certificate=False)
+
 
     http_client=sdconst.HTTP_CLIENT_URLLIB if args.urllib2 else sdconst.HTTP_CLIENT_WGET
 
