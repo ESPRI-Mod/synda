@@ -2,7 +2,7 @@
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
-#  @program        synda
+#  @program        synda-pp
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand')
-    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as subcommand
+    parser.add_argument('-V','--version',action='version',version=sdapp.version)
     sdsubparser.run(subparsers)
     args = parser.parse_args()
 
