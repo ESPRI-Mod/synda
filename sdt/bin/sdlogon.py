@@ -38,6 +38,8 @@ def print_certificate():
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
 def is_openid_set():
+    openid=sdconfig.config.get('esgf_credential','openid')
+
     if openid=='https://esgf-node.ipsl.fr/esgf-idp/openid/foo':
         return False
     else:
@@ -47,6 +49,8 @@ def is_openid_set():
 def renew_certificate_with_retry_highfreq():
     """
     Retry mecanism when ESGF IDP cannot be reached.
+
+    Not used
 
     Notes
         - Retry when SDException occurs, raise any other errors
@@ -60,6 +64,8 @@ def renew_certificate_with_retry(force,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
+    Not used
+
     Notes
         - IDP is periodically contacted using the following schedule: 
           1h, 2h, 4h, 8h, 16h, 24h, 24h, 24h, 24h...
@@ -72,19 +78,20 @@ def renew_certificate_with_retry(force,quiet=True):
 
 def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
 
-    if sdconfig.use_myproxy_module:
-        renew_certificate_new(force_renew_certificate,quiet,debug,force_renew_ca_certificates)
-    else:
-        renew_certificate_old(force_renew_certificate,quiet,debug,force_renew_ca_certificates)
-
-def renew_certificate_new(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
-    """Renew ESGF certificate using sdmyproxy module."""
+    # retrieve openid and password
+    openid=sdconfig.config.get('esgf_credential','openid')
+    password=sdconfig.config.get('esgf_credential','password')
 
     # extract info from openid
     (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
 
-    # retrieve password
-    password=sdconfig.config.get('esgf_credential','password')
+    if sdconfig.use_myproxy_module:
+        renew_certificate_new(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet,debug,force_renew_ca_certificates)
+    else:
+        renew_certificate_old(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet,debug,force_renew_ca_certificates)
+
+def renew_certificate_new(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
+    """Renew ESGF certificate using sdmyproxy module."""
 
     # main
     try:
@@ -93,13 +100,13 @@ def renew_certificate_new(force_renew_certificate,quiet=True,debug=False,force_r
         sdlog.error("SDMYPROX-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
         raise
 
-def renew_certificate_old(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
+def renew_certificate_old(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
     """Renew ESGF certificate using 'sdlogon.sh' script."""
 
     # TODO: move this log into the script so to print only when expired
     #sdlog.info("SYDLOGON-002","Renew certificate..")
 
-    (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
+    # note: password is not used in this func: this is normal (it is retrieved by the shell script)
 
     argv=[sdconfig.logon_script,'-h',hostname,'-p',port,'-s',sdconfig.security_dir,'-u',username]
 
@@ -132,9 +139,7 @@ def renew_certificate_old(force_renew_certificate,quiet=True,debug=False,force_r
             print_stderr("'%s' script stdxxx (debug mode)\n"%os.path.basename(sdconfig.logon_script))
             print_stderr('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
 
-# Init.
-
-openid=sdconfig.config.get('esgf_credential','openid')
+# init.
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
