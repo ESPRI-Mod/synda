@@ -504,7 +504,7 @@ install_st_application ()
     $PYTHON_CMD setup.py install --install-scripts=$st_lib
 
     # chmod conf file
-    chmod go-r "$st_conf_file"
+    chmod go+r "$st_conf_file"
     chmod go-r "$st_cred_file"
 
     # create symlink in 'bin'
