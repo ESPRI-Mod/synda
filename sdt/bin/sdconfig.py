@@ -68,16 +68,33 @@ def print_(name):
 
 # Init module.
 
-if 'ST_HOME' not in os.environ:
-    raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
+multiuser=False # TODO: rename to 'system_pkg_install'
 
-root_folder=os.environ['ST_HOME']
-tmp_folder="%s/tmp"%root_folder
-selections_folder="%s/selection"%root_folder
-log_folder="%s/log"%root_folder
-conf_folder="%s/conf"%root_folder
+if not multiuser:
+    if 'ST_HOME' not in os.environ:
+        raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
+
+    root_folder=os.environ['ST_HOME']
+    tmp_folder="%s/tmp"%root_folder
+    log_folder="%s/log"%root_folder
+    conf_folder="%s/conf"%root_folder
+    selections_folder="%s/selection"%root_folder
+
+    default_db_folder="%s/db"%root_folder
+    default_data_folder="%s/data"%root_folder
+    default_sandbox_folder="%s/sandbox"%root_folder
+else:
+    root_folder='/usr/share/python/synda/sdt'
+    tmp_folder='/var/tmp/synda/sdt'
+    log_folder='/var/log/synda/sdt'
+    conf_folder='/etc/synda/sdt'
+    selections_folder='/etc/synda/sdt/selection'
+
+    default_db_folder='/var/lib/synda/sdt'
+    default_data_folder='/srv/synda/sdt/data'
+    default_sandbox_folder='/srv/synda/sdt/sandbox'
+
 bin_folder="%s/bin"%root_folder
-
 selection_default_folder="%s/default"%conf_folder
 
 data_download_script_http="%s/sdget.sh"%bin_folder
@@ -94,8 +111,6 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
-
-multiuser=False
 
 # TODO: replace default options DICTIONNARY below with a default options FILE
 # (pb with options below is that they are available in all sections)
@@ -152,10 +167,11 @@ if multiuser:
 else:
     config.read(credential_file)
 
-data_folder=get_path('data_path',"%s/data"%root_folder)
-db_folder=get_path('db_path',"%s/db"%root_folder)
+db_folder=get_path('db_path',default_db_folder)
+data_folder=get_path('data_path',default_data_folder)
+sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
+
 db_file="%s/sdt.db"%db_folder
-sandbox_folder=get_path('sandbox_path',"%s/sandbox"%root_folder)
 
 check_path(root_folder)
 check_path(selections_folder)

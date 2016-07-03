@@ -58,8 +58,8 @@ if not system_pkg_install:
 else:
     root_folder='/usr/share/python/synda/sdp'
     tmp_folder='/var/tmp/synda/sdp'
-    log_folder='/var/log/synda/sdt'
-    conf_folder='/etc/synda/sdt'
+    log_folder='/var/log/synda/sdp'
+    conf_folder='/etc/synda/sdp'
 
 bin_folder="%s/bin"%root_folder
 pipeline_folder="%s/pipeline"%conf_folder
