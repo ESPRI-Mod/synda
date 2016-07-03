@@ -215,7 +215,7 @@ if not is_special_user():
     # infos.)
 
     # create user credential file sample
-    os.mkdir(user_conf_dir)
+    os.makedirs(user_conf_dir)
     sdcfbuilder.create_credential_file_sample(user_credential_file)
     os.chmod(user_credential_file,0600)
 
