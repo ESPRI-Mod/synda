@@ -155,16 +155,20 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
 
-
 # set security_dir
-#
-# TODO
-#     may use tmp_folder for both to improve consistency (if HOME is used in multi-user mode, it can be root or daemon unprivileged user which increase complexity)
-#
-if multiuser:
+if sdtools.is_daemon():
+
+    # better keep tmp_folder for this case
+    # (if HOME is used here, it can be root or daemon
+    # unprivileged user which increase complexity)
+
     security_dir="%s/.esg"%tmp_folder
 else:
+
+    #if is_special_user():
+    #if multiuser:
     security_dir="%s/.esg"%os.environ['HOME']
+
 
 # set x509 paths
 esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
