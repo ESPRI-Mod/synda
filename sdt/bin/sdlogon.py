@@ -57,7 +57,7 @@ def renew_certificate_with_retry_highfreq():
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(False,True)
+    renew_certificate(force_renew_certificate=False,quiet=True)
 
 @retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, SDException)) # 1800000 => 30mn, 86400000 => 24 hours
 def renew_certificate_with_retry(force,quiet=True):
@@ -74,9 +74,9 @@ def renew_certificate_with_retry(force,quiet=True):
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(force,quiet)
+    renew_certificate(force_renew_certificate=force,quiet=quiet)
 
-def renew_certificate(force_renew_certificate,quiet=True,debug=False,force_renew_ca_certificates=False):
+def renew_certificate(force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
 
     # retrieve openid and password
     openid=sdconfig.config.get('esgf_credential','openid')
@@ -145,6 +145,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    renew_certificate(True,quiet=False,debug=True)
+    renew_certificate(force_renew_certificate=True,quiet=False,debug=True)
 
     print_stderr("Certificate successfully renewed")

@@ -163,7 +163,7 @@ def event_loop():
 
                 # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
                 #
-                sdlogon.renew_certificate(True)
+                sdlogon.renew_certificate(force_renew_certificate=True)
 
 
             else:
