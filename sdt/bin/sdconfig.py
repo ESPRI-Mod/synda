@@ -170,15 +170,8 @@ else:
 esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
-db_folder=get_path('db_path',default_db_folder)
-data_folder=get_path('data_path',default_data_folder)
-sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
-
-db_file="%s/sdt.db"%db_folder
-
 check_path(root_folder)
 check_path(selections_folder)
-check_path(data_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
@@ -227,6 +220,14 @@ config=sdcfloader.load(configuration_file,credential_file,user_configuration_fil
 # aliases
 openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
+
+db_folder=get_path('db_path',default_db_folder)
+data_folder=get_path('data_path',default_data_folder)
+sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
+
+db_file="%s/sdt.db"%db_folder
+
+check_path(data_folder)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
