@@ -6,7 +6,7 @@
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
-#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdp/doc/LICENSE)
 ##################################
 
 """Contains jobrun DAO SQL queries."""

@@ -6,7 +6,7 @@
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
-#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdp/doc/LICENSE)
 ##################################
 
 """Contains file permission related functions."""
@@ -67,7 +67,7 @@ def chown_files(files,uid,gid):
         'files' can contain regular file or directory.
     """
     for file_ in files:
-        if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdt/.esg/certificates'"
+        if os.path.exists(file_): # this is to prevent error like "OSError: [Errno 2] No such file or directory: '/var/tmp/synda/sdp/.esg/certificates'"
             os.chown(file_,uid,gid)
 
 if __name__ == "__main__":
