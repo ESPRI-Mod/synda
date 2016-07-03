@@ -204,7 +204,6 @@ mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
 fix_encoding=False
-
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 
 if not is_special_user():
@@ -233,6 +232,8 @@ sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
 db_file="%s/sdt.db"%db_folder
 
 check_path(data_folder)
+
+files_dest_folder_for_get_subcommand='.' # '.' | sandbox_folder
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

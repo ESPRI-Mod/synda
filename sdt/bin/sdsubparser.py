@@ -130,7 +130,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'get',no_default=False,help='Download dataset',example=sdcliex.get())
     subparser.add_argument('--verify_checksum','-c',action='store_true',help='Compare remote and local checksum')
-    subparser.add_argument('--dest_folder','-d',default=sdconfig.sandbox_folder,help='Destination folder')
+    subparser.add_argument('--dest_folder','-d',default=sdconfig.files_dest_folder_for_get_subcommand,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
     subparser.add_argument('--network_bandwidth_test','-n',action='store_true',help='Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.')
     subparser.add_argument('--openid','-o',help='ESGF openid')
