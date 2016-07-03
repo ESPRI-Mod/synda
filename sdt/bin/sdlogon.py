@@ -37,14 +37,6 @@ def print_certificate():
     else:
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
-def is_openid_set():
-    openid=sdconfig.config.get('esgf_credential','openid')
-
-    if openid=='https://esgf-node.ipsl.fr/esgf-idp/openid/foo':
-        return False
-    else:
-        return True
-
 @retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, SDException)) # 50000 => 50 seconds
 def renew_certificate_with_retry_highfreq():
     """

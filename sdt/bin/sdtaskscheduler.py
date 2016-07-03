@@ -146,7 +146,7 @@ def event_loop():
 
         try:
 
-            if sdlogon.is_openid_set():
+            if sdconfig.is_openid_set():
 
 
                 # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)

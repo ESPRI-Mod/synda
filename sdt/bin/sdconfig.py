@@ -66,6 +66,12 @@ def print_(name):
         if name in globals():
             print globals()[name]
 
+def is_openid_set():
+    if openid=='https://esgf-node.ipsl.fr/esgf-idp/openid/foo':
+        return False
+    else:
+        return True
+
 # Init module.
 
 multiuser=False # TODO: rename to 'system_pkg_install'
@@ -207,6 +213,10 @@ fix_encoding=False
 
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 
+# aliases
+FIXME => trigger error if not file owner
+openid=config.get('esgf_credential','openid')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n','--name',default=None,help='Name of the parameter to be displayed (if not set, all parameters are displayed)')
@@ -214,7 +224,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.testconfigparser:
-        openid=config.get('esgf_credential','openid')
-        print openid
+        print config.get('post_processing','username')
     else:
         print_(args.name)

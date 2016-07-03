@@ -25,12 +25,12 @@ def autoremove(args):
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
 def certificate(args):
-    import sdlogon
+    import sdconfig,sdlogon
     if args.action is None:
         sdlogon.print_certificate()
     else:
         if args.action=="renew":
-            if sdlogon.is_openid_set():
+            if sdconfig.is_openid_set():
                 try:
                     sdlogon.renew_certificate(force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
                     print_stderr('Certificate successfully renewed.')   
@@ -254,7 +254,7 @@ def get(args):
 
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
 
-    if sdlogon.is_openid_set():
+    if sdconfig.is_openid_set():
         sdlogon.renew_certificate(force_renew_certificate=False)
     else:
         print_stderr('Error: OpenID not set in configuration file.')   
