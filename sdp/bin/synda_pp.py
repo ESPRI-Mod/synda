@@ -12,7 +12,7 @@
 """'synda_pp' command.
 
 Note
-    Remove '-W ignore' once only Python 2.7+
+    Remove '-W ignore' once only Python 2.7+. TAG5J43K
 """
 
 import sys

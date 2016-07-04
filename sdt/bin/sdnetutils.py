@@ -98,7 +98,7 @@ def HTTP_GET_2(url,timeout=20,verify=True):
     buf=None
 
     try:
-        #requests.packages.urllib3.disable_warnings()
+        requests.packages.urllib3.disable_warnings()
         response=requests.get(url, timeout=timeout, verify=verify)
         buf=response.text
     except Exception, e:
