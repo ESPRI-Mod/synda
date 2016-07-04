@@ -57,11 +57,16 @@ def daemon(args):
 
 def queue(args):
     import spstatquery
-    from tabulate import tabulate
+    #from tabulate import tabulate
 
-    li=spstatquery.get_ppprun_stat()
+    di=spstatquery.get_ppprun_stat()
 
-    print tabulate(li,headers=['project','status','count'],tablefmt="plain")
+    for project in di:
+        print project
+        for status in di[project]:
+            print '%10s: %3d'%(status,di[project][status])
+
+    #print tabulate(li,headers=['project','status','count'],tablefmt="plain")
 
 # init.
 
