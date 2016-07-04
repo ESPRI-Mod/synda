@@ -55,7 +55,7 @@ def who_am_i():
 # Init.
 
 name='postprocessing'
-version='1.0'
+version='1.1'
 spapputils.set_exception_handler()
 
 if who_am_i()=='ihm':
