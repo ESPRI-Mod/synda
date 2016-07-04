@@ -21,7 +21,7 @@ def get_ppprun_stat():
     conn=spdb.connect()
     c=conn.cursor()
 
-    q='select project,status,count(*) as nbr from ppprun group by project,status'
+    q='select project,status,count(*) as count from ppprun group by project,status'
 
     c.execute(q)
     rs=c.fetchone()
@@ -29,13 +29,13 @@ def get_ppprun_stat():
 
         project=rs[0]
         status=rs[1]
-        nbr=rs[2]
+        count=rs[2]
 
         if project not in di:
-            di[project]={status:nbr}
+            di[project]={status:count}
         else:
             if status not in di[project]:
-                di[project][status]=nbr
+                di[project][status]=count
             else:
                 assert False
 
