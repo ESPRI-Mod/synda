@@ -6,7 +6,7 @@ This documents contains instructions to install Synda from DEB package.
 
 ## Requirements
 
-Synda DEB packages are available for Debian, Ubuntu and Mint.
+*synda* DEB package is available for Debian, Ubuntu and Mint.
 
 ## Installation
 

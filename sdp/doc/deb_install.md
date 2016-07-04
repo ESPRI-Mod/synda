@@ -8,12 +8,18 @@ This documents contains instructions to install *sdp* from DEB package.
 
 *sdp* DEB package is available for Debian, Ubuntu and Mint.
 
+## Naming
+
+* *synda* is the application name
+* *sdp* is the module name
+* *synda-pp* is the package name
+
 ## Installation
 
 Add IPSL Synda repository
 
 ```
-echo deb http://dods.ipsl.jussieu.fr/jripsl/synda/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
+echo deb http://dods.ipsl.jussieu.fr/jripsl/synda-pp/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda-pp.list
 ```
 
 where &lt;distro-name&gt; can be one of
@@ -44,7 +50,7 @@ sudo apt-get install synda-pp --force-yes -y
 * Restart service with
 
 ```
-sudo service synda restart
+sudo service sdp restart
 ```
 
 ## Files location
@@ -53,6 +59,6 @@ sudo service synda restart
 * /var/lib/synda/sdp
 * /var/tmp/synda/sdp
 * /var/log/synda/sdp
-* /usr/bin/FIXME
+* /usr/bin/synda_pp
 * /usr/share/python/synda/sdp
 * /usr/share/doc/synda/sdp

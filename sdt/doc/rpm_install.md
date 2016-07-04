@@ -6,7 +6,7 @@ This documents contains instructions to install Synda from RPM package.
 
 ## Requirements
 
-Synda RPM packages are available for RHEL6 and RHEL7.
+*synda* RPM package is available for RHEL6 and RHEL7.
 
 On RHEL5, Synda can only be installed from source.
 

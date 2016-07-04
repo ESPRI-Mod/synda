@@ -1,4 +1,4 @@
-# *sdp* Debian package upgrade guide
+# *sdp* DEB package upgrade guide
 
 ## Synopsis
 
@@ -42,5 +42,5 @@ Restore database from backup in /var/lib/synda/sdp (replace the existing file).
 Restart service with
 
 ```
-sudo service synda restart
+sudo service sdp restart
 ```

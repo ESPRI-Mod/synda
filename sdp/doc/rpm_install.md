@@ -1,14 +1,20 @@
-# Synda post-processing RPM package installation guide
+# *sdp* RPM package installation guide
 
 ## Synopsis
 
-This documents contains instructions to install Synda from RPM package.
+This documents contains instructions to install *sdp* from RPM package.
 
 ## Requirements
 
-Synda RPM packages are available for RHEL6 and RHEL7.
+*sdp* RPM package is available for RHEL6 and RHEL7.
 
-On RHEL5, Synda can only be installed from source.
+On RHEL5, *sdp* can only be installed from source.
+
+## Naming
+
+* *synda* is the application name
+* *sdp* is the module name
+* *synda-pp* is the package name
 
 ## Installation
 
@@ -20,10 +26,10 @@ To install EPEL, use
 sudo yum install epel-release -y
 ```
 
-To install synda RPM package, use
+To install *sdp* RPM package, use
 
 ```
-sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/<package-name> -y
+sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda-pp/rpm/<package-name> -y
 ```
 
 where &lt;package-name&gt; can be one of
@@ -41,10 +47,10 @@ where &lt;package-name&gt; can be one of
 
 Example
 
-To install Synda on Scientific Linux 6.7, do
+To install *sdp* on Scientific Linux 6.7, do
 
 ```
-sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/rpm/synda-pp-1.1-1.x86_64_scientific67.rpm 
+sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda-pp/rpm/synda-pp-1.1-1.x86_64_scientific67.rpm 
 ```
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.

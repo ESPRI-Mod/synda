@@ -1,4 +1,4 @@
-# sdp installation from source guide
+# *sdp* installation from source guide
 
 ## Introduction
 
@@ -6,7 +6,7 @@ This document describes how to install and configure sdp module.
 
 ## Synopsis
 
-This documents contains instructions to install Synda from source.
+This documents contains instructions to install *sdp* from source.
 
 ## Requirements
 
