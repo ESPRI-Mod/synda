@@ -1,12 +1,13 @@
 - Version 3.5 - 
-	- add requests (pypi).
+	- use requests (pypi) to resolve openid.
 	- add ~/.sdt/conf/credentials.conf
 	- add ~/.sdt/conf/sdt.conf
 	- remove ~/.syndarc
 	- add 'open' action.
-	- ergonomy improvements.
+	- add 'check' action.
 	- use myproxyclient latest version.
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
+	- ergonomy improvements.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
