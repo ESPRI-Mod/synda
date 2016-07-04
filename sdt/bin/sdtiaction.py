@@ -30,14 +30,31 @@ def certificate(args):
         sdlogon.print_certificate()
     else:
         if args.action=="renew":
-            if sdconfig.is_openid_set():
-                try:
-                    sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
-                    print_stderr('Certificate successfully renewed.')   
-                except Exception,e:
-                    print_stderr('Error occurs while renewing certificate (%s)'%str(e))
+            if args.openid and args.password:
+                # use credential from CLI
+
+                oid=args.openid
+                pwd=args.password
             else:
-                print_stderr('Error: OpenID not set in configuration file.')   
+                # use credential from file
+
+                if sdconfig.is_openid_set():
+                    oid=sdconfig.openid
+                    pwd=sdconfig.password
+                else:
+                    if sdconfig.is_special_user():
+                        print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.credential_file)   
+                    else:
+                        print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.user_credential_file)   
+
+                    return 1
+
+            # retrieve certificate
+            try:
+                sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
+                print_stderr('Certificate successfully renewed.')
+            except Exception,e:
+                print_stderr('Error occurs while renewing certificate (%s)'%str(e))
         elif args.action=="print":
             sdlogon.print_certificate()
         else:
