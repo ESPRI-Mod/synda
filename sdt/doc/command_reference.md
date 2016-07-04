@@ -14,6 +14,7 @@ Available subcommands are:
 
     autoremove   Remove old datasets versions
     certificate  Manage X509 certificate
+    check        Perform check over ESGF metadata
     contact      Print contact information
     daemon       Daemon management
     dump         Display raw metadata
@@ -25,19 +26,21 @@ Available subcommands are:
     intro        Print introduction to synda command
     list         List installed dataset
     metric       Display performance and disk usage metrics
-    param        Display ESGF parameters
+    open         Open netcdf file
+    param        Print ESGF facets
     pexec        Execute post-processing task
     queue        Display download queue status
     remove       Remove dataset
     replica      Move to next replica
     reset        Remove all 'waiting' and 'error' transfers
-    retry        Retry transfer (switch error status to waiting)
+    retry        Retry transfer (switch status from error to waiting)
     search       Search dataset
     selection    List selection files
     show         Display detailed information about dataset
     stat         Display summary information about dataset
     update       Update ESGF parameter local cache
     upgrade      Perform an upgrade (retrieve new version for all selection files)
+    variable     Print variable
     version      List all versions of a dataset
     watch        Display running transfer
 
