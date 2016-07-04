@@ -10,6 +10,9 @@
 ##################################
 
 """'synda_pp' command.
+
+Note
+    Remove '-W ignore' once only Python 2.7+
 """
 
 import sys
