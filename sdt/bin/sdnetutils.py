@@ -15,7 +15,7 @@ import sys
 import os
 import traceback
 import urllib2
-#import requests
+import requests
 import sdxml
 from sdtypes import Response
 from sdexception import SDException
@@ -92,23 +92,34 @@ def call_param_web_service(url,timeout):
 
     return params
 
+def HTTP_GET_2(url,timeout=20,verify=True):
+    """requests impl."""
+
+    buf=None
+
+    try:
+        #requests.packages.urllib3.disable_warnings()
+        response=requests.get(url, timeout=timeout, verify=verify)
+        buf=response.text
+    except Exception, e:
+        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
+        errcode="SDNETUTI-004"
+
+        raise SDException(errcode,errmsg)
+
+    return buf
+
 def HTTP_GET(url,timeout=20):
+    """urllib impl."""
+
     sock=None
     buf=None
 
     try:
         sdpoodlefix.start(url)
 
-        # urllib2
-        #
         sock=urllib2.urlopen(url, timeout=timeout)
         buf=sock.read()
-
-        # requests
-        #
-        #response=requests.get(url, timeout=timeout)
-        #buf=response.text
-
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-002"

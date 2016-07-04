@@ -38,7 +38,7 @@ def extract_info_from_openid(openid):
     
 
     try:
-        xrds_buf=sdnetutils.HTTP_GET(openid,timeout=10)
+        xrds_buf=sdnetutils.HTTP_GET_2(openid,timeout=10,verify=False)
         (hostname,port)=parse_XRDS(xrds_buf)
         username=parse_openid(openid)
         return (hostname,port,username)
