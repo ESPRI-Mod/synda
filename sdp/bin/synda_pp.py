@@ -23,8 +23,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand')
-    parser.add_argument('-V','--version',action='version',version=sdapp.version)
-    sdsubparser.run(subparsers)
+    parser.add_argument('-V','--version',action='version',version=spapp.version)
+    spsubparser.run(subparsers)
     args = parser.parse_args()
 
     if args.subcommand=='help':

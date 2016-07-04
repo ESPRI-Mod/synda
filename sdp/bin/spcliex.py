@@ -12,7 +12,7 @@
 """This module contains command line examples.
 
 Note
-    sdcliex means 'Synda Post-processing Command LIne EXample'
+    spcliex means 'Synda Post-processing Command LIne EXample'
 """
 
 def queue():

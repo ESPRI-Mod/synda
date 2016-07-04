@@ -12,7 +12,7 @@
 """This module contains actions specific parsers used by 'synda' script."""
 
 import argparse
-import sdcliex
+import spcliex
 
 def build_epilog_section(title,body):
 
@@ -48,5 +48,5 @@ def create_subparser(subparsers,subcommand,**kw):
     return subparser
 
 def run(subparsers):
-    subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=sdcliex.queue())
+    subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=spcliex.queue())
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
