@@ -182,10 +182,13 @@ verbosity=0
 always_log_wget_output=0
 parse_output=1
 wget_timeout=360
-while getopts 'adhp:st:v' OPTION
+certdirprefix=
+while getopts 'ac:dhp:st:v' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1
+        ;;
+  c)    certdirprefix=$OPTARG
         ;;
   d)    debug=1
         ;;
@@ -236,15 +239,9 @@ fi
 
 multiuser="0"
 
-if [ "$multiuser" = "0" ]; then
-    certdirprefix=$HOME
-else
-    certdirprefix=/var/tmp/synda/sdt
-fi
-
 USE_CERTIFICATE="yes" # yes | no
-export ESGF_CREDENTIAL=$certdirprefix/.esg/credentials.pem
-export ESGF_CERT_DIR=$certdirprefix/.esg/certificates
+export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
+export ESGF_CERT_DIR=$certdirprefix/certificates
 
 # set log & tmp dir.
 if [ "$multiuser" = "0" ]; then

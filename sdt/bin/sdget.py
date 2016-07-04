@@ -184,7 +184,7 @@ def build_verbosity_option(verbosity):
 
 def prepare_args(url,full_local_path,script,debug,timeout,verbosity,hpss):
 
-    li=[script,'-t',str(timeout),url,full_local_path]
+    li=[script,'-t',str(timeout),'-c',sdconfig.security_dir,url,full_local_path]
 
     if debug:
         li.insert(1,'-d')
