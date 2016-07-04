@@ -42,12 +42,12 @@ def daemon():
     return buf
 
 def dump():
-    buf="""  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
-  synda dump CMIP5 IPSL mon atmos 1 -d -F indent
-  synda dump -R CMIP5 1 -f -F indent
+    buf="""  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -F indent
+  synda dump CMIP5 IPSL mon atmos limit=1 -d -F indent
+  synda dump -R CMIP5 limit=1 -f -F indent
   synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
-  synda dump -R CMIP5 1 -f -F value -C url_http,url_gridftp
-  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value"""
+  synda dump -R CMIP5 limit=1 -f -F value -C url_http,url_gridftp
+  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -C local_path -F value"""
     return buf
 
 def facet():
@@ -63,7 +63,7 @@ def get():
   synda get clcalipso_cfDay_NICAM-09_aqua4K_r1i1p1_00000101-00000330.nc
   synda get -d CORDEX 1
   synda get -f CMIP5 fx 1
-  synda get protocol=gridftp 1 -f
+  synda get protocol=gridftp limit=1 -f
   synda get uo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc wmo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc
   synda get http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
   synda get gsiftp://esgf1.dkrz.de:2811//cmip5/cmip5/output2/MPI-M/MPI-ESM-P/past1000/mon/ocean/Omon/r1i1p1/v20131203/umo/umo_Omon_MPI-ESM-P_past1000_r1i1p1_112001-112912.nc
@@ -90,8 +90,8 @@ def intro():
     return buf
 
 def list():
-    buf="""  synda list 5 -f
-  synda list 5 -d
+    buf="""  synda list limit=5 -f
+  synda list limit=5 -d
 """
     return buf
 

@@ -64,7 +64,9 @@ def run(facets_groups):
 
 def infere_parameter_name(pvalue,type_):
     if pvalue.isdigit():
-        pname='limit'
+        pname='limit' # deprecated: do no use this anymore
+        # pname='query' # replace with this asap
+
     elif sdidtest.is_url(pvalue):
         pname='url'
     elif sdidtest.is_file_functional_id(pvalue):
