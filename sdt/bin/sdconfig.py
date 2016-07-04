@@ -165,9 +165,25 @@ if sdtools.is_daemon():
     security_dir="%s/.esg"%tmp_folder
 else:
 
-    #if is_special_user():
     #if multiuser:
-    security_dir="%s/.esg"%os.environ['HOME']
+    if is_special_user():
+
+        # we may use HOME in this case too,
+        # but when doing that, this error occurs (on sl67 with rpm pkg):
+        #
+        # Starting synda daemon (sdt): Traceback (most recent call last):
+        #   File "/usr/share/python/synda/sdt/bin/sddaemon.py", line 39, in <module>
+        #     import sdconfig
+        #   File "/usr/share/python/synda/sdt/bin/sdconfig.py", line 170, in <module>
+        #     security_dir="%s/.esg"%os.environ['HOME']
+        #   File "/usr/share/python/synda/sdt/lib64/python2.6/UserDict.py", line 22, in __getitem__
+        #     raise KeyError(key)
+        # KeyError: 'HOME'
+
+
+        security_dir="%s/.esg"%tmp_folder
+    else:
+        security_dir="%s/.esg"%os.environ['HOME']
 
 
 # set x509 paths
