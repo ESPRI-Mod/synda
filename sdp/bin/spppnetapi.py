@@ -12,7 +12,7 @@
 """This module contains Post-Processing routines available as web service.
 
 Notes
-    - 'spppnetapi' means 'Synchro-Data Post-Processing Network API'
+    - 'spppnetapi' means 'Synda Post-Processing Network API'
     - This module wraps post-processing methods and makes sure
       methods arguments are serializable.
 """
@@ -49,7 +49,7 @@ def job_done(job):
     return response
 
 def event(events):
-    # this func is called when new events are coming from Synchro-Data Transfer module
+    # this func is called when new events are coming from Synda Transfer module
 
     # debug
     #splog.info('SPPPNEAP-001',"event() method called (args=%s)"%str(events))

@@ -10,10 +10,6 @@
 ##################################
 
 """This module contains exception classes.
-
-Note
-    This module doesn't use any other (Synchro-Data) module and thus can be used
-    everywhere (even in 'spapp' module) without circular dependency problem.
 """
 
 class SPException(Exception):

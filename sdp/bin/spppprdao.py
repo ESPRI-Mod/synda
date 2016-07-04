@@ -12,7 +12,7 @@
 """Contains post-processing pipeline run DAO SQL queries.
 
 Note
-    - 'spppprdao' means 'Synchro-Data Post-Processing Pipeline Run Data Access Object'
+    - 'spppprdao' means 'Synda Post-Processing Pipeline Run Data Access Object'
 """
 
 import spapp
