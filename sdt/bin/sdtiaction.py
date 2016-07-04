@@ -286,7 +286,10 @@ def get(args):
     # '<dest_folder>/<filename>' (i.e. you can't use DRS tree in-between). This may
     # change in the future.
     #
-    local_path_prefix=args.dest_folder
+    if args.dest_folder is None:
+        local_path_prefix=os.getcwd()
+    else:
+        local_path_prefix=args.dest_folder
 
     # BEWARE
     #

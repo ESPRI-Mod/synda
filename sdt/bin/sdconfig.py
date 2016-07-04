@@ -249,7 +249,7 @@ db_file="%s/sdt.db"%db_folder
 
 check_path(data_folder)
 
-files_dest_folder_for_get_subcommand='.' # '.' | sandbox_folder
+files_dest_folder_for_get_subcommand=None # None | sandbox_folder
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
