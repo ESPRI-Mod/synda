@@ -17,55 +17,51 @@ Note
 """
 
 import sys
-from sdtools import print_stderr
-import sdexception
+from sptools import print_stderr
+import spexception
 
 def daemon(args):
-    import sddaemon,sdconfig
+    import spdaemon,spconfig
 
     if args.action is None:
-        sddaemon.print_daemon_status()
+        spdaemon.print_daemon_status()
     else:
 
         if args.action in ['start','stop']:
-            if sdconfig.multiuser:
-                print_stderr("When synda is installed with system package, daemon must be managed using 'service' command")
+            if spconfig.system_pkg_install:
+                print_stderr("Daemon must be managed using 'service' command (system package installation)")
                 return 1
 
         if args.action=="start":
 
-            if sddaemon.is_running():
+            if spdaemon.is_running():
                 print_stderr("Daemon already started")
             else:
                 try:
-                    sddaemon.start()
+                    spdaemon.start()
                     print_stderr("Daemon successfully started")
-                except sdexception.SDException,e:
+                except spexception.SPException,e:
                     print_stderr('error occured',e.msg)
         elif args.action=="stop":
 
-            if sddaemon.is_running():
+            if spdaemon.is_running():
                 try:
-                    sddaemon.stop()
+                    spdaemon.stop()
                     print_stderr("Daemon successfully stopped")
-                except sdexception.SDException,e:
+                except spexception.SPException,e:
                     print_stderr('error occured',e.msg)
             else:
                 print_stderr("Daemon already stopped")
         elif args.action=="status":
-            sddaemon.print_daemon_status()
+            spdaemon.print_daemon_status()
 
 def queue(args):
-    import sdfilequery
+    import spstatquery
     from tabulate import tabulate
-    from sdprogress import ProgressThread
 
-    ProgressThread.start(sleep=0.1,running_message='Collecting status information.. ',end_message='') # spinner start
-    li=sdfilequery.get_download_status(args.project)
-    ProgressThread.stop() # spinner stop
+    li=spstatquery.get_ppprun_stat()
 
-    print tabulate(li,headers=['status','count','size'],tablefmt="plain")
-    #sddaemon.print_daemon_status()
+    print tabulate(li,headers=['project','status','count'],tablefmt="plain")
 
 # init.
 
