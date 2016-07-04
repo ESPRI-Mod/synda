@@ -86,7 +86,7 @@ def renew_certificate_new(hostname,port,username,password,force_renew_certificat
         sdmyproxy.run(hostname,port,username,force_renew_certificate,force_renew_ca_certificates,password)
     except Exception,e:
         sdlog.error("SDMYPROX-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
-        raise
+        raise SDException('SDMYPROX-014','Error occured while retrieving certificate from myproxy server (%s)'%str(e)) # cast to SDException
 
 def renew_certificate_old(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
     """Renew ESGF certificate using 'sdlogon.sh' script."""
