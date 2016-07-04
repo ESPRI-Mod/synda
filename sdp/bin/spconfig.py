@@ -80,7 +80,7 @@ db_folder=get_db_folder()
 db_file="%s/sdp.db"%db_folder
 
 check_path(root_folder)
-check_path(data_folder)
+#check_path(data_folder)
 
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
