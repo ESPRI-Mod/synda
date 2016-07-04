@@ -62,19 +62,44 @@ optional arguments:
 Manage X509 certificate
 
 ```
-usage: synda certificate [-h] [-x] [{renew,print}]
+usage: synda certificate [-h] [-d] [-o OPENID] [-p PASSWORD] [-x]
+                         [{renew,print}]
 
 positional arguments:
   {renew,print}         action
 
 optional arguments:
   -h, --help            show this help message and exit
+  -d, --debug           Display debug message
+  -o OPENID, --openid OPENID
+                        ESGF openid
+  -p PASSWORD, --password PASSWORD
+                        ESGF password
   -x, --force_renew_ca_certificates
                         Force renew CA certificates
 
 examples
   synda certificate renew
   synda certificate print
+```
+
+### check
+
+Perform check over ESGF metadata
+
+```
+usage: synda check [-h] [-z] [{dataset_version,file_variable}]
+
+positional arguments:
+  {dataset_version,file_variable}
+                        action
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -z, --dry_run
+
+examples
+  synda check dataset_version
 ```
 
 ### contact
@@ -136,12 +161,12 @@ optional arguments:
                         set format to be used with 'dump' action
 
 examples
-  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -F indent
-  synda dump CMIP5 IPSL mon atmos 1 -d -F indent
-  synda dump -R CMIP5 1 -f -F indent
+  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -F indent
+  synda dump CMIP5 IPSL mon atmos limit=1 -d -F indent
+  synda dump -R CMIP5 limit=1 -f -F indent
   synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
-  synda dump -R CMIP5 1 -f -F value -C url_http,url_gridftp
-  synda dump CORDEX IPSL-INERIS  evaluation 1 -f -C local_path -F value
+  synda dump -R CMIP5 limit=1 -f -F value -C url_http,url_gridftp
+  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -C local_path -F value
 ```
 
 ### facet
@@ -170,12 +195,13 @@ examples
 
 ### get
 
-Direct download (download files in foreground without using the daemon)
+Download dataset
 
 ```
 usage: synda get [-h] [-s SELECTION_FILE] [-z] [--verify_checksum]
                  [--dest_folder DEST_FOLDER] [--force]
-                 [--network_bandwidth_test] [--quiet] [--timeout TIMEOUT]
+                 [--network_bandwidth_test] [--openid OPENID]
+                 [--password PASSWORD] [--quiet] [--timeout TIMEOUT]
                  [--urllib2] [--verbosity] [--hpss] [--no-hpss]
                  [parameter [parameter ...]]
 
@@ -193,6 +219,10 @@ optional arguments:
   --force, -f           Overwrite local file if exists
   --network_bandwidth_test, -n
                         Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.
+  --openid OPENID, -o OPENID
+                        ESGF openid
+  --password PASSWORD, -p PASSWORD
+                        ESGF password
   --quiet, -q
   --timeout TIMEOUT, -t TIMEOUT
                         HTTP timeout
@@ -208,7 +238,7 @@ examples
   synda get clcalipso_cfDay_NICAM-09_aqua4K_r1i1p1_00000101-00000330.nc
   synda get -d CORDEX 1
   synda get -f CMIP5 fx 1
-  synda get protocol=gridftp 1 -f
+  synda get protocol=gridftp limit=1 -f
   synda get uo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc wmo_Omon_FGOALS-gl_past1000_r1i1p1_100001-199912.nc
   synda get http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
   synda get gsiftp://esgf1.dkrz.de:2811//cmip5/cmip5/output2/MPI-M/MPI-ESM-P/past1000/mon/ocean/Omon/r1i1p1/v20131203/umo/umo_Omon_MPI-ESM-P_past1000_r1i1p1_112001-112912.nc
@@ -246,7 +276,7 @@ optional arguments:
 Install dataset
 
 ```
-usage: synda install [-h] [-s SELECTION_FILE] [-n] [-z] [-y]
+usage: synda install [-h] [-s SELECTION_FILE] [-n] [-z] [-y] [-i]
                      [parameter [parameter ...]]
 
 positional arguments:
@@ -258,6 +288,12 @@ optional arguments:
   -n, --no_default      prevent loading default value
   -z, --dry_run
   -y, --yes             assume "yes" as answer to all prompts and run non-interactively
+  -i, --incremental     Install files which appeared since last run (experimental)
+
+examples
+  synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+  synda install sfcWind_ARC-44_ECMWF-ERAINT_evaluation_r1i1p1_AWI-HIRHAM5_v1_sem_197903-198011.nc
+  synda stat MPI-ESM-LR rcp26
 
 notes
   'install' command is asynchronous, the transfer is handled by a
@@ -281,7 +317,7 @@ optional arguments:
 List installed dataset
 
 ```
-usage: synda list [-h] [-s SELECTION_FILE] [-n] [-z] [-a | -d | -f | -v]
+usage: synda list [-h] [-s SELECTION_FILE] [-z] [-a | -d | -f | -v]
                   [parameter [parameter ...]]
 
 positional arguments:
@@ -290,7 +326,6 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
-  -n, --no_default      prevent loading default value
   -z, --dry_run
   -a, --aggregation
   -d, --dataset
@@ -298,8 +333,8 @@ optional arguments:
   -v, --variable
 
 examples
-  synda list 5 -f
-  synda list 5 -d
+  synda list limit=5 -f
+  synda list limit=5 -d
 ```
 
 ### metric
@@ -307,11 +342,12 @@ examples
 Display performance and disk usage metrics
 
 ```
-usage: synda metric [-h] [--groupby {data_node,project,model}]
+usage: synda metric [-h] [-z] [--groupby {data_node,project,model}]
                     [--metric {rate,size}] [--project PROJECT]
 
 optional arguments:
   -h, --help            show this help message and exit
+  -z, --dry_run
   --groupby {data_node,project,model}, -g {data_node,project,model}
                         Group-by clause
   --metric {rate,size}, -m {rate,size}
@@ -322,6 +358,29 @@ optional arguments:
 examples
   synda metric -g data_node -m rate -p CMIP5
   synda metric -g project -m size
+```
+
+### open
+
+Open netcdf file
+
+```
+usage: synda open [-h] [-s SELECTION_FILE] [-z] [--geometry GEOMETRY]
+                  [parameter [parameter ...]]
+
+positional arguments:
+  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s SELECTION_FILE, --selection_file SELECTION_FILE
+  -z, --dry_run
+  --geometry GEOMETRY, -g GEOMETRY
+                        Window geometry
+
+examples
+  synda open cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+  synda open -g 1000x600+70+0 orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 ```
 
 ### param
@@ -351,21 +410,16 @@ examples
 Execute post-processing task
 
 ```
-usage: synda pexec [-h] [-s SELECTION_FILE] [-n] [-z] [-a | -d | -f | -v]
-                   order_name
+usage: synda pexec [-h] [-s SELECTION_FILE] [-n] [-z] {cdf}
 
 positional arguments:
-  order_name            Order name
+  {cdf}                 Order name
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
-  -a, --aggregation
-  -d, --dataset
-  -f, --file
-  -v, --variable
 ```
 
 ### queue
@@ -475,6 +529,10 @@ optional arguments:
   -v, --variable
 
 examples
+  synda search cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
+  synda search rcp85 3hr timeslice=20050101-21001231 -f
+  synda search rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z
+  synda search timeslice=00100101-20501231 model=GFDL-ESM2M "Air Temperature" -f
   synda search experiment=rcp45,rcp85 model=CCSM4
   synda search project=CMIP5 realm=atmos
   synda search realm=atmos project=CMIP5
@@ -496,6 +554,7 @@ examples
   synda search tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613
   synda search dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
   synda search http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
+  synda search gsiftp://esgf1.dkrz.de:2811//cmip5/cmip5/output2/MPI-M/MPI-ESM-P/past1000/mon/ocean/Omon/r1i1p1/v20131203/umo/umo_Omon_MPI-ESM-P_past1000_r1i1p1_112001-112912.nc
   synda search cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 ```
 
@@ -539,7 +598,7 @@ examples
 Display summary information about dataset
 
 ```
-usage: synda stat [-h] [-s SELECTION_FILE] [-n] [-z]
+usage: synda stat [-h] [-s SELECTION_FILE] [-n] [-z] [-i]
                   [parameter [parameter ...]]
 
 positional arguments:
@@ -550,6 +609,7 @@ optional arguments:
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
+  -i, --incremental     Install files which appeared since last run (experimental)
 
 examples
   synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
@@ -578,15 +638,16 @@ optional arguments:
 Perform an upgrade (retrieve new version for all selection files)
 
 ```
-usage: synda upgrade [-h] [-z] [-y] [parameter [parameter ...]]
+usage: synda upgrade [-h] [-z] [-y] [-i] [parameter [parameter ...]]
 
 positional arguments:
-  parameter      search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter          search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
 
 optional arguments:
-  -h, --help     show this help message and exit
+  -h, --help         show this help message and exit
   -z, --dry_run
-  -y, --yes      assume "yes" as answer to all prompts and run non-interactively
+  -y, --yes          assume "yes" as answer to all prompts and run non-interactively
+  -i, --incremental  Install files which appeared since last run (experimental)
 ```
 
 ### variable
