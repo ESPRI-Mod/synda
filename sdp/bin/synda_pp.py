@@ -17,6 +17,7 @@ import argparse
 import spapp
 import spsubparser
 import sptools
+import spsubcommand
 
 if __name__ == '__main__':
 
@@ -25,8 +26,6 @@ if __name__ == '__main__':
     parser.add_argument('-V','--version',action='version',version=sdapp.version)
     sdsubparser.run(subparsers)
     args = parser.parse_args()
-
-    # -- subcommand routing -- #
 
     if args.subcommand=='help':
 
@@ -40,16 +39,9 @@ if __name__ == '__main__':
 
         sys.exit(0)
 
-    import sdtsaction
-    if args.subcommand in spaction.actions.keys():
-        sdtsaction.actions[args.subcommand](args)
-        status=sdtiaction.actions[args.subcommand](args)
-
-        # hack
-        # TODO: review all return code in sdtiaction module
-        if not isinstance(status,int):
-            status=0 # arbitrary
-
+    if args.subcommand in spsubcommand.actions.keys():
+        spsubcommand.actions[args.subcommand](args)
+        status=spsubcommand.actions[args.subcommand](args)
         sys.exit(status)
 
     sptools.print_stderr('Invalid operation %s'%args.subcommand)   
