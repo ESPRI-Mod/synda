@@ -773,7 +773,7 @@ st_lib="$st_root/lib/sd"
 st_conf_file="$st_root/conf/sdt.conf"
 st_cred_file="$st_root/conf/credentials.conf"
 #
-sp_version=${g__version:-1.0} # set HEAD version unless vernum is specified by the user
+sp_version=${g__version:-1.1} # set HEAD version unless vernum is specified by the user
 sp_package=sdp-${sp_version}
 pp_archive=${sp_package}.tar.gz
 pp_url="$url_prefix/${pp_archive}"
