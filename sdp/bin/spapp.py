@@ -22,8 +22,11 @@ import spapputils
 import spconfig
 
 def cleanup():
+    """
     if os.path.isfile(spconfig.ihm_pid_file):
         os.unlink(spconfig.ihm_pid_file)
+    """
+    pass
 
 def is_daemon():
 
@@ -60,12 +63,14 @@ spapputils.set_exception_handler()
 
 if who_am_i()=='ihm':
 
+    """
     if spconfig.prevent_daemon_and_ihm:
         spapputils.singleton_check(spconfig.daemon_pid_file)
     if spconfig.prevent_ihm_and_ihm:
         spapputils.singleton_check(spconfig.ihm_pid_file)
+    """
 
-    spapputils.create_IHM_pid_file(spconfig.ihm_pid_file)
+    #spapputils.create_IHM_pid_file(spconfig.ihm_pid_file)
 
     # configure non-daemon start/stop routines 
     # (daemon start/stop routines are configured directly in sptaskscheduler module)
