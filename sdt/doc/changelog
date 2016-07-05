@@ -7,6 +7,7 @@
 	- add 'check' action.
 	- use myproxyclient latest version.
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
+	- change tarball location for source installation (use install.sh latest version).
 	- ergonomy improvements.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
