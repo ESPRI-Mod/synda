@@ -54,15 +54,9 @@ build ()
 upload ()
 {
     local file_=${1}
+    local dest=${2}
 
-    if [ -z "$SYNDA_WEBHOST" ]; then
-        echo "Error: SYNDA_WEBHOST is not set"
-        exit 1
-    fi
-
-    webhost=$SYNDA_WEBHOST
-
-    scp -C $file_ $webhost
+    scp -C $file_ $dest
 }
 
 get_archive_name ()
@@ -171,17 +165,25 @@ fi
 # send tarball to apache
 if [ "$deploy" = "1" ]; then
 
+    if [ -z "$SYNDA_WEBHOST" ]; then
+        echo "Error: SYNDA_WEBHOST is not set"
+        exit 1
+    fi
+    webhost=$SYNDA_WEBHOST
+
     if [ "$sdt_mod" = "1" ]; then
         version=$( get_version $src_snapshot_root/sdt/bin/sdapp.py )
         archive=$( get_archive_name $version sdt )
+        dest=${webhost}/sdt/src
     fi
 
     if [ "$sdp_mod" = "1" ]; then
         version=$( get_version $src_snapshot_root/sdp/bin/spapp.py )
         archive=$( get_archive_name $version sdp )
+        dest=${webhost}/sdp/src
     fi
 
-    upload $archive
+    upload $archive $dest
 fi
 
 exit 0
