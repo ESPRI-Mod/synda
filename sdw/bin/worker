@@ -100,9 +100,11 @@ def check_user_group():
 
     groups = [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
 
+    """ obsolete
     if 'cmip5' not in groups:
         sys.stderr.write('Warning: user running this script is not in cmip5 group\n')
         #raise Exception('Incorrect group (user running this script must be in cmip5 group).')
+    """
 
 def get_unique_filename():
     return "worker-%s-%i.log"%(datetime.datetime.now().strftime("%Y%m%d-%H%M%S"),os.getpid())
