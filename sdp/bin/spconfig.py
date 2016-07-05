@@ -92,8 +92,6 @@ incorrect_checksum_action="remove"
 
 max_metadata_parallel_download_per_index=3
 
-daemon_command_name='sprpcserver'
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n','--name',default=None)
