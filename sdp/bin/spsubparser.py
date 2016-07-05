@@ -48,5 +48,8 @@ def create_subparser(subparsers,subcommand,**kw):
     return subparser
 
 def run(subparsers):
+    subparser=subparsers.add_parser('help',help='Show help')
+    subparser.add_argument('topic',nargs='?')
+
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=spcliex.queue())
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
