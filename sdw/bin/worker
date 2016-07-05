@@ -69,6 +69,7 @@ def _get_args():
     parser.add_argument('-T', '--timeout', type = int, default = 1000, help = 'Remote service timeout')
     parser.add_argument('-u','--username', default = 'sdpp', help = 'Remote service username')
     parser.add_argument('-1', '--one_item_only', action = 'store_true', default = False, help = 'Apply process on only one database entry')
+    parser.add_argument('-v', '--verbose', action = 'store_true')
     parser.add_argument('-V', '--version', action = 'version', version = "%(prog)s ({0})".format(VERSION), help = 'Program version')
     return parser.parse_args()
 
@@ -241,6 +242,10 @@ def init_logger(logfile):
 
 def run(args):
     """Test service connection or start processing jobs"""
+
+    if args.verbose:
+        print url
+        print args.username
 
     # Create database connection service
     service = pyjsonrpc.HttpClient(url, args.username, password, args.timeout)
