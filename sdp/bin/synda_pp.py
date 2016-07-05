@@ -42,9 +42,9 @@ if __name__ == '__main__':
 
         sys.exit(0)
 
-    if args.subcommand in spsubcommand.actions.keys():
-        spsubcommand.actions[args.subcommand](args)
-        status=spsubcommand.actions[args.subcommand](args)
+    if args.subcommand in spsubcommand.spsubcommands.keys():
+        spsubcommand.spsubcommands[args.subcommand](args)
+        status=spsubcommand.spsubcommands[args.subcommand](args)
         sys.exit(status)
 
     sptools.print_stderr('Invalid operation %s'%args.subcommand)   
