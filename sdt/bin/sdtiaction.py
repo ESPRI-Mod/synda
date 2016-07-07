@@ -25,6 +25,7 @@ def autoremove(args):
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
 def certificate(args):
+    status=0
     import sdconfig,sdlogon
     if args.action is None:
         sdlogon.print_certificate()
@@ -47,18 +48,22 @@ def certificate(args):
                     else:
                         print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.user_credential_file)   
 
-                    return 1
+                    status=1
 
             # retrieve certificate
             try:
                 sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
                 print_stderr('Certificate successfully renewed.')
+                status=0
             except Exception,e:
                 print_stderr('Error occurs while renewing certificate (%s)'%str(e))
+                status=1
         elif args.action=="print":
             sdlogon.print_certificate()
         else:
             print_stderr('Not implemented yet.')   
+
+    return status
 
 def check(args):
     import sddump,sdtypes,sddatasetversion
@@ -735,13 +740,13 @@ def param(args):
     sdparam.print_(args)
 
 def pexec(args):
-    import sdsearch, sdpporder, sddb, syndautils, sdconst, sdpostpipelineutils, sdhistorydao
+    import sdsearch, sdpporder, sddb, syndautils, sdconst, sdpostpipelineutils, sdhistorydao, sddeferredbefore
 
     if args.order_name=='cdf':
         selection_filename=None
 
         # use search-api operator to build datasets list
-        stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
+        stream=syndautils.get_stream(subcommand=args.subcommand,selection_file=args.selection_file,no_default=args.no_default)
         sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
 
         dataset_found_count=0
@@ -776,13 +781,13 @@ def pexec(args):
 
         if dataset_found_count>0:
             if order_dataset_count==0:
-                print_stderr("Dataset not downloaded: operation cancelled")   
+                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")   
             else:
                 sdhistorydao.add_history_line(sdconst.ACTION_PEXEC,selection_filename)
 
                 print_stderr("Post-processing task successfully submitted (order_dataset_count=%d,order_variable_count=%d)"%(order_dataset_count,order_variable_count))
         else:
-            print_stderr('Dataset not found')
+            print_stderr('Data not found')
     else:
         print_stderr("Invalid order name ('%s')"%args.order_name)
 
