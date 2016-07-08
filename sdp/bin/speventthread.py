@@ -61,9 +61,8 @@ def process_event(e,conn):
         assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
 
-    elif e.name==spconst.EVENT_LATEST_DATASET_COMPLETE:
+    elif e.name==spconst.EVENT_VARIABLE_COMPLETE:
         pipeline='IPSL_003'
-        assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
     elif e.name=='cdf_variable':
