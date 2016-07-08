@@ -68,20 +68,8 @@ def process_event(e,conn):
 
     elif e.name=='cdf_variable':
 
-        dependent_pipeline=get_dependency(e,conn)
-        if dependent_pipeline is not None:
-            if dependent_pipeline.status==PPPRUN_STATUS_DONE:
 
-                status=spconst.PPPRUN_STATUS_WAITING
-
-            else:
-                splog.info('SPEVENTT-010','Create with PAUSE status as dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
-
-                status=spconst.PPPRUN_STATUS_PAUSE
-        else:
-            splog.info('SPEVENTT-018',"Create with PAUSE status as dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
-
-            status=spconst.PPPRUN_STATUS_PAUSE
+        status=get_new_pipeline_status(e,conn)
 
         pipeline='CDF_001'
         create_pipeline(pipeline,status,e,conn)
@@ -121,6 +109,24 @@ def consume_events():
 
     except Exception, e:
         traceback.print_exc(file=open(spconfig.stacktrace_log_file,"a"))
+
+def get_new_pipeline_status(e,conn):
+    dependent_pipeline=get_dependency(e,conn)
+    if dependent_pipeline is not None:
+        if dependent_pipeline.status==spconst.PPPRUN_STATUS_DONE:
+
+            status=spconst.PPPRUN_STATUS_WAITING
+
+        else:
+            splog.info('SPEVENTT-010','Create with PAUSE status as dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
+
+            status=spconst.PPPRUN_STATUS_PAUSE
+    else:
+        splog.info('SPEVENTT-018',"Create with PAUSE status as dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
+
+        status=spconst.PPPRUN_STATUS_PAUSE
+
+    return status
 
 def events_loop(stop_event):
     while not stop_event.is_set():
