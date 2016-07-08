@@ -68,10 +68,13 @@ def process_event(e,conn):
 
     elif e.name=='cdf_variable':
 
+        if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+            pipeline='CDF_003'
+            status=spconst.PPPRUN_STATUS_WAITING
+        else:
+            pipeline='CDF_001'
+            status=get_new_pipeline_status(e,conn)
 
-        status=get_new_pipeline_status(e,conn)
-
-        pipeline='CDF_001'
         create_pipeline(pipeline,status,e,conn)
 
     elif e.name=='cdf_dataset':
