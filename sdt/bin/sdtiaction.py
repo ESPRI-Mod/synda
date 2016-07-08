@@ -764,6 +764,7 @@ def pexec(args):
             for d in datasets:
                 if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
+
                     # first, send cdf variable order
                     # (note: total number of variable event is given by: "total+=#variable for each ds")
                     for v in d['variable']:
@@ -771,16 +772,24 @@ def pexec(args):
                             order_variable_count+=1
                             sdpporder.submit('cdf_variable',d['project'],d['model'],d['local_path'],variable=v,commit=False)
 
+
                     # second, send cdf dataset order
-                    order_dataset_count+=1
-                    sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
+                    if d['project'] in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+
+                        # we do not trigger 'dataset' level event in this case
+                        pass
+                    else:                        
+
+                        order_dataset_count+=1
+                        sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
+
 
             dataset_found_count+=len(datasets)
 
         sddb.conn.commit()
 
         if dataset_found_count>0:
-            if order_dataset_count==0:
+            if order_dataset_count==0 and order_variable_count==0:
                 print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")   
             else:
                 sdhistorydao.add_history_line(sdconst.ACTION_PEXEC,selection_filename)
