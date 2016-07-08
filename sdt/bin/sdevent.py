@@ -227,17 +227,25 @@ def latest_dataset_complete_event(project,model,dataset_pattern,commit=True):
 
     sdlog.log("SYDEVENT-045","'latest_dataset_complete_event' triggered (%s)"%dataset_pattern,event_triggered_log_level)
 
-    if project!='CMIP5': # CMIP5 use a special event (output12 based)
+    if project=='CMIP5':
 
-        event=Event(name=sdconst.EVENT_LATEST_DATASET_COMPLETE)
-        event.project=project
-        event.model=model
-        event.dataset_pattern=dataset_pattern
-        event.variable=''
-        event.filename_pattern=''
-        event.crea_date=sdtime.now()
-        event.priority=sdconst.DEFAULT_PRIORITY
-        sdeventdao.add_event(event,commit=commit)
+        # CMIP5 use output12 special event
+        return
+
+    if project in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+
+        # CORDEX and CMIP6 use only variable level event
+        return
+
+    event=Event(name=sdconst.EVENT_LATEST_DATASET_COMPLETE)
+    event.project=project
+    event.model=model
+    event.dataset_pattern=dataset_pattern
+    event.variable=''
+    event.filename_pattern=''
+    event.crea_date=sdtime.now()
+    event.priority=sdconst.DEFAULT_PRIORITY
+    sdeventdao.add_event(event,commit=commit)
 
 def non_latest_dataset_complete_event(project,model,dataset_pattern,commit=True):
     # this event means one non-latest dataset has been completed (beware: no 'latest switch' event here: was not latest before and still isn't)
