@@ -65,18 +65,16 @@ def file_complete_event(tr):
 def variable_complete_event(project,model,dataset,variable,commit=True):
     sdlog.log("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable),event_triggered_log_level)
 
-    # not used for now
-    """
-    event=Event(name=sdconst.EVENT_VARIABLE_COMPLETE)
-    event.project=project
-    event.model=model
-    event.dataset_pattern=dataset.local_path
-    event.variable=variable
-    event.filename_pattern=''
-    event.crea_date=sdtime.now()
-    event.priority=sdconst.DEFAULT_PRIORITY
-    sdeventdao.add_event(event,commit=commit)
-    """
+    if project!='CMIP5': # CMIP5 use special output12 event
+        event=Event(name=sdconst.EVENT_VARIABLE_COMPLETE)
+        event.project=project
+        event.model=model
+        event.dataset_pattern=dataset.local_path
+        event.variable=variable
+        event.filename_pattern=''
+        event.crea_date=sdtime.now()
+        event.priority=sdconst.DEFAULT_PRIORITY
+        sdeventdao.add_event(event,commit=commit)
 
     # cascade 1 (trigger dataset event)
     if dataset.status==sdconst.DATASET_STATUS_COMPLETE:
