@@ -286,6 +286,7 @@ check_ve ()
     ve_dir=${1}
 
     if [ -f $ve_dir/bin/activate ]; then
+        # previous installation already exists
 
 
         # If we are here, it can be because:
