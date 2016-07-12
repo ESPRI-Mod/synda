@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser.add_argument('-v','--viewer',action='store_true')
     args = parser.parse_args()
 
-    pipeline=sppipeline.get_pipeline('IPSL_001')
+    pipeline=sppipeline.get_pipeline('IPSL_VARIABLE')
 
     if args.list is not None:
 

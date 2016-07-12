@@ -38,11 +38,11 @@ def get_dependency(e,conn):
     if e.name=='cdf_variable':
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-            pipeline='IPSL_003'
+            pipeline='IPSL'
             if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
                 dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
         else:
-            pipeline='IPSL_002'
+            pipeline='IPSL_DATASET'
             if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
                 dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
 
@@ -53,24 +53,24 @@ def get_dependency(e,conn):
 
 def process_event(e,conn):
     if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
-        pipeline='IPSL_001'
+        pipeline='IPSL_VARIABLE'
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
     elif e.name==spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:
-        pipeline='IPSL_002'
+        pipeline='IPSL_DATASET'
         assert e.variable == ''
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
 
     elif e.name==spconst.EVENT_VARIABLE_COMPLETE:
-        pipeline='IPSL_003'
+        pipeline='IPSL'
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
     elif e.name=='cdf_variable':
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-            pipeline='CDF_003'
+            pipeline='CDF'
         else:
-            pipeline='CDF_001'
+            pipeline='CDF_VARIABLE'
 
         status=get_new_pipeline_status(e,conn)
 
@@ -78,8 +78,10 @@ def process_event(e,conn):
 
     elif e.name=='cdf_dataset':
 
-        pipeline='CDF_002'
+        assert e.project not in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET
         assert e.variable == ''
+
+        pipeline='CDF_DATASET'
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn) # called for each variable, but duplicate dataset are ignored(i.e. for some project, a dataset is a group of variable)
 
     else:
