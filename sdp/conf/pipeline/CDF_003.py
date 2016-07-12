@@ -6,7 +6,7 @@
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
 #                             All Rights Reserved”
-#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
 """Contains 'dataset latest' pipeline definition."""
@@ -37,10 +37,10 @@ name='CDF_003'
 ppp=PostProcessingPipeline(name)
 
 t1=Transition(name='spatial_interpolation',destination='S2200',get_args=f1)
-t1=Transition(name='latest',destination='S2300',get_args=f2)
+t2=Transition(name='latest',destination='S2300',get_args=f2)
 
 s1=State(name='S2100',transition=t1,initial=True)
-s2=State(name='S2200',transition=t1,initial=True)
+s2=State(name='S2200',transition=t2)
 s3=State(name='S2300',transition=None)
 
 ppp.add(s1,s2,s3)
