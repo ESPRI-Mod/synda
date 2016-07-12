@@ -38,13 +38,13 @@ def get_dependency(e,conn):
     if e.name=='cdf_variable':
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-            pipeline='IPSL_001'
-            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
-        else:
             pipeline='IPSL_003'
             if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
                 dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
+        else:
+            pipeline='IPSL_002'
+            if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
+                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
 
     else:
         assert False
@@ -69,10 +69,10 @@ def process_event(e,conn):
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
             pipeline='CDF_003'
-            status=spconst.PPPRUN_STATUS_WAITING
         else:
             pipeline='CDF_001'
-            status=get_new_pipeline_status(e,conn)
+
+        status=get_new_pipeline_status(e,conn)
 
         create_pipeline(pipeline,status,e,conn)
 
