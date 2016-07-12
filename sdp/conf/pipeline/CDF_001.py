@@ -37,9 +37,9 @@ def f2(kw):
     dest_path=sppipelineutils.build_user_path('interpolated',kw)
     return {'project':kw.project,'src_variable_path':src_path,'dest_variable_path':dest_path}
 
-t1=Transition(name='spatial_interpolation',destination='S2020',get_args=f2)
+t1=Transition(name='spatial_interpolation',destination='S2200',get_args=f2)
 
-s1=State(name='S2010',transition=t1,initial=True)
-s2=State(name='S2020',transition=None)
+s1=State(name='S2100',transition=t1,initial=True)
+s2=State(name='S2200',transition=None)
 
 ppp.add(s1,s2)

@@ -39,11 +39,11 @@ def f4(kw):
 name='IPSL_002'
 ppp=PostProcessingPipeline(name)
 
-t1=Transition(name='latest',destination='S1300',get_args=f1)
-t2=Transition(name='mapfile',destination='S1400',get_args=f1)
+t1=Transition(name='latest',destination='S1200',get_args=f1)
+t2=Transition(name='mapfile',destination='S1300',get_args=f1)
 
 s1=State(name='S1100',transition=t1,initial=True)
-s2=State(name='S1300',transition=t2)
-s3=State(name='S1400',transition=None)
+s2=State(name='S1200',transition=t2)
+s3=State(name='S1300',transition=None)
 
 ppp.add(s1,s2,s3)
