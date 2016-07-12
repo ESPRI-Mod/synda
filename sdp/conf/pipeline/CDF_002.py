@@ -31,9 +31,9 @@ def f1(kw):
 name='CDF_002'
 ppp=PostProcessingPipeline(name)
 
-t1=Transition(name='latest',destination='S2120',get_args=f1)
+t1=Transition(name='latest',destination='S3200',get_args=f1)
 
-s1=State(name='S2110',transition=t1,initial=True)
-s2=State(name='S2120',transition=None)
+s1=State(name='S3100',transition=t1,initial=True)
+s2=State(name='S3200',transition=None)
 
 ppp.add(s1,s2)
