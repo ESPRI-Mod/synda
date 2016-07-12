@@ -41,7 +41,7 @@ def build_user_path(project_subdir,kw):
     dataset_pattern=remove_first_facet(dataset_pattern) if kw.project in ['CMIP5','CORDEX'] else dataset_pattern
 
     path='%s/%s/%s/%s/%s'%(kw.data_folder,'project',kw.project,project_subdir,dataset_pattern)
-    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' and kw.project!='CORDEX' else path
     path+='/' # add ending slash
 
     return path
@@ -49,7 +49,7 @@ def build_user_path(project_subdir,kw):
 def build_mirror_path(kw):
 
     path='%s/%s/%s'%(kw.data_folder,'esgf/mirror',kw.dataset_pattern)
-    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' and kw.project!='CORDEX' else path
     path+='/' # add ending slash
 
     return path
@@ -58,7 +58,7 @@ def build_process_path(kw):
     dataset_pattern=kw.dataset_pattern.replace('/*/','/merge/') if kw.project=='CMIP5' else kw.dataset_pattern # product coalesce CMIP5 hack
 
     path='%s/%s/%s'%(kw.data_folder,'esgf/process',dataset_pattern)
-    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' else path
+    path='%s/%s'%(path,kw.variable) if kw.path_type=='variable' and kw.project!='CORDEX' else path
     path+='/' # add ending slash
 
     return path
