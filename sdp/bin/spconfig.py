@@ -62,7 +62,6 @@ else:
     conf_folder='/etc/synda/sdp'
 
 bin_folder="%s/bin"%root_folder
-pipeline_folder="%s/pipeline"%conf_folder
 
 cleanup_tree_script="%s/spcleanup_tree.sh"%bin_folder
 configuration_file="%s/sdp.conf"%conf_folder
@@ -71,8 +70,12 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 certificate_file='%s/server.pem'%tmp_folder
 
-config = ConfigParser.ConfigParser()
+default_options={'pipeline_path':"%s/pipeline"%conf_folder}
+
+config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
+
+pipeline_folder=config.get('path','pipeline_path')
 
 data_folder=get_data_folder()
 
