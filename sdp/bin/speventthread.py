@@ -33,12 +33,14 @@ def create_pipeline(pipeline,status,e,conn):
         e.status=spconst.EVENT_STATUS_ANOMALY # mark events as anomaly (this event has been inhibited and may need to be manually switched to 'new'. also most often it's not necessary (i.e. it has been inhibited because another identical event was preceding it))
 
 def get_pipeline_dependency(name,dataset_pattern,variable,conn):
-    pipeline_dependency=None
+    pipeline_dependencies=spppprdao.get_pppruns(order='fifo',pipeline=name,dataset_pattern=dataset_pattern,variable=variable,conn=conn)
 
-    if spppprdao.exists_ppprun(PPPRun(pipeline=name,dataset_pattern=dataset_pattern,variable=variable),conn):
-        pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=name,dataset_pattern=dataset_pattern,variable=variable,conn=conn)
-
-    return pipeline_dependency
+    if len(pipeline_dependencies)==0:
+        return None
+    elif len(pipeline_dependencies)==1:
+        return pipeline_dependencies[0]
+    else:
+        assert False # currently, one pipeline can only have one dep max
 
 def process_event(e,conn):
     if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
@@ -55,13 +57,18 @@ def process_event(e,conn):
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
     elif e.name==spconst.EVENT_CDF_VARIABLE:
-
-        if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+        if is_one_var_per_ds(e.project):
             pipeline='CDF'
+            pipe_dep_name='IPSL'
         else:
             pipeline='CDF_VARIABLE'
+            pipe_dep_name='IPSL_DATASET' # maybe use IPSL_VARIABLE here (i.e. IPSL_DATASET may be done while IPSL_VARIABLE is running..)
 
-        status=get_new_pipeline_status(e,conn)
+        # retrieve dependency
+        pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,e.variable,conn)
+
+        # compute status
+        status=get_new_pipeline_status(pipeline_dependency,e)
 
         create_pipeline(pipeline,status,e,conn)
 
@@ -109,31 +116,16 @@ def is_one_var_per_ds(project):
     else:
         return False
 
-def get_new_pipeline_status(e,conn):
-
-
-    # manage dependencies between pipeline
-
-    if e.name==spconst.EVENT_CDF_VARIABLE:
-        pipe_dep_name='IPSL' if is_one_var_per_ds(e.project) else 'IPSL_DATASET'
-    else:
-        assert False
-
-    pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,e.variable,conn)
-
+def get_new_pipeline_status(pipeline_dependency,e):
 
     if pipeline_dependency is not None:
         if pipeline_dependency.status==spconst.PPPRUN_STATUS_DONE:
-
             status=spconst.PPPRUN_STATUS_WAITING
-
         else:
             splog.info('SPEVENTT-010','Create with PAUSE status as dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
-
             status=spconst.PPPRUN_STATUS_PAUSE
     else:
         splog.info('SPEVENTT-018',"Create with PAUSE status as dependent pipeline doesn't exist (dataset_pattern=%s,variable=%s)"%(e.dataset_pattern,e.variable))
-
         status=spconst.PPPRUN_STATUS_PAUSE
 
     return status
