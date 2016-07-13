@@ -23,7 +23,7 @@ sudo yum install epel-release -y
 To install synda RPM package, use
 
 ```
-sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/sdt/rpm/<package-name> -y
+sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/<package-name> -y
 ```
 
 where &lt;package-name&gt; can be one of
@@ -44,7 +44,7 @@ Example
 To install Synda on Scientific Linux 6.7, do
 
 ```
-sudo yum install http://dods.ipsl.jussieu.fr/jripsl/synda/sdt/rpm/synda-3.4-1.x86_64_scientific67.rpm 
+sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/synda-3.4-1.x86_64_scientific67.rpm 
 ```
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.

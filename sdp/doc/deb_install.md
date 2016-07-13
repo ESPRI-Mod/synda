@@ -19,7 +19,7 @@ This documents contains instructions to install *sdp* from DEB package.
 Add IPSL Synda repository
 
 ```
-echo deb http://dods.ipsl.jussieu.fr/jripsl/synda/sdp/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda-pp.list
+echo deb http://sd-53687.dedibox.fr/synda/sdp/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda-pp.list
 ```
 
 where &lt;distro-name&gt; can be one of

@@ -761,10 +761,7 @@ g__before_md5_conffile=
 post_install_msg= # used to display some info to the user after installation
 tmpdir=$( mktemp -d -p /tmp tmp.sdt.XXXXXXXXXX ) # use mktemp instead of hardcoded path in case different user install synda from source on a multi-user machine
 #
-# TODO: switch to this url ? => http://esgf-local.ipsl.upmc.fr/thredds/fileServer/ipsl_public/jripsl/synda/sdt-3.1.tar.gz
-#
-#
-st_url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda/sdt/src
+st_url_prefix=http://sd-53687.dedibox.fr/synda/sdt/src
 st_version=${g__version:-3.4} # default version if not specified by the user
 st_package=sdt-${st_version}
 st_archive=${st_package}.tar.gz
@@ -774,7 +771,7 @@ st_lib="$st_root/lib/sd"
 st_conf_file="$st_root/conf/sdt.conf"
 st_cred_file="$st_root/conf/credentials.conf"
 #
-sp_url_prefix=http://dods.ipsl.jussieu.fr/jripsl/synda/sdp/src
+sp_url_prefix=http://sd-53687.dedibox.fr/synda/sdp/src
 sp_version=${g__version:-1.1} # set HEAD version unless vernum is specified by the user
 sp_package=sdp-${sp_version}
 pp_archive=${sp_package}.tar.gz

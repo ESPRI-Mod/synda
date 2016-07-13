@@ -13,7 +13,7 @@ This documents contains instructions to install Synda from DEB package.
 Add IPSL Synda repository
 
 ```
-echo deb http://dods.ipsl.jussieu.fr/jripsl/synda/sdt/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
+echo deb http://sd-53687.dedibox.fr/synda/sdt/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
 ```
 
 where &lt;distro-name&gt; can be one of

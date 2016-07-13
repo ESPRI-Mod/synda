@@ -21,7 +21,7 @@ Run commands below
 Run commands below
 
     mkdir -p /srv/synda/sdt
-    sudo wget http://dods.ipsl.jussieu.fr/jripsl/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+    sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
 
 --------------------------------------------------------
 
