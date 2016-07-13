@@ -32,17 +32,11 @@ def create_pipeline(pipeline,status,e,conn):
         splog.warning('SPEVENTT-012',"Event status set to anomaly")
         e.status=spconst.EVENT_STATUS_ANOMALY # mark events as anomaly (this event has been inhibited and may need to be manually switched to 'new'. also most often it's not necessary (i.e. it has been inhibited because another identical event was preceding it))
 
-def get_pipeline_dependency(e,conn):
+def get_pipeline_dependency(name,dataset_pattern,variable,conn):
     pipeline_dependency=None
 
-    if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-        pipeline='IPSL'
-        if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-            pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
-    else:
-        pipeline='IPSL_DATASET'
-        if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-            pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
+    if spppprdao.exists_ppprun(PPPRun(pipeline=name,dataset_pattern=dataset_pattern,variable=variable),conn):
+        pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=name,dataset_pattern=dataset_pattern,variable=variable,conn=conn)
 
     return pipeline_dependency
 
@@ -109,21 +103,27 @@ def consume_events():
     except Exception, e:
         traceback.print_exc(file=open(spconfig.stacktrace_log_file,"a"))
 
+def is_one_var_per_ds(project):
+    if project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+        return True
+    else:
+        return False
+
 def get_new_pipeline_status(e,conn):
 
 
     # manage dependencies between pipeline
 
     if e.name==spconst.EVENT_CDF_VARIABLE:
-        pass
+        pipe_dep_name='IPSL' if is_one_var_per_ds(e.project) else 'IPSL_DATASET'
     else:
         assert False
 
-    dependent_pipeline=get_pipeline_dependency(e,conn)
+    pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,e.variable,conn)
 
 
-    if dependent_pipeline is not None:
-        if dependent_pipeline.status==spconst.PPPRUN_STATUS_DONE:
+    if pipeline_dependency is not None:
+        if pipeline_dependency.status==spconst.PPPRUN_STATUS_DONE:
 
             status=spconst.PPPRUN_STATUS_WAITING
 
