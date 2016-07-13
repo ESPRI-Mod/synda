@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""Contains sample_01 pipeline definition."""
+"""Contains P001 pipeline definition."""
 
 import sppipelineutils
 from sppostprocessingutils import PostProcessingPipeline,State,Transition
@@ -46,7 +46,7 @@ def f5(kw):
     path=sppipelineutils.build_user_path('main',kw)
     return {'project':kw.project,'dataset_path':path}
 
-name='sample_01'
+name='P001'
 ppp=PostProcessingPipeline(name)
 
 t0=Transition(name='is_duplicate',destination={0:'S0300',1:'S0100'})
