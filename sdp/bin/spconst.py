@@ -11,6 +11,9 @@
 
 import spapp
 
+EVENT_CDF_VARIABLE='cdf_variable'
+EVENT_CDF_DATASET='cdf_dataset'
+#
 EVENT_VARIABLE_COMPLETE='variable_complete'
 EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
 #

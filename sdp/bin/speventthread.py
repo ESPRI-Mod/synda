@@ -65,7 +65,7 @@ def process_event(e,conn):
         pipeline='IPSL'
         create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
 
-    elif e.name=='cdf_variable':
+    elif e.name==spconst.EVENT_CDF_VARIABLE:
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
             pipeline='CDF'
@@ -76,7 +76,7 @@ def process_event(e,conn):
 
         create_pipeline(pipeline,status,e,conn)
 
-    elif e.name=='cdf_dataset':
+    elif e.name==spconst.EVENT_CDF_DATASET:
 
         assert e.project not in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET
         assert e.variable == ''
