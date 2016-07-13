@@ -60,12 +60,14 @@ def process_event(e,conn):
         if is_one_var_per_ds(e.project):
             pipeline='CDF'
             pipe_dep_name='IPSL'
+            variable=e.variable
         else:
             pipeline='CDF_VARIABLE'
             pipe_dep_name='IPSL_DATASET' # maybe use IPSL_VARIABLE here (i.e. IPSL_DATASET may be done while IPSL_VARIABLE is running..)
+            variable=''
 
         # retrieve dependency
-        pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,e.variable,conn)
+        pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,variable,conn)
 
         # compute status
         status=get_new_pipeline_status(pipeline_dependency,e)
