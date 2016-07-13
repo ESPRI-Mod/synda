@@ -32,24 +32,24 @@ def create_pipeline(pipeline,status,e,conn):
         splog.warning('SPEVENTT-012',"Event status set to anomaly")
         e.status=spconst.EVENT_STATUS_ANOMALY # mark events as anomaly (this event has been inhibited and may need to be manually switched to 'new'. also most often it's not necessary (i.e. it has been inhibited because another identical event was preceding it))
 
-def get_dependency(e,conn):
-    dependent_pipeline=None
+def get_pipeline_dependency(e,conn):
+    pipeline_dependency=None
 
-    if e.name=='cdf_variable':
+    if e.name==spconst.EVENT_CDF_VARIABLE:
 
         if e.project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
             pipeline='IPSL'
             if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
+                pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,conn=conn)
         else:
             pipeline='IPSL_DATASET'
             if spppprdao.exists_ppprun(PPPRun(pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable),conn):
-                dependent_pipeline=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
+                pipeline_dependency=spppprdao.get_pppruns(order='fifo',pipeline=pipeline,dataset_pattern=e.dataset_pattern,variable=e.variable,conn=conn)
 
     else:
         assert False
 
-    return dependent_pipeline
+    return pipeline_dependency
 
 def process_event(e,conn):
     if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
@@ -115,7 +115,7 @@ def consume_events():
         traceback.print_exc(file=open(spconfig.stacktrace_log_file,"a"))
 
 def get_new_pipeline_status(e,conn):
-    dependent_pipeline=get_dependency(e,conn)
+    dependent_pipeline=get_pipeline_dependency(e,conn)
     if dependent_pipeline is not None:
         if dependent_pipeline.status==spconst.PPPRUN_STATUS_DONE:
 
