@@ -132,7 +132,7 @@ def set_selection(selection_filenames):
     else:
         # load all selections
 
-        for filename in getselectionfilelist():
+        for filename in get_selection_file_list():
             us=selection_builder(filename)
 
             if us.group==sdconst.DEFAULT_GROUP: # without "-t" option we only add default group us (i.e. currently, you have to use "-t" option to process selection which are not in the default group)
@@ -158,9 +158,9 @@ def is_dataset_inside_selections(verylightdatasetid):
 
     return False # not found in any selections
 
-def PROC0012():
+def reset():
     """Mark all selections as done (aka "normal", "complete"..) and set the checksum."""
-    for filename in getselectionfilelist():
+    for filename in get_selection_file_list():
         us=Selection(filename=filename,logger=getLogger())
         us.setStatus(sdconst.SELECTION_STATUS_NORMAL)
         l__checksum=compute_checksum(us.getSelectionFileFullPath())
