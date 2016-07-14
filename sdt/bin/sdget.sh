@@ -237,14 +237,14 @@ if [ $debug -eq 1 ]; then
     always_log_wget_output=1
 fi
 
-multiuser="0"
+system_pkg_install="0"
 
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
 
 # set log & tmp dir.
-if [ "$multiuser" = "0" ]; then
+if [ "$system_pkg_install" = "0" ]; then
 
     # check root folder
     if [ -z "$ST_HOME" ]; then

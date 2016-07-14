@@ -80,10 +80,10 @@ shift $(($OPTIND - 1)) # remove options
 MYPROXY_CMD="${0%/*}/myproxyclient"
 MYPROXY_VERBOSE=""
 #MYPROXY_VERBOSE="--verbose"
-multiuser="0"
+system_pkg_install="0"
 
 # set root folder
-if [ "$multiuser" = "0" ]; then
+if [ "$system_pkg_install" = "0" ]; then
     if [ -z "$ST_HOME" ]; then
         msg "ERR008" "root directory not found"
         exit 9
