@@ -106,6 +106,16 @@ Default: 0
 
 --------------------------------------------------------
 
+### core.selection_path
+
+Override selection directory default path
+
+Type: string
+
+Default: '$HOME/sdt/selection' for source installation and '/etc/synda/sdt/selection' for system package installation.
+
+--------------------------------------------------------
+
 ### core.data_path
 
 Override the data directory default path
@@ -118,7 +128,7 @@ Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt/data' for 
 
 ### core.db_path
 
-Override the default database path
+Override the database default path
 
 Type: string
 

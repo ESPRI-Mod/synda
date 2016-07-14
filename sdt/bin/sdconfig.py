@@ -93,8 +93,8 @@ if not system_pkg_install:
     tmp_folder="%s/tmp"%root_folder
     log_folder="%s/log"%root_folder
     conf_folder="%s/conf"%root_folder
-    selection_folder="%s/selection"%root_folder
 
+    default_selection_folder="%s/selection"%root_folder
     default_db_folder="%s/db"%root_folder
     default_data_folder="%s/data"%root_folder
     default_sandbox_folder="%s/sandbox"%root_folder
@@ -103,8 +103,8 @@ else:
     tmp_folder='/var/tmp/synda/sdt'
     log_folder='/var/log/synda/sdt'
     conf_folder='/etc/synda/sdt'
-    selection_folder='/etc/synda/sdt/selection'
 
+    default_selection_folder='/etc/synda/sdt/selection'
     default_db_folder='/var/lib/synda/sdt'
     default_data_folder='/srv/synda/sdt/data'
     default_sandbox_folder='/srv/synda/sdt/sandbox'
@@ -170,7 +170,6 @@ esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
 check_path(root_folder)
-check_path(selection_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
@@ -219,12 +218,14 @@ config=sdcfloader.load(configuration_file,credential_file,user_configuration_fil
 openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
 
+selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
 data_folder=get_path('data_path',default_data_folder)
 sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
 
 db_file="%s/sdt.db"%db_folder
 
+check_path(selection_folder)
 check_path(data_folder)
 
 files_dest_folder_for_get_subcommand=None # None | sandbox_folder
