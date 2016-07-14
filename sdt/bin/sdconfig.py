@@ -93,7 +93,7 @@ if not system_pkg_install:
     tmp_folder="%s/tmp"%root_folder
     log_folder="%s/log"%root_folder
     conf_folder="%s/conf"%root_folder
-    selections_folder="%s/selection"%root_folder
+    selection_folder="%s/selection"%root_folder
 
     default_db_folder="%s/db"%root_folder
     default_data_folder="%s/data"%root_folder
@@ -103,7 +103,7 @@ else:
     tmp_folder='/var/tmp/synda/sdt'
     log_folder='/var/log/synda/sdt'
     conf_folder='/etc/synda/sdt'
-    selections_folder='/etc/synda/sdt/selection'
+    selection_folder='/etc/synda/sdt/selection'
 
     default_db_folder='/var/lib/synda/sdt'
     default_data_folder='/srv/synda/sdt/data'
@@ -170,7 +170,7 @@ esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
 check_path(root_folder)
-check_path(selections_folder)
+check_path(selection_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses

@@ -37,7 +37,7 @@ def print_selection(filename):
     sdtools.print_stderr()
 
 def read_selection(filename):
-    path="%s/%s"%(sdconfig.selections_folder,filename)
+    path="%s/%s"%(sdconfig.selection_folder,filename)
     with open(path, 'r') as fh:
         buf=fh.readlines()
 

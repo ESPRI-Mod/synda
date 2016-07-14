@@ -73,7 +73,7 @@ def build_selection_file_list():
     """Return full path files list."""
     files=[]
     
-    for file in glob.glob( os.path.join(sdconfig.selections_folder, '*') ):
+    for file in glob.glob( os.path.join(sdconfig.selection_folder, '*') ):
         if not os.path.isdir(file): # exclude sub-dirs
             if not is_default_file(file): # exclude default special selections
                 files.append(file)

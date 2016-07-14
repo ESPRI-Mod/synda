@@ -35,7 +35,7 @@ def find_selection_file(file):
 
             # if we are here, we expect the file to be in the 'selection' folder
 
-            return "%s/%s"%(sdconfig.selections_folder,file)
+            return "%s/%s"%(sdconfig.selection_folder,file)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
