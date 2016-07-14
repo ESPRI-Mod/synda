@@ -15,7 +15,7 @@ import sys
 import argparse
 import json
 import sdapp
-import sdconfig
+import sdselectionfileutils
 import sdprepare_dataset_attr
 import sdlocalpath
 import sdshrink
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     if args.file == "-":
         files=json.load( sys.stdin )
     else:
-        path=sdconfig.find_selection_file(args.file)
+        path=sdselectionfileutils.find_selection_file(args.file)
         with open(path, 'r') as fh:
             files=json.load( fh )
 

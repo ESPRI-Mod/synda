@@ -31,27 +31,6 @@ def get_project_default_selection_file(project):
     path="%s/default_%s.txt"%(selection_default_folder,project)
     return path
 
-def find_selection_file(file):
-    if os.path.isfile(file):
-        # file found
-
-        return file
-    else:
-        if '/' in file:
-            # path
-
-            # if we are here, path is incorrect.
-            # we return the path 'as is'
-            # (it will trigger an error message in the calling func)
-
-            return file
-        else:
-            # filename
-
-            # if we are here, we expect the file to be in the 'selection' folder
-
-            return "%s/%s"%(selections_folder,file)
-
 def check_path(path):
     if not os.path.exists(path):
         raise SDException("SDATYPES-101","Path not found (%s)"%path)

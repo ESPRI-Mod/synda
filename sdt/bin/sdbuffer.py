@@ -15,7 +15,7 @@ import os
 import sys
 import sdapp
 import sdconst
-import sdconfig
+import sdselectionfileutils
 import sdtools
 from sdtypes import Buffer
 from sdexception import SDException,FileNotFoundException
@@ -77,7 +77,7 @@ def get_selection_file_buffer(path=None,parameter=[]):
             buffer=Buffer(path=sdconst.SELECTION_FROM_STDIN,filename=sdconst.SELECTION_FROM_STDIN,lines=lines)
 
     elif mode=='file':
-        path=sdconfig.find_selection_file(path)
+        path=sdselectionfileutils.find_selection_file(path)
 
         if not os.path.isfile(path):
             raise FileNotFoundException('SDBUFFER-002','File not found (%s)'%path)
