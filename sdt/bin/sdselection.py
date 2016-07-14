@@ -13,10 +13,10 @@
 
 import os
 import glob
-import sdlog
 import argparse
 from subprocess import call
 import sdapp
+import sdlog
 import sdtools
 from sdexception import SDException
 import sdconfig
