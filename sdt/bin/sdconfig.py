@@ -81,7 +81,7 @@ def is_special_user():
             - <user> who performed synda installation from source (can be root or a normal user)
     """
 
-    if multiuser:
+    if system_pkg_install:
         # in system package based installation, root is always the special-user
 
         if sdtools.is_root():
@@ -104,9 +104,9 @@ def is_special_user():
 
 # Init module.
 
-multiuser=False # TODO: rename to 'system_pkg_install'
+system_pkg_install=False
 
-if not multiuser:
+if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
@@ -165,7 +165,7 @@ if sdtools.is_daemon():
     security_dir="%s/.esg"%tmp_folder
 else:
 
-    #if multiuser:
+    #if system_pkg_install:
     if is_special_user():
 
         # we may use HOME in this case too,

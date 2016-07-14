@@ -29,7 +29,7 @@ import sdconst
 from sdexception import SDException,FileNotFoundException
 
 def is_granted():
-    if sdconfig.multiuser:
+    if sdconfig.system_pkg_install:
         if sdtools.is_root():
             return True
         else:

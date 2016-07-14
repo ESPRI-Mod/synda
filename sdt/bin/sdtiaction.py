@@ -204,7 +204,7 @@ def daemon(args):
     else:
 
         if args.action in ['start','stop']:
-            if sdconfig.multiuser:
+            if sdconfig.system_pkg_install:
                 print_stderr("Daemon must be managed using 'service' command (system package installation)")
                 return 1
 

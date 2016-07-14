@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
 
     # -- permission check -- #
-    if sdconfig.multiuser:
+    if sdconfig.system_pkg_install:
         if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
             if not sdtools.is_root():
                 sdtools.print_stderr("You need to be root to perform this command.")

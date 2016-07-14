@@ -27,7 +27,7 @@ from sdexception import SDException,CertificateRenewalException
 def print_certificate():
     import os, sdutils
 
-    certdirprefix=sdconfig.tmp_folder if sdconfig.multiuser else os.environ.get('HOME')
+    certdirprefix=sdconfig.tmp_folder if sdconfig.system_pkg_install else os.environ.get('HOME')
 
     certificate_file='%s/.esg/credentials.pem'%certdirprefix
 
