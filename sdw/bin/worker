@@ -57,7 +57,7 @@ def _get_args():
     parser.add_argument('-d', '--debug', action = 'store_true', default = False, help = 'Debug mode')
     parser.add_argument('-H', '--host', default = host, help = 'Remote service hostname')
     parser.add_argument('-j', '--job_class', type=lambda s: s.split(','), required = False, metavar='JOB_CLASS', help = """Only processes specified job class.\nAvailable job classes are:\n- suppression_variable\n- coalesce\n- overlap\n- time_axis_normalization\n- cdscan\n- copy. \nMultiple values can be set using comma as delimiter (e.g. coalesce,overlap,copy).""")
-    parser.add_argument('-l', '--logdir', default = None, help = """Logfile directory""")
+    parser.add_argument('-l', '--logdir', default = get_log_dir(), help = """Logfile directory""")
 
     # This option is disabled for now as we need to always use crea_date as sort order
     #parser.add_argument('-o', '--order', choices = ['aspgf','fifo'], default = 'fifo', help = """Pipeline processing order.""") # 'aspgf' means 'Already Started Pipelines Go First' 
@@ -261,19 +261,17 @@ def stop(signum, frame):
     logging.info('Worker received stop signal')
     quit = True
 
-# daemon related funcs
-
 def get_log_dir(args):
-    """This func is used only in daemon mode."""
-    if args.logdir is None:
-        if 'SP_HOME' in os.environ:
-            logdir='%s/log'%os.environ.get('SP_HOME')
-        else:
-            logdir=default_logdir
+    FIXME
+    if 'SP_HOME' in os.environ:
+        return '%s/log'%os.environ.get('SP_HOME')
+    elif os.path.isdir():
+        return '/var/log/synda/sdw'
     else:
-        logdir=args.logdir
+        log_dir='%s/worker_log'%tmp_folder
+        return log_dir
 
-    return logdir
+# daemon related funcs
 
 def is_root():
     if os.geteuid() == 0:
@@ -371,7 +369,6 @@ VERSION = '{0} {1}-{2}-{3}'.format('v1.0', '2015', '01', '21')
 quit=False
 password=None # 'Remote service password'
 tmp_folder='/tmp'
-default_logdir='%s/worker_log'%tmp_folder
 pid_file="%s/sp_worker.pid"%tmp_folder
 stacktrace_log_file="/tmp/worker_stacktrace.log"
 host='127.0.0.1'
@@ -396,9 +393,7 @@ if __name__ == '__main__':
 
         signal.signal(signal.SIGTERM, stop)
 
-        # build log path
-        logdir=default_logdir if args.logdir is None else args.logdir
-        logfile=get_logfile(logdir,get_unique_filename())
+        logfile=get_logfile(args.logdir,get_unique_filename()) # this is to prevent log collision in batch mode (when many worker run simultaneously)
 
         # run as unprivileged user (if run as root and unprivileged user is set)
         if is_root():
@@ -416,9 +411,7 @@ if __name__ == '__main__':
         context=daemon.DaemonContext(working_directory=tmp_folder, pidfile=pidfile,)
         context.signal_map={ signal.SIGTERM: stop, }
 
-        # build log path
-        logdir=get_log_dir(args)
-        logfile=get_logfile(logdir,'worker.log')
+        logfile=get_logfile(args.logdir,'worker.log')
 
         if args.action == 'start':
             start_daemon(args)
