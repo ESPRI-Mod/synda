@@ -263,18 +263,11 @@ def stop(signum, frame):
 
 # daemon related funcs
 
-def locate_sp_home():
-    """Return Synda Post-processing location."""
-    if 'SP_HOME' in os.environ:
-        return os.environ.get('SP_HOME')
-    else:
-        return None
-
 def get_log_dir(args):
     """This func is used only in daemon mode."""
     if args.logdir is None:
-        if locate_sp_home() is not None:
-            logdir='%s/log'%locate_sp_home()
+        if 'SP_HOME' in os.environ:
+            logdir='%s/log'%os.environ.get('SP_HOME')
         else:
             logdir=default_logdir
     else:
