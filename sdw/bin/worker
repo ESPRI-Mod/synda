@@ -64,7 +64,7 @@ def _get_args():
 
     parser.add_argument('-p','--port', default = port, help = 'Remote service port')
     parser.add_argument('-P','--pipeline', default = None, help = """Only processes specified pipeline.\nAvailable pipelines are:\n- CMIP5_001\n- CMIP5_002""")
-    parser.add_argument('-s', '--script_dir', default = '/prodigfs/esg/ArchiveTools/sdp/script', help = """Process script directory (default = /prodigfs/esg/ArchiveTools/sdp/script)""")
+    parser.add_argument('-s', '--script_dir', default = script_dir, help = """Process script directory (default = /prodigfs/esg/ArchiveTools/sdp/script)""")
     parser.add_argument('-t', '--test', action = 'store_true', default = False, help = 'Test server connection')
     parser.add_argument('-T', '--timeout', type = int, default = 1000, help = 'Remote service timeout')
     parser.add_argument('-u','--username', default = 'sdpp', help = 'Remote service username')
@@ -264,7 +264,7 @@ def stop(signum, frame):
 def get_log_dir():
     if 'SP_HOME' in os.environ:
         return '%s/log'%os.environ.get('SP_HOME')
-    elif os.access(log_path_system_package, os.W_OK):
+    elif os.path.isdir(log_path_system_package) and os.access(log_path_system_package, os.W_OK):
         return log_path_system_package
     else:
         return '%s/worker_log'%tmp_folder
@@ -372,6 +372,7 @@ pid_file="%s/sp_worker.pid"%tmp_folder
 stacktrace_log_file="/tmp/worker_stacktrace.log"
 host='127.0.0.1'
 port='18290'
+script_dir='/opt/synda/scripts_pp'
 
 # daemon unprivileged user
 user=None
