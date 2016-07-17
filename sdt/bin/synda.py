@@ -29,7 +29,6 @@ import sdi18n
 import sdsubparser
 import sdtools
 import sdconfig
-#from sdtools import DefaultHelpParser
 
 def set_stream_type(args):
     import sddeferredbefore
@@ -72,10 +71,8 @@ def set_stream_type(args):
 if __name__ == '__main__':
 
     # create the top-level parser
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
-
-    # argparse customization example
-    #parser = DefaultHelpParser(formatter_class=argparse.RawTextHelpFormatter,description=sdi18n.m0016)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
+    #parser = sdtools.DefaultHelpParser(formatter_class=argparse.RawDescriptionHelpFormatter,description=sdi18n.m0016)
 
     subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand') # ,help=sdi18n.m0015
 

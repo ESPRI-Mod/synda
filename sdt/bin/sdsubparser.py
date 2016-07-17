@@ -96,7 +96,7 @@ def create_subparser(subparsers,subcommand,**kw):
 
     epilog=build_epilog(kw)
 
-    subparser = subparsers.add_parser(subcommand,usage=kw.get('usage',None),help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawTextHelpFormatter)
+    subparser = subparsers.add_parser(subcommand,usage=kw.get('usage',None),help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawDescriptionHelpFormatter)
 
     if kw.get('common_option',True):
         add_common_option(subparser,**kw)
