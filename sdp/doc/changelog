@@ -1,9 +1,11 @@
-- Version 1.1 - DEV
-	- Add requirements.txt file.
-	- Add multivalues support for job_class option.
-	- Add conf folder.
+- Version 1.1 - 20160717
+	- add CORDEX support.
+	- add pexec support.
+	- add requirements.txt file.
+	- add multivalues support for job_class option.
+	- add conf folder.
 - Version 1.0 - 20141225
-	- Pipeline engine.
+	- pipeline engine.
 	- Jsonrpc server .
-	- Database environment.
-	- Worker script.
+	- database environment.
+	- worker script.
