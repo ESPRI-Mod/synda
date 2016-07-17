@@ -206,3 +206,5 @@ m0023="""  This command is for source installation only (in system package
   installation, Synda daemon is installed as a service and is managed
   using 'service' command).
 """
+
+m0024="""Set the total number of returned results. By default, returns the first 100 records matching the given constraints. Limit can be also be changed through the keyword parameters limit=. The system imposes a maximum value of limit <= 10,000."""

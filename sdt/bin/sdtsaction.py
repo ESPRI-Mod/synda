@@ -156,7 +156,7 @@ def file_list(args):
 def dataset_search(args):
     import sddeferredafter, sdrdataset, sdstream
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_SEARCH_LIMIT) # add default limit
+    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
     sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -173,7 +173,7 @@ def dataset_search(args):
 def variable_search(args):
     import sddeferredafter, sdrdataset, sdrvariable
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_SEARCH_LIMIT) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
+    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
     sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -189,7 +189,7 @@ def file_search(args):
     # tuning: note that we don't reduce the number of field returned here.
     # Maybe change that to optimise download time / reduce bandwidth footprint.
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_SEARCH_LIMIT)
+    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
 
     files=sdrfile.get_files(stream=args.stream,dry_run=args.dry_run)
 
