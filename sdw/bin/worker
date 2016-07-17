@@ -62,12 +62,12 @@ def _get_args():
     # This option is disabled for now as we need to always use crea_date as sort order
     #parser.add_argument('-o', '--order', choices = ['aspgf','fifo'], default = 'fifo', help = """Pipeline processing order.""") # 'aspgf' means 'Already Started Pipelines Go First' 
 
-    parser.add_argument('-p','--port', default = port, help = 'Remote service port')
-    parser.add_argument('-P','--pipeline', default = None, help = """Only processes specified pipeline.\nAvailable pipelines are:\n- CMIP5_001\n- CMIP5_002""")
+    parser.add_argument('-p', '--port', default = port, help = 'Remote service port')
+    parser.add_argument('-P', '--pipeline', default = None, help = """Only processes specified pipeline.\nAvailable pipelines are:\n- CMIP5_001\n- CMIP5_002""")
     parser.add_argument('-s', '--script_dir', default = script_dir, help = """Process script directory (default = /prodigfs/esg/ArchiveTools/sdp/script)""")
     parser.add_argument('-t', '--test', action = 'store_true', default = False, help = 'Test server connection')
     parser.add_argument('-T', '--timeout', type = int, default = 1000, help = 'Remote service timeout')
-    parser.add_argument('-u','--username', default = 'sdpp', help = 'Remote service username')
+    parser.add_argument('-u', '--username', default = 'sdpp', help = 'Remote service username')
     parser.add_argument('-1', '--one_item_only', action = 'store_true', default = False, help = 'Apply process on only one database entry')
     parser.add_argument('-v', '--verbose', action = 'store_true')
     parser.add_argument('-V', '--version', action = 'version', version = "%(prog)s ({0})".format(VERSION), help = 'Program version')
