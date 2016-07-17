@@ -86,10 +86,10 @@ def is_one_variable_per_dataset_project(stream):
 
     # check
     if len(project)==0:
-        print_stderr("The project name must be specified in the search (mandatory when using 'variable/agreggation' type)")
+        print_stderr("The project name must be specified (mandatory when using 'variable/agreggation' type)")
         sys.exit(1)
     elif len(project)>1:
-        print_stderr("Only one project name must be specified in the search (mandatory when using 'variable/agreggation' type)")
+        print_stderr("Only one project name must be specified (mandatory when using 'variable/agreggation' type)")
         sys.exit(1)
 
     if sdtools.intersect(project,sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET):

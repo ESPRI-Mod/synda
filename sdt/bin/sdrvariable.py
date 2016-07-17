@@ -17,12 +17,8 @@ import sdapp
 import sdvariable
 from tabulate import tabulate
 
-def print_list(datasets):
-    li=[]
-    for d in datasets:
-        for v in d['variable']:
-            variable_functional_id=sdvariable.build_variable_functional_id(d['dataset_functional_id'],v) # note that variable is NOT an ESGF official identifier
-            li.append([variable_functional_id])
+def print_list(datasets,limit=None):
+    li=get_variable_list(datasets,limit)
     print tabulate(li,tablefmt="plain")
 
 def print_details(d):
@@ -40,6 +36,20 @@ def print_details(d):
         print "%-15s  %s"%(f['size'],f['filename'])
     print "%i files found."%(len(d.files),)
     """
+
+def get_variable_list(datasets,limit=None):
+    li=[]
+
+    for d in datasets:
+        for v in d['variable']:
+            variable_functional_id=sdvariable.build_variable_functional_id(d['dataset_functional_id'],v) # note that variable is NOT an ESGF official identifier
+            li.append([variable_functional_id])
+
+            if limit is not None:
+                if len(li)>=limit:
+                    return li
+
+    return li
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
