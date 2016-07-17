@@ -173,7 +173,7 @@ def dataset_search(args):
 def variable_search(args):
     import sddeferredafter, sdrdataset, sdrvariable
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
+    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
     sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -181,7 +181,12 @@ def variable_search(args):
     if len(datasets)==0:
         print "Variable not found"
     else:
-        sdrvariable.print_list(datasets)
+        sdrvariable.print_list(datasets,args.limit) # TAGJ43JK3J43
+
+    # TAGJ43JK3J43
+    # In variable mode, the total number of row is given by: "total+=#variable for each ds".
+    # First, we limit the number of returned datasets, then we limit the number of variable
+    # (this is needed as we don't know in advance the number of variable for each dataset)
 
 def file_search(args):
     import sdrfile, sddeferredafter
