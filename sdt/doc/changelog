@@ -10,6 +10,7 @@
 	- change tarball location for source installation (use install.sh latest version).
 	- ergonomy improvements.
 	- replace RawTextHelpFormatter with RawDescriptionHelpFormatter.
+	- set 'metadata_parallel_download' to False.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
