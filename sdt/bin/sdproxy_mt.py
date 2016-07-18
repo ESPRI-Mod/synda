@@ -240,7 +240,7 @@ def run_helper(queries):
         afte=time.time()
         diff=afte-befo
         if diff>sleep_time+warning_threshold:
-            sdlog.warning("SDPROXMT-005","WARNING: one iteration takes %d second to complete."%diff)
+            sdlog.warning("SDPROXMT-005","WARNING: system overload detected (sleep takes %d second to complete)."%diff)
 
     # retrieve files from output queue and insert them into a list
     while not __result_queue.empty():
