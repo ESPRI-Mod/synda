@@ -57,9 +57,7 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-        files=execute_queries(squeries,parallel) # retrieve files
-        files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
-        files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+        files=execute_queries(squeries,parallel,post_pipeline_mode,action) # retrieve files
 
         if progress:
             ProgressThread.stop() # spinner stop
@@ -82,8 +80,10 @@ def fill_dataset_timestamp(squeries,files,parallel,action):
 
     return files
 
-def execute_queries(squeries,parallel):
+def execute_queries(squeries,parallel,post_pipeline_mode,action):
     files=sdrun.run(squeries,parallel)
+    files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
+    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
     return files
 
 if __name__ == '__main__':
