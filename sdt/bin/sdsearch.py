@@ -63,17 +63,7 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
         # post-processing
         files=sdpipeline.post_pipeline(files,post_pipeline_mode)
 
-
-        # HACK
-        #
-        # second run to retrieve dataset timestamps in one row
-        #
-        # MEMO: when action is 'install', type is always 'File' (i.e. this code gets executed only for type=File)
-        #
-        if action is not None:
-            if action=='install':
-                files=sdbatchtimestamp.add_dataset_timestamp(squeries,files,parallel)
-
+        files=fill_dataset_timestamp(squeries,files,parallel,action)
 
         if progress:
             ProgressThread.stop() # spinner stop
@@ -81,6 +71,20 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
         return files
 
     return []
+
+def fill_dataset_timestamp(squeries,files,parallel,action):
+
+    # HACK
+    #
+    # second run to retrieve dataset timestamps in one row
+    #
+    # MEMO: when action is 'install', type is always 'File' (i.e. this code gets executed only for type=File)
+    #
+    if action is not None:
+        if action=='install':
+            files=sdbatchtimestamp.add_dataset_timestamp(squeries,files,parallel)
+
+    return files
 
 def execute_queries(squeries,parallel):
     files=sdrun.run(squeries,parallel)
