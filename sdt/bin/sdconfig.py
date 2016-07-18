@@ -182,6 +182,7 @@ dataset_filter_mecanism_in_file_context='dataset_id' # dataset_id | query
 max_metadata_parallel_download_per_index=3
 sdtc_history_file=os.path.expanduser("~/.sdtc_history")
 
+metadata_parallel_download=False
 http_client='wget' # wget | urllib
 
 # note that variable below only set which low_level mecanism to use to find the nearest (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
