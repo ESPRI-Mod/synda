@@ -57,7 +57,7 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
         # retrieve files
-        files=sdrun.run(squeries,parallel)
+        files=submit_queries_to_search_api(squeries,parallel)
 
         # post-processing
         files=sdpipeline.post_pipeline(files,post_pipeline_mode)
@@ -80,6 +80,10 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
         return files
 
     return []
+
+def submit_queries_to_search_api(squeries,parallel):
+    files=sdrun.run(squeries,parallel)
+    return files
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
