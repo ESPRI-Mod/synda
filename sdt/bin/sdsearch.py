@@ -38,9 +38,9 @@ from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
 class Metadata():
-    def __init__(self,files=[],store_path=None):
+    def __init__(self,files=[]):
         self.files=files
-        self.store_path=store_path
+        self.store=sdmts.get_metadata_tmp_storage()
 
 def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None):
     """
@@ -77,11 +77,9 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
 def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
     """This func serializes received metadata on-disk to prevent memory overload."""
 
-    sdmts.cleanup() # cleanup previous storage if any
-    s=sdmts.get_metadata_tmp_storage()
-
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
 
+    metadata=Metadata()
     k=0
     count=0
     for q in squeries:
@@ -90,7 +88,7 @@ def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
         files=fill_dataset_timestamp([q],files,parallel,action) # complete missing info
         count+=len(files)
 
-        s[k] = files # store metadata on-disk
+        metadata.store[k] = files # store metadata on-disk
 
         # cleanup (experimental)
         #del files
@@ -100,14 +98,14 @@ def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
 
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%count)
 
-    sdlog.info("SDSEARCH-588","Load metadata from disk to memory")
+    # debug
+    # (if uncommented on lowmem machine, swapping occurs)
+    #sdlog.info("SDSEARCH-588","Load metadata from disk to memory")
+    #for k in metadata.store:
+    #    files+=metadata.store[k]
+    #sdlog.info("SDSEARCH-594","Metadata successfully loaded in memory")
 
-    for k in s:
-        files+=s[k]
-
-    sdlog.info("SDSEARCH-594","Metadata successfully loaded in memory")
-
-    return Metadata(files=files)
+    return metadata
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 

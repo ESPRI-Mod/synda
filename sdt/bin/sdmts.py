@@ -20,7 +20,11 @@ import sdconfig
 import sdsqlitedict
 
 def get_metadata_tmp_storage():
+
+    cleanup() # empty previous storage if any
+
     d = sdsqlitedict.SqliteDict(path=dbfile)
+
     return d
 
 def cleanup():
