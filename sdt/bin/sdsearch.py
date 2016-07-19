@@ -37,6 +37,11 @@ import sdmts
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
+class Metadata():
+    def __init__(self,files=None,store_path=None):
+        self.files=files
+        self.store_path=store_path
+
 def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None):
     """
     Note
@@ -60,12 +65,12 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-        files=execute_queries(squeries,parallel,post_pipeline_mode,action) # retrieve files
+        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action) # retrieve files
 
         if progress:
             ProgressThread.stop() # spinner stop
 
-        return files
+        return metadata.files
 
     return []
 
@@ -102,7 +107,7 @@ def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
 
     sdlog.info("SDSEARCH-594","Metadata successfully loaded in memory")
 
-    return files
+    return Metadata(files=files)
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 
@@ -122,7 +127,8 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     files=sdrun.run(squeries,parallel)
     files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
     files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-    return files
+
+    return Metadata(files=files)
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
