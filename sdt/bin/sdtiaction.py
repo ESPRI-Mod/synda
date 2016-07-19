@@ -413,22 +413,26 @@ def install(args):
 
     return status
 
-def install_helper(args,files=None):
+def install_helper(args,metadata=None):
     import syndautils, sddaemon
 
     syndautils.check_daemon()
 
-    if files is None:
+    if metadata is None:
+
+        # retrieve metadata
 
         if args.incremental and not args.selection_file:
             print_stderr("ERROR: 'selection_file' option is not set (a selection file must be used when 'incremental' option is set)")
             return (1,0)
 
         try:
-            files=syndautils.file_full_search(args)
+            metadata=syndautils.file_full_search(args)
         except sdexception.EmptySelectionException, e:
             print 'No packages will be installed, upgraded, or removed.'
             sys.exit(0)
+
+    files=metadata.files
 
     # in dry-run mode, we stop here
     if args.dry_run:
@@ -520,7 +524,8 @@ def remove(args):
     syndautils.check_daemon()
 
     try:
-        files=syndautils.file_full_search(args)
+        metadata=syndautils.file_full_search(args)
+        files=metadata.files
     except sdexception.EmptySelectionException, e:
         print 'No packages will be installed, upgraded, or removed.'
         sys.exit(0)
@@ -568,7 +573,8 @@ def stat(args):
     import syndautils
 
     try:
-        files=syndautils.file_full_search(args)
+        metadata=syndautils.file_full_search(args)
+        files=metadata.files
     except sdexception.EmptySelectionException, e:
         print "You must specify at least one facet to perform this action."
         sys.exit(0)
@@ -613,9 +619,9 @@ def upgrade(args):
 
             # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
 
-            metadata=sdsearch.run(selection=selection)
+            metadata=sdsearch.run(selection=selection,lowmem=False)
             args.yes=True
-            (status,newly_installed_files_count)=install_helper(args,files=metadata.files)
+            (status,newly_installed_files_count)=install_helper(args,metadata)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
