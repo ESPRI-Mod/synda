@@ -119,9 +119,9 @@ def file_full_search(args):
 
 
 
-    files=sdsearch.run(stream=stream,dry_run=args.dry_run)
+    metadata=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
-    return files
+    return metadata.files
 
 def force_type(stream,type_):
     import sddeferredbefore

@@ -38,7 +38,7 @@ from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
 class Metadata():
-    def __init__(self,files=None,store_path=None):
+    def __init__(self,files=[],store_path=None):
         self.files=files
         self.store_path=store_path
 
@@ -70,9 +70,9 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
         if progress:
             ProgressThread.stop() # spinner stop
 
-        return metadata.files
+        return metadata
 
-    return []
+    return Metadata()
 
 def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
     """This func serializes received metadata on-disk to prevent memory overload."""

@@ -133,6 +133,7 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
+metadata_tmp_dir='/prodigfs/esg/ArchiveTools/synda/tmp' # FIXME (prevent collision between PROD and DEV, maybe add parameter in sdt.conf). TAG45J33KJ455
 
 # set security_dir
 if sdtools.is_daemon():
@@ -176,6 +177,8 @@ prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
 files_download=True # if set to False, daemon do not renew certificate nor download files (useful to use synda in post-processing mode only)
+
+log_domain_inconsistency=True
 
 dataset_filter_mecanism_in_file_context='dataset_id' # dataset_id | query
 

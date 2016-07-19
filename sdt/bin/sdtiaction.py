@@ -613,9 +613,9 @@ def upgrade(args):
 
             # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
 
-            files=sdsearch.run(selection=selection)
+            metadata=sdsearch.run(selection=selection)
             args.yes=True
-            (status,newly_installed_files_count)=install_helper(args,files=files)
+            (status,newly_installed_files_count)=install_helper(args,files=metadata.files)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
@@ -754,7 +754,8 @@ def pexec(args):
         order_dataset_count=0
         for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
             
-            datasets=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
+            metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
+            datasets=metadata.files
 
             # WART
             # (gets overwritten at each iteration, but not a big deal as always the same value)
