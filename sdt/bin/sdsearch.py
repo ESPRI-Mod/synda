@@ -42,7 +42,7 @@ class Metadata():
         self.files=files
         self.store=sdmts.get_metadata_tmp_storage()
 
-def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None):
+def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None,lowmem=False):
     """
     Note
         squeries means 'Serialized queries'
@@ -65,7 +65,11 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action) # retrieve files
+        # retrieve files
+        if lowmem:
+            metadata=execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action)
+        else:
+            metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
 
         if progress:
             ProgressThread.stop() # spinner stop
