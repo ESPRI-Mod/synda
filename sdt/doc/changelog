@@ -11,6 +11,7 @@
 	- ergonomy improvements.
 	- replace RawTextHelpFormatter with RawDescriptionHelpFormatter.
 	- set 'metadata_parallel_download' to False.
+	- add support for lowmem machine.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
