@@ -24,6 +24,7 @@ import sys
 import argparse
 import json
 import sdapp
+import sdconfig
 from sdexception import SDException
 import sdprint
 import sdlog
@@ -48,7 +49,10 @@ def add_missing_attributes(files):
     # (otherwise KeyError exception occurs).
     for f in files:
         if 'checksum' not in f:
-            sdlog.warning("SDPRFIAT-001","File have no checksum (%s)"%(f["file_functional_id"],))
+
+            if sdconfig.log_domain_inconsistency:
+                sdlog.warning("SDPRFIAT-001","File have no checksum (%s)"%(f["file_functional_id"],))
+
             f['checksum']=None
             f['checksum_type']=None
 
