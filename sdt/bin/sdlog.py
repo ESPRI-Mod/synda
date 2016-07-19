@@ -70,7 +70,7 @@ def get_verbosity_level():
     return level
 
 def get_verbosity_label(level):
-    label=LEVELS[level] # int to string conversion
+    label=LABELS[level] # int to string conversion
     return label
 
 def create_logger(name,filename):
