@@ -19,8 +19,10 @@ Notes
 """
 
 import os
+import gc
 import argparse
 import sdapp
+import sdlog
 import sdconfig
 import sdpipeline
 import sdrun
@@ -31,6 +33,7 @@ import sdconst
 import sdtools
 import sdsqueries
 import sdbatchtimestamp
+import sdmts
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
@@ -65,6 +68,41 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
         return files
 
     return []
+
+def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
+    """This func serializes received metadata on-disk to prevent memory overload."""
+
+    sdmts.cleanup() # cleanup previous storage if any
+    s=sdmts.get_metadata_tmp_storage()
+
+    sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
+
+    k=0
+    count=0
+    for q in squeries:
+        files=sdrun.run([q],parallel)
+        files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
+        files=fill_dataset_timestamp([q],files,parallel,action) # complete missing info
+        count+=len(files)
+
+        s[k] = files # store metadata on-disk
+
+        # cleanup (experimental)
+        #del files
+        #gc.collect()
+
+        k+=1
+
+    sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%count)
+
+    sdlog.info("SDSEARCH-588","Load metadata from disk to memory")
+
+    for k in s:
+        files+=s[k]
+
+    sdlog.info("SDSEARCH-594","Metadata successfully loaded in memory")
+
+    return files
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 
