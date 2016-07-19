@@ -26,8 +26,20 @@ import humanize
 import sdapp
 import sdconst
 import sdstatutils
+import syndautils
 
-def run(files):
+def run(args):
+
+    try:
+        metadata=syndautils.file_full_search(args)
+        files=metadata.files
+    except sdexception.EmptySelectionException, e:
+        print "You must specify at least one facet to perform this action."
+        return
+
+    if args.dry_run:
+        return
+
     total=sdstatutils.get_total(files)
     statuses=sdstatutils.get_statuses(files)
     print_summary(statuses,total)

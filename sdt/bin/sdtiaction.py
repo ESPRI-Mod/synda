@@ -442,18 +442,8 @@ def reset(args):
     sddeletefile.reset()
 
 def stat(args):
-    import syndautils
-
-    try:
-        metadata=syndautils.file_full_search(args)
-        files=metadata.files
-    except sdexception.EmptySelectionException, e:
-        print "You must specify at least one facet to perform this action."
-        sys.exit(0)
-
-    if not args.dry_run:
-        import sdstat
-        sdstat.run(files)
+    import sdstat
+    sdstat.run(args)
 
 def selection(args): # don't remove 'args' argument event if not used
     """
