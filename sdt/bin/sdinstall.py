@@ -16,8 +16,8 @@ import argparse
 from sdtools import print_stderr
 import sdexception
 
-def install_helper(args,metadata=None):
-    import syndautils, sddaemon
+def run(args,metadata=None):
+    import syndautils
 
     syndautils.check_daemon()
 
@@ -35,7 +35,10 @@ def install_helper(args,metadata=None):
             print 'No packages will be installed, upgraded, or removed.'
             sys.exit(0)
 
-    files=metadata.files
+    install(metadata.files)
+
+def install(files):
+    import sddaemon
 
     # in dry-run mode, we stop here
     if args.dry_run:
