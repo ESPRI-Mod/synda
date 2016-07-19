@@ -16,6 +16,7 @@ Note
 """
 
 import os
+import sdconfig
 import sdsqlitedict
 
 def get_metadata_tmp_storage():
