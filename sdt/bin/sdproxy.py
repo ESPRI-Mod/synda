@@ -35,7 +35,7 @@ class SearchAPIProxy():
         request=Request(url=url,pagination=True)
         final_url=request.get_url()
 
-        sdlog.info("SYDPROXY-490","paginated call started (url=%s)"%final_url)
+        sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
 
         try:
             result=self.call_web_service__PAGINATION(request) # return Response object
@@ -44,7 +44,7 @@ class SearchAPIProxy():
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
             raise
 
-        sdlog.info("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(result.call_duration, len(result.files), final_url))
+        sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(result.call_duration, len(result.files), final_url))
 
         if attached_parameters.get('verbose',False) == True:
             sdtools.print_stderr("Url: %s"%final_url)
@@ -74,7 +74,7 @@ class SearchAPIProxy():
 
         assert result.num_result==len(result.files) # should always be the same
 
-        sdlog.debug("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(len(result.files),result.num_found,request.get_url()))
+        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(len(result.files),result.num_found,request.get_url()))
 
         return result
 
