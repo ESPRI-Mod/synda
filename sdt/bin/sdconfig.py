@@ -133,8 +133,6 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-metadata_tmp_dir='/prodigfs/esg/ArchiveTools/synda/tmp' # FIXME (prevent collision between PROD and DEV, maybe add parameter in sdt.conf). TAG45J33KJ455
-
 # set security_dir
 if sdtools.is_daemon():
 

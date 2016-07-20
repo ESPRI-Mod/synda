@@ -33,5 +33,5 @@ def cleanup():
 
 # init.
 
-dbfilename='metadata.db'
-dbfile=os.path.join(sdconfig.metadata_tmp_dir,dbfilename)
+dbfilename='sdt_transient_storage.db'
+dbfile=os.path.join(sdconfig.db_folder,dbfilename)
