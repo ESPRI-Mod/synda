@@ -9,9 +9,11 @@
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
 	- change tarball location for source installation (use install.sh latest version).
 	- ergonomy improvements.
-	- replace RawTextHelpFormatter with RawDescriptionHelpFormatter.
+	- replace argparse RawTextHelpFormatter with RawDescriptionHelpFormatter.
 	- set 'metadata_parallel_download' to False.
 	- add support for lowmem machine.
+	- add sdsqlitedict module.
+	- add sdmts module.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.

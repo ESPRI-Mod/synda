@@ -1,9 +1,10 @@
 - Version 1.1 - 20160717
 	- add CORDEX support.
 	- add pexec support.
-	- add requirements.txt file.
 	- add multivalues support for job_class option.
 	- add conf folder.
+	- add pipeline_path.
+	- improve worker log routines.
 - Version 1.0 - 20141225
 	- pipeline engine.
 	- Jsonrpc server .
