@@ -435,7 +435,7 @@ def metric(args):
 
 def remove(args):
     import sdremove
-    sdremove.run(args)
+    return sdremove.run(args)
 
 def reset(args):
     import sddeletefile
@@ -443,7 +443,7 @@ def reset(args):
 
 def stat(args):
     import sdstat
-    sdstat.run(args)
+    return sdstat.run(args)
 
 def selection(args): # don't remove 'args' argument event if not used
     """

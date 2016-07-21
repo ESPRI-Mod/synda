@@ -32,19 +32,20 @@ def run(args,metadata=None):
         try:
             metadata=syndautils.file_full_search(args)
         except sdexception.EmptySelectionException, e:
-            print 'No packages will be installed, upgraded, or removed.'
-            sys.exit(0)
-
-    install(metadata.files)
-
-def install(files):
-    import sddaemon
+            print_stderr('No packages will be installed, upgraded, or removed.')
+            return (0,0)
 
     # in dry-run mode, we stop here
     if args.dry_run:
         return (0,0)
 
     interactive=not args.yes
+
+    return install(metadata.files,interactive)
+
+def install(files,interactive):
+    import sddaemon
+
 
     # Compute total files stat
     count_total=len(files)

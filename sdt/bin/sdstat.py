@@ -34,11 +34,11 @@ def run(args):
         metadata=syndautils.file_full_search(args)
         files=metadata.files
     except sdexception.EmptySelectionException, e:
-        print "You must specify at least one facet to perform this action."
-        return
+        print_stderr("You must specify at least one facet to perform this action.")
+        return 1
 
     if args.dry_run:
-        return
+        return 0
 
     total=sdstatutils.get_total(files)
     statuses=sdstatutils.get_statuses(files)
@@ -46,6 +46,8 @@ def run(args):
 
     #(projects,models)=get_details(files)
     #print_details(projects,models)
+
+    return 0
 
 def print_summary(statuses,total,mode='line'):
     if mode=='delimited':

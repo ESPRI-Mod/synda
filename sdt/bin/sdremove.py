@@ -25,8 +25,8 @@ def run(args):
         metadata=syndautils.file_full_search(args)
         files=metadata.files
     except sdexception.EmptySelectionException, e:
-        print 'No packages will be installed, upgraded, or removed.'
-        sys.exit(0)
+        print_stderr('No packages will be installed, upgraded, or removed.')
+        return 0
 
     if not args.dry_run:
         import humanize, sdsimplefilter, sdconst, sdutils, sdoperation, sddeletedataset
@@ -58,10 +58,13 @@ def run(args):
                 # fourth step is to remove orphan folder.
                 sdoperation.cleanup_tree()
 
+                return 0
             else:
                 print_stderr('Abort.')
+                return 1
         else:
             print_stderr('Nothing to delete.')
+            return 0
 
 # init.
 
