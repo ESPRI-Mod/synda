@@ -47,6 +47,7 @@ def run(args):
             print_stderr('After this operation, %s of disk space will be freed.'%humanize.naturalsize(size_delete,gnu=False))
 
             # ask user for confirmation
+            interactive=not args.yes
             if interactive:
                 if sdutils.query_yes_no('Do you want to continue?', default="no"):
                     suppression_confirmed=True
