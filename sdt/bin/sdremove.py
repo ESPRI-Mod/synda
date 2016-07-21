@@ -15,9 +15,13 @@ import sys
 import argparse
 from sdtools import print_stderr
 import sdexception
+import sddelete
+import sddeletefile
+import sddeletedataset
+import sdoperation
 
 def run(args):
-    import sddelete,sddeletefile,syndautils
+    import syndautils
 
     syndautils.check_daemon()
 
@@ -29,7 +33,7 @@ def run(args):
         return 0
 
     if not args.dry_run:
-        import humanize, sdsimplefilter, sdconst, sdutils, sdoperation, sddeletedataset
+        import humanize, sdsimplefilter, sdconst, sdutils
 
         # Compute deleted stat for files
         files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
@@ -43,21 +47,7 @@ def run(args):
             print_stderr('After this operation, %s of disk space will be freed.'%humanize.naturalsize(size_delete,gnu=False))
 
             if sdutils.query_yes_no('Do you want to continue?', default="no"):
-
-                # first step, change the files status from 'done' to 'delete' (update metadata)
-                nbr=sddelete.run(files)
-                print_stderr("%i file(s) removed"%nbr)
-
-                # second step, do the deletion (remove files on filesystem and remove files metadata)
-                # (to do a deferred deletion (i.e. by the daemon), comment line below)
-                sddeletefile.delete_transfers()
-
-                # third step is to remove orphan dataset
-                sddeletedataset.purge_orphan_datasets()
-
-                # fourth step is to remove orphan folder.
-                sdoperation.cleanup_tree()
-
+                remove(files)
                 return 0
             else:
                 print_stderr('Abort.')
@@ -65,6 +55,22 @@ def run(args):
         else:
             print_stderr('Nothing to delete.')
             return 0
+
+def remove(files):
+
+    # first step, change the files status from 'done' to 'delete' (update metadata)
+    nbr=sddelete.run(files)
+    print_stderr("%i file(s) removed"%nbr)
+
+    # second step, do the deletion (remove files on filesystem and remove files metadata)
+    # (to do a deferred deletion (i.e. by the daemon), comment line below)
+    sddeletefile.delete_transfers()
+
+    # third step is to remove orphan dataset
+    sddeletedataset.purge_orphan_datasets()
+
+    # fourth step is to remove orphan folder.
+    sdoperation.cleanup_tree()
 
 # init.
 

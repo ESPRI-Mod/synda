@@ -187,6 +187,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'remove',help='Remove dataset',example=sdcliex.remove())
     add_parameter_argument(subparser)
+    add_ni_option(subparser)
 
     subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Move to next replica',example=sdcliex.replica())
     add_action_argument(subparser,choices=['next'])
