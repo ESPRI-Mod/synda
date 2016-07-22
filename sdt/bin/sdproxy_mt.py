@@ -128,7 +128,7 @@ def run(i__queries):
     if len(failed_queries)>0:
         sdlog.error("SDPROXMT-084","max retry iteration reached. %d queries did not succeed"%(len(failed_queries),))
 
-    return results # result is a return Response object
+    return results # result is a files list
 
 def start_new_thread(host,url):
     sdlog.debug("SDPROXMT-002","Starting new search-API thread (%s)"%host)
