@@ -86,7 +86,7 @@ def run(i__queries):
     """
     Notes
         - this method contains the retry mecanism
-        - return files list (not Response object)
+        - return files list
     """
 
     # check
@@ -94,23 +94,23 @@ def run(i__queries):
         if sdconst.IDXHOSTMARK not in q['url']:
             raise SDException('SDPROXMT-044','Incorrect query: host must not be set at this step')
 
-    # retry
+    # retry loop
     max_retry=6
     i=0
     results=[]
     l__queries=i__queries
     while i < max_retry:
 
-        (tmp_results,failed_queries)=run_helper(l__queries) # MEMO: tmp_results is files list, not a Response object
+        (successes,errors)=run_helper(l__queries)
 
         # add OK results
-        for r in tmp_results:
+        for r in successes:
             results.append(r)
 
-        if len(failed_queries)>0:
-            sdlog.info("SDPROXMT-082","%d search-API queries failed"%(len(failed_queries),))
+        if len(errors)>0:
+            sdlog.info("SDPROXMT-082","%d search-API queries failed"%(len(errors),))
             sdlog.info("SDPROXMT-083","retry 'failed search-API queries'")
-            l__queries=failed_queries
+            l__queries=errors
 
             i+=1
 
@@ -125,8 +125,8 @@ def run(i__queries):
 
 
 
-    if len(failed_queries)>0:
-        sdlog.error("SDPROXMT-084","max retry iteration reached. %d queries did not succeed"%(len(failed_queries),))
+    if len(errors)>0:
+        sdlog.error("SDPROXMT-084","max retry iteration reached. %d queries did not succeed"%(len(errors),))
 
     return results # result is a files list
 
@@ -197,7 +197,6 @@ def distribute_queries(queries):
 def run_helper(queries):
     """
     notes
-      - return files list (not Response object)
       - "queries" is non-threadsafe (i.e. not a Queue), but doesn't matter as threads do not use it
     """
     total_files=[]
@@ -242,11 +241,11 @@ def run_helper(queries):
         if diff>sleep_time+warning_threshold:
             sdlog.warning("SDPROXMT-005","WARNING: system overload detected (sleep takes %d second to complete)."%diff)
 
-    # retrieve files from output queue and insert them into a list
+    # retrieve result from output queue
     while not __result_queue.empty():
 
-        # retrieve files from ONE search-API call
-        result=__result_queue.get(False)
+
+        result=__result_queue.get(False) # retrieve files from ONE search-API call
 
         for f in result.files: # move from 'Response' object to files list
             total_files.append(f)
@@ -272,7 +271,7 @@ def set_index_hosts(index_hosts):
 
 max_thread_per_host=sdconfig.max_metadata_parallel_download_per_index
 
-__result_queue=Queue.Queue() # thread safe data structure to hold files retrieved from the search-API
+__result_queue=Queue.Queue() # thread safe data structure to hold search-API result
 __error_queue=Queue.Queue()  # thread safe data structure to hold unsuccessful request (used by the retry mecanism)
 
 searchAPIServices=None # list of search-API services (M queries will be sent to one service at once, resulting in MxN parallel streams, with N the number of service)
@@ -284,12 +283,10 @@ if __name__ == '__main__':
     queries=[{'url':url}]
     files=run(queries)
 
-    # TODO
-
     # dict to "File" operation
     file_list=[]
-    for file in files:
-        file_list.append(File(**file))
+    for file_ in files:
+        file_list.append(File(**file_))
 
     for f in file_list:
         print "%s %s"%(f.timestamp,f.id)
