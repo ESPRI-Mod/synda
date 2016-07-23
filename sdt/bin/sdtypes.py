@@ -230,6 +230,21 @@ class Item():
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
+class Responses():
+
+    def __init__(self,responses):
+        self.responses=responses
+
+    def merge(self):
+        files=[]
+        elapsed_time=0
+
+        for r in self.responses:
+            files.extend(r.get_files())   # merge all chunks
+            elapsed_time+=r.call_duration # merge call_duration
+
+        return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+
 class Request():
     def __init__(self,url=None,pagination=True,limit=sdconst.CHUNKSIZE):
         self._url=url

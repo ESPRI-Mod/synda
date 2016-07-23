@@ -34,13 +34,14 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
 
         try:
-            result=self.call_web_service__PAGINATION(request) # return Response object
+            responses=self.call_web_service__PAGINATION(request) # return Response object
+            result=responses.merge()
         except Exception,e:
             sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
             raise
 
-        sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(result.call_duration, len(result.files), final_url))
+        sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(result.call_duration, result.count(), final_url))
 
         if attached_parameters.get('verbose',False) == True:
             sdtools.print_stderr("Url: %s"%final_url)
@@ -141,15 +142,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (result.num_result>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        # merge all chunks
-        files=[]
-        elapsed_time=0
-        for chunk in chunks:
-            files.extend(chunk.files)
-            elapsed_time+=chunk.call_duration # merge elapsed time
-
-
-        return sdtypes.Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+        return sdtypes.Responses(chunks)
 
 if __name__ == '__main__':
 
