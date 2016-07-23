@@ -20,11 +20,11 @@ import sys
 import traceback
 import re
 import copy
+import json
 import sdapp
 import sdconfig
 import sdconst
 import sdtools
-import json
 from sdexception import SDException
 
 class Variable():
@@ -309,6 +309,12 @@ class Response():
             raise SDException("SDATYPES-005","assert error")
         if self.num_result is None:
             raise SDException("SDATYPES-006","assert error")
+
+    def count(self):
+        return len(self.files)
+
+    def get_files(self):
+        return self.files
 
     def add_attached_parameters(self,attached_parameters):
         """This func adds some parameters to the result of a query. 
