@@ -232,7 +232,7 @@ class Item():
 
 class Responses():
 
-    def __init__(self,responses):
+    def __init__(self,responses=[]):
         self.responses=responses
 
     def merge(self):
@@ -244,6 +244,9 @@ class Responses():
             elapsed_time+=r.call_duration # merge call_duration
 
         return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+
+    def add(self,response):
+        self.responses.append(response)
 
 class Request():
     def __init__(self,url=None,pagination=True,limit=sdconst.CHUNKSIZE):

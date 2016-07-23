@@ -86,7 +86,7 @@ def run(i__queries):
     """
     Notes
         - this method contains the retry mecanism
-        - return files list
+        - return Response object
     """
 
     # check
@@ -97,15 +97,13 @@ def run(i__queries):
     # retry loop
     max_retry=6
     i=0
-    results=[]
+    responses=Responses()
     l__queries=i__queries
     while i < max_retry:
 
-        (successes,errors)=run_helper(l__queries)
+        (success,errors)=run_helper(l__queries)
 
-        # add OK results
-        for r in successes:
-            results.append(r)
+        responses.add(success)
 
         if len(errors)>0:
             sdlog.info("SDPROXMT-082","%d search-API queries failed"%(len(errors),))
@@ -128,7 +126,7 @@ def run(i__queries):
     if len(errors)>0:
         sdlog.error("SDPROXMT-084","max retry iteration reached. %d queries did not succeed"%(len(errors),))
 
-    return results # result is a files list
+    return responses.merge()
 
 def start_new_thread(host,url):
     sdlog.debug("SDPROXMT-002","Starting new search-API thread (%s)"%host)
@@ -199,8 +197,6 @@ def run_helper(queries):
     notes
       - "queries" is non-threadsafe (i.e. not a Queue), but doesn't matter as threads do not use it
     """
-    total_files=[]
-
     total_query_to_process=len(queries)
 
     sdlog.debug("SDPROXMT-003","%d search-API queries to process (max_thread_per_host=%d,timeout=%d)"%(total_query_to_process,max_thread_per_host,sdconst.SEARCH_API_HTTP_TIMEOUT))
@@ -242,13 +238,10 @@ def run_helper(queries):
             sdlog.warning("SDPROXMT-005","WARNING: system overload detected (sleep takes %d second to complete)."%diff)
 
     # retrieve result from output queue
+    responses=Responses()
     while not __result_queue.empty():
-
-
-        result=__result_queue.get(False) # retrieve files from ONE search-API call
-
-        for f in result.files: # move from 'Response' object to files list
-            total_files.append(f)
+        success=__result_queue.get(False) # retrieve result from ONE successful search-API call
+        responses.add(success)
 
     # retrieve error from output queue and insert them into a list
     errors=[]
@@ -256,7 +249,9 @@ def run_helper(queries):
         query=__error_queue.get(False)
         errors.append(query)
 
-    return (total_files,errors)
+    response=responses.merge()
+
+    return (response,errors)
 
 def set_index_hosts(index_hosts):
     global searchAPIServices
@@ -281,11 +276,11 @@ set_index_hosts(sdindex.index_host_list)
 if __name__ == '__main__':
     url="http://%s/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File"%sdconst.IDXHOSTMARK
     queries=[{'url':url}]
-    files=run(queries)
+    response=run(queries)
 
     # dict to "File" operation
     file_list=[]
-    for file_ in files:
+    for file_ in response.get_files():
         file_list.append(File(**file_))
 
     for f in file_list:
