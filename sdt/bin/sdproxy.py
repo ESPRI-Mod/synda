@@ -12,7 +12,7 @@
 import time
 import argparse
 import sdapp
-from sdtypes import Request,Response,File
+import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
 import sdnetutils
@@ -27,12 +27,8 @@ class SearchAPIProxy():
         pass
 
     def run(self,url=None,attached_parameters={}):
-        """Execute one search query (as pagination is used, it can result in many HTTP queries)
-
-        Returns:
-            Response object
-        """
-        request=Request(url=url,pagination=True)
+        """Execute one search query (as pagination is used, it can result in many HTTP queries)."""
+        request=sdtypes.Request(url=url,pagination=True)
         final_url=request.get_url()
 
         sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
@@ -153,17 +149,19 @@ class SearchAPIProxy():
             elapsed_time+=chunk.call_duration # merge elapsed time
 
 
-        return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+        return sdtypes.Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
 
 if __name__ == '__main__':
-    search=SearchAPIProxy()
+
     url="http://esgf-data.dkrz.de/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File"
+
+    search=SearchAPIProxy()
     result=search.run(url=url)
 
     # dict to "File" operation
     file_list=[]
-    for file in result.files:
-        file_list.append(File(**file))
+    for file_ in result.get_files():
+        file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
         print "%s %s"%(f.timestamp,f.id)
