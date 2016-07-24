@@ -32,7 +32,6 @@ def run(**kw):
     files=sdremoveaggregation.run(files)
     files=sdprepare_dataset_attr.run(files)
     files=sdlocalpath.run(files,mode='dataset')
-    files=sdshrink.run(files)
     files=sdcomplete.run(files)
     files=sdstatusfilter.run(files)
     return files

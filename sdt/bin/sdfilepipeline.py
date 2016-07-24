@@ -67,14 +67,6 @@ def run(**kw):
     files=sdprepare_file_attr.run(files)
     files=sdlocalpath.run(files)
 
-    #for f in files:
-    #    sdlog.debug("SDFIPIPE-004","%s"%f['url'],stdout=True)
-
-    files=sdshrink.run(files)
-
-    #for f in files:
-    #    sdlog.debug("SDFIPIPE-005","%s"%f['url'],stdout=True)
-
     
     # EXT_FILE_POST
     #

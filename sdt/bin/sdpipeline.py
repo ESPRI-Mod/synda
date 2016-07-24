@@ -36,9 +36,11 @@ def post_pipeline(files,mode=None):
     if mode=='file':
         files=sdgenericpipeline.run(files)
         files=sdfilepipeline.run(files=files)
+        files=sdshrink.run(files)
     elif mode=='dataset':
         files=sdgenericpipeline.run(files)
         files=sddatasetpipeline.run(files=files)
+        files=sdshrink.run(files)
     elif mode=='generic':
         files=sdgenericpipeline.run(files)
     elif mode is None:
