@@ -20,6 +20,7 @@ Note:
 import json
 import sdapp
 import sdquerypipeline
+import sdshrink
 import sdparse
 import sdbuffer
 import sdparampipeline

@@ -18,7 +18,6 @@ import sdapp
 import sdselectionfileutils
 import sdprepare_dataset_attr
 import sdlocalpath
-import sdshrink
 import sdremoveaggregation
 import sdcomplete
 import sdconst

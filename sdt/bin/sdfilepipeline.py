@@ -31,7 +31,6 @@ import sdlocalpath
 import sdcheck_dataset_template
 import sdremoveaggregation
 import sdcomplete
-import sdshrink
 import sdprint
 import sdlog
 import sdstatusfilter
