@@ -59,7 +59,8 @@ def run(facets_groups):
 
             # build n run
             queries=sdremoteqbuilder.run([facets_group_cpy]) # we need to process one facets group at a time, as each datasets list is facets group specific
-            datasets=sdrun.run(queries)
+            metadata=sdrun.run(queries)
+            datasets=metadata.get_files()
             datasets=sdpipeline.post_pipeline(datasets,'generic')
 
             if len(datasets)>0:
