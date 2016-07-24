@@ -31,6 +31,18 @@ def cleanup():
     if os.path.isfile(dbfile):
         os.unlink(dbfile)
 
+class MemoryStorage():
+    pass
+
+class DatabaseStorage():
+    pass
+
+def get_store(lowmem=False):
+    if lowmem:
+        return DatabaseStorage()
+    else:
+        return MemoryStorage()
+
 # init.
 
 dbfilename='sdt_transient_storage.db'

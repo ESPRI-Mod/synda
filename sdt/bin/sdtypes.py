@@ -23,7 +23,7 @@ import copy
 import json
 import sdapp
 import sdconfig
-#import sdmts
+import sdmts
 import sdconst
 import sdtools
 from sdexception import SDException
@@ -293,12 +293,6 @@ class Request():
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
-class MemoryStorage():
-    pass
-
-class DatabaseStorage():
-    pass
-
 class Metadata():
     def __init__(self,files=None,response=None):
         assert not (files and response)
@@ -349,6 +343,9 @@ class Response():
     """Contains web service output after XML parsing."""
 
     def __init__(self,**kw):
+        self.lowmem=kw.get("lowmem",False)
+        self.store=sdmts.get_store(self.lowmem)
+
         self.files=kw.get("files",[])                # File (key/value attribute based files list)
         self.num_found=kw.get("num_found",0)         # total match found in ESGF for the query
         self.num_result=kw.get("num_result",0)       # how many match returned, depending on "offset" and "limit" parameter
