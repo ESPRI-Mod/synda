@@ -19,8 +19,8 @@ import time
 import traceback
 import sdlog
 from sdproxy import SearchAPIProxy
-from sdtypes import File
 from sdexception import SDException
+import sdtypes
 import sdindex
 import sdconst
 import sdconfig
@@ -97,7 +97,7 @@ def run(i__queries):
     # retry loop
     max_retry=6
     i=0
-    responses=Responses()
+    responses=sdtypes.Responses()
     l__queries=i__queries
     while i < max_retry:
 
@@ -238,7 +238,7 @@ def run_helper(queries):
             sdlog.warning("SDPROXMT-005","WARNING: system overload detected (sleep takes %d second to complete)."%diff)
 
     # retrieve result from output queue
-    responses=Responses()
+    responses=sdtypes.Responses()
     while not __result_queue.empty():
         success=__result_queue.get(False) # retrieve result from ONE successful search-API call
         responses.add(success)
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     # dict to "File" operation
     file_list=[]
     for file_ in response.get_files():
-        file_list.append(File(**file_))
+        file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
         print "%s %s"%(f.timestamp,f.id)
