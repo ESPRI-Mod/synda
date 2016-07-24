@@ -43,7 +43,11 @@ def get_datasets(stream=None,parameter=None,dry_run=False): # TODO: maybe remove
 
     return datasets
 
-def get_dataset(stream=None,parameter=[],dry_run=False):
+def get_dataset(stream=None,parameter=None,dry_run=False):
+
+    if parameter is None:
+        parameter=[]
+
     datasets=get_datasets(stream=stream,parameter=parameter,dry_run=dry_run)
     if len(datasets)==1:
         d=datasets[0]
