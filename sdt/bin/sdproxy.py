@@ -26,8 +26,12 @@ class SearchAPIProxy():
     def __init__(self,**kw):
         pass
 
-    def run(self,url=None,attached_parameters={}):
+    def run(self,url=None,attached_parameters=None):
         """Execute one search query (as pagination is used, it can result in many HTTP queries)."""
+
+        if attached_parameters is None:
+            attached_parameters={}
+
         request=sdtypes.Request(url=url,pagination=True)
         final_url=request.get_url()
 
