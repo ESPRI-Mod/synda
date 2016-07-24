@@ -41,7 +41,11 @@ from sdprogress import ProgressThread
 from sdtypes import Request,Response
 from sdexception import SDException
 
-def run(stream=None,path=None,parameter=[],index_host=None,post_pipeline_mode='file',dry_run=False,count=False):
+def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False,count=False):
+
+    if parameter is None:
+        parameter=[]
+
     queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False,count=count)
 
     if len(queries)<1:
