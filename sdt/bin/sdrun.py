@@ -9,7 +9,13 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module runs queries against the search-API service and returns found files list."""
+"""This module runs queries against the search-API service and returns found files list.
+
+Note
+    Do not use parallel mode on lowmem machine
+    (else many huge buffer are likely to be open simultaneously in sdnetutils.call_web_service)
+    use sequential mode instead.
+"""
 
 import sys
 import argparse
@@ -19,23 +25,24 @@ import sdprint
 import sdlog
 import sdpipelineutils
 import sdproxy_mt
+import sdtypes
 from sdproxy import SearchAPIProxy
 
 def run(queries,parallel=True):
-    files=[]
+    responses=sdtypes.Responses()
 
     if parallel:
         (queries_with_index_host,queries_without_index_host)=split_queries(queries) # we need this, because query with specific index host can't be parallelized
 
         if len(queries_with_index_host)>0:
-            files.extend(sequential_exec(queries_with_index_host))
+            responses.add(sequential_exec(queries_with_index_host))
 
         if len(queries_without_index_host)>0:
-            files.extend(parallel_exec(queries_without_index_host))
+            responses.add(parallel_exec(queries_without_index_host))
     else:
-        files.extend(sequential_exec(queries))
+        responses.add(sequential_exec(queries))
 
-    return files
+    return sdtypes.Metadata(responses.merge()) # we cast to remove pagination related code from public interface (e.g. num_found,num_result,call_duration..)
 
 def split_queries(queries):
     queries_with_index_host=[]
@@ -68,15 +75,15 @@ def is_index_host_set(query):
         return False
 
 def parallel_exec(queries):
-    return sdproxy_mt.run(queries) # MEMO: sdproxy_mt returns files list
+    return sdproxy_mt.run(queries)
 
 def sequential_exec(queries):
     search=SearchAPIProxy()
-    files=[]
+    responses=sdtypes.Responses()
     for q in queries:
-        result=search.run(url=q['url'],attached_parameters=q.get('attached_parameters')) # MEMO: sdproxy_mt returns Response object
-        files.extend(result.files)
-    return files
+        result=search.run(url=q['url'],attached_parameters=q.get('attached_parameters'))
+        responses.add(result)
+    return responses.merge()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -87,5 +94,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     queries=sdpipelineutils.get_input_data(args.file)
-    files=run(queries,args.parallel)
+    metadata=run(queries,args.parallel)
+    files=metadata.get_files()
     sdprint.print_format(files,args.format,args.print_only_one_item)

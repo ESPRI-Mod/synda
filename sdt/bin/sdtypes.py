@@ -27,6 +27,23 @@ import sdconst
 import sdtools
 from sdexception import SDException
 
+class Metadata():
+    def __init__(self,files=None,response=None):
+        assert not (files and response)
+
+        if files is not None:
+            self.files=files
+        elif response is not None:
+            self.files=response.get_files()
+        else:
+            assert False
+
+    def count(self):
+        return len(self.files)
+
+    def get_files(self):
+        return self.files
+
 class Variable():
     def __init__(self,**kwargs):
         self.__dict__.update( kwargs )
@@ -37,7 +54,6 @@ class Event():
         self.__dict__.update( kwargs )
     def __str__(self):
         return self.name
-
 
 class Buffer():
     def __init__(self,**kw):
