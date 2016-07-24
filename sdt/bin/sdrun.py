@@ -11,10 +11,12 @@
 
 """This module runs queries against the search-API service and returns found files list.
 
-Note
-    Do not use parallel mode on lowmem machine
-    (else many huge buffer are likely to be open simultaneously in sdnetutils.call_web_service)
-    use sequential mode instead.
+Notes
+    - Do not use parallel mode on lowmem machine
+      (else many huge buffer are likely to be open simultaneously in sdnetutils.call_web_service)
+      use sequential mode instead.
+    - This module can be tested with
+      cat selection_4.txt | sdquerypipeline.py -i esgf-node.ipsl.upmc.fr | sdrun.py -f indent
 """
 
 import sys
