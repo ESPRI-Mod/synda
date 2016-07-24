@@ -260,8 +260,8 @@ class Item():
 
 class Responses():
 
-    def __init__(self,responses=[]):
-        self.responses=responses
+    def __init__(self,responses=None):
+        self.responses=[] if responses is None else responses
 
     def merge(self):
         files=[]
