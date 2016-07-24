@@ -346,7 +346,7 @@ class Response():
         self.lowmem=kw.get("lowmem",False)
         self.store=sdmts.get_store(self.lowmem)
 
-        self.files=kw.get("files",[])                # File (key/value attribute based files list)
+        self.store.set_files(kw.get("files",[]))     # File (key/value attribute based files list)
         self.num_found=kw.get("num_found",0)         # total match found in ESGF for the query
         self.num_result=kw.get("num_result",0)       # how many match returned, depending on "offset" and "limit" parameter
         self.call_duration=kw.get("call_duration")   # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
@@ -360,10 +360,10 @@ class Response():
             raise SDException("SDATYPES-006","assert error")
 
     def count(self):
-        return len(self.files)
+        return self.store.count()
 
     def get_files(self):
-        return self.files
+        return self.store.get_files()
 
     def add_attached_parameters(self,attached_parameters):
         """This func adds some parameters to the result of a query. 
@@ -374,11 +374,9 @@ class Response():
               'query pipeline' to 'file pipeline'.
         """
         assert isinstance(attached_parameters, dict)
-        for f in self.files:
-            assert 'attached_parameters' not in f
-            f['attached_parameters']=copy.deepcopy(attached_parameters)
+        self.store.add_attached_parameters(attached_parameters)
 
     def __str__(self):
-        return "\n".join(['%s'%(f['id'],) for f in self.files])
+        return "\n".join(['%s'%(f['id'],) for f in self.store.get_files()])
 
 # init.

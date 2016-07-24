@@ -16,6 +16,7 @@ Note
 """
 
 import os
+import copy
 import sdconfig
 import sdsqlitedict
 
@@ -32,7 +33,23 @@ def cleanup():
         os.unlink(dbfile)
 
 class MemoryStorage():
-    pass
+
+    def __init__(self):
+        self.files=[]
+
+    def set_files(self,files):
+        self.files=files
+
+    def count(self):
+        return len(self.files)
+
+    def get_files(self):
+        return self.files
+
+    def add_attached_parameters(self,attached_parameters):
+        for f in self.files:
+            assert 'attached_parameters' not in f
+            f['attached_parameters']=copy.deepcopy(attached_parameters)
 
 class DatabaseStorage():
     pass
