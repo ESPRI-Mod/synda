@@ -26,8 +26,11 @@ def check_daemon():
             print 'The daemon must be stopped before installing/removing dataset'
             sys.exit(3)
 
-def get_stream(subcommand=None,parameter=[],selection_file=None,no_default=True,raise_exception_if_empty=False):
+def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=True,raise_exception_if_empty=False):
     import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore, sdexception
+
+    if parameter is None:
+        parameter=[]
 
     buffer=sdbuffer.get_selection_file_buffer(parameter=parameter,path=selection_file)
 
