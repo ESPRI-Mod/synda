@@ -27,11 +27,18 @@ def print_selection_list_with_index(pattern=None):
     for i,s in enumerate(get_selection_list(filename_pattern=pattern)):
         print "%3d %s"%(i,s.filename)
 
-def print_selection_list(pattern=None,project=[]):
+def print_selection_list(pattern=None,project=None):
+
+    if project is None:
+        project=[]
+
     for s in get_selection_list(pattern,project=project):
         print s.filename
 
-def get_selection_list(filename_pattern=None,project=[]):
+def get_selection_list(filename_pattern=None,project=None):
+
+    if project is None:
+        project=[]
 
     if selections is None:
         load_selections()
