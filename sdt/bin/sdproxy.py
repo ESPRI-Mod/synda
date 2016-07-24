@@ -121,8 +121,8 @@ class SearchAPIProxy():
         request.limit=sdconst.CHUNKSIZE
         request.offset=0
         offset = 0
-        chunks = []        # list of chunks (every web service call generate one chunk (which is a Response object))
-        nread = 0          # how many already read
+        chunks = sdtypes.Responses() # every web service call generate one chunk (which is a Response object)
+        nread = 0            # how many already read
         moredata = True
 
         while moredata: # paging loop
@@ -137,7 +137,7 @@ class SearchAPIProxy():
                 result=self.call_web_service(request)
 
             # retrieve output
-            chunks.append(result) # Response object
+            chunks.add(result) # Response object
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
@@ -146,7 +146,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (result.num_result>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        return sdtypes.Responses(chunks)
+        return chunks
 
 if __name__ == '__main__':
 
