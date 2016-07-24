@@ -39,12 +39,12 @@ import sdconfig
 def run(files):
 
     #for f in files:
-    #    sdlog.debug("SDFIPIPE-004","%s"%f['url'],stdout=True)
+    #    sdlog.debug("SDSHRINK-004","%s"%f['data_node'],stdout=True)
 
     files=shrink(files)
 
     #for f in files:
-    #    sdlog.debug("SDFIPIPE-005","%s"%f['url'],stdout=True)
+    #    sdlog.debug("SDSHRINK-005","%s"%f['data_node'],stdout=True)
 
     return files
 
