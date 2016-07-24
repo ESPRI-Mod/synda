@@ -29,7 +29,11 @@ import sddquery
 import sdprint
 from sdtypes import File,Dataset
 
-def run(stream=None,path=None,parameter=[],dry_run=False,load_default=None):
+def run(stream=None,path=None,parameter=None,dry_run=False,load_default=None):
+
+    if parameter is None:
+        parameter=[]
+
     queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,query_type='local',dry_run=dry_run,load_default=load_default)
 
     files=[]
