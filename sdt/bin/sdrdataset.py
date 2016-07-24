@@ -38,7 +38,11 @@ def get_datasets(stream=None,parameter=None,post_pipeline_mode='dataset',dry_run
     result=sdquicksearch.run(stream=stream,parameter=parameter,post_pipeline_mode=post_pipeline_mode,dry_run=dry_run)
     return result.files
 
-def get_dataset(stream=None,parameter=[],dry_run=False):
+def get_dataset(stream=None,parameter=None,dry_run=False):
+
+    if parameter is None:
+        parameter=[]
+
     datasets=get_datasets(stream=stream,parameter=parameter,dry_run=dry_run)
     if len(datasets)==0:
         d=None
