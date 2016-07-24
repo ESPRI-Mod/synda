@@ -20,13 +20,16 @@ import sdtools
 from sdtypes import Buffer
 from sdexception import SDException,FileNotFoundException
 
-def get_selection_file_buffer(path=None,parameter=[]):
+def get_selection_file_buffer(path=None,parameter=None):
     """Retrieve input facets from file, stdin or command line argument and returns a Buffer object.
 
     Args:
         path: selection file path
         parameter: facets from command line arguments
     """
+
+    if parameter is None:
+        parameter=[]
 
     # coherence check
     if path is not None and len(parameter)>0:
