@@ -23,6 +23,7 @@ import copy
 import json
 import sdapp
 import sdconfig
+#import sdmts
 import sdconst
 import sdtools
 from sdexception import SDException
@@ -38,10 +39,21 @@ class Metadata():
         else:
             self.files=[]
 
+        assert isinstance(self.files,list)
+
+        #self.store=sdmts.get_metadata_tmp_storage()
+        #metadata.store[k] = files # store metadata on-disk
+
     def count(self):
         return len(self.files)
 
     def get_files(self):
+
+        assert isinstance(self.files,list)
+
+        #for k in metadata.store:
+        #    files+=metadata.store[k]
+
         return self.files
 
 class Variable():

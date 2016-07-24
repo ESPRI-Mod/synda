@@ -77,12 +77,16 @@ def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
 
     metadata=sdrun.run(squeries,parallel)
-    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
-    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
 
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
 
-    return sdtypes.Metadata(files=files)
+    new_metadata=sdtypes.Metadata()
+    for chunk in metadata: # FIXME add iterator feature ?
+        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode) # post-processing
+        files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+        new_metadata.add(files)
+
+    return new_metadata
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 
