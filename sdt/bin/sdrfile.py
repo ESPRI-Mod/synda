@@ -23,7 +23,10 @@ import sdcliex
 import sdconst
 import sddeferredbefore
 
-def get_files(stream=None,parameter=[],post_pipeline_mode='file',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+def get_files(stream=None,parameter=None,post_pipeline_mode='file',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+
+    if parameter is None:
+        parameter=[]
 
     assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
 
@@ -35,7 +38,11 @@ def get_files(stream=None,parameter=[],post_pipeline_mode='file',dry_run=False):
     result=sdquicksearch.run(stream=stream,parameter=parameter,post_pipeline_mode=post_pipeline_mode,dry_run=dry_run)
     return result.files
 
-def get_file(stream=None,parameter=[],dry_run=False):
+def get_file(stream=None,parameter=None,dry_run=False):
+
+    if parameter is None:
+        parameter=[]
+
     files=get_files(stream=stream,parameter=parameter,dry_run=dry_run)
     if len(files)==0:
         f=None
