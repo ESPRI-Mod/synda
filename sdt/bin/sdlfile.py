@@ -20,7 +20,10 @@ import sdi18n
 import sdcliex
 import sddeferredbefore
 
-def get_files(stream=None,parameter=[],dry_run=False):
+def get_files(stream=None,parameter=None,dry_run=False):
+
+    if parameter is None:
+        parameter=[]
 
     assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
 
