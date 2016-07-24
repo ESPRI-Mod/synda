@@ -36,7 +36,7 @@ class Metadata():
         elif response is not None:
             self.files=response.get_files()
         else:
-            assert False
+            self.files=[]
 
     def count(self):
         return len(self.files)

@@ -33,14 +33,9 @@ import sdconst
 import sdtools
 import sdsqueries
 import sdbatchtimestamp
-import sdmts
+import sdtypes
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
-
-class Metadata():
-    def __init__(self,files=[]):
-        self.files=files
-        self.store=sdmts.get_metadata_tmp_storage()
 
 def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None,lowmem=False):
     """
@@ -60,6 +55,7 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
 
     if dry_run:
         sdsqueries.print_(squeries)
+        return sdtypes.Metadata()
     else:
         if progress:
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
@@ -76,19 +72,17 @@ def run(stream=None,selection=None,path=None,parameter=[],post_pipeline_mode='fi
 
         return metadata
 
-    return Metadata()
-
 def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
     """This func serializes received metadata on-disk to prevent memory overload."""
 
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
 
-    metadata=Metadata()
+    metadata=sdtypes.Metadata()
     k=0
     count=0
     for q in squeries:
-        files=sdrun.run([q],parallel)
-        files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
+        metadata=sdrun.run([q],parallel)
+        files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
         files=fill_dataset_timestamp([q],files,parallel,action) # complete missing info
         count+=len(files)
 
@@ -126,11 +120,10 @@ def fill_dataset_timestamp(squeries,files,parallel,action):
     return files
 
 def execute_queries(squeries,parallel,post_pipeline_mode,action):
-    files=sdrun.run(squeries,parallel)
-    files=sdpipeline.post_pipeline(files,post_pipeline_mode) # post-processing
+    metadata=sdrun.run(squeries,parallel)
+    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
     files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-
-    return Metadata(files=files)
+    return sdtypes.Metadata(files=files)
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
