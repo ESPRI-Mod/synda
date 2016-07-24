@@ -19,7 +19,6 @@ Notes
 """
 
 import os
-import gc
 import argparse
 import sdapp
 import sdlog
@@ -77,33 +76,13 @@ def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
 
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
 
-    metadata=sdtypes.Metadata()
-    k=0
-    count=0
-    for q in squeries:
-        metadata=sdrun.run([q],parallel)
-        files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
-        files=fill_dataset_timestamp([q],files,parallel,action) # complete missing info
-        count+=len(files)
+    metadata=sdrun.run(squeries,parallel)
+    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
+    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
 
-        metadata.store[k] = files # store metadata on-disk
+    sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
 
-        # cleanup (experimental)
-        #del files
-        #gc.collect()
-
-        k+=1
-
-    sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%count)
-
-    # debug
-    # (if uncommented on lowmem machine, swapping occurs)
-    #sdlog.info("SDSEARCH-588","Load metadata from disk to memory")
-    #for k in metadata.store:
-    #    files+=metadata.store[k]
-    #sdlog.info("SDSEARCH-594","Metadata successfully loaded in memory")
-
-    return metadata
+    return sdtypes.Metadata(files=files)
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 
