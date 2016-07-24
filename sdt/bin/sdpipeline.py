@@ -51,13 +51,16 @@ def post_pipeline(files,mode=None):
 
     return files # return list of dict here (i.e. not File object)
 
-def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
+def build_queries(stream=None,selection=None,path=None,parameter=None,index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
     standalone query pipeline.
 
     Returns:
         squeries (Serialized queries) # TODO: maybe rename stream to dqueries
     """
+
+    if parameter is None:
+        parameter=[]
 
     if stream is None:
 
@@ -81,9 +84,12 @@ def build_queries(stream=None,selection=None,path=None,parameter=[],index_host=N
     queries=sdquerypipeline.run(stream,index_host=index_host,query_type=query_type,dry_run=dry_run,parallel=parallel)
     return queries
 
-def prepare_param(selection=None,path=None,parameter=[],load_default=None):
+def prepare_param(selection=None,path=None,parameter=None,load_default=None):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
     standalone param pipeline."""
+
+    if parameter is None:
+        parameter=[]
 
     if selection is None:
         buffer=sdbuffer.get_selection_file_buffer(path=path,parameter=parameter)
@@ -95,10 +101,13 @@ def prepare_param(selection=None,path=None,parameter=[],load_default=None):
 
     return facets_groups
 
-def parse(parameter=[]):
+def parse(parameter=None):
     """This pipeline is used as a fast parameter parser (without further
     processing).
     """
+
+    if parameter is None:
+        parameter=[]
 
     buffer=sdbuffer.get_selection_file_buffer(parameter=parameter)
     selection=sdparse.build(buffer,load_default=False)
