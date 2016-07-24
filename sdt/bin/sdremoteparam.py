@@ -25,7 +25,7 @@ import sdpipeline
 import sddenormodel
 import sdremoteparam_light
 
-def run(pname=None,host=None,facets_group={},dry_run=False):
+def run(pname=None,host=None,facets_group=None,dry_run=False):
     """
     Args:
         facets_group: if present, only parameter matching facets_group filter are returned
@@ -33,6 +33,9 @@ def run(pname=None,host=None,facets_group={},dry_run=False):
     Returns:
         Dict of list of 'Item' object
     """
+
+    if facets_group is None:
+        facets_group={}
 
     assert isinstance(facets_group,dict)
 
