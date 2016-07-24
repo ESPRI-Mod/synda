@@ -58,7 +58,8 @@ def get_datasets_timestamps(squeries,parallel):
         q['url']=q['dataset_timestamp_url']
 
     # run
-    datasets=sdrun.run(squeries,parallel)
+    metadata=sdrun.run(squeries,parallel)
+    datasets=metadata.get_files()
 
     # transform to dict for quick random access
     di={}
