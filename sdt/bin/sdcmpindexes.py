@@ -41,8 +41,8 @@ if __name__ == '__main__':
 
     for index_host in sdindex.index_host_list:
         sdproxy_mt.set_index_hosts([index_host]) # this is to have parallel, but on only one index
-        files=sdrun.run(queries)
-        files=sdpipeline.post_pipeline(files,'generic') # this is to exclude malformed files if any
+        metadata=sdrun.run(queries)
+        files=sdpipeline.post_pipeline(metadata.get_files(),'generic') # this is to exclude malformed files if any
 
         with open('%s/%s'%(output_dir,index_host),'w') as fh:
             sdprint.print_format(files,'line',fh=fh)
