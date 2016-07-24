@@ -28,34 +28,6 @@ import sdconst
 import sdtools
 from sdexception import SDException
 
-class Metadata():
-    def __init__(self,files=None,response=None):
-        assert not (files and response)
-
-        if files is not None:
-            self.files=files
-        elif response is not None:
-            self.files=response.get_files()
-        else:
-            self.files=[]
-
-        assert isinstance(self.files,list)
-
-        #self.store=sdmts.get_metadata_tmp_storage()
-        #metadata.store[k] = files # store metadata on-disk
-
-    def count(self):
-        return len(self.files)
-
-    def get_files(self):
-
-        assert isinstance(self.files,list)
-
-        #for k in metadata.store:
-        #    files+=metadata.store[k]
-
-        return self.files
-
 class Variable():
     def __init__(self,**kwargs):
         self.__dict__.update( kwargs )
@@ -258,24 +230,6 @@ class Item():
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
-class Responses():
-
-    def __init__(self,responses=None):
-        self.responses=[] if responses is None else responses
-
-    def merge(self):
-        files=[]
-        elapsed_time=0
-
-        for r in self.responses:
-            files.extend(r.get_files())   # merge all chunks
-            elapsed_time+=r.call_duration # merge call_duration
-
-        return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
-
-    def add(self,response):
-        self.responses.append(response)
-
 class Request():
     def __init__(self,url=None,pagination=True,limit=sdconst.CHUNKSIZE):
         self._url=url
@@ -338,6 +292,58 @@ class Request():
 
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
+
+class MemoryStorage():
+    pass
+
+class DatabaseStorage():
+    pass
+
+class Metadata():
+    def __init__(self,files=None,response=None):
+        assert not (files and response)
+
+        if files is not None:
+            self.files=files
+        elif response is not None:
+            self.files=response.get_files()
+        else:
+            self.files=[]
+
+        assert isinstance(self.files,list)
+
+        #self.store=sdmts.get_metadata_tmp_storage()
+        #metadata.store[k] = files # store metadata on-disk
+
+    def count(self):
+        return len(self.files)
+
+    def get_files(self):
+
+        assert isinstance(self.files,list)
+
+        #for k in metadata.store:
+        #    files+=metadata.store[k]
+
+        return self.files
+
+class Responses():
+
+    def __init__(self,responses=None):
+        self.responses=[] if responses is None else responses
+
+    def merge(self):
+        files=[]
+        elapsed_time=0
+
+        for r in self.responses:
+            files.extend(r.get_files())   # merge all chunks
+            elapsed_time+=r.call_duration # merge call_duration
+
+        return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+
+    def add(self,response):
+        self.responses.append(response)
 
 class Response():
     """Contains web service output after XML parsing."""
