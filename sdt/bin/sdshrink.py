@@ -37,6 +37,19 @@ import sduniq
 import sdconfig
 
 def run(files):
+
+    #for f in files:
+    #    sdlog.debug("SDFIPIPE-004","%s"%f['url'],stdout=True)
+
+    files=shrink(files)
+
+    #for f in files:
+    #    sdlog.debug("SDFIPIPE-005","%s"%f['url'],stdout=True)
+
+    return files
+
+def shrink(files):
+
     if is_nearestpost_enabled(files):
         # In this case, we remove duplicates by keeping the nearest
 
