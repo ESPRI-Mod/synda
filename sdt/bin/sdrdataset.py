@@ -22,7 +22,10 @@ import sdcliex
 import sddeferredbefore
 import humanize
 
-def get_datasets(stream=None,parameter=[],post_pipeline_mode='dataset',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+def get_datasets(stream=None,parameter=None,post_pipeline_mode='dataset',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
+
+    if parameter is None:
+        parameter=[]
 
     assert (stream is None) or (len(parameter)<1) # this is to prevent using stream and parameter together
     assert post_pipeline_mode!='file'
