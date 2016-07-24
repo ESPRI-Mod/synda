@@ -73,9 +73,9 @@ class SearchAPIProxy():
 
             raise
 
-        assert result.num_result==len(result.files) # should always be the same
+        assert result.num_result==result.count() # should always be the same
 
-        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(len(result.files),result.num_found,request.get_url()))
+        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(result.count(),result.num_found,request.get_url()))
 
         return result
 
