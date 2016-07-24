@@ -42,7 +42,7 @@ def run(queries,parallel=True):
     else:
         responses.add(sequential_exec(queries))
 
-    return sdtypes.Metadata(responses.merge()) # we cast to remove pagination related code from public interface (e.g. num_found,num_result,call_duration..)
+    return sdtypes.Metadata(responses.merge().get_files()) # we cast to remove pagination related code from public interface (e.g. num_found,num_result,call_duration..)
 
 def split_queries(queries):
     queries_with_index_host=[]
