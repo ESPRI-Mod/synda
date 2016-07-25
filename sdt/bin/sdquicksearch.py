@@ -72,35 +72,31 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-            result=process_queries(queries) # Metadata object
+            responses=process_queries(queries)
+            metadata=sdtypes.Metadata(responses)
 
             # post-call-processing
-            li=sdpipeline.post_pipeline(result.get_files(),post_pipeline_mode)
-            result.set_files(li)
+            li=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode)
+            metadata.set_files(li)
 
-            return result
+            return metadata
         finally:
             if progress:
                 ProgressThread.stop() # spinner stop
 
 def process_queries(queries):
-    if len(queries)>1:
-        responses=sdtypes.Responses()
+    responses=sdtypes.Responses()
 
-        for query in queries:
-            responses.add(ws_call(query))
+    for query in queries:
+        responses.add(ws_call(query))
 
-        return responses.merge() # Metadata object
-    else:
-        query=queries[0] 
-        response=ws_call(query)
-        return Metadata(response=response)
+    return responses
 
 def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
     result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
 
-    if result.num_result>=sdconst.CHUNKSIZE:
+    if result.count()>=sdconst.CHUNKSIZE:
         raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
 
     result.add_attached_parameters(query.get('attached_parameters',{}))
