@@ -331,17 +331,14 @@ class BaseResponse(CommonIO):
         return Response(files=files,call_duration=elapsed_time)
 
 class Metadata(CommonIO):
-    def __init__(self,files=None,response=None):
-        assert not (files and response)
+    def __init__(self,base_response=None,lowmem=False): # 'base_response' is an interface
+        self.lowmem=lowmem
+        self.store=sdmts.get_store(self.lowmem)
 
-        if files is not None:
-            self.files=files
-        elif response is not None:
-            self.files=response.get_files()
-        else:
-            self.files=[]
+        if base_response is not None:
+            self.set_files(base_response.get_files())
 
-        assert isinstance(self.files,list)
+        base_response.delete()
 
     def add(self,metadata):
         self.store.append_files(metadata.get_files())
@@ -350,15 +347,15 @@ class Metadata(CommonIO):
 
 class PaginatedResponse(BaseResponse):
 
-    def __init__(self,responses=None):
+    def __init__(self,responses=None,lowmem=False):
 
-        self.lowmem=kw.get("lowmem",False)
+        self.lowmem=lowmem
         self.store=sdmts.get_store(self.lowmem)
 
         assert responses is not None
 
         # merge files
-        for r in responses.get_responses():
+        for r in responses:
             self.store.append_files(r.get_files())
 
         # merge call_duration
