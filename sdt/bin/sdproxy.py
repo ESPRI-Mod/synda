@@ -38,22 +38,22 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
 
         try:
-            result=self.call_web_service__PAGINATION(request) # return Response object
+            paginated_response=self.call_web_service__PAGINATION(request) # return Response object
         except Exception,e:
             sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
             raise
 
-        sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(result.call_duration, result.count(), final_url))
+        sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(paginated_response.call_duration, paginated_response.count(), final_url))
 
         if attached_parameters.get('verbose',False) == True:
             sdtools.print_stderr("Url: %s"%final_url)
-            sdtools.print_stderr("Duration: %s"%result.call_duration)
+            sdtools.print_stderr("Duration: %s"%paginated_response.call_duration)
             sdtools.print_stderr("")
 
-        result.add_attached_parameters(attached_parameters)
+        paginated_response.add_attached_parameters(attached_parameters)
 
-        return result
+        return paginated_response
 
     def call_web_service(self,request):
 
@@ -119,7 +119,7 @@ class SearchAPIProxy():
         request.limit=sdconst.CHUNKSIZE
         request.offset=0
         offset = 0
-        chunks = sdtypes.Responses() # every web service call generate one chunk (which is a Response object)
+        responses = sdtypes.Responses() # every web service call generate one chunk (which is a Response object)
         nread = 0                    # how many already read
         moredata = True
 
@@ -135,7 +135,7 @@ class SearchAPIProxy():
                 result=self.call_web_service(request)
 
             # retrieve output
-            chunks.add(result) # Response object
+            responses.add(result) # Response object
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
@@ -144,7 +144,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (result.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        return chunks.merge()
+        return PaginatedResponse(responses)
 
 if __name__ == '__main__':
 
