@@ -51,7 +51,6 @@ class MetadataThread(threading.Thread):
             #sdlog.debug("SDPROXMT-012","Using %s"%self.host,stderr=False,logfile=True)
 
 
-
             # BEWARE: printing stuff on stdxxx is NOT welcome here, as we are
             # here running inside a progress bar... so printing on stdxxx
             # result in a big mess. Maybe enable verbose mode here only if
@@ -110,15 +109,11 @@ def run(i__queries):
             i+=1
 
             continue
-
         else:
-
             if i>0:
                 sdlog.info("SDPROXMT-089","retry succeeded")
 
             break
-
-
 
     if len(errors)>0:
         sdlog.error("SDPROXMT-084","max retry iteration reached. %d queries did not succeed"%(len(errors),))
@@ -162,7 +157,6 @@ def process_query(host,query):
 
         return True
     else:
-
         return False
 
 def distribute_queries(queries):
@@ -174,11 +168,8 @@ def distribute_queries(queries):
     for host in hosts:
 
         if len(queries)<1:
-
             break
-
         else:
-
             query=queries.pop()
 
             status=process_query(host,query)
@@ -255,7 +246,7 @@ def set_index_hosts(index_hosts):
     for index_host in index_hosts:
         searchAPIServices[index_host]={}
         searchAPIServices[index_host]['iSearchAPIProxy']=sdproxy.SearchAPIProxy() # contains service PTR
-        searchAPIServices[index_host]['threadlist']=[]                    # contains threads PTR
+        searchAPIServices[index_host]['threadlist']=[]                            # contains threads PTR
 
 # module init
 
