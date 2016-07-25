@@ -38,7 +38,7 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
 
         try:
-            paginated_response=self.call_web_service__PAGINATION(request) # return Response object
+            paginated_response=self.call_web_service__PAGINATION(request)
         except Exception,e:
             sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
@@ -60,7 +60,7 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-100","Search-API call started (%s)."%request.get_url())
 
         try:
-            result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # returns Response object
+            response=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # returns Response object
         except:
 
             # if exception occurs in sdnetutils.call_web_service() method, all
@@ -73,9 +73,9 @@ class SearchAPIProxy():
 
             raise
 
-        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(result.count(),result.num_found,request.get_url()))
+        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(response.count(),response.num_found,request.get_url()))
 
-        return result
+        return response
 
     def call_web_service__RETRY(self,request):
         """Add mono-host retry to call_web_service() method.
@@ -96,7 +96,7 @@ class SearchAPIProxy():
                 sdlog.info("SYDPROXY-088","Retry search-API call (%s)."%request.get_url())
 
             try:
-                result=self.call_web_service(request)
+                response=self.call_web_service(request)
                 break
             except:
                 sdlog.info("SYDPROXY-090","Search-API call failed (%s)."%request.get_url())
@@ -107,7 +107,7 @@ class SearchAPIProxy():
                 else:
                     i+=1
 
-        return result
+        return response
 
     def call_web_service__PAGINATION(self,request):
         """
@@ -119,8 +119,8 @@ class SearchAPIProxy():
         request.limit=sdconst.CHUNKSIZE
         request.offset=0
         offset = 0
-        responses = sdtypes.Responses() # every web service call generate one chunk (which is a Response object)
-        nread = 0                    # how many already read
+        responses = sdtypes.Responses()
+        nread = 0 # how many already read
         moredata = True
 
         while moredata: # paging loop
@@ -130,19 +130,19 @@ class SearchAPIProxy():
 
             # call
             if sdconfig.mono_host_retry:
-                result=self.call_web_service__RETRY(request)
+                response=self.call_web_service__RETRY(request)
             else:
-                result=self.call_web_service(request)
+                response=self.call_web_service(request)
 
             # retrieve output
-            responses.add(result) # Response object
+            responses.add(response)
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
-            nread += result.count()
-            nleft = result.num_found - nread
+            nread += response.count()
+            nleft = response.num_found - nread
 
-            moredata = (nleft>0) and (result.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
+            moredata = (nleft>0) and (response.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
         return PaginatedResponse(responses)
 
