@@ -144,7 +144,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (response.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        return PaginatedResponse(responses)
+        return PaginatedResponse(responses) # BEWARE: responses object are modified here
 
 if __name__ == '__main__':
 
