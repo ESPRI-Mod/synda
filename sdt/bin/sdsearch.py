@@ -109,7 +109,8 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     metadata=sdrun.run(squeries,parallel)
     files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
     files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-    return sdtypes.Metadata(files=files)
+    metadata.set_files(files)
+    return metadata
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
