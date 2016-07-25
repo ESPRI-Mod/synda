@@ -72,11 +72,11 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-            result=process_queries(queries) # return Response object
+            result=process_queries(queries) # Metadata object
 
             # post-call-processing
-            result.files=sdpipeline.post_pipeline(result.files,post_pipeline_mode)
-            result.num_result=len(result.files) # sync objec attributes (yes, maybe not the best place to do that). We do that because sdpipeline.post_pipeline() method is likely to change the number of items in 'files' attribute (i.e. without updating the corresponding 'num_result' attribute, so we need to do it here).
+            li=sdpipeline.post_pipeline(result.get_files(),post_pipeline_mode)
+            result.set_files(li)
 
             return result
         finally:
@@ -85,22 +85,16 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
 
 def process_queries(queries):
     if len(queries)>1:
-        total_result=sdtypes.Response()
-        total_result.call_duration=0 # we need to do this for the sum operation below not to raise exception (MEMO: call_duration is None by default).
+        responses=sdtypes.Responses()
 
         for query in queries:
-            result=ws_call(query)
-            total_result.files.extend(result.files)
-            total_result.call_duration+=result.call_duration # have sense, because is sequential
+            responses.add(ws_call(query))
 
-        total_result.num_found=None # this number have no more meaning/sense with multiple queries (i.e. because of duplicate/intersection between queries)
-        total_result.num_result=len(total_result.files)
-
-        return total_result
+        return responses.merge() # Metadata object
     else:
         query=queries[0] 
-        result=ws_call(query)
-        return result
+        response=ws_call(query)
+        return Metadata(response=response)
 
 def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
