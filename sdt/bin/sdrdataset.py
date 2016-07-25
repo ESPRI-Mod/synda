@@ -36,7 +36,7 @@ def get_datasets(stream=None,parameter=None,post_pipeline_mode='dataset',dry_run
         sddeferredbefore.add_forced_parameter(stream,'type','Dataset')
 
     result=sdquicksearch.run(stream=stream,parameter=parameter,post_pipeline_mode=post_pipeline_mode,dry_run=dry_run)
-    return result.files
+    return result.get_files()
 
 def get_dataset(stream=None,parameter=None,dry_run=False):
 
