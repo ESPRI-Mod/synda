@@ -21,8 +21,6 @@ Credit
     https://pypi.python.org/pypi/persistentdicts/2.0.4
 """
 
-from __future__ import with_statement
-import sys
 import json
 import collections
 import sqlite3

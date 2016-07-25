@@ -62,29 +62,61 @@ class MemoryStorage():
 
 class DatabaseStorage():
 
-DO-ME
-
     def __init__(self):
-        create db+table
-        self.files=[]
+
+        assert not os.path.isfile(dbfile) # dbfile shouldn't exist at this time
+
+        self.conn = sqlite3.connect(dbfile, isolation_level='DEFERRED')
+
+        self.create_table()
+
+    def create_table(self,name='data'):
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("CREATE TABLE %s (id TEXT PRIMARY KEY, size INT, data_node TEXT, attrs TEXT)"%name)
+            self.conn.commit()
+
+    def drop_table(self):
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("DROP TABLE data")
+            self.conn.commit()
 
     def set_files(self,files):
-        truncate+insert
-        self.files=files
+
+        # WARNING: slow perf here. Maybe remove the dbfile.
+        self.drop_table()
+        self.create_table()
+
+        # WARNING: slow perf here. Maybe replace rown-by-row insert with array insert.
+        with contextlib.closing(self.conn.cursor()) as c:
+        for f in files:
+            c.execute("INSERT INTO data (id, size, data_node, attrs) VALUES (?, ?, ?, ?)", (f['id'], f['size'], f['data_node'], json.dumps(f)))
+        self.conn.commit()
 
     def count(self):
-        obvious
-        return len(self.files)
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("SELECT COUNT(1) from data")
+            res = int(c.fetchone()[0])
+        return res
 
     def get_files(self):
-        hehe
-        return self.files
+
+        # WARNING: slow perf here. Maybe use 'yield' keyword as in sdsqlitedict module.
+        li=[]
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("SELECT id, size, data_node, attrs from data")
+            rs=c.fetchone()
+            #li.append((rs[0],rs[1],rs[2],rs[3])
+            li.append(json.loads(rs[3]))
+        return li
 
     def add_attached_parameters(self,attached_parameters):
-        load-truncate+insert
-        for f in self.files:
+
+        # WARNING: slow perf here. Maybe replace with 'ALTER TABLE foo RENAME TO bar'
+        li=self.get_files()
+        for f in li:
             assert 'attached_parameters' not in f
             f['attached_parameters']=copy.deepcopy(attached_parameters)
+        self.set_files(self,li):
 
 def get_store(lowmem=False):
     if lowmem:
@@ -95,5 +127,6 @@ def get_store(lowmem=False):
 # init.
 
 #FIXME to handle collision-free dbfile naming (as now used by sdtypes.py)
+#FIXME close db connection et remove the dbfile once done
 dbfilename='sdt_transient_storage.db'
 dbfile=os.path.join(sdconfig.db_folder,dbfilename)
