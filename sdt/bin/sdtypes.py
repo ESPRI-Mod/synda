@@ -306,18 +306,12 @@ class Metadata():
 
         assert isinstance(self.files,list)
 
-        #self.store=sdmts.get_metadata_tmp_storage()
-        #metadata.store[k] = files # store metadata on-disk
-
     def count(self):
         return len(self.files)
 
     def get_files(self):
 
         assert isinstance(self.files,list)
-
-        #for k in metadata.store:
-        #    files+=metadata.store[k]
 
         return self.files
 
@@ -346,11 +340,10 @@ class Response():
         self.lowmem=kw.get("lowmem",False)
         self.store=sdmts.get_store(self.lowmem)
 
-        self.store.set_files(kw.get("files",[]))     # File (key/value attribute based files list)
-        self.num_found=kw.get("num_found",0)         # total match found in ESGF for the query
-        self.num_result=kw.get("num_result",0)       # how many match returned, depending on "offset" and "limit" parameter
-        self.call_duration=kw.get("call_duration")   # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
-
+        self.store.set_files(kw.get("files",[]))                   # File (key/value attribute based files list)
+        self.num_found=kw.get("num_found",0)                       # total match found in ESGF for the query
+        self.num_result=kw.get("num_result",0)                     # how many match returned, depending on "offset" and "limit" parameter
+        self.call_duration=kw.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
         self.parameter_values=kw.get("parameter_values",[])        # parameters list (come from the XML document footer)
 
         # assert
