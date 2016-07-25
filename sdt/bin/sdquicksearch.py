@@ -38,7 +38,7 @@ import sdcliex
 import sdprint
 import sdsqueries
 from sdprogress import ProgressThread
-from sdtypes import Request,Response
+import sdtypes
 from sdexception import SDException
 
 def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False,count=False):
@@ -57,7 +57,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
 
     if dry_run:
         for query in queries:
-            request=Request(url=query['url'],pagination=False)
+            request=sdtypes.Request(url=query['url'],pagination=False)
 
             print '%s'%request.get_url()
 
@@ -65,7 +65,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
             #print 'Url: %s'%request.get_url()
             #print 'Attached parameters: %s'%query.get('attached_parameters')
 
-        return Response()
+        return sdtypes.Response()
     else:
         try:
             if progress:
@@ -85,7 +85,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
 
 def process_queries(queries):
     if len(queries)>1:
-        total_result=Response()
+        total_result=sdtypes.Response()
         total_result.call_duration=0 # we need to do this for the sum operation below not to raise exception (MEMO: call_duration is None by default).
 
         for query in queries:
@@ -103,7 +103,7 @@ def process_queries(queries):
         return result
 
 def ws_call(query):
-    request=Request(url=query['url'],pagination=False)
+    request=sdtypes.Request(url=query['url'],pagination=False)
     result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
 
     if result.num_result>=sdconst.CHUNKSIZE:
