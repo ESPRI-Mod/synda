@@ -88,9 +88,9 @@ class DatabaseStorage():
 
         # WARNING: slow perf here. Maybe replace rown-by-row insert with array insert.
         with contextlib.closing(self.conn.cursor()) as c:
-        for f in files:
-            c.execute("INSERT INTO data (id, size, data_node, attrs) VALUES (?, ?, ?, ?)", (f['id'], f['size'], f['data_node'], json.dumps(f)))
-        self.conn.commit()
+            for f in files:
+                c.execute("INSERT INTO data (id, size, data_node, attrs) VALUES (?, ?, ?, ?)", (f['id'], f['size'], f['data_node'], json.dumps(f)))
+            self.conn.commit()
 
     def count(self):
         with contextlib.closing(self.conn.cursor()) as c:
