@@ -119,7 +119,7 @@ class SearchAPIProxy():
         request.limit=sdconst.CHUNKSIZE
         request.offset=0
         offset = 0
-        responses = sdtypes.Responses()
+        paginated_response=PaginatedResponse()
         nread = 0 # how many already read
         moredata = True
 
@@ -135,7 +135,7 @@ class SearchAPIProxy():
                 response=self.call_web_service(request)
 
             # retrieve output
-            responses.add(response)
+            paginated_response.add(response)
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
@@ -144,7 +144,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (response.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        return PaginatedResponse(responses) # BEWARE: responses object are modified here
+        return paginated_response
 
 if __name__ == '__main__':
 

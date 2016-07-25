@@ -72,8 +72,8 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-            responses=process_queries(queries)
-            metadata=sdtypes.Metadata(responses)
+            mqr=process_queries(queries)
+            metadata=sdtypes.Metadata(mqr)
 
             # post-call-processing
             li=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode)
@@ -85,12 +85,12 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 ProgressThread.stop() # spinner stop
 
 def process_queries(queries):
-    responses=sdtypes.Responses()
+    mqr=sdtypes.MultiQueryResponse()
 
     for query in queries:
-        responses.add(ws_call(query))
+        mqr.add(ws_call(query))
 
-    return responses
+    return mqr
 
 def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)

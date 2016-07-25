@@ -320,16 +320,6 @@ class BaseResponse(CommonIO):
         assert isinstance(attached_parameters, dict)
         self.store.add_attached_parameters(attached_parameters)
 
-    def merge(self):
-        files=[]
-        elapsed_time=0
-
-        for r in self.responses:
-            files.extend(r.get_files())   # merge all chunks
-            elapsed_time+=r.call_duration # merge call_duration (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
-
-        return Response(files=files,call_duration=elapsed_time)
-
 class Metadata(CommonIO):
     def __init__(self,base_response=None,lowmem=False): # 'base_response' is an interface
         self.lowmem=lowmem
@@ -347,35 +337,31 @@ class Metadata(CommonIO):
 
 class PaginatedResponse(BaseResponse):
 
-    def __init__(self,responses=None,lowmem=False):
-
+    def __init__(self,lowmem=False):
         self.lowmem=lowmem
         self.store=sdmts.get_store(self.lowmem)
+        self.call_duration=0
 
-        assert responses is not None
+    def add(self,response):
+        self.store.append_files(response.get_files())
+        self.call_duration+=response.call_duration # merge call_duration (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
+        response.delete()
 
-        # merge files
-        for r in responses:
-            self.store.append_files(r.get_files())
+class MultiQueryResponse(BaseResponse):
 
-        # merge call_duration
-        # (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
-        call_duration=0
-        for r in responses:
-            call_duration+=r.call_duration
-        self.call_duration=call_duration
-
-        # delete
-        for r in responses:
-            r.delete()
-
-class Responses():
-
-    def __init__(self):
-        self.responses=[]
+    def __init__(self,lowmem=False):
+        self.lowmem=lowmem
+        self.store=sdmts.get_store(self.lowmem)
+        self.call_duration=0
 
     def add(self,response):
         self.responses.append(response)
+
+    def get_call_duration(self):
+        call_duration=0
+        for r in self.responses:
+            call_duration+=r.call_duration
+        return call_duration
 
     def __iter__(self):
         for response in self.responses:
