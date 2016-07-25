@@ -344,7 +344,7 @@ class PaginatedResponse(BaseResponse):
 
     def add(self,response):
         self.store.append_files(response.get_files())
-        self.call_duration+=response.call_duration # merge call_duration (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
+        self.call_duration+=response.call_duration
         response.delete()
 
 class MultiQueryResponse(BaseResponse):
@@ -355,17 +355,9 @@ class MultiQueryResponse(BaseResponse):
         self.call_duration=0
 
     def add(self,response):
-        self.responses.append(response)
-
-    def get_call_duration(self):
-        call_duration=0
-        for r in self.responses:
-            call_duration+=r.call_duration
-        return call_duration
-
-    def __iter__(self):
-        for response in self.responses:
-            yield response
+        self.store.append_files(response.get_files())
+        self.call_duration+=response.call_duration
+        response.delete()
 
 class Response(BaseResponse):
     """Contains web service output after XML parsing."""
