@@ -73,8 +73,6 @@ class SearchAPIProxy():
 
             raise
 
-        assert result.num_result==result.count() # should always be the same
-
         sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(result.count(),result.num_found,request.get_url()))
 
         return result
@@ -122,7 +120,7 @@ class SearchAPIProxy():
         request.offset=0
         offset = 0
         chunks = sdtypes.Responses() # every web service call generate one chunk (which is a Response object)
-        nread = 0            # how many already read
+        nread = 0                    # how many already read
         moredata = True
 
         while moredata: # paging loop
@@ -141,10 +139,10 @@ class SearchAPIProxy():
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
-            nread += result.num_result
+            nread += result.count()
             nleft = result.num_found - nread
 
-            moredata = (nleft>0) and (result.num_result>0) # the second member is for the case when "num_found > 0" but nothing is returned
+            moredata = (nleft>0) and (result.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
         return chunks
 
