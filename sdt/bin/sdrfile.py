@@ -36,7 +36,7 @@ def get_files(stream=None,parameter=None,post_pipeline_mode='file',dry_run=False
         sddeferredbefore.add_forced_parameter(stream,'type','File')
 
     result=sdquicksearch.run(stream=stream,parameter=parameter,post_pipeline_mode=post_pipeline_mode,dry_run=dry_run)
-    return result.files
+    return result.get_files()
 
 def get_file(stream=None,parameter=None,dry_run=False):
 

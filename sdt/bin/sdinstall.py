@@ -41,7 +41,7 @@ def run(args,metadata=None):
 
     interactive=not args.yes
 
-    return install(metadata.files,interactive)
+    return install(metadata.get_files(),interactive)
 
 def install(files,interactive):
     import sddaemon

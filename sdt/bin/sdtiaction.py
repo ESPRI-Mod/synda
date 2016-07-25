@@ -623,7 +623,7 @@ def pexec(args):
         for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
             
             metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
-            datasets=metadata.files
+            datasets=metadata.get_files()
 
             # WART
             # (gets overwritten at each iteration, but not a big deal as always the same value)

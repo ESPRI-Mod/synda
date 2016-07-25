@@ -27,7 +27,7 @@ def run(args):
 
     try:
         metadata=syndautils.file_full_search(args)
-        files=metadata.files
+        files=metadata.get_files()
     except sdexception.EmptySelectionException, e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0

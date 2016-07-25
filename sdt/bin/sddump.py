@@ -35,7 +35,7 @@ def dump_ESGF(parameter,fields='instance_id,timestamp',dry_run=False):
     parameter.append("replica=false")
 
     metadata=sdsearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=dry_run)
-    return metadata.files
+    return metadata.get_files()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

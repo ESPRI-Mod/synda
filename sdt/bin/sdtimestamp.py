@@ -42,10 +42,11 @@ def fill_missing_dataset_timestamp(dataset_without_timestamp):
     # Note
     #     We do not filter replica in the query below in case the master host is not up
     result=sdquicksearch.run(parameter=['limit=1','fields=instance_id,timestamp,type','type=Dataset','instance_id=%s'%dataset_without_timestamp.dataset_functional_id],post_pipeline_mode=None)
+    li=result.get_files()
 
     # check if dataset has been found in ESGF
-    if len(result.files)>0:
-        d=result.files[0]
+    if len(li)>0:
+        d=li[0]
     else:
         raise SDException("SDTIMEST-800","%s dataset does not exist in ESGF (or the index used does not list it)"%dataset_without_timestamp.dataset_functional_id)
 
@@ -72,8 +73,9 @@ def use_file_timestamp_if_dataset_timestamp_is_missing(d):
         # Note
         #     We do not filter replica in the query below in case the master host is not up
         result=sdquicksearch.run(parameter=['limit=1','fields=instance_id,timestamp,type','type=File','dataset_id=%s'%d['instance_id']],post_pipeline_mode=None)
-        if len(result.files)>0:
-            file=result.files[0]
+        li=result.get_files()
+        if len(li)>0:
+            file=li[0]
 
             if 'timestamp' in file:
 

@@ -60,7 +60,7 @@ def test_index_hosts():
 
 def get_random_test_query():
     datasets=sdsample.get_sample_datasets('CMIP5',1000)
-    dataset=random.choice(datasets.files)
+    dataset=random.choice(datasets.get_files())
     dataset=Dataset(**dataset)
 
     r=dataset.realm

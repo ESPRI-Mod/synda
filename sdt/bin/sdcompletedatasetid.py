@@ -131,7 +131,7 @@ def get_data_nodes(instance_id,replica):
     if result.count()>0:
 
         datanodes=[]
-        for d in result.files:
+        for d in result.get_files():
             datanodes.append(d['data_node'])
 
         return datanodes

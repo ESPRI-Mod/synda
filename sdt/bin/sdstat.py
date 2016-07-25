@@ -32,7 +32,7 @@ def run(args):
 
     try:
         metadata=syndautils.file_full_search(args)
-        files=metadata.files
+        files=metadata.get_files()
     except sdexception.EmptySelectionException, e:
         print_stderr("You must specify at least one facet to perform this action.")
         return 1

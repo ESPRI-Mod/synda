@@ -118,4 +118,4 @@ if __name__ == '__main__':
 
     result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run)
 
-    sdprint.print_format(result.files,args.format,args.print_only_one_item)
+    sdprint.print_format(result.get_files(),args.format,args.print_only_one_item)

@@ -47,7 +47,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
         # we loop until we find a correct file (i.e. well-formed)
         well_formed_file=None
         for i in range(20): # arbitrary
-            for file_ in result.files:
+            for file_ in result.get_files():
                 if len(file_['variable'])==1:
                     well_formed_file=file_
                     break

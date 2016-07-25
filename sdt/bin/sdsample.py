@@ -60,7 +60,7 @@ def print_remote_samples():
 def print_remote_sample(project):
     """Print one random file of given project."""
     result=sdquicksearch.run(parameter=['project=%s'%project,"limit=1"])
-    for f in result.files:
+    for f in result.get_files():
         print "%s" % (f['local_path'])
         print "%s|%s" % (f['file_functional_id'],f['data_node'])
         print

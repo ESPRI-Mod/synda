@@ -24,7 +24,7 @@ def print_small_dataset(project,sample_size=2000):
     result=sdsample.get_sample_datasets(project,sample_size)
     if result.count()>0:
 
-        files=result.files
+        files=result.get_files()
 
         # str to int
         for d in files:
@@ -52,7 +52,7 @@ def get_sorted_files(project,sample_size,sort_key='size'):
     result=sdsample.get_sample_files(project,sample_size)
     if result.count()>0:
 
-        files=result.files
+        files=result.get_files()
 
         # cast str to int
         for f in files:
