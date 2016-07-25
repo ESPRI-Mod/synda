@@ -38,8 +38,7 @@ class SearchAPIProxy():
         sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
 
         try:
-            responses=self.call_web_service__PAGINATION(request) # return Response object
-            result=responses.merge()
+            result=self.call_web_service__PAGINATION(request) # return Response object
         except Exception,e:
             sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
@@ -53,6 +52,7 @@ class SearchAPIProxy():
             sdtools.print_stderr("")
 
         result.add_attached_parameters(attached_parameters)
+
         return result
 
     def call_web_service(self,request):
@@ -144,7 +144,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (result.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-        return chunks
+        return chunks.merge()
 
 if __name__ == '__main__':
 
