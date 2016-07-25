@@ -14,7 +14,7 @@ contain paging management.
 
 Notes
     - this module cannot retrieve huge number of files (i.e. > 10000)
-    - this module can be used to count number of matches
+    - this module cannot be used to count number of matches
     - this module support 'limit' feature
     - this module do not have a next chunk offset based mecanism (i.e. it cannot aggregate multiple search-api calls together)
     - with this module it is NOT possible to retrieve all records if number of result > sdconst.CHUNKSIZE
@@ -41,18 +41,15 @@ from sdprogress import ProgressThread
 import sdtypes
 from sdexception import SDException
 
-def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False,count=False):
+def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False):
 
     if parameter is None:
         parameter=[]
 
-    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False,count=count)
+    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False)
 
     if len(queries)<1:
         raise SDException("SDQSEARC-001","No query to process")
-
-    if count and len(queries)>1:
-        raise SDException("SDQSEARC-100","Too much query (when 'count' is True, multi-query is not allowed)") # TAGJKFJK34343
 
     progress=sdsqueries.get_scalar(queries,'progress',False,type_=bool) # we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
     searchapi_host=sdsqueries.get_scalar(queries,'searchapi_host')
@@ -121,7 +118,6 @@ if __name__ == '__main__':
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
-    parser.add_argument('-c','--count',action='store_true',help='Count how many found files') # note: see TAGJKFJK34343
     parser.add_argument('-F','--format',choices=sdprint.formats,default='indent')
     parser.add_argument('-i','--index_host')
     parser.add_argument('-m','--post_pipeline_mode',default='file')
@@ -130,9 +126,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run,count=args.count)
+    result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run)
 
-    if args.count:
-        print "%i"%result.num_found
-    else:
-        sdprint.print_format(result.files,args.format,args.print_only_one_item)
+    sdprint.print_format(result.files,args.format,args.print_only_one_item)
