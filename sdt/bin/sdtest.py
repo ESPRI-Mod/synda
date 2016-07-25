@@ -15,7 +15,7 @@ from tabulate import tabulate
 import argparse
 import random
 import sdapp
-import sdquicksearch
+import sdquickcount
 import sdindex
 import sdpipeline
 import sdparam
@@ -49,7 +49,7 @@ def test_index_hosts():
 
     li=[]
     for index_host in sdindex.index_host_list:
-        result=sdquicksearch.run(index_host=index_host,parameter=parameter)
+        result=sdquickcount.run(index_host=index_host,parameter=parameter)
         li.append([index_host,result.num_found,result.call_duration if result.call_duration>=1 else 0.1])
 
     ProgressThread.stop()

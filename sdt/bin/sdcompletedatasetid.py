@@ -128,7 +128,7 @@ def get_data_nodes(instance_id,replica):
     #print parameter
 
     result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=False)
-    if result.num_result>0:
+    if result.count()>0:
 
         datanodes=[]
         for d in result.files:
