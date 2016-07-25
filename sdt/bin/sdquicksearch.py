@@ -51,6 +51,9 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
     if len(queries)<1:
         raise SDException("SDQSEARC-001","No query to process")
 
+    if count and len(queries)>1:
+        raise SDException("SDQSEARC-100","Too much query (when 'count' is True, multi-query is not allowed)") # TAGJKFJK34343
+
     progress=sdsqueries.get_scalar(queries,'progress',False,type_=bool) # we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
     searchapi_host=sdsqueries.get_scalar(queries,'searchapi_host')
 
@@ -118,7 +121,7 @@ if __name__ == '__main__':
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
-    parser.add_argument('-c','--count',action='store_true',help='Count how many found files')
+    parser.add_argument('-c','--count',action='store_true',help='Count how many found files') # note: see TAGJKFJK34343
     parser.add_argument('-F','--format',choices=sdprint.formats,default='indent')
     parser.add_argument('-i','--index_host')
     parser.add_argument('-m','--post_pipeline_mode',default='file')
