@@ -28,23 +28,23 @@ import sdlog
 import sdpipelineutils
 import sdproxy_mt
 import sdtypes
-from sdproxy import SearchAPIProxy
+import sdproxy
 
 def run(queries,parallel=True):
-    responses=sdtypes.Responses()
+    metadata=sdtypes.Metadata()
 
     if parallel:
         (queries_with_index_host,queries_without_index_host)=split_queries(queries) # we need this, because query with specific index host can't be parallelized
 
         if len(queries_with_index_host)>0:
-            responses.add(sequential_exec(queries_with_index_host))
+            metadata.add(sequential_exec(queries_with_index_host))
 
         if len(queries_without_index_host)>0:
-            responses.add(parallel_exec(queries_without_index_host))
+            metadata.add(parallel_exec(queries_without_index_host))
     else:
-        responses.add(sequential_exec(queries))
+        metadata.add(sequential_exec(queries))
 
-    return sdtypes.Metadata(responses.merge().get_files()) # we cast to remove pagination related code from public interface (e.g. num_found,num_result,call_duration..)
+    return metadata
 
 def split_queries(queries):
     queries_with_index_host=[]
@@ -80,12 +80,12 @@ def parallel_exec(queries):
     return sdproxy_mt.run(queries)
 
 def sequential_exec(queries):
-    search=SearchAPIProxy()
-    responses=sdtypes.Responses()
+    search=sdproxy.SearchAPIProxy()
+    metadata=sdtypes.Metadata()
     for q in queries:
         result=search.run(url=q['url'],attached_parameters=q.get('attached_parameters'))
-        responses.add(result)
-    return responses.merge()
+        metadata.add(result)
+    return metadata
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
