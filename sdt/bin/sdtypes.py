@@ -293,7 +293,44 @@ class Request():
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
-class Metadata():
+class CommonIO():
+
+    def count(self):
+        return self.store.count()
+
+    def set_files(self,files):
+        self.store.set_files(files)
+
+    def get_files(self):
+        return self.store.get_files()
+
+    def delete(self):
+        self.store.delete()
+
+class BaseResponse(CommonIO):
+
+    def add_attached_parameters(self,attached_parameters):
+        """This func adds some parameters to the result of a query. 
+        
+        Notes
+            - The idea is the keep some parameters around by making them jump
+              over the search call (e.g. Search-api call, SQL call..), from
+              'query pipeline' to 'file pipeline'.
+        """
+        assert isinstance(attached_parameters, dict)
+        self.store.add_attached_parameters(attached_parameters)
+
+    def merge(self):
+        files=[]
+        elapsed_time=0
+
+        for r in self.responses:
+            files.extend(r.get_files())   # merge all chunks
+            elapsed_time+=r.call_duration # merge call_duration (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
+
+        return Response(files=files,call_duration=elapsed_time)
+
+class Metadata(CommonIO):
     def __init__(self,files=None,response=None):
         assert not (files and response)
 
@@ -306,34 +343,48 @@ class Metadata():
 
         assert isinstance(self.files,list)
 
-    def count(self):
-        return len(self.files)
+    def add(self,metadata):
+        self.store.append_files(metadata.get_files())
 
-    def get_files(self):
+        metadata.delete()
 
-        assert isinstance(self.files,list)
+class PaginatedResponse(BaseResponse):
 
-        return self.files
+    def __init__(self,responses=None):
+
+        self.lowmem=kw.get("lowmem",False)
+        self.store=sdmts.get_store(self.lowmem)
+
+        assert responses is not None
+
+        # merge files
+        for r in responses.get_responses():
+            self.store.append_files(r.get_files())
+
+        # merge call_duration
+        # (BEWARE: when parallel mode is used, this does not represent walltime. It have more sense when using sequential mode)
+        call_duration=0
+        for r in responses:
+            call_duration+=r.call_duration
+        self.call_duration=call_duration
+
+        # delete
+        for r in responses:
+            r.delete()
 
 class Responses():
 
-    def __init__(self,responses=None):
-        self.responses=[] if responses is None else responses
-
-    def merge(self):
-        files=[]
-        elapsed_time=0
-
-        for r in self.responses:
-            files.extend(r.get_files())   # merge all chunks
-            elapsed_time+=r.call_duration # merge call_duration
-
-        return Response(files=files,call_duration=elapsed_time) # call_duration here means multi-call duration (i.e. because of pagination)
+    def __init__(self):
+        self.responses=[]
 
     def add(self,response):
         self.responses.append(response)
 
-class Response():
+    def __iter__(self):
+        for response in self.responses:
+            yield response
+
+class Response(BaseResponse):
     """Contains web service output after XML parsing."""
 
     def __init__(self,**kw):
@@ -342,32 +393,12 @@ class Response():
 
         self.store.set_files(kw.get("files",[]))                   # File (key/value attribute based files list)
         self.num_found=kw.get("num_found",0)                       # total match found in ESGF for the query
-        self.num_result=kw.get("num_result",0)                     # how many match returned, depending on "offset" and "limit" parameter
         self.call_duration=kw.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
         self.parameter_values=kw.get("parameter_values",[])        # parameters list (come from the XML document footer)
 
         # assert
         if self.num_found is None:
             raise SDException("SDATYPES-005","assert error")
-        if self.num_result is None:
-            raise SDException("SDATYPES-006","assert error")
-
-    def count(self):
-        return self.store.count()
-
-    def get_files(self):
-        return self.store.get_files()
-
-    def add_attached_parameters(self,attached_parameters):
-        """This func adds some parameters to the result of a query. 
-        
-        Notes
-            - The idea is the keep some parameters around by making them jump
-              over the search call (e.g. Search-api call, SQL call..), from
-              'query pipeline' to 'file pipeline'.
-        """
-        assert isinstance(attached_parameters, dict)
-        self.store.add_attached_parameters(attached_parameters)
 
     def __str__(self):
         return "\n".join(['%s'%(f['id'],) for f in self.store.get_files()])
