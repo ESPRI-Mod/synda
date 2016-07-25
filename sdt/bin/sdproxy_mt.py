@@ -18,7 +18,7 @@ import random
 import time
 import traceback
 import sdlog
-from sdproxy import SearchAPIProxy
+import sdproxy
 from sdexception import SDException
 import sdtypes
 import sdindex
@@ -40,8 +40,9 @@ class MetadataThread(threading.Thread):
     def run(self):
         """
         Note
-          Better put Response object in ThreadSafe object (i.e. in queue not in files list)
+            Better put Response object in ThreadSafe object
         """
+
         ap=self.query.get('attached_parameters',{})
 
         try:
@@ -259,7 +260,7 @@ def set_index_hosts(index_hosts):
     searchAPIServices={}
     for index_host in index_hosts:
         searchAPIServices[index_host]={}
-        searchAPIServices[index_host]['iSearchAPIProxy']=SearchAPIProxy() # contains service PTR
+        searchAPIServices[index_host]['iSearchAPIProxy']=sdproxy.SearchAPIProxy() # contains service PTR
         searchAPIServices[index_host]['threadlist']=[]                    # contains threads PTR
 
 # module init
