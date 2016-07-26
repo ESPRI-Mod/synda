@@ -32,16 +32,16 @@ import sddeferredafter
 from sdexception import SDException
 
 
-def post_pipeline(files,mode=None):
+def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
+
+    files=metadata.get_files()
 
     if mode=='file':
         files=sdgenericpipeline.run(files)
         files=sdfilepipeline.run(files=files)
-        files=sdshrink.run(files)
     elif mode=='dataset':
         files=sdgenericpipeline.run(files)
         files=sddatasetpipeline.run(files=files)
-        files=sdshrink.run(files)
     elif mode=='generic':
         files=sdgenericpipeline.run(files)
     elif mode is None:
@@ -52,7 +52,9 @@ def post_pipeline(files,mode=None):
     else:
         raise SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
 
-    return files # return list of dict here (i.e. not File object)
+    metadata.set_files(files)
+
+    return metadata
 
 def build_queries(stream=None,selection=None,path=None,parameter=None,index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
@@ -87,6 +89,14 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     queries=sdquerypipeline.run(stream,index_host=index_host,query_type=query_type,dry_run=dry_run,parallel=parallel)
     return queries
 
+def post_pipeline(metadata,mode=None):
+    metadata=post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode)
+
+    if mode in ['file','dataset']:
+        metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
+
+    return metadata
+
 def prepare_param(selection=None,path=None,parameter=None,load_default=None):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
     standalone param pipeline."""
@@ -117,3 +127,10 @@ def parse(parameter=None):
     facets_groups=selection.merge_facets()
     facets_groups=sdinference.run(facets_groups)
     return facets_groups
+
+def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata):
+
+    FIXME
+    files=sdshrink.run(files)
+
+    return metadata
