@@ -328,7 +328,7 @@ class Metadata(CommonIO):
         if base_response is not None:
             self.set_files(base_response.get_files())
 
-        base_response.delete()
+            base_response.delete()
 
     def add(self,metadata):
         self.store.append_files(metadata.get_files())
