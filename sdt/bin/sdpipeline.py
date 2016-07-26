@@ -50,14 +50,13 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
     # way 2: chunk-by-chunk (updating store on-the-fly)
     """
     for chunk in metadata.get_files_PAGINATION():
-        files=post_pipeline(chunk.get_files(),mode)
+        files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk.get_files(),mode)
         metadata.update(files)
     """
 
     return metadata
 
-def post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata,mode=None):
-    files=metadata.get_files()
+def post_pipeline_CHUNK_BY_CHUNK_OK_helper(files,mode=None):
 
     if mode=='file':
         files=sdgenericpipeline.run(files)
@@ -75,9 +74,7 @@ def post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata,mode=None):
     else:
         raise SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
 
-    metadata.set_files(files)
-
-    return metadata
+    return files
 
 def build_queries(stream=None,selection=None,path=None,parameter=None,index_host=None,load_default=None,query_type='remote',dry_run=False,parallel=True,count=False):
     """This pipeline add 'path', 'parameter' and 'selection' input type to the
@@ -115,8 +112,11 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
 def post_pipeline(metadata,mode=None):
     metadata=post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode)
 
+    """
+    FIXME
     if mode in ['file','dataset']:
         metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
+    """
 
     return metadata
 
@@ -153,7 +153,6 @@ def parse(parameter=None):
 
 def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata):
 
-    FIXME
     files=sdshrink.run(files)
 
     return metadata
