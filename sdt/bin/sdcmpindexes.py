@@ -31,18 +31,18 @@ output_dir='/tmp/sdcmpindexes'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('file',nargs='?',default='-',help='Selection file')
+    parser.add_argument('selection_file',nargs='?',default='-',help='Selection file')
     args = parser.parse_args()
 
     if not os.path.isdir(output_dir):
         os.mkdir(output_dir) 
 
-    queries=sdpipeline.build_queries(path=args.file)
+    queries=sdpipeline.build_queries(path=args.selection_file)
 
     for index_host in sdindex.index_host_list:
         sdproxy_mt.set_index_hosts([index_host]) # this is to have parallel, but on only one index
         metadata=sdrun.run(queries)
-        files=sdpipeline.post_pipeline(metadata.get_files(),'generic') # this is to exclude malformed files if any
+        metadata=sdpipeline.post_pipeline(metadata,'generic') # this is to exclude malformed files if any
 
         with open('%s/%s'%(output_dir,index_host),'w') as fh:
-            sdprint.print_format(files,'line',fh=fh)
+            sdprint.print_format(metadata.get_files(),'line',fh=fh)

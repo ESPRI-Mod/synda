@@ -31,9 +31,32 @@ import sddatasetpipeline
 import sddeferredafter
 from sdexception import SDException
 
-
 def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
 
+    # way 0: load-all-in-memory
+    """
+    files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata.get_files(),mode)
+    metadata.set_files(files)
+    """
+
+    # way 1: chunk-by-chunk (using a second store)
+    new_metadata=sdtypes.Metadata()
+    for chunk in metadata.get_files_GENERATOR():
+        files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk.get_files(),mode)
+        new_metadata.add(files)
+    metadata.delete()
+    metadata=new_metadata
+
+    # way 2: chunk-by-chunk (updating store on-the-fly)
+    """
+    for chunk in metadata.get_files_PAGINATION():
+        files=post_pipeline(chunk.get_files(),mode)
+        metadata.update(files)
+    """
+
+    return metadata
+
+def post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata,mode=None):
     files=metadata.get_files()
 
     if mode=='file':
