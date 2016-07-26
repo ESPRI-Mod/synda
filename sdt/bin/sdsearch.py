@@ -82,14 +82,13 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
     sdlog.info("SDSEARCH-594","Metadata processing end.")
 
-    FIXME
     sdlog.info("SDSEARCH-620","Retrieving timestamp begin.")
-    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+    metadata=fill_dataset_timestamp(squeries,metadata,parallel,action) # complete missing info
     sdlog.info("SDSEARCH-634","Retrieving timestamp end.")
 
     return metadata
 
-def fill_dataset_timestamp(squeries,files,parallel,action):
+def fill_dataset_timestamp(squeries,metadata,parallel,action):
 
     # HACK
     #
@@ -99,9 +98,9 @@ def fill_dataset_timestamp(squeries,files,parallel,action):
     #
     if action is not None:
         if action=='install':
-            files=sdbatchtimestamp.add_dataset_timestamp(squeries,files,parallel)
+            metadata=sdbatchtimestamp.add_dataset_timestamp(squeries,metadata,parallel)
 
-    return files
+    return metadata
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)

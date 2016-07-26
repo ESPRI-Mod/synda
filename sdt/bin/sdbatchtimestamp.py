@@ -17,7 +17,7 @@ import sdrun
 import sdlog
 from sdexception import MissingDatasetTimestampUrlException,MissingTimestampException
 
-def add_dataset_timestamp(squeries,files,parallel):
+def add_dataset_timestamp(squeries,metadata,parallel):
     datasets_timestamps=None
 
 
@@ -25,12 +25,13 @@ def add_dataset_timestamp(squeries,files,parallel):
         datasets_timestamps=get_datasets_timestamps(squeries,parallel)
     except MissingDatasetTimestampUrlException,e:
         sdlog.error("SYNDABTI-600","Datasets timestamps cannot be set as dataset_timestamp_url is missing")
-        return files
+        return metadata
 
 
     sdlog.info("SYNDABTI-100","%d datasets with timestamp retrieved"%len(datasets_timestamps))
 
 
+    FIXME
     # update results from first run
     for f in files:
         dataset_functional_id=f['dataset_functional_id']
