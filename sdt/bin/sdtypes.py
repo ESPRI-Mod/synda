@@ -304,8 +304,8 @@ class CommonIO():
     def get_files(self):
         return self.store.get_files()
 
-    def get_chunks(self,**kw):
-        return self.store.get_chunks(**kw)
+    def get_chunks(self,fetch_mode):
+        return self.store.get_chunks(fetch_mode)
 
     def delete(self):
         self.store.delete()

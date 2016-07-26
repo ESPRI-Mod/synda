@@ -23,13 +23,13 @@ Reference
 """
 
 import argparse
+import copy
 import sdapp
 import sdconst
 import sdlog
 import sddquery
 import sdpipelineutils
 import sdremotequtils
-import sdbatchtimestamp
 import sdprint
 
 def run(facets_groups):
@@ -74,12 +74,28 @@ def build_query(facets_group):
     # hack to retrieve datasets timestamps in one row
     if action is not None:
         if action=='install':
-            ds_timstap_facets=sdbatchtimestamp.transform_facets_for_dataset_timestamp_retrieval(facets)
+            ds_timstap_facets=transform_facets_for_dataset_timestamp_retrieval(facets)
             query['dataset_timestamp_url']=sdremotequtils.build_url(ds_timstap_facets,searchapi_host)
 
 
 
     return query
+
+def transform_facets_for_dataset_timestamp_retrieval(facets):
+    """Force attributes for dataset timestamp retrieval."""
+
+    # do not alter original facets object
+    facets_cpy=copy.deepcopy(facets)
+
+    facets_cpy['type']=['Dataset']
+
+    # we also add '_timestamp' as some project use this naming
+    # (e.g.ahttp://esgf-index1.ceda.ac.uk/esg-search/search?fields=timestamp,_timestamp&instance_id=cordex.output.EUR-11.DHMZ.ECMWF-ERAINT.evaluation.r1i1p1.RegCM4-2.v1.day.ps.v20150527).
+    # Note that search-API 'fields' attribute can contains non-existent fields
+    # (i.e. no error occurs in such case, non-existent fields are just ignored)
+    facets_cpy['fields']=['timestamp','_timestamp','instance_id']
+
+    return facets_cpy
 
 # init.
 

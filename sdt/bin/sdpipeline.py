@@ -29,35 +29,12 @@ import sdgenericpipeline
 import sdfilepipeline
 import sddatasetpipeline
 import sddeferredafter
+import sdconst
 import sdtypes
+import sdpipelineutils
 from sdexception import SDException
 
-def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
-
-    # way 0: load-all-in-memory
-    """
-    files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata.get_files(),mode)
-    metadata.set_files(files)
-    """
-
-    # way 1: chunk-by-chunk (using a second store)
-    new_metadata=sdtypes.Metadata()
-    for chunk in metadata.get_chunks(mode='generator'):
-        chunk=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk,mode)
-        new_metadata.add_files(chunk)
-    metadata.delete()
-    metadata=new_metadata
-
-    # way 2: chunk-by-chunk (updating store on-the-fly)
-    """
-    for chunk in metadata.get_chunks(mode='pagination'):
-        chunk=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk,mode)
-        metadata.update(chunk)
-    """
-
-    return metadata
-
-def post_pipeline_CHUNK_BY_CHUNK_OK_helper(files,mode=None):
+def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
 
     assert isinstance(files,list)
 
@@ -113,7 +90,7 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     return queries
 
 def post_pipeline(metadata,mode=None):
-    metadata=post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode)
+    metadata=sdpipelineutils.perform_chunk_by_chunk(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     """
     FIXME

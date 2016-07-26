@@ -98,7 +98,7 @@ def fill_dataset_timestamp(squeries,metadata,parallel,action):
     #
     if action is not None:
         if action=='install':
-            metadata=sdbatchtimestamp.add_dataset_timestamp(squeries,metadata,parallel)
+            metadata=sdbatchtimestamp.run(squeries,metadata,parallel)
 
     return metadata
 

@@ -12,17 +12,16 @@
 """This module contains pagination mecanism to prevent using too much memory."""
 
 import sdapp
-import sddb
 
 class DBPagination():
 
-    def __init__(self,table,columns,conn=sddb.conn):
+    def __init__(self,table,columns,chunksize,conn):
         self.conn=conn
         self.table=table
         self.columns=columns
         self.pagination_offset=0
         self.pagination_limit=0
-        self.pagination_block_size=2500
+        self.pagination_block_size=chunksize
 
     def reset(self):
         self.pagination_limit=self.pagination_block_size

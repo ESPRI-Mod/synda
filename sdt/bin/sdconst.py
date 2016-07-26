@@ -120,6 +120,7 @@ LOGFILE_CONSUMER='transfer.log'
 CHUNKSIZE=9000
 
 PROCESSING_CHUNKSIZE=500
+PROCESSING_FETCH_MODE_GENERATOR='generator'
 
 SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)
 DIRECT_DOWNLOAD_HTTP_TIMEOUT=30 # Direct download HTTP timeout (time to wait for HTTP response)
