@@ -96,8 +96,10 @@ class DatabaseStorage():
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT %s from data"%columns)
             rs=c.fetchone()
-            #li.append((rs[0],rs[1],rs[2],rs[3]))
-            li.append(json.loads(rs[3]))
+            while rs is not None
+                #li.append((rs[0],rs[1],rs[2],rs[3]))
+                li.append(json.loads(rs[3]))
+                rs=c.fetchone()
         return li
 
     def get_chunks(self,**kw):
@@ -123,11 +125,8 @@ class DatabaseStorage():
                 results = c.fetchmany(chunksize)
                 if not results:
                     break
-                yield  results
-
-                #for row in results:
-                #    li.kk(rs[0],rs[1],rs[2],rs[3])
-                #yield  li
+                li=[json.loads(rs[3]) for rs in results] # WARNING: two (sdconst.PROCESSING_CHUNKSIZE) list in memory at the same time
+                yield li
 
     def get_chunks_PAGINATION(self,chunksize=sdconst.PROCESSING_CHUNKSIZE):
         dbpagination=DBPagination()
