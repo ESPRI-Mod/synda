@@ -40,7 +40,7 @@ class MemoryStorage():
         chunksize=kw.get('chunksize',sdconst.PROCESSING_CHUNKSIZE)
 
         for i in xrange(0, self.count(), chunksize):
-            yield sef.files[i:i+chunksize]
+            yield self.files[i:i+chunksize]
 
     def append_files(self,files):
         self.files.extend(files)
