@@ -29,6 +29,7 @@ import sdgenericpipeline
 import sdfilepipeline
 import sddatasetpipeline
 import sddeferredafter
+import sdtypes
 from sdexception import SDException
 
 def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
