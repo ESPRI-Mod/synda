@@ -119,7 +119,7 @@ class SearchAPIProxy():
         request.limit=sdconst.CHUNKSIZE
         request.offset=0
         offset = 0
-        paginated_response=PaginatedResponse()
+        paginated_response=sdtypes.PaginatedResponse()
         nread = 0 # how many already read
         moredata = True
 

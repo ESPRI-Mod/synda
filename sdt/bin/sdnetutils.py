@@ -17,7 +17,7 @@ import traceback
 import urllib2
 import requests
 import sdxml
-from sdtypes import Response
+import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
 import sdlog
@@ -76,7 +76,7 @@ def call_web_service(url,timeout):
 
         raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
-    return Response(call_duration=elapsed_time,**result)
+    return sdtypes.Response(call_duration=elapsed_time,**result)
 
 def call_param_web_service(url,timeout):
     buf=HTTP_GET(url,timeout)
