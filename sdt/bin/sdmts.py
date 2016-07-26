@@ -20,6 +20,7 @@ import copy
 import sdconfig
 import uuid
 import sddbpagination
+import sdconst
 
 class MemoryStorage():
 
@@ -32,8 +33,14 @@ class MemoryStorage():
     def set_files(self,files):
         self.files=files
 
-    def get_files(self,**kw):
+    def get_files(self):
         return self.files
+
+    def get_chunks(self,**kw):
+        chunksize=kw.get('chunksize',sdconst.PROCESSING_CHUNKSIZE)
+
+        for i in xrange(0, self.count(), chunksize):
+            yield sef.files[i:i+chunksize]
 
     def append_files(self,files):
         self.files.extend(files)
@@ -82,17 +89,7 @@ class DatabaseStorage():
 
         self.append_files(files)
 
-    def get_files(self,**kw):
-        mode=kw.get('mode','generator')
-
-        if mode=='all':
-            return self.get_files_ALL()
-        elif mode=='generator':
-            return self.get_files_GENERATOR(arraysize=100)
-        elif mode=='pagination':
-            return self.get_files_PAGINATION()
-
-    def get_files_ALL(self):
+    def get_files(self):
         """WARNING: this func doesn't work on lowmem machine (<64Go RAM)."""
 
         li=[]
@@ -103,27 +100,36 @@ class DatabaseStorage():
             li.append(json.loads(rs[3]))
         return li
 
-    def get_files_GENERATOR(self,arraysize=100):
+    def get_chunks(self,**kw):
+        mode=kw.get('mode','generator')
+        chunksize=kw.get('chunksize',sdconst.PROCESSING_CHUNKSIZE)
+
+        if mode=='generator':
+            return self.get_chunks_GENERATOR(chunksize=chunksize)
+        elif mode=='pagination':
+            return self.get_chunks_PAGINATION(chunksize=chunksize)
+        else:
+            assert False
+
+    def get_chunks_GENERATOR(self,chunksize=sdconst.PROCESSING_CHUNKSIZE):
         """This method is used to loop over all files using yield without consuming too much memory ('yield' based impl.)
 
         Note
             It is not possible to write anywhere in the db file between two yields !
         """
-
-        def fetch(cur,sz):
-            while True:
-                results = cur.fetchmany(sz)
-                if not results:
-                    break
-                for result in results: # loop over row block
-                    yield result
-
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("select %s from data"%columns)
-            for rs in fetch(c,arraysize): # loop over row
-                yield (rs[0],rs[1],rs[2],rs[3])
+            while True:
+                results = c.fetchmany(chunksize)
+                if not results:
+                    break
+                yield  results
 
-    def get_files_PAGINATION(self):
+                #for row in results:
+                #    li.kk(rs[0],rs[1],rs[2],rs[3])
+                #yield  li
+
+    def get_chunks_PAGINATION(self,chunksize=sdconst.PROCESSING_CHUNKSIZE):
         dbpagination=DBPagination()
         dbpagination.reset()
 

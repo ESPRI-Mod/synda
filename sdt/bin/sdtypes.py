@@ -301,10 +301,11 @@ class CommonIO():
     def set_files(self,files):
         self.store.set_files(files)
 
-    def get_files(self,**kw):
-        files=self.store.get_files(**kw)
-        assert isinstance(files,list)
-        return files
+    def get_files(self):
+        return self.store.get_files()
+
+    def get_chunks(self,**kw):
+        return self.store.get_chunks(**kw)
 
     def delete(self):
         self.store.delete()

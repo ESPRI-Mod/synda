@@ -119,6 +119,8 @@ LOGFILE_CONSUMER='transfer.log'
 # So from now, it's set to 9000
 CHUNKSIZE=9000
 
+PROCESSING_CHUNKSIZE=500
+
 SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)
 DIRECT_DOWNLOAD_HTTP_TIMEOUT=30 # Direct download HTTP timeout (time to wait for HTTP response)
 ASYNC_DOWNLOAD_HTTP_TIMEOUT=360 # Async download HTTP timeout (time to wait for HTTP response)

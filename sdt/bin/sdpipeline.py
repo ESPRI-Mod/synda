@@ -36,13 +36,13 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
 
     # way 0: load-all-in-memory
     """
-    files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata.get_files(mode='all'),mode)
+    files=post_pipeline_CHUNK_BY_CHUNK_OK_helper(metadata.get_files(),mode)
     metadata.set_files(files)
     """
 
     # way 1: chunk-by-chunk (using a second store)
     new_metadata=sdtypes.Metadata()
-    for chunk in metadata.get_files(mode='generator'):
+    for chunk in metadata.get_chunks(mode='generator'):
         chunk=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk,mode)
         new_metadata.add(chunk)
     metadata.delete()
@@ -50,7 +50,7 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
 
     # way 2: chunk-by-chunk (updating store on-the-fly)
     """
-    for chunk in metadata.get_files(mode='pagination'):
+    for chunk in metadata.get_chunks(mode='pagination'):
         chunk=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk,mode)
         metadata.update(chunk)
     """
