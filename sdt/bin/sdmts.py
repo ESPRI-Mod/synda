@@ -22,7 +22,13 @@ import uuid
 import sddbpagination
 import sdconst
 
-class MemoryStorage():
+# abstract class
+class Storage():
+
+    def get_chunks(self,fetch_mode):
+        pass
+
+class MemoryStorage(Storage):
 
     def __init__(self):
         self.files=[]
@@ -36,8 +42,8 @@ class MemoryStorage():
     def get_files(self):
         return self.files
 
-    def get_chunks(self,**kw):
-        chunksize=kw.get('chunksize',sdconst.PROCESSING_CHUNKSIZE)
+    def get_chunks(self,fetch_mode): # fetch_mode is not used (but need to be present to respect Storage contract)
+        chunksize=sdconst.PROCESSING_CHUNKSIZE
 
         for i in xrange(0, self.count(), chunksize):
             yield self.files[i:i+chunksize]
@@ -53,7 +59,7 @@ class MemoryStorage():
     def delete(self):
         del self.files
 
-class DatabaseStorage():
+class DatabaseStorage(Storage):
 
     def __init__(self):
         self.dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())
@@ -102,18 +108,15 @@ class DatabaseStorage():
                 rs=c.fetchone()
         return li
 
-    def get_chunks(self,**kw):
-        mode=kw.get('mode','generator')
-        chunksize=kw.get('chunksize',sdconst.PROCESSING_CHUNKSIZE)
-
-        if mode=='generator':
-            return self.get_chunks_GENERATOR(chunksize=chunksize)
-        elif mode=='pagination':
-            return self.get_chunks_PAGINATION(chunksize=chunksize)
+    def get_chunks(self,fetch_mode):
+        if fetch_mode=='generator':
+            return self.get_chunks_GENERATOR()
+        elif fetch_mode=='pagination':
+            return self.get_chunks_PAGINATION()
         else:
             assert False
 
-    def get_chunks_GENERATOR(self,chunksize=sdconst.PROCESSING_CHUNKSIZE):
+    def get_chunks_GENERATOR(self):
         """This method is used to loop over all files using yield without consuming too much memory ('yield' based impl.)
 
         Note
@@ -122,14 +125,14 @@ class DatabaseStorage():
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("select %s from data"%columns)
             while True:
-                results = c.fetchmany(chunksize)
+                results = c.fetchmany(sdconst.PROCESSING_CHUNKSIZE)
                 if not results:
                     break
                 li=[json.loads(rs[3]) for rs in results] # WARNING: two (sdconst.PROCESSING_CHUNKSIZE) list in memory at the same time
                 yield li
 
-    def get_chunks_PAGINATION(self,chunksize=sdconst.PROCESSING_CHUNKSIZE):
-        dbpagination=DBPagination()
+    def get_chunks_PAGINATION(self):
+        dbpagination=DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,self.conn)
         dbpagination.reset()
 
         files=dbpagination.get_files()
