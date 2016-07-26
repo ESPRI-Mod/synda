@@ -86,7 +86,7 @@ def process_queries(queries):
     mqr=sdtypes.MultiQueryResponse()
 
     for query in queries:
-        mqr.add(ws_call(query))
+        mqr.swallow(ws_call(query))
 
     return mqr
 

@@ -44,7 +44,7 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
     new_metadata=sdtypes.Metadata()
     for chunk in metadata.get_chunks(mode='generator'):
         chunk=post_pipeline_CHUNK_BY_CHUNK_OK_helper(chunk,mode)
-        new_metadata.add(chunk)
+        new_metadata.add_files(chunk)
     metadata.delete()
     metadata=new_metadata
 

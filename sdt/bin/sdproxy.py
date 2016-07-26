@@ -135,7 +135,7 @@ class SearchAPIProxy():
                 response=self.call_web_service(request)
 
             # retrieve output
-            paginated_response.add(response)
+            paginated_response.swallow(response)
 
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE

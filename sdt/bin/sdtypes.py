@@ -333,10 +333,13 @@ class Metadata(CommonIO):
 
             base_response.delete()
 
-    def add(self,metadata):
+    def swallow(self,metadata):
         self.store.append_files(metadata.get_files())
-
         metadata.delete()
+
+    def add_files(self,files):
+        assert isinstance(files, list)
+        self.store.append_files(files)
 
 class PaginatedResponse(BaseResponse):
 
@@ -345,7 +348,7 @@ class PaginatedResponse(BaseResponse):
         self.store=sdmts.get_store(self.lowmem)
         self.call_duration=0
 
-    def add(self,response):
+    def swallow(self,response):
         self.store.append_files(response.get_files())
         self.call_duration+=response.call_duration
         response.delete()
@@ -357,7 +360,7 @@ class MultiQueryResponse(BaseResponse):
         self.store=sdmts.get_store(self.lowmem)
         self.call_duration=0
 
-    def add(self,response):
+    def swallow(self,response):
         self.store.append_files(response.get_files())
         self.call_duration+=response.call_duration
         response.delete()
