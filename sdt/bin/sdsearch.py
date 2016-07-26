@@ -79,32 +79,13 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
 
     sdlog.info("SDSEARCH-590","Metadata processing begin.")
-
-    # way 0: load-all-in-memory
-    """
-    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
-    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-    metadata.set_files(files)
-    """
-
-    # way 1: chunk-by-chunk (using a second store)
-    new_metadata=sdtypes.Metadata()
-    for chunk in metadata.get_files_GENERATOR():
-        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode)
-        files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-        new_metadata.add(files)
-    metadata.delete()
-    metadata=new_metadata
-
-    # way 2: chunk-by-chunk (updating store on-the-fly)
-    """
-    for chunk in metadata.get_files_PAGINATION():
-        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode)
-        files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-        metadata.update(files)
-    """
-
+    metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
     sdlog.info("SDSEARCH-594","Metadata processing end.")
+
+    FIXME
+    sdlog.info("SDSEARCH-620","Retrieving timestamp begin.")
+    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+    sdlog.info("SDSEARCH-634","Retrieving timestamp end.")
 
     return metadata
 

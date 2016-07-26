@@ -75,9 +75,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
             mqr=process_queries(queries)
             metadata=sdtypes.Metadata(mqr)
 
-            # post-call-processing
-            li=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode)
-            metadata.set_files(li)
+            metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
 
             return metadata
         finally:
