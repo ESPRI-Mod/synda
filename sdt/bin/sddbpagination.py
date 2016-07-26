@@ -24,12 +24,11 @@ class DBPagination():
         self.pagination_limit=0
         self.pagination_block_size=2500
 
-    def get_files_pagination__reset(self):
-
+    def reset(self):
         self.pagination_limit=self.pagination_block_size
         self.pagination_offset=0
 
-    def get_files_pagination(self):
+    def get_files(self):
         """
         This method is used to loop over all files (note that we use pagination here not to load all the rows in memory !!!)
 

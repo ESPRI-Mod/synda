@@ -19,6 +19,7 @@ import os
 import copy
 import sdconfig
 import uuid
+import sddbpagination
 
 class MemoryStorage():
 
@@ -113,7 +114,20 @@ class DatabaseStorage():
                 yield (rs[0],rs[1],rs[2],rs[3])
 
     def get_files_PAGINATION(self):
-        FIXME use sddbpagination module here
+        dbpagination=DBPagination()
+        dbpagination.reset()
+
+        files=dbpagination.get_files()
+        while len(files)>0:
+            for t in files:
+
+                # <= PERFORM TASK HERE
+
+                update_db(l__date,t.file_id)
+
+            sddb._conn.commit() # commit block of insertSelectionTransferJunction
+
+            files=dbpagination.get_files()
 
     def append_files(self,files):
 
