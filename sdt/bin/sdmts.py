@@ -32,7 +32,7 @@ class MemoryStorage():
     def set_files(self,files):
         self.files=files
 
-    def get_files(self):
+    def get_files(self,**kw):
         return self.files
 
     def append_files(self,files):
@@ -82,9 +82,19 @@ class DatabaseStorage():
 
         self.append_files(files)
 
-    def get_files(self):
+    def get_files(self,**kw):
+        mode=kw.get('mode','generator')
 
-        # WARNING: slow perf here. Maybe use 'yield' keyword as in sdsqlitedict module.
+        if mode=='all':
+            return self.get_files_ALL()
+        elif mode=='generator':
+            return self.get_files_GENERATOR(arraysize=100)
+        elif mode=='pagination':
+            return self.get_files_PAGINATION()
+
+    def get_files_ALL(self):
+        """WARNING: this func doesn't work on lowmem machine (<64Go RAM)."""
+
         li=[]
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT %s from data"%columns)
