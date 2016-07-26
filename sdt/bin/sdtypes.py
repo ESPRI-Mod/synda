@@ -302,7 +302,9 @@ class CommonIO():
         self.store.set_files(files)
 
     def get_files(self,**kw):
-        return self.store.get_files(**kw)
+        files=self.store.get_files(**kw)
+        assert isinstance(files,list)
+        return files
 
     def delete(self):
         self.store.delete()
