@@ -96,7 +96,7 @@ class DatabaseStorage():
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT %s from data"%columns)
             rs=c.fetchone()
-            while rs is not None
+            while rs is not None:
                 #li.append((rs[0],rs[1],rs[2],rs[3]))
                 li.append(json.loads(rs[3]))
                 rs=c.fetchone()
