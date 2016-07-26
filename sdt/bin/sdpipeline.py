@@ -59,6 +59,8 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(metadata,mode=None):
 
 def post_pipeline_CHUNK_BY_CHUNK_OK_helper(files,mode=None):
 
+    assert isinstance(files,list)
+
     if mode=='file':
         files=sdgenericpipeline.run(files)
         files=sdfilepipeline.run(files=files)
