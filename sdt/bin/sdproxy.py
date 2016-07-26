@@ -134,15 +134,14 @@ class SearchAPIProxy():
             else:
                 response=self.call_web_service(request)
 
-            # retrieve output
-            paginated_response.swallow(response)
-
             # paging (post-processing)
             offset += sdconst.CHUNKSIZE
             nread += response.count()
             nleft = response.num_found - nread
 
             moredata = (nleft>0) and (response.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
+
+            paginated_response.swallow(response) # warning: response is modified here
 
         return paginated_response
 
