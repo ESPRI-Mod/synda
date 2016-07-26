@@ -14,6 +14,7 @@
 import os
 import sys
 import json
+import sdtypes
 
 def get_input_data(path,deserialize_by_line=False):
     """Deserialize and returns input data (from file or stdin).
@@ -51,3 +52,33 @@ def get_input_data(path,deserialize_by_line=False):
         keysvals_groups=f_deserialize_by_line(sys.stdin) if deserialize_by_line else json.load(sys.stdin)
 
     return keysvals_groups
+
+def perform_chunk_by_chunk(fetch_mode,metadata,f,*args,**kwargs):
+
+    if fetch_mode=='no_chunk':
+
+        # way 0: load-all-in-memory (no chunk)
+        files=f(metadata.get_files(),*args,**kwargs)
+        metadata.set_files(files)
+
+    elif fetch_mode=='generator':
+
+        # way 1: chunk-by-chunk (using a second store)
+        new_metadata=sdtypes.Metadata()
+        for chunk in metadata.get_chunks(fetch_mode):
+            chunk=f(chunk,*args,**kwargs)
+            new_metadata.add_files(chunk)
+        metadata.delete()
+        metadata=new_metadata
+
+    elif fetch_mode=='pagination':
+
+        # way 2: chunk-by-chunk (updating store on-the-fly)
+        for chunk in metadata.get_chunks(fetch_mode):
+            chunk=f(chunk,*args,**kwargs)
+            metadata.update(chunk)
+
+    else:
+        assert False
+
+    return metadata
