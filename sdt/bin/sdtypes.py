@@ -301,8 +301,8 @@ class CommonIO():
     def set_files(self,files):
         self.store.set_files(files)
 
-    def get_files(self):
-        return self.store.get_files()
+    def get_files(self,**kw):
+        return self.store.get_files(**kw)
 
     def delete(self):
         self.store.delete()
