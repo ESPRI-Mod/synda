@@ -64,32 +64,49 @@ def run(stream=None,selection=None,path=None,parameter=None,post_pipeline_mode='
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
         # retrieve files
-        if lowmem:
-            metadata=execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action)
-        else:
-            metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
+        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
 
         if progress:
             ProgressThread.stop() # spinner stop
 
         return metadata
 
-def execute_queries_LOWMEM(squeries,parallel,post_pipeline_mode,action):
+def execute_queries(squeries,parallel,post_pipeline_mode,action):
     """This func serializes received metadata on-disk to prevent memory overload."""
 
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
-
     metadata=sdrun.run(squeries,parallel)
-
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
 
+    sdlog.info("SDSEARCH-590","Metadata processing begin.")
+
+    # way 0: load-all-in-memory
+    """
+    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
+    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+    metadata.set_files(files)
+    """
+
+    # way 1: chunk-by-chunk (using a second store)
     new_metadata=sdtypes.Metadata()
-    for chunk in metadata: # FIXME add iterator feature ?
-        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode) # post-processing
+    for chunk in metadata.get_files_GENERATOR():
+        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode)
         files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
         new_metadata.add(files)
+    metadata.delete()
+    metadata=new_metadata
 
-    return new_metadata
+    # way 2: chunk-by-chunk (updating store on-the-fly)
+    """
+    for chunk in metadata.get_files_PAGINATION():
+        files=sdpipeline.post_pipeline(chunk.get_files(),post_pipeline_mode)
+        files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
+        metadata.update(files)
+    """
+
+    sdlog.info("SDSEARCH-594","Metadata processing end.")
+
+    return metadata
 
 def fill_dataset_timestamp(squeries,files,parallel,action):
 
@@ -104,13 +121,6 @@ def fill_dataset_timestamp(squeries,files,parallel,action):
             files=sdbatchtimestamp.add_dataset_timestamp(squeries,files,parallel)
 
     return files
-
-def execute_queries(squeries,parallel,post_pipeline_mode,action):
-    metadata=sdrun.run(squeries,parallel)
-    files=sdpipeline.post_pipeline(metadata.get_files(),post_pipeline_mode) # post-processing
-    files=fill_dataset_timestamp(squeries,files,parallel,action) # complete missing info
-    metadata.set_files(files)
-    return metadata
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)

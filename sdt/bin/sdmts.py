@@ -86,18 +86,41 @@ class DatabaseStorage():
         # WARNING: slow perf here. Maybe use 'yield' keyword as in sdsqlitedict module.
         li=[]
         with contextlib.closing(self.conn.cursor()) as c:
-            c.execute("SELECT id, size, data_node, attrs from data")
+            c.execute("SELECT %s from data"%columns)
             rs=c.fetchone()
-            #li.append((rs[0],rs[1],rs[2],rs[3])
+            #li.append((rs[0],rs[1],rs[2],rs[3]))
             li.append(json.loads(rs[3]))
         return li
+
+    def get_files_GENERATOR(self,arraysize=100):
+        """This method is used to loop over all files using yield without consuming too much memory ('yield' based impl.)
+
+        Note
+            It is not possible to write anywhere in the db file between two yields !
+        """
+
+        def fetch(cur,sz):
+            while True:
+                results = cur.fetchmany(sz)
+                if not results:
+                    break
+                for result in results: # loop over row block
+                    yield result
+
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("select %s from data"%columns)
+            for rs in fetch(c,arraysize): # loop over row
+                yield (rs[0],rs[1],rs[2],rs[3])
+
+    def get_files_PAGINATION(self):
+        FIXME use sddbpagination module here
 
     def append_files(self,files):
 
         # WARNING: slow perf here. Maybe replace rown-by-row insert with array insert.
         with contextlib.closing(self.conn.cursor()) as c:
             for f in files:
-                c.execute("INSERT INTO data (id, size, data_node, attrs) VALUES (?, ?, ?, ?)", (f['id'], f['size'], f['data_node'], json.dumps(f)))
+                c.execute("INSERT INTO data (%s) VALUES (?, ?, ?, ?)"%columns, (f['id'], f['size'], f['data_node'], json.dumps(f)))
             self.conn.commit()
 
     def add_attached_parameters(self,attached_parameters):
@@ -122,3 +145,5 @@ def get_store(lowmem=False):
         return MemoryStorage()
 
 # init.
+
+columns="id, size, data_node, attrs"
