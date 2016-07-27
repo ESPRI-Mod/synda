@@ -30,7 +30,10 @@ import sdlog
 import sdgc
 from sdexception import SDException
 
-def run(files,mode):
+def run(metadata,mode):
+
+    FIXME
+
     new_files={}
     for f in files:
         id_=sdpostpipelineutils.get_functional_identifier_value(f)
@@ -42,7 +45,7 @@ def run(files,mode):
         else:
             new_files[id_]=f
 
-    return new_files.values()
+FIXME    return new_files.values()
 
 def compare(f1,f2):
     mode=sdconfig.config.get('behaviour','nearest_mode')

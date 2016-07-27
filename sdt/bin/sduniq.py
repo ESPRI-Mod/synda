@@ -21,9 +21,11 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 
-def run(files,mode,keep_replica=False):
+def run(metadata,mode,keep_replica=False):
+    FIXME
+
     files=remove_duplicate(files,keep_replica)
-    return files
+    return metadata
 
 def remove_duplicate(files,keep_replica):
     """This func remove uniq_id duplicates."""
