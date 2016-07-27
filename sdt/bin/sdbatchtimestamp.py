@@ -16,7 +16,7 @@ import sdapp
 import sdrun
 import sdlog
 import sdconst
-import sdpipelineutils
+import sdpipelineprocessing
 from sdexception import MissingDatasetTimestampUrlException,MissingTimestampException
 
 def run(squeries,metadata,parallel):
@@ -32,7 +32,7 @@ def run(squeries,metadata,parallel):
 
     sdlog.info("SYNDABTI-100","%d datasets with timestamp retrieved"%len(datasets_timestamps))
 
-    metadata=sdpipelineutils.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_dataset_timestamp,datasets_timestamps)
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_dataset_timestamp,datasets_timestamps)
 
     return metadata
 

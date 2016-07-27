@@ -32,7 +32,7 @@ import sddatasetpipeline
 import sddeferredafter
 import sdconst
 import sdtypes
-import sdpipelineutils
+import sdpipelineprocessing
 from sdexception import SDException
 
 def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
@@ -91,7 +91,7 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     return queries
 
 def post_pipeline(metadata,mode=None):
-    metadata=sdpipelineutils.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     if mode in ['file','dataset']:
         metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
