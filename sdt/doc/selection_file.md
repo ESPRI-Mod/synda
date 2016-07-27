@@ -20,11 +20,13 @@ Example of a selection file
     model=CNRM-CM5 CSIRO-Mk3-6-0
     experiment=historical amip
     ensemble=r1i1p1
-    variable[atmos][mon]=tasmin tas psl
-    variable[ocean][fx]=areacello sftof
-    variable[land][mon]=mrsos,nppRoot,nep
-    variable[seaIce][mon]=sic evap
-    variable[ocnBgchem][mon]=dissic fbddtalk
+    variable[atmos]=tasmin tas psl
+    variable[cfDay]=albisccp cltisccp pctisccp rlut rlutcs rsut rsutcs
+    variable[ocean fx]=areacello sftof
+    variable[land mon]=mrsos,nppRoot,nep
+    variable[seaIce mon]=sic evap
+    variable[ocnBgchem mon]=dissic fbddtalk
+    variable[Lmon]=mrro mrso
 
 Notes:
 
