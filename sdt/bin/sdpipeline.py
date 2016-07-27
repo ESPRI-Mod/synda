@@ -20,6 +20,7 @@ Note:
 import json
 import sdapp
 import sdquerypipeline
+import sdshrinkprepare
 import sdshrink
 import sdparse
 import sdbuffer
@@ -92,11 +93,8 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
 def post_pipeline(metadata,mode=None):
     metadata=sdpipelineutils.perform_chunk_by_chunk(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
-    """
-    FIXME
     if mode in ['file','dataset']:
         metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
-    """
 
     return metadata
 
@@ -132,7 +130,6 @@ def parse(parameter=None):
     return facets_groups
 
 def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata):
-
+    sdshrinkprepare
     files=sdshrink.run(files)
-
     return metadata
