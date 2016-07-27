@@ -36,6 +36,23 @@ import sdnearestpost
 import sduniq
 import sdconfig
 
+def foobar():
+    keep_replica=sdpostpipelineutils.get_attached_parameter__global(files,'keep_replica')
+    if keep_replica=='true':
+        # Keep replica.
+        # In this case, we remove type-A duplicates, but we keep type-B duplicates (i.e. replicas)
+
+        # uniq key => id (i.e. including datanode)
+
+        files=sduniq.run(files,keep_replica=True)
+    else:
+        # Do not keep replica.
+        # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
+
+        # uniq key => instance_id (i.e. excluding datanode)
+
+        files=sduniq.run(files)
+
 def run(files):
 
     #for f in files:
@@ -55,21 +72,7 @@ def shrink(files):
 
         files=sdnearestpost.run(files)
     else:
-        keep_replica=sdpostpipelineutils.get_attached_parameter__global(files,'keep_replica')
-        if keep_replica=='true':
-            # Keep replica.
-            # In this case, we remove type-A duplicates, but we keep type-B duplicates (i.e. replicas)
-
-            # uniq key => id (i.e. including datanode)
-
-            files=sduniq.run(files,keep_replica=True)
-        else:
-            # Do not keep replica.
-            # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
-    
-            # uniq key => instance_id (i.e. excluding datanode)
-
-            files=sduniq.run(files)
+        foobar()
 
     return files
 
