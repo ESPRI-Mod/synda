@@ -53,7 +53,7 @@ def get_input_data(path,deserialize_by_line=False):
 
     return keysvals_groups
 
-def perform_chunk_by_chunk(io_mode,metadata,f,*args,**kwargs):
+def run_pipeline(io_mode,metadata,f,*args,**kwargs):
 
     if io_mode=='no_chunk':
 

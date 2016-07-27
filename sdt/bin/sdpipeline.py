@@ -91,7 +91,7 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     return queries
 
 def post_pipeline(metadata,mode=None):
-    metadata=sdpipelineutils.perform_chunk_by_chunk(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
+    metadata=sdpipelineutils.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     if mode in ['file','dataset']:
         metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
