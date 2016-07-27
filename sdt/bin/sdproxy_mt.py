@@ -99,7 +99,7 @@ def run(i__queries):
 
         (success,errors)=run_helper(l__queries)
 
-        metadata.swallow(success) # warning: success is modified here
+        metadata.slurp(success) # warning: success is modified here
 
         if len(errors)>0:
             sdlog.info("SDPROXMT-082","%d search-API queries failed"%(len(errors),))
@@ -229,7 +229,7 @@ def run_helper(queries):
     metadata=sdtypes.Metadata()
     while not __result_queue.empty():
         success=__result_queue.get(False) # retrieve result from ONE successful search-API call
-        metadata.swallow(success) # warning: success is modified here
+        metadata.slurp(success) # warning: success is modified here
 
     # retrieve error from output queue and insert them into a list
     errors=[]

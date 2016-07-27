@@ -141,7 +141,7 @@ class SearchAPIProxy():
 
             moredata = (nleft>0) and (response.count()>0) # the second member is for the case when "num_found > 0" but nothing is returned
 
-            paginated_response.swallow(response) # warning: response is modified here
+            paginated_response.slurp(response) # warning: response is modified here
 
         return paginated_response
 

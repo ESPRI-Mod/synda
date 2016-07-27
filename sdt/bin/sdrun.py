@@ -37,12 +37,12 @@ def run(queries,parallel=True):
         (queries_with_index_host,queries_without_index_host)=split_queries(queries) # we need this, because query with specific index host can't be parallelized
 
         if len(queries_with_index_host)>0:
-            metadata.swallow(sequential_exec(queries_with_index_host))
+            metadata.slurp(sequential_exec(queries_with_index_host))
 
         if len(queries_without_index_host)>0:
-            metadata.swallow(parallel_exec(queries_without_index_host))
+            metadata.slurp(parallel_exec(queries_without_index_host))
     else:
-        metadata.swallow(sequential_exec(queries))
+        metadata.slurp(sequential_exec(queries))
 
     return metadata
 
@@ -84,7 +84,7 @@ def sequential_exec(queries):
     metadata=sdtypes.Metadata()
     for q in queries:
         result=search.run(url=q['url'],attached_parameters=q.get('attached_parameters'))
-        metadata.swallow(result)
+        metadata.slurp(result)
     return metadata
 
 if __name__ == '__main__':
