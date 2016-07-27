@@ -129,9 +129,5 @@ def parse(parameter=None):
     return facets_groups
 
 def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata,mode):
-    light_metadata=sdlmattrfilter.run(metadata) # build light list (keeping only required attributes to perform 'shrink' task)
-
-    FIXME
-    sdshrinkprepare
-    files=sdshrink.run(files)
+    metadata=sdshrink.run(metadata,mode)
     return metadata
