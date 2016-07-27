@@ -11,42 +11,21 @@
 
 """This module contains shrink preprocessing routines."""
 
-class ShrinkPrepareDataStructure():
-    def __init__(self):
-        self.light_files=[]
-    def run():
+def is_nearestpost_enabled(metadata):
 
-class ShrinkComputeFlag():
-
-    def __init__(self):
-        keep_replica=sdpostpipelineutils.get_attached_parameter__global(files,'keep_replica')
-        self.nearestpost_enabled=True
-
-    def run(self,files):
-
-            
-    def is_nearestpost_enabled(files):
-        if self.nearestpost_enabled==False:
-    
-            # already set to false in a previous chunk
-            return
-        else:
-            if sdconfig.nearest_schedule=='post':
-                if nearest_flag_set_on_all_files(files):
-                    self.nearestpost_enabled=True
-                else:
-                    self.nearestpost_enabled=False
-            else:
-                self.nearestpost_enabled=False
-
-    def nearest_flag_set_on_all_files(files):
-        """This func checks that all files have the 'nearest' flag (as
-        sdnearestpost processing type is 'interfile', we need ALL files to
-        be flagged).
-        """
-
-        for f in files:
-            nearest=sdpostpipelineutils.get_attached_parameter(f,'nearest','false')
-            if nearest=='false':
-                return False
+    if sdconfig.nearest_schedule=='post' and nearest_flag_set_on_all_files(metadata):
         return True
+    else:
+        return False
+
+def nearest_flag_set_on_all_files(metadata):
+    """This func checks that all files have the 'nearest' flag (as sdnearestpost processing type is 'interfile', we need ALL files to be flagged)."""
+
+    # create light list with needed columns only not to overload system memory
+    light_metadata=sdlmattrfilter.run(metadata,['attached_parameters']) # we keep 'attached_parameters' because it contains 'nearest' flag we are interested in
+
+    for f in light_metadata.get_files(): # load complete list in memory
+        nearest=sdpostpipelineutils.get_attached_parameter(f,'nearest','false')
+        if nearest=='false':
+            return False
+    return True
