@@ -52,7 +52,7 @@ def call_web_service(url,timeout):
         buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
 
     try:
-        result=sdxml.parse_metadata(buf)
+        di=sdxml.parse_metadata(buf)
     except Exception,e:
 
         # If we are here, it's likely that they is a problem with the internet connection
@@ -76,7 +76,7 @@ def call_web_service(url,timeout):
 
         raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
-    return sdtypes.Response(call_duration=elapsed_time,**result)
+    return sdtypes.Response(call_duration=elapsed_time,**di)
 
 def call_param_web_service(url,timeout):
     buf=HTTP_GET(url,timeout)
