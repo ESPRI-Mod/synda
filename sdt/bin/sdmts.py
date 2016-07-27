@@ -26,7 +26,7 @@ import sdconst
 # abstract class
 class Storage():
 
-    def get_chunks(self,fetch_mode):
+    def get_chunks(self,io_mode):
         pass
 
     def copy(self):
@@ -49,7 +49,7 @@ class MemoryStorage(Storage):
     def get_files(self):
         return self.files
 
-    def get_chunks(self,fetch_mode): # fetch_mode is not used (but need to be present to respect Storage contract)
+    def get_chunks(self,io_mode): # io_mode is not used (but need to be present to respect Storage contract)
         chunksize=sdconst.PROCESSING_CHUNKSIZE
 
         for i in xrange(0, self.count(), chunksize):
@@ -120,10 +120,10 @@ class DatabaseStorage(Storage):
                 rs=c.fetchone()
         return li
 
-    def get_chunks(self,fetch_mode):
-        if fetch_mode=='generator':
+    def get_chunks(self,io_mode):
+        if io_mode=='generator':
             return self.get_chunks_GENERATOR()
-        elif fetch_mode=='pagination':
+        elif io_mode=='pagination':
             return self.get_chunks_PAGINATION()
         else:
             assert False
