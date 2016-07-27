@@ -30,7 +30,7 @@ import sdlog
 import sdgc
 from sdexception import SDException
 
-def run(files):
+def run(files,mode):
     new_files={}
     for f in files:
         id_=sdpostpipelineutils.get_functional_identifier_value(f)

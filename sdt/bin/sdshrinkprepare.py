@@ -11,21 +11,26 @@
 
 """This module contains shrink preprocessing routines."""
 
-def is_nearestpost_enabled(metadata):
+import sdpostpipelineutils
+import sduniq
 
-    if sdconfig.nearest_schedule=='post' and nearest_flag_set_on_all_files(metadata):
-        return True
+def uniq(metadata,mode):
+
+    # retrieve global flag
+    f=metadata.get_one_file()
+    keep_replica=sdpostpipelineutils.get_attached_parameter__global([f],'keep_replica')
+
+    if keep_replica=='true':
+        # Keep replica.
+        # In this case, we remove type-A duplicates, but we keep type-B duplicates (i.e. replicas)
+
+        # uniq key => id (i.e. including datanode)
+
+        files=sduniq.run(files,keep_replica=True)
     else:
-        return False
+        # Do not keep replica.
+        # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
 
-def nearest_flag_set_on_all_files(metadata):
-    """This func checks that all files have the 'nearest' flag (as sdnearestpost processing type is 'interfile', we need ALL files to be flagged)."""
+        # uniq key => instance_id (i.e. excluding datanode)
 
-    # create light list with needed columns only not to overload system memory
-    light_metadata=sdlmattrfilter.run(metadata,['attached_parameters']) # we keep 'attached_parameters' because it contains 'nearest' flag we are interested in
-
-    for f in light_metadata.get_files(): # load complete list in memory
-        nearest=sdpostpipelineutils.get_attached_parameter(f,'nearest','false')
-        if nearest=='false':
-            return False
-    return True
+        files=sduniq.run(files)
