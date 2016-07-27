@@ -115,7 +115,7 @@ def file_full_search(args):
 
 
 
-    metadata=sdsearch.run(stream=stream,dry_run=args.dry_run,lowmem=False)
+    metadata=sdsearch.run(stream=stream,dry_run=args.dry_run)
 
     return metadata
 

@@ -19,6 +19,7 @@ import os
 import copy
 import sdconfig
 import uuid
+import shutil
 import sddbpagination
 import sdconst
 
@@ -65,18 +66,21 @@ class MemoryStorage(Storage):
     def delete(self):
         del self.files
 
-    def copy(self):
+    def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
         return copy.deepcopy(self.files)
 
 class DatabaseStorage(Storage):
 
-    def __init__(self):
-        self.dbfile=get_uniq_fullpath_db_filename()
+    def __init__(self,dbfile=None):
+        if dbfile is None:
+            self.dbfile=get_uniq_fullpath_db_filename()
+            assert not os.path.isfile(self.dbfile) # dbfile shouldn't exist at this time
+        else:
+            # this case is only to duplicate the object (see copy method)
 
-        assert not os.path.isfile(self.dbfile) # dbfile shouldn't exist at this time
+            self.dbfile=dbfile
 
-        self.conn = sqlite3.connect(self.dbfile, isolation_level='DEFERRED')
-
+        self.connect()
         self.create_table()
 
     def create_table(self,name='data'):
@@ -173,10 +177,36 @@ class DatabaseStorage(Storage):
         self.set_files(self,li)
 
     def delete(self):
-        if self.conn is not None:
-            conn.close()
+        self.disconnect()
         if os.path.isfile(self.dbfile):
             os.unlink(self.dbfile)
+
+    def connect(self):
+        self.conn = sqlite3.connect(self.dbfile, isolation_level='DEFERRED')
+
+    def disconnect(self):
+        if self.conn is not None:
+            self.conn.close()
+
+    def copy(self):
+
+        # create new db file for the copy
+        dbfile_cpy=get_uniq_fullpath_db_filename()
+        assert not os.path.isfile(dbfile_cpy) # dbfile shouldn't exist at this time
+
+        # temporariy close ori connection
+        self.disconnect()
+
+        # copy dbfile
+        shutil.copy(self.dbfile,dbfile_cpy)
+
+        # create new instance
+        cpy=DatabaseStorage(dbfile=dbfile_cpy)
+
+        # re-open ori connection
+        self.connect()
+
+        return cpy
 
 def get_uniq_fullpath_db_filename():
     dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())

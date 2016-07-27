@@ -36,7 +36,7 @@ import sdtypes
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
-def run(stream=None,selection=None,path=None,parameter=None,post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None,lowmem=False):
+def run(stream=None,selection=None,path=None,parameter=None,post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None):
     """
     Note
         squeries means 'Serialized queries'
