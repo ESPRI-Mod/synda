@@ -481,7 +481,7 @@ def upgrade(args):
 
             # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
 
-            metadata=sdsearch.run(selection=selection,lowmem=False)
+            metadata=sdsearch.run(selection=selection)
             args.yes=True
             (status,newly_installed_files_count)=sdinstall.run(args,metadata)
 

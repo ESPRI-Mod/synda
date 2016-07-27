@@ -325,12 +325,10 @@ class BaseResponse(CommonIO):
 
 class Metadata(CommonIO):
     def __init__(self,base_response=None,lowmem=False): # 'base_response' is an interface
-        self.lowmem=lowmem
-        self.store=sdmts.get_store(self.lowmem)
+        self.store=sdmts.get_store(lowmem)
 
         if base_response is not None:
             self.set_files(base_response.get_files())
-
             base_response.delete()
 
     def slurp(self,metadata):
@@ -343,13 +341,15 @@ class Metadata(CommonIO):
 
     def copy(self):
         FIXME
-        return Metadata(lowmem=self.lowmem,metadata)
+        cpy=Metadata(lowmem=self.lowmem)
+        cpy.store.delete()
+        cpy.store=self.store.copy()
+        return cpy
 
 class PaginatedResponse(BaseResponse):
 
     def __init__(self,lowmem=False):
-        self.lowmem=lowmem
-        self.store=sdmts.get_store(self.lowmem)
+        self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
     def slurp(self,response):
@@ -360,8 +360,7 @@ class PaginatedResponse(BaseResponse):
 class MultiQueryResponse(BaseResponse):
 
     def __init__(self,lowmem=False):
-        self.lowmem=lowmem
-        self.store=sdmts.get_store(self.lowmem)
+        self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
     def slurp(self,response):
@@ -373,8 +372,8 @@ class Response(BaseResponse):
     """Contains web service output after XML parsing."""
 
     def __init__(self,**kw):
-        self.lowmem=kw.get("lowmem",False)
-        self.store=sdmts.get_store(self.lowmem)
+        lowmem=kw.get("lowmem",False)
+        self.store=sdmts.get_store(lowmem)
 
         self.store.set_files(kw.get("files",[]))                   # File (key/value attribute based files list)
         self.num_found=kw.get("num_found",0)                       # total match found in ESGF for the query
