@@ -310,6 +310,9 @@ class CommonIO():
     def delete(self):
         self.store.delete()
 
+    def get_one_file(self):
+        return self.store.get_one_file()
+
 class BaseResponse(CommonIO):
 
     def add_attached_parameters(self,attached_parameters):

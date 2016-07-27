@@ -35,6 +35,9 @@ class Storage():
     def delete(self):
         pass
 
+    def get_one_file(self):
+        pass
+
 class MemoryStorage(Storage):
 
     def __init__(self):
@@ -68,6 +71,10 @@ class MemoryStorage(Storage):
 
     def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
         return copy.deepcopy(self.files)
+
+    def get_one_file(self):
+        assert self.count()>0
+        return self.files[0]
 
 class DatabaseStorage(Storage):
 
@@ -207,6 +214,15 @@ class DatabaseStorage(Storage):
         self.connect()
 
         return cpy
+
+    def get_one_file(self):
+        assert self.count()>0
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("SELECT %s from data LIMIT 1"%columns)
+            rs=c.fetchone()
+            #(rs[0],rs[1],rs[2],rs[3])
+            file_=json.loads(rs[3])
+        return file_
 
 def get_uniq_fullpath_db_filename():
     dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())
