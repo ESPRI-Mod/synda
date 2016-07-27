@@ -14,6 +14,12 @@
 import sdtypes
 
 def run_pipeline(io_mode,metadata,f,*args,**kwargs):
+    """
+    Note
+        Beware: metadata input argument is modified in this func !
+        (you have to make a copy before calling this func if you want
+        to keep original data)
+    """
 
     if io_mode=='no_chunk':
 
@@ -42,9 +48,3 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         assert False
 
     return metadata
-
-def attribute_filter(files,keeped_attrs):
-    new_files=[]
-    for f in files:
-        new_files.append(dict((k, f[k]) for k in keeped_attrs))
-    return new_files
