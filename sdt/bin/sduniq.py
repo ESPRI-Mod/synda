@@ -21,12 +21,6 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 
-def get_uniq_id(f,keep_replica):
-    if keep_replica:
-        return (sdpostpipelineutils.get_functional_identifier_value(f),f['data_node']) # tuple
-    else:
-        return sdpostpipelineutils.get_functional_identifier_value(f)
-
 def run(metadata,mode,keep_replica=False):
     metadata=remove_duplicate(metadata,mode,keep_replica)
     return metadata
@@ -34,16 +28,18 @@ def run(metadata,mode,keep_replica=False):
 def remove_duplicate(metadata,mode,keep_replica):
     """This func remove uniq_id duplicates."""
 
-    FIXME
-
     files_without_duplicate={}
     for f in files:
-
         uniq_id=get_uniq_id(f,keep_replica)
-
         files_without_duplicate[uniq_id]=f # duplicates are removed here (last item in the loop win)
 
     return files_without_duplicate.values()
+
+def get_uniq_id(f,keep_replica):
+    if keep_replica:
+        return (sdpostpipelineutils.get_functional_identifier_value(f),f['data_node']) # tuple
+    else:
+        return sdpostpipelineutils.get_functional_identifier_value(f)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
