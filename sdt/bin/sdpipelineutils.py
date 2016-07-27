@@ -68,7 +68,7 @@ def perform_chunk_by_chunk(fetch_mode,metadata,f,*args,**kwargs):
         for chunk in metadata.get_chunks(fetch_mode):
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
-        metadata.delete() # FIXME
+        metadata.delete() # FIXME everywhere
         metadata=new_metadata
 
     elif fetch_mode=='pagination':
