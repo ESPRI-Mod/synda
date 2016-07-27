@@ -36,57 +36,19 @@ import sdnearestpost
 import sduniq
 import sdconfig
 
-def foobar():
-    keep_replica=sdpostpipelineutils.get_attached_parameter__global(files,'keep_replica')
-    if keep_replica=='true':
-        # Keep replica.
-        # In this case, we remove type-A duplicates, but we keep type-B duplicates (i.e. replicas)
+def run(metadata,mode):
+    metadata=shrink(metadata)
+    return metadata
 
-        # uniq key => id (i.e. including datanode)
+def shrink(metadata):
 
-        files=sduniq.run(files,keep_replica=True)
-    else:
-        # Do not keep replica.
-        # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
-
-        # uniq key => instance_id (i.e. excluding datanode)
-
-        files=sduniq.run(files)
-
-def run(files):
-
-    #for f in files:
-    #    sdlog.debug("SDSHRINK-004","%s"%f['data_node'],stdout=True)
-
-    files=shrink(files)
-
-    #for f in files:
-    #    sdlog.debug("SDSHRINK-005","%s"%f['data_node'],stdout=True)
-
-    return files
-
-def shrink(files):
-
-    if is_nearestpost_enabled(files):
+    if sdshrinkprepare.is_nearestpost_enabled(metadata):
         # In this case, we remove duplicates by keeping the nearest
 
-        files=sdnearestpost.run(files)
+        metadata=sdnearestpost.run(metadata)
     else:
-        foobar()
+        # In this case, we remove duplicates by using a 'uniq' filter
 
-    return files
+        metadata=sdshrinkprepare.remove_duplicate(metadata)
 
-def is_nearestpost_enabled(files):
-    if sdconfig.nearest_schedule=='post' and nearest_flag_set_on_all_files(files):
-        return True
-    else:
-        return False
-
-def nearest_flag_set_on_all_files(files):
-    """This func checks that all files have the 'nearest' flag (as sdnearestpost processing type is 'interfile', we need ALL files to be flagged)."""
-
-    for f in files:
-        nearest=sdpostpipelineutils.get_attached_parameter(f,'nearest','false')
-        if nearest=='false':
-            return False
-    return True
+    return metadata
