@@ -31,9 +31,8 @@ import sdfilepipeline
 import sddatasetpipeline
 import sddeferredafter
 import sdconst
-import sdtypes
 import sdpipelineprocessing
-from sdexception import SDException
+import sdexception
 
 def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
 
@@ -53,7 +52,7 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
 
         pass
     else:
-        raise SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
+        raise sdexception.SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
 
     return files
 
@@ -94,7 +93,7 @@ def post_pipeline(metadata,mode=None):
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     if mode in ['file','dataset']:
-        metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata)
+        metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata,mode)
 
     return metadata
 
@@ -129,7 +128,10 @@ def parse(parameter=None):
     facets_groups=sdinference.run(facets_groups)
     return facets_groups
 
-def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata):
+def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata,mode):
+    light_metadata=sdlmattrfilter.run(metadata) # build light list (keeping only required attributes to perform 'shrink' task)
+
+    FIXME
     sdshrinkprepare
     files=sdshrink.run(files)
     return metadata
