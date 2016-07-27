@@ -21,7 +21,7 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 
-def run(files,keep_replica=False):
+def run(files,mode,keep_replica=False):
     files=remove_duplicate(files,keep_replica)
     return files
 

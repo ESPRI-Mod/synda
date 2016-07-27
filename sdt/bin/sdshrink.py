@@ -33,6 +33,7 @@ Notes
 
 import sdnearestpost
 import sdshrinktest
+import sdshrinkutils
 
 def run(metadata,mode):
 

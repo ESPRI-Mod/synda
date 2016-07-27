@@ -26,11 +26,11 @@ def uniq(metadata,mode):
 
         # uniq key => id (i.e. including datanode)
 
-        files=sduniq.run(files,keep_replica=True)
+        files=sduniq.run(files,mode,keep_replica=True)
     else:
         # Do not keep replica.
         # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
 
         # uniq key => instance_id (i.e. excluding datanode)
 
-        files=sduniq.run(files)
+        files=sduniq.run(files,mode,keep_replica=False)
