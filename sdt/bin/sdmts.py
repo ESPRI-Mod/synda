@@ -28,6 +28,12 @@ class Storage():
     def get_chunks(self,fetch_mode):
         pass
 
+    def copy(self):
+        pass
+
+    def delete(self):
+        pass
+
 class MemoryStorage(Storage):
 
     def __init__(self):
@@ -59,11 +65,13 @@ class MemoryStorage(Storage):
     def delete(self):
         del self.files
 
+    def copy(self):
+        return copy.deepcopy(self.files)
+
 class DatabaseStorage(Storage):
 
     def __init__(self):
-        self.dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())
-        self.dbfile=os.path.join(sdconfig.db_folder,dbfilename)
+        self.dbfile=get_uniq_fullpath_db_filename()
 
         assert not os.path.isfile(self.dbfile) # dbfile shouldn't exist at this time
 
@@ -169,6 +177,11 @@ class DatabaseStorage(Storage):
             conn.close()
         if os.path.isfile(self.dbfile):
             os.unlink(self.dbfile)
+
+def get_uniq_fullpath_db_filename():
+    dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())
+    dbfile=os.path.join(sdconfig.db_folder,dbfilename)
+    return dbfile
 
 def get_store(lowmem=False):
     if lowmem:
