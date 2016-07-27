@@ -324,6 +324,7 @@ class BaseResponse(CommonIO):
         self.store.add_attached_parameters(attached_parameters)
 
 class Metadata(CommonIO):
+
     def __init__(self,base_response=None,lowmem=False): # 'base_response' is an interface
         self.store=sdmts.get_store(lowmem)
 
@@ -340,7 +341,6 @@ class Metadata(CommonIO):
         self.store.append_files(files)
 
     def copy(self):
-        FIXME
         cpy=Metadata(lowmem=self.lowmem)
         cpy.store.delete()
         cpy.store=self.store.copy()
