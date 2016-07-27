@@ -53,28 +53,28 @@ def get_input_data(path,deserialize_by_line=False):
 
     return keysvals_groups
 
-def perform_chunk_by_chunk(fetch_mode,metadata,f,*args,**kwargs):
+def perform_chunk_by_chunk(io_mode,metadata,f,*args,**kwargs):
 
-    if fetch_mode=='no_chunk':
+    if io_mode=='no_chunk':
 
-        # way 0: load-all-in-memory (no chunk)
+        # way 0: load-all-in-memory (no chunk).
         files=f(metadata.get_files(),*args,**kwargs)
         metadata.set_files(files)
 
-    elif fetch_mode=='generator':
+    elif io_mode=='generator':
 
         # way 1: chunk-by-chunk (using a second store)
         new_metadata=sdtypes.Metadata()
-        for chunk in metadata.get_chunks(fetch_mode):
+        for chunk in metadata.get_chunks(io_mode):
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
         metadata.delete() # FIXME everywhere
         metadata=new_metadata
 
-    elif fetch_mode=='pagination':
+    elif io_mode=='pagination':
 
         # way 2: chunk-by-chunk (updating store on-the-fly)
-        for chunk in metadata.get_chunks(fetch_mode):
+        for chunk in metadata.get_chunks(io_mode):
             chunk=f(chunk,*args,**kwargs)
             metadata.update(chunk)
 
@@ -82,3 +82,9 @@ def perform_chunk_by_chunk(fetch_mode,metadata,f,*args,**kwargs):
         assert False
 
     return metadata
+
+def attribute_filter(self,files):
+    new_files=[]
+    for file_ in files:
+        self.files.append(dict_you_want = dict((your_key, old_dict[your_key]) for your_key in your_keys))
+    return new_files
