@@ -33,13 +33,13 @@ from sdexception import SDException
 def run(metadata):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,data_node]) # create light list with needed columns only, not to overload system memory.
 
-    score=build_score_table(light_metadata,functional_id_keyname)
+    score=build_score_table(light_metadata,functional_id_keyname) # warning: load list in memory
 
     # filtering to keep nearest datanode
     for id in score:
-        datanodes=score[id].keys()
+        datanodes=score[id]
         dn=get_nearest_dn(datanodes)
-        score[id]=dn # replace dict with scalar
+        score[id]=dn # replace list with scalar
 
     # at this point, 'score' table is in the form: [id]=dn
 
@@ -52,8 +52,6 @@ def run(metadata):
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest_file,functional_id_keyname,score)
 
     return metadata
-
-def get_nearest_dn(datanodes):
 
 def keep_nearest_file(files,functional_id_keyname,score):
     new_files=[]
@@ -71,13 +69,14 @@ def keep_nearest_file(files,functional_id_keyname,score):
 def build_score_table(light_metadata,functional_id_keyname):
     score={}
     
-    for f in light_metadata:
+    for f in light_metadata.get_files(): # warning: load list in memory
         key=f[functional_id_keyname]
         dn=f['data_node']
         if key in score:
-            score[key][dn]=None # override duplicate if any (i.e. duplicate NOT replicate)
+            if dn not in score[key]: # prevent exact duplicate if any (i.e. duplicate NOT replicate)
+                score[key].append(dn)
         else:
-            score[key]={dn:None}
+            score[key]=[dn]
 
     return score
 
@@ -101,6 +100,9 @@ def old_algo(files):
             new_files[id_]=f
 
     return new_files.values()
+
+def get_nearest_dn(datanodes):
+    return dn
 
 def compare_file(f1,f2):
     return compare_dn(f1['data_node'],f2['data_node'])
