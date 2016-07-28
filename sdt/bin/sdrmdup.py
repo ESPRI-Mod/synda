@@ -9,11 +9,15 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module removes file duplicates (e.g. replica).
+"""This module removes file duplicates.
 
 Notes
-    - This module  removes duplicate files in a random way (i.e. all files have the same chance to be removed).
-    - This module deals with two types of duplicates (see comments in sdshrink for details).
+    - This module removes duplicate files in a random way (i.e. all files have the same chance to be removed).
+    - This module keeps replicates
+    - sdrmdup means 'SynDa ReMove DUPlicate'
+
+See also
+    - sdshrink
 """
 
 import sdapp
@@ -21,33 +25,21 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 
-def run(metadata,functional_id_keyname,keep_replica=False):
-
-    fu=remove_duplicate if keep_replica else remove_duplicate_and_replica
-
-    light_metadata=sdlmattrfilter.run(metadata,['functional_id_keyname','data_node']) # create light list with needed columns only not to overload system memory
+def run(metadata,functional_id_keyname):
+    light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,'data_node']) # create light list with needed columns only not to overload system memory
 
     # list of dict => dict of bool
-    seen=dict((di[k], False) for di in light_metadata)
+    seen=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata)
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,fu,functional_id_keyname,seen)
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove,functional_id_keyname,seen)
 
     return metadata
 
-def remove_duplicate(files,functional_id_keyname,seen):
+def remove(files,functional_id_keyname,seen):
     new_files=[]
     for f in files:
         uniq_id=(f[functional_id_keyname],f['data_node']) # tuple
-        if not seen[uniq]:
-            new_files.append(f)
-            seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
-    return new_files
-
-def remove_duplicate_and_replica(files,functional_id_keyname,seen):
-    new_files=[]
-    for f in files:
-        uniq_id=f[functional_id_keyname]
-        if not seen[uniq]:
+        if not seen[uniq_id]:
             new_files.append(f)
             seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
     return new_files

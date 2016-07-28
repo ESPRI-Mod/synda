@@ -12,7 +12,8 @@
 """This module contains shrink preprocessing routines."""
 
 import sdpostpipelineutils
-import sduniq
+import sdrmduprep
+import sdrmdup
 
 def uniq(metadata):
 
@@ -27,13 +28,13 @@ def uniq(metadata):
 
         # uniq key => id (i.e. including datanode)
 
-        metadata=sduniq.run(metadata,functional_id_keyname,keep_replica=True)
+        metadata=sdrmdup.run(metadata,functional_id_keyname)
     else:
         # Do not keep replica.
         # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
 
         # uniq key => instance_id (i.e. excluding datanode)
 
-        metadata=sduniq.run(metadata,functional_id_keyname,keep_replica=False)
+        metadata=sdrmduprep.run(metadata,functional_id_keyname)
 
     return metadata
