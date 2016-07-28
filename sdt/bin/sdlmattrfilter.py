@@ -20,11 +20,7 @@ import sdconst
 import sdpipelineprocessing
 
 def run(metadata,attrs_to_keep):
-
     metadata_cpy=metadata.copy() # prevent modify original data
-
-    assert not isinstance(metadata_cpy.store,list)
-
     light_metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata_cpy,attribute_filter,attrs_to_keep)
     return light_metadata
 

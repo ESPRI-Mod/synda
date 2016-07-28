@@ -70,7 +70,9 @@ class MemoryStorage(Storage):
         del self.files
 
     def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
-        return copy.deepcopy(self.files)
+        cpy=MemoryStorage()
+        cpy.files=copy.deepcopy(self.files)
+        return cpy
 
     def get_one_file(self):
         assert self.count()>0
