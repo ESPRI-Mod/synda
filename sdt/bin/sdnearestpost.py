@@ -30,7 +30,7 @@ import sdlog
 import sdgc
 from sdexception import SDException
 
-def run(metadata,mode):
+def run(metadata):
 
     FIXME
 

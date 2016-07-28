@@ -35,27 +35,27 @@ import sdnearestpost
 import sdshrinktest
 import sdshrinkutils
 
-def run(metadata,mode):
+def run(metadata):
 
     #for f in files.get_files():
     #    sdlog.debug("SDSHRINK-004","%s"%f['data_node'],stdout=True)
 
-    metadata=shrink(metadata,mode)
+    metadata=shrink(metadata)
 
     #for f in metadata.get_files():
     #    sdlog.debug("SDSHRINK-005","%s"%f['data_node'],stdout=True)
 
     return metadata
 
-def shrink(metadata,mode):
+def shrink(metadata):
 
     if sdshrinktest.is_nearestpost_enabled(metadata):
         # In this case, we remove duplicates by keeping the nearest
 
-        metadata=sdnearestpost.run(metadata,mode)
+        metadata=sdnearestpost.run(metadata)
     else:
         # In this case, we remove duplicates by using a 'uniq' filter
 
-        metadata=sdshrinkutils.uniq(metadata,mode)
+        metadata=sdshrinkutils.uniq(metadata)
 
     return metadata
