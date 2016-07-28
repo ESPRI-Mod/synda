@@ -21,6 +21,8 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         to keep original data)
     """
 
+    assert not isinstance(metadata.store,list)
+
     if io_mode=='no_chunk':
 
         # way 0: load-all-in-memory (no chunk).
