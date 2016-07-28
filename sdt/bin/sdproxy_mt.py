@@ -38,11 +38,6 @@ class MetadataThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        """
-        Note
-            Better put Response object in ThreadSafe object
-        """
-
         ap=self.query.get('attached_parameters',{})
 
         try:
