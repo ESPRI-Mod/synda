@@ -353,7 +353,7 @@ class Metadata(CommonIO):
 
 class PaginatedResponse(BaseResponse):
 
-    def __init__(self,lowmem=False):
+    def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
@@ -377,7 +377,7 @@ class Response(BaseResponse):
     """Contains web service output after XML parsing."""
 
     def __init__(self,**kw):
-        lowmem=kw.get("lowmem",False)
+        lowmem=kw.get("lowmem",False) # always use RAM by default, even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
 
         self.store.set_files(kw.get("files",[]))                   # File (key/value attribute based files list)

@@ -197,6 +197,7 @@ use_myproxy_module=True
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
+lowmem=True
 fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 
