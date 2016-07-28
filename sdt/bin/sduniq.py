@@ -21,25 +21,34 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 
-def run(metadata,mode,keep_replica=False):
-    metadata=remove_duplicate(metadata,mode,keep_replica)
+def run(metadata,functional_id_keyname,keep_replica=False):
+
+    fu=remove_duplicate if keep_replica else remove_duplicate_and_replica
+
+    light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
+
+    # list of dict => dict of bool
+    seen=dict((di[k], False) for di in light_metadata)
+
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,fu,functional_id_keyname,seen)
+
     return metadata
 
-def remove_duplicate(metadata,mode,keep_replica):
-    """This func remove uniq_id duplicates."""
-
+def remove_duplicate(files,functional_id_keyname,seen):
     files_without_duplicate={}
     for f in files:
-        uniq_id=get_uniq_id(f,keep_replica)
+        uniq_id=(f[functional_id_keyname],f['data_node']) # tuple
         files_without_duplicate[uniq_id]=f # duplicates are removed here (last item in the loop win)
 
     return files_without_duplicate.values()
 
-def get_uniq_id(f,keep_replica):
-    if keep_replica:
-        return (sdpostpipelineutils.get_functional_identifier_value(f),f['data_node']) # tuple
-    else:
-        return sdpostpipelineutils.get_functional_identifier_value(f)
+def remove_duplicate_and_replica(files,functional_id_keyname,seen):
+    files_without_duplicate={}
+    for f in files:
+        uniq_id=f[functional_id_keyname]
+        files_without_duplicate[uniq_id]=f # duplicates are removed here (last item in the loop win)
+
+    return files_without_duplicate.values()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
