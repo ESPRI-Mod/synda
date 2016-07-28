@@ -344,7 +344,7 @@ class Metadata(CommonIO):
         self.store.append_files(files)
 
     def copy(self):
-        cpy=Metadata(lowmem=self.lowmem)
+        cpy=Metadata()
         cpy.store.delete()
         cpy.store=self.store.copy()
         return cpy
