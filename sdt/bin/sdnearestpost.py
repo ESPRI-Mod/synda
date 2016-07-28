@@ -34,7 +34,7 @@ def run(metadata):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
 
     # build score table
-    score=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata) # list of dict => dict (id=>bool)
+    score=dict(((f[functional_id_keyname],f['data_node']), None) for f in light_metadata) # list of dict => dict (id=>number)
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest,functional_id_keyname,score)
 
     # score based filter
@@ -46,14 +46,7 @@ def keep_nearest(files,functional_id_keyname,score):
 
     for f in files:
         uniq_id=(f[functional_id_keyname],f['data_node']) # tuple
-        if score[uniq_id] is None:
-            # there is a previous instance of this file (e.g. another replica)
-
-            score[uniq_id]=True
-
-        else:
-            if compare_file(f,new_files[id_]):
-                new_files[id_]=f # replace as 'f' is the nearest
+        score[uniq_id]=compare_file(f,new_files[id_]):
 
     return files
 
