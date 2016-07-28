@@ -31,9 +31,26 @@ import sdgc
 from sdexception import SDException
 
 def run(metadata):
+    light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
+    score=dict((f[functional_id_keyname], None) for f in light_metadata) # list of dict => dict of bool
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest,functional_id_keyname,score)
+    return metadata
 
-    FIXME
+def keep_nearest(files,functional_id_keyname,score):
 
+    for f in files:
+        uniq_id=f[functional_id_keyname]
+        if score[uniq_id] is not None:
+            # there is a previous instance of this file (e.g. another replica)
+
+            if compare(f,new_files[id_]):
+                new_files[id_]=f # replace as 'f' is the nearest
+        else:
+            score[uniq_id]=
+
+    return files
+
+OLD
     new_files={}
     for f in files:
         id_=sdpostpipelineutils.get_functional_identifier_value(f)
@@ -45,7 +62,7 @@ def run(metadata):
         else:
             new_files[id_]=f
 
-FIXME    return new_files.values()
+    return new_files.values()
 
 def compare(f1,f2):
     mode=sdconfig.config.get('behaviour','nearest_mode')
