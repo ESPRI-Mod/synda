@@ -32,50 +32,66 @@ from sdexception import SDException
 
 def run(metadata):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
-    score=dict((f[functional_id_keyname], None) for f in light_metadata) # list of dict => dict of bool
+
+    # build score table
+    score=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata) # list of dict => dict (id=>bool)
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest,functional_id_keyname,score)
+
+    # score based filter
+    FIXME
+
     return metadata
 
 def keep_nearest(files,functional_id_keyname,score):
 
     for f in files:
-        uniq_id=f[functional_id_keyname]
-        if score[uniq_id] is not None:
+        uniq_id=(f[functional_id_keyname],f['data_node']) # tuple
+        if score[uniq_id] is None:
             # there is a previous instance of this file (e.g. another replica)
 
-            if compare(f,new_files[id_]):
-                new_files[id_]=f # replace as 'f' is the nearest
+            score[uniq_id]=True
+
         else:
-            score[uniq_id]=
+            if compare_file(f,new_files[id_]):
+                new_files[id_]=f # replace as 'f' is the nearest
 
     return files
 
-OLD
+def old_algo(files):
+    """
+    Note
+        Use a lot of memory.
+
+    Not used.
+    """
     new_files={}
+
     for f in files:
         id_=sdpostpipelineutils.get_functional_identifier_value(f)
         if id_ in new_files:
             # there is a previous instance of this file (e.g. another replica)
 
-            if compare(f,new_files[id_]):
+            if compare_file(f,new_files[id_]):
                 new_files[id_]=f # replace as 'f' is the nearest
         else:
             new_files[id_]=f
 
     return new_files.values()
 
-def compare(f1,f2):
+def compare_file(f1,f2):
+    return compare_dn(f1['data_node'],f2['data_node'])
+
+def compare_dn(datanode_1,datanode_2):
     mode=sdconfig.config.get('behaviour','nearest_mode')
 
     if mode=='geolocation':
-        return (get_distance(f1) < get_distance(f2))
+        return (get_distance(datanode_1) < get_distance(datanode_2))
     elif mode=='rtt':
-        return (get_RTT(f1) < get_RTT(f2))
+        return (get_RTT(datanode_1) < get_RTT(datanode_2))
     else:
         raise SDException("SDNEARES-001","Incorrect nearest mode (%s)"%mode)
 
-def get_RTT(f):
-    remote_host=f['data_node']
+def get_RTT(remote_host):
 
     if remote_host not in sdgc.RTT_cache:
         sdlog.info("SDNEARES-012","Compute RTT for '%s' host."%remote_host)
@@ -103,8 +119,7 @@ def compute_RTT(remote_host):
 
     return rtt
 
-def get_distance(f):
-    remote_host=f['data_node']
+def get_distance(remote_host):
 
     if remote_host not in sdgc.GEO_cache:
         sdgc.GEO_cache[remote_host]=compute_distance(remote_host)
