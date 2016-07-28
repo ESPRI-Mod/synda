@@ -87,13 +87,14 @@ class DatabaseStorage(Storage):
         if dbfile is None:
             self.dbfile=get_uniq_fullpath_db_filename()
             assert not os.path.isfile(self.dbfile) # dbfile shouldn't exist at this time
+
+            self.connect()
+            self.create_table()
         else:
             # this case is only to duplicate the object (see copy method)
 
             self.dbfile=dbfile
-
-        self.connect()
-        self.create_table()
+            self.connect()
 
     def create_table(self,name='data'):
         with contextlib.closing(self.conn.cursor()) as c:
