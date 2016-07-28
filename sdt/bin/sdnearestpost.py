@@ -38,7 +38,7 @@ def run(metadata):
     # filtering to keep nearest datanode
     for id in score:
         datanodes=score[id].keys()
-        dn=get_nearest_dn(datanodes) FIXME
+        dn=get_nearest_dn(datanodes)
         score[id]=dn # replace dict with scalar
 
     # at this point, 'score' table is in the form: [id]=dn
@@ -53,16 +53,18 @@ def run(metadata):
 
     return metadata
 
+def get_nearest_dn(datanodes):
+
 def keep_nearest_file(files,functional_id_keyname,score):
     new_files=[]
 
     for f in files:
-        id=f[functional_id_keyname]
+        id_=f[functional_id_keyname]
         dn=f['data_node']
-        if (id,dn) in score:
-            if not score[(id,dn)]:
+        if (id_,dn) in score: # add the nearest replicate
+            if not score[(id_,dn)]: # prevent adding duplicate (memo: duplicate != replicate). i.e. some exact same file may be present multiple time in the list (see 'Type-A' in sdshrink for more info).
                 new_files.append(f)
-                score[(id,dn)]=True
+                score[(id_,dn)]=True
 
     return new_files
 
