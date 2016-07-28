@@ -24,6 +24,7 @@ import sdapp
 import sdconst
 import sdprint
 import sdpostpipelineutils
+import sdlmattrfilter
 
 def run(metadata,functional_id_keyname):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,'data_node']) # create light list with needed columns only not to overload system memory
