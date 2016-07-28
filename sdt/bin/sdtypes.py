@@ -314,6 +314,13 @@ class CommonIO():
     def get_one_file(self):
         return self.store.get_one_file()
 
+class Responses():
+
+    def slurp(self,response):
+        self.store.append_files(response.get_files())
+        self.call_duration+=response.call_duration
+        response.delete()
+
 class BaseResponse(CommonIO):
 
     def add_attached_parameters(self,attached_parameters):
@@ -329,7 +336,7 @@ class BaseResponse(CommonIO):
 
 class Metadata(CommonIO):
 
-    def __init__(self,base_response=None,lowmem=sdconfig.lowmem): # 'base_response' is an interface
+    def __init__(self,base_response=None,lowmem=sdconfig.lowmem): # 'base_response' is an interface matching multiple object
         self.store=sdmts.get_store(lowmem)
 
         if base_response is not None:
@@ -351,27 +358,17 @@ class Metadata(CommonIO):
         assert not isinstance(cpy.store,list)
         return cpy
 
-class PaginatedResponse(BaseResponse):
+class PaginatedResponse(BaseResponse,Responses):
 
     def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-    def slurp(self,response):
-        self.store.append_files(response.get_files())
-        self.call_duration+=response.call_duration
-        response.delete()
-
-class MultiQueryResponse(BaseResponse):
+class MultiQueryResponse(BaseResponse,Responses):
 
     def __init__(self,lowmem=False): # use RAM even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
-
-    def slurp(self,response):
-        self.store.append_files(response.get_files())
-        self.call_duration+=response.call_duration
-        response.delete()
 
 class Response(BaseResponse):
     """Contains web service output after XML parsing."""
