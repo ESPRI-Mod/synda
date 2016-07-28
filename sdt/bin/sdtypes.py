@@ -304,6 +304,9 @@ class CommonIO():
     def get_files(self):
         return self.store.get_files()
 
+    def size(self):
+        return self.size
+
     def get_chunks(self,io_mode):
         assert not isinstance(self.store,list)
         return self.store.get_chunks(io_mode)
@@ -314,11 +317,12 @@ class CommonIO():
     def get_one_file(self):
         return self.store.get_one_file()
 
-class Responses():
+class ResponseList():
 
     def slurp(self,response):
-        self.store.append_files(response.get_files())
+        self.store.append_files(response.get_files()) # warning: load list in memory
         self.call_duration+=response.call_duration
+        self.size+=response.size()
         response.delete()
 
 class BaseResponse(CommonIO):
@@ -358,13 +362,13 @@ class Metadata(CommonIO):
         assert not isinstance(cpy.store,list)
         return cpy
 
-class PaginatedResponse(BaseResponse,Responses):
+class PaginatedResponse(BaseResponse,ResponseList):
 
     def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-class MultiQueryResponse(BaseResponse,Responses):
+class MultiQueryResponse(BaseResponse,ResponseList):
 
     def __init__(self,lowmem=False): # use RAM even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
@@ -377,9 +381,12 @@ class Response(BaseResponse):
         lowmem=kw.get("lowmem",False) # use RAM even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
 
-        self.store.set_files(kw.get("files",[]))                   # File (key/value attribute based files list)
+        files=kw.get("files",[])
+
+        self.store.set_files(files)                                # File (key/value attribute based files list)
         self.num_found=kw.get("num_found",0)                       # total match found in ESGF for the query
         self.call_duration=kw.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
+        self.size=sum(int(f['size']) for f in files)               # compute files total size
         self.parameter_values=kw.get("parameter_values",[])        # parameters list (come from the XML document footer)
 
         # assert
