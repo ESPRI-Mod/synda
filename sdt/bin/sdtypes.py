@@ -305,6 +305,7 @@ class CommonIO():
         return self.store.get_files()
 
     def get_chunks(self,io_mode):
+        assert not isinstance(self.store,list)
         return self.store.get_chunks(io_mode)
 
     def delete(self):
