@@ -105,7 +105,7 @@ def get_nearest_dn(datanodes):
     nearest=datanodes[0]
     for d in datanodes:
         if compare_dn(d,nearest):
-            nearest=d # replace as d is the nearestof the two
+            nearest=d # replace as d is the nearest of the two
     return nearest
 
 def compare_file(f1,f2):

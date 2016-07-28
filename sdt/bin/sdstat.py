@@ -27,6 +27,7 @@ import sdapp
 import sdconst
 import sdstatutils
 import syndautils
+import sdexception
 
 def run(args):
 
