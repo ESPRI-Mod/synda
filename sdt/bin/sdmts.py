@@ -117,7 +117,7 @@ class DatabaseStorage(Storage):
         self.append_files(files)
 
     def get_files(self):
-        """WARNING: this func doesn't work on lowmem machine (<64Go RAM)."""
+        """WARNING: this func loads all the data in memory."""
 
         li=[]
         with contextlib.closing(self.conn.cursor()) as c:
