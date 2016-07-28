@@ -92,7 +92,7 @@ def post_pipeline(metadata,mode=None):
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     if mode in ['file','dataset']:
-        metadata=post_pipeline_CHUNK_BY_CHUNK_NOK(metadata,mode)
+        metadata=sdshrink.run(metadata,mode)
 
     return metadata
 
@@ -126,7 +126,3 @@ def parse(parameter=None):
     facets_groups=selection.merge_facets()
     facets_groups=sdinference.run(facets_groups)
     return facets_groups
-
-def post_pipeline_CHUNK_BY_CHUNK_NOK(metadata,mode):
-    metadata=sdshrink.run(metadata,mode)
-    return metadata

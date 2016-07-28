@@ -14,11 +14,12 @@
 import sdpostpipelineutils
 import sduniq
 
-def uniq(metadata,mode):
+def uniq(metadata):
 
     # retrieve global flag
     f=metadata.get_one_file()
     keep_replica=sdpostpipelineutils.get_attached_parameter__global([f],'keep_replica')
+    functional_id_keyname=sdpostpipelineutils.get_functional_identifier_name(f)
 
     if keep_replica=='true':
         # Keep replica.
@@ -26,13 +27,13 @@ def uniq(metadata,mode):
 
         # uniq key => id (i.e. including datanode)
 
-        metadata=sduniq.run(metadata,mode,keep_replica=True)
+        metadata=sduniq.run(metadata,functional_id_keyname,keep_replica=True)
     else:
         # Do not keep replica.
         # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
 
         # uniq key => instance_id (i.e. excluding datanode)
 
-        metadata=sduniq.run(metadata,mode,keep_replica=False)
+        metadata=sduniq.run(metadata,functional_id_keyname,keep_replica=False)
 
     return metadata
