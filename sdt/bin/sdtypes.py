@@ -348,6 +348,7 @@ class Metadata(CommonIO):
         cpy=Metadata()
         cpy.store.delete()
         cpy.store=self.store.copy()
+        assert not isinstance(cpy.store,list)
         return cpy
 
 class PaginatedResponse(BaseResponse):

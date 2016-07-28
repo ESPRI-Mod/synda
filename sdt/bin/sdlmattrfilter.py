@@ -21,8 +21,6 @@ import sdpipelineprocessing
 
 def run(metadata,attrs_to_keep):
 
-    assert not isinstance(metadata.store,list)
-
     metadata_cpy=metadata.copy() # prevent modify original data
 
     assert not isinstance(metadata_cpy.store,list)
