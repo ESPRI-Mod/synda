@@ -25,7 +25,7 @@ def run(metadata,functional_id_keyname,keep_replica=False):
 
     fu=remove_duplicate if keep_replica else remove_duplicate_and_replica
 
-    light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
+    light_metadata=sdlmattrfilter.run(metadata,['functional_id_keyname','data_node']) # create light list with needed columns only not to overload system memory
 
     # list of dict => dict of bool
     seen=dict((di[k], False) for di in light_metadata)
@@ -35,20 +35,22 @@ def run(metadata,functional_id_keyname,keep_replica=False):
     return metadata
 
 def remove_duplicate(files,functional_id_keyname,seen):
-    files_without_duplicate={}
+    new_files=[]
     for f in files:
         uniq_id=(f[functional_id_keyname],f['data_node']) # tuple
-        files_without_duplicate[uniq_id]=f # duplicates are removed here (last item in the loop win)
-
-    return files_without_duplicate.values()
+        if not seen[uniq]:
+            new_files.append(f)
+            seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
+    return new_files
 
 def remove_duplicate_and_replica(files,functional_id_keyname,seen):
-    files_without_duplicate={}
+    new_files=[]
     for f in files:
         uniq_id=f[functional_id_keyname]
-        files_without_duplicate[uniq_id]=f # duplicates are removed here (last item in the loop win)
-
-    return files_without_duplicate.values()
+        if not seen[uniq]:
+            new_files.append(f)
+            seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
+    return new_files
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
