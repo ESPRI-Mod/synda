@@ -186,7 +186,7 @@ class DatabaseStorage(Storage):
         for f in li:
             assert 'attached_parameters' not in f
             f['attached_parameters']=copy.deepcopy(attached_parameters)
-        self.set_files(self,li)
+        self.set_files(li)
 
     def delete(self):
         self.disconnect()
