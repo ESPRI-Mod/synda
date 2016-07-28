@@ -97,7 +97,7 @@ class DatabaseStorage(Storage):
 
     def create_table(self,name='data'):
         with contextlib.closing(self.conn.cursor()) as c:
-            c.execute("CREATE TABLE %s (id TEXT PRIMARY KEY, size INT, data_node TEXT, attrs TEXT)"%name)
+            c.execute("CREATE TABLE %s (%s)"%(name,columns_definition))
             self.conn.commit()
 
     def drop_table(self):
@@ -127,8 +127,23 @@ class DatabaseStorage(Storage):
             c.execute("SELECT %s from data"%columns)
             rs=c.fetchone()
             while rs is not None:
-                #li.append((rs[0],rs[1],rs[2],rs[3]))
-                li.append(json.loads(rs[3]))
+
+
+                # multicol table
+                #
+                #=rs[0]
+                #=rs[1]
+                #=rs[2]
+                #attrs=json.loads(rs[3])
+                #
+                #tu=(rs[0],rs[1],rs[2],attrs)
+                #li.append(tu)
+
+
+                # monocol table
+                attrs=json.loads(rs[0])
+                li.append(attrs)
+
                 rs=c.fetchone()
         return li
 
@@ -152,7 +167,19 @@ class DatabaseStorage(Storage):
                 results = c.fetchmany(sdconst.PROCESSING_CHUNKSIZE)
                 if not results:
                     break
-                li=[json.loads(rs[3]) for rs in results] # WARNING: two (sdconst.PROCESSING_CHUNKSIZE) list in memory at the same time
+
+                # WARNING: two (sdconst.PROCESSING_CHUNKSIZE) list in memory at the same time
+                li=[]
+                for rs in results:
+                
+                    # multicol table
+                    #attrs=json.loads(rs[3])
+
+                    # monocol table
+                    attrs=json.loads(rs[0])
+
+                    li.append(attrs)
+
                 yield li
 
     def get_chunks_PAGINATION(self):
@@ -176,7 +203,15 @@ class DatabaseStorage(Storage):
         # WARNING: slow perf here. Maybe replace rown-by-row insert with array insert.
         with contextlib.closing(self.conn.cursor()) as c:
             for f in files:
-                c.execute("INSERT INTO data (%s) VALUES (?, ?, ?, ?)"%columns, (f['id'], f['size'], f['data_node'], json.dumps(f)))
+
+                # multicol table
+                #tu=(f['id'], f['size'], f['data_node'], json.dumps(f))
+                #c.execute("INSERT INTO data (%s) VALUES (?, ?, ?, ?)"%columns, tu)
+
+                # monocol table
+                tu=(json.dumps(f),)
+                c.execute("INSERT INTO data (%s) VALUES (?)"%columns, tu)
+
             self.conn.commit()
 
     def add_attached_parameters(self,attached_parameters):
@@ -225,8 +260,16 @@ class DatabaseStorage(Storage):
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT %s from data LIMIT 1"%columns)
             rs=c.fetchone()
-            #(rs[0],rs[1],rs[2],rs[3])
-            file_=json.loads(rs[3])
+
+            # multicol table
+            #=rs[0]
+            #=rs[1]
+            #=rs[2]
+            #=rs[3]
+
+            # monocol table
+            file_=json.loads(rs[0])
+
         return file_
 
 def get_uniq_fullpath_db_filename():
@@ -242,4 +285,8 @@ def get_store(lowmem=False):
 
 # init.
 
-columns="id, size, data_node, attrs"
+#columns='id, size, data_node, attrs'
+#columns_definition='id TEXT PRIMARY KEY, size INT, data_node TEXT, attrs TEXT'
+
+columns='attrs'
+columns_definition='attrs TEXT'
