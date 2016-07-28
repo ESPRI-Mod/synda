@@ -102,7 +102,11 @@ def old_algo(files):
     return new_files.values()
 
 def get_nearest_dn(datanodes):
-    return dn
+    nearest=datanodes[0]
+    for d in datanodes:
+        if compare_dn(d,nearest):
+            nearest=d # replace as d is the nearestof the two
+    return nearest
 
 def compare_file(f1,f2):
     return compare_dn(f1['data_node'],f2['data_node'])
