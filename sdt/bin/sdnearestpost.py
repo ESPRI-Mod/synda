@@ -35,25 +35,36 @@ def run(metadata):
 
     score=build_score_table(light_metadata,functional_id_keyname)
 
-    # score table filtering
-    FIXME
+    # filtering to keep nearest datanode
+    for id in score:
+        datanodes=score[id].keys()
+        dn=get_nearest_dn(datanodes) FIXME
+        score[id]=dn # replace dict with scalar
+
+    # at this point, 'score' table is in the form: [id]=dn
+
+    # 'score' data structure transformation
+    score=dict(((k, score[k]),False) for k in score) # warning: two list in memory simultaneously !
+
+    # at this point, 'score' table is in the form: [(id,dn)]=False
 
     # final filtering (come back to files list)
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest,functional_id_keyname,score)
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest_file,functional_id_keyname,score)
 
     return metadata
 
-FIXME
-def keep_nearest(files,functional_id_keyname,score):
-    """Result is in score table (files remains as is)."""
+def keep_nearest_file(files,functional_id_keyname,score):
+    new_files=[]
 
     for f in files:
         id=f[functional_id_keyname]
         dn=f['data_node']
-        if is_nearest(id,dn):
-        else:
+        if (id,dn) in score:
+            if not score[(id,dn)]:
+                new_files.append(f)
+                score[(id,dn)]=True
 
-    return files
+    return new_files
 
 def build_score_table(light_metadata,functional_id_keyname):
     score={}
