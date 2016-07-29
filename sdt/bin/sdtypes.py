@@ -317,7 +317,7 @@ class CommonIO():
     def get_one_file(self):
         return self.store.get_one_file()
 
-class ResponseList():
+class ResponseIngester():
 
     def slurp(self,response):
         self.store.append_files(response.get_files()) # warning: load list in memory
@@ -325,7 +325,7 @@ class ResponseList():
         self.size+=response.size()
         response.delete()
 
-class BaseResponse(CommonIO):
+class AttachedParameters(CommonIO):
 
     def add_attached_parameters(self,attached_parameters):
         """This func adds some parameters to the result of a query. 
@@ -362,19 +362,19 @@ class Metadata(CommonIO):
         assert not isinstance(cpy.store,list)
         return cpy
 
-class PaginatedResponse(BaseResponse,ResponseList):
+class PaginatedResponse(AttachedParameters,ResponseIngester):
 
     def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-class MultiQueryResponse(BaseResponse,ResponseList):
+class MultiQueryResponse(AttachedParameters,ResponseIngester):
 
     def __init__(self,lowmem=False): # use RAM even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-class Response(BaseResponse):
+class Response(AttachedParameters):
     """Contains web service output after XML parsing."""
 
     def __init__(self,**kw):
