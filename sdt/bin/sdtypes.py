@@ -293,7 +293,8 @@ class Request():
     def __str__(self):
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
-class CommonIO():
+class CommonIO(object):
+    """Abstract."""
 
     def count(self):
         return self.store.count()
@@ -317,7 +318,8 @@ class CommonIO():
     def get_one_file(self):
         return self.store.get_one_file()
 
-class ResponseIngester():
+class ResponseIngester(object):
+    """Abstract."""
 
     def slurp(self,response):
         self.store.append_files(response.get_files()) # warning: load list in memory
@@ -325,7 +327,8 @@ class ResponseIngester():
         self.size+=response.size()
         response.delete()
 
-class AttachedParameters(CommonIO):
+class AttachedParameters(object):
+    """Abstract."""
 
     def add_attached_parameters(self,attached_parameters):
         """This func adds some parameters to the result of a query. 
@@ -339,6 +342,7 @@ class AttachedParameters(CommonIO):
         self.store.add_attached_parameters(attached_parameters)
 
 class Metadata(CommonIO):
+    """Concrete."""
 
     def __init__(self,base_response=None,lowmem=sdconfig.lowmem): # 'base_response' is an interface matching multiple object
         self.store=sdmts.get_store(lowmem)
@@ -362,20 +366,26 @@ class Metadata(CommonIO):
         assert not isinstance(cpy.store,list)
         return cpy
 
-class PaginatedResponse(AttachedParameters,ResponseIngester):
+class PaginatedResponse(CommonIO,AttachedParameters,ResponseIngester):
+    """Concrete."""
 
     def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-class MultiQueryResponse(AttachedParameters,ResponseIngester):
+class MultiQueryResponse(CommonIO,AttachedParameters,ResponseIngester):
+    """Concrete."""
 
     def __init__(self,lowmem=False): # use RAM even if 'sdconfig.lowmem' is set
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
 
-class Response(AttachedParameters):
-    """Contains web service output after XML parsing."""
+class Response(CommonIO,AttachedParameters):
+    """Contains web service output after XML parsing.
+
+    Note
+        Concrete
+    """
 
     def __init__(self,**kw):
         lowmem=kw.get("lowmem",False) # use RAM even if 'sdconfig.lowmem' is set
