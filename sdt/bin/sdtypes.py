@@ -406,14 +406,11 @@ class Response(CommonIO,AttachedParameters):
     """
 
     def __init__(self,*args,**kwargs):
-
-        # call base class initializer
-        CommonIO.__init__(self,*args,**kwargs)
+        CommonIO.__init__(self,*args,**kwargs)                         # call base class initializer
 
         self.num_found=kwargs.get("num_found",0)                       # total match found in ESGF for the query
         self.call_duration=kwargs.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
         self.parameter_values=kwargs.get("parameter_values",[])        # parameters list (come from the XML document footer)
-
 
         # check
 
