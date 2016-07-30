@@ -21,6 +21,7 @@ import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
 import sdlog
+import sdconst
 import sdconfig
 import sdpoodlefix
 import httplib
@@ -36,7 +37,7 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def call_web_service(url,timeout,lowmem=sdconfig.lowmem):
+def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): # default is to load list resulting from HTTP call in memory (should work on lowmem machine as response should not exceed SEARCH_API_CHUNKSIZE)
     start_time=SDTimer.get_time()
     buf=HTTP_GET(url,timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
