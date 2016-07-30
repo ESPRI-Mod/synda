@@ -295,7 +295,7 @@ def get_uniq_fullpath_db_filename():
     dbfile=os.path.join(sdconfig.db_folder,dbfilename)
     return dbfile
 
-def get_store(lowmem=False):
+def get_new_store(lowmem=False):
     if lowmem:
         return DatabaseStorage()
     else:

@@ -299,7 +299,7 @@ class CommonIO(object):
     def __init__(self,*args,**kwargs):
         lowmem=kwargs.get('lowmem',sdconfig.lowmem)            # note that if store is not None, lowmem have no effect
 
-        self.store=kwargs.get('store',sdmts.get_store(lowmem)) # passing 'store' as argument is only used for internal operation (e.g. copy)
+        self.store=kwargs.get('store',sdmts.get_new_store(lowmem)) # passing 'store' as argument is only used for internal operation (e.g. copy)
         self.size=kwargs.get('size',0)
 
     def count(self):
