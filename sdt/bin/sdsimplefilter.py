@@ -16,16 +16,17 @@ from sdexception import SDException
 import sdconst
 import sdprint
 
-def run(files,filter_name,filter_value,mode):
+def run(metadata,filter_name,filter_value,mode):
     if mode=='keep':
-        return keep_matching_files(files,filter_name,filter_value)
+        return keep_matching_files(metadata,filter_name,filter_value)
     elif mode=='remove':
-        return remove_matching_files(files,filter_name,filter_value)
+        return remove_matching_files(metadata,filter_name,filter_value)
     else:
         raise SDException("SDSIMPLF-002","Incorrect mode (%s)"%mode)
 
-def keep_matching_files(files,filter_name,filter_value):
+def keep_matching_files(metadata,filter_name,filter_value):
     """Keeps files with a match.
+    FIXME
 
     Note:
         - If filter name not found in file attributes, raises exception.
@@ -41,10 +42,11 @@ def keep_matching_files(files,filter_name,filter_value):
 
     files=new_files
 
-    return files
+    return metadata
 
-def remove_matching_files(files,filter_name,filter_value):
+def remove_matching_files(metadata,filter_name,filter_value):
     """Remove files with a match.
+    FIXME
 
     Note:
         If filter name not found in file attributes, raises exception.
@@ -60,7 +62,7 @@ def remove_matching_files(files,filter_name,filter_value):
 
     files=new_files
 
-    return files
+    return metadata
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -71,5 +73,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     files=json.load( sys.stdin )
-    files=run(files,'status',args.status,args.mode)
-    sdprint.print_format(files,args.format,args.print_only_one_item)
+    metadata=Metadata(files=files)
+    metadata=run(metadata,'status',args.status,args.mode)
+    sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item)
