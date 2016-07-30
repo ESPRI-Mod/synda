@@ -32,6 +32,10 @@ class Storage():
     def get_chunks(self,io_mode):
         pass
 
+    def merge(self,store):
+        """Merge the store given in argument into the current store."""
+        pass
+
     def copy(self):
         pass
 
@@ -60,6 +64,9 @@ class MemoryStorage(Storage):
 
         for i in xrange(0, self.count(), chunksize):
             yield self.files[i:i+chunksize]
+
+    def merge(self,store):
+        self.files.extend(store.get_files())
 
     def append_files(self,files):
         self.files.extend(files)
@@ -198,6 +205,16 @@ class DatabaseStorage(Storage):
             sddb._conn.commit() # commit block of insertSelectionTransferJunction
 
             files=dbpagination.get_files()
+
+    def merge(self,store):
+        store.disconnect() # not sure if needed (more info => https://www.sqlite.org/lang_detach.html)
+
+        self.conn.execute("ATTACH DATABASE '%s' AS incoming"%store.dbfile)
+        self.conn.execute("insert into data select %s from incoming.data"%columns)
+        self.conn.commit() # commit all attached databases (TBC)
+        self.conn.execute("DETACH DATABASE incoming")
+
+        store.connect() # not sure if needed
 
     def append_files(self,files):
 
