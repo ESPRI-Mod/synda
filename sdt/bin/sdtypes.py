@@ -309,9 +309,6 @@ FIXME
     def get_files(self): # warning: load list in memory
         return self.store.get_files()
 
-    def size(self):
-        return self.size
-
     def get_chunks(self,io_mode):
         assert not isinstance(self.store,list)
         return self.store.get_chunks(io_mode)
@@ -355,8 +352,9 @@ class Metadata(CommonIO):
             self.store=store
 
     def slurp(self,metadata):
-        self.store.append_files(metadata.get_files())
-        metadata.delete()
+        self.store.merge(metadata.store)
+        self.size+=metadata.size
+        metadata.delete() # FIXME
 
     def add_files(self,files):
         assert isinstance(files, list)
