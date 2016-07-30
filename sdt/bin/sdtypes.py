@@ -327,7 +327,7 @@ class ResponseIngester(object):
     def slurp(self,response):
         self.store.append_files(response.get_files()) # load list in memory, but should work on lowmem machine as response do not exceed SEARCH_API_CHUNKSIZE
         self.call_duration+=response.call_duration
-        self.size+=response.size()
+        self.size+=response.size
         response.delete()
 
 class AttachedParameters(object):
