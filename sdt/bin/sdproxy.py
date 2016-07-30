@@ -53,7 +53,7 @@ class SearchAPIProxy():
 
         paginated_response.add_attached_parameters(attached_parameters)
 
-        return sdtypes.Metadata(paginated_response) # we cast to remove pagination related code and have a lighter object
+        return paginated_response.to_metadata() # we cast to remove pagination related code and have a lighter object
 
     def call_web_service(self,request):
 

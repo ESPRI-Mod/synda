@@ -73,7 +73,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
             mqr=process_queries(queries)
-            metadata=sdtypes.Metadata(mqr,lowmen=False) # use RAM to improve speed here (this module is only intended to process small amount of data, so it should be ok on lowmem machine). 
+            metadata=mqr.to_metadata()
 
             metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
 
@@ -83,7 +83,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 ProgressThread.stop() # spinner stop
 
 def process_queries(queries):
-    mqr=sdtypes.MultiQueryResponse()
+    mqr=sdtypes.MultiQueryResponse(lowmen=False) # use RAM to improve speed here (this module is only intended to process small amount of data, so it should be ok on lowmem machine). 
 
     for query in queries:
         mqr.slurp(ws_call(query))

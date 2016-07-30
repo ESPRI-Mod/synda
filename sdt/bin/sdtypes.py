@@ -296,13 +296,17 @@ class Request():
 class CommonIO(object):
     """Abstract."""
 
+FIXME
+    def __init__(self):
+        self.size=0
+
     def count(self):
         return self.store.count()
 
     def set_files(self,files):
         self.store.set_files(files)
 
-    def get_files(self):
+    def get_files(self): # warning: load list in memory
         return self.store.get_files()
 
     def size(self):
@@ -344,12 +348,11 @@ class AttachedParameters(object):
 class Metadata(CommonIO):
     """Concrete."""
 
-    def __init__(self,base_response=None,lowmem=sdconfig.lowmem): # 'base_response' is an interface matching multiple object
-        self.store=sdmts.get_store(lowmem)
-
-        if base_response is not None:
-            self.set_files(base_response.get_files())
-            base_response.delete()
+    def __init__(self,store=None,lowmem=sdconfig.lowmem): # if store is set, lowmem have no effect
+        if store is None:
+            self.store=sdmts.get_store(lowmem)
+        else:
+            self.store=store
 
     def slurp(self,metadata):
         self.store.append_files(metadata.get_files())
@@ -372,6 +375,10 @@ class PaginatedResponse(CommonIO,AttachedParameters,ResponseIngester):
     def __init__(self,lowmem=sdconfig.lowmem):
         self.store=sdmts.get_store(lowmem)
         self.call_duration=0
+
+    def to_metadata(self):
+        metadata=Metadata(store=self.store)
+        return metadata
 
 class MultiQueryResponse(CommonIO,AttachedParameters,ResponseIngester):
     """Concrete."""
@@ -404,6 +411,6 @@ class Response(CommonIO,AttachedParameters):
             raise SDException("SDATYPES-005","assert error")
 
     def __str__(self):
-        return "\n".join(['%s'%(f['id'],) for f in self.store.get_files()])
+        return "\n".join(['%s'%(f['id'],) for f in self.store.get_files()]) # warning load listin memory
 
 # init.
