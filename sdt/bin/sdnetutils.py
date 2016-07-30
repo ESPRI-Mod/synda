@@ -99,8 +99,8 @@ def HTTP_GET_2(url,timeout=20,verify=True):
 
     try:
         requests.packages.urllib3.disable_warnings()
-        response=requests.get(url, timeout=timeout, verify=verify)
-        buf=response.text
+        result=requests.get(url, timeout=timeout, verify=verify)
+        buf=result.text
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-004"
