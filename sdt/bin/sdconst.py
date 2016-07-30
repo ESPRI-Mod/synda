@@ -165,8 +165,9 @@ PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 #     - we add data_node in all light fields, because it's needed for many thing ('-r' option, nearest..)
 #     - we add variable for file too, so to be able to remove malformed files (i.e. some malformed files have many variables set instead of one)
 #     - 'instance_id' is used for example in 'sdremoveaggregation'
+#     - 'size' is required as non-optional part of basic data structure (Metadata, Response..)
 #
-LIGHT_FIELDS='instance_id,id,type,data_node,variable'
+LIGHT_FIELDS='instance_id,id,type,data_node,variable,size'
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 
