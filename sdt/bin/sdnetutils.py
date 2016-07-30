@@ -36,7 +36,7 @@ class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     def getConnection(self, host, timeout=300):
             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def call_web_service(url,timeout):
+def call_web_service(url,timeout,lowmem=sdconfig.lowmem):
     start_time=SDTimer.get_time()
     buf=HTTP_GET(url,timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
@@ -76,7 +76,7 @@ def call_web_service(url,timeout):
 
         raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
-    return sdtypes.Response(call_duration=elapsed_time,**di)
+    return sdtypes.Response(call_duration=elapsed_time,lowmem=lowmem,**di) # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
 
 def call_param_web_service(url,timeout):
     buf=HTTP_GET(url,timeout)
