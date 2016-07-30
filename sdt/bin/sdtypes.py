@@ -390,16 +390,14 @@ class Response(CommonIO,AttachedParameters):
 
     def __init__(self,*args,**kwargs):
 
+        files=kwargs.get("files",[])
+
         # compute files total size
         kwargs['size']=sum(int(f['size']) for f in files)              #  we alter 'kwargs' here to keep 'size' attribute initialization in one place (i.e. in CommonIO constructor)
 
         # call base class initializer
         CommonIO.__init__(self,*args,**kwargs)
 
-
-        # manage class specific arguments
-
-        files=kwargs.get("files",[])
         self.store.set_files(files)                                    # File (key/value attribute based files list)
 
         self.num_found=kwargs.get("num_found",0)                       # total match found in ESGF for the query
