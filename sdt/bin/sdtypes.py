@@ -299,8 +299,25 @@ class CommonIO(object):
     def __init__(self,*args,**kwargs):
         lowmem=kwargs.get('lowmem',sdconfig.lowmem)            # note that if store is not None, lowmem have no effect
 
-        self.store=kwargs.get('store',sdmts.get_new_store(lowmem)) # passing 'store' as argument is only used for internal operation (e.g. copy)
-        self.size=kwargs.get('size',0)
+        files=kwargs.get("files",None)
+        store=kwargs.get('store',None)
+
+        assert not (files is not None and store is not None)
+
+        if files is not None:
+            self.store=sdmts.get_new_store(lowmem)
+            self.store.set_files(files)                        # Files (key/value attribute based files list)
+            self.size=sum(int(f['size']) for f in files)
+        elif store is not None:
+            # passing 'store' as argument is only used for internal operation (e.g. copy)
+
+            self.store=store
+            self.size=kwargs.get('size',None)
+
+            assert self.size is not None # size must be given if store is given
+        else:
+            self.store=sdmts.get_new_store(lowmem)
+            self.size=0
 
     def count(self):
         return self.store.count()
@@ -390,15 +407,8 @@ class Response(CommonIO,AttachedParameters):
 
     def __init__(self,*args,**kwargs):
 
-        files=kwargs.get("files",[])
-
-        # compute files total size
-        kwargs['size']=sum(int(f['size']) for f in files)              #  we alter 'kwargs' here to keep 'size' attribute initialization in one place (i.e. in CommonIO constructor)
-
         # call base class initializer
         CommonIO.__init__(self,*args,**kwargs)
-
-        self.store.set_files(files)                                    # File (key/value attribute based files list)
 
         self.num_found=kwargs.get("num_found",0)                       # total match found in ESGF for the query
         self.call_duration=kwargs.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
