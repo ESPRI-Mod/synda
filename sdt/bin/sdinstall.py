@@ -41,16 +41,17 @@ def run(args,metadata=None):
 
     interactive=not args.yes
 
-    return install(metadata.get_files(),interactive)
+    return install(metadata,interactive)
 
-def install(files,interactive):
+def install(metadata,interactive):
     import sddaemon
 
 
     # Compute total files stat
-    count_total=len(files)
-    size_total=sum(int(f['size']) for f in files)
+    count_total=metadata.count()
+    size_total=metadata.size
 
+    FIXME
 
     # Compute new files stat
     #
