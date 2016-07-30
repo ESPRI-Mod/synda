@@ -296,9 +296,11 @@ class Request():
 class CommonIO(object):
     """Abstract."""
 
-FIXME
-    def __init__(self):
-        self.size=0
+    def __init__(self,*args,**kwargs):
+        lowmem=kwargs.get('lowmem',sdconfig.lowmem)            # note that if store is not None, lowmem have no effect
+
+        self.store=kwargs.get('store',sdmts.get_store(lowmem)) # passing 'store' as argument is only used for internal operation (e.g. copy)
+        self.size=kwargs.get('size',0)
 
     def count(self):
         return self.store.count()
@@ -342,14 +344,19 @@ class AttachedParameters(object):
         assert isinstance(attached_parameters, dict)
         self.store.add_attached_parameters(attached_parameters)
 
+class MetaResponse(CommonIO,AttachedParameters,ResponseIngester):
+    """Abstract."""
+
+    def __init__(self,*args,**kwargs):
+        CommonIO.__init__(self,*args,**kwargs)
+        self.call_duration=0
+
+    def to_metadata(self):
+        metadata=Metadata(store=self.store,size=self.size)
+        return metadata
+
 class Metadata(CommonIO):
     """Concrete."""
-
-    def __init__(self,store=None,lowmem=sdconfig.lowmem): # if store is set, lowmem have no effect
-        if store is None:
-            self.store=sdmts.get_store(lowmem)
-        else:
-            self.store=store
 
     def slurp(self,metadata):
         self.store.merge(metadata.store)
@@ -367,23 +374,15 @@ class Metadata(CommonIO):
         assert not isinstance(cpy.store,list)
         return cpy
 
-class PaginatedResponse(CommonIO,AttachedParameters,ResponseIngester):
+class PaginatedResponse(MetaResponse):
     """Concrete."""
 
-    def __init__(self,lowmem=sdconfig.lowmem):
-        self.store=sdmts.get_store(lowmem)
-        self.call_duration=0
+    pass
 
-    def to_metadata(self):
-        metadata=Metadata(store=self.store)
-        return metadata
-
-class MultiQueryResponse(CommonIO,AttachedParameters,ResponseIngester):
+class MultiQueryResponse(MetaResponse):
     """Concrete."""
 
-    def __init__(self,lowmem=False): # use RAM even if 'sdconfig.lowmem' is set
-        self.store=sdmts.get_store(lowmem)
-        self.call_duration=0
+    pass
 
 class Response(CommonIO,AttachedParameters):
     """Contains web service output after XML parsing.
@@ -392,17 +391,24 @@ class Response(CommonIO,AttachedParameters):
         Concrete
     """
 
-    def __init__(self,**kw):
-        lowmem=kw.get("lowmem",False) # use RAM even if 'sdconfig.lowmem' is set
-        self.store=sdmts.get_store(lowmem)
+    def __init__(self,*args,**kwargs):
 
-        files=kw.get("files",[])
+        # compute files total size
+        kwargs['size']=sum(int(f['size']) for f in files)              #  we alter 'kwargs' here to keep 'size' attribute initialization in one place (i.e. in CommonIO constructor)
 
-        self.store.set_files(files)                                # File (key/value attribute based files list)
-        self.num_found=kw.get("num_found",0)                       # total match found in ESGF for the query
-        self.call_duration=kw.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
-        self.size=sum(int(f['size']) for f in files)               # compute files total size
-        self.parameter_values=kw.get("parameter_values",[])        # parameters list (come from the XML document footer)
+        # call base class initializer
+        CommonIO.__init__(self,*args,**kwargs)
+
+
+        # manage class specific arguments
+
+        files=kwargs.get("files",[])
+        self.store.set_files(files)                                    # File (key/value attribute based files list)
+
+        self.num_found=kwargs.get("num_found",0)                       # total match found in ESGF for the query
+        self.call_duration=kwargs.get("call_duration")                 # ESGF index service call duration (if call has been paginated, then this member contains sum of all calls duration)
+        self.parameter_values=kwargs.get("parameter_values",[])        # parameters list (come from the XML document footer)
+
 
         # check
 
