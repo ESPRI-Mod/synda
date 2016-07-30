@@ -116,7 +116,7 @@ class SearchAPIProxy():
         """
 
         # init
-        request.limit=sdconst.CHUNKSIZE
+        request.limit=sdconst.SEARCH_API_CHUNKSIZE
         request.offset=0
         offset = 0
         paginated_response=sdtypes.PaginatedResponse()
@@ -135,7 +135,7 @@ class SearchAPIProxy():
                 response=self.call_web_service(request)
 
             # paging (post-processing)
-            offset += sdconst.CHUNKSIZE
+            offset += sdconst.SEARCH_API_CHUNKSIZE
             nread += response.count()
             nleft = response.num_found - nread
 

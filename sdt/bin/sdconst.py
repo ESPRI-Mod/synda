@@ -117,7 +117,7 @@ LOGFILE_CONSUMER='transfer.log'
 # It seems to be of bug on the server side.
 #
 # So from now, it's set to 9000
-CHUNKSIZE=9000
+SEARCH_API_CHUNKSIZE=9000
 
 PROCESSING_CHUNKSIZE=500
 PROCESSING_FETCH_MODE_GENERATOR='generator'

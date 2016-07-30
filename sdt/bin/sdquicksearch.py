@@ -17,7 +17,7 @@ Notes
     - this module cannot be used to count number of matches
     - this module support 'limit' feature
     - this module do not have a next chunk offset based mecanism (i.e. it cannot aggregate multiple search-api calls together)
-    - with this module it is NOT possible to retrieve all records if number of result > sdconst.CHUNKSIZE
+    - with this module it is NOT possible to retrieve all records if number of result > sdconst.SEARCH_API_CHUNKSIZE
     - this module DO NOT have a retry mecanism if the search-API call failed
     - one advantage of this module is it is not threads based, so
       doing CTRL-C make it stop immediately (but now, it should also be the case
@@ -94,7 +94,7 @@ def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
     result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
 
-    if result.count()>=sdconst.CHUNKSIZE:
+    if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
         raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
 
     result.add_attached_parameters(query.get('attached_parameters',{}))

@@ -231,7 +231,7 @@ class Item():
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
 class Request():
-    def __init__(self,url=None,pagination=True,limit=sdconst.CHUNKSIZE):
+    def __init__(self,url=None,pagination=True,limit=sdconst.SEARCH_API_CHUNKSIZE):
         self._url=url
         self.pagination=pagination
 
@@ -326,7 +326,7 @@ class ResponseIngester(object):
     """Abstract."""
 
     def slurp(self,response):
-        self.store.append_files(response.get_files()) # warning: load list in memory
+        self.store.append_files(response.get_files()) # load list in memory, but should work on lowmem machine as response do not exceed SEARCH_API_CHUNKSIZE
         self.call_duration+=response.call_duration
         self.size+=response.size()
         response.delete()
@@ -406,9 +406,13 @@ class Response(CommonIO,AttachedParameters):
         self.size=sum(int(f['size']) for f in files)               # compute files total size
         self.parameter_values=kw.get("parameter_values",[])        # parameters list (come from the XML document footer)
 
-        # assert
+        # check
+
         if self.num_found is None:
             raise SDException("SDATYPES-005","assert error")
+
+        if self.count()>sdconst.SEARCH_API_CHUNKSIZE:
+            assert False
 
     def __str__(self):
         return "\n".join(['%s'%(f['id'],) for f in self.store.get_files()]) # warning load listin memory

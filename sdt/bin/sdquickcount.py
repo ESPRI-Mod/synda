@@ -59,7 +59,7 @@ def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
     result=sdnetutils.call_web_service(request.get_url(),sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
 
-    if result.count()>=sdconst.CHUNKSIZE:
+    if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
         raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
 
     result.add_attached_parameters(query.get('attached_parameters',{}))
