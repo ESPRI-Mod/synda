@@ -368,10 +368,7 @@ class Metadata(CommonIO):
         self.store.append_files(files)
 
     def copy(self):
-        cpy=Metadata()
-        cpy.store.delete()
-        cpy.store=self.store.copy()
-        assert not isinstance(cpy.store,list)
+        cpy=Metadata(store=self.store.copy(),size=self.size)
         return cpy
 
 class PaginatedResponse(MetaResponse):
