@@ -261,7 +261,7 @@ if __name__ == '__main__':
 
     # dict to "File" operation
     file_list=[]
-    for file_ in metadata.get_files():
+    for file_ in metadata.get_files(): # warning: load list in memory
         file_list.append(sdtypes.File(**file_))
 
     for f in file_list:

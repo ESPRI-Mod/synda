@@ -97,5 +97,5 @@ if __name__ == '__main__':
 
     queries=sdpipelineutils.get_input_data(args.file)
     metadata=run(queries,args.parallel)
-    files=metadata.get_files()
+    files=metadata.get_files() # warning: load list in memory
     sdprint.print_format(files,args.format,args.print_only_one_item)
