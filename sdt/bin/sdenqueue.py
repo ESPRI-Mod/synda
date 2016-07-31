@@ -34,24 +34,28 @@ import sdconst
 import sdsqlutils
 import sdpostpipelineutils
 import sdtime
+import sdpipelineprocessing
 from sdexception import SDException
 from sdprogress import ProgressThread
 
-def run(files):
-    selection_filename=sdpostpipelineutils.get_attached_parameter__global(files,'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
-    files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
+def run(metadata):
 
-    count=len(files) # how many files to be inserted
-    total_size=sum(int(f['size']) for f in files)
+    f=metadata.get_one_file()
+    selection_filename=sdpostpipelineutils.get_attached_parameter__global([f],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
+
+    count=metadata.count() # how many files to be inserted
+    total_size=metadata.size
 
     if count>0:
         insertion_group_id=sdsqlutils.nextval('insertion_group_id','history') # this is uniq identifier for all inserted files during this run
-        files=add_insertion_group_id(files,insertion_group_id)
+        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_insertion_group_id,insertion_group_id)
 
         # TODO: maybe add a way to prevent progress (may be usefull when using 'upgrade' action)
         ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
-        add_files(files)
+        add_files(metadata)
 
         ProgressThread.stop() # spinner stop
 
@@ -97,6 +101,8 @@ def keep_recent_datasets(datasets):
     return li
 
 def add_files(files):
+
+FIXME
     for f in files:
         add_file(File(**f))
 
