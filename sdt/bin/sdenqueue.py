@@ -28,6 +28,7 @@ import sdhistorydao
 import sdfiledao
 import sddatasetdao
 import sdutils
+import sdconfig
 import sdtimestamp
 from sdtypes import Dataset,File
 import sdconst
