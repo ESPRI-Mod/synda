@@ -55,7 +55,9 @@ def run(metadata):
         # TODO: maybe add a way to prevent progress (may be usefull when using 'upgrade' action)
         ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
-        add_files(metadata)
+        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_files)
+        fix_timestamp()
+        sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
 
         ProgressThread.stop() # spinner stop
 
@@ -101,56 +103,9 @@ def keep_recent_datasets(datasets):
     return li
 
 def add_files(files):
-
-FIXME
     for f in files:
         add_file(File(**f))
-
-    # HACK 1
-    #
-    # Once all insertions are done, we update 'dataset.timestamp' column (this
-    # cannot be done in one step, because dataset 'timestamp' attribute doesn't
-    # exist in file's attributes).
-    #
-    # 'timestamp' is mainly (only ?) needed by sddatasetversion.compare() func
-    #
-    # Indeed, this code is a hack that makes the workflow less readable
-    # (i.e. 'search' then 'enqueue' then 'search' again). Maybe try to improve
-    # this in the future. Still, it not as bad as if 'search' triggers 'search'
-    # recursively, because in our case, when the second search starts, the
-    # first search is completed (AFAIR sdsearch is protected not to permit
-    # recursion anyway). 
-    # But if needed, there is a way to trigger search recursively: use
-    # sdquicksearch (also in this case, sdsearch can still be used for the top
-    # level search (so resulting with a mix of sdsearch and sdquicksearch)).
-    #
-    datasets_without_timestamp=sddatasetdao.get_datasets(timestamp=None) # retrieve datasets with timestamp not set
-
-    # HACK 2
-    recent_datasets_without_timestamp=keep_recent_datasets(datasets_without_timestamp)
-
-    if len(recent_datasets_without_timestamp)>0:
-        sdlog.info("SDENQUEU-004","Retrieving timestamp for %i dataset(s)."%len(recent_datasets_without_timestamp))
-
-        for dataset_without_timestamp in recent_datasets_without_timestamp:
-
-            try:
-                sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
-            except SDException, e:
-                if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
-                    sdlog.info("SDENQUEU-909","Timestamp not set for dataset (reason=%s,dataset=%s)"%(e.code,dataset_without_timestamp.dataset_functional_id))
-                else:
-                    # fatal error come here
-
-                    raise
-
-    else:
-        # This case is when new files are enqueued, but only on existing
-        # dataset (so there is no dataset timestamp to update).
-
-        pass
-
-    sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
+    return [] # nothing to return (end of processing)
 
 def add_file(f):
     sdlog.info("SDENQUEU-003","Create transfer (local_path=%s,url=%s)"%(f.get_full_local_path(),f.url))
@@ -230,6 +185,52 @@ def add_dataset(f):
         d.model=f.model if hasattr(f,'model') else None
 
         return sddatasetdao.add_dataset(d,commit=False)
+
+def fix_timestamp():
+
+    # HACK 1
+    #
+    # Once all insertions are done, we update 'dataset.timestamp' column (this
+    # cannot be done in one step, because dataset 'timestamp' attribute doesn't
+    # exist in file's attributes).
+    #
+    # 'timestamp' is mainly (only ?) needed by sddatasetversion.compare() func
+    #
+    # Indeed, this code is a hack that makes the workflow less readable
+    # (i.e. 'search' then 'enqueue' then 'search' again). Maybe try to improve
+    # this in the future. Still, it not as bad as if 'search' triggers 'search'
+    # recursively, because in our case, when the second search starts, the
+    # first search is completed (AFAIR sdsearch is protected not to permit
+    # recursion anyway). 
+    # But if needed, there is a way to trigger search recursively: use
+    # sdquicksearch (also in this case, sdsearch can still be used for the top
+    # level search (so resulting with a mix of sdsearch and sdquicksearch)).
+    #
+    datasets_without_timestamp=sddatasetdao.get_datasets(timestamp=None) # retrieve datasets with timestamp not set
+
+    # HACK 2
+    recent_datasets_without_timestamp=keep_recent_datasets(datasets_without_timestamp)
+
+    if len(recent_datasets_without_timestamp)>0:
+        sdlog.info("SDENQUEU-004","Retrieving timestamp for %i dataset(s)."%len(recent_datasets_without_timestamp))
+
+        for dataset_without_timestamp in recent_datasets_without_timestamp:
+
+            try:
+                sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
+            except SDException, e:
+                if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
+                    sdlog.info("SDENQUEU-909","Timestamp not set for dataset (reason=%s,dataset=%s)"%(e.code,dataset_without_timestamp.dataset_functional_id))
+                else:
+                    # fatal error come here
+
+                    raise
+
+    else:
+        # This case is when new files are enqueued, but only on existing
+        # dataset (so there is no dataset timestamp to update).
+
+        pass
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
