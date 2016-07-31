@@ -15,18 +15,18 @@ import sdapp
 from sdexception import SDException
 import sdconst
 import sdprint
+import sdpipelineprocessing
 
 def run(metadata,filter_name,filter_value,mode):
     if mode=='keep':
-        return keep_matching_files(metadata,filter_name,filter_value)
+        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_matching_files,filter_name,filter_value)
     elif mode=='remove':
-        return remove_matching_files(metadata,filter_name,filter_value)
+        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove_matching_files,filter_name,filter_value)
     else:
         raise SDException("SDSIMPLF-002","Incorrect mode (%s)"%mode)
 
-def keep_matching_files(metadata,filter_name,filter_value):
+def keep_matching_files(files,filter_name,filter_value):
     """Keeps files with a match.
-    FIXME
 
     Note:
         - If filter name not found in file attributes, raises exception.
@@ -42,11 +42,10 @@ def keep_matching_files(metadata,filter_name,filter_value):
 
     files=new_files
 
-    return metadata
+    return files
 
-def remove_matching_files(metadata,filter_name,filter_value):
+def remove_matching_files(files,filter_name,filter_value):
     """Remove files with a match.
-    FIXME
 
     Note:
         If filter name not found in file attributes, raises exception.
@@ -62,7 +61,7 @@ def remove_matching_files(metadata,filter_name,filter_value):
 
     files=new_files
 
-    return metadata
+    return files
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
