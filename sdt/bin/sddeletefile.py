@@ -37,6 +37,8 @@ def delete_transfers(limit=None):
     for tr in transfer_list:
         immediate_delete(tr)
 
+    sddb.conn.commit() # final commit (we do all deletion in one transaction).
+
     return sdfiledao.transfer_status_count(status=sdconst.TRANSFER_STATUS_DELETE)
 
 def deferred_delete(file_functional_id):
@@ -61,7 +63,7 @@ def immediate_delete(tr):
         try:
             os.remove(tr.get_full_local_path())
             # note: if data cannot be removed (i.e. exception is raised), we don't remove metadata
-            sdfiledao.delete_file(tr)
+            sdfiledao.delete_file(tr,commit=False)
 
         except Exception,e:
             sdlog.error("SDDELETE-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
@@ -73,7 +75,7 @@ def immediate_delete(tr):
         else:
             # this case is for 'waiting' and 'error' status (in these cases, data do not exist, so we just remove metadata)
 
-            sdfiledao.delete_file(tr)
+            sdfiledao.delete_file(tr,commit=False)
 
 def reset():
     import sddeletedataset
