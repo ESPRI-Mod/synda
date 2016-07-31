@@ -85,6 +85,7 @@ def remove(metadata):
     # Note
     #    Use loop for lowmem machine compatibility
     #
+    count=sddeletefile.delete_transfers(100)
     while count > 0:
         count=sddeletefile.delete_transfers(100)
 
