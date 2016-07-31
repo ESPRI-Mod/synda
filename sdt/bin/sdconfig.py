@@ -217,9 +217,10 @@ if not is_special_user():
 
 config=sdcfloader.load(configuration_file,credential_file,user_configuration_file,user_credential_file,special_user=is_special_user())
 
-# aliases
+# aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
+progress=config.getboolean('interface','progress')
 
 selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)

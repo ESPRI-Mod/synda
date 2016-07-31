@@ -52,14 +52,15 @@ def run(metadata):
         insertion_group_id=sdsqlutils.nextval('insertion_group_id','history') # this is uniq identifier for all inserted files during this run
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_insertion_group_id,insertion_group_id)
 
-        # TODO: maybe add a way to prevent progress (may be usefull when using 'upgrade' action)
-        sdprogress.ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
+        if sdconfig.progress:
+            sdprogress.ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_files)
         fix_timestamp()
         sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
 
-        sdprogress.ProgressThread.stop() # spinner stop
+        if sdconfig.progress:
+            sdprogress.ProgressThread.stop() # spinner stop
 
         sdhistorydao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id)
 
