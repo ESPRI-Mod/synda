@@ -25,6 +25,8 @@ def run(metadata,filter_name,filter_value,mode):
     else:
         raise SDException("SDSIMPLF-002","Incorrect mode (%s)"%mode)
 
+    return metadata
+
 def keep_matching_files(files,filter_name,filter_value):
     """Keeps files with a match.
 
