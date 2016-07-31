@@ -27,7 +27,7 @@ def add_file(file,commit=True,conn=sddb.conn):
     keys_to_insert=['status', 'crea_date', 'url', 'local_path', 'filename', 'file_functional_id', 'tracking_id', 'priority', 'checksum', 'checksum_type', 'size', 'variable', 'project', 'model', 'data_node', 'dataset_id', 'insertion_group_id', 'timestamp']
     return sdsqlutils.insert(file,keys_to_insert,commit,conn)
 
-def delete_file(tr,conn=sddb.conn):
+def delete_file(tr,commit=True,conn=sddb.conn):
     c = conn.cursor()
 
     c.execute("delete from selection__file where file_id=?",(tr.file_id,)) # also delete entries from junction table
@@ -38,7 +38,9 @@ def delete_file(tr,conn=sddb.conn):
         raise SDException("SYNCDDAO-908","file not found (file_id=%i,local_path=%s)"%(tr.file_id,tr.local_path,))
 
     c.close()
-    conn.commit()
+
+    if commit:
+        conn.commit()
 
 def exists_file(f,conn=sddb.conn):
     """
