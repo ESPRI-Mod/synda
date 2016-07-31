@@ -23,8 +23,14 @@ from sdtools import print_stderr
 import sdconst
 
 def transfer_running_count(conn=sddb.conn):
+    return transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING,conn=conn)
+
+def transfer_status_count(status=None,conn=sddb.conn):
+
+    assert status!=None
+
     c=conn.cursor()
-    q="select count(1) from file where status = '%s'" % sdconst.TRANSFER_STATUS_RUNNING
+    q="select count(1) from file where status = '%s'" % status
     c.execute(q)
     rs=c.fetchone()
 
