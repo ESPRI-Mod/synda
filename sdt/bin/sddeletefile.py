@@ -24,6 +24,9 @@ import sddeletequery
 
 def delete_transfers(limit=None):
     """
+    Returns
+        how many files with TRANSFER_STATUS_DELETE status remain
+
     Note
         'limit' is used to delete only a subset of all files marked for
         deletion each time this func is called. If 'limit' is None,
@@ -33,6 +36,8 @@ def delete_transfers(limit=None):
 
     for tr in transfer_list:
         immediate_delete(tr)
+
+    return sdfiledao.transfer_status_count(status=sdconst.TRANSFER_STATUS_DELETE)
 
 def deferred_delete(file_functional_id):
     f=sdfiledao.get_file(file_functional_id)
