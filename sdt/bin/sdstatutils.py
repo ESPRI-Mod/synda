@@ -18,12 +18,10 @@ import humanize
 import sdapp
 import sdconst
 
-def get_total(files):
+def get_total(statuses):
     total={}
     total['pending']={}
     total['all']={}
-
-    statuses=get_statuses(files)
 
     total['pending']['count']=sum(statuses[s]['count'] for s in sdconst.TRANSFER_STATUSES_PENDING)
     total['pending']['size']=sum(statuses[s]['size'] for s in sdconst.TRANSFER_STATUSES_PENDING)
@@ -32,19 +30,11 @@ def get_total(files):
 
     return total
 
-def get_statuses(files):
+def get_statuses(files,statuses):
     """Returns size & count for each status."""
-    statuses={}
-
-    for status in sdconst.TRANSFER_STATUSES_ALL:
-        statuses[status]={}
-
-    for status in sdconst.TRANSFER_STATUSES_ALL:
-        statuses[status]['count']=0
-        statuses[status]['size']=0
 
     for f in files:
         statuses[f['status']]['count']+=1
         statuses[f['status']]['size']+=int(f['size'])
 
-    return statuses
+    return []

@@ -28,12 +28,12 @@ import sdconst
 import sdstatutils
 import syndautils
 import sdexception
+import sdpipelineprocessing
 
 def run(args):
 
     try:
         metadata=syndautils.file_full_search(args)
-        files=metadata.get_files()
     except sdexception.EmptySelectionException, e:
         print_stderr("You must specify at least one facet to perform this action.")
         return 1
@@ -41,12 +41,21 @@ def run(args):
     if args.dry_run:
         return 0
 
-    total=sdstatutils.get_total(files)
-    statuses=sdstatutils.get_statuses(files)
-    print_summary(statuses,total)
 
-    #(projects,models)=get_details(files)
-    #print_details(projects,models)
+    statuses={}
+
+    for status in sdconst.TRANSFER_STATUSES_ALL:
+        statuses[status]={}
+
+    for status in sdconst.TRANSFER_STATUSES_ALL:
+        statuses[status]['count']=0
+        statuses[status]['size']=0
+
+    sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,sdstatutils.get_statuses,statuses)
+
+
+    total=sdstatutils.get_total(statuses)
+    print_summary(statuses,total)
 
     return 0
 
@@ -75,17 +84,10 @@ def print_summary(statuses,total,mode='line'):
             if size>0:
                 print "%s files size: %s"%(s.title(),humanize.naturalsize(size,gnu=False))
 
-def print_details(files):
-        print "Details"
-        print '======='
-        print "Details regarding files with 'new' status"
-        print '========================================='
-        print 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    files=json.load( sys.stdin )
+    files=json.load( sys.stdin ) # warning: load list in memory
 
     run(files)
