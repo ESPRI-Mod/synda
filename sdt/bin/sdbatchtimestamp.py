@@ -65,11 +65,10 @@ def get_datasets_timestamps(squeries,parallel):
 
     # run
     metadata=sdrun.run(squeries,parallel)
-    datasets=metadata.get_files()
 
     # transform to dict for quick random access
     di={}
-    for d in datasets:
+    for d in metadata.get_files(): # warning: load list in memory
         instance_id=d['instance_id']
 
         try:
