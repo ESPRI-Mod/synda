@@ -69,15 +69,24 @@ def run(args):
             print_stderr('Nothing to delete.')
             return 0
 
-def remove(files):
+def remove(metadata):
 
-    # first step, change the files status from 'done' to 'delete' (update metadata)
-    nbr=sddelete.run(files)
+    # First step, change the files status from 'done' to 'delete' (update metadata).
+    #
+    # Note
+    #     This is a deferred delete.
+    #
+    nbr=sddelete.run(metadata)
     print_stderr("%i file(s) removed"%nbr)
 
-    # second step, do the deletion (remove files on filesystem and remove files metadata)
+    # Second step, do the deletion (remove files on filesystem and remove files metadata)
     # (to do a deferred deletion (i.e. by the daemon), comment line below)
-    sddeletefile.delete_transfers()
+    #
+    # Note
+    #    Use loop for lowmem machine compatibility
+    #
+    while count > 0:
+        count=sddeletefile.delete_transfers(1000)
 
     # Third step is to remove orphan dataset
     sddeletedataset.purge_orphan_datasets()
