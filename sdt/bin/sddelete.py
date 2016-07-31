@@ -22,6 +22,7 @@ import sdsimplefilter
 import sdconst
 import sdlog
 import sddeletefile
+import sddb
 
 def run(metadata):
     """
@@ -41,6 +42,7 @@ def run(metadata):
 
     if count>0:
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,delete)
+        sddb.conn.commit() # final commit (we do all update in one transaction).
 
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,selection_filename)
 

@@ -18,6 +18,7 @@ import sdlog
 import sdhistorydao
 import sdfiledao
 import sdconst
+import sddb
 
 def delete_insertion_group(insertion_group_id):
     files=sdfiledao.get_files(insertion_group_id=insertion_group_id)
@@ -26,6 +27,7 @@ def delete_insertion_group(insertion_group_id):
         for f in files:
             sddeletefile.deferred_delete(f.file_functional_id)
             sdlog.info("SDINSGRP-001","File marked for deletion (%s)"%f.file_functional_id)
+        sddb.conn.commit() # final commit (we do all update in one transaction).
         print "%i file(s) marked for deletion"%len(files)
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
     else:

@@ -42,7 +42,7 @@ def deferred_delete(file_functional_id):
     f.sdget_status=None
     f.sdget_error_msg=None
 
-    sdfiledao.update_file(f)
+    sdfiledao.update_file(f,commit=False)
 
 def immediate_delete(tr):
     """Delete file (metadata and data).
