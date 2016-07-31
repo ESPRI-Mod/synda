@@ -159,6 +159,9 @@ SELECTION_FROM_STDIN='stdin'
 #
 PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 
+# Fields that MUST be part of every search-api requests
+REQUIRED_FIELDS=['type','size']
+
 # Light fields are used to retrieve just the necessary fields, so to limit the bandwidth footprint.
 #
 # Notes
@@ -167,7 +170,7 @@ PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 #     - 'instance_id' is used for example in 'sdremoveaggregation'
 #     - 'size' is required as non-optional part of basic data structure (Metadata, Response..)
 #
-LIGHT_FIELDS='instance_id,id,type,data_node,variable,size'
+LIGHT_FIELDS=['instance_id','id','type','data_node','variable','size']
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 
