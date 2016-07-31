@@ -51,8 +51,6 @@ def install(metadata,interactive):
     count_total=metadata.count()
     size_total=metadata.size
 
-    FIXME
-
     # Compute new files stat
     #
     # (yes, block below is a duplicate of what is done inside sdenqueue.run()
@@ -60,9 +58,9 @@ def install(metadata,interactive):
     # perfomance)
     #
     import sdsimplefilter, sdconst
-    files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
-    count_new=len(files)
-    size_new=sum(int(f['size']) for f in files)
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
+    count_new=metadata.count()
+    size_new=metadata.size
 
 
     # what to do if no match
@@ -94,14 +92,14 @@ def install(metadata,interactive):
     # install
     if installation_confirmed:
         import sdenqueue
-        sdenqueue.run(files)
+        sdenqueue.run(metadata)
 
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
 
             if not sddaemon.is_running():
-                print_stderr("The daemon is not running. To start it, use 'sudo service synda start'.")
+                print_stderr("The daemon is not running. To start it, use 'sudo service synda start'.") # FIXME
     else:
         if interactive:
             print_stderr('Abort.')
