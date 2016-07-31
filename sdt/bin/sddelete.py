@@ -51,7 +51,7 @@ def run(metadata):
 
     return count
 
-def delete():
+def delete(files):
     for file in files:
         sddeletefile.deferred_delete(file['file_functional_id'])
     return [] # nothing to return (end of processing)
