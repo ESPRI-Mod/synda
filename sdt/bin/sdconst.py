@@ -170,7 +170,7 @@ REQUIRED_FIELDS=['type','size']
 #     - 'instance_id' is used for example in 'sdremoveaggregation'
 #     - 'size' is required as non-optional part of basic data structure (Metadata, Response..)
 #
-LIGHT_FIELDS=['instance_id','id','type','data_node','variable','size']
+LIGHT_FIELDS=['instance_id','id','data_node','variable']+REQUIRED_FIELDS
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 

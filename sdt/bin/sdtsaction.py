@@ -401,9 +401,9 @@ def file_dump(args):
 
 # init.
 
-dataset_light_fields=sdconst.LIGHT_FIELDS
-variable_light_fields=sdconst.LIGHT_FIELDS
-file_light_fields=sdconst.LIGHT_FIELDS
+dataset_light_fields=','.join(sdconst.LIGHT_FIELDS)
+variable_light_fields=','.join(sdconst.LIGHT_FIELDS)
+file_light_fields=','.join(sdconst.LIGHT_FIELDS)
 
 actions={
     'dump':dump,
