@@ -62,7 +62,7 @@ def run(facets_groups):
             metadata=sdrun.run(queries)
             metadata=sdpipeline.post_pipeline(metadata,'generic')
 
-            datasets=metadata.get_files()
+            datasets=metadata.get_files() # warning: load list in memory
 
             if len(datasets)>0:
                 if explode_on_instance_id:

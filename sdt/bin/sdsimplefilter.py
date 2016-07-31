@@ -76,4 +76,4 @@ if __name__ == '__main__':
     files=json.load( sys.stdin )
     metadata=Metadata(files=files)
     metadata=run(metadata,'status',args.status,args.mode)
-    sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item)
+    sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item) # warning: load list in memory
