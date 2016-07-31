@@ -13,6 +13,7 @@
 
 import argparse
 import sdapp
+import sdconst
 import sddatasetdao
 import sdquicksearch
 import sdlog
