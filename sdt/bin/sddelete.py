@@ -23,29 +23,35 @@ import sdconst
 import sdlog
 import sddeletefile
 
-def run(files):
+def run(metadata):
     """
     Set files status to "delete"
 
     Note
         - the func only change the status (i.e. data and metadata will be removed later by the daemon)
     """
-    selection_filename=sdpostpipelineutils.get_attached_parameter__global(files,'selection_filename')
 
-    files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
-    files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_DELETE,'remove')
+    f=metadata.get_one_file()
+    selection_filename=sdpostpipelineutils.get_attached_parameter__global([f],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
 
-    count=len(files)
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_DELETE,'remove')
+
+    count=metadata.count()
 
     if count>0:
-        for file in files:
-            sddeletefile.deferred_delete(file['file_functional_id'])
+        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,delete)
 
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,selection_filename)
 
         sdlog.info("SDDELETE-929","%i files marked for deletion (selection=%s)"%(count,selection_filename))
 
     return count
+
+def delete():
+    for file in files:
+        sddeletefile.deferred_delete(file['file_functional_id'])
+    return [] # nothing to return (end of processing)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
