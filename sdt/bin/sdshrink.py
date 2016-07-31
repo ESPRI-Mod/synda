@@ -37,12 +37,12 @@ import sdshrinkutils
 
 def run(metadata):
 
-    #for f in files.get_files():
+    #for f in metadata.get_files(): # warning: load list in memory
     #    sdlog.debug("SDSHRINK-004","%s"%f['data_node'],stdout=True)
 
     metadata=shrink(metadata)
 
-    #for f in metadata.get_files():
+    #for f in metadata.get_files(): # warning: load list in memory
     #    sdlog.debug("SDSHRINK-005","%s"%f['data_node'],stdout=True)
 
     return metadata
