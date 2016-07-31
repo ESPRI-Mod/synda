@@ -21,6 +21,7 @@ import argparse
 import sdconst
 import sdlog
 import sddeletequery
+import sddb
 
 def delete_transfers(limit=None):
     """
