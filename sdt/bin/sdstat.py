@@ -42,15 +42,7 @@ def run(args):
         return 0
 
 
-    statuses={}
-
-    for status in sdconst.TRANSFER_STATUSES_ALL:
-        statuses[status]={}
-
-    for status in sdconst.TRANSFER_STATUSES_ALL:
-        statuses[status]['count']=0
-        statuses[status]['size']=0
-
+    statuses=sdstatutils.init_table()
     sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,sdstatutils.get_statuses,statuses)
 
 

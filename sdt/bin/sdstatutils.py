@@ -30,6 +30,18 @@ def get_total(statuses):
 
     return total
 
+def init_table():
+    statuses={}
+
+    for status in sdconst.TRANSFER_STATUSES_ALL:
+        statuses[status]={}
+
+    for status in sdconst.TRANSFER_STATUSES_ALL:
+        statuses[status]['count']=0
+        statuses[status]['size']=0
+
+    return statuses
+
 def get_statuses(files,statuses):
     """Returns size & count for each status."""
 
