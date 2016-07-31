@@ -623,14 +623,15 @@ def pexec(args):
         for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
             
             metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
-            datasets=metadata.get_files()
 
             # WART
             # (gets overwritten at each iteration, but not a big deal as always the same value)
             if selection_filename is None: # this is to keep the first found value (i.e. if last facets_group is empty but not the previous ones do not keep the last one (which would be None))
-                selection_filename=sdpostpipelineutils.get_attached_parameter__global(datasets,'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
 
-            for d in datasets:
+                dataset=metadata.get_one_file()
+                selection_filename=sdpostpipelineutils.get_attached_parameter__global([dataset],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+
+            for d in metadata.get_files(): # warning: load list in memory
                 if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
 
