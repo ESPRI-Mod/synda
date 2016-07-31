@@ -86,7 +86,7 @@ def remove(metadata):
     #    Use loop for lowmem machine compatibility
     #
     while count > 0:
-        count=sddeletefile.delete_transfers(1000)
+        count=sddeletefile.delete_transfers(100)
 
     # Third step is to remove orphan dataset
     sddeletedataset.purge_orphan_datasets()
