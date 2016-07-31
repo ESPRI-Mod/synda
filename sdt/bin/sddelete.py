@@ -23,6 +23,7 @@ import sdconst
 import sdlog
 import sddeletefile
 import sddb
+import sdpipelineprocessing
 
 def run(metadata):
     """
