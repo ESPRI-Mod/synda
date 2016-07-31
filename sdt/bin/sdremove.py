@@ -27,7 +27,6 @@ def run(args):
 
     try:
         metadata=syndautils.file_full_search(args)
-        files=metadata.get_files()
     except sdexception.EmptySelectionException, e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
@@ -35,11 +34,15 @@ def run(args):
     if not args.dry_run:
         import humanize, sdsimplefilter, sdconst, sdutils
 
-        # Compute deleted stat for files
-        files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
-        files=sdsimplefilter.run(files,'status',sdconst.TRANSFER_STATUS_DELETE,'remove') # maybe not needed as we do immediate delete from now...
-        count_delete=len(files)
-        size_delete=sum(int(f['size']) for f in files if f['status']==sdconst.TRANSFER_STATUS_DONE)
+        # filtering
+
+        metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
+        metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_DELETE,'remove') # maybe not needed as we now do immediate delete
+
+        count_delete=metadata.count()
+
+        metadata_done=sdsimplefilter.run(metadata.copy(),'status',sdconst.TRANSFER_STATUS_DONE,'keep')
+        size_delete=metadata_done.size
 
         if count_delete>0:
 
@@ -59,7 +62,7 @@ def run(args):
 
             # perform deletion
             if suppression_confirmed:
-                remove(files)
+                remove(metadata)
                 return 0
 
         else:
@@ -76,10 +79,10 @@ def remove(files):
     # (to do a deferred deletion (i.e. by the daemon), comment line below)
     sddeletefile.delete_transfers()
 
-    # third step is to remove orphan dataset
+    # Third step is to remove orphan dataset
     sddeletedataset.purge_orphan_datasets()
 
-    # fourth step is to remove orphan folder.
+    # Fourth step is to remove orphan folder.
     sdoperation.cleanup_tree()
 
 # init.
