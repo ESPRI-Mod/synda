@@ -40,7 +40,7 @@ def delete_transfers(limit=None):
 
     sddb.conn.commit() # final commit (we do all deletion in one transaction).
 
-    return sdfiledao.transfer_status_count(status=sdconst.TRANSFER_STATUS_DELETE)
+    return sdfilequery.transfer_status_count(status=sdconst.TRANSFER_STATUS_DELETE)
 
 def deferred_delete(file_functional_id):
     f=sdfiledao.get_file(file_functional_id)
