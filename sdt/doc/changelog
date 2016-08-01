@@ -4,7 +4,8 @@
 	- add ~/.sdt/conf/sdt.conf
 	- remove ~/.syndarc
 	- add 'open' action.
-	- add 'check' action.
+	- add 'check' action for selection.
+	- add 'check' action for file's variable.
 	- use myproxyclient latest version.
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
 	- change tarball location for source installation (use install.sh latest version).
