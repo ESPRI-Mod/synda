@@ -122,7 +122,7 @@ LOGFILE_DOMAIN='domain.log'
 # So from now, it's set to 9000
 SEARCH_API_CHUNKSIZE=9000
 
-PROCESSING_CHUNKSIZE=3000 # as list maybe duplicated in memory at some point in the pipeline, we use a lower value here than SEARCH_API_CHUNKSIZE
+PROCESSING_CHUNKSIZE=5000 # as list maybe duplicated in memory at some point in the pipeline, we use a lower value here than SEARCH_API_CHUNKSIZE
 PROCESSING_FETCH_MODE_GENERATOR='generator'
 
 SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)

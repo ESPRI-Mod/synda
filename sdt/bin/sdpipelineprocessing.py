@@ -36,7 +36,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         new_metadata=sdtypes.Metadata()
         for chunk in metadata.get_chunks(io_mode):
 
-            sdlog.info("SYNDPIPR-002","Process chunk")
+            sdlog.debug("SYNDPIPR-002","Process chunk")
 
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
