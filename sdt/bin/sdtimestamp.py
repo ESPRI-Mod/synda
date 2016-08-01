@@ -73,7 +73,7 @@ def use_file_timestamp_if_dataset_timestamp_is_missing(d):
 
         # Note
         #     We do not filter replica in the query below in case the master host is not up
-        result=sdquicksearch.run(parameter=['limit=1','fields=instance_id,timestamp,type','type=File','dataset_id=%s'%d['instance_id']],post_pipeline_mode=None)
+        result=sdquicksearch.run(parameter=['limit=1','fields=%s'%timestamp_fields,'type=File','dataset_id=%s'%d['instance_id']],post_pipeline_mode=None)
         li=result.get_files()
         if len(li)>0:
             file=li[0]
