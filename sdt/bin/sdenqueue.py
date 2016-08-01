@@ -50,14 +50,23 @@ def run(metadata):
     total_size=metadata.size
 
     if count>0:
+
+        sdlog.info("SDENQUEU-002","Add insertion_group_id..")
+
         insertion_group_id=sdsqlutils.nextval('insertion_group_id','history') # this is uniq identifier for all inserted files during this run
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_insertion_group_id,insertion_group_id)
 
         if sdconfig.progress:
             sdprogress.ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
+        sdlog.info("SDENQUEU-003","Insert files and datasets..")
+
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_files)
+
+        sdlog.info("SDENQUEU-004","Fill timestamp..")
+
         fix_timestamp()
+
         sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
 
         if sdconfig.progress:
