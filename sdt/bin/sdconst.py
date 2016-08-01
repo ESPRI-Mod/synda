@@ -62,7 +62,7 @@ DEFAULT_GROUP="default"
 
 # SDSSSP means 'SynDa Specific Scalar Selection Parameters'
 SDSSSP=['action',
-        'group',
+        'selection_group',
         'nearest',
         'keep_replica',
         'last_query',

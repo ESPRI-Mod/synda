@@ -14,6 +14,7 @@
 import sdsearch
 import sdinstall
 import sdexception
+import sdlog
 from sdtools import print_stderr
 
 def run(selections,args):
@@ -29,6 +30,9 @@ def run(selections,args):
     #
     args.subcommand='install'
 
+    # force non-interactive mode
+    args.yes=True
+
     for selection in selections:
         try:
             print_stderr("Process %s.."%selection.filename)
@@ -41,6 +45,7 @@ def install(args,selection):
     # TODO: maybe force type=file here, in case the selection file have 'type=Dataset'
 
     if not args.dry_run:
+        sdlog.info("SDUPGRAD-001","Retrieve metadata from ESGF..")
         metadata=sdsearch.run(selection=selection)
-        args.yes=True
+        sdlog.info("SDUPGRAD-002","Install files..")
         (status,newly_installed_files_count)=sdinstall.run(args,metadata)
