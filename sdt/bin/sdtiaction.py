@@ -66,7 +66,7 @@ def certificate(args):
     return status
 
 def check(args):
-    import sddump,sdtypes,sddatasetversion
+    import sddump,sdtypes,sddatasetversion,sdfields
 
     if args.action is None:
         print_stderr('Please specify a check to perform.')   
@@ -92,7 +92,7 @@ def check(args):
         subset_filter=['model=CNRM-CM5','project=specs','realm=atmos','variable=tas']
         #subset_filter=['project=specs']
 
-        files=sddump.dump_ESGF(['type=File']+subset_filter,fields='title,instance_id,variable',dry_run=args.dry_run)
+        files=sddump.dump_ESGF(['type=File']+subset_filter,fields=sdfields.get_file_variable_fields(),dry_run=args.dry_run)
 
         if not args.dry_run:
             print '%i file(s) retrieved'%len(files)
@@ -116,7 +116,7 @@ def check(args):
         #subset_filter=['model=HadCM3','project=CMIP5']
         subset_filter=['project=CMIP5']
 
-        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields='master_id,version,timestamp',dry_run=args.dry_run)
+        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields=sdfields.get_dataset_version_fields(),dry_run=args.dry_run)
 
         if not args.dry_run:
 
