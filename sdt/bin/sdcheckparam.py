@@ -78,7 +78,7 @@ def check_parameters(facets_groups):
 
                 # in fact it is better to raise exception here, else user is not informed
                 # when typo occurs in parameter name (e.g. 'experiments' instead of 'experiment')
-                raise sdexception.UnknownParameterException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
+                raise sdexception.UnknownParameterNameException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
 
             else:
                 check_parameter_values(name,values)
@@ -93,7 +93,7 @@ def check_parameter_values(name,values):
             if sdconfig.unknown_value_behaviour=='warning':
                 print_stderr('WARNING: '+msg)
             else:
-                raise sdexception.SDException("SYDCHECK-002",msg)
+                raise sdexception.UnknownParameterValueException("SYDCHECK-002",msg)
 
 def check_coherency(facets_groups):
     for facets_group in facets_groups:

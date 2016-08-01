@@ -33,8 +33,8 @@ def run(selections,args):
         try:
             print_stderr("Process %s.."%selection.filename)
             install(args,selection)
-        except sdexception.UnknownParameterException,e:
-            print_stderr("Error occurs while processing %s (str(e))"%selection.filename)
+        except sdexception.IncorrectParameterException,e:
+            print_stderr("Error occurs while processing %s (%s)"%(selection.filename,str(e)))
 
 def install(args,selection):
 

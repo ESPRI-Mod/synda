@@ -78,8 +78,8 @@ def check(args):
             try:
                 print_stderr("Checking %s.."%selection.filename)
                 sdpipeline.prepare_param(selection=selection)
-            except sdexception.UnknownParameterException,e:
-                print_stderr("Error occurs while processing %s (str(e))"%selection.filename)
+            except sdexception.IncorrectParameterException,e:
+                print_stderr("Error occurs while processing %s (%s)"%(selection.filename,str(e)))
 
     elif args.action=="file_variable":
 

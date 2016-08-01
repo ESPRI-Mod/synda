@@ -53,5 +53,10 @@ class IncorrectVTCException(SDException): # VTC means 'Version Timestamp Correla
     pass
 class IncorrectVersionFormatException(SDException):
     pass
-class UnknownParameterException(SDException):
+class IncorrectParameterException(SDException):
+    pass
+#
+class UnknownParameterNameException(IncorrectParameterException):
+    pass
+class UnknownParameterValueException(IncorrectParameterException):
     pass
