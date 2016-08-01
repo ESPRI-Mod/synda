@@ -120,7 +120,7 @@ def run_hard_tasks():
 def run_soft_tasks():
     """Soft tasks are not executed during application shutdown."""
 
-    if sdconfig.files_download:
+    if sdconfig.download_enabled:
         sdtask.transfers_begin()
 
     sdtask.delete_transfers()
@@ -142,7 +142,7 @@ def event_loop():
     cleanup_running_transfer()
     scheduler_state=1
 
-    if sdconfig.files_download:
+    if sdconfig.download_enabled:
 
         try:
 

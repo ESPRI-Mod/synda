@@ -174,8 +174,6 @@ prevent_daemon_and_modification=False # prevent modification while daemon is run
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
-files_download=True # if set to False, daemon do not renew certificate nor download files (useful to use synda in post-processing mode only)
-
 log_domain_inconsistency=True
 
 dataset_filter_mecanism_in_file_context='dataset_id' # dataset_id | query
@@ -221,6 +219,7 @@ config=sdcfloader.load(configuration_file,credential_file,user_configuration_fil
 openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
+download_enabled=config.getboolean('download','download_enabled')
 
 selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
