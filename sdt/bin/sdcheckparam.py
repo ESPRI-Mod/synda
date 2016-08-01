@@ -78,7 +78,7 @@ def check_parameters(facets_groups):
 
                 # in fact it is better to raise exception here, else user is not informed
                 # when typo occurs in parameter name (e.g. 'experiments' instead of 'experiment')
-                raise SDException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
+                raise UnknownParameterException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
 
             else:
                 check_parameter_values(name,values)
