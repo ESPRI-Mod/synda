@@ -29,7 +29,7 @@ import sdprint
 import sddquery
 import sdi18n
 from sdtools import print_stderr
-from sdexception import SDException
+import sdexception
 
 def run(facets_groups):
     facets_groups=check_parameters(facets_groups)
@@ -46,7 +46,7 @@ def check_replica_not_set_when_using_nearestpost(facets_groups):
         if sdconfig.nearest_schedule=='post':
             if sddquery.get_scalar(dquery,'nearest',False,bool):
                 if 'replica' in dquery:
-                    raise SDException('SYDCHECK-010',"'replica' facet must not be set when using 'sdnearestpost' module")
+                    raise sdexception.SDException('SYDCHECK-010',"'replica' facet must not be set when using 'sdnearestpost' module")
 
     return facets_groups
 
@@ -59,7 +59,7 @@ def check_search_api_scalar_parameter(facets_groups):
             if name in facets_group:
                 value=facets_group[name]
                 if len(value)>1:
-                    raise SDException("SYDCHECK-004","Too much values for '%s' parameter (value='%s')"%(name,str(value)))
+                    raise sdexception.SDException("SYDCHECK-004","Too much values for '%s' parameter (value='%s')"%(name,str(value)))
         
     return facets_groups
 
@@ -78,7 +78,7 @@ def check_parameters(facets_groups):
 
                 # in fact it is better to raise exception here, else user is not informed
                 # when typo occurs in parameter name (e.g. 'experiments' instead of 'experiment')
-                raise UnknownParameterException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
+                raise sdexception.UnknownParameterException("SYDCHECK-008","Unknown parameter name: %s"%(name,))
 
             else:
                 check_parameter_values(name,values)
@@ -93,7 +93,7 @@ def check_parameter_values(name,values):
             if sdconfig.unknown_value_behaviour=='warning':
                 print_stderr('WARNING: '+msg)
             else:
-                raise SDException("SYDCHECK-002",msg)
+                raise sdexception.SDException("SYDCHECK-002",msg)
 
 def check_coherency(facets_groups):
     for facets_group in facets_groups:
