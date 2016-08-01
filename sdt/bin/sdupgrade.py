@@ -35,10 +35,10 @@ def run(selections,args):
 
     for selection in selections:
         try:
-            print_stderr("Process %s.."%selection.filename)
+            sdlog.info("SDUPGRAD-003","Process %s.."%selection.filename,stderr=True)
             install(args,selection)
         except sdexception.IncorrectParameterException,e:
-            print_stderr("Error occurs while processing %s (%s)"%(selection.filename,str(e)))
+            sdlog.info("SDUPGRAD-004","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
 
 def install(args,selection):
 
