@@ -14,13 +14,21 @@
 import sdconfig
 import sdlmattrfilter
 import sdpostpipelineutils
+import sdlog
 
 def is_nearestpost_enabled(metadata):
+    result=False
+
+    sdlog.info("SSHRINKT-001","Check if nearestpost is enabled..")
 
     if sdconfig.nearest_schedule=='post' and nearest_flag_set_on_all_files(metadata):
-        return True
+        result=True
     else:
-        return False
+        result=False
+
+    sdlog.info("SSHRINKT-002","nearestpost=%s"%result)
+
+    return result
 
 def nearest_flag_set_on_all_files(metadata):
     """This func checks that all files have the 'nearest' flag (as sdnearestpost processing type is 'interfile', we need ALL files to be flagged)."""

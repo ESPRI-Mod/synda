@@ -34,6 +34,7 @@ Notes
 import sdnearestpost
 import sdshrinktest
 import sdshrinkutils
+import sdlog
 
 def run(metadata):
 
@@ -52,10 +53,14 @@ def shrink(metadata):
     if sdshrinktest.is_nearestpost_enabled(metadata):
         # In this case, we remove duplicates by keeping the nearest
 
+        sdlog.info("SDSHRINK-001","Start nearestpost filter..")
         metadata=sdnearestpost.run(metadata)
+        sdlog.info("SDSHRINK-002","nearestpost filter completed")
     else:
         # In this case, we remove duplicates by using a 'uniq' filter
 
+        sdlog.info("SDSHRINK-008","Start uniq filter..")
         metadata=sdshrinkutils.uniq(metadata)
+        sdlog.info("SDSHRINK-010","uniq filter completed")
 
     return metadata
