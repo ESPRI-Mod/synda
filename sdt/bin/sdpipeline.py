@@ -29,6 +29,7 @@ import sdgenericpipeline
 import sdfilepipeline
 import sddatasetpipeline
 import sddeferredafter
+import sdlog
 import sdconst
 import sdpipelineprocessing
 import sdexception
@@ -92,7 +93,10 @@ def post_pipeline(metadata,mode=None):
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
 
     if mode in ['file','dataset']:
+
+        sdlog.info("SDPIPELI-002","Start shrink processing")
         metadata=sdshrink.run(metadata)
+        sdlog.info("SDPIPELI-002","Shrink processing completed")
 
     return metadata
 

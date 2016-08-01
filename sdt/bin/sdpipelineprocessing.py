@@ -12,6 +12,7 @@
 """This module contains pipeline execution routines."""
 
 import sdtypes
+import sdlog
 
 def run_pipeline(io_mode,metadata,f,*args,**kwargs):
     """
@@ -20,6 +21,8 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         (you have to make a copy before calling this func if you want
         to keep original data)
     """
+
+    sdlog.info("SYNDPIPR-001","Start chunk loop")
 
     if io_mode=='no_chunk':
 
@@ -32,8 +35,12 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         # way 1: chunk-by-chunk (using a second store)
         new_metadata=sdtypes.Metadata()
         for chunk in metadata.get_chunks(io_mode):
+
+            sdlog.info("SYNDPIPR-002","Process chunk")
+
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
+
         metadata.delete() # FIXME everywhere
         metadata=new_metadata
 
@@ -46,5 +53,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
 
     else:
         assert False
+
+    sdlog.info("SYNDPIPR-003","Chunk loop completed")
 
     return metadata
