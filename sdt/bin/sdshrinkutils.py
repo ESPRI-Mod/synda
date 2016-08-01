@@ -14,6 +14,7 @@
 import sdpostpipelineutils
 import sdrmduprep
 import sdrmdup
+import sdlog
 
 def uniq(metadata):
 
@@ -28,12 +29,16 @@ def uniq(metadata):
 
         # uniq key => id (i.e. including datanode)
 
+        sdlog.info("SSHRINKU-001","Remove duplicate..")
+
         metadata=sdrmdup.run(metadata,functional_id_keyname)
     else:
         # Do not keep replica.
         # In this case, we remove type-A and type-B duplicates by randomly keeping one candidate
 
         # uniq key => instance_id (i.e. excluding datanode)
+
+        sdlog.info("SSHRINKU-002","Remove duplicate and replicate..")
 
         metadata=sdrmduprep.run(metadata,functional_id_keyname)
 
