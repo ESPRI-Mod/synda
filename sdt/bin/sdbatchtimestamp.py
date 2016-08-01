@@ -29,8 +29,9 @@ def run(squeries,metadata,parallel):
         sdlog.error("SYNDABTI-600","Datasets timestamps cannot be set as dataset_timestamp_url is missing")
         return metadata
 
-
     sdlog.info("SYNDABTI-100","%d datasets with timestamp retrieved"%len(datasets_timestamps))
+
+    sdlog.info("SYNDABTI-306","Set missing timestamp..")
 
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_dataset_timestamp,datasets_timestamps)
 
@@ -63,8 +64,13 @@ def get_datasets_timestamps(squeries,parallel):
 
         q['url']=q['dataset_timestamp_url']
 
+    
+    sdlog.info("SYNDABTI-301","Submit timestamp queries..")
+
     # run
     metadata=sdrun.run(squeries,parallel)
+
+    sdlog.info("SYNDABTI-304","Transform timestamp data struct..")
 
     # transform to dict for quick random access
     di={}
