@@ -90,7 +90,12 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     return queries
 
 def post_pipeline(metadata,mode=None):
+
+    sdlog.info("SDPIPELI-004","Start main pipeline")
+
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
+
+    sdlog.info("SDPIPELI-006","Main pipeline completed")
 
     if mode in ['file','dataset']:
 
