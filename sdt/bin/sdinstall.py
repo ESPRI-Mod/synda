@@ -13,8 +13,9 @@
 
 import sys
 import argparse
-from sdtools import print_stderr
 import sdexception
+import sdlog
+from sdtools import print_stderr
 
 def run(args,metadata=None):
     import syndautils
@@ -50,6 +51,8 @@ def install(metadata,interactive):
     # Compute total files stat
     count_total=metadata.count()
     size_total=metadata.size
+
+    sdlog.info("SYNDINST-001","Compute stats..")
 
     # Compute new files stat
     #
@@ -88,6 +91,7 @@ def install(metadata,interactive):
     else:
         installation_confirmed=True
 
+    sdlog.info("SYNDINST-002","Store metadata in database..")
 
     # install
     if installation_confirmed:
@@ -99,7 +103,7 @@ def install(metadata,interactive):
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
 
             if not sddaemon.is_running():
-                print_stderr("The daemon is not running. To start it, use 'sudo service synda start'.") # FIXME
+                print_stderr("The daemon is not running. To start it, use 'sudo service synda start'.") # FIXME (make not convenient for source install..)
     else:
         if interactive:
             print_stderr('Abort.')
