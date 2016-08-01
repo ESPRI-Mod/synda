@@ -458,32 +458,11 @@ def upgrade(args):
     Note
         inter-selection func
     """
-    import sdselectionsgroup, sdparameter, sdsearch, sdinstall
-
-
-    # BEWARE: tricky statement
-    #
-    # 'upgrade' is a multi-selections 'subcommand' which do the same as the
-    # mono-selection 'install' subcommand, but for many selections.  What we do
-    # here is replace 'upgrade' subcommand with 'install' subcommand, so that we can,
-    # now that we are in 'upgrade' func/context, 
-    # come back to the existing mono-selection func,
-    # for each selection, with 'install' subcommand.
-    #
-    args.subcommand='install'
+    import sdselectionsgroup, sdparameter, sdupgrade
 
     project=sdparameter.extract_values_from_parameter(args.parameter,'project') # retrieve project(s) from parameter
-
-    for selection in sdselectionsgroup.get_selection_list(project=project):
-        print_stderr("Process %s.."%selection.filename)
-
-        if not args.dry_run:
-
-            # TODO: maybe force type=file here, in case the selection file have 'type=dataset'
-
-            metadata=sdsearch.run(selection=selection)
-            args.yes=True
-            (status,newly_installed_files_count)=sdinstall.run(args,metadata)
+    selections=sdselectionsgroup.get_selection_list(project=project)
+    sdupgrade.run(selections,args)
 
 def replica_next(file_functional_id,args):
     import sdrfile, sdmodify, sdfiledao, sdutils, sdconst
