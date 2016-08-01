@@ -13,9 +13,10 @@
 
 import sdconst
 
+def get_timestamp_fields():
+    return ','.join(sdconst.TIMESTAMP_FIELDS)
+
 def get_sample_fields():
-    return ','.join(sample_fields)
+    return ','.join(sdconst.TIMESTAMP_FIELDS)
 
 # init.
-
-sample_fields=sdconst.TIMESTAMP_FIELDS
