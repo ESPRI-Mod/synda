@@ -28,6 +28,7 @@ import sdrtt
 import sdconfig
 import sdlog
 import sdgc
+import sdlmattrfilter
 from sdexception import SDException
 
 def run(metadata):
