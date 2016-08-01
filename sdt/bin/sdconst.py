@@ -178,7 +178,7 @@ REQUIRED_FIELDS=['type','size']
 #
 LIGHT_FIELDS=['instance_id','id','data_node','variable']+REQUIRED_FIELDS
 
-TIMESTAMP_FIELDS=['instance_id','timestamp']+REQUIRED_FIELDS
+TIMESTAMP_FIELDS=['instance_id','timestamp','_timestamp']+REQUIRED_FIELDS
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 

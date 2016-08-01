@@ -93,7 +93,7 @@ def transform_facets_for_dataset_timestamp_retrieval(facets):
     # (e.g.ahttp://esgf-index1.ceda.ac.uk/esg-search/search?fields=timestamp,_timestamp&instance_id=cordex.output.EUR-11.DHMZ.ECMWF-ERAINT.evaluation.r1i1p1.RegCM4-2.v1.day.ps.v20150527).
     # Note that search-API 'fields' attribute can contains non-existent fields
     # (i.e. no error occurs in such case, non-existent fields are just ignored)
-    facets_cpy['fields']=['timestamp','_timestamp','instance_id']
+    facets_cpy['fields']=sdconst.TIMESTAMP_FIELDS
 
     return facets_cpy
 
