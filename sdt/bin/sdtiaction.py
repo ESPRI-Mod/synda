@@ -71,6 +71,16 @@ def check(args):
     if args.action is None:
         print_stderr('Please specify a check to perform.')   
 
+    elif args.action=="selection":
+        import sdselectionsgroup,sdpipeline
+
+        for selection in sdselectionsgroup.get_selection_list():
+            try:
+                print_stderr("Checking %s.."%selection.filename)
+                sdpipeline.prepare_param(selection=selection)
+            except sdexception.UnknownParameterException,e:
+                print_stderr("Error occurs while processing %s (str(e))"%selection.filename)
+
     elif args.action=="file_variable":
 
         #subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
