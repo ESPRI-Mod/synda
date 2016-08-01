@@ -30,6 +30,9 @@ def run(args,metadata=None):
             print_stderr("ERROR: 'selection_file' option is not set (a selection file must be used when 'incremental' option is set)")
             return (1,0)
 
+        if args.selection_file is not None:
+            sdlog.info("SYNDINST-006","Process '%s'"%args.selection_file)
+
         try:
             metadata=syndautils.file_full_search(args)
         except sdexception.EmptySelectionException, e:
