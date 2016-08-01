@@ -38,6 +38,9 @@ def run(args,metadata=None):
         except sdexception.EmptySelectionException, e:
             print_stderr('No packages will be installed, upgraded, or removed.')
             return (0,0)
+        except sdexception.SDException, e:
+            sdlog.info("SYNDINST-006","Exception occured during installation ('%s')"%str(e))
+            raise
 
     # in dry-run mode, we stop here
     if args.dry_run:
