@@ -19,17 +19,20 @@ import argparse
 import sdapp
 import sdprint
 import sdsearch
+import sdfields
 
 def run():
     pass
 
-def dump_ESGF(parameter,fields='instance_id,timestamp',dry_run=False):
+def dump_ESGF(parameter,fields=None,dry_run=False):
     """This func dumps fields for all ESGF matching files/datasets.
 
     Initially designed to batch update attribute in Synda database
     (e.g. when a new attribute is decided to be stored in Synda,
     all already downloaded files metadata must be updated).
     """
+
+    assert fields is not None
 
     parameter.append("fields=%s"%fields)
     parameter.append("replica=false")
@@ -42,7 +45,7 @@ if __name__ == '__main__':
 
     parser.add_argument('parameter',nargs='*',default=[])
 
-    parser.add_argument('-f','--fields',default='instance_id,timestamp')
+    parser.add_argument('-f','--fields',default=sdfields.get_sample_fields())
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
