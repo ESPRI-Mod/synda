@@ -376,6 +376,7 @@ class Metadata(CommonIO):
     """Concrete."""
 
     def slurp(self,metadata):
+        assert isinstance(metadata, Metadata)
         self.store.merge(metadata.store)
         self.size+=metadata.size
         metadata.delete() # FIXME
