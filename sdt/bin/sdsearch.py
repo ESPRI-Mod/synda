@@ -78,13 +78,13 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     metadata=sdrun.run(squeries,parallel)
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
 
-    sdlog.info("SDSEARCH-590","Metadata processing begin.")
+    sdlog.info("SDSEARCH-590","Metadata processing begin")
     metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
-    sdlog.info("SDSEARCH-594","Metadata processing end.")
+    sdlog.info("SDSEARCH-594","Metadata processing end")
 
-    sdlog.info("SDSEARCH-620","Retrieving timestamp begin.")
+    sdlog.info("SDSEARCH-620","Retrieving timestamp begin")
     metadata=fill_dataset_timestamp(squeries,metadata,parallel,action) # complete missing info
-    sdlog.info("SDSEARCH-634","Retrieving timestamp end.")
+    sdlog.info("SDSEARCH-634","Retrieving timestamp end")
 
     return metadata
 
