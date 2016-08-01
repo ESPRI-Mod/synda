@@ -100,8 +100,11 @@ AIFPP='aifp_' # 'AIFPP' means 'After Inference Forced Parameter Prefix'. 'aifp_'
 #
 LOGGER_FEEDER='feeder'
 LOGGER_CONSUMER='consumer'
+LOGGER_DOMAIN='domain'
+#
 LOGFILE_FEEDER='discovery.log'
 LOGFILE_CONSUMER='transfer.log'
+LOGFILE_DOMAIN='domain.log'
 
 
 # Maximum files number returned by one search-api call.

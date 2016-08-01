@@ -24,6 +24,7 @@ TODO
 from sdexception import SDException
 import sdconfig
 import sdlog
+import sdconst
 
 def run(files):
     (keep,reject)=filter(files)
@@ -56,7 +57,7 @@ def filter(files):
                     reject.append(f)
 
                     if sdconfig.log_domain_inconsistency:
-                        sdlog.warning("SDPOSXPC-002","WARNING: 'variable' attribute contains too much values ('%s')."%f['id'],stderr=False)
+                        sdlog.warning("SDPOSXPC-002","WARNING: 'variable' attribute contains too much values ('%s')."%f['id'],stderr=False,logger_name=sdconst.LOGGER_DOMAIN)
 
         elif type_=='Dataset':
             # currently, there is no reject rules for Dataset type, so we keep all of them

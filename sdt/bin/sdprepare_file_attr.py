@@ -28,6 +28,7 @@ import sdconfig
 from sdexception import SDException
 import sdprint
 import sdlog
+import sdconst
 
 def run(files):
     files=rename_attributes(files)
@@ -51,7 +52,7 @@ def add_missing_attributes(files):
         if 'checksum' not in f:
 
             if sdconfig.log_domain_inconsistency:
-                sdlog.warning("SDPRFIAT-001","File have no checksum (%s)"%(f["file_functional_id"],))
+                sdlog.warning("SDPRFIAT-001","File have no checksum (%s)"%(f["file_functional_id"],),logger_name=sdconst.LOGGER_DOMAIN)
 
             f['checksum']=None
             f['checksum_type']=None

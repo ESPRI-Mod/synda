@@ -36,18 +36,18 @@ def die(code,msg):
 	critical(code,msg)
 	sys.exit(1)
 
-def debug(code,message,stdout=False,stderr=False,logfile=True):
-    log(code,message,logging.DEBUG,stdout,stderr,logfile)
-def info(code,message,stdout=False,stderr=False,logfile=True):
-    log(code,message,logging.INFO,stdout,stderr,logfile)
-def warning(code,message,stdout=False,stderr=False,logfile=True):
-    log(code,message,logging.WARNING,stdout,stderr,logfile)
-def error(code,message,stdout=False,stderr=False,logfile=True):
-    log(code,message,logging.ERROR,stdout,stderr,logfile)
-def critical(code,message,stdout=False,stderr=False,logfile=True):
-    log(code,message,logging.CRITICAL,stdout,stderr,logfile)
+def debug(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
+    log(code,message,logging.DEBUG,stdout,stderr,logfile,logger_name)
+def info(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
+    log(code,message,logging.INFO,stdout,stderr,logfile,logger_name)
+def warning(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
+    log(code,message,logging.WARNING,stdout,stderr,logfile,logger_name)
+def error(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
+    log(code,message,logging.ERROR,stdout,stderr,logfile,logger_name)
+def critical(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
+    log(code,message,logging.CRITICAL,stdout,stderr,logfile,logger_name)
 
-def log(code,message,level,stdout=False,stderr=False,logfile=True):
+def log(code,message,level,stdout=False,stderr=False,logfile=True,logger_name=None):
     # check code length
     if len(code)!=12:
         raise SDException("SYNDALOG-002","%s have an incorrect length"%code)
@@ -62,7 +62,15 @@ def log(code,message,level,stdout=False,stderr=False,logfile=True):
             sdtools.print_stderr(message)
 
     if logfile:
-        logger.log(level,message,extra={'code' : code})
+        if logger_name is None:
+            # default logger
+
+            default_logger.log(level,message,extra={'code' : code})
+        else:
+            if logger_name==sdconst.LOGGER_DOMAIN:
+                domain_logger.log(level,message,extra={'code' : code})
+            else:
+                assert False
 
 def get_verbosity_level():
     label=sdconfig.config.get('log','verbosity_level')
@@ -87,16 +95,17 @@ def create_logger(name,filename):
 
     return logger
 
-def set_logger(name):
-    global logger
-    logger=logging.getLogger(name)
+def set_default_logger(name):
+    global default_logger
+    default_logger=logging.getLogger(name)
 
 # module init.
 
-create_logger(sdconst.LOGGER_FEEDER,sdconst.LOGFILE_FEEDER)
-create_logger(sdconst.LOGGER_CONSUMER,sdconst.LOGFILE_CONSUMER)
+discovery_logger=create_logger(sdconst.LOGGER_FEEDER,sdconst.LOGFILE_FEEDER)
+transfer_logger=create_logger(sdconst.LOGGER_CONSUMER,sdconst.LOGFILE_CONSUMER)
+domain_logger=create_logger(sdconst.LOGGER_DOMAIN,sdconst.LOGFILE_DOMAIN)
 
-logger=logging.getLogger(sdconst.LOGGER_FEEDER)
+default_logger=discovery_logger
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
