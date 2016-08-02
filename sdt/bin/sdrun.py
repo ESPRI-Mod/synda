@@ -31,9 +31,10 @@ import sdtypes
 import sdproxy
 
 def run(queries,parallel=True):
-    metadata=sdtypes.Metadata()
 
     if parallel:
+        metadata=sdtypes.Metadata()
+
         (queries_with_index_host,queries_without_index_host)=split_queries(queries) # we need this, because query with specific index host can't be parallelized
 
         if len(queries_with_index_host)>0:
@@ -42,7 +43,7 @@ def run(queries,parallel=True):
         if len(queries_without_index_host)>0:
             metadata.slurp(parallel_exec(queries_without_index_host))
     else:
-        metadata.slurp(sequential_exec(queries))
+        metadata=sequential_exec(queries)
 
     return metadata
 
