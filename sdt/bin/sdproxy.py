@@ -51,7 +51,11 @@ class SearchAPIProxy():
             sdtools.print_stderr("Duration: %s"%paginated_response.call_duration)
             sdtools.print_stderr("")
 
+        sdlog.info("SYDPROXY-620","Add attached_parameters..")
+
         paginated_response.add_attached_parameters(attached_parameters)
+
+        sdlog.info("SYDPROXY-628","attached_parameters added")
 
         return paginated_response.to_metadata() # we cast to remove pagination related code and have a lighter object
 
