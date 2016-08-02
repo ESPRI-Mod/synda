@@ -51,7 +51,7 @@ def run(metadata):
 
     if count>0:
 
-        sdlog.info("SDENQUEU-002","Add insertion_group_id..")
+        sdlog.info("SDENQUEU-102","Add insertion_group_id..")
 
         insertion_group_id=sdsqlutils.nextval('insertion_group_id','history') # this is uniq identifier for all inserted files during this run
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_insertion_group_id,insertion_group_id)
@@ -59,11 +59,11 @@ def run(metadata):
         if sdconfig.progress:
             sdprogress.ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
-        sdlog.info("SDENQUEU-003","Insert files and datasets..")
+        sdlog.info("SDENQUEU-103","Insert files and datasets..")
 
         metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_files)
 
-        sdlog.info("SDENQUEU-004","Fill timestamp..")
+        sdlog.info("SDENQUEU-104","Fill timestamp..")
 
         fix_timestamp()
 
@@ -231,7 +231,7 @@ def fix_timestamp():
                 sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
             except SDException, e:
                 if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
-                    sdlog.info("SDENQUEU-909","Timestamp not set for dataset (reason=%s,dataset=%s)"%(e.code,dataset_without_timestamp.dataset_functional_id))
+                    sdlog.info("SDENQUEU-909","Timestamp not set for '%s' dataset (%s)"%(dataset_without_timestamp.dataset_functional_id,str(e)))
                 else:
                     # fatal error come here
 
