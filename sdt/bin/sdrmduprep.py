@@ -26,12 +26,19 @@ import sdprint
 import sdpostpipelineutils
 import sdlmattrfilter
 import sdpipelineprocessing
+import sdlog
 
 def run(metadata,functional_id_keyname):
+
+    sdlog.info("SYNDRMDR-001","Build 'seen' table..")
+
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname]) # create light list with needed columns only not to overload system memory
 
     # build 'seen' data structure (list of dict => dict (id=>bool))
     seen=dict((f[functional_id_keyname], False) for f in light_metadata.get_files()) # warning: load list in memory
+
+
+    sdlog.info("SYNDRMDR-002","Perform duplicate and replicate suppression..")
 
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove,functional_id_keyname,seen)
 
