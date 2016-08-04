@@ -11,9 +11,7 @@
 
 """This module contains network functions."""
 
-import sys
 import os
-import traceback
 import urllib2
 import requests
 import sdxml
@@ -25,6 +23,7 @@ import sdconst
 import sdconfig
 import sdpoodlefix
 import httplib
+import sdtrace
 
 class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     """HTTP handler that transmits an X509 certificate as part of the request."""
@@ -65,7 +64,7 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
         #
         # TODO: maybe always enable this
         #
-        #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+        sdtrace.log_exception()
 
         # debug
         #
