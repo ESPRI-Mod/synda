@@ -18,6 +18,9 @@ import sdlog
 
 def uniq(metadata):
 
+    if metadata.count() < 1:
+        return metadata
+
     # retrieve global flag
     f=metadata.get_one_file()
     keep_replica=sdpostpipelineutils.get_attached_parameter__global([f],'keep_replica')

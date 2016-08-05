@@ -29,13 +29,20 @@ def run(metadata):
     """
     Set files status to "delete"
 
+    Returns:
+        Number of deleted items.
+
     Note
         - the func only change the status (i.e. data and metadata will be removed later by the daemon)
     """
 
+    if metadata.count() < 1:
+        return 0
+
     f=metadata.get_one_file()
     selection_filename=sdpostpipelineutils.get_attached_parameter__global([f],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
 
+    # FIXME: merge both to improve perf
     metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
     metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_DELETE,'remove')
 

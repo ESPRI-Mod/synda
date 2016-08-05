@@ -613,37 +613,38 @@ def pexec(args):
             
             metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
 
-            # WART
-            # (gets overwritten at each iteration, but not a big deal as always the same value)
-            if selection_filename is None: # this is to keep the first found value (i.e. if last facets_group is empty but not the previous ones do not keep the last one (which would be None))
+            dataset_found_count+=metadata.count()
 
-                dataset=metadata.get_one_file()
-                selection_filename=sdpostpipelineutils.get_attached_parameter__global([dataset],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+            if metadata.count() > 0:
 
-            for d in metadata.get_files(): # warning: load list in memory
-                if d['status']==sdconst.DATASET_STATUS_COMPLETE:
+                # WART
+                # (gets overwritten at each iteration, but not a big deal as always the same value)
+                if selection_filename is None: # this is to keep the first found value (i.e. if last facets_group is empty but not the previous ones do not keep the last one (which would be None))
 
+                    dataset=metadata.get_one_file()
+                    selection_filename=sdpostpipelineutils.get_attached_parameter__global([dataset],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
 
-                    # first, send cdf variable order
-                    # (note: total number of variable event is given by: "total+=#variable for each ds")
-                    for v in d['variable']:
-                        if v in facets_group['variable']: # TAG45345JK3J53K
-                            order_variable_count+=1
-                            sdpporder.submit('cdf_variable',d['project'],d['model'],d['local_path'],variable=v,commit=False)
+                for d in metadata.get_files(): # warning: load list in memory
+                    if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
 
-                    # second, send cdf dataset order
-                    if d['project'] in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-
-                        # we do not trigger 'dataset' level event in this case
-                        pass
-                    else:                        
-
-                        order_dataset_count+=1
-                        sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
+                        # first, send cdf variable order
+                        # (note: total number of variable event is given by: "total+=#variable for each ds")
+                        for v in d['variable']:
+                            if v in facets_group['variable']: # TAG45345JK3J53K
+                                order_variable_count+=1
+                                sdpporder.submit('cdf_variable',d['project'],d['model'],d['local_path'],variable=v,commit=False)
 
 
-            dataset_found_count+=len(datasets)
+                        # second, send cdf dataset order
+                        if d['project'] in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+
+                            # we do not trigger 'dataset' level event in this case
+                            pass
+                        else:                        
+
+                            order_dataset_count+=1
+                            sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
 
         sddb.conn.commit()
 
@@ -658,6 +659,9 @@ def pexec(args):
             print_stderr('Data not found')
     else:
         print_stderr("Invalid order name ('%s')"%args.order_name)
+        return 1
+
+    return 0
 
 def queue(args):
     import sdfilequery

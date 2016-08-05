@@ -40,6 +40,13 @@ from sdexception import SDException
 import sdprogress
 
 def run(metadata):
+    """
+    Returns
+        Number of enqueued items.
+    """
+
+    if metadata.count() < 1:
+        return 0
 
     f=metadata.get_one_file()
     selection_filename=sdpostpipelineutils.get_attached_parameter__global([f],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
