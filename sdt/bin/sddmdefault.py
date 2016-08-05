@@ -16,7 +16,6 @@ Note
 """
 
 import os
-import traceback
 import time
 import Queue
 import sdapp
@@ -31,6 +30,7 @@ import sdevent
 import sdutils
 import sdtools
 import sdget
+import sdtrace
 from sdworkerutils import WorkerThread
 
 class Download():

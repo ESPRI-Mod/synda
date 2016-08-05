@@ -29,7 +29,6 @@ import time
 import daemon
 import daemon.pidfile
 import psutil
-import traceback
 import argparse
 import signal
 import subprocess
@@ -56,8 +55,7 @@ def is_running():
         return False
 
 def main_loop():
-    import sdapp
-    import sdlog, sdtaskscheduler # both must be here because of double-fork (sdtaskscheduler too, because sdtaskscheduler do use sdlog)
+    import sdapp, sdlog, sdtaskscheduler # must be here because of double-fork
     import sddb # this is to create database objects if not done already
 
     sdlog.info('SDDAEMON-001',"Daemon starting ...")
@@ -99,6 +97,7 @@ def start():
             try:
                 main_loop()
             except Exception, e:
+                import sdtrace
                 sdtrace.log_exception()
 
 

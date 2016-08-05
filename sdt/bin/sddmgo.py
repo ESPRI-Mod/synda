@@ -16,7 +16,6 @@ Note
 """
 
 import os
-import traceback
 import time
 import re
 import abc

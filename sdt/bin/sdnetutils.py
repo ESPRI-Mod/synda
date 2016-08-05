@@ -18,6 +18,7 @@ import sdxml
 import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
+import sdapp
 import sdlog
 import sdconst
 import sdconfig

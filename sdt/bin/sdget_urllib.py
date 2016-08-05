@@ -14,7 +14,6 @@
 import os
 import sys
 import time
-import traceback
 import argparse
 import urllib2
 import shutil
@@ -22,6 +21,7 @@ import humanize
 import sdapp
 import sdconst
 import sdconfig
+import sdtrace
 from sdnetutils import HTTPSClientAuthHandler
 from sdprogress import SDProgressDot
 from sdexception import SDException
@@ -216,10 +216,9 @@ def download_file_helper(url,local_path,timeout):
             os.unlink(local_path)
 
         # debug
-        # (print low-level exception stack)
-        #traceback.print_exc(file=sys.stderr)
+        #sdtrace.log_exception()
 
-        # tranform low level into SDException
+        # cast to SDException
         raise SDException('SYNDGEUL-001',str(e))
 
         return 1
