@@ -39,6 +39,8 @@ def run(selections,args):
             install(args,selection)
         except sdexception.IncorrectParameterException,e:
             sdlog.info("SDUPGRAD-004","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
+        except sdexception.SDException,e:
+            sdlog.info("SDUPGRAD-008","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
 
 def install(args,selection):
 
