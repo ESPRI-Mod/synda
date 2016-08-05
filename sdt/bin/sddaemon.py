@@ -15,12 +15,10 @@ Usage
     pip install python-daemon # note that this will also install 'lockfile' dependency
 
 Note
-    This module don't import sdapp on purpose (it will be done in 'sdtaskscheduler').
-    If we do import it and it's loaded before the double-fork, then the who_am_i()
-    func doesn't work anymore. My understanding is that a double-fork is not like
-    an exec, i.e. loaded module before the double fork are reused after the double fork.
-    I think that, because it's seems that sdapp module init code doesn't get executed 
-    twice (TO BE CONFIRMED).
+    This module don't import sdapp on purpose (it will be done after the
+    'double-fork'). If we do import it and it's loaded before the
+    double-fork, then who_am_i() doesn't work anymore. i.e. sdapp module init
+    code doesn't get executed twice. TAGJL54JJJ3JK22LLL.
 """
 
 import os
@@ -58,6 +56,7 @@ def is_running():
         return False
 
 def main_loop():
+    import sdapp
     import sdlog, sdtaskscheduler # both must be here because of double-fork (sdtaskscheduler too, because sdtaskscheduler do use sdlog)
     import sddb # this is to create database objects if not done already
 
@@ -100,7 +99,7 @@ def start():
             try:
                 main_loop()
             except Exception, e:
-                traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+                sdtrace.log_exception()
 
 
 
