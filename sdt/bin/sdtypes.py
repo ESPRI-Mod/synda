@@ -306,7 +306,7 @@ class CommonIO(object):
         if files is not None:
             self.store=sdmts.get_new_store(lowmem)
             self.store.set_files(files)                        # Files (key/value attribute based files list)
-            self.size=sum(int(f['size']) for f in files)
+            self.size=compute_total_size(files)
         elif store is not None:
             # passing 'store' as argument is only used for internal operation (e.g. copy)
 
@@ -323,12 +323,12 @@ class CommonIO(object):
 
     def set_files(self,files):
         self.store.set_files(files)
-        self.size=sum(int(f['size']) for f in files)
+        self.size=compute_total_size(files)
 
     def add_files(self,files):
         assert isinstance(files, list)
         self.store.append_files(files)
-        self.size+=sum(int(f['size']) for f in files)
+        self.size+=compute_total_size(files)
 
     def get_files(self): # warning: load list in memory
         return self.store.get_files()
@@ -342,6 +342,19 @@ class CommonIO(object):
 
     def get_one_file(self):
         return self.store.get_one_file()
+
+def compute_total_size(files):
+    if len(files)>0:
+        file_=files[0] # assume all items are of the same type
+        type_=file_.get('type')
+        if type_=='Dataset': 
+            return 0
+        elif type_=='File': 
+            return sum(int(f['size']) for f in files)
+        else:
+            raise SDException("SDATYPES-024","Incorrect type (type=%s)"%str(type_))
+    else:
+        return 0
 
 class ResponseIngester(object):
     """Abstract."""
