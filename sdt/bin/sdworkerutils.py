@@ -20,7 +20,7 @@ import sdconfig
 from sdexception import CertificateRenewalException
 
 class WorkerThread(threading.Thread):
-    """This class is the thread that take care of the file transfer."""
+    """This class is the thread that handle the file transfer."""
 
     def __init__(self,instance,queue,service):
         threading.Thread.__init__(self)
@@ -30,7 +30,7 @@ class WorkerThread(threading.Thread):
 
     def run(self):
         try:
-            self._service.run(self._instance)
+            self._service.run(self._instance) # calls Download.run()
             self._queue.put(self._instance) # add item in queue to handle database I/O in the main process
         except CertificateRenewalException, e:
             sdlog.error("SDWUTILS-003","Certificate error: the daemon must be stopped")
