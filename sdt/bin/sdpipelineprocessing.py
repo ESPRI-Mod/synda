@@ -49,7 +49,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         # way 2: chunk-by-chunk (updating store on-the-fly)
         for chunk in metadata.get_chunks(io_mode):
             chunk=f(chunk,*args,**kwargs)
-            metadata.update(chunk)
+            metadata.update(chunk) # TODO: check if 'size' is handled here
 
     else:
         assert False

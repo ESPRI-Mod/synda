@@ -323,6 +323,12 @@ class CommonIO(object):
 
     def set_files(self,files):
         self.store.set_files(files)
+        self.size=sum(int(f['size']) for f in files)
+
+    def add_files(self,files):
+        assert isinstance(files, list)
+        self.store.append_files(files)
+        self.size+=sum(int(f['size']) for f in files)
 
     def get_files(self): # warning: load list in memory
         return self.store.get_files()
@@ -379,10 +385,6 @@ class Metadata(CommonIO):
         self.store.merge(metadata.store)
         self.size+=metadata.size
         metadata.delete() # FIXME
-
-    def add_files(self,files):
-        assert isinstance(files, list)
-        self.store.append_files(files)
 
     def copy(self):
         cpy=Metadata(store=self.store.copy(),size=self.size)
