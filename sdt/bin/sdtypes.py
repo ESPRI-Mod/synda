@@ -346,13 +346,25 @@ class CommonIO(object):
 def compute_total_size(files):
     if len(files)>0:
         file_=files[0] # assume all items are of the same type
-        type_=file_.get('type')
-        if type_=='Dataset': 
+
+        # FIXME: remove this block
+        if 'size' not in file_:
             return 0
-        elif type_=='File': 
+        else:
+            return sum(int(f['size']) for f in files)
+
+        # FIXME: use this block insted
+        # test with: ST_DEBUG=1 synda search CMIP5 decadal1995 mon land
+        """
+        type_=file_.get('type')
+        if type_=='Dataset':
+            return 0
+        elif type_=='File':
             return sum(int(f['size']) for f in files)
         else:
             raise SDException("SDATYPES-024","Incorrect type (type=%s)"%str(type_))
+        """
+
     else:
         return 0
 
