@@ -17,7 +17,6 @@ Note
 
 import os
 import sys
-import traceback
 import re
 import copy
 import json

@@ -11,10 +11,10 @@
 
 """This module contains worker related objects."""
 
-import traceback
 import sys
 import threading
 import sdapp
+import sdtrace
 import sdlog
 import sdconfig
 from sdexception import CertificateRenewalException

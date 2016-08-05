@@ -13,7 +13,6 @@
 
 import sys
 import os
-import traceback
 import sdapp
 import sdconfig
 import sdfiledao
@@ -27,6 +26,7 @@ import sdeventdao
 import sdlog
 import sddb
 import sddeletefile
+import sdtrace
 from sdexception import NoTransferWaitingException,FatalException,RemoteException
 from sdtypes import File
 
