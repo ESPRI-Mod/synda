@@ -34,7 +34,7 @@ import sdconst
 import sdpipelineprocessing
 import sdexception
 
-def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
+def main_pipeline(files,mode=None):
 
     assert isinstance(files,list)
 
@@ -46,11 +46,6 @@ def post_pipeline_CHUNK_BY_CHUNK_OK(files,mode=None):
         files=sddatasetpipeline.run(files=files)
     elif mode=='generic':
         files=sdgenericpipeline.run(files)
-    elif mode is None:
-        # if None, we return the result as is, any without transformation
-        # (usefull for dumping malformed files JSON raw data, to make debugging malformed files more easy).
-
-        pass
     else:
         raise sdexception.SDException("SDPIPELI-001","Incorrect mode (%s)"%mode)
 
@@ -91,9 +86,15 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
 
 def post_pipeline(metadata,mode=None):
 
+    if mode is None:
+        # if mode is None, we return the result as is, without any transformation
+        # (usefull for dumping malformed files JSON raw data, to make malformed files debug more easy).
+
+        return metadata
+
     sdlog.info("SDPIPELI-004","Start main pipeline")
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,post_pipeline_CHUNK_BY_CHUNK_OK,mode)
+    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,main_pipeline,mode)
 
     sdlog.info("SDPIPELI-006","Main pipeline completed")
 
