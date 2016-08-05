@@ -42,9 +42,5 @@ class WorkerThread(threading.Thread):
 
         except Exception, e:
             sdlog.error("SDWUTILS-002","Thread didn't complete successfully")
-
-            # debug
-            traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
-            traceback.print_exc(file=sys.stderr)
-
+            sdtrace.log_exception(stderr=True)
             self._service.exception_occurs=True

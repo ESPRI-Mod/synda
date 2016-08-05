@@ -26,7 +26,7 @@ def is_nearestpost_enabled(metadata):
     else:
         result=False
 
-    sdlog.info("SSHRINKT-002","nearestpost=%s"%result)
+    sdlog.info("SSHRINKT-002","nearestpost is %s"%result)
 
     return result
 

@@ -21,6 +21,7 @@ from pyjsonrpc.rpcerror import MethodNotFound,InternalError
 import argparse
 import sdlog
 import sdconfig
+import sdtrace
 from sdexception import RemoteException
 
 def event(events):
@@ -38,9 +39,10 @@ def event(events):
     except InternalError,e:
         sdlog.error("SDPPPROX-016","Server internal error (see %s file for more details)"%sdconfig.stacktrace_log_file)
 
-        # print 'server side' exception stack (TODO: find a way to also print it on the server side)
-        with open(sdconfig.stacktrace_log_file,'a') as fh:
-            fh.write(e.data)
+        # print 'server side' exception stack
+        sdtrace.log_message(e.data)
+
+        # TODO: find a way to also print it on the server side
 
         raise RemoteException("SDPPPROX-120","Server internal error")
     except Exception,e:

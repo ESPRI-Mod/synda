@@ -57,7 +57,7 @@ def process_async_event(): # 'async' is because event are waiting in 'event' tab
             sdlog.error("SYNDTASK-018","Fatal error occurs during event processing (%s)"%str(e))
 
             # debug
-            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+            #sdtrace.log_exception()
 
             raise
 

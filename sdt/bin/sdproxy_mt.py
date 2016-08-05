@@ -16,7 +16,6 @@ import sdapp
 import threading
 import random
 import time
-import traceback
 import sdlog
 import sdproxy
 from sdexception import SDException
@@ -26,6 +25,7 @@ import sdconst
 import sdconfig
 import sdsquery
 import sdtools
+import sdtrace
 
 class MetadataThread(threading.Thread):
     def __init__(self,host,service,query,result_queue,error_queue):
@@ -75,7 +75,7 @@ class MetadataThread(threading.Thread):
             #sdlog.info("SDPROXMT-006", "%s"%(str(e)),)
 
             # debug
-            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+            #sdtrace.log_exception()
 
 def run(i__queries):
     """This method contains the retry mecanism."""

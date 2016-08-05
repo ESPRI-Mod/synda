@@ -183,8 +183,7 @@ def transfers_end():
         except:
 
             # debug
-            #traceback.print_exc(file=sys.stderr)
-            #traceback.print_exc(file=open(sdconfig.stacktrace_log_file,"a"))
+            #sdtrace.log_exception(stderr=True)
 
             raise
 
