@@ -32,6 +32,14 @@ import sdlmattrfilter
 from sdexception import SDException
 
 def run(metadata):
+
+    if metadata.count() < 1:
+        return metadata
+
+    # retrieve global flag
+    f=metadata.get_one_file()
+    functional_id_keyname=sdpostpipelineutils.get_functional_identifier_name(f)
+
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,data_node]) # create light list with needed columns only, not to overload system memory.
 
     score=build_score_table(light_metadata,functional_id_keyname) # warning: load list in memory
