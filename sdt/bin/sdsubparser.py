@@ -222,6 +222,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
     add_incremental_mode_argument(subparser)
+    subparser.add_argument('-e','--exclude_from',metavar='FILE',help='Read exclude selection-file from FILE')
 
     subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())
     add_parameter_argument(subparser)

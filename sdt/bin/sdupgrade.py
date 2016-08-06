@@ -11,6 +11,7 @@
 
 """This module contains 'upgrade' routines."""
 
+import os
 import sdsearch
 import sdinstall
 import sdexception
@@ -33,7 +34,13 @@ def run(selections,args):
     # force non-interactive mode
     args.yes=True
 
+    exclude_selection_files=get_exclude(args)
+
     for selection in selections:
+
+        if selection.filename in exclude_selection_files:
+            continue
+
         try:
             sdlog.info("SDUPGRAD-003","Process %s.."%selection.filename,stderr=True)
             install(args,selection)
@@ -51,3 +58,17 @@ def install(args,selection):
         metadata=sdsearch.run(selection=selection)
         sdlog.info("SDUPGRAD-002","Install files..")
         (status,newly_installed_files_count)=sdinstall.run(args,metadata)
+
+def get_exclude(args):
+    li=[]
+
+    if not os.path.isfile(args.exclude_from):
+        return []
+
+    with open(args.exclude_from) as f:
+        li = [line.rstrip('\r\n') for line in f]
+
+    return li
+
+# init.
+
