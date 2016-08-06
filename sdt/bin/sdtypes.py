@@ -353,7 +353,7 @@ def compute_total_size(files):
         else:
             return sum(int(f['size']) for f in files)
 
-        # FIXME: use this block insted
+        # FIXME: use this block instead
         # test with: ST_DEBUG=1 synda search CMIP5 decadal1995 mon land
         """
         type_=file_.get('type')

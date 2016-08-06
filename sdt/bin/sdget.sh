@@ -370,7 +370,7 @@ else
         $url"
 fi
 
-wget_stderr2stdout()
+wget_stderr2stdout ()
 {
     # this func gives the possibility to filter wget errmsg in downstream steps (e.g. to exclude download progress)
 
