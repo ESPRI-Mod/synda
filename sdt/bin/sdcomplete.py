@@ -48,12 +48,16 @@ def complete(files):
             if transfer<>None:
                 f['status']=transfer.status
 
-                if not sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). It is usefull here for example when user wants to change priority (YES, a search-API request is needed in this case!).
+                if sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). It is usefull here for example when user wants to change priority (YES, a search-API request is needed in this case!).
+                    f['priority']=sdpostpipelineutils.get_attached_parameter(f,'priority')
+                else:
                     f['priority']=transfer.priority
             else:
                 f['status']=sdconst.TRANSFER_STATUS_NEW
 
-                if not sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). This is usefull here to set special priority for new files.
+                if sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). This is usefull here to set special priority for new files.
+                    f['priority']=sdpostpipelineutils.get_attached_parameter(f,'priority')
+                else:
                     f['priority']=sdconst.DEFAULT_PRIORITY
 
         elif f["type"]==sdconst.SA_TYPE_DATASET:
