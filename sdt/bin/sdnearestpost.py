@@ -60,6 +60,9 @@ def run(metadata):
     # final filtering (come back to files list)
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest_file,functional_id_keyname,score)
 
+    # cleanup
+    sdlmattrfilter.delete()
+
     return metadata
 
 def keep_nearest_file(files,functional_id_keyname,score):
