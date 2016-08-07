@@ -27,7 +27,7 @@ def set_scalar(stream,name,value):
         we assume all dquery have same value for that parameter.
     """
     for dquery in stream:
-        value=sddquery.set_scalar(dquery,name,value)
+        sddquery.set_scalar(dquery,name,value)
 
 def get_scalar(stream,name,default=None,type_=None):
 
