@@ -22,7 +22,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         to keep original data)
     """
 
-    sdlog.info("SYNDPIPR-001","Start chunk loop")
+    sdlog.info("SYNDPIPR-001","Start chunk loop (%d files to process)"%metadata.count())
 
     if io_mode=='no_chunk':
 
