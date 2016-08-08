@@ -318,6 +318,14 @@ class CommonIO(object):
             self.store=sdmts.get_new_store(lowmem)
             self.size=0
 
+    def __del__(self):
+        """Destructor
+
+        Calls 'delete' when object is garbage collected.
+        """
+
+        self.delete()
+
     def count(self):
         return self.store.count()
 
