@@ -383,7 +383,6 @@ class ResponseIngester(object):
         self.store.append_files(response.get_files()) # load list in memory, but should work on lowmem machine as response do not exceed SEARCH_API_CHUNKSIZE
         self.call_duration+=response.call_duration
         self.size+=response.size
-        response.delete()
 
 class AttachedParameters(object):
     """Abstract."""
@@ -417,7 +416,6 @@ class Metadata(CommonIO):
         assert isinstance(metadata, Metadata)
         self.store.merge(metadata.store)
         self.size+=metadata.size
-        metadata.delete() # FIXME
 
     def copy(self):
         cpy=Metadata(store=self.store.copy(),size=self.size)

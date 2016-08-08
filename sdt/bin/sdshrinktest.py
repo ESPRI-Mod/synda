@@ -43,7 +43,4 @@ def nearest_flag_set_on_all_files(metadata):
             status=False
             break
 
-    # cleanup
-    light_metadata.delete()
-
     return status

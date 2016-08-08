@@ -41,8 +41,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
 
-        metadata.delete() # FIXME everywhere
-        metadata=new_metadata
+        metadata=new_metadata # note: metadata old value get's removed here (destructor is called)
 
     elif io_mode=='pagination':
 

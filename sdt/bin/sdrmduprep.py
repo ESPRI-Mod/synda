@@ -42,9 +42,6 @@ def run(metadata,functional_id_keyname):
 
     metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove,functional_id_keyname,seen)
 
-    # cleanup
-    light_metadata.delete()
-
     return metadata
 
 def remove(files,functional_id_keyname,seen):
