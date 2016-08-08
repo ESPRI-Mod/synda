@@ -77,7 +77,12 @@ class MemoryStorage(Storage):
             f['attached_parameters']=copy.deepcopy(attached_parameters)
 
     def delete(self):
-        del self.files
+
+        # This block can be removed as garbage collector manage the 'list' deletion (self.files) automatically.
+        # Only keeped to enforce symetry with DatabaseStorage.
+        #
+        if hasattr(self,files):
+            del self.files
 
     def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
         cpy=MemoryStorage()
