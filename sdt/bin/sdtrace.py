@@ -15,7 +15,6 @@ import inspect
 import sys
 import datetime
 import traceback
-import sdapp
 import sdconfig
 
 # -- trace funcs -- #

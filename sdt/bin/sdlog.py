@@ -32,10 +32,6 @@ LABELS = {logging.DEBUG: 'debug',
           logging.ERROR: 'error',
           logging.CRITICAL: 'critical'}
 
-def die(code,msg):
-	critical(code,msg)
-	sys.exit(1)
-
 def debug(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
     log(code,message,logging.DEBUG,stdout,stderr,logfile,logger_name)
 def info(code,message,stdout=False,stderr=False,logfile=True,logger_name=None):
