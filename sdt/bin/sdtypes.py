@@ -407,7 +407,7 @@ class MetaResponse(CommonIO,AttachedParameters,ResponseIngester):
         self.call_duration=0
 
     def to_metadata(self):
-        metadata=Metadata(store=self.store,size=self.size)
+        metadata=Metadata(store=self.store.copy(),size=self.size)
         return metadata
 
 class Metadata(CommonIO):
