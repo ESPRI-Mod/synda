@@ -49,8 +49,8 @@ def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=Tru
     #
     # TODO: make it work with all actions (e.g. search) as it only working for 'install' action for now
     #
-    #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
     if sdconfig.config.getboolean('behaviour','nearest'):
+        #sddeferredbefore.add_default_parameter(stream,'nearest',True) # TODO: why this one is not working ?
         sdstream.set_scalar(stream,'nearest',True)
 
     # progress
