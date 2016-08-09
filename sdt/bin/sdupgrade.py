@@ -62,8 +62,11 @@ def install(args,selection):
 def get_exclude(args):
     li=[]
 
-    if not os.path.isfile(args.exclude_from):
+    if args.exclude_from is None:
         return []
+
+    if not os.path.isfile(args.exclude_from):
+        raise sdexception.SDException('SDUPGRAD-108','exclude-from file not found (%s)'%args.exclude_from)
 
     with open(args.exclude_from) as f:
         li = [line.rstrip('\r\n') for line in f]
