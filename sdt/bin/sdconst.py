@@ -162,6 +162,7 @@ SELECTION_FROM_STDIN='stdin'
 #
 PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 
+
 # Fields that MUST be part of every search-api requests
 #
 # Notes
@@ -179,6 +180,11 @@ REQUIRED_FIELDS=['type','size','data_node']
 LIGHT_FIELDS=['instance_id','id','variable']+REQUIRED_FIELDS
 
 TIMESTAMP_FIELDS=['instance_id','timestamp','_timestamp']+REQUIRED_FIELDS
+
+VARIABLE_FIELDS=['title','instance_id','variable']+REQUIRED_FIELDS
+
+DATASET_VERSION_FIELDS=['master_id','version','timestamp']+REQUIRED_FIELDS
+
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 

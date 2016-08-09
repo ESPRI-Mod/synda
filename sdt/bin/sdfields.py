@@ -20,9 +20,9 @@ def get_sample_fields():
     return ','.join(sdconst.TIMESTAMP_FIELDS)
 
 def get_file_variable_fields():
-    return 'title,instance_id,variable,size,type'
+    return ','.join(sdconst.VARIABLE_FIELDS)
 
 def get_dataset_version_fields():
-    return 'master_id,version,timestamp,size,type'
+    return ','.join(sdconst.DATASET_VERSION_FIELDS)
 
 # init.
