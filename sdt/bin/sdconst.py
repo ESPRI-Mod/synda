@@ -167,17 +167,17 @@ PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
 #
 # Notes
 #     - 'size' is required as non-optional part of basic data structure (Metadata, Response..)
-#     - we add data_node here, because it's needed for many thing ('-r' option, nearest..)
 #
-REQUIRED_FIELDS=['type','size','data_node']
+REQUIRED_FIELDS=['type','size']
 
 # Light fields are used to retrieve just the necessary fields, so to limit the bandwidth footprint.
 #
 # Notes
+#     - we add data_node here, because it's needed for many thing ('-r' option, nearest..)
 #     - we add variable for file too, so to be able to remove malformed files (i.e. some malformed files have many variables set instead of one)
 #     - 'instance_id' is used for example in 'sdremoveaggregation'
 #
-LIGHT_FIELDS=['instance_id','id','variable']+REQUIRED_FIELDS
+LIGHT_FIELDS=['instance_id','id','variable','data_node']+REQUIRED_FIELDS
 
 TIMESTAMP_FIELDS=['instance_id','timestamp','_timestamp']+REQUIRED_FIELDS
 
