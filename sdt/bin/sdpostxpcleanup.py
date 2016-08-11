@@ -57,7 +57,7 @@ def filter(files):
                     reject.append(f)
 
                     if sdconfig.log_domain_inconsistency:
-                        sdlog.warning("SDPOSXPC-002","WARNING: 'variable' attribute contains too much values ('%s')."%f['id'],stderr=False,logger_name=sdconst.LOGGER_DOMAIN)
+                        sdlog.warning("SDPOSXPC-002","WARNING: 'variable' attribute contains too much values (id='%s',variable=%s)."%(f['id'],variable),stderr=True,logger_name=sdconst.LOGGER_DOMAIN)
 
         elif type_=='Dataset':
             # currently, there is no reject rules for Dataset type, so we keep all of them
