@@ -24,8 +24,8 @@ def run(metadata,attrs_to_keep):
     light_metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata_cpy,attribute_filter,attrs_to_keep)
     return light_metadata
 
-def attribute_filter(files,keeped_attrs):
+def attribute_filter(files,kept_attrs):
     new_files=[]
     for f in files:
-        new_files.append(dict((k, f[k]) for k in keeped_attrs))
+        new_files.append(dict((k, f[k]) for k in kept_attrs))
     return new_files
