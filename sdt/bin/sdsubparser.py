@@ -36,8 +36,13 @@ def add_type_grp(parser):
 def add_ni_option(parser): # 'ni' means 'Non-Interactive'
     parser.add_argument('-y','--yes',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively')
 
-def add_incremental_mode_argument(parser):
-    parser.add_argument('-i','--incremental', action='store_true',help='Install files which appeared since last run (experimental)')
+def add_incremental_mode_argument(parser,subc):
+    if subc=='stat':
+        msg='Limit action on files which appeared since last run (experimental)'
+    else:
+        msg='Install files which appeared since last run (experimental)'
+
+    parser.add_argument('-i','--incremental', action='store_true',help=msg)
 
     # redundant with 'parameter', but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
     parser.add_argument('--timestamp_left_boundary',help=argparse.SUPPRESS) # timestamp left boundary filter (hidden option mainly used for debug)
@@ -156,7 +161,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'install',help='Install dataset',note=sdi18n.m0022,example=sdcliex.install())
     add_ni_option(subparser)
     add_parameter_argument(subparser)
-    add_incremental_mode_argument(subparser)
+    add_incremental_mode_argument(subparser,'install')
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
@@ -212,7 +217,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
-    add_incremental_mode_argument(subparser)
+    add_incremental_mode_argument(subparser,'stat')
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
@@ -221,7 +226,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help='Perform an upgrade (retrieve new version for all selection files)')
     add_parameter_argument(subparser)
     add_ni_option(subparser)
-    add_incremental_mode_argument(subparser)
+    add_incremental_mode_argument(subparser,'upgrade')
     subparser.add_argument('-e','--exclude_from',metavar='FILE',help='Read exclude selection-file from FILE')
 
     subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())
