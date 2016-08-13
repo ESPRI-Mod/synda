@@ -11,10 +11,11 @@
 
 """This module contains pipeline execution routines."""
 
+import sdapp
 import sdtypes
 import sdlog
 
-def run_pipeline(io_mode,metadata,f,*args,**kwargs):
+def run_pipeline(io_mode,metadata,f,*args,**kwargs): # FIXME: add default value for io_mode
     """
     Note
         Beware: metadata input argument is modified in this func !
@@ -22,7 +23,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
         to keep original data)
     """
 
-    sdlog.info("SYNDPIPR-001","Start chunk loop (%d files to process)"%metadata.count())
+    sdlog.info("SYNDPIPR-001","Start chunk loop (files-count=%d)"%metadata.count())
 
     if io_mode=='no_chunk':
 
@@ -41,7 +42,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
             chunk=f(chunk,*args,**kwargs)
             new_metadata.add_files(chunk)
 
-        metadata=new_metadata # note: metadata old value get's removed here (destructor is called)
+        metadata=new_metadata # note: metadata old value get's removed here (destructor is called). This is to enforce that this function IS destructive with its input argument (see func comment for more info).
 
     elif io_mode=='pagination':
 
@@ -50,9 +51,15 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs):
             chunk=f(chunk,*args,**kwargs)
             metadata.update(chunk) # TODO: check if 'size' is handled here
 
+    elif io_mode=='experimental':
+
+        # use 'ALTER TABLE foo RENAME TO bar' here
+
+        pass
+
     else:
         assert False
 
-    sdlog.info("SYNDPIPR-003","Chunk loop completed")
+    sdlog.info("SYNDPIPR-003","Chunk loop completed (files-count=%d)"%metadata.count())
 
     return metadata
