@@ -341,8 +341,9 @@ fi
 # retrieve destination folder
 local_folder=`dirname $local_file`
 
+# set directory umask
 # set 'cmip5' group writable
-umask "u=rwx,g=rwx,o=rx"
+umask u=rwx,g=rwx,o=rx
 
 # create folder if not exists
 mkdir -p ${local_folder}
@@ -395,6 +396,7 @@ strip_dot_progress ()
 
 }
 
+# set file umask
 # set 'cmip5' group writable
 umask u=rw,g=rw,o=r
 
