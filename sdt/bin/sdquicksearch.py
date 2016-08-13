@@ -37,6 +37,7 @@ import sdi18n
 import sdcliex
 import sdprint
 import sdsqueries
+import sdlog
 from sdprogress import ProgressThread
 import sdtypes
 from sdexception import SDException
@@ -75,7 +76,9 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
             mqr=process_queries(queries)
             metadata=mqr.to_metadata()
 
+            sdlog.debug("SDQSEARC-002","files-count=%d"%metadata.count())
             metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
+            sdlog.debug("SDQSEARC-004","files-count=%d"%metadata.count())
 
             return metadata
         finally:
