@@ -198,6 +198,7 @@ poddlefix=True
 lowmem=True
 fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
+stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
 
 if not is_special_user():
     # if we are here, it means we have no access to the machine-wide credential file.

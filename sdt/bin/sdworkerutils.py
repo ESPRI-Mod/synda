@@ -33,14 +33,18 @@ class WorkerThread(threading.Thread):
             self._service.run(self._instance) # calls Download.run()
             self._queue.put(self._instance) # add item in queue to handle database I/O in the main process
         except CertificateRenewalException, e:
+            # error occured during certificate renewal
+
             sdlog.error("SDWUTILS-003","Certificate error: the daemon must be stopped")
             sdlog.error("SDWUTILS-001","Thread didn't complete successfully")
 
             # no need to log stacktrace here as exception is already logged downstream
 
-            self._service.exception_occurs=True
+            self._service.exception_occurs=True # always stop daemon in this case, as download can't succeed without a working certificate
 
         except Exception, e:
             sdlog.error("SDWUTILS-002","Thread didn't complete successfully")
             sdtrace.log_exception(stderr=True)
-            self._service.exception_occurs=True
+
+            if sdconfig.stop_download_if_error_occurs:
+                self._service.exception_occurs=True
