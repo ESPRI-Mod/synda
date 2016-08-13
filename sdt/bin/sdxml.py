@@ -14,6 +14,7 @@
 import argparse
 from lxml import etree
 import sdapp
+import sdlog
 from sdexception import SDException
 from sdtypes import Item
 
@@ -248,6 +249,8 @@ def parse_metadata(buffer):
                         pass
 
         l__files.append(l__dict)
+
+    sdlog.debug("SYNDAXML-014","files-count=%d"%len(l__files))
 
     return {'files':l__files,'num_found':l__num_found,'num_result':len(l__files)}
 
