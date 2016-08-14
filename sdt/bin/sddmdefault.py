@@ -21,7 +21,7 @@ import Queue
 import sdapp
 import sdlog
 import sdconst
-from sdexception import SDException,FatalException
+import sdexception
 import sdlogon
 import sdconfig
 import sdtime
@@ -107,7 +107,7 @@ class Download():
                         tr.status=sdconst.TRANSFER_STATUS_DONE
 
                     else:
-                        raise FatalException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
+                        raise sdexception.FatalException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
             else:
                 # remote checksum is missing
                 # NOTE: we DON'T store the local checksum ('file' table contains only the *remote* checksum)
@@ -163,7 +163,7 @@ def end_of_transfer(tr):
     # check for fatal error
     if tr.sdget_status==4:
         sdlog.info("SDDMDEFA-147","Stopping daemon as sdget.download() returned fatal error.")
-        raise FatalException()
+        raise sdexception.FatalException()
 
 def start_transfer_thread(tr):
     th=WorkerThread(tr,eot_queue,Download)
@@ -178,7 +178,7 @@ def transfers_end():
             eot_queue.task_done()
         except Queue.Empty, e:
             pass
-        except FatalException, e:
+        except sdexception.FatalException, e:
             raise
         except:
 
