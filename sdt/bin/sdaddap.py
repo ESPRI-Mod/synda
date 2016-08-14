@@ -15,6 +15,7 @@ import copy
 import sdapp
 import sdconst
 import sdlog
+import sdtypes
 import sdpipelineprocessing
 
 def run(o,attached_parameters):
@@ -29,15 +30,15 @@ def run(o,attached_parameters):
 
     sdlog.info("SYDADDAP-620","Add attached_parameters..")
 
-    if isinstance(o,Metadata):
+    if isinstance(o,sdtypes.Metadata):
 
         o=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,o,add_attached_parameters,attached_parameters)
 
-    elif isinstance(o,Response):
+    elif isinstance(o,sdtypes.Response):
 
         # no need to process chunk by chunk here as Response size only contains a small amount of data (< sdconst.SEARCH_API_CHUNKSIZE)
 
-        files=add_attached_parameters(result.get_files(),attached_parameters)
+        files=add_attached_parameters(o.get_files(),attached_parameters)
         o.set_files(files)
 
     else:
