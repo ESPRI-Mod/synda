@@ -9,6 +9,8 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
+"""This module contains search-api proxy."""
+
 import time
 import argparse
 import sdapp
@@ -20,6 +22,7 @@ import sdconst
 import sdlog
 import sdtools
 import sdconfig
+import sdaddap
 
 # not a singleton
 class SearchAPIProxy():
@@ -51,13 +54,11 @@ class SearchAPIProxy():
             sdtools.print_stderr("Duration: %s"%paginated_response.call_duration)
             sdtools.print_stderr("")
 
-        sdlog.info("SYDPROXY-620","Add attached_parameters..")
+        md=paginated_response.to_metadata() # we cast to remove pagination related code and have a lighter object
 
-        paginated_response.add_attached_parameters(attached_parameters)
+        md=sdaddap.run(md,attached_parameters)
 
-        sdlog.info("SYDPROXY-628","attached_parameters added")
-
-        return paginated_response.to_metadata() # we cast to remove pagination related code and have a lighter object
+        return md
 
     def call_web_service(self,request):
 

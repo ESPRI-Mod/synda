@@ -38,6 +38,7 @@ import sdcliex
 import sdprint
 import sdsqueries
 import sdlog
+import sdaddap
 from sdprogress import ProgressThread
 import sdtypes
 from sdexception import SDException
@@ -100,7 +101,8 @@ def ws_call(query):
     if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
         raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
 
-    result.add_attached_parameters(query.get('attached_parameters',{}))
+    result=sdaddap.run(result,query.get('attached_parameters',{}))
+
     return result
 
 if __name__ == '__main__':

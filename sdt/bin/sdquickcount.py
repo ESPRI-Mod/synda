@@ -28,6 +28,7 @@ import sdnetutils
 import sdi18n
 import sdcliex
 import sdtypes
+import sdaddap
 from sdexception import SDException
 
 def run(stream=None,path=None,parameter=[],index_host=None,dry_run=False):
@@ -41,28 +42,30 @@ def run(stream=None,path=None,parameter=[],index_host=None,dry_run=False):
     if len(queries)>1:
         raise SDException("SDQSEARC-100","Too much query (multi-query is not allowed in this module, use sdquicksearch instead)")
 
+    query=queries[0]
+
     if dry_run:
-        for query in queries:
-            request=sdtypes.Request(url=query['url'],pagination=False)
+        request=sdtypes.Request(url=query['url'],pagination=False)
 
-            print '%s'%request.get_url()
+        print '%s'%request.get_url()
 
-            # debug
-            #print 'Url: %s'%request.get_url()
-            #print 'Attached parameters: %s'%query.get('attached_parameters')
+        # debug
+        #print 'Url: %s'%request.get_url()
+        #print 'Attached parameters: %s'%query.get('attached_parameters')
 
         return sdtypes.Response()
     else:
-        return ws_call(queries[0]) # return Response object
+        return ws_call(query) # return Response object
 
 def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
     result=sdnetutils.call_web_service(request.get_url(),timeout=sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
 
-    if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
+    if result.count()>sdconst.SEARCH_API_CHUNKSIZE:
         raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
 
-    result.add_attached_parameters(query.get('attached_parameters',{}))
+    result=sdaddap.run(result,query.get('attached_parameters',{}))
+
     return result
 
 if __name__ == '__main__':
