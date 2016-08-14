@@ -71,15 +71,10 @@ class MemoryStorage(Storage):
     def append_files(self,files):
         self.files.extend(files)
 
-    def add_attached_parameters(self,attached_parameters):
-        for f in self.files:
-            assert 'attached_parameters' not in f
-            f['attached_parameters']=copy.deepcopy(attached_parameters)
-
     def delete(self):
 
         # This block can be removed as garbage collector manage the 'list' deletion (self.files) automatically.
-        # Only keeped to enforce symetry with DatabaseStorage.
+        # Only kept to enforce symetry with DatabaseStorage.
         #
         if hasattr(self,'files'):
             del self.files
@@ -236,15 +231,6 @@ class DatabaseStorage(Storage):
                 c.execute("INSERT INTO data (%s) VALUES (?)"%columns, tu)
 
             self.conn.commit()
-
-    def add_attached_parameters(self,attached_parameters):
-
-        # WARNING: slow perf here. Maybe replace with 'ALTER TABLE foo RENAME TO bar'
-        li=self.get_files()
-        for f in li:
-            assert 'attached_parameters' not in f
-            f['attached_parameters']=copy.deepcopy(attached_parameters)
-        self.set_files(li)
 
     def delete(self):
         self.disconnect()

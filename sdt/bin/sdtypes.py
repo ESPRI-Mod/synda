@@ -380,25 +380,12 @@ class ResponseIngester(object):
     """Abstract."""
 
     def slurp(self,response):
-        self.store.append_files(response.get_files()) # load list in memory, but should work on lowmem machine as response do not exceed SEARCH_API_CHUNKSIZE
+        assert isinstance(response,Response)
+        self.store.append_files(response.get_files()) # get_files() here loads list in memory, but should work on lowmem machine as Response object never exceed SEARCH_API_CHUNKSIZE
         self.call_duration+=response.call_duration
         self.size+=response.size
 
-class AttachedParameters(object):
-    """Abstract."""
-
-    def add_attached_parameters(self,attached_parameters):
-        """This func adds some parameters to the result of a query. 
-        
-        Notes
-            - The idea is the keep some parameters around by making them jump
-              over the search call (e.g. Search-api call, SQL call..), from
-              'query pipeline' to 'file pipeline'.
-        """
-        assert isinstance(attached_parameters, dict)
-        self.store.add_attached_parameters(attached_parameters)
-
-class MetaResponse(CommonIO,AttachedParameters,ResponseIngester):
+class MetaResponse(CommonIO,ResponseIngester):
     """Abstract."""
 
     def __init__(self,*args,**kwargs):
@@ -431,7 +418,7 @@ class MultiQueryResponse(MetaResponse):
 
     pass
 
-class Response(CommonIO,AttachedParameters):
+class Response(CommonIO):
     """Contains web service output after XML parsing.
 
     Note
