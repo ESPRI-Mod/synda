@@ -83,7 +83,8 @@ def parallel_exec(queries):
 def sequential_exec(queries):
     search=sdproxy.SearchAPIProxy()
     metadata=sdtypes.Metadata()
-    for q in queries:
+    for i,q in enumerate(queries):
+        sdlog.info("SYNDARUN-001","Process query %d"%i)
         result=search.run(url=q['url'],attached_parameters=q.get('attached_parameters'))
         metadata.slurp(result)
     return metadata
