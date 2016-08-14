@@ -20,7 +20,7 @@ import re
 import argparse
 import sdlog
 import sdutils
-from sdexception import SDException,OpenIDProcessingException
+from sdexception import OpenIDIncorrectFormatException,OpenIDProcessingException
 import sdnetutils
 
 XRI_NS = 'xri://$xrd*($v*2.0)'
@@ -77,7 +77,7 @@ def parse_openid(openid):
     if m:
         username = m.group(1)
     else:
-        raise SDException('SDOPENID-001','Incorrect format')
+        raise OpenIDIncorrectFormatException('SDOPENID-001','Incorrect format')
 
     return username
 
