@@ -52,10 +52,17 @@ def log(code,message,level,stdout=False,stderr=False,logfile=True,logger_name=No
     modulecode=code[0:8]
 
     if level>=get_verbosity_level():
+
         if stdout:
             sdtools.print_stdout(message)
+
         if stderr:
-            sdtools.print_stderr(message)
+
+            # add msg prefix
+            label=get_verbosity_label(level)
+            formatted_msg='%s: %s'%(label.upper(),message)
+
+            sdtools.print_stderr(formatted_msg)
 
     if logfile:
         if logger_name is None:
