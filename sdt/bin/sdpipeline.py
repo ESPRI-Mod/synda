@@ -107,8 +107,12 @@ def post_pipeline(metadata,mode=None):
     return metadata
 
 def prepare_param(selection=None,path=None,parameter=None,load_default=None):
-    """This pipeline add 'path', 'parameter' and 'selection' input type to the
-    standalone param pipeline."""
+    """This func adds 'path', 'parameter' and 'selection' input type to the
+    standalone param pipeline.
+
+    Note
+        This func is used for light scenario (complex scenario use 'sdquerypipeline' module).
+    """
 
     if parameter is None:
         parameter=[]
