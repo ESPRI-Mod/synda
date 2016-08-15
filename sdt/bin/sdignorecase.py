@@ -27,6 +27,11 @@ import sdconfig
 import sdprint
 
 def run(facets_groups):
+
+    # if filter not enabled in config file, leave without doing anything
+    if sdconfig.config.getboolean('behaviour','ignorecase') == False:
+        return facets_groups
+
     for facets_group in facets_groups:
         if sdconst.PENDING_PARAMETER in facets_group:
             new_pending_parameter=[]
