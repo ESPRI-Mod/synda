@@ -48,11 +48,14 @@ def print_exception(type_, value, tb):
         stderr()
         stderr('%s'%value.msg)
         stderr()
+        stderr()
+        stderr('==================')
+        stderr('*   Stacktrace   *')
+        stderr('==================')
+        stderr()
+        traceback.print_tb(tb)
+        stderr()
 
-        if 'ST_DEBUG' in os.environ:
-            if os.environ.get('ST_DEBUG')=="1":
-                stderr('Stacktrace:')
-                traceback.print_tb(tb)
     else:
         traceback.print_exception(type_, value, tb)
 
