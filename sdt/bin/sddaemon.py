@@ -184,7 +184,7 @@ if __name__ == "__main__":
         #
         #if not is_running():
         #    import sdlog
-        #    sdlog.info("SDDAEMON-222" "Error occurs during transfer daemon startup, see log files for details",stderr=True)
+        #    sdlog.error("SDDAEMON-222" "Error occurs during transfer daemon startup, see log files for details",stderr=True)
         #    sys.exit(2)
 
     elif args.action == 'stop':
