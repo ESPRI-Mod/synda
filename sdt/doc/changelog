@@ -16,6 +16,7 @@
 	- add sdsqlitedict module.
 	- add sdmts module.
 	- do not stop daemon anymore when error occurs during download (except for certificate renewal error).
+	- always print stacktrace when error occurs (ST_DEBUG env. var. is not used anymore).
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
