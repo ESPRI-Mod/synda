@@ -136,9 +136,13 @@ def get_last_access_date(self,t):
         return l__date_str
     except OSError, e:
         if e.errno == errno.ENOENT: # errno.ENOENT = no such file or directory
-            raise FileNotFoundException("%s"%str(e)) # cast exception to Synda exception
+            raise FileNotFoundException("%s"%str(e)) # cast (we break stacktrace here because we need to handle this case in a specific way).
         else:
-            raise SDException("SYDUTILS-632","fatal I/O error (%s)"%str(e))
+
+            # check if logging is possible here or move this func upstream)
+            #sdlog.error("SYDUTILS-632","Fatal I/O error (%s)"%str(e))
+
+            raise
 
 def replace_product(path,new_product):
     for product in ['output','output1','output2']: # doesn't work if product is on the first or on the last position

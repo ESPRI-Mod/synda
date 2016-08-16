@@ -159,8 +159,8 @@ def update_last_access_date():
                 transfers_without_file+=1
                 continue
 
-            except SDException,e:
-                sdlog.error("SDOPERAT-532","Fatal error")
+            except Exception,e:
+                sdlog.error("SDOPERAT-532","Fatal error (%s)"%str(e))
                 raise
 
             # set new date in DB
