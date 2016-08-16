@@ -71,7 +71,11 @@ def renew_certificate_with_retry(openid,password,force_renew_certificate=False,q
 def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
 
     # extract info from openid
-    (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
+    try:
+        (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
+    except (OpenIDProcessingException,OpenIDIncorrectFormatException) as e:
+        sdlog.error("SYDLOGON-800","Exception occured during certificate renewal (%s)"%str(e))
+        raise
 
     if sdconfig.use_myproxy_module:
         renew_certificate_new(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet=quiet,debug=debug,force_renew_ca_certificates=force_renew_ca_certificates)
