@@ -22,7 +22,7 @@ import sdutils
 import sdlog
 import sdmyproxy
 from sdtools import print_stderr
-from sdexception import SDException,CertificateRenewalException
+import sdexception
 
 def print_certificate():
     import os, sdutils
@@ -37,7 +37,7 @@ def print_certificate():
     else:
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
-@retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, SDException)) # 50000 => 50 seconds
+@retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, sdexception.SDException)) # 50000 => 50 seconds
 def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificate=False,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
@@ -51,7 +51,7 @@ def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificat
     """
     renew_certificate(openid,password,force_renew_certificate=force_renew_certificate,quiet=quiet)
 
-@retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, SDException)) # 1800000 => 30mn, 86400000 => 24 hours
+@retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, sdexception.SDException)) # 1800000 => 30mn, 86400000 => 24 hours
 def renew_certificate_with_retry(openid,password,force_renew_certificate=False,quiet=True):
     """
     Retry mecanism when ESGF IDP cannot be reached.
@@ -85,12 +85,11 @@ def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,d
 def renew_certificate_new(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
     """Renew ESGF certificate using sdmyproxy module."""
 
-    # main
     try:
         sdmyproxy.run(hostname,port,username,force_renew_certificate,force_renew_ca_certificates,password)
     except Exception,e:
         sdlog.error("SYDLOGON-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
-        raise SDException('SYDLOGON-014','Error occured while retrieving certificate from myproxy server (%s)'%str(e)) # cast to SDException
+        raise sdexception.SDException('SYDLOGON-014','Error occured while retrieving certificate from myproxy server (%s)'%str(e)) # cast to SDException
 
 def renew_certificate_old(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
     """Renew ESGF certificate using 'sdlogon.sh' script."""
@@ -125,7 +124,7 @@ def renew_certificate_old(hostname,port,username,password,force_renew_certificat
 
         sdlog.error("SYDLOGON-040","Exception occured while retrieving certificate (status=%i)"%status)
 
-        raise CertificateRenewalException("SYDLOGON-001","Cannot retrieve certificate from ESGF (hostname=%s,port=%s)"%(hostname,port))
+        raise sdexception.CertificateRenewalException("SYDLOGON-001","Cannot retrieve certificate from ESGF (hostname=%s,port=%s)"%(hostname,port))
     else:
         if debug:
             print_stderr("'%s' script stdxxx (debug mode)\n"%os.path.basename(sdconfig.logon_script))
