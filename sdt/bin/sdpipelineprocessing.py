@@ -23,7 +23,7 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs): # FIXME: add default value 
         to keep original data)
     """
 
-    sdlog.info("SYNDPIPR-001","Start chunk loop (files-count=%d)"%metadata.count())
+    sdlog.debug("SYNDPIPR-001","Start chunk loop (files-count=%d)"%metadata.count())
 
     if io_mode=='no_chunk':
 
@@ -60,6 +60,6 @@ def run_pipeline(io_mode,metadata,f,*args,**kwargs): # FIXME: add default value 
     else:
         assert False
 
-    sdlog.info("SYNDPIPR-003","Chunk loop completed (files-count=%d)"%metadata.count())
+    sdlog.debug("SYNDPIPR-003","Chunk loop completed (files-count=%d)"%metadata.count())
 
     return metadata
