@@ -61,6 +61,7 @@ def get_facet_values_early(orig_stream,name,extract_item=False):
 
     # A
     stream=sddeferredbefore.run(stream)
+    stream=sdignorecase.run(stream)
     stream=sdinference.run(stream) # this is to resolve pending parameter
     stream=sddeferredafter.run(stream)
 

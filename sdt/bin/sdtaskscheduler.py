@@ -30,7 +30,7 @@ import sdlogon
 import sdtask
 import sdprofiler
 import sdfilequery
-from sdexception import FatalException,SDException,CertificateRenewalException
+from sdexception import FatalException,SDException,OpenIDNotSetException
 
 def terminate(signal,frame):
     global quit
@@ -168,7 +168,7 @@ def event_loop():
 
             else:
                 sdlog.error("SDTSCHED-928",'OpenID not set in configuration file',stderr=True)
-                raise CertificateRenewalException("SDTSCHED-264","OpenID not set in configuration file")
+                raise OpenIDNotSetException("SDTSCHED-264","OpenID not set in configuration file")
 
         except SDException,e:
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)

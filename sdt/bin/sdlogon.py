@@ -73,8 +73,8 @@ def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,d
     # extract info from openid
     try:
         (hostname,port,username)=sdopenid.extract_info_from_openid(openid)
-    except (OpenIDProcessingException,OpenIDIncorrectFormatException) as e:
-        sdlog.error("SYDLOGON-800","Exception occured during certificate renewal (%s)"%str(e))
+    except Exception,e:
+        sdlog.error("SYDLOGON-800","Exception occured while processing openid (%s)"%str(e))
         raise
 
     if sdconfig.use_myproxy_module:
@@ -89,7 +89,7 @@ def renew_certificate_new(hostname,port,username,password,force_renew_certificat
         sdmyproxy.run(hostname,port,username,force_renew_certificate,force_renew_ca_certificates,password)
     except Exception,e:
         sdlog.error("SYDLOGON-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
-        raise sdexception.SDException('SYDLOGON-014','Error occured while retrieving certificate from myproxy server (%s)'%str(e)) # cast to SDException
+        raise
 
 def renew_certificate_old(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
     """Renew ESGF certificate using 'sdlogon.sh' script."""

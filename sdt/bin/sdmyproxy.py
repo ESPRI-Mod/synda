@@ -26,7 +26,7 @@ import sdlog
 import sdutils
 import sdconfig
 from myproxy.client import MyProxyClient
-from sdexception import PasswordNotSetException,UsernameNotSetException,CertificateRenewalException
+import sdexception
 
 def get_passwd_from_passwd_file():
     passwd=None
@@ -51,12 +51,12 @@ def run(host,port,username,force_renew_certificate=False,force_renew_ca_certific
     # check password
     if password == "pwd":
         sdlog.error("SDMYPROX-019","ESGF password not set")
-        raise PasswordNotSetException()
+        raise sdexception.PasswordNotSetException()
 
     # check username
     if username is None:
         sdlog.error("SDMYPROX-020","ESGF username not set")
-        raise UsernameNotSetException()
+        raise sdexception.UsernameNotSetException()
 
     if force_renew_certificate:
         if os.path.isfile(sdconfig.esgf_x509_proxy):
@@ -78,13 +78,13 @@ def run(host,port,username,force_renew_certificate=False,force_renew_ca_certific
     # check (second pass => if it fails again, then fatal error)
     if not certificate_exists():
         sdlog.error("SDMYPROX-009","Error occured while retrieving certificate")
-        raise CertificateRenewalException()
+        raise sdexception.MissingCertificateException()
     else:
         os.chmod(sdconfig.esgf_x509_proxy,0600) # needed by globus-url-copy
 
         if not certificate_is_valid():
             sdlog.error("SDMYPROX-010","Error occurs while retrieving certificate")
-            raise CertificateRenewalException()
+            raise sdexception.InvalidCertificateException()
 
 def certificate_exists ():
     if os.path.isfile(sdconfig.esgf_x509_proxy):

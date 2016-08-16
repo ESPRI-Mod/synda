@@ -33,10 +33,6 @@ class RemoteException(SDException):
     pass
 class CertificateRenewalException(SDException):
     pass
-class OpenIDProcessingException(SDException):
-    pass
-class OpenIDIncorrectFormatException(SDException):
-    pass
 class MissingDatasetTimestampUrlException(SDException):
     pass
 class MissingTimestampException(SDException):
@@ -61,4 +57,15 @@ class IncorrectParameterException(SDException):
 class UnknownParameterNameException(IncorrectParameterException):
     pass
 class UnknownParameterValueException(IncorrectParameterException):
+    pass
+#
+class InvalidCertificateException(CertificateRenewalException):
+    pass
+class MissingCertificateException(CertificateRenewalException):
+    pass
+class OpenIDProcessingException(CertificateRenewalException):
+    pass
+class OpenIDIncorrectFormatException(CertificateRenewalException):
+    pass
+class OpenIDNotSetException(CertificateRenewalException):
     pass

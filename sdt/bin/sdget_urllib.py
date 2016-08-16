@@ -218,10 +218,9 @@ def download_file_helper(url,local_path,timeout):
         # debug
         #sdtrace.log_exception()
 
-        # cast to SDException
-        raise SDException('SYNDGEUL-001',str(e))
+        raise
 
-        return 1
+        #return 1
 
     finally:
 
