@@ -48,7 +48,7 @@ def get_facet_values_early(orig_stream,name,extract_item=False):
     TODO
         Maybe find a proper way to do that
     """
-    import sdstream, sdextractitem, sdinference, copy, sddeferredbefore, sddeferredafter
+    import sdstream, sdextractitem, sdignorecase, sdinference, copy, sddeferredbefore, sddeferredafter
 
     assert name!='type' # type cannot be inferred using this func (use infer_type() func instead)
 
