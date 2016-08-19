@@ -15,6 +15,7 @@
 	- add support for lowmem machine.
 	- add sdsqlitedict module.
 	- add sdmts module.
+	- add 'ignorecase' filter for 'upgrade' and 'facet' subcommands.
 	- remove '-n' option from 'synda facet' command.
 	- do not stop daemon anymore when error occurs during download (except for certificate renewal error).
 	- always print stacktrace when error occurs (ST_DEBUG env. var. is not used anymore).
