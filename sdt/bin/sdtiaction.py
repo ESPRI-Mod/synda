@@ -244,7 +244,7 @@ def daemon(args):
 def facet(args):
     import sdparam,sdremoteparam,syndautils,sdinference,sdignorecase
 
-    facets_groups=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
+    facets_groups=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=True)
     facets_groups=sdignorecase.run(facets_groups)
     facets_groups=sdinference.run(facets_groups)
 
