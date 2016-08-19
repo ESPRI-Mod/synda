@@ -24,6 +24,7 @@ import sdshrink
 import sdparse
 import sdbuffer
 import sdparampipeline
+import sdignorecase
 import sdinference
 import sdgenericpipeline
 import sdfilepipeline
@@ -138,6 +139,6 @@ def parse(parameter=None):
     buffer=sdbuffer.get_selection_file_buffer(parameter=parameter)
     selection=sdparse.build(buffer,load_default=False)
     facets_groups=selection.merge_facets()
-    #facets_groups=sdignorecase.run(facets_groups) # enable me if ignorecase is needed here
+    facets_groups=sdignorecase.run(facets_groups)
     facets_groups=sdinference.run(facets_groups)
     return facets_groups
