@@ -46,7 +46,7 @@ def print_exception(type_, value, tb):
         stderr('*   Error message   *')
         stderr('=====================')
         stderr()
-        stderr('%s'%value.msg)
+        stderr('%s'%value.msg.rstrip('\r\n'))
         stderr()
         stderr()
         stderr('==================')

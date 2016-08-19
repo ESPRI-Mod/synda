@@ -31,6 +31,8 @@ def handle_negated_value(name):
 
 def is_case_incorrect(value):
     if value in reversed_params:
+        # if we are here, it means that value exist with that exact case, so the case is correct
+
         return False
     else:
         if value.upper() in ucvalue2value:
