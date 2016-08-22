@@ -208,3 +208,7 @@ m0023="""  This command is for source installation only (in system package
 """
 
 m0024="""Set the total number of returned results. By default, returns the first 100 records matching the given constraints. Limit can be also be changed through the keyword parameters limit=. The system imposes a maximum value of limit <= 10,000."""
+
+m0025="""sudo service synda start"""
+
+m0026="""synda daemon start"""

@@ -13,6 +13,8 @@
 
 import sys
 import argparse
+import sdconfig
+import sdi18n
 import sdexception
 import sdlog
 from sdtools import print_stderr
@@ -109,7 +111,8 @@ def install(metadata,interactive):
             print_stderr("You can follow the download using 'synda watch' and 'synda queue' commands")
 
             if not sddaemon.is_running():
-                print_stderr("The daemon is not running. To start it, use 'sudo service synda start'.") # FIXME (make not convenient for source install..)
+                msg=sdi18n.m0025 if sdconfig.system_pkg_install else sdi18n.m0026
+                print_stderr("The daemon is not running. To start it, use '%s'."%msg)
     else:
         if interactive:
             print_stderr('Abort.')
