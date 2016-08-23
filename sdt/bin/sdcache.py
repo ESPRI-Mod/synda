@@ -60,8 +60,8 @@ def _reload_parameters(parameters):
 def _update_parameters(parameters):
     for pname,pvalues in parameters.iteritems():
         if len(pvalues)==0:
-            # This case means this is a parameter without any associated value (e.g. 'title').
-            #
+            # This case means this is a parameter without any associated value.
+
             # It is likely to be a NON-free parameter which is present in solar
             # parameters, but not used by any dataset (TBC).
             # e.g. 'realm' and 'driving_ensemble' in the query below are of that kind
@@ -223,6 +223,18 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
             assert isinstance(params['project'],list)
             if len(params['project'])>0:
                 project=select_project(params['project'])
+
+    # Hack
+    #
+    # 'version' have many predefined values from above queries, but shouldn't.
+    # This is because of the way solar query works (TBC).
+    #
+    # To fix the problem, we remove 'version' (fetched from previous queries).
+    # 'version' will be added by the get_one_file() method below as a FREE-parameter.
+    #
+    # Note: the same problem may occur for other search-api parameter
+    #
+    del params['version']
 
     # Third pass to fetch file attributes which can also be used as search criterias (e.g. title). TAG543534563
     #
