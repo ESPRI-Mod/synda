@@ -42,7 +42,7 @@ def run(selections,args):
             continue
 
         try:
-            sdlog.info("SDUPGRAD-003","Process %s.."%selection.filename,stderr=True)
+            sdlog.info("SDUPGRAD-003","Process %s.."%selection.filename,stdout=True)
             install(args,selection)
         except sdexception.IncorrectParameterException,e:
             sdlog.error("SDUPGRAD-004","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
