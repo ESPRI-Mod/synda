@@ -392,7 +392,10 @@ strip_dot_progress ()
 {
 
     # remove progress lines from wget output to prevent exceeding maximum single argument size (i.e. when storing wget output into 'wget_errmsg' variable)
-    grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script'
+    grep -v -F 'K .......... ..........'
+
+    # previous version contained some comment, but was removed as it looks ugly in processes list (see TAG5K43L4KLL)
+    #grep -v -F 'K .......... ..........' | sed '/^Saving to: /a \\nDISPLAY BELOW IS NORMAL: wget progress has been stripped by sdget.sh script'
 
 }
 
