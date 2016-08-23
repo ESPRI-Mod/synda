@@ -118,6 +118,14 @@ if __name__ == '__main__':
     if args.subcommand in sdtsaction.actions.keys():
         import syndautils
 
+        # hack to explode id in individual facets (experimental)
+        if args.explode:
+            if len(args.parameter)>0:
+                id_=args.parameter[0]
+                delim='/' if '/' in id_ else '.'
+                li=id_.split(delim)+args.parameter[1:] # this allow to add other parameter after id e.g. 'synda search <master_id> <version>'
+                args.parameter=li
+
         stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default)
 
 
