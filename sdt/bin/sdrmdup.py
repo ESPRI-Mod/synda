@@ -25,6 +25,7 @@ import sdconst
 import sdprint
 import sdpostpipelineutils
 import sdlmattrfilter
+import sdpipelineprocessing
 
 def run(metadata,functional_id_keyname):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,'data_node']) # create light list with needed columns only not to overload system memory
@@ -32,7 +33,8 @@ def run(metadata,functional_id_keyname):
     # list of dict => dict (id=>bool)
     seen=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata)
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove,functional_id_keyname,seen)
+    po=sdpipelineprocessing.ProcessingObject(remove,functional_id_keyname,seen)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     return metadata
 

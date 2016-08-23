@@ -60,7 +60,8 @@ def run(metadata):
     # at this point, 'score' table is in the form: [(id,dn)]=False
 
     # final filtering (come back to files list)
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_nearest_file,functional_id_keyname,score)
+    po=sdpipelineprocessing.ProcessingObject(keep_nearest_file,functional_id_keyname,score)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     return metadata
 

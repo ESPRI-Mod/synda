@@ -40,7 +40,8 @@ def run(metadata,functional_id_keyname):
 
     sdlog.info("SYNDRMDR-002","Perform duplicate and replicate suppression..")
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove,functional_id_keyname,seen)
+    po=sdpipelineprocessing.ProcessingObject(remove,functional_id_keyname,seen)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     return metadata
 

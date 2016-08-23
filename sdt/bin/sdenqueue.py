@@ -61,14 +61,16 @@ def run(metadata):
         sdlog.info("SDENQUEU-102","Add insertion_group_id..")
 
         insertion_group_id=sdsqlutils.nextval('insertion_group_id','history') # this is uniq identifier for all inserted files during this run
-        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_insertion_group_id,insertion_group_id)
+        po=sdpipelineprocessing.ProcessingObject(add_insertion_group_id,insertion_group_id)
+        metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
         if sdconfig.progress:
             sdprogress.ProgressThread.start(sleep=0.1,running_message='',end_message='') # spinner start
 
         sdlog.info("SDENQUEU-103","Insert files and datasets..")
 
-        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_files)
+        po=sdpipelineprocessing.ProcessingObject(add_files)
+        metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
         sdlog.info("SDENQUEU-104","Fill timestamp..")
 

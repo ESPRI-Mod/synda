@@ -49,7 +49,8 @@ def run(metadata):
     count=metadata.count()
 
     if count>0:
-        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,delete)
+        po=sdpipelineprocessing.ProcessingObject(delete)
+        metadata=sdpipelineprocessing.run_pipeline(metadata,po)
         sddb.conn.commit() # final commit (we do all update in one transaction).
 
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,selection_filename)

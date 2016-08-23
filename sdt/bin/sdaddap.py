@@ -32,7 +32,8 @@ def run(o,attached_parameters):
 
     if isinstance(o,sdtypes.Metadata):
 
-        o=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,o,add_attached_parameters,attached_parameters)
+        po=sdpipelineprocessing.ProcessingObject(add_attached_parameters,attached_parameters)
+        o=sdpipelineprocessing.run_pipeline(o,po)
 
     elif isinstance(o,sdtypes.Response):
 

@@ -14,14 +14,26 @@
 import sdapp
 import sdtypes
 import sdlog
+import sdconst
 
-def run_pipeline(io_mode,metadata,f,*args,**kwargs): # FIXME: add default value for io_mode
+class ProcessingObject(object):
+    def __init__(self,f,*args,**kwargs):
+        self.f=f # note: this func must take files list as first argument (i.e. chunk).
+        self.args=args # note: this do not contain the first argument of f. It will be set automatically during processing (see below).
+        self.kwargs=kwargs
+
+def run_pipeline(metadata,po,io_mode=sdconst.PROCESSING_FETCH_MODE_GENERATOR):
     """
     Note
         Beware: metadata input argument is modified in this func !
         (you have to make a copy before calling this func if you want
         to keep original data)
     """
+
+    # alias
+    f=po.f
+    args=po.args
+    kwargs=po.kwargs
 
     sdlog.debug("SYNDPIPR-001","Start chunk loop (files-count=%d)"%metadata.count())
 

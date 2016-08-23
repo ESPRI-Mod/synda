@@ -33,7 +33,8 @@ def run(squeries,metadata,parallel):
 
     sdlog.info("SYNDABTI-306","Set missing timestamp..")
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,add_dataset_timestamp,datasets_timestamps)
+    po=sdpipelineprocessing.ProcessingObject(add_dataset_timestamp,datasets_timestamps)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     return metadata
 

@@ -43,7 +43,8 @@ def run(args):
 
 
     statuses=sdstatutils.init_table()
-    sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,sdstatutils.get_statuses,statuses)
+    po=sdpipelineprocessing.ProcessingObject(sdstatutils.get_statuses,statuses)
+    sdpipelineprocessing.run_pipeline(metadata,po)
 
 
     total=sdstatutils.get_total(statuses)

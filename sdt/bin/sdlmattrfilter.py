@@ -21,7 +21,8 @@ import sdpipelineprocessing
 
 def run(metadata,attrs_to_keep):
     metadata_cpy=metadata.copy() # prevent modify original data
-    light_metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata_cpy,attribute_filter,attrs_to_keep)
+    po=sdpipelineprocessing.ProcessingObject(attribute_filter,attrs_to_keep)
+    light_metadata=sdpipelineprocessing.run_pipeline(metadata_cpy,po)
     return light_metadata
 
 def attribute_filter(files,kept_attrs):

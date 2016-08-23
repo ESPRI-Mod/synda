@@ -95,7 +95,8 @@ def post_pipeline(metadata,mode=None):
 
     sdlog.info("SDPIPELI-004","Start main pipeline")
 
-    metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,main_pipeline,mode)
+    po=sdpipelineprocessing.ProcessingObject(main_pipeline,mode)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     sdlog.info("SDPIPELI-006","Main pipeline completed")
 

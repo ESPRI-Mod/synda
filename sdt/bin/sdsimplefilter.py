@@ -19,9 +19,11 @@ import sdpipelineprocessing
 
 def run(metadata,filter_name,filter_value,mode):
     if mode=='keep':
-        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,keep_matching_files,filter_name,filter_value)
+        po=sdpipelineprocessing.ProcessingObject(keep_matching_files,filter_name,filter_value)
+        metadata=sdpipelineprocessing.run_pipeline(metadata,po)
     elif mode=='remove':
-        metadata=sdpipelineprocessing.run_pipeline(sdconst.PROCESSING_FETCH_MODE_GENERATOR,metadata,remove_matching_files,filter_name,filter_value)
+        po=sdpipelineprocessing.ProcessingObject(remove_matching_files,filter_name,filter_value)
+        metadata=sdpipelineprocessing.run_pipeline(metadata,po)
     else:
         raise SDException("SDSIMPLF-002","Incorrect mode (%s)"%mode)
 
