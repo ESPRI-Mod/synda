@@ -125,7 +125,7 @@ def run_soft_tasks():
 
     sdtask.delete_transfers()
 
-    if sdconfig.config.get('module','post_processing')=='1':
+    if sdconfig.config.getboolean('module','post_processing'):
         sdtask.process_async_event()
 
 @sdprofiler.timeit
