@@ -142,6 +142,28 @@ def get_metrics(group_,metric,project_,dry_run=False):
 
     return li
 
+def get_download_speed_over_time():
+    li=[]
+
+    q="""
+      select
+        datetime(
+                cast(   
+                        (   
+                            strftime('%s', start_date) /* cast date to timestamp */
+                            / (24*60*60) /* time mark every 24 hours */
+                        )
+                as int ) /* round (i.e. remove decimal. This is where is the core intelligence of this query) */
+            * (24*60*60), /* revert (without the decimal part, of course) */
+        'unixepoch') interval, /* revert */
+        avg(rate) rate_by_day
+      from file
+      where status in ('done')
+      group by interval order by interval
+      """
+
+    return li
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
