@@ -46,6 +46,17 @@ Default: 1
 
 --------------------------------------------------------
 
+### module.download
+
+If true, download files from ESGF. To use synda in discovery or post-processing
+mode only, set this parameter to false.
+
+Type: boolean
+
+Default: true
+
+--------------------------------------------------------
+
 ### module.post_processing
 
 If true, send download completion events to the post-processing module.
