@@ -220,7 +220,7 @@ config=sdcfloader.load(configuration_file,credential_file,user_configuration_fil
 openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
-download_enabled=config.getboolean('download','download_enabled')
+download=config.getboolean('module','download')
 
 selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
