@@ -325,12 +325,12 @@ certdirprefix=sdconfig.tmp_folder if sdconfig.system_pkg_install else os.environ
 certificate_file='%s/.esg/credentials.pem' % certdirprefix
 
 # sdt/conf/credentails.conf
-globus_username = sdconfig.config.get('globus', 'username')
-globus_password = sdconfig.config.get('globus', 'password')
+globus_username = sdconfig.config.get('globustransfer', 'username')
+globus_password = sdconfig.config.get('globustransfer', 'password')
 
 # sdt/conf/sdt.conf
-dst_endpoint = sdconfig.config.get('globus', 'destination_endpoint')
-endpoints_filepath = sdconfig.config.get('globus', 'esgf_endpoints')
+dst_endpoint = sdconfig.config.get('globustransfer', 'destination_endpoint')
+endpoints_filepath = sdconfig.config.get('globustransfer', 'esgf_endpoints')
 if endpoints_filepath:
     globus_endpoints = LocalEndpointDict(endpoints_filepath).endpointDict()
 

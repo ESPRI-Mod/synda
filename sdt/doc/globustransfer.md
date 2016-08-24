@@ -28,7 +28,7 @@ Then use one of the methods below to install the globus module
 
 ### sdt/conf/credentials.conf
 
-    [globus]
+    [globustransfer]
     username=
     password=
 
@@ -37,7 +37,7 @@ Then use one of the methods below to install the globus module
     [module]
     globustransfer=1
 
-    [globus]
+    [globustransfer]
     destination_endpoint = destination#endpoint
     esgf_endpoints = /esg/config/esgf_endpoints.xml
 
