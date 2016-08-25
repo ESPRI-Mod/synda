@@ -119,6 +119,7 @@ if __name__ == '__main__':
         import syndautils
 
         # hack to explode id in individual facets (experimental)
+        if args.subcommand=='search':
         if args.explode:
             if len(args.parameter)>0:
                 id_=args.parameter[0]
