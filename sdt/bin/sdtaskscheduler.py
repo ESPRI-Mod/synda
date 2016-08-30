@@ -52,24 +52,13 @@ def terminate(signal,frame):
     import psutil
     parent = psutil.Process(os.getpid())
 
-    # NEW WAY
-    # see TAG54353543DFDSFD for info
-    #
+    # see TAG54353543DFDSFD for info regarding this block.
     if hasattr(parent, 'get_children'):
         for child in parent.get_children(True):
-            if child.is_running():
-                child.terminate()
+            resilient_terminate(child)
     else:
         for child in parent.children(True):
-            if child.is_running():
-                child.terminate()
-
-    # OLD
-    """
-    for child in parent.get_children(True):
-        if child.is_running():
-            child.terminate()
-    """
+            resilient_terminate(child)
 
 def cleanup_running_transfer():
     """This handle zombie cases (transfers with 'running' status, but not running).
@@ -90,6 +79,19 @@ def cleanup_running_transfer():
 
         t.status=sdconst.TRANSFER_STATUS_WAITING
         sdfiledao.update_file(t)
+
+def resilient_terminate(child):
+    """This func terminate the child and inhibits NoSuchProcess exception if any."""
+
+    import psutil
+
+    if child.is_running():
+        try:
+            child.terminate()
+        except psutil.NoSuchProcess as e:
+            # this may occurs because of race condition. See TAGGFJDGKDF for more info.
+
+            pass
 
 def start_watchdog():
     """Starting download processes watchdog."""
