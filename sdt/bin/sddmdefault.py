@@ -144,7 +144,7 @@ def end_of_transfer(tr):
         # all running transfers are killed, or when wget are 'stalled'
         # and killed by watchdog)
         
-        sdlog.info("SDDMDEFA-108","%s"%(tr.error_msg,))
+        sdlog.info("SDDMDEFA-108","%s url=%s file_id=%d"%(tr.error_msg,tr.url,tr.file_id))
         #sdlog.info("SDDMDEFA-104","Transfer marked for retry (%s)"%str(tr))
     else:
         sdlog.info("SDDMDEFA-102","Transfer failed (%s)"%str(tr))
