@@ -106,6 +106,10 @@ LOGFILE_FEEDER='discovery.log'
 LOGFILE_CONSUMER='transfer.log'
 LOGFILE_DOMAIN='domain.log'
 
+CHECKSUM_TYPE_MD5='md5'
+CHECKSUM_TYPE_SHA256='sha256'
+CHECKSUM_TYPES=[CHECKSUM_TYPE_MD5,CHECKSUM_TYPE_SHA256]
+
 
 # Maximum files number returned by one search-api call.
 #
