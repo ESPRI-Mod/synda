@@ -33,8 +33,8 @@ def watch():
     while True:
         new_processes={}
 
-        # 5 mn sleep (exit event aware)
-        for i in range(5):
+        # 10 mn sleep (exit event aware)
+        for i in range(10):
             if quit==1:
                 break
             for i in range(6):
