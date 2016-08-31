@@ -61,11 +61,13 @@ def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=Tru
 
     return stream # aka facets_groups
 
-def file_full_search(args):
+def file_full_search(args,stream=None):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
     import sdsearch,sdlog,sdhistory,sdstream
 
-    stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
+    if stream is None:
+        stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
+
     force_type(stream,sdconst.SA_TYPE_FILE) # type is always SA_TYPE_FILE when we are here
 
 
