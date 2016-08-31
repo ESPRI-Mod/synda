@@ -46,7 +46,7 @@ def populate_selection_transfer_junction():
             for us in get_Selections():
 
                 # debug
-                #print "%s<=>%s"%(t.getTransferID(),us.getSelectionID())
+                #print "%s<=>%s"%(t.get_transfer_id(),us.get_selection_id())
 
                 if us.contains(t):
 
