@@ -128,8 +128,36 @@ class Download():
 
             # Set status
             if killed:
-                tr.status=sdconst.TRANSFER_STATUS_WAITING
-                tr.error_msg="Error occurs during download (killed). Transfer marked for retry."
+
+                # OLD WAY
+                #tr.status=sdconst.TRANSFER_STATUS_WAITING
+                #tr.error_msg="Error occurs during download (killed). Transfer marked for retry."
+
+                # NEW WAY
+                #
+                # We do not switch to 'waiting' anymore in this case, because
+                # most often, process is killed by the watchdog for good
+                # reason (e.g. the transfer process is frozen because of a
+                # non-fixable server side problem).
+                #
+                # If we set to 'waiting' here, it will be retried for ever
+                # without ending, causing synda to never complete a download
+                # task (download task here means all files added and marked for
+                # download  during a discovery step, e.g. 300 To of files).
+                #
+                # The downside of this new way of doing is that if the process
+                # has been killed for bad reason (sudden reboot, watchdog kills
+                # it because it was too slow or because of a temporary server
+                # failure, etc..), then it will not be automatically retried
+                # and will requires manual intervention.
+                #
+                # To solve this later problem, a high level manual retry system
+                # must be implemented (directly in synda, or using crontab).
+                #
+                tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.error_msg="Download process has been killed"
+
+                sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
                 tr.error_msg="Error occurs during download."
