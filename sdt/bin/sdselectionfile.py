@@ -52,43 +52,43 @@ def edit_selection(file):
 
 def add_selection(us):
     # compute selection checksum from scratch
-    l__file_checksum=computechecksum(us.getselectionfilefullpath())
+    l__file_checksum=compute_checksum(us.get_selection_file_full_path())
 
-    if not existsSelection(us):
+    if not exists_selection(us):
         # add selection in database if missing
 
-        us.setChecksum(l__file_checksum)
-        us.setStatus(sdconst.SELECTION_STATUS_NEW)
-        us.setFullScan(True)
+        us.set_checksum(l__file_checksum)
+        us.set_status(sdconst.SELECTION_STATUS_NEW)
+        us.set_fullscan(True)
 
         insertSelection(us) # warning: this modify us object (set PK)
 
     else:
         # selection already in database
 
-        from_db_us=fetchselection(us.getFilename()) # retrieve us from DB
-        us.setSelectionID(from_db_us.getSelectionID())                  # copy DB id
+        from_db_us=fetch_selection(us.get_filename()) # retrieve us from DB
+        us.set_selection_id(from_db_us.get_selection_id())                  # copy DB id
 
         # check if same checksums
-        if l__file_checksum==from_db_us.getChecksum():
+        if l__file_checksum==from_db_us.get_checksum():
             # same checksum
 
             # retrieve status
-            us.setStatus(from_db_us.getStatus())
-            us.setChecksum(from_db_us.getChecksum())
+            us.set_status(from_db_us.get_status())
+            us.set_checksum(from_db_us.get_checksum())
 
-            if us.getStatus()==sdconst.SELECTION_STATUS_NORMAL:
+            if us.get_status()==sdconst.SELECTION_STATUS_NORMAL:
 
                 # nothing to do here (let (a) and (b) decide if we need fullscan)
                 pass
 
-            elif us.getStatus()==sdconst.SELECTION_STATUS_MODIFIED:
+            elif us.get_status()==sdconst.SELECTION_STATUS_MODIFIED:
 
-                us.setFullScan(True)
+                us.set_fullscan(True)
 
-            elif us.getStatus()==sdconst.SELECTION_STATUS_NEW:
+            elif us.get_status()==sdconst.SELECTION_STATUS_NEW:
 
-                us.setFullScan(True)
+                us.set_fullscan(True)
 
             else:
 
@@ -98,31 +98,31 @@ def add_selection(us):
             # same checksum
             # checksum differ
 
-            sdlog.info("SYNDASEL-197","%s selection has been modified (marked for fullscan)"%us.getFilename())
+            sdlog.info("SYNDASEL-197","%s selection has been modified (marked for fullscan)"%us.get_filename())
 
 
-            us.setChecksum(l__file_checksum)                  # update checksum
-            us.setStatus(sdconst.SELECTION_STATUS_MODIFIED) # update status
+            us.set_checksum(l__file_checksum)                  # update checksum
+            us.set_status(sdconst.SELECTION_STATUS_MODIFIED) # update status
 
-            updateselection(us)
+            update_selection(us)
 
     # add selection in selection list
     # TODO
-    _selections[us.getFilename()]=us
+    _selections[us.get_filename()]=us
 
 def bind_file_to_selection():
     # update junction table
 
     try:
-        sddao.insertselectiontransferjunction(file,self._conn)
+        sddao.insert_selection_transfer_junction(file,self._conn)
     except Exception,e:
-        self.log("SYNDATF-044","fatal error (selection_id=%s,transfer_id=%i)"%(u_s.getSelectionID(),file.getTransferID()))
+        self.log("SYNDATF-044","fatal error (selection_id=%s,transfer_id=%i)"%(u_s.get_selection_id(),file.get_transfer_id()))
         raise
 
 def set_selection(selection_filenames):
     """Load selections."""
 
-    if selection_filenames<>None:
+    if selection_filenames is not None:
         # load selections specified on CLI (using "-t" option)
         
         for filename in selection_filenames:
@@ -147,13 +147,13 @@ def selection_builder(filename):
         raise SDException("SYNDATSEL-099","file not found: %s (use \"-l\" option to list available selections)"%fullpath_file)
 
     # create selection object (from file)
-    us=Selection(filename=filename,logger=getLogger())
+    us=Selection(filename=filename,logger=get_logger())
 
     return us
 
-def is_dataset_inside_selections(verylightdatasetid):
+def is_dataset_inside_selections(very_light_dataset_id):
     for us in _selections.values():
-        if us.is_dataset_inside_selection(verylightdatasetid):
+        if us.is_dataset_inside_selection(very_light_dataset_id):
             return True # found it
 
     return False # not found in any selections
@@ -161,11 +161,11 @@ def is_dataset_inside_selections(verylightdatasetid):
 def reset():
     """Mark all selections as done (aka "normal", "complete"..) and set the checksum."""
     for filename in get_selection_file_list():
-        us=Selection(filename=filename,logger=getLogger())
-        us.setStatus(sdconst.SELECTION_STATUS_NORMAL)
-        l__checksum=compute_checksum(us.getSelectionFileFullPath())
-        us.setChecksum(l__checksum)
-        updateselection(us)
+        us=Selection(filename=filename,logger=get_logger())
+        us.set_status(sdconst.SELECTION_STATUS_NORMAL)
+        l__checksum=compute_checksum(us.get_selection_file_full_path())
+        us.set_checksum(l__checksum)
+        update_selection(us)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
