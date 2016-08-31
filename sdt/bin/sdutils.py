@@ -163,18 +163,20 @@ def parameter_to_query(parameter):
 
     return query
 
-def compute_checksum(file_fullpath,checksum_type="md5",blocksize=(1024*64)):
+def compute_checksum(file_fullpath,checksum_type=sdconst.CHECKSUM_TYPE_MD5,blocksize=(1024*64)):
+
+    if checksum_type not in sdconst.CHECKSUM_TYPES:
+        raise SDException("SYDUTILS-422","incorrect checksum_type (%s,%s)"%(file_fullpath,checksum_type))
+
     with open(file_fullpath, mode='rb') as f:
 
         d=None
-        if checksum_type=="md5":
+        if checksum_type==sdconst.CHECKSUM_TYPE_MD5:
             d = hashlib.md5()
-        elif checksum_type=="MD5":
-            d = hashlib.md5()
-        elif checksum_type in ('SHA256','sha256','SHA-256'):
+        elif checksum_type==sdconst.CHECKSUM_TYPE_SHA256:
             d = hashlib.sha256()
         else:
-            raise SDException("SYDUTILS-422","incorrect checksum_type (%s,%s)"%(file_fullpath,checksum_type))
+            assert False
 
         for buf in iter(partial(f.read, blocksize), b''):
             d.update(buf)
