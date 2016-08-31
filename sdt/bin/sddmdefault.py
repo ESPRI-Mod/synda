@@ -133,7 +133,7 @@ class Download():
                 #tr.status=sdconst.TRANSFER_STATUS_WAITING
                 #tr.error_msg="Error occurs during download (killed). Transfer marked for retry."
 
-                # NEW WAY
+                # NEW WAY (TAG4JK4JJJ4454)
                 #
                 # We do not switch to 'waiting' anymore in this case, because
                 # most often, process is killed by the watchdog for good
