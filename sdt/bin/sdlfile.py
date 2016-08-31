@@ -34,7 +34,7 @@ def get_files(stream=None,parameter=None,dry_run=False):
 
     files=sdlsearch.run(stream=stream,parameter=parameter,dry_run=dry_run)
 
-    return files
+    return files # returns list of File object
 
 def get_file(stream=None,dry_run=False):
     files=get_files(stream=stream,dry_run=dry_run)
