@@ -19,9 +19,35 @@ import sddelete
 import sddeletefile
 import sddeletedataset
 import sdoperation
+import sdtypes
+import syndautils
 
 def run(args):
-    import syndautils
+    run_remote(args)
+
+def run_local(args):
+    import sdlfile
+
+    syndautils.check_daemon()
+
+    try:
+        files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
+
+        if len(files)==0:
+            raise sdexception.EmptySelectionException()
+
+        # transform object to dict (needed as remove_helper() expect list of dict, not list of File)
+        files=[f.__dict__ for f in files]
+
+        metadata=sdtypes.Metadata(files=files)
+    except sdexception.EmptySelectionException, e:
+        print_stderr('No packages will be installed, upgraded, or removed.')
+        return 0
+
+    if not args.dry_run:
+        remove_helper(args,metadata)
+
+def run_remote(args):
 
     syndautils.check_daemon()
 
@@ -32,42 +58,45 @@ def run(args):
         return 0
 
     if not args.dry_run:
-        import humanize, sdsimplefilter, sdconst, sdutils
+        remove_helper(args,metadata)
 
-        # filtering
+def remove_helper(args,metadata):
+    import humanize, sdsimplefilter, sdconst, sdutils
 
-        metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
-        metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_DELETE,'remove') # maybe not needed as we now do immediate delete
+    # filtering
 
-        count_delete=metadata.count()
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'remove')
+    metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_DELETE,'remove') # maybe not needed as we now do immediate delete
 
-        metadata_done=sdsimplefilter.run(metadata.copy(),'status',sdconst.TRANSFER_STATUS_DONE,'keep')
-        size_delete=metadata_done.size
+    count_delete=metadata.count()
 
-        if count_delete>0:
+    metadata_done=sdsimplefilter.run(metadata.copy(),'status',sdconst.TRANSFER_STATUS_DONE,'keep')
+    size_delete=metadata_done.size
 
-            print_stderr('%i file(s) will be removed.'%count_delete)
-            print_stderr('After this operation, %s of disk space will be freed.'%humanize.naturalsize(size_delete,gnu=False))
+    if count_delete>0:
 
-            # ask user for confirmation
-            interactive=not args.yes
-            if interactive:
-                if sdutils.query_yes_no('Do you want to continue?', default="no"):
-                    suppression_confirmed=True
-                else:
-                    print_stderr('Abort.')
-                    return 1
-            else:
+        print_stderr('%i file(s) will be removed.'%count_delete)
+        print_stderr('After this operation, %s of disk space will be freed.'%humanize.naturalsize(size_delete,gnu=False))
+
+        # ask user for confirmation
+        interactive=not args.yes
+        if interactive:
+            if sdutils.query_yes_no('Do you want to continue?', default="no"):
                 suppression_confirmed=True
-
-            # perform deletion
-            if suppression_confirmed:
-                remove(metadata)
-                return 0
-
+            else:
+                print_stderr('Abort.')
+                return 1
         else:
-            print_stderr('Nothing to delete.')
+            suppression_confirmed=True
+
+        # perform deletion
+        if suppression_confirmed:
+            remove(metadata)
             return 0
+
+    else:
+        print_stderr('Nothing to delete.')
+        return 0
 
 def remove(metadata):
 
