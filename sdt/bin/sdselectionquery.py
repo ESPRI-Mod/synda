@@ -17,7 +17,7 @@ from sdexception import SDException
 def get_selection_files_list(self,us):
     li=[]
     c = self._conn.cursor()
-    c.execute("select t.local_path local_path from selection__transfer ust,transfer t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.getselectionid(),))
+    c.execute("select t.local_path local_path from selection__transfer ust,transfer t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.get_selection_id(),))
     rs=c.fetchone()
     while rs!=None:
         li.append(rs["local_path"])
@@ -37,7 +37,7 @@ def get_selection_total_size(us):
     """
     size=0
     c = sddb.conn.cursor()
-    c.execute("select sum(t.size) size from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.getselectionid(),))
+    c.execute("select sum(t.size) size from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.get_selection_id(),))
     rs=c.fetchone()
     if rs is not None:
         size=rs[0]
@@ -97,7 +97,7 @@ def get_selection_stats(us,status):
     count=0
     c = sddb.conn.cursor()
 
-    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?",(status,us.getSelectionID(),))
+    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?",(status,us.get_selection_id(),))
 
     #self.log("SDSTAT-INF110",""%(,))
 

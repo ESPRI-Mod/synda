@@ -30,7 +30,7 @@ def set_checksum_when_empty(file):
 
     never used yet
     """
-    for f in sdrebuildquery.getfileswithoutchecksum():
+    for f in sdrebuildquery.get_files_without_checksum():
         l__checksum_type="md5"
         l__checksum=compute_checksum(f.get_full_local_path(),l__checksum_type)
 

@@ -147,7 +147,7 @@ def update_last_access_date():
         for t in transfers:
 
             # keep only "done" transfers
-            if t.getStatus() != sdconst.TRANSFER_STATUS_DONE:
+            if t.get_status() != sdconst.TRANSFER_STATUS_DONE:
                 continue
 
             # retrieve "last access date"

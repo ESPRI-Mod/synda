@@ -38,7 +38,7 @@ def change_priority(new_priority,conn=sddb.conn):
     """Change priority value for already existing transfer."""
     c=conn.cursor()
     sdlog.info("SDMODIFQ-002","updating %s selection (new priority=%s)"%(u_s.filename,new_priority))
-    res=c.execute("UPDATE file SET priority = ? WHERE EXISTS (SELECT 1 FROM selection__file WHERE file.file_id = selection__file.file_id AND selection__file.selection_id = ?)",(new_priority,u_s.getSelectionID(),))
+    res=c.execute("UPDATE file SET priority = ? WHERE EXISTS (SELECT 1 FROM selection__file WHERE file.file_id = selection__file.file_id AND selection__file.selection_id = ?)",(new_priority,u_s.get_selection_id(),))
     modified_files_count=c.rowcount
     conn.commit()
     c.close()

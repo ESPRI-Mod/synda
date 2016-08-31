@@ -114,7 +114,7 @@ def insert_selection(us,conn=sddb.conn):
 
 def update_selection(us,conn=sddb.conn):
     c = conn.cursor()
-    c.execute("update selection set checksum=?, status=?  where filename=?",(us.getChecksum(),us.getStatus(),us.getFilename()))
+    c.execute("update selection set checksum=?, status=?  where filename=?",(us.get_checksum(),us.get_status(),us.get_filename()))
     c.close()
     conn.commit()
 
@@ -122,7 +122,7 @@ def update_selection(us,conn=sddb.conn):
 
 def insert_selection_file_junction(o,us,commit=True,conn=sddb.conn):
     c = conn.cursor()
-    c.execute( "insert into selection__file (file_id,selection_id) values (?,?)",(o.file_id,us.getSelectionID()))
+    c.execute( "insert into selection__file (file_id,selection_id) values (?,?)",(o.file_id,us.get_selection_id()))
     c.close()
 
 def truncate_selection_transfer_junction(conn=sddb.conn):
@@ -137,13 +137,13 @@ def truncate_orphan_tables(conn=sddb.conn):
     conn.commit()
 
 def insert_transfer_without_selection(t,conn=sddb.conn):
-    # no commit here (will be committed in populateSelectionTransferJunction()
+    # no commit here (will be committed in populateselectiontransferjunction()
     c = conn.cursor()
     c.execute("insert into transfer_without_selection (file_id) values (?)",(t.file_id,))
     c.close()
 
 def insert_transfer_without_dataset(t,conn=sddb.conn):
-    # no commit here (will be committed in populateSelectionTransferJunction()
+    # no commit here (will be committed in populateselectiontransferjunction()
     c = conn.cursor()
     c.execute("insert into transfer_without_dataset (file_id) values (?)",(t.file_id,))
     c.close()

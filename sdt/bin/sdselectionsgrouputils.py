@@ -108,9 +108,9 @@ def reset_selections_status():
     DEV.
     """
     for u_s in get_selections():
-        if u_s.getStatus() in (sdconst.SELECTION_STATUS_NEW,sdconst.SELECTION_STATUS_MODIFIED):
-            u_s.setStatus(sdconst.SELECTION_STATUS_NORMAL)
-            updateSelection(u_s)
+        if u_s.get_status() in (sdconst.SELECTION_STATUS_NEW,sdconst.SELECTION_STATUS_MODIFIED):
+            u_s.set_status(sdconst.SELECTION_STATUS_NORMAL)
+            update_selection(u_s)
 
 # module init.
 
