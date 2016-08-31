@@ -377,6 +377,7 @@ def get(args):
     elif len(urls)>0:
         # url(s) found in stream: search-api operator not needed (download url directly)
 
+        # TAGDSFDF432F
         if args.verify_checksum:
             print_stderr("To perform checksum verification, ESGF file identifier (e.g. title, id, tracking id..)  must be used instead of file url.")
             return 1
@@ -398,7 +399,7 @@ def get(args):
                                     args.force,
                                     http_client,
                                     local_path_prefix,
-                                    verify_checksum=args.verify_checksum,
+                                    verify_checksum=args.verify_checksum, # see above at TAGDSFDF432F
                                     network_bandwidth_test=args.network_bandwidth_test,
                                     debug=True,
                                     verbosity=args.verbosity,
