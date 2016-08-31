@@ -17,6 +17,8 @@ Example
 
 import string
 import sdapp
+import sdconst
+import sdexception
 
 def normalize_model_name(model_name):
     """Replace special characters with hyphen.
@@ -62,3 +64,14 @@ def normalize_model_name(model_name):
         normalized_mode_name=mode_name_without_special_character
 
     return normalized_mode_name
+
+def normalize_checksum_type(checksum_type):
+
+    if "md5" in checksum_type.lower():
+        return sdconst.CHECKSUM_TYPE_MD5
+    elif 'sha' in checksum_type.lower() and '256' in checksum_type:
+        return sdconst.CHECKSUM_TYPE_SHA256
+    else:
+        raise sdexception.UnknownChecksumType("SDNORMAL-001","Unknown checksum type (%s)"%(checksum_type,))
+
+    return checksum_type

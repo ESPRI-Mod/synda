@@ -53,6 +53,8 @@ class IncorrectVersionFormatException(SDException):
     pass
 class IncorrectParameterException(SDException):
     pass
+class UnknownChecksumType(SDException):
+    pass
 #
 class UnknownParameterNameException(IncorrectParameterException):
     pass
