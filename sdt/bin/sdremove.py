@@ -13,7 +13,7 @@
 
 import sys
 import argparse
-from sdtools import print_stderr
+from sdtools import print_stderr,print_stdout
 import sdexception
 import sddelete
 import sddeletefile
@@ -46,6 +46,10 @@ def run_local(args,stream):
 
         if len(files)==0:
             raise sdexception.EmptySelectionException()
+
+        if args.verbose:
+            for f in files:
+                print_stdout(f.local_path)
 
         # transform object to dict (needed as remove_helper() expect list of dict, not list of File)
         files=[f.__dict__ for f in files]

@@ -23,7 +23,7 @@ def add_lsearch_option(parser):
 
 def add_verbose_option(parser):
     # TODO: use this => parser.add_argument('--verbosity','-v', action='count', default=0)
-    parser.add_argument('--verbose',action='store_true',help='verbose mode')
+    parser.add_argument('--verbose',action='store_true',help='verbose mode') # '-v' not used to prevent collision
 
 def add_type_grp(parser):
     type_grp=parser.add_mutually_exclusive_group(required=False)
@@ -193,6 +193,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'remove',help='Remove dataset',example=sdcliex.remove())
     add_parameter_argument(subparser)
     add_ni_option(subparser)
+    add_verbose_option(subparser)
 
     subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Move to next replica',example=sdcliex.replica())
     add_action_argument(subparser,choices=['next'])
