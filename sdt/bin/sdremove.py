@@ -21,17 +21,28 @@ import sddeletedataset
 import sdoperation
 import sdtypes
 import syndautils
+import sdearlystreamutils
 
-def run(args):
-    run_remote(args)
+def run(args,stream):
+    if is_local(stream):
+        run_local(args,stream)
+    else:
+        run_remote(args,stream)
 
-def run_local(args):
+def is_local(stream):
+    li=sdearlystreamutils.get_facet_values_early(stream,'status')
+    if len(li)!=0:
+        return True
+    else:
+        return False
+
+def run_local(args,stream):
     import sdlfile
 
     syndautils.check_daemon()
 
     try:
-        files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
+        files=sdlfile.get_files(stream=stream,dry_run=args.dry_run)
 
         if len(files)==0:
             raise sdexception.EmptySelectionException()
@@ -47,12 +58,12 @@ def run_local(args):
     if not args.dry_run:
         remove_helper(args,metadata)
 
-def run_remote(args):
+def run_remote(args,stream):
 
     syndautils.check_daemon()
 
     try:
-        metadata=syndautils.file_full_search(args)
+        metadata=syndautils.file_full_search(args,stream)
     except sdexception.EmptySelectionException, e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
@@ -118,7 +129,7 @@ def remove(metadata):
     while count > 0:
         count=sddeletefile.delete_transfers(100)
 
-    # Third step is to remove orphan dataset
+    # Third step is to remove orphan dataset in local database
     sddeletedataset.purge_orphan_datasets()
 
     # Fourth step is to remove orphan folder.

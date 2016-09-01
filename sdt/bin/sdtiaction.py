@@ -446,8 +446,10 @@ def metric(args):
         sdmetric.print_rate(args.groupby,args.project,dry_run=args.dry_run)
 
 def remove(args):
-    import sdremove
-    return sdremove.run(args)
+    import sdremove,syndautils
+
+    stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
+    return sdremove.run(args,stream)
 
 def reset(args):
     import sddeletefile
