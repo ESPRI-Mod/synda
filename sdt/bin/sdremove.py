@@ -49,7 +49,8 @@ def run_local(args,stream):
 
         if args.verbose:
             for f in files:
-                print_stdout(f.local_path)
+                buf="file_id=%d, status=%s, local_path=%s, url=%s" % (f.file_id,f.status,f.get_full_local_path(),f.url)
+                print_stdout(buf)
 
         # transform object to dict (needed as remove_helper() expect list of dict, not list of File)
         files=[f.__dict__ for f in files]
