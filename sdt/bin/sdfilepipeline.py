@@ -34,6 +34,7 @@ import sdcomplete
 import sdprint
 import sdlog
 import sdstatusfilter
+import sdnormalizefattr
 import sdprotocol
 from sdexception import SDException
 
@@ -62,6 +63,8 @@ def run(**kw):
     #     - we will now remove those column downstream (but only for 'dump' action)
     #
     #files=sdreducecol.run(files)
+
+    files=sdnormalizefattr.run(files)
 
     files=sdprepare_file_attr.run(files)
     files=sdlocalpath.run(files)
