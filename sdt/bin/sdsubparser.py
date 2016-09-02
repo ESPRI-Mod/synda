@@ -206,6 +206,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     subparser.add_argument('-e','--explode',action='store_true',help=argparse.SUPPRESS) # explode id into individual facets (hidden option mainly used for debug)
     subparser.add_argument('-l','--limit',type=int,default=sdconst.DEFAULT_SEARCH_LIMIT,help=sdi18n.m0024)
+    subparser.add_argument('-m','--metadata_service',choices=['esgf_search_api','thredds_catalog'],help='Retrieve files list from given metadata service. Metadata service can be a file or an URI. Default is metadata service is esgf_search_api.')
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
     add_type_grp(subparser)
 
