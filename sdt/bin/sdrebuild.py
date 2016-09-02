@@ -21,6 +21,7 @@ import sdtimestamp
 import sdfields
 import sdlog
 import sddump
+import sdutils
 from sdprogress import SDProgressDot,SDProgressBar
 from sdexception import SDException
 
@@ -32,7 +33,7 @@ def set_checksum_when_empty(file):
     """
     for f in sdrebuildquery.get_files_without_checksum():
         l__checksum_type="md5"
-        l__checksum=compute_checksum(f.get_full_local_path(),l__checksum_type)
+        l__checksum=sdutils.compute_checksum(f.get_full_local_path(),l__checksum_type)
 
         f.checksum=l__checksum
         f.checksum_type=l__checksum_type

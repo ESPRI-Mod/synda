@@ -18,6 +18,7 @@ from subprocess import call
 import sdapp
 import sdlog
 import sdtools
+import sdutils
 from sdexception import SDException
 import sdconfig
 
@@ -52,7 +53,7 @@ def edit_selection(file):
 
 def add_selection(us):
     # compute selection checksum from scratch
-    l__file_checksum=compute_checksum(us.get_selection_file_full_path())
+    l__file_checksum=sdutils.compute_checksum(us.get_selection_file_full_path())
 
     if not exists_selection(us):
         # add selection in database if missing
@@ -163,7 +164,7 @@ def reset():
     for filename in get_selection_file_list():
         us=Selection(filename=filename,logger=get_logger())
         us.set_status(sdconst.SELECTION_STATUS_NORMAL)
-        l__checksum=compute_checksum(us.get_selection_file_full_path())
+        l__checksum=sdutils.compute_checksum(us.get_selection_file_full_path())
         us.set_checksum(l__checksum)
         update_selection(us)
 
