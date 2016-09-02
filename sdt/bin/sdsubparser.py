@@ -204,9 +204,9 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdcliex.search('synda search'))
     add_parameter_argument(subparser)
+    subparser.add_argument('-e','--explode',action='store_true',help=argparse.SUPPRESS) # explode id into individual facets (hidden option mainly used for debug)
     subparser.add_argument('-l','--limit',type=int,default=sdconst.DEFAULT_SEARCH_LIMIT,help=sdi18n.m0024)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
-    subparser.add_argument('-e','--explode',action='store_true',help=argparse.SUPPRESS) # explode id into individual facets (hidden option mainly used for debug)
     add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'selection',common_option=False,help='List selection files')
