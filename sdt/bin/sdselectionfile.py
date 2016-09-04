@@ -164,8 +164,8 @@ def reset():
     for filename in get_selection_file_list():
         us=Selection(filename=filename,logger=get_logger())
         us.set_status(sdconst.SELECTION_STATUS_NORMAL)
-        l__checksum=sdutils.compute_checksum(us.get_selection_file_full_path())
-        us.set_checksum(l__checksum)
+        cs=sdutils.compute_checksum(us.get_selection_file_full_path())
+        us.set_checksum(cs)
         update_selection(us)
 
 if __name__ == '__main__':
