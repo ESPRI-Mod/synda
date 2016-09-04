@@ -35,13 +35,15 @@ class DBPagination():
           This method is like get_files_batch(), but use pagination instead of using yield
         """
         c = self.conn.cursor()
+
         q="select %s from %s limit %d offset %d" % (self.columns,self.table,self.pagination_limit,self.pagination_offset)
         c.execute(q)
-
         results = c.fetchall()
+
         c.close()
-        return results
 
         self.pagination_offset+=self.pagination_block_size # move OFFSET for the next call
+
+        return results
 
 # init.
