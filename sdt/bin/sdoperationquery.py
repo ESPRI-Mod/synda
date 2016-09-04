@@ -58,7 +58,7 @@ def populate_selection_transfer_junction():
                 transfer_without_selection+=1
 
 
-        _conn.commit() # commit block of insertSelectionTransferJunction
+        _conn.commit() # commit block
 
         # display progress
         #if i%100==0:

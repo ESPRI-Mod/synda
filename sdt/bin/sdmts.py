@@ -202,7 +202,7 @@ class DatabaseStorage(Storage):
 
                 update_db(l__date,t.file_id)
 
-            sddb._conn.commit() # commit block of insertSelectionTransferJunction
+            sddb._conn.commit() # commit block
 
             files=dbpagination.get_files()
 
