@@ -21,6 +21,7 @@
 	- always print stacktrace when error occurs (ST_DEBUG env. var. is not used anymore).
 	- write yes/no confirmation message on stderr.
 	- prevent adding predefined values for 'version' facet in local cache.
+	- add checksum type normalization routine.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.
