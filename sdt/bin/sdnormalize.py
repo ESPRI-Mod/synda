@@ -67,11 +67,13 @@ def normalize_model_name(model_name):
 
 def normalize_checksum_type(checksum_type):
 
-    if "md5" in checksum_type.lower():
+    if checksum_type is None:
+        return None
+    elif "md5" in checksum_type.lower():
         return sdconst.CHECKSUM_TYPE_MD5
     elif 'sha' in checksum_type.lower() and '256' in checksum_type:
         return sdconst.CHECKSUM_TYPE_SHA256
+    elif checksum_type=='None':
+        return None
     else:
         raise sdexception.UnknownChecksumType("SDNORMAL-001","Unknown checksum type (%s)"%(checksum_type,))
-
-    return checksum_type
