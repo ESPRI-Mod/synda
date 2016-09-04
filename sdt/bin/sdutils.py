@@ -232,7 +232,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-b','--blocksize',type=int,default=(1024*64))
     parser.add_argument('-f','--file',required=True)
-    parser.add_argument('-t','--checksum_type',default='sha256')
+    parser.add_argument('-t','--checksum_type',default=sdconst.CHECKSUM_TYPE_SHA256)
     args = parser.parse_args()
 
     # test
