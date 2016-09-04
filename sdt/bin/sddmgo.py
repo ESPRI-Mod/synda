@@ -55,7 +55,7 @@ def transfers_end():
                     sdlog.error("SDDMGLOB-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
 
                 # retrieve local and remote checksum
-                checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5'
+                checksum_type=tr.checksum_type if tr.checksum_type is not None else sdconst.CHECKSUM_TYPE_MD5
                 local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
                 remote_checksum=tr.checksum # retrieve remote checksum
 

@@ -79,7 +79,7 @@ class Download():
                 # remote checksum exists
 
                 # compute local checksum
-                checksum_type=tr.checksum_type if tr.checksum_type is not None else 'md5' # arbitrary fallback to 'md5'
+                checksum_type=tr.checksum_type if tr.checksum_type is not None else sdconst.CHECKSUM_TYPE_MD5 # fallback to 'md5' (arbitrary)
                 local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
 
                 # compare local and remote checksum
