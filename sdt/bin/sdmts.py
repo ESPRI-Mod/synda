@@ -191,7 +191,7 @@ class DatabaseStorage(Storage):
                 yield li
 
     def get_chunks_PAGINATION(self):
-        dbpagination=DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,self.conn)
+        dbpagination=sddbpagination.DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,self.conn)
         dbpagination.reset()
 
         files=dbpagination.get_files()
