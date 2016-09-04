@@ -65,10 +65,11 @@ def get_files_pagination__reset():
 
 def get_files_pagination(conn=sddb.conn):
     """
-    this method is used to loop over all files (note that we use pagination here not to load all the rows in memory !!!)
+    this method is used to loop over all files (note that we use pagination here not to load all the rows in memory)
 
-    note
-      this method is like get_files_batch(), but use pagination instead of using yield
+    notes
+      - this method is like get_files_batch(), but use pagination instead of using yield
+      - with this method, it is possible to update record along the way
     """
     global pagination_offset
 
