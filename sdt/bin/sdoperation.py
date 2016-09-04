@@ -26,6 +26,7 @@ import sdutils
 import sddao
 import sddeletedataset
 import sdvariable
+import sdfiledao
 import sddb
 import sdproduct
 import sdevent
@@ -164,9 +165,9 @@ def update_last_access_date():
                 raise
 
             # set new date in DB
-            updatetransferlastaccessdate(l__date,t.file_id)
+            sdfiledao.update_transfer_last_access_date(l__date,t.file_id)
 
-        sddb._conn.commit() # commit block of insertSelectionTransferJunction
+        sddb._conn.commit() # commit block
         SDProgressDot.print_char(".")
         transfers=get_files_pagination()
 
