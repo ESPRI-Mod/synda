@@ -29,28 +29,19 @@ class DBPagination():
 
     def get_files(self):
         """
-        This method is used to loop over all files (note that we use pagination here not to load all the rows in memory !!!)
+        This method is used to loop over all files (note that we use pagination here not to load all the rows in memory)
 
         Note
           This method is like get_files_batch(), but use pagination instead of using yield
         """
-
-        files=[]
-
         c = self.conn.cursor()
         q="select %s from %s limit %d offset %d" % (self.columns,self.table,self.pagination_limit,self.pagination_offset)
         c.execute(q)
 
         results = c.fetchall()
-
-        for rs in results:
-            files.append(FIXME)
-
         c.close()
+        return results
 
-        # move OFFSET for the next call
-        self.pagination_offset+=self.pagination_block_size
-
-        return files
+        self.pagination_offset+=self.pagination_block_size # move OFFSET for the next call
 
 # init.
