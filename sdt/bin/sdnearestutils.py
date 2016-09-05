@@ -68,6 +68,10 @@ def domain_to_country_code(domain):
         country_code='US'
     elif ext == 'edu':
         country_code='US'
+    elif ext == 'net':
+        country_code='US'
+    elif ext == 'org':
+        country_code='US'
     elif ext == 'uk':
         # following this page => http://fr.wikipedia.org/wiki/ISO_3166-1
         # UK seems valid, but the module 'pycountry' doesn't support it,
