@@ -19,13 +19,15 @@ class DBPagination():
         self.conn=conn
         self.table=table
         self.columns=columns
+        self.pagination_block_size=chunksize
         self.pagination_offset=0
         self.pagination_limit=0
-        self.pagination_block_size=chunksize
+
+        self.reset()
 
     def reset(self):
-        self.pagination_limit=self.pagination_block_size
         self.pagination_offset=0
+        self.pagination_limit=self.pagination_block_size
 
     def get_files(self):
         """
