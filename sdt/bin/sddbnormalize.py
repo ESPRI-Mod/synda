@@ -9,34 +9,20 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""Contains database upgrade routines.
+"""Contains database normalization routines."""
 
-Note
-    This module is used by sddb, so do not import sddb here.
-"""
-
+import argparse
 import sdapp
 import sdnormalize
 import sdprogress
 
 def normalize_checksum_type(conn):
+    conn.create_function("NORMALIZE_CHECKSUM_TYPE", 1, sdnormalize.normalize_checksum_type)
+    conn.execute("UPDATE file set checksum_type=NORMALIZE_CHECKSUM_TYPE(checksum_type);")
 
-    dbpagination=DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,conn)
-    dbpagination.reset()
+if __name__ == '__main__':
+    import sddb # do not move at the top (this module is used by sddb module)
 
-    files=dbpagination.get_files()
-    while len(files)>0:
-        for t in files:
+    parser = argparse.ArgumentParser()
 
-            checksum_type=sdnormalize.normalize_checksum_type(t.checksum_type)
-            update_checksum_type(checksum_type,t.file_id)
-            update_db(l__date,t.file_id)
-
-        sddb._conn.commit() # commit block
-        conn.commit() # commit block
-        sdprogress.SDProgressDot.print_char(".")
-        transfers=get_files_pagination()
-
-        files=dbpagination.get_files()
-
-    sdlargequery.get_files_pagination__reset()
+    normalize_checksum_type(sddb.conn)

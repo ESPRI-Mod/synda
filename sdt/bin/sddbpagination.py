@@ -54,7 +54,7 @@ class DBPagination():
 # init.
 
 if __name__ == '__main__':
-    import sddb,sdnormalize
+    import sddb, sdnormalize # do not move sddb at the top (this module is not currently but may be used by sddb module)
 
     parser = argparse.ArgumentParser()
 
