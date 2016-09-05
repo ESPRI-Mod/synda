@@ -11,7 +11,10 @@
 
 """This module contains pagination mecanism to prevent using too much memory."""
 
+import argparse
 import sdapp
+import sdconst
+import sdprogress
 
 class DBPagination():
 
@@ -49,3 +52,22 @@ class DBPagination():
         return results
 
 # init.
+
+if __name__ == '__main__':
+    import sddb,sdnormalize
+
+    parser = argparse.ArgumentParser()
+
+    dbpagination=DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,sddb.conn)
+
+    files=dbpagination.get_files()
+    while len(files)>0:
+        for f in files:
+
+            # PAYLOAD
+            checksum_type=sdnormalize.normalize_checksum_type(f.checksum_type)
+            sddb.conn.execute("update file set checksum_type=? where file_id=?",(checksum_type,f.file_id))
+
+        conn.commit() # commit block
+        files=dbpagination.get_files() # next block
+        sdprogress.SDProgressDot.print_char(".")
