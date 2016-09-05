@@ -198,6 +198,18 @@ def file_search(args):
 
     files=sdrfile.get_files(stream=args.stream,dry_run=args.dry_run)
 
+    """
+    import sdearlystreamutils, sdconfig
+    if sdconfig.metadata_server_type=='apache_default_listing':
+        urls=sdearlystreamutils.get_facet_values_early(stream,'url')
+        if len(urls)==0:
+            # no url in stream
+
+            print_stderr("Incorrect argument: please specify an url")
+        else:
+            sdmtgrabber.get_files(stream=args.stream,dry_run=args.dry_run)
+    """
+
     if not args.dry_run:
         if len(files)==0:
             print_stderr("File not found")   
