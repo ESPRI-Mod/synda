@@ -13,6 +13,7 @@
 
 import sdapp
 import sdlog
+import sddbnormalize
 import sddbversionutils
 from sdexception import SDException
 
@@ -61,6 +62,8 @@ def upgrade_db(conn,current_db_version,new_db_version):
 # -- upgrade procs -- #
 
 def upgrade_35(conn):
+
+    sddbnormalize.normalize_checksum_type(conn)
 
     conn.execute("alter table history add column selection_file_checksum TEXT")
     conn.execute("alter table history add column selection_file TEXT")
