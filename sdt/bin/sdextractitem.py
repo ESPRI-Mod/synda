@@ -41,9 +41,9 @@ def run(facets_groups,key):
                 process_item(facets_group,identifier,key)
 
             elif len(li)>1:
-                # this case is not supported yet
 
-                pass
+                for identifier in li:
+                    process_item(facets_group,identifier,key)
 
     return facets_groups
 
@@ -86,8 +86,8 @@ def get_functional_identifiers(facets_group):
     li=[]
     for id_ in functional_identifiers:
         if id_ in facets_group:
-            v=sddquery.get_scalar(facets_group,id_)
-            li.append(v)
+            values=sddquery.get_list(facets_group,id_,default=[])
+            li.extend(values)
 
     return li
 
@@ -118,7 +118,10 @@ def process_item(facets_group,identifier,key):
         pass
 
     else:
-        facets_group[key]=[value]
+        if key not in facets_group:
+            facets_group[key]=[value]
+        else:
+            facets_group[key].append(value)
 
 # module init.
 
