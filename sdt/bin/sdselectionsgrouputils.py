@@ -98,7 +98,7 @@ def build_selection_list():
         except Exception, e:
             sdlog.error("SDSELGPU-001","Exception occured (%s)"%str(e))
 
-            raise SDException("SDSELGPU-001","Error occured whileloading '%s' selection file. See log for details."%file)
+            raise SDException("SDSELGPU-001","Error occured while loading '%s' selection file. See log for details."%file)
 
     return selections
 
