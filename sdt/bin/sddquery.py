@@ -73,7 +73,7 @@ def get_scalar(facets_group,name,default=None,type_=None):
     else:
         return default
 
-def get_list(facets_group,name):
+def get_list(facets_group,name,default=None):
     """
     Returns
         value as list
@@ -86,7 +86,7 @@ def get_list(facets_group,name):
         else:
             return [value]
     else:
-        return None
+        return default
 
 def is_empty(dquery):
     """This func return True if dquery if empty."""
