@@ -29,21 +29,8 @@ def run(facets_groups,key):
         if key not in facets_group:
             li=get_functional_identifiers(facets_group)
 
-            if len(li)==0:
-                # nothing to extract
-
-                pass
-
-            elif len(li)==1:
-
-                identifier=li[0]
-
+            for identifier in li:
                 process_item(facets_group,identifier,key)
-
-            elif len(li)>1:
-
-                for identifier in li:
-                    process_item(facets_group,identifier,key)
 
     return facets_groups
 
