@@ -45,6 +45,8 @@ def get_scalar(facets_group,name,default=None,type_=None):
     """
     Args
         type_: helper used to cast before returning the value.
+    Returns
+        value as scalar
     """
 
     # tricky code because scalar facet are stored as vector
@@ -70,6 +72,21 @@ def get_scalar(facets_group,name,default=None,type_=None):
         return casted_value
     else:
         return default
+
+def get_list(facets_group,name):
+    """
+    Returns
+        value as list
+    """
+    if name in facets_group:
+        value=facets_group[name]
+
+        if isinstance(value,list):
+            return value
+        else:
+            return [value]
+    else:
+        return None
 
 def is_empty(dquery):
     """This func return True if dquery if empty."""
