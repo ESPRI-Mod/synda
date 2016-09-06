@@ -30,8 +30,9 @@ def run(args,stream):
         run_remote(args,stream)
 
 def is_local(stream):
-    li=sdearlystreamutils.get_facet_values_early(stream,'status')
-    if len(li)!=0:
+    if ( sdearlystreamutils.exists_facet_value_early(stream,'status')
+            or sdearlystreamutils.exists_facet_value_early(stream,'insertion_group_id')
+            or sdearlystreamutils.exists_facet_value_early(stream,'sdget_status') ):
         return True
     else:
         return False

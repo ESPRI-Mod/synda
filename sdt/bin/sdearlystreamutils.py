@@ -38,6 +38,14 @@ def get_facet_value_early(orig_stream,name,extract_item=False):
     else:
         raise sdexception.TooMuchValueException()
 
+def exists_facet_value_early(orig_stream,name,extract_item=False):
+    li=get_facet_values_early(orig_stream,name,extract_item)
+
+    if len(li)==0:
+        return False
+    else:
+        return True
+
 def get_facet_values_early(orig_stream,name,extract_item=False):
     """Get facet values from a dqueries object at an early time (before any transformation of that object occured).
 
