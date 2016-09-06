@@ -38,18 +38,7 @@ def run(facets_groups,key):
 
                 identifier=li[0]
 
-                value=extract_item(identifier,key)
-
-                if value is None:
-                    # We come here for example with osb4MIPs project,
-                    # as model doesn't exist for Obs
-                    # (e.g. synda search obs4MIPs.PCMDI.CloudSat.mon.v1.cfadDbze94_obs4MIPs_CloudSat_L3_V2.0_20081101_20081130.nc -y)
-
-                    #print 'Cannot extract %s from functional identifier'%key
-                    pass
-
-                else:
-                    facets_group[key]=[value]
+                process_item(facets_group,identifier,key)
 
             elif len(li)>1:
                 # this case is not supported yet
@@ -116,6 +105,20 @@ def extract_variable_name_from_filename(filename):
         assert False
 
     return variable
+
+def process_item(facets_group,identifier,key):
+    value=extract_item(identifier,key)
+
+    if value is None:
+        # We come here for example with osb4MIPs project,
+        # as model doesn't exist for Obs
+        # (e.g. synda search obs4MIPs.PCMDI.CloudSat.mon.v1.cfadDbze94_obs4MIPs_CloudSat_L3_V2.0_20081101_20081130.nc -y)
+
+        #print 'Cannot extract %s from functional identifier'%key
+        pass
+
+    else:
+        facets_group[key]=[value]
 
 # module init.
 
