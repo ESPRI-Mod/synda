@@ -135,6 +135,8 @@ def remove(metadata):
     while count > 0:
         count=sddeletefile.delete_transfers(100)
 
+    print_stderr("Remove empty folders and files.. (it may take some time)")
+
     # Third step is to remove orphan dataset (METADATA)
     sddeletedataset.purge_orphan_datasets()
 
