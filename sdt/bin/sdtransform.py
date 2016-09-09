@@ -21,8 +21,13 @@ import sdpostpipelineutils
 import sdexception
 
 def run(files):
+    files=transform_url(files)
+    return files
 
-    url_replace=sdpostpipelineutils.get_attached_parameter(f,'url_replace')
+def transform_url(files):
+
+    url_replace=sdpostpipelineutils.get_attached_parameter__global(files,'url_replace')
+
     if url_replace is not None:
         (from_string,to_string)=parse_rule('url_replace',url_replace)
         for f in files:
