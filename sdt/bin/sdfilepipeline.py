@@ -25,6 +25,7 @@ import sdselectionfileutils
 import sdreducecol
 import sdreducerow
 import sdtimefilter
+import sdtransform
 import sdprepare_dataset_attr
 import sdprepare_file_attr
 import sdlocalpath
@@ -46,6 +47,7 @@ def run(**kw):
     files=sdremoveaggregation.run(files)
     files=sdprotocol.run(files)
     files=sdtimefilter.run(files)
+    files=sdtransform.run(files)
     files=sdprepare_dataset_attr.run(files)
     #files=sdcheck_dataset_template.run(files)
 

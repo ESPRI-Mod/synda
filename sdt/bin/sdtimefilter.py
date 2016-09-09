@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script keeps files in the given timeslice range."""
+"""This module keeps files in the given timeslice range."""
 
 import sys
 import re
