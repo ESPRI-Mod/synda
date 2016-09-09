@@ -109,14 +109,8 @@ else:
     default_data_folder='/srv/synda/sdt/data'
     default_sandbox_folder='/srv/synda/sdt/sandbox'
 
-bin_folder="%s/bin"%root_folder
 default_folder="%s/default"%conf_folder
 
-data_download_script_http="%s/sdget.sh"%bin_folder
-data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
-
-logon_script="%s/sdlogon.sh"%bin_folder
-cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 
 configuration_file="%s/sdt.conf"%conf_folder
 credential_file="%s/credentials.conf"%conf_folder
@@ -228,6 +222,13 @@ selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
 data_folder=get_path('data_path',default_data_folder)
 sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
+bin_folder="%s/bin"%root_folder
+
+data_download_script_http="%s/sdget.sh"%bin_folder
+data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
+
+logon_script="%s/sdlogon.sh"%bin_folder
+cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 
 default_selection_file="%s/default.txt"%default_folder
 db_file="%s/sdt.db"%db_folder
