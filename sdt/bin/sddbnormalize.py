@@ -21,8 +21,8 @@ def normalize_checksum_type(conn):
     conn.execute("UPDATE file set checksum_type=NORMALIZE_CHECKSUM_TYPE(checksum_type);")
 
 if __name__ == '__main__':
-    import sddb # do not move at the top (this module is used by sddb module)
-
     parser = argparse.ArgumentParser()
 
+    import sddb # do not move at the top (this module is used by sddb module)
     normalize_checksum_type(sddb.conn)
+    sddb.conn.commit()
