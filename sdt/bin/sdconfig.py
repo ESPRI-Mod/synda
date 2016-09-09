@@ -109,7 +109,7 @@ else:
     default_data_folder='/srv/synda/sdt/data'
     default_sandbox_folder='/srv/synda/sdt/sandbox'
 
-default_folder="%s/default"%conf_folder
+default_folder_default_path="%s/default"%conf_folder
 
 
 configuration_file="%s/sdt.conf"%conf_folder
@@ -218,6 +218,7 @@ password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
 download=config.getboolean('module','download')
 
+default_folder=get_path('default_path',default_folder_default_path)
 selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
 data_folder=get_path('data_path',default_data_folder)
