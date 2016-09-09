@@ -28,7 +28,7 @@ def get_path(name,default_value):
         return default_value
 
 def get_project_default_selection_file(project):
-    path="%s/default_%s.txt"%(selection_default_folder,project)
+    path="%s/default_%s.txt"%(default_folder,project)
     return path
 
 def check_path(path):
@@ -110,14 +110,13 @@ else:
     default_sandbox_folder='/srv/synda/sdt/sandbox'
 
 bin_folder="%s/bin"%root_folder
-selection_default_folder="%s/default"%conf_folder
+default_folder="%s/default"%conf_folder
 
 data_download_script_http="%s/sdget.sh"%bin_folder
 data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
 
 logon_script="%s/sdlogon.sh"%bin_folder
 cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
-default_selection_file="%s/default.txt"%selection_default_folder
 
 configuration_file="%s/sdt.conf"%conf_folder
 credential_file="%s/credentials.conf"%conf_folder
@@ -230,6 +229,7 @@ db_folder=get_path('db_path',default_db_folder)
 data_folder=get_path('data_path',default_data_folder)
 sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
 
+default_selection_file="%s/default.txt"%default_folder
 db_file="%s/sdt.db"%db_folder
 
 check_path(selection_folder)
