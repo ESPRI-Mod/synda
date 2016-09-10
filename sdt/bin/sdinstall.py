@@ -60,7 +60,7 @@ def install(metadata,interactive):
     count_total=metadata.count()
     size_total=metadata.size
 
-    sdlog.info("SYNDINST-001","Compute stats..")
+    sdlog.info("SYNDINST-001","'keep new status' process begins")
 
     # Compute new files stat
     #
@@ -73,6 +73,7 @@ def install(metadata,interactive):
     count_new=metadata.count()
     size_new=metadata.size
 
+    sdlog.info("SYNDINST-024","'keep new status' process ends")
 
     # what to do if no match
     if count_new<1:
