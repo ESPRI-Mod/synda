@@ -19,14 +19,14 @@ import sdlog
 def is_nearestpost_enabled(metadata):
     result=False
 
-    sdlog.info("SSHRINKT-001","Check if nearestpost is enabled..")
+    sdlog.debug("SSHRINKT-001","Check if nearestpost is enabled..")
 
     if sdconfig.nearest_schedule=='post' and nearest_flag_set_on_all_files(metadata):
         result=True
     else:
         result=False
 
-    sdlog.info("SSHRINKT-002","nearestpost is %s"%result)
+    sdlog.debug("SSHRINKT-002","nearestpost is %s"%result)
 
     return result
 
