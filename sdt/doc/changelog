@@ -22,6 +22,7 @@
 	- write yes/no confirmation message on stderr.
 	- prevent adding predefined values for 'version' facet in local cache.
 	- add checksum type normalization routine.
+	- add 'url_replace' selection file parameter.
 	- ergonomy improvements.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
