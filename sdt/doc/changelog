@@ -7,9 +7,9 @@
 	- add 'check' action for selection.
 	- add 'check' action for file's variable.
 	- use myproxyclient latest version.
+	- add 'default_path' option in sdt.conf.
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
 	- change tarball location for source installation (use install.sh latest version).
-	- ergonomy improvements.
 	- replace argparse RawTextHelpFormatter with RawDescriptionHelpFormatter.
 	- set 'metadata_parallel_download' to False.
 	- add support for lowmem machine.
@@ -22,6 +22,7 @@
 	- write yes/no confirmation message on stderr.
 	- prevent adding predefined values for 'version' facet in local cache.
 	- add checksum type normalization routine.
+	- ergonomy improvements.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
 	- add 'synda get' subcommand.

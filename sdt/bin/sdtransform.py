@@ -36,12 +36,12 @@ def transform_url(files):
     return files
 
 def parse_rule(name,body):
-    match=re.search('^s|([^|]+)|([^|]*)|$',body)
+    match=re.search('^s\|([^|]+)\|([^|]*)\|$',body)
     if match!=None:
         from_string=match.group(1)
         to_string=match.group(2)
     else:
-        raise sdexception.SDException("SYNDTRAN-001","Incorrect format for %s (%s)"%(name,body))
+        raise sdexception.SDException("SYNDTRAN-001","Incorrect format for '%s' parameter (%s)"%(name,body))
 
     return (from_string,to_string)
 
