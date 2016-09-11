@@ -45,6 +45,12 @@ class Storage():
     def get_one_file(self):
         pass
 
+    def connect(self):
+        pass
+
+    def disconnect(self):
+        pass
+
 class MemoryStorage(Storage):
 
     def __init__(self):

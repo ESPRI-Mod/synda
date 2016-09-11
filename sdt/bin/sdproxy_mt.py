@@ -61,6 +61,7 @@ class MetadataThread(threading.Thread):
 
 
             metadata=self.service.run(url=url_with_host_set,attached_parameters=ap) # service is an instance of SearchAPIProxy
+            metadata.disconnect() # TAGKLK434L3K34K
             self.result_queue.put(metadata)
         except Exception, e:
             # note
@@ -224,6 +225,7 @@ def run_helper(queries):
     metadata=sdtypes.Metadata()
     while not __result_queue.empty():
         success=__result_queue.get(False) # retrieve result from ONE successful search-API call
+        success.connect() # TAGKLK434L3K34K
         metadata.slurp(success) # warning: success is modified here
 
     # retrieve error from output queue and insert them into a list
