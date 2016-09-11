@@ -351,6 +351,12 @@ class CommonIO(object):
     def get_one_file(self):
         return self.store.get_one_file()
 
+    def connect(self):
+        self.store.connect()
+
+    def disconnect(self):
+        self.store.disconnect()
+
 def compute_total_size(files):
     if len(files)>0:
         file_=files[0] # assume all items are of the same type
