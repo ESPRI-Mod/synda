@@ -13,9 +13,9 @@
 
 import os
 import argparse
-import glob
 import sdapp
 import sdconfig
+import sdtools
 
 def run(uid,gid):
     chown_folder(uid,gid)
@@ -58,7 +58,7 @@ def chown_file(uid,gid):
     chown_files(li,uid,gid)
 
     # CA certificates
-    li=ls(sdconfig.esgf_x509_cert_dir)
+    li=sdtools.ls(sdconfig.esgf_x509_cert_dir)
     chown_files(li,uid,gid)
     
     # db file
@@ -66,23 +66,8 @@ def chown_file(uid,gid):
     chown_files(li,uid,gid)
 
     # log
-    li=ls(sdconfig.log_folder)
+    li=sdtools.ls(sdconfig.log_folder)
     chown_files(li,uid,gid)
-
-def ls(path,filter_='*'):
-    """Return full path files list inside the given folder.
-
-    Note
-        - non-recursive
-        - folder are not listed
-    """
-    files=[]
-
-    for file_ in glob.glob( os.path.join(path, filter_) ):
-        if not os.path.isdir(file_): # exclude sub-dirs
-            files.append(file_)
-
-    return files
 
 def chown_files(files,uid,gid):
     """Perform chown on all files.

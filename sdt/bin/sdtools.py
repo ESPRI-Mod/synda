@@ -16,6 +16,7 @@
 import sys
 import os
 import re
+import glob
 import argparse
 
 def is_file_read_access_OK(path):
@@ -204,3 +205,18 @@ def set_terminal_cursor_visible():
             ESC[34hESC[?25hESC[34hESC[?25h
     """
     os.system('setterm -cursor on 1>&2') # redirect to stderr to prevent messing with stdout text stream
+
+def ls(path,filter_='*'):
+    """Return full path files list inside the given folder.
+
+    Note
+        - non-recursive
+        - folder are not listed
+    """
+    files=[]
+
+    for file_ in glob.glob( os.path.join(path, filter_) ):
+        if not os.path.isdir(file_): # exclude sub-dirs
+            files.append(file_)
+
+    return files
