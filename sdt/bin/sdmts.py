@@ -288,7 +288,7 @@ class DatabaseStorage(Storage):
         return file_
 
 def get_uniq_fullpath_db_filename():
-    dbfilename='sdt_transient_storage_%s.db'%str(uuid.uuid4())
+    dbfilename='sdt_transient_storage_%s_%s.db'%(str(os.getpid()),str(uuid.uuid4()))
     dbfile=os.path.join(sdconfig.db_folder,dbfilename)
     return dbfile
 
