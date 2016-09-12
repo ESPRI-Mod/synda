@@ -124,6 +124,8 @@ def queue():
 
 def remove():
     buf="""  synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+  synda remove status=error -n
+  synda remove data_node=vesg.ipsl.upmc.fr,tds.ucar.edu,esgnode2.nci.org.au status=error -n
   synda remove CMIP5 MIROC-ESM historicalNat mon"""
     return buf
 
