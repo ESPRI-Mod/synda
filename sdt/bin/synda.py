@@ -160,9 +160,14 @@ if __name__ == '__main__':
 
         set_stream_type(args)
 
-        sdtsaction.actions[args.subcommand](args)
+        status=sdtsaction.actions[args.subcommand](args)
 
-        sys.exit(0)
+        # hack
+        # TODO: review all return code in sdtsaction module
+        if not isinstance(status,int):
+            status=0 # arbitrary
+
+        sys.exit(status)
 
     import sdtiaction
     if args.subcommand in sdtiaction.actions.keys():

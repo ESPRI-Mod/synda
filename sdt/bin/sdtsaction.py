@@ -203,10 +203,10 @@ def dataset_show(args):
     li=sdearlystreamutils.get_facet_values_early(args.stream,'instance_id')
     if len(li)==0:
         print_stderr('Please specify a dataset name.')
-        return
+        return 1
     elif len(li)>1:
         print_stderr('Too many arguments.')
-        return
+        return 1
 
     if args.localsearch:
         import sdldataset
@@ -267,14 +267,14 @@ def file_show(args):
 
             # no identifier found, we stop the processing
             print_stderr('Please specify a file identifier (id or filename).')
-            return
+            return 1
 
         elif len(li)>1:
             print_stderr('Too many arguments.')
-            return
+            return 1
     elif len(li)>1:
         print_stderr('Too many arguments.')
-        return
+        return 1
 
 
     # main
@@ -311,10 +311,10 @@ def dataset_version(args):
 
     if len(li)==0:
         print_stderr('Please specify a dataset name.')
-        return
+        return 1
     elif len(li)>1:
         print_stderr('Too many arguments.')
-        return
+        return 1
     else:
         dataset_functional_id=li[0]
 
