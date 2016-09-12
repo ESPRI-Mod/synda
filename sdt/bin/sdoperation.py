@@ -154,7 +154,7 @@ def update_last_access_date():
             # retrieve "last access date"
             l__date=None
             try:
-                l__date=sdutils.get_last_access_date(t)
+                l__date=sdutils.get_last_access_date(t.get_full_local_path())
             except FileNotFoundException,e:
                 sdlog.error("SDOPERAT-632","File missing on filesystem (%s)"%t.get_full_local_path())
                 transfers_without_file+=1

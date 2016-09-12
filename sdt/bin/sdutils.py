@@ -123,7 +123,7 @@ def get_status_output(args, **kwargs):
 
     return p.returncode, stdout, stderr
 
-def get_last_access_date(self,t):
+def get_last_access_date(self,f):
     """
     return value example
       "2011-08-19 11:19:29.675221"
@@ -131,9 +131,9 @@ def get_last_access_date(self,t):
     l__epoch=0
 
     try:
-        l__epoch=os.path.getatime(t.get_full_local_path())
-        l__date_str=datetime.datetime.fromtimestamp(l__epoch).strftime('%Y-%m-%d %H:%M:%S.%f')
-        return l__date_str
+        l__epoch=os.path.getatime(f)
+        date_str=datetime.datetime.fromtimestamp(l__epoch).strftime('%Y-%m-%d %H:%M:%S.%f')
+        return date_str
     except OSError, e:
         if e.errno == errno.ENOENT: # errno.ENOENT = no such file or directory
             raise FileNotFoundException("%s"%str(e)) # cast (we break stacktrace here because we need to handle this case in a specific way).
