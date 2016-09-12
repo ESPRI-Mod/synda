@@ -24,7 +24,7 @@ import sddeletequery
 import sddb
 import sdfilequery
 
-def delete_transfers(limit=None):
+def delete_transfers(limit=None,remove_all=True):
     """
     Returns
         how many files with TRANSFER_STATUS_DELETE status remain
@@ -37,7 +37,10 @@ def delete_transfers(limit=None):
     transfer_list=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_DELETE,limit=limit)
 
     for tr in transfer_list:
-        immediate_delete(tr)
+        if remove_all:
+            immediate_delete(tr)
+        else:
+            immediate_md_delete(tr)
 
     sddb.conn.commit() # final commit (we do all deletion in one transaction).
 
@@ -78,6 +81,14 @@ def immediate_delete(tr):
             # this case is for 'waiting' and 'error' status (in these cases, data do not exist, so we just remove metadata)
 
             sdfiledao.delete_file(tr,commit=False)
+
+def immediate_md_delete(tr):
+    """Delete file (metadata only) """
+    sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
+    try:
+        sdfiledao.delete_file(tr,commit=False)
+    except Exception,e:
+        sdlog.error("SDDELETE-128","Error occurs during file metadata suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 
 def reset():
     import sddeletedataset
