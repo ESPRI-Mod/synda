@@ -18,6 +18,7 @@ Note
 
 import sdconst
 import sdprint
+import sdconfig
 from sdtools import print_stderr
 
 def list_(args):
@@ -189,35 +190,9 @@ def variable_search(args):
     # (this is needed as we don't know in advance the number of variable for each dataset)
 
 def file_search(args):
-    import sdrfile, sddeferredafter
-
-    # tuning: note that we don't reduce the number of field returned here.
-    # Maybe change that to optimise download time / reduce bandwidth footprint.
-
-    sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
-
-    files=sdrfile.get_files(stream=args.stream,dry_run=args.dry_run)
-
-    """
-    import sdearlystreamutils, sdconfig
-    if sdconfig.metadata_server_type=='apache_default_listing':
-        urls=sdearlystreamutils.get_facet_values_early(stream,'url')
-        if len(urls)==0:
-            # no url in stream
-
-            print_stderr("Incorrect argument: please specify an url")
-        else:
-            sdmtgrabber.get_files(stream=args.stream,dry_run=args.dry_run)
-    """
-
-    if not args.dry_run:
-        if len(files)==0:
-            print_stderr("File not found")   
-        else:
-            if args.replica:
-                sdrfile.print_replica_list(files)
-            else:
-                sdrfile.print_list(files)
+    import sdfilesearch
+    assert sdconfig.metadata_server_type in sdconst.METADATA_SERVER_TYPES
+    getattr(sdfilesearch, sdconfig.metadata_server_type)(args)
 
 # o-------------------------------------------------------o
 
