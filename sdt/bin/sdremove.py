@@ -22,6 +22,7 @@ import sdoperation
 import sdtypes
 import syndautils
 import sdearlystreamutils
+import sdlog
 
 def run(args,stream):
     if is_local(stream):
@@ -79,6 +80,8 @@ def run_remote(args,stream):
 
 def remove_helper(args,metadata):
     import humanize, sdsimplefilter, sdconst, sdutils
+
+    sdlog.info("SDREMOVE-001","Remove operation running..")
 
     # filtering
 
