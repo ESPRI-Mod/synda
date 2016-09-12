@@ -111,6 +111,7 @@ CHECKSUM_TYPE_MD5='md5'
 CHECKSUM_TYPE_SHA256='sha256'
 CHECKSUM_TYPES=[CHECKSUM_TYPE_MD5,CHECKSUM_TYPE_SHA256]
 
+METADATA_SERVER_TYPES=['esgf_search_api','thredds_catalog','apache_default_listing']
 
 # Maximum files number returned by one search-api call.
 #
