@@ -108,14 +108,14 @@ def remove_helper(args,metadata):
 
         # perform deletion
         if suppression_confirmed:
-            remove(metadata)
+            remove(metadata,(not args.keep_data))
             return 0
 
     else:
         print_stderr('Nothing to delete.')
         return 0
 
-def remove(metadata):
+def remove(metadata,remove_all=True):
 
     # First step, change the files status from 'done' to 'delete' (METADATA).
     #
@@ -131,9 +131,9 @@ def remove(metadata):
     # Note
     #    Use loop for lowmem machine compatibility
     #
-    count=sddeletefile.delete_transfers(100)
+    count=sddeletefile.delete_transfers(100,remove_all)
     while count > 0:
-        count=sddeletefile.delete_transfers(100)
+        count=sddeletefile.delete_transfers(100,remove_all)
 
     print_stderr("Remove empty folders and files.. (it may take some time)")
 
@@ -141,7 +141,8 @@ def remove(metadata):
     sddeletedataset.purge_orphan_datasets()
 
     # Fourth step is to remove orphan folder (DATA)
-    sdoperation.cleanup_tree()
+    if remove_all:
+        sdoperation.cleanup_tree()
 
 # init.
 
