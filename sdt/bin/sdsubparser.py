@@ -194,6 +194,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
     add_verbose_option(subparser)
+    subparser.add_argument('-m','keep_data',action='store_true',help='Remove only metadata')
 
     subparser=create_subparser(subparsers,'replica',selection=False,no_default=False,help='Move to next replica',example=sdcliex.replica())
     add_action_argument(subparser,choices=['next'])
