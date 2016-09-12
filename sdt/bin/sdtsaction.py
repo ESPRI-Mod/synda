@@ -192,7 +192,7 @@ def variable_search(args):
 def file_search(args):
     import sdfilesearch
     assert sdconfig.metadata_server_type in sdconst.METADATA_SERVER_TYPES
-    getattr(sdfilesearch, sdconfig.metadata_server_type)(args)
+    return getattr(sdfilesearch, sdconfig.metadata_server_type)(args)
 
 # o-------------------------------------------------------o
 

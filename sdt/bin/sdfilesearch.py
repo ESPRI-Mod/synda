@@ -40,7 +40,6 @@ def apache_default_listing(args):
         # no url in stream
 
         print_stderr("Incorrect argument: please specify an url")
-
         return 1
     else:
         files=sdmoebiusklein.get_files(stream=args.stream,dry_run=args.dry_run)
@@ -52,4 +51,5 @@ def apache_default_listing(args):
                 sdmoebiusklein.print_list(files)
 
 def thredds_catalog(args):
-    pass
+    print_stderr("Not implemented")
+    return 1
