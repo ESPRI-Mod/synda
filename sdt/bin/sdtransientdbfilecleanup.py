@@ -13,6 +13,7 @@
 
 import os
 import re
+import time
 import sdtools
 import sdconfig
 import sdexception
@@ -28,8 +29,12 @@ def run():
         pass
 
 def is_recent(f):
-    TODO
-    crea_date=get_crea_date(f)
+    age=file_age_in_seconds(f)
+
+    if age < (86400*2): # two days
+        return True
+    else:
+        return False
 
 def is_pid_alive():
     pid=get_pid_from_filename(f)
@@ -45,15 +50,6 @@ def get_pid_from_filename(f):
 
     return pid
 
-def get_crea_date(f):
-    TODO
-    try:
-        l__epoch=os.path.getatime(f)
-        date_str=datetime.datetime.fromtimestamp(l__epoch).strftime('%Y-%m-%d %H:%M:%S.%f')
-        return date_str
-    except FileNotFoundException,e:
-        continue
-
-    except Exception,e:
-        sdlog.error("SDOPERAT-532","Fatal error (%s)"%str(e))
-        raise
+def file_age_in_seconds(pathname):
+    age = time.time() - os.path.getmtime(pathname)
+    return int(age)
