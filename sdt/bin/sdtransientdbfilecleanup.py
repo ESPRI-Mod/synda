@@ -17,7 +17,7 @@ import sdtools
 import sdconfig
 import sdexception
 
-def cleanup():
+def run():
     try:
         for f in sdtools.ls(sdconfig.db_folder,'sdt_transient_storage_*'):
             if is_recent() or is_pid_alive():

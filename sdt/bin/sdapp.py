@@ -20,7 +20,7 @@ import atexit
 import sdapputils
 import sdconfig
 import sdtools
-import sdtransientdbfile
+import sdtransientdbfilecleanup
 
 def cleanup():
     if sdconfig.prevent_daemon_and_ihm or sdconfig.prevent_ihm_and_ihm:
@@ -61,7 +61,7 @@ if not os.path.exists(sdconfig.tmp_folder):
     os.makedirs(sdconfig.tmp_folder)
 
 if who_am_i()=='ihm':
-    sdtransientdbfile.cleanup()
+    sdtransientdbfilecleanup.run()
 
     if sdconfig.prevent_daemon_and_ihm:
         sdapputils.singleton_check(sdconfig.daemon_pid_file)
