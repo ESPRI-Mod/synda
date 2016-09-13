@@ -409,7 +409,7 @@ install_sg_application ()
 install_st_additional_packages ()
 {
     # install pypi python modules in virtualenv
-    $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests
+    $python_pkg_install_cmd pyOpenSSL psutil humanize lxml==3.3.5 tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests beautifulsoup4
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
         $python_pkg_install_cmd argparse
