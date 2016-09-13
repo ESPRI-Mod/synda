@@ -46,7 +46,7 @@ def is_pid_alive(f):
         return False
 
 def get_pid_from_filename(f):
-    match=re.search('^sdt_transient_storage_([^_]+)_[^_]+$',f)
+    match=re.search('^.*sdt_transient_storage_([^_]+)_[^_]+$',f)
     if match!=None:
         pid=match.group(1)
     else:
