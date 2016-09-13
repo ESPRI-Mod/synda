@@ -1,4 +1,4 @@
-import beautifulsoup4
+import bs4
 import requests
 
 def file_list(url, ext=''):
@@ -9,7 +9,7 @@ def file_list(url, ext=''):
     # debug
     #print page
 
-    soup = beautifulsoup4.BeautifulSoup(page, 'html.parser')
+    soup = bs4.BeautifulSoup(page, 'html.parser')
 
     for node in soup.find_all('a'):
         if node.get('href').endswith(ext):
@@ -17,8 +17,8 @@ def file_list(url, ext=''):
 
     return li
 
-url = 'http://clarkstars.grtv.im/transmission'
-ext = 'mkv'
+url = 'http://hydrology.princeton.edu/data/efwood/SWICCA/CMIP5/rcp45/2057-2099/bc_pr'
+ext = 'nc'
 
 for f in file_list(url, ext):
     print f
