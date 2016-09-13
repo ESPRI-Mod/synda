@@ -49,6 +49,8 @@ def run(selections,args):
         except sdexception.SDException,e:
             sdlog.error("SDUPGRAD-008","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
 
+    sdlog.info("SDUPGRAD-020","Upgrade completed successfully")
+
 def install(args,selection):
 
     # TODO: maybe force type=file here, in case the selection file have 'type=Dataset'
