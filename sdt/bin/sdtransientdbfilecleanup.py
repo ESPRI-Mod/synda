@@ -39,7 +39,11 @@ def is_recent(f):
 def is_pid_alive(f):
     pid=get_pid_from_filename(f)
     pid_proc_folder="/proc/%s"%pid
-    return os.path.exists(pid_proc_folder) # TAG8UUJIHJH8Y8Y
+
+    if os.path.exists(pid_proc_folder): # TAG8UUJIHJH8Y8Y
+        return True
+    else:
+        return False
 
 def get_pid_from_filename(f):
     match=re.search('^sdt_transient_storage_([^_]+)_[^_]+$',f)
