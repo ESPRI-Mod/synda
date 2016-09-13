@@ -21,7 +21,7 @@ import sdexception
 def run():
     try:
         for f in sdtools.ls(sdconfig.db_folder,'sdt_transient_storage_*'):
-            if is_recent() or is_pid_alive():
+            if is_recent(f) or is_pid_alive(f):
                 pass
             else:
                 os.unlink(f)
@@ -36,7 +36,7 @@ def is_recent(f):
     else:
         return False
 
-def is_pid_alive():
+def is_pid_alive(f):
     pid=get_pid_from_filename(f)
     pid_proc_folder="/proc/%s"%pid
     return os.path.exists(pid_proc_folder) # TAG8UUJIHJH8Y8Y
