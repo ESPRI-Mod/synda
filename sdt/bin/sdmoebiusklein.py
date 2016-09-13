@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+import beautifulsoup4
 import requests
 
 def file_list(url, ext=''):
@@ -9,7 +9,7 @@ def file_list(url, ext=''):
     # debug
     #print page
 
-    soup = BeautifulSoup(page, 'html.parser')
+    soup = beautifulsoup4.BeautifulSoup(page, 'html.parser')
 
     for node in soup.find_all('a'):
         if node.get('href').endswith(ext):
