@@ -28,7 +28,7 @@ def run(o,attached_parameters):
     """
     assert isinstance(attached_parameters, dict)
 
-    sdlog.info("SYDADDAP-620","Add attached_parameters..")
+    sdlog.debug("SYDADDAP-620","Add attached_parameters..")
 
     if isinstance(o,sdtypes.Metadata):
 
@@ -45,7 +45,7 @@ def run(o,attached_parameters):
     else:
         assert False
 
-    sdlog.info("SYDADDAP-628","attached_parameters added")
+    sdlog.debug("SYDADDAP-628","attached_parameters added")
 
     return o
 
