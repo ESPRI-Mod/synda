@@ -159,8 +159,12 @@ class Download():
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
-                tr.status=sdconst.TRANSFER_STATUS_ERROR
-                tr.error_msg="Error occurs during download."
+                if sdconfig.next_url_on_error:
+                    #sdnexturl.run(tr)
+                    pass
+                else:
+                    tr.status=sdconst.TRANSFER_STATUS_ERROR
+                    tr.error_msg="Error occurs during download."
 
 def end_of_transfer(tr):
     # log
