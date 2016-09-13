@@ -23,7 +23,8 @@ sudo yum install epel-release -y
 To install synda RPM package, use
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/<package-name> -y
+wget http://sd-53687.dedibox.fr/synda/sdt/rpm/<package-name>
+sudo yum install -y <package-name>
 ```
 
 where &lt;package-name&gt; can be one of
