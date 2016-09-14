@@ -11,12 +11,11 @@
 
 """This script contains next url routine."""
 
+import argparse
 import sdlog
 
 def run(tr):
-    TODO => select which protocol to use in the line below
-    result=sdquicksearch.run(parameter=['limit=1','fields=%s'%timestamp_fields,'type=File','dataset_id=%s'%d['instance_id']],post_pipeline_mode=None)
-    li=result.get_files()
+    li=get_urls()
     if len(li)>0:
         file_=li[0]
         url=file_['timestamp']
@@ -24,3 +23,12 @@ def run(tr):
         sdlog.info("SDTIMEST-001","Dataset timestamp set from one dataset's file's timestamp (dataset_functional_id=%s,file_functional_id=%s)"%(d['instance_id'],file['instance_id']))
     else:
         sdlog.info("SDTIMEST-001","Dataset timestamp set from one dataset's file's timestamp (dataset_functional_id=%s,file_functional_id=%s)"%(d['instance_id'],file['instance_id']))
+
+def get_urls():
+    result=sdquicksearch.run(parameter=['limit=1','fields=%s'%url_fields,'type=File','instance_id=%s'%d['instance_id']],post_pipeline_mode=None)
+    return result.get_files()
+
+url_fields=','.join(sdconst.URL_FIELDS)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()

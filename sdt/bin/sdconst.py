@@ -187,6 +187,8 @@ LIGHT_FIELDS=['instance_id','id','variable','data_node']+REQUIRED_FIELDS
 
 TIMESTAMP_FIELDS=['instance_id','timestamp','_timestamp']+REQUIRED_FIELDS
 
+URL_FIELDS=['url']+REQUIRED_FIELDS
+
 VARIABLE_FIELDS=['title','instance_id','variable']+REQUIRED_FIELDS
 
 DATASET_VERSION_FIELDS=['master_id','version','timestamp']+REQUIRED_FIELDS
