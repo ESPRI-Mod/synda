@@ -31,7 +31,8 @@ import sdutils
 import sdtools
 import sdget
 import sdtrace
-from sdworkerutils import WorkerThread
+#import sdnexturl
+import sdworkerutils
 
 class Download():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
@@ -198,7 +199,7 @@ def end_of_transfer(tr):
         raise sdexception.FatalException()
 
 def start_transfer_thread(tr):
-    th=WorkerThread(tr,eot_queue,Download)
+    th=sdworkerutils.WorkerThread(tr,eot_queue,Download)
     th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
     th.start()
 

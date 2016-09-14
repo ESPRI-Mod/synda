@@ -13,22 +13,48 @@
 
 import argparse
 import sdlog
+import sdconst
+import sdquicksearch
+import sdexception
 
 def run(tr):
-    li=get_urls()
+    try:
+        urls=get_urls(tr.file_functional_id)
+
+        new_url=get_next_url(tr.url,urls)
+
+        tr.url=new_url
+    except sdexception.FileNotFoundException:
+        sdlog.info("SDNEXTUR-001","File not found while trying to switch url (file_functional_id=%s)"%())
+
+def get_next_url(urls,current_url):
+    for k, in urls:
+        print 
+    else:
+        sdlog.info("SDNEXTUR-001","(file_functional_id=%s)"%())
+
+def get_urls(file_functional_id):
+    result=sdquicksearch.run(parameter=['limit=1','fields=%s'%url_fields,'type=File','instance_id=%s'%file_functional_id],post_pipeline_mode=None)
+    li=result.get_files()
     if len(li)>0:
         file_=li[0]
-        url=file_['timestamp']
 
-        sdlog.info("SDTIMEST-001","Dataset timestamp set from one dataset's file's timestamp (dataset_functional_id=%s,file_functional_id=%s)"%(d['instance_id'],file['instance_id']))
+        # remove non url attributes
+        try:
+            del file_['attached_parameters']
+        except Exception as e:
+            pass
+
+        urls=file_
     else:
-        sdlog.info("SDTIMEST-001","Dataset timestamp set from one dataset's file's timestamp (dataset_functional_id=%s,file_functional_id=%s)"%(d['instance_id'],file['instance_id']))
+        raise sdexception.FileNotFoundException()
 
-def get_urls():
-    result=sdquicksearch.run(parameter=['limit=1','fields=%s'%url_fields,'type=File','instance_id=%s'%d['instance_id']],post_pipeline_mode=None)
-    return result.get_files()
+    return urls
 
 url_fields=','.join(sdconst.URL_FIELDS)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+
+    file_functional_id='cmip5.output1.LASG-CESS.FGOALS-g2.decadal1985.day.atmos.day.r1i1p1.v1.va_day_FGOALS-g2_decadal1985_r1i1p1_19880101-19881231.nc'
+    print get_urls(file_functional_id)
