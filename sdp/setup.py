@@ -2,6 +2,7 @@
 from distutils.core import setup
 import glob
 import os
+
 setup(name='sdp',
         #py_modules=['ppdb'],
         scripts=[os.path.join('bin',f) for f in os.listdir('bin')], 
@@ -19,6 +20,8 @@ setup(name='sdp',
         long_description='This program processes files from the Earth System Grid Federation (ESGF) archive.',
         license='Public',
         platforms='Linux',
+        maintainer='jripsl',
+        maintainer_email='jripsl@ipsl.jussieu.fr',
         author='jripsl',
         author_email='jripsl@ipsl.jussieu.fr'
         )
