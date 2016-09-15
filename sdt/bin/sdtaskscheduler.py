@@ -48,7 +48,11 @@ def terminate(signal,frame):
     sdwatchdog.quit=1
     quit=1
 
+
     # kill all childs (i.e. abort running transfer(s) if any)
+
+    sdlog.info("SDTSCHED-005","Cleanup child processes")
+
     import psutil
     parent = psutil.Process(os.getpid())
 
@@ -59,6 +63,9 @@ def terminate(signal,frame):
     else:
         for child in parent.children(True):
             resilient_terminate(child)
+
+
+    sdlog.info("SDTSCHED-006","Waiting for the daemon to stop..")
 
 def cleanup_running_transfer():
     """This handle zombie cases (transfers with 'running' status, but not running).

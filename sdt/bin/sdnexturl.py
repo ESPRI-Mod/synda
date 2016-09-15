@@ -18,20 +18,42 @@ import sdquicksearch
 import sdexception
 
 def run(tr):
+
+    if is_gridftp_url():
+        # gridftp failure: fallback to HTTP
+
+        try:
+            urls=get_urls(tr.file_functional_id)
+            urls=remove_unsupported_url(urls)
+            new_url=get_next_url(tr.url,urls)
+            tr.url=new_url
+
+        except sdexception.FileNotFoundException:
+            sdlog.info("SDNEXTUR-001","File not found while trying to switch url (file_functional_id=%s)"%(tr.file_functional_id,))
+
+    else:
+        # no fallback for HTTP failure
+
+        pass
+
+def is_gridftp_url(url):
+    pass
+
+def remove_unsupported_url(urls):
+
+    # remove opendap url (opendap is not used in synda for now)
     try:
-        urls=get_urls(tr.file_functional_id)
+        del urls['url_opendap']
+    except Exception as e:
+        pass
 
-        new_url=get_next_url(tr.url,urls)
-
-        tr.url=new_url
-    except sdexception.FileNotFoundException:
-        sdlog.info("SDNEXTUR-001","File not found while trying to switch url (file_functional_id=%s)"%())
+    return urls
 
 def get_next_url(urls,current_url):
-    for k, in urls:
-        print 
+    for k in urls:
+        print k
     else:
-        sdlog.info("SDNEXTUR-001","(file_functional_id=%s)"%())
+        sdlog.info("SDNEXTUR-002","(file_functional_id=%s)"%())
 
 def get_urls(file_functional_id):
     result=sdquicksearch.run(parameter=['limit=1','fields=%s'%url_fields,'type=File','instance_id=%s'%file_functional_id],post_pipeline_mode=None)
@@ -46,6 +68,7 @@ def get_urls(file_functional_id):
             pass
 
         urls=file_
+
     else:
         raise sdexception.FileNotFoundException()
 
