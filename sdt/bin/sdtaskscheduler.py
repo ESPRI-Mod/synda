@@ -199,7 +199,8 @@ def event_loop():
 
         if quit==1:
             if can_leave(): # wait until all threads finish and until everything has been processed on the database I/O queue 
-                sdlog.info("SDTSCHED-001","Synda service stopped",stderr=True)
+                sdlog.info("SDTSCHED-001","eot_queue orders processing completed",stderr=False)
+                sdlog.info("SDTSCHED-003","Running transfer processing completed",stderr=False)
                 break
 
         time.sleep(main_loop_sleep)
