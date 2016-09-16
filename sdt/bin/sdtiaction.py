@@ -320,7 +320,7 @@ def get(args):
     # change in the future.
     #
     if args.dest_folder is None:
-        local_path_prefix=os.getcwd()
+        local_path_prefix=os.getcwd() # current working directory
     else:
         local_path_prefix=args.dest_folder
 

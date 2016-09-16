@@ -238,7 +238,16 @@ db_file="%s/sdt.db"%db_folder
 check_path(selection_folder)
 check_path(data_folder)
 
-files_dest_folder_for_get_subcommand=None # None | sandbox_folder
+# destination folder for 'synda get'
+#
+# Allowed value
+#     None
+#     sandbox_folder
+#
+# Note
+#     when set to None, destination folder is the current working directory (as wget)
+#
+files_dest_folder_for_get_subcommand=None
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
