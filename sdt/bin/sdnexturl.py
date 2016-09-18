@@ -13,31 +13,49 @@
 
 import argparse
 import sdlog
+import sdutils
 import sdconst
 import sdquicksearch
 import sdexception
 
 def run(tr):
-
-    if is_gridftp_url():
-        # gridftp failure: fallback to HTTP
+    """
+    Returns
+        True: url has been switched to a new one
+        False: nothing changed (same url)
+    """
+    transfer_protocol=sdutils.get_transfer_protocol(tr.url)
+    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+        # GRIDFTP url
 
         try:
-            urls=get_urls(tr.file_functional_id)
-            urls=remove_unsupported_url(urls)
-            new_url=get_next_url(tr.url,urls)
-            tr.url=new_url
-
-        except sdexception.FileNotFoundException:
+            next_url(tr)
+            return True
+        except sdexception.FileNotFoundException as e:
             sdlog.info("SDNEXTUR-001","File not found while trying to switch url (file_functional_id=%s)"%(tr.file_functional_id,))
+            return False
+        except sdexception.HttpUrlNotFoundException as e:
+            sdlog.info("SDNEXTUR-002","File not found while trying to switch url (file_functional_id=%s)"%(tr.file_functional_id,))
+            return False
 
     else:
-        # no fallback for HTTP failure
+        # most likely HTTP url
 
-        pass
+        # nothing to do
+        # (i.e. no fallback for now in this module for http url)
 
-def is_gridftp_url(url):
-    pass
+        return False
+
+def next_url(tr):
+    urls=get_urls(tr.file_functional_id)
+    urls=remove_unsupported_url(urls)
+
+    if 'url_http' in urls:
+        sdlog.info("SDNEXTUR-004","Switch url (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,tr.url,urls['url_http']))
+        tr.url=urls['url_http']
+    else:
+        sdlog.info("SDNEXTUR-006","Http url not found (file_functional_id=%s)"%(tr.file_functional_id,))
+        raise sdexception.HttpUrlNotFoundException()
 
 def remove_unsupported_url(urls):
 
@@ -48,12 +66,6 @@ def remove_unsupported_url(urls):
         pass
 
     return urls
-
-def get_next_url(urls,current_url):
-    for k in urls:
-        print k
-    else:
-        sdlog.info("SDNEXTUR-002","(file_functional_id=%s)"%())
 
 def get_urls(file_functional_id):
     result=sdquicksearch.run(parameter=['limit=1','fields=%s'%url_fields,'type=File','instance_id=%s'%file_functional_id],post_pipeline_mode=None)
