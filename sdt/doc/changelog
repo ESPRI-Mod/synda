@@ -23,6 +23,8 @@
 	- prevent adding predefined values for 'version' facet in local cache.
 	- add checksum type normalization routine.
 	- add 'url_replace' selection file parameter.
+	- add 'http_fallback' option (switch protocol on error).
+	- add 'default_listing_size' configuration option.
 	- add '-m' option to synda 'remove command'.
 	- ergonomy improvements.
 - Version 3.4 - 20160504
