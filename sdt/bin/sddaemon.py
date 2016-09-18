@@ -174,6 +174,7 @@ if __name__ == "__main__":
 
     if args.action in ['start','stop']:
         if not sdutils.is_granted():
+            sdtools.print_stderr() # this is to prevent having all on the same line when using "synda service" command e.g. "Shutting down synda daemon (sdt): You need to be root to perform this command."
             sdtools.print_stderr('You need to be root to perform this command.')
             sys.exit(1)
 
