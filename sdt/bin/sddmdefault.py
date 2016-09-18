@@ -160,18 +160,32 @@ class Download():
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
+
+
+                # Hack
+                #
+                # Notes
+                #     - Only active for gridftp url to prevent having useless log message (i.e. there is currently no url switching mecanism for http url)
+                #     - We need a log here so to have a trace of the original failed transfer (i.e. in case the url-switch succeed, the error msg will be reset)
+                #
+                transfer_protocol=sdutils.get_transfer_protocol(tr.url)
+                if transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
+                    sdlog.info("SDDMDEFA-088","Transfer failed: try to use another url (%s)"%str(tr))
+
+
                 if sdconfig.next_url_on_error:
                     result=sdnexturl.run(tr)
                     if result:
                         tr.status=sdconst.TRANSFER_STATUS_WAITING
-                        tr.error_msg=""
+                        tr.error_msg=''
                     else:
                         tr.status=sdconst.TRANSFER_STATUS_ERROR
-                        tr.error_msg="Error occurs during download."
+                        tr.error_msg='Error occurs during download.'
+
 
                 else:
                     tr.status=sdconst.TRANSFER_STATUS_ERROR
-                    tr.error_msg="Error occurs during download."
+                    tr.error_msg='Error occurs during download.'
 
 def end_of_transfer(tr):
     # log
