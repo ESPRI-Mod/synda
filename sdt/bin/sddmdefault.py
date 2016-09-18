@@ -88,6 +88,7 @@ class Download():
                     # checksum is ok
 
                     tr.status=sdconst.TRANSFER_STATUS_DONE
+                    tr.error_msg=""
                 else:
                     # checksum is not ok
 
@@ -106,7 +107,7 @@ class Download():
                         sdlog.info("SDDMDEFA-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
                         
                         tr.status=sdconst.TRANSFER_STATUS_DONE
-
+                        tr.error_msg=""
                     else:
                         raise sdexception.FatalException("SDDMDEFA-507","incorrect value (%s)"%incorrect_checksum_action)
             else:
@@ -114,10 +115,7 @@ class Download():
                 # NOTE: we DON'T store the local checksum ('file' table contains only the *remote* checksum)
 
                 tr.status=sdconst.TRANSFER_STATUS_DONE
-
-            if tr.status == sdconst.TRANSFER_STATUS_DONE:
                 tr.error_msg=""
-                sdlog.info("SDDMDEFA-101", "Transfer done (%s)" % str(tr))
         else:
 
             # Remove file if exists
@@ -189,6 +187,7 @@ class Download():
                     tr.error_msg='Error occurs during download.'
 
 def end_of_transfer(tr):
+
     # log
     if tr.status==sdconst.TRANSFER_STATUS_DONE:
         sdlog.info("SDDMDEFA-101","Transfer done (%s)"%str(tr))
