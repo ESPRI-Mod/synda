@@ -192,8 +192,6 @@ use_myproxy_module=True
 # Type of metadata server. Default is 'esgf_search_api'.
 metadata_server_type='esgf_search_api' # 'esgf_search_api' | 'thredds_catalog' | 'apache_default_listing'
 
-default_limits_mode='low' # low | medium | high
-next_url_on_error=False # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
@@ -253,6 +251,11 @@ check_path(data_folder)
 #     when set to None, destination folder is the current working directory (as wget)
 #
 files_dest_folder_for_get_subcommand=None
+
+default_limits_mode=config.get('interface','default_listing_size')
+
+# if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
+next_url_on_error=config.getboolean('download','http_fallback')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
