@@ -148,15 +148,11 @@ ACTION_ADD='add'
 ACTION_DELETE='delete'
 ACTION_PEXEC='pexec'
 #
-DEFAULT_LIMITS_LOW={'search':100,'dump':50,'list':20}
-DEFAULT_LIMITS_MEDIUM={'search':1000,'dump':100,'list':200}
-DEFAULT_LIMITS_HIGH={'search':6000,'dump':6000,'list':20000}
-
-DEFAULT_LIMITS=DEFAULT_LIMITS_LOW
-
-DEFAULT_SEARCH_LIMIT=DEFAULT_LIMITS['search']
-DEFAULT_DUMP_LIMIT=DEFAULT_LIMITS['dump']
-DEFAULT_LIST_LIMIT=DEFAULT_LIMITS['list']
+DEFAULT_LIMITS={
+    'low':{'search':100,'dump':50,'list':20},
+    'medium':{'search':1000,'dump':100,'list':200},
+    'high':{'search':6000,'dump':6000,'list':20000}
+}
 #
 IDXHOSTMARK='IDXHOSTMARK'
 #

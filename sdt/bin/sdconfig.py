@@ -13,12 +13,16 @@
 
 import os
 import argparse
+import sdconst
 import sdtools
 import sdcfloader
 import sdcfbuilder
 from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
+
+def get_default_limit(command):
+    return sdconst.DEFAULT_LIMITS[default_limits_mode][command]
 
 def get_path(name,default_value):
     path=config.get('core',name)
@@ -188,6 +192,7 @@ use_myproxy_module=True
 # Type of metadata server. Default is 'esgf_search_api'.
 metadata_server_type='esgf_search_api' # 'esgf_search_api' | 'thredds_catalog' | 'apache_default_listing'
 
+default_limits_mode='low' # low | medium | high
 next_url_on_error=False # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
 mono_host_retry=False
 proxymt_progress_stat=False

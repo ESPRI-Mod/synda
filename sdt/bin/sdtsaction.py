@@ -117,7 +117,7 @@ def file_foobar(args):
 def dataset_list(args):
     import sddeferredafter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_LIST_LIMIT)
+    sddeferredafter.add_default_parameter(args.stream,'limit',sdconfig.get_default_limit('list'))
 
     import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
@@ -129,7 +129,7 @@ def dataset_list(args):
 def variable_list(args):
     import sddeferredafter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_LIST_LIMIT) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
+    sddeferredafter.add_default_parameter(args.stream,'limit',sdconfig.get_default_limit('list')) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
 
     print_stderr('Not implemented yet.')   
     """
@@ -144,7 +144,7 @@ def variable_list(args):
 def file_list(args):
     import sddeferredafter, sdlfile
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_LIST_LIMIT)
+    sddeferredafter.add_default_parameter(args.stream,'limit',sdconfig.get_default_limit('list'))
 
     files=sdlfile.get_files(stream=args.stream,dry_run=args.dry_run)
     if len(files)==0:
@@ -338,7 +338,7 @@ def file_version(args):
 def dataset_dump(args):
     import sdrdataset, sddeferredafter, sdcolumnfilter
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_DUMP_LIMIT)
+    sddeferredafter.add_default_parameter(args.stream,'limit',sdconfig.get_default_limit('dump'))
     post_pipeline_mode=None if args.raw_mode else 'dataset'
     files=sdrdataset.get_datasets(stream=args.stream,post_pipeline_mode=post_pipeline_mode,dry_run=args.dry_run)
 
@@ -355,7 +355,7 @@ def variable_dump(args):
 def file_dump(args):
     import sdrfile, sddeferredafter, sdcolumnfilter, sdreducecol
 
-    sddeferredafter.add_default_parameter(args.stream,'limit',sdconst.DEFAULT_DUMP_LIMIT)
+    sddeferredafter.add_default_parameter(args.stream,'limit',sdconfig.get_default_limit('dump'))
 
 
     if args.raw_mode:
