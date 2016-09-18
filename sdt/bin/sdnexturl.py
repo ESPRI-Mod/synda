@@ -32,10 +32,10 @@ def run(tr):
             next_url(tr)
             return True
         except sdexception.FileNotFoundException as e:
-            sdlog.info("SDNEXTUR-001","File not found while trying to switch url (file_functional_id=%s)"%(tr.file_functional_id,))
+            sdlog.info("SDNEXTUR-001","Cannot switch url for %s (FileNotFoundException)"%(tr.file_functional_id,))
             return False
         except sdexception.HttpUrlNotFoundException as e:
-            sdlog.info("SDNEXTUR-002","File not found while trying to switch url (file_functional_id=%s)"%(tr.file_functional_id,))
+            sdlog.info("SDNEXTUR-002","Cannot switch url for %s (HttpUrlNotFoundException)"%(tr.file_functional_id,))
             return False
 
     else:
@@ -51,8 +51,12 @@ def next_url(tr):
     urls=remove_unsupported_url(urls)
 
     if 'url_http' in urls:
-        sdlog.info("SDNEXTUR-004","Switch url (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,tr.url,urls['url_http']))
-        tr.url=urls['url_http']
+        old_url=tr.url
+        new_url=urls['url_http']
+
+        tr.url=new_url
+
+        sdlog.info("SDNEXTUR-004","Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,old_url,new_url))
     else:
         sdlog.info("SDNEXTUR-006","Http url not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.HttpUrlNotFoundException()
@@ -82,6 +86,7 @@ def get_urls(file_functional_id):
         urls=file_
 
     else:
+        sdlog.info("SDNEXTUR-090","File not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.FileNotFoundException()
 
     return urls
