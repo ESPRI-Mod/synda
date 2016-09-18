@@ -149,9 +149,9 @@ ACTION_DELETE='delete'
 ACTION_PEXEC='pexec'
 #
 DEFAULT_LIMITS={
-    'low':{'search':100,'dump':50,'list':20},
+    'small':{'search':100,'dump':50,'list':20},
     'medium':{'search':1000,'dump':100,'list':200},
-    'high':{'search':6000,'dump':6000,'list':20000}
+    'big':{'search':6000,'dump':6000,'list':20000}
 }
 #
 IDXHOSTMARK='IDXHOSTMARK'
