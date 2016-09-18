@@ -161,7 +161,14 @@ class Download():
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
                 if sdconfig.next_url_on_error:
-                    sdnexturl.run(tr)
+                    result=sdnexturl.run(tr)
+                    if result:
+                        tr.status=sdconst.TRANSFER_STATUS_WAITING
+                        tr.error_msg=""
+                    else:
+                        tr.status=sdconst.TRANSFER_STATUS_ERROR
+                        tr.error_msg="Error occurs during download."
+
                 else:
                     tr.status=sdconst.TRANSFER_STATUS_ERROR
                     tr.error_msg="Error occurs during download."
@@ -172,12 +179,12 @@ def end_of_transfer(tr):
         sdlog.info("SDDMDEFA-101","Transfer done (%s)"%str(tr))
     elif tr.status==sdconst.TRANSFER_STATUS_WAITING:
         # Transfer have been marked for retry
-        # (this happens for example during shutdown immediate, where
-        # all running transfers are killed, or when wget are 'stalled'
-        # and killed by watchdog)
+        #
+        # This may happen for example
+        #  - during shutdown immediate, where all running transfers are killed, or when wget are 'stalled' and killed by watchdog
+        #  - as a consequence of sdnexturl
         
-        sdlog.info("SDDMDEFA-108","%s url=%s file_id=%d"%(tr.error_msg,tr.url,tr.file_id))
-        #sdlog.info("SDDMDEFA-104","Transfer marked for retry (%s)"%str(tr))
+        sdlog.info("SDDMDEFA-108","Transfer marked for retry (error_msg='%s',url=%s,file_id=%d"%(tr.error_msg,tr.url,tr.file_id))
     else:
         sdlog.info("SDDMDEFA-102","Transfer failed (%s)"%str(tr))
 

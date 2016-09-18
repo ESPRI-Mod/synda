@@ -25,6 +25,8 @@ class SDException(Exception):
 
 class FileNotFoundException(SDException):
     pass
+class HttpUrlNotFoundException(SDException):
+    pass
 class NoTransferWaitingException(SDException):
     pass
 class FatalException(SDException):
