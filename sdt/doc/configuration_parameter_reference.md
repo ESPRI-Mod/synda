@@ -46,6 +46,17 @@ Default: 1
 
 --------------------------------------------------------
 
+### download.http_fallback
+
+If true, if gridftp transfer fails, gridftp url is automatically replaced with
+http url.
+
+Type: boolean
+
+Default: false
+
+--------------------------------------------------------
+
 ### module.download
 
 If true, download files from ESGF. To use synda in discovery or post-processing
@@ -187,6 +198,19 @@ Default: 0
 
 --------------------------------------------------------
 
+### interface.default_listing_size
+
+This parameter drives how many results are displayed by default for "search",
+"list" and "dump" subcommands.
+
+Possible values are: "small", "medium" and "big".
+
+Type: string
+
+Default: small
+
+--------------------------------------------------------
+
 ### behaviour.onemgf
 
 Improve search performance (experimental).
@@ -247,7 +271,7 @@ Default: false
 
 Set nearest replica algorithm.
 
-Possible values are: "geolocation" and "rtt"
+Possible values are: "geolocation" and "rtt".
 
 Type: string
 
