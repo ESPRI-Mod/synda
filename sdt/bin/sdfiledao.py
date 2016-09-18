@@ -14,6 +14,7 @@
 import sdapp
 from sdexception import SDException
 import sddb
+import sdconfig
 import sdsqlutils
 from sdtypes import File
 
@@ -142,6 +143,11 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
 
 def update_file(file,commit=True,conn=sddb.conn):
     keys=['status','error_msg','sdget_status','sdget_error_msg','start_date','end_date','duration','rate']
+
+    # 'url' need to be present when 'sdnexturl' feature is enabled
+    if sdconfig.next_url_on_error:
+        keys.append('url')
+
     rowcount=sdsqlutils.update(file,keys,commit,conn)
 
     # check

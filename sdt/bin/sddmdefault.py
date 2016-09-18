@@ -31,7 +31,7 @@ import sdutils
 import sdtools
 import sdget
 import sdtrace
-#import sdnexturl
+import sdnexturl
 import sdworkerutils
 
 class Download():
@@ -161,8 +161,7 @@ class Download():
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
                 if sdconfig.next_url_on_error:
-                    #sdnexturl.run(tr)
-                    pass
+                    sdnexturl.run(tr)
                 else:
                     tr.status=sdconst.TRANSFER_STATUS_ERROR
                     tr.error_msg="Error occurs during download."
