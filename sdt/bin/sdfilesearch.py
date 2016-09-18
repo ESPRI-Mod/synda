@@ -33,7 +33,7 @@ def esgf_search_api(args):
                 sdrfile.print_list(files)
 
 def apache_default_listing(args):
-    import sdearlystreamutils, sdmoebiusklein
+    import sdearlystreamutils, sdhtmlbasic
 
     urls=sdearlystreamutils.get_facet_values_early(args.stream,'url')
     if len(urls)==0:
@@ -42,13 +42,13 @@ def apache_default_listing(args):
         print_stderr("Incorrect argument: please specify an url")
         return 1
     else:
-        files=sdmoebiusklein.get_files(stream=args.stream,dry_run=args.dry_run)
+        files=sdhtmlbasic.get_files(stream=args.stream,dry_run=args.dry_run)
 
         if not args.dry_run:
             if len(files)==0:
                 print_stderr("File not found")   
             else:
-                sdmoebiusklein.print_list(files)
+                sdhtmlbasic.print_list(files)
 
 def thredds_catalog(args):
     print_stderr("Not implemented")

@@ -36,6 +36,16 @@ Type: string
 
 Default: &lt;index.default_index&gt; from sdt.conf file (or random index from &lt;index.indexes&gt; in parallel mode)
 
+#### url_replace
+
+Replace all occurrences of substring in url
+
+Type: string
+
+Example:
+
+    url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|
+
 #### priority
 
 Set download priority.
