@@ -37,6 +37,9 @@ def run(tr):
         except sdexception.HttpUrlNotFoundException as e:
             sdlog.info("SDNEXTUR-002","Cannot switch url for %s (HttpUrlNotFoundException)"%(tr.file_functional_id,))
             return False
+        except Exception as e:
+            sdlog.info("SDNEXTUR-003","Unknown exception (file_functional_id=%s,exception=%s)"%(tr.file_functional_id,str(e)))
+            return False
 
     else:
         # most likely HTTP url
