@@ -29,38 +29,28 @@ sudo yum install -y <package-name>
 
 where &lt;package-name&gt; can be one of
 
-* synda-3.4-1.x86_64_centos65.rpm
-* synda-3.4-1.x86_64_centos67.rpm
-* synda-3.4-1.x86_64_centos71.rpm
-* synda-3.4-1.x86_64_fedora20.rpm
-* synda-3.4-1.x86_64_fedora21.rpm
-* synda-3.4-1.x86_64_fedora22.rpm
-* synda-3.4-1.x86_64_fedora23.rpm
-* synda-3.4-1.x86_64_scientific61.rpm
-* synda-3.4-1.x86_64_scientific67.rpm
-* synda-3.4-1.x86_64_scientific71.rpm
+* synda-3.5-1.x86_64_centos65.rpm
+* synda-3.5-1.x86_64_centos67.rpm
+* synda-3.5-1.x86_64_centos71.rpm
+* synda-3.5-1.x86_64_fedora20.rpm
+* synda-3.5-1.x86_64_fedora21.rpm
+* synda-3.5-1.x86_64_fedora22.rpm
+* synda-3.5-1.x86_64_fedora23.rpm
+* synda-3.5-1.x86_64_scientific61.rpm
+* synda-3.5-1.x86_64_scientific67.rpm
+* synda-3.5-1.x86_64_scientific71.rpm
 
 Example
 
 To install Synda on Scientific Linux 6.7, do
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/synda-3.4-1.x86_64_scientific67.rpm 
+sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/synda-3.5-1.x86_64_scientific67.rpm 
 ```
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
 
 Note: RPM packages are currently only available for 64 bits architecture
-
-## Patch
-
-Synda 3.4 RPM package contains a bug which prevent displaying error messages under certain circumstances.
-
-Run the command below to fix it
-
-```
-sudo sed -i -e "s/install/get','install/" /usr/share/python/synda/sdt/bin/sdconst.py
-```
 
 ## Configuration
 

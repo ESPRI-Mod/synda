@@ -762,7 +762,7 @@ post_install_msg= # used to display some info to the user after installation
 tmpdir=$( mktemp -d -p /tmp tmp.sdt.XXXXXXXXXX ) # use mktemp instead of hardcoded path in case different user install synda from source on a multi-user machine
 #
 st_url_prefix=http://sd-53687.dedibox.fr/synda/sdt/src
-st_version=${g__version:-3.4} # default version if not specified by the user
+st_version=${g__version:-3.5} # default version if not specified by the user
 st_package=sdt-${st_version}
 st_archive=${st_package}.tar.gz
 st_url="$st_url_prefix/${st_archive}"
