@@ -25,7 +25,7 @@
 	- add 'url_replace' selection file parameter.
 	- add 'http_fallback' option (switch protocol on error).
 	- add 'default_listing_size' configuration option.
-	- add '-m' option to synda 'remove command'.
+	- add '-m' option to 'synda remove' command.
 	- ergonomy improvements.
 - Version 3.4 - 20160504
 	- add 'synda variable' command
