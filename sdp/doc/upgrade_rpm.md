@@ -8,6 +8,12 @@ This document contains instructions to upgrade *sdp* version using RPM package.
 
 ### Pre-upgrade
 
+Stop service with
+
+```
+sudo service sdp stop
+```
+
 Backup folders below
 
     /etc/synda/sdp

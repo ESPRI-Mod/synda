@@ -8,11 +8,11 @@ This documents contains instructions to install *sdp* from DEB package.
 
 *sdp* DEB package is available for Debian, Ubuntu and Mint.
 
-## Naming
+## Terminology
 
 * *synda* is the application name
-* *sdp* is the module name
-* *synda-pp* is the package name
+* *sdp* is the module name (synda is made of several modules)
+* *synda-pp* is the Debian package name
 
 ## Installation
 
@@ -33,7 +33,7 @@ If you need a distro/version that is not listed, you can open a github issue so 
 
 Note: DEB packages are currently only available for 64 bits architecture
 
-Once repository is added, run command below to update package list.
+Once repository is added, run command below to update the package list.
 
 ```
 sudo apt-get update
@@ -46,6 +46,8 @@ sudo apt-get install synda-pp --force-yes -y
 ```
 
 ## Configuration
+
+* Edit */etc/synda/sdp/sdp.conf* file
 
 * Restart service with
 

@@ -8,6 +8,12 @@ This document contains instructions to install new *sdp* version.
 
 ### Pre-upgrade
 
+Stop daemon with
+
+```
+spdaemon stop
+```
+
 Backup $HOME/sdp folder
 
 ### Upgrade
@@ -28,3 +34,9 @@ username, password..).
 
 Note: you can use a diff program to compare post-upgrade configuration files
 over pre-upgrade configuration files (from the backup).
+
+Start daemon with
+
+```
+spdaemon start
+```

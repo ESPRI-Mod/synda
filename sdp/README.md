@@ -15,6 +15,6 @@ compute farm freeing the resources.
 
 ## Version
 
-* Stable: 1.0
+* Stable: 1.1
 
-* Testing: 1.1
+* Testing: 1.2

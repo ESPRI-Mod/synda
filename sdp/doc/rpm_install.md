@@ -10,11 +10,11 @@ This documents contains instructions to install *sdp* from RPM package.
 
 On RHEL5, *sdp* can only be installed from source.
 
-## Naming
+## Terminology
 
 * *synda* is the application name
-* *sdp* is the module name
-* *synda-pp* is the package name
+* *sdp* is the module name (synda is made of several modules)
+* *synda-pp* is the RPM package name
 
 ## Installation
 
@@ -29,7 +29,8 @@ sudo yum install epel-release -y
 To install *sdp* RPM package, use
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/sdp/rpm/<package-name> -y
+wget http://sd-53687.dedibox.fr/synda/sdp/rpm/<package-name>
+sudo yum install -y <package-name>
 ```
 
 where &lt;package-name&gt; can be one of
@@ -58,6 +59,8 @@ If you need a distro/version that is not listed, you can open a github issue so 
 Note: RPM packages are currently only available for 64 bits architecture
 
 ## Configuration
+
+* Edit */etc/synda/sdp/sdp.conf* file
 
 * Restart service with
 

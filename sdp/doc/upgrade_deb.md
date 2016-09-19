@@ -8,6 +8,12 @@ This document contains instructions to upgrade *sdp* version using Debian packag
 
 ### Pre-upgrade
 
+Stop service with
+
+```
+sudo service sdp stop
+```
+
 Backup folders below
 
     /etc/synda/sdp
