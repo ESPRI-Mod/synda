@@ -132,4 +132,8 @@ if __name__ == '__main__':
         buffer=fh.read()
 
     #parse_parameters(buffer)
-    print parse_metadata(buffer)
+    result=parse_metadata(buffer)
+
+    print result['num_found']
+    print result['num_result']
+    print result['files']

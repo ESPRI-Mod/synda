@@ -256,4 +256,16 @@ def parse_metadata(buffer):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--file',required=True)
     args = parser.parse_args()
+
+    # read search-api output sample
+    with open(args.file, 'r') as fh:
+        buffer=fh.read()
+
+    #parse_parameters(buffer)
+    result=parse_metadata(buffer)
+
+    print result['num_found']
+    print result['num_result']
+    print result['files']
