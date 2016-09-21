@@ -23,6 +23,7 @@ import sdlog
 import sdtools
 import sdconfig
 import sdaddap
+import sdurlutils
 
 # not a singleton
 class SearchAPIProxy():
@@ -153,6 +154,8 @@ class SearchAPIProxy():
 if __name__ == '__main__':
 
     url="http://esgf-data.dkrz.de/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File"
+
+    url=sdurlutils.add_solr_output_format(url)
 
     search=SearchAPIProxy()
     result=search.run(url=url)
