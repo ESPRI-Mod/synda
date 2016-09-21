@@ -26,6 +26,7 @@ import sdconfig
 import sdsquery
 import sdtools
 import sdtrace
+import sdurlutils
 
 class MetadataThread(threading.Thread):
     def __init__(self,host,service,query,result_queue,error_queue):
@@ -258,6 +259,7 @@ set_index_hosts(sdindex.index_host_list)
 
 if __name__ == '__main__':
     url="http://%s/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File"%sdconst.IDXHOSTMARK
+    url=sdurlutils.add_solr_output_format(url)
     queries=[{'url':url}]
     metadata=run(queries)
 
