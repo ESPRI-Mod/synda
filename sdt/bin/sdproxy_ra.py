@@ -22,6 +22,8 @@ Notes
 
 import sdindex
 import sdnetutils
+import sdconfig
+import sdurlutils
 from sdtypes import Request
 
 def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_run=None):
@@ -30,7 +32,9 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
     project_filter='' if project is None else "&project=%s"%project
     query_filter='' if query is None else "&query=%s"%query
 
-    url='http://%s/esg-search/search?type=File%s%s&fields=*'%(host,project_filter,query_filter)
+    fmt=sdurlutils.get_solr_output_format(sdconfig.searchapi_output_format)
+
+    url='http://%s/esg-search/search?type=File%s%s&fields=*&format=%s'%(host,project_filter,query_filter,fmt)
 
     if dry_run:
 
