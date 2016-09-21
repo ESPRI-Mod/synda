@@ -134,6 +134,4 @@ if __name__ == '__main__':
     #parse_parameters(buffer)
     result=parse_metadata(buffer)
 
-    print result['num_found']
-    print result['num_result']
-    print result['files']
+    print "%s\n"%json.dumps(result,indent=4, separators=(',', ': '))

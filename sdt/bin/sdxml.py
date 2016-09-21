@@ -12,6 +12,7 @@
 """This module contains xml functions."""
 
 import argparse
+import json
 from lxml import etree
 import sdapp
 import sdlog
@@ -266,6 +267,4 @@ if __name__ == '__main__':
     #parse_parameters(buffer)
     result=parse_metadata(buffer)
 
-    print result['num_found']
-    print result['num_result']
-    print result['files']
+    print "%s\n"%json.dumps(result,indent=4, separators=(',', ': '))
