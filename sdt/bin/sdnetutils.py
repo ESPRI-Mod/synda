@@ -14,7 +14,6 @@
 import os
 import urllib2
 import requests
-import sdxml
 import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
@@ -53,7 +52,7 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
         buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
 
     try:
-        di=sdxml.parse_metadata(buf)
+        di=search_api_parser.parse_metadata(buf)
     except Exception,e:
 
         # If we are here, it's likely that they is a problem with the internet connection
@@ -85,7 +84,7 @@ def call_param_web_service(url,timeout):
     buf=HTTP_GET(url,timeout)
 
     try:
-        params=sdxml.parse_parameters(buf)
+        params=search_api_parser.parse_parameters(buf)
     except:
 
         # If we are here, it's likely that they is a problem with the internet connection
@@ -148,3 +147,15 @@ def test_access():
             break
         data_list.append(data)
         #print "Read %s bytes"%len(data)
+
+def get_search_api_parser():
+    if sdconfig.searchapi_output_format==sdconst.SEARCH_API_OUTPUT_FORMAT_XML:
+        import sdxml
+        return sdxml
+    elif sdconfig.searchapi_output_format==sdconst.SEARCH_API_OUTPUT_FORMAT_JSON:
+        import sdjson
+        return sdjson
+    else:
+        assert False
+
+search_api_parser=get_search_api_parser()

@@ -280,6 +280,10 @@ files_dest_folder_for_get_subcommand=None
 
 default_limits_mode=config.get('interface','default_listing_size')
 
+# Note
+#     When set to xml, 'lxml' package is required (must be added both in install.sh and in requirements.txt)
+searchapi_output_format=sdconst.SEARCH_API_OUTPUT_FORMAT_JSON
+
 # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
 next_url_on_error=config.getboolean('download','http_fallback')
 
