@@ -2,7 +2,7 @@ pyOpenSSL
 myproxyclient
 psutil
 humanize
-lxml==3.3.5
+#lxml==3.3.5
 tabulate
 progress
 pycountry
