@@ -264,7 +264,7 @@ if __name__ == '__main__':
     with open(args.file, 'r') as fh:
         buffer=fh.read()
 
-    #parse_parameters(buffer)
+    #result=parse_parameters(buffer)
     result=parse_metadata(buffer)
 
     print "%s\n"%json.dumps(result,indent=4, separators=(',', ': '))

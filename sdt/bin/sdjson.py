@@ -25,16 +25,34 @@ def parse_parameters(buffer):
         raise
 
     params={}
-    parameter_nodes=xmldoc.xpath("./lst[@name='facet_counts']/lst[@name='facet_fields']")
-    for parameter_node in parameter_nodes:
-        for facet in parameter_node.xpath("./*"):
-            facet_name=facet.attrib["name"]
+    footer_node=xmldoc["facet_counts"]
+    fields_node=footer_node["facet_fields"]
+    for facet_name,li in fields_node.iteritems():
+        items=[]
 
-            items=[]
-            for n in facet.xpath("./*"):
-                items.append(Item(n.attrib["name"], int(n.text)))
+        """
+        Tricky code to parse list with mixed info
 
-            params[facet_name]=items
+        Sample:
+
+            "social_forcing":[
+              "NA",2860,
+              "nosoc",2273,
+              "pressoc",2382,
+              "ssp2",15860],
+            "vegetation":[
+              "NA",2296,
+              "static",537],
+            "downscaling_model_type":[
+        """
+        for tu in zip(li[0::2], li[1::2]):
+            value=tu[0]
+            count=tu[1]
+
+            items.append(Item(value, int(count)))
+
+
+        params[facet_name]=items
 
     return params
 
@@ -131,7 +149,7 @@ if __name__ == '__main__':
     with open(args.file, 'r') as fh:
         buffer=fh.read()
 
-    #parse_parameters(buffer)
+    #result=parse_parameters(buffer)
     result=parse_metadata(buffer)
 
     print "%s\n"%json.dumps(result,indent=4, separators=(',', ': '))
