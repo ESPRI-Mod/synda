@@ -21,6 +21,7 @@ Notes
 from sdexception import SDException
 import sdconst
 import sdconfig
+import sdurlutils
 
 def serialize_parameters(facets):
     """Serialize parameters
@@ -81,9 +82,6 @@ def serialize_parameter__mvpp(name,values): # 'mvpp' means 'many values per para
     else:
         return ''
 
-def get_solr_output_format(output_format):
-    return 'application%%2Fsolr%%2B%s'%output_format
-
 def build_url(facets,searchapi_host):
     serialized_parameters=serialize_parameters(facets)
 
@@ -91,7 +89,7 @@ def build_url(facets,searchapi_host):
     serialized_parameters=serialized_parameters.replace(" ","%20")
     #serialized_parameters=serialized_parameters.replace("|","%7C") # seems no need to encode this one (done automatically by the browser)
 
-    fmt=get_solr_output_format(sdconfig.searchapi_output_format)
+    fmt=sdurlutils.get_solr_output_format(sdconfig.searchapi_output_format)
 
     url="http://{0}/esg-search/search?{1}&format={2}".format(sdconst.IDXHOSTMARK,serialized_parameters,fmt)
 
