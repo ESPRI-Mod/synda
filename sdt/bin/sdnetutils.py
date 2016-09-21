@@ -85,12 +85,12 @@ def call_param_web_service(url,timeout):
 
     try:
         params=search_api_parser.parse_parameters(buf)
-    except:
+    except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        raise SDException('SDNETUTI-003','Network error')
+        raise SDException('SDNETUTI-003','Network error (%s)'%str(e))
 
     return params
 
