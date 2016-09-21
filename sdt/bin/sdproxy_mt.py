@@ -18,7 +18,6 @@ import random
 import time
 import sdlog
 import sdproxy
-from sdexception import SDException
 import sdtypes
 import sdindex
 import sdconst
@@ -27,6 +26,7 @@ import sdsquery
 import sdtools
 import sdtrace
 import sdurlutils
+import sdexception
 
 class MetadataThread(threading.Thread):
     def __init__(self,host,service,query,result_queue,error_queue):
@@ -85,7 +85,7 @@ def run(i__queries):
     # check
     for q in i__queries:
         if sdconst.IDXHOSTMARK not in q['url']:
-            raise SDException('SDPROXMT-044','Incorrect query: host must not be set at this step')
+            raise sdexception.SDException('SDPROXMT-044','Incorrect query: host must not be set at this step')
 
     # retry loop
     max_retry=6
