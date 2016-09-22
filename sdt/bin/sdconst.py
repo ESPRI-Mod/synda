@@ -164,7 +164,6 @@ SA_TYPE_AGGREGATION='Aggregation' # aggregation ~ variable (only use locally (i.
 SA_TYPE_DATASET='Dataset'
 #
 SA_TYPE_DEFAULT=SA_TYPE_DATASET
-SD_TYPE_DEFAULT=SA_TYPE_FILE
 #
 PENDING_PARAMETER='pending_parameter' # this parameter contains unnamed parameters list (i.e. it contains a  list of parameter values)
 #
