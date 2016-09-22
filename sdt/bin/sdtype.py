@@ -124,6 +124,6 @@ def infer_display_type(stream):
         type_=_infer_from_dquery(dquery)
 
     if type_ is None:
-        type_=sdconfig.sa_type_default
+        type_=sdconfig.sdtsaction_type_default
 
     return type_
