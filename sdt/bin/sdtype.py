@@ -23,6 +23,7 @@ TODO
 
 import sdconst
 import sddquery
+import sdconfig
 
 def _infer_from_unnamed_facet(pvalue):
     if pvalue==sdconst.SA_TYPE_FILE:
@@ -123,6 +124,6 @@ def infer_display_type(stream):
         type_=_infer_from_dquery(dquery)
 
     if type_ is None:
-        type_=sdconst.SA_TYPE_DATASET # default
+        type_=sdconfig.sa_type_default
 
     return type_

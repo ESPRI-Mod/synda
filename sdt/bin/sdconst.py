@@ -163,8 +163,6 @@ SA_TYPE_FILE='File'
 SA_TYPE_AGGREGATION='Aggregation' # aggregation ~ variable (only use locally (i.e. search-api doesn't support it for now except for some special project))
 SA_TYPE_DATASET='Dataset'
 #
-SA_TYPE_DEFAULT=SA_TYPE_DATASET
-#
 PENDING_PARAMETER='pending_parameter' # this parameter contains unnamed parameters list (i.e. it contains a  list of parameter values)
 #
 SELECTION_FROM_CMDLINE='cli'
