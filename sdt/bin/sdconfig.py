@@ -218,7 +218,6 @@ use_myproxy_module=True
 # Type of metadata server. Default is 'esgf_search_api'.
 metadata_server_type='esgf_search_api' # 'esgf_search_api' | 'thredds_catalog' | 'apache_default_listing'
 
-sd_type_default=sdconst.SA_TYPE_FILE
 sdtsaction_type_default=sdconst.SA_TYPE_DATASET
 
 mono_host_retry=False

@@ -40,7 +40,7 @@ import sdprint
 
 def run(facets_groups):
     for facets_group in facets_groups:
-        type_=sddquery.get_scalar(facets_group,'type',default=sdconfig.sd_type_default) 
+        type_=sddquery.get_scalar(facets_group,'type',default=sdconst.SA_TYPE_FILE) 
 
         if sdconst.PENDING_PARAMETER in facets_group:
             pending_parameters=facets_group[sdconst.PENDING_PARAMETER]
