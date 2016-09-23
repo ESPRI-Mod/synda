@@ -116,7 +116,7 @@ def check(args):
         #subset_filter=['model=HadCM3','project=CMIP5']
         subset_filter=['project=CMIP5']
 
-        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields=sdfields.get_dataset_version_fields(),dry_run=args.dry_run)
+        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields=sdfields.get_dataset_version_fields(),dry_run=args.dry_run,playback=args.playback,record=args.record)
 
         if not args.dry_run:
 

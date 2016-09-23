@@ -36,7 +36,7 @@ import sdtypes
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
-def run(stream=None,selection=None,path=None,parameter=None,post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None):
+def run(stream=None,selection=None,path=None,parameter=None,post_pipeline_mode='file',parallel=sdconfig.metadata_parallel_download,index_host=None,dry_run=False,load_default=None,playback=None,record=None):
     """
     Note
         squeries means 'Serialized queries'
@@ -120,6 +120,9 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
+    parser.add_argument('-p','--playback',help='Read metadata from file',metavar='FILE')
+    parser.add_argument('-r','--record',help='Write metadata to file',metavar='FILE')
+
     parser.add_argument('--load-default',dest='load_default',action='store_true')
     parser.add_argument('--no-load-default',dest='load_default',action='store_false')
     parser.set_defaults(load_default=None)
@@ -135,7 +138,9 @@ if __name__ == '__main__':
                  post_pipeline_mode=args.post_pipeline_mode,
                  dry_run=args.dry_run,
                  load_default=args.load_default,
-                 parallel=args.parallel)
+                 parallel=args.parallel,
+                 playback=args.playback,
+                 record=args.record)
 
     if not args.dry_run:
         sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item) # warning: load list in memory
