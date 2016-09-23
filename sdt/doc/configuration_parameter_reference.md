@@ -128,6 +128,18 @@ Default: 0
 
 --------------------------------------------------------
 
+### core.metadata_server_type
+
+Type of metadata server
+
+Possible values are: "esgf_search_api", "thredds_catalog" and "apache_default_listing".
+
+Type: string
+
+Default: 'esgf_search_api'
+
+--------------------------------------------------------
+
 ### core.default_path
 
 Override 'selection file default value' directory default path
@@ -231,7 +243,7 @@ If behaviour.check_parameter is true,
 
     $ synda search cmip5 taz
 
-will raises an exception and informs the user that 'taz' value is not found.
+will raises an exception and inform the user that 'taz' value is not found.
 
 Type: boolean
 

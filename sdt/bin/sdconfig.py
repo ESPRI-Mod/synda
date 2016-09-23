@@ -215,9 +215,6 @@ unknown_value_behaviour='error' # error | warning
 # this is to switch between 'sdmyproxy.py' and 'sdlogon.sh'
 use_myproxy_module=True
 
-# Type of metadata server. Default is 'esgf_search_api'.
-metadata_server_type='esgf_search_api' # 'esgf_search_api' | 'thredds_catalog' | 'apache_default_listing'
-
 # Set default type (File | Dataset | Variable)
 sdtsaction_type_default=sdconst.SA_TYPE_FILE if metadata_server_type=='apache_default_listing' else sdconst.SA_TYPE_DATASET
 
@@ -250,6 +247,7 @@ openid=config.get('esgf_credential','openid')
 password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
 download=config.getboolean('module','download')
+metadata_server_type=config.get('core','metadata_server_type')
 
 default_folder=get_path('default_path',default_folder_default_path)
 selection_folder=get_path('selection_path',default_selection_folder)
