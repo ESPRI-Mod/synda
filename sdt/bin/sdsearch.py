@@ -130,8 +130,8 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
-    parser.add_argument('-p','--playback',help='Read metadata from file',metavar='FILE')
-    parser.add_argument('-r','--record',help='Write metadata to file',metavar='FILE')
+    parser.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
+    parser.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
 
     parser.add_argument('--load-default',dest='load_default',action='store_true')
     parser.add_argument('--no-load-default',dest='load_default',action='store_false')

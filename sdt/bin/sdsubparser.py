@@ -71,8 +71,8 @@ def add_action_argument(parser,choices=None,default=None):
 
 def add_playback_record_options(parser):
     grp=parser.add_mutually_exclusive_group(required=False)
-    grp.add_argument('-p','--playback',help='Read metadata from file',metavar='FILE')
-    grp.add_argument('-r','--record',help='Write metadata to file',metavar='FILE')
+    grp.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
+    grp.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
 
 def build_epilog_section(title,body):
 
