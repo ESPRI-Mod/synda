@@ -215,9 +215,6 @@ unknown_value_behaviour='error' # error | warning
 # this is to switch between 'sdmyproxy.py' and 'sdlogon.sh'
 use_myproxy_module=True
 
-# Set default type (File | Dataset | Variable)
-sdtsaction_type_default=sdconst.SA_TYPE_FILE if metadata_server_type=='apache_default_listing' else sdconst.SA_TYPE_DATASET
-
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
@@ -280,6 +277,9 @@ check_path(data_folder)
 files_dest_folder_for_get_subcommand=None
 
 default_limits_mode=config.get('interface','default_listing_size')
+
+# Set default type (File | Dataset | Variable)
+sdtsaction_type_default=sdconst.SA_TYPE_FILE if metadata_server_type=='apache_default_listing' else sdconst.SA_TYPE_DATASET
 
 # Note
 #     When set to xml, 'lxml' package is required (must be added both in install.sh and in requirements.txt)
