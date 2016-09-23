@@ -1,5 +1,6 @@
 import bs4
 import requests
+import argparse
 
 def file_list(url, ext=''):
     li=[]
@@ -20,5 +21,9 @@ def file_list(url, ext=''):
 url = 'http://hydrology.princeton.edu/data/efwood/SWICCA/CMIP5/rcp45/2057-2099/bc_pr'
 ext = 'nc'
 
-for f in file_list(url, ext):
-    print f
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
+    for f in file_list(url, ext):
+        print f
