@@ -74,7 +74,13 @@ def run(stream=None,
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
         # retrieve files
-        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
+        if playback is not None:
+            #metadata=sdtypes.Metadata()
+            pass
+        else:
+            metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
+            if record is not None:
+                pass
 
         if progress:
             ProgressThread.stop() # spinner stop
