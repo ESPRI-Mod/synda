@@ -20,6 +20,7 @@ Notes
 
 import os
 import argparse
+import json
 import sdapp
 import sdlog
 import sdconfig
@@ -73,14 +74,7 @@ def run(stream=None,
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-        # retrieve files
-        if playback is not None:
-            #metadata=sdtypes.Metadata()
-            pass
-        else:
-            metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
-            if record is not None:
-                pass
+        metadata=_get_files(squeries,parallel,post_pipeline_mode,action,playback,record)
 
         if progress:
             ProgressThread.stop() # spinner stop
@@ -101,6 +95,22 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     sdlog.info("SDSEARCH-620","Retrieve timestamps")
     metadata=fill_dataset_timestamp(squeries,metadata,parallel,action) # complete missing info
     sdlog.info("SDSEARCH-634","timestamps successfully retrieved")
+
+    return metadata
+
+def _get_files(squeries,parallel,post_pipeline_mode,action,playback,record):
+
+    if playback is not None:
+        with open(playback, 'r') as fh:
+            metadata=sdtypes.Metadata(files=json.load(fh)) # warning: load full list in memory
+
+    else:
+
+        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
+
+        if record is not None:
+            with open(record, 'w') as fh:
+                json.dump(metadata.get_files(),fh,indent=4) # warning: load full list in memory
 
     return metadata
 
@@ -136,8 +146,9 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
-    parser.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
-    parser.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
+    grp=parser.add_mutually_exclusive_group(required=False)
+    grp.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
+    grp.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
 
     parser.add_argument('--load-default',dest='load_default',action='store_true')
     parser.add_argument('--no-load-default',dest='load_default',action='store_false')
