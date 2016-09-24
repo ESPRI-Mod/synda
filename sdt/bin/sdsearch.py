@@ -100,6 +100,9 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     return metadata
 
 def _get_files(squeries,parallel,post_pipeline_mode,action,playback,record):
+    """
+    TODO: maybe move this code inside sdmts module (e.g. metadata.dump(path))
+    """
 
     if playback is not None:
         with open(playback, 'r') as fh:
