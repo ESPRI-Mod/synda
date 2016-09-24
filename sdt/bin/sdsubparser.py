@@ -17,6 +17,7 @@ import sdcliex
 import sdconst
 import sdprint
 import sdconfig
+import sdcommonarg
 
 def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
@@ -69,11 +70,6 @@ def add_parameter_argument(parser):
 def add_action_argument(parser,choices=None,default=None):
     parser.add_argument('action',nargs='?',default=default,choices=choices,help=sdi18n.m0017)
 
-def add_playback_record_options(parser):
-    grp=parser.add_mutually_exclusive_group(required=False)
-    grp.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
-    grp.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
-
 def build_epilog_section(title,body):
 
     if body is not None:
@@ -124,7 +120,7 @@ def run(subparsers):
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
     subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check())
-    add_playback_record_options(subparser)
+    sdcommonarg.add_playback_record_options(subparser)
     add_action_argument(subparser,choices=['dataset_version','file_variable','selection'])
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')

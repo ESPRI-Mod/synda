@@ -34,6 +34,7 @@ import sdtools
 import sdsqueries
 import sdbatchtimestamp
 import sdtypes
+import sdcommonarg
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
@@ -146,9 +147,7 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
-    grp=parser.add_mutually_exclusive_group(required=False)
-    grp.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
-    grp.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
+    sdcommonarg.add_playback_record_options(parser)
 
     parser.add_argument('--load-default',dest='load_default',action='store_true')
     parser.add_argument('--no-load-default',dest='load_default',action='store_false')
