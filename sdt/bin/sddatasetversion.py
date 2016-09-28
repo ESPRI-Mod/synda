@@ -11,6 +11,9 @@
 
 """This module contains dataset versions management code."""
 
+import argparse
+import re
+import sdtypes
 import sdapp
 import sdmath
 from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException,IncorrectVersionFormatException
@@ -18,6 +21,54 @@ from sdexception import SDException,MixedVersionFormatException,IncorrectVTCExce
 _VERSION_FORMAT_SHORT='short' # e.g. 'v1'
 _VERSION_FORMAT_LONG='long' # e.g. '20120101'
 _VERSION_FORMAT_LONG_WITH_PREFIX='long_with_prefix' # e.g. 'v20120101'
+
+class DatasetVersion():
+    """Dataset version object"""
+
+    # FIXME we distinguish between versions like 20160618 or 20160619 and
+    # versions like 1 or 2. 
+    # If a data set goes from 1 to 20160618 we see it as an error for now.
+    # May change in the future (it may be handled as long as it doesn't go back to 3 for the next version. TBC)
+
+    # FIXME If there is any overlap between those formats, the least selective
+    # ones must come last. 
+    # For example, if /\d+/ came before /\d{8}/,
+    # which_format() would identify 20160618
+    # as matching /\d+/ instead of /\d{8}/.
+
+    _dataset_version_regexp_strings=[
+        #r'^v(\d{8})$',
+        r'^v(\d+)$',
+        #r'^(\d{8})$',
+        r'^(\d+)$',
+    ]
+
+    _dataset_version_regexps = map(lambda s: re.compile(s, re.IGNORECASE), _dataset_version_regexp_strings);
+
+    def __init__(self, version):
+        self.version = version
+        self._version_formats = None
+
+    def get_version(self):
+        return self.version
+
+    def analyse(self):
+        """Analyse a version string, identifying the format in which it is and
+           extracting a version number (an integer) for comparing it to other
+           versions. Returns the number of the regexp it matches and the
+           version number or (None, None) if it matches none.
+        """
+        for n, re in enumerate(self._dataset_version_regexps):
+            #print 'n = %d, re = "%s", self.version = "%s"' % (n, re, self.version)
+            match = re.match(self.version)
+            if match:
+                vernum = long(match.group(0)) + 0
+                vernum_str = '%s' % vernum
+                if (vernum_str != match.group(0)):  # Not supposed to happen
+                    raise SDException("SDDATVER-006", 'Unexpected error while extracting version number from version string "%s" with regexp "%s": capture "%s" converts to "%s"' % (self.version, self._dataset_version_regexp_strings[n], match.group(0), vernum_str))
+                return n, vernum
+
+        return None, None
 
 class DatasetVersions():
     """Manage dataset version.
@@ -233,3 +284,19 @@ class DatasetVersions():
             raise
         except:
             raise
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('versions', nargs='*')
+    args=parser.parse_args()
+
+    versions=DatasetVersions()
+    for v in args.versions:
+        ds=sdtypes.Dataset(master_id='ds1', version=v)
+        dv.add_dataset_version(ds)
+
+    dv.version_format_check()
+
+    print "ds has %d versions in %d different formats:" % (len(dv._dataset_versions), len(dv._version_formats))
+    for n, vfn in enumerate(dv.version_formats()):
+        print "vfn = %s (/%s/)" % (vfn, DatasetVersion._dataset_version_regexp_strings[vfn])
