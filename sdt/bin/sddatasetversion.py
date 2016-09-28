@@ -231,22 +231,6 @@ class DatasetVersions():
     def get_versions(self):
         return [d.version for d in self._dataset_versions]
 
-    def version_format_check(self):
-        """Verify version format regularity."""
-
-        version_formats=set() # use set() instead of list to prevent duplicate
-        for d in self._dataset_versions:
-            if self.is_short_version_format(d.version):
-                version_formats.add(_VERSION_FORMAT_SHORT)
-            elif self.is_long_version_format(d.version):
-                version_formats.add(_VERSION_FORMAT_LONG)
-            elif self.is_long_version_with_prefix_format(d.version):
-                version_formats.add(_VERSION_FORMAT_LONG_WITH_PREFIX)
-            else:
-                raise IncorrectVersionFormatException('SDDATVER-004','Incorrect version format (master_id=%s,version=%s)'%(d.master_id,d.version))
-
-        if len(version_formats)!=1: # only one version format must be use for a dataset (i.e. short and long format should not be mixed)
-            raise MixedVersionFormatException('SDDATVER-005','Mixed version format')
 
     def version_and_timestamp_correlation_check(self):
         """Verify that timestamp monotonicity follows version monotonicity
@@ -266,37 +250,3 @@ class DatasetVersions():
 
         if not sdmath.monotone_increasing(li):
             raise IncorrectVTCException()
-
-    def version_consistency_check(self):
-
-        assert len(self._dataset_versions)>0
-
-        try:
-            self.version_format_check()
-        except MixedVersionFormatException,e:
-            raise
-        except:
-            raise
-
-        try:
-            self.version_and_timestamp_correlation_check()
-        except IncorrectVTCException,e:
-            raise
-        except:
-            raise
-
-if __name__=='__main__':
-    parser=argparse.ArgumentParser()
-    parser.add_argument('versions', nargs='*')
-    args=parser.parse_args()
-
-    versions=DatasetVersions()
-    for v in args.versions:
-        ds=sdtypes.Dataset(master_id='ds1', version=v)
-        dv.add_dataset_version(ds)
-
-    dv.version_format_check()
-
-    print "ds has %d versions in %d different formats:" % (len(dv._dataset_versions), len(dv._version_formats))
-    for n, vfn in enumerate(dv.version_formats()):
-        print "vfn = %s (/%s/)" % (vfn, DatasetVersion._dataset_version_regexp_strings[vfn])
