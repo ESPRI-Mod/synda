@@ -198,6 +198,7 @@ class DatasetVersions():
                 # To raise exception instead, uncomment line below
                 #raise SDException("SDDATVER-003","Incorrect timestamp (%s,%s,%s,%s)"%(d_a.dataset_functional_id,d_b.dataset_functional_id,d_a.timestamp,d_b.timestamp))
 
+
         else:
             return d_a.version > d_b.version
 
