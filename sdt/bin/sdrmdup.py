@@ -31,7 +31,7 @@ def run(metadata,functional_id_keyname):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,'data_node']) # create light list with needed columns only not to overload system memory
 
     # list of dict => dict (id=>bool)
-    seen=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata)
+    seen=dict(((f[functional_id_keyname],f['data_node']), False) for f in light_metadata.get_files())
 
     po=sdpipelineprocessing.ProcessingObject(remove,functional_id_keyname,seen)
     metadata=sdpipelineprocessing.run_pipeline(metadata,po)
