@@ -102,7 +102,7 @@ def stop():
         try:
             os.kill(pidfile.read_pid(),signal.SIGTERM)
         except:
-            print 'Daemon process is not running but pid file exists in $SP_HOME/tmp'
+            print 'Daemon process is not running but pid file exists (%s)'%spconfig.daemon_pid_file
     else:
         print 'Daemon is already stopped.'
 
