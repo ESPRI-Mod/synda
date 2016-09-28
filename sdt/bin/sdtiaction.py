@@ -66,10 +66,13 @@ def certificate(args):
     return status
 
 def check(args):
-    import sddump,sdtypes,sddatasetversion,sdfields
+    import sddump,sdcheckdatasetversion,sdfields
+
+    status=0
 
     if args.action is None:
-        print_stderr('Please specify a check to perform.')   
+        print_stderr('Please specify a check to perform.')
+        status=1
 
     elif args.action=="selection":
         import sdselectionsgroup,sdpipeline
@@ -109,98 +112,17 @@ def check(args):
 
             if errors==0:
                 print 'No inconsistency detected'
+            else:
+                print '%d inconsistencies detected'%errors
 
     elif args.action=="dataset_version":
-
-        #subset_filter=['model=HadCM3','project=CMIP5','experiment=historical','realm=atmos']
-        #subset_filter=['model=HadCM3','project=CMIP5']
-        subset_filter=['project=CMIP5']
-
-        datasets=sddump.dump_ESGF(['type=Dataset']+subset_filter,fields=sdfields.get_dataset_version_fields(),dry_run=args.dry_run,playback=args.playback,record=args.record)
-
-        if not args.dry_run:
-
-
-            print '%i dataset(s) retrieved'%len(datasets)
-
-
-            # group dataset by 'master_id'
-            #
-            # MEMO
-            #     'master_id' is the dataset identifier without 'version' item
-
-            datasets_grouped_by_master_id={}
-            for dataset in datasets:
-
-                d=sdtypes.Dataset(**dataset)
-
-                # debug
-                #print '%s %s %s'%(d.version,d.timestamp,d.master_id)
-
-                if d.master_id in datasets_grouped_by_master_id:
-
-                    # retrieve DatasetVersions object
-                    dv=datasets_grouped_by_master_id[d.master_id]
-
-                    # add dataset version into DatasetVersions object
-                    dv.add_dataset_version(d)
-                else:
-
-                    # create DatasetVersions object
-                    dv=sddatasetversion.DatasetVersions()
-
-                    # add dataset version into DatasetVersions object
-                    dv.add_dataset_version(d)
-
-                    # add DatasetVersions object into global structure ('master_id' indexed)
-                    datasets_grouped_by_master_id[d.master_id]=dv
-
-
-            # debug
-            # print how many version exist for each dataset
-            """
-            for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
-                print '%s => %i'%(master_id,dataset_versions.count())
-            """
-
-            # main
-            errors=0
-            for master_id,dataset_versions in datasets_grouped_by_master_id.iteritems():
-
-                # debug
-                #print 'Perform dataset_version quality check on %s'%master_id
-
-                try:
-                    dataset_versions.version_consistency_check()
-                except sdexception.IncorrectVersionFormatException,e:
-                    print 'Inconsistency detected: incorrect version format (master_id=%s,version=%s)'%(master_id,str(dataset_versions.get_sorted_versions()))
-
-                    # debug
-                    """
-                    for d_v in dataset_versions.get_sorted_versions():
-                        print d_v
-                    """
-
-                    errors+=1
-                except sdexception.MixedVersionFormatException,e:
-                    print 'Inconsistency detected: mixed version format (%s)'%master_id
-
-                    for d_v in dataset_versions.get_sorted_versions():
-                        print d_v
-
-                    errors+=1
-                except sdexception.IncorrectVTCException,e:
-                    print 'Inconsistency detected: incorrect correlation for version and timestamp (%s)'%master_id
-
-                    errors+=1
-                
-            if errors==0:
-                print 'No inconsistency detected'
+        status=sdcheckdatasetversion.run(args)
 
     else:
-        assert False
+        print_stderr('Invalid check "%s"'%args.action)
+        status=1
 
-    return 0
+    return status
 
 def contact(args):
     import sdi18n

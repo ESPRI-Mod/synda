@@ -122,6 +122,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check())
     sdcommonarg.add_playback_record_options(subparser)
     add_action_argument(subparser,choices=['dataset_version','file_variable','selection'])
+    add_parameter_argument(subparser)
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
