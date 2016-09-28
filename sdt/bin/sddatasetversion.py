@@ -198,7 +198,6 @@ class DatasetVersions():
                 # To raise exception instead, uncomment line below
                 #raise SDException("SDDATVER-003","Incorrect timestamp (%s,%s,%s,%s)"%(d_a.dataset_functional_id,d_b.dataset_functional_id,d_a.timestamp,d_b.timestamp))
 
-
         else:
             return d_a.version > d_b.version
 
@@ -230,23 +229,3 @@ class DatasetVersions():
 
     def get_versions(self):
         return [d.version for d in self._dataset_versions]
-
-
-    def version_and_timestamp_correlation_check(self):
-        """Verify that timestamp monotonicity follows version monotonicity
-        (i.e. if version increase, timestamp must increase too)."""
-
-        # debug
-        #print self.get_sorted_versions()
-        #print self.get_dataset_versions_SORT_BY_VERSION()
-
-        li=[]
-        for d in self.get_dataset_versions_SORT_BY_VERSION():
-            
-            # debug
-            #print d.version
-
-            li.append(d.version)
-
-        if not sdmath.monotone_increasing(li):
-            raise IncorrectVTCException()
