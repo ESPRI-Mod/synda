@@ -83,8 +83,9 @@ def run(args):
     print_wrapped('synda check dataset_version %s' % ' '.join(args.parameter))
     sys.stdout.flush()
 
+    all_dsv = sddump.dump_ESGF(['type=Dataset']+args.parameter,fields='master_id,version,timestamp',dry_run=args.dry_run)
+
     if not args.dry_run:
-        all_dsv = sddump.dump_ESGF(['type=Dataset']+args.parameter,fields='master_id,version,timestamp',dry_run=args.dry_run)
 
         # group dataset by 'master_id'
         #
