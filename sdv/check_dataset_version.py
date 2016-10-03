@@ -22,13 +22,13 @@ def run():
 
             # post-processing password
             password='barreau'
-            fabric.api.run("sudo sed -i '3s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%password) # beware: line number specific
+            fabric.api.run("sudo sed -i '3s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
 
             # ESGF password
             openid='https://pcmdi.llnl.gov/esgf-idp/openid/syndatest'
             password='KucJedvos3!'
-            fabric.api.run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' /etc/synda/sdt/credentials.conf"%openid)
-            fabric.api.run("sudo sed -i '7s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%password) # beware: line number specific
+            fabric.api.run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' %s/credentials.conf"%(openid,sdt_conf_folder))
+            fabric.api.run("sudo sed -i '7s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
 
             fabric.api.run("sudo service synda restart")
 
@@ -69,18 +69,19 @@ def run():
 
     fabric.api.execute(execute_basic_command)
     fabric.api.execute(check_version)
-    fabric.api.execute(check_dataset_version)
-    fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
 
     time.sleep(150) # give some time for the file to be downloaded (default 300)
 
-    fabric.api.execute(check_dataset_version)
-    fabric.api.execute(check_dataset_version)
-    fabric.api.execute(check_dataset_version)
-    fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
+    #fabric.api.execute(check_dataset_version)
 
 # init.
 sdt_version='3.5'
+sdt_conf_folder='/etc/synda/sdt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
