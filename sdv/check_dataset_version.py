@@ -90,7 +90,7 @@ def run():
     #fabric.api.execute(check_dataset_version)
 
 # init.
-sdt_version='3.5'
+sdt_version='3.6'
 #sdt_conf_folder='/etc/synda/sdt'
 sdt_conf_folder='/home/foobar/sdt/conf'
 pp_password='bar'
