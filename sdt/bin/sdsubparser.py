@@ -45,7 +45,8 @@ def add_incremental_mode_argument(parser,subc):
 
     parser.add_argument('-i','--incremental', action='store_true',help=msg)
 
-    # redundant with 'parameter', but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
+def add_timestamp_boundaries(parser):
+    # redundant with 'to' and 'from' search-api parameters, but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
     parser.add_argument('--timestamp_left_boundary',help=argparse.SUPPRESS) # timestamp left boundary filter (hidden option mainly used for debug)
     parser.add_argument('--timestamp_right_boundary',help=argparse.SUPPRESS) # timestamp right boundary filter (hidden option mainly used for debug)
 
@@ -165,6 +166,7 @@ def run(subparsers):
     add_ni_option(subparser)
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'install')
+    add_timestamp_boundaries(subparser)
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
@@ -224,6 +226,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'stat')
+    add_timestamp_boundaries(subparser)
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
@@ -233,6 +236,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
     add_incremental_mode_argument(subparser,'upgrade')
+    add_timestamp_boundaries(subparser)
     subparser.add_argument('-e','--exclude_from',metavar='FILE',help='Read exclude selection-file from FILE')
 
     subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())

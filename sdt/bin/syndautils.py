@@ -77,7 +77,7 @@ def file_full_search(args,stream=None):
     if args.subcommand in ('install','stat'): # prevent incremental mode for 'remove' subcommand
 
         if args.timestamp_left_boundary and args.incremental:
-            raise sdexception.SDException('SYNUTILS-003',"Incorrect argument: 'timestamp_left_boundary' and 'incremental' are mutually exlusive options")
+            raise sdexception.SDException('SYNUTILS-003',"Incorrect argument: 'timestamp_left_boundary' and 'incremental' are mutually exclusive options")
 
         # those filters are mainly used to test 'incremental mode' feature
         if args.timestamp_left_boundary is not None:
