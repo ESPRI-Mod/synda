@@ -18,52 +18,60 @@ import fabric.api
 
 def run():
 
+    # fabric init.
+    #fabric.api.env.hosts = ['myserver']
+    #fabric.api.env.key_filename = v.keyfile()
+    #fabric.api.env.disable_known_hosts = True
+
+    #fabric_run=fabric.api.run
+    fabric_run=fabric.api.local
+
     @fabric.api.task
     def configure_task():
 
             # post-processing password
             password='barreau'
-            fabric.api.run("sudo sed -i '3s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
+            fabric_run("sudo sed -i '3s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
 
             # ESGF password
             openid='https://pcmdi.llnl.gov/esgf-idp/openid/syndatest'
             password='KucJedvos3!'
-            fabric.api.run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' %s/credentials.conf"%(openid,sdt_conf_folder))
-            fabric.api.run("sudo sed -i '7s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
+            fabric_run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' %s/credentials.conf"%(openid,sdt_conf_folder))
+            fabric_run("sudo sed -i '7s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
 
-            fabric.api.run("sudo service synda restart")
+            fabric_run("sudo service synda restart")
 
     @fabric.api.task
     def execute_basic_command():
-        fabric.api.run('synda -V')
+        fabric_run('synda -V')
 
     @fabric.api.task
     def check_version():
-        fabric.api.run('test %s = $( synda -V 2>&1 )'%sdt_version)
+        fabric_run('test %s = $( synda -V 2>&1 )'%sdt_version)
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('synda check dataset_version')
+        fabric_run('synda check dataset_version')
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
+        fabric_run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('test -f /tmp/foobar')
+        fabric_run('test -f /tmp/foobar')
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('sudo synda stat CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac | grep "Done files count: 1"')
+        fabric_run('sudo synda stat CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac | grep "Done files count: 1"')
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('sudo synda remove -y CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac')
+        fabric_run('sudo synda remove -y CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac')
 
     @fabric.api.task
     def check_dataset_version():
-        fabric.api.run('test ! -f /srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc')
+        fabric_run('test ! -f /srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc')
 
 
     fabric.api.execute(configure_task) 
@@ -82,7 +90,8 @@ def run():
 
 # init.
 sdt_version='3.5'
-sdt_conf_folder='/etc/synda/sdt'
+#sdt_conf_folder='/etc/synda/sdt'
+sdt_conf_folder='/home/foobar/sdt/conf'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
