@@ -11,6 +11,7 @@
 
 """This script contains user acceptance testing (UAT) routines."""
 
+import argparse
 import re
 import time
 import fabric.api
@@ -86,3 +87,5 @@ sdt_conf_folder='/etc/synda/sdt'
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
+
+    run()
