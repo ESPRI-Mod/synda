@@ -30,16 +30,16 @@ def run():
     def configure_task():
 
             # post-processing password
-            password='barreau'
-            fabric_run("sudo sed -i '3s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
+            fabric_run("sudo sed -i '3s|password=foobar|password=%s|' %s/credentials.conf"%(pp_password,sdt_conf_folder)) # beware: line number specific
 
             # ESGF password
             openid='https://pcmdi.llnl.gov/esgf-idp/openid/syndatest'
-            password='KucJedvos3!'
             fabric_run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' %s/credentials.conf"%(openid,sdt_conf_folder))
-            fabric_run("sudo sed -i '7s|password=foobar|password=%s|' %s/credentials.conf"%(password,sdt_conf_folder)) # beware: line number specific
+            fabric_run("sudo sed -i '7s|password=foobar|password=%s|' %s/credentials.conf"%(esgf_password,sdt_conf_folder)) # beware: line number specific
 
-            fabric_run("sudo service synda restart")
+    @fabric.api.task
+    def restart():
+        fabric_run("sudo service synda restart")
 
     @fabric.api.task
     def execute_basic_command():
@@ -75,6 +75,7 @@ def run():
 
 
     fabric.api.execute(configure_task) 
+    #fabric.api.execute(restart) 
 
     fabric.api.execute(execute_basic_command)
     fabric.api.execute(check_version)
@@ -92,6 +93,8 @@ def run():
 sdt_version='3.5'
 #sdt_conf_folder='/etc/synda/sdt'
 sdt_conf_folder='/home/foobar/sdt/conf'
+pp_password='bar'
+esgf_password='foo'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
