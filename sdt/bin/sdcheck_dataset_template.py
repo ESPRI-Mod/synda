@@ -46,14 +46,11 @@ def check_DRS_consistency(files):
                 sdlog.warning("SDCHKFIL-001","inconsistency detected between metadata and search-API facet (path_from_id=%s,path_from_template=%s)"%(path_from_id,path_from_template))
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
     files=json.load( sys.stdin )
-
     files=run(files)
-
     sdprint.print_format(files,args.format,args.print_only_one_item)
