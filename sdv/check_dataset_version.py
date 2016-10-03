@@ -82,7 +82,7 @@ def run():
     #fabric.api.execute(check_dataset_version)
     #fabric.api.execute(check_dataset_version)
 
-    time.sleep(150) # give some time for the file to be downloaded (default 300)
+    #time.sleep(150) # give some time for the file to be downloaded (default 300)
 
     #fabric.api.execute(check_dataset_version)
     #fabric.api.execute(check_dataset_version)
