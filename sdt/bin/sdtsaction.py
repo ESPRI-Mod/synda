@@ -193,7 +193,7 @@ def variable_search(args):
 def file_search(args):
     import sdfilesearch
 
-    if sdconfig.metadata_server_type not in sdconst.METADATA_SERVER_TYPES
+    if sdconfig.metadata_server_type not in sdconst.METADATA_SERVER_TYPES:
         raise sdexception.SDException('SDTSACTI-001','Incorrect metadata server type (%s)'%sdconfig.metadata_server_type)
 
     return getattr(sdfilesearch, sdconfig.metadata_server_type)(args)
