@@ -13,6 +13,7 @@
 
 import argparse
 import fabric.api
+from svtestutils import fabric_run
 
 @fabric.api.task
 def configure_task():

@@ -31,6 +31,7 @@ def fabric_run(cmd):
 # init.
 exec_mode='local'
 installation_mode='source'
+#installation_mode='system_package'
 normal_user='foobar'
 
 # fabric init.
