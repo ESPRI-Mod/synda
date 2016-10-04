@@ -14,10 +14,10 @@
 import argparse
 import re
 import time
-import fabric.api.task as task
-import fabric.api.execute as task_exec
-from testutils import fabric_run
-import testcommon as tc
+from fabric.api import task
+from fabric.api import execute as task_exec
+from svtestutils import fabric_run
+import svtestcommon as tc
 
 def run():
 
