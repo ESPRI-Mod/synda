@@ -20,6 +20,7 @@ import sdconst
 import sdprint
 import sdconfig
 from sdtools import print_stderr
+import sdexception
 
 def list_(args):
     import sdearlystreamutils
@@ -191,7 +192,10 @@ def variable_search(args):
 
 def file_search(args):
     import sdfilesearch
-    assert sdconfig.metadata_server_type in sdconst.METADATA_SERVER_TYPES
+
+    if sdconfig.metadata_server_type not in sdconst.METADATA_SERVER_TYPES
+        raise sdexception.SDException('SDTSACTI-001','Incorrect metadata server type (%s)'%sdconfig.metadata_server_type)
+
     return getattr(sdfilesearch, sdconfig.metadata_server_type)(args)
 
 # o-------------------------------------------------------o
