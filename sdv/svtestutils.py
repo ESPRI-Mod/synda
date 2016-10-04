@@ -45,6 +45,9 @@ home=os.environ['HOME']
 #fabric.api.env.key_filename = v.keyfile()
 #fabric.api.env.disable_known_hosts = True
 
+# verbosity mode
+#fabric.state.output['running'] = False
+
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
