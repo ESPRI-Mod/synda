@@ -1,15 +1,46 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
 
-def fabric_run(cmd):
+##################################
+#  @program        synda
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
+##################################
 
-    if installation_mode=='source':
-        cmd=cmd.replace('sudo service synda','synda daemon')
-        cmd=cmd.replace('sudo ','')
-        cmd=cmd.replace('/etc/synda/sdt','/home/%s/sdt/conf'%normal_user)
-    elif installation_mode=='system_package':
-        pass # nothing to do as this is the default
+"""This script contains UAT test for incremental discovery."""
 
-    if exec_mode=='local':
-        fabric.api.local(cmd)
-    else:
-        fabric.api.run(cmd)
+import argparse
+import fabric.api
 
+@fabric.api.task
+def configure_task():
+
+    # post-processing password
+    fabric_run("sudo sed -i '3s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%(pp_password,)) # beware: line number specific
+
+    # ESGF password
+    openid='https://pcmdi.llnl.gov/esgf-idp/openid/syndatest'
+    fabric_run("sudo sed -i 's|openid=https://esgf-node.ipsl.fr/esgf-idp/openid/foo|openid=%s|' /etc/synda/sdt/credentials.conf"%(openid,))
+    fabric_run("sudo sed -i '7s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%(esgf_password,)) # beware: line number specific
+
+@fabric.api.task
+def restart():
+    fabric_run("sudo service synda restart")
+
+@fabric.api.task
+def stop():
+    fabric_run("sudo service synda stop")
+
+@fabric.api.task
+def execute_basic_command():
+    fabric_run('synda -V')
+
+@fabric.api.task
+def check_version():
+    fabric_run('test %s = $( synda -V 2>&1 )'%sdt_version)
+
+if __name__=='__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
