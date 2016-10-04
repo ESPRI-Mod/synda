@@ -15,6 +15,14 @@ import os
 import argparse
 import fabric.api
 
+def task_exec(task):
+
+    print
+    print task.name
+    print
+
+    fabric.api.execute(task)
+
 def fabric_run(cmd):
 
     if installation_mode=='source':
