@@ -11,6 +11,7 @@
 
 """This script contains UAT test for incremental discovery."""
 
+import os
 import argparse
 import fabric.api
 
@@ -19,7 +20,7 @@ def fabric_run(cmd):
     if installation_mode=='source':
         cmd=cmd.replace('sudo service synda','synda daemon')
         cmd=cmd.replace('sudo ','')
-        cmd=cmd.replace('/etc/synda/sdt','/home/%s/sdt/conf'%normal_user)
+        cmd=cmd.replace('/etc/synda/sdt','%s/sdt/conf'%home)
     elif installation_mode=='system_package':
         pass # nothing to do as this is the default
 
@@ -32,7 +33,9 @@ def fabric_run(cmd):
 exec_mode='local'
 installation_mode='source'
 #installation_mode='system_package'
-normal_user='foobar'
+
+normal_user='foobar' # not used
+home=os.environ['HOME']
 
 # fabric init.
 #fabric.api.env.hosts = ['myserver']
