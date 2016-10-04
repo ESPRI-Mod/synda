@@ -22,6 +22,7 @@ import svtestcommon as tc
 def run():
 
     task_exec(tc.stop) 
+    task_exec(tc.disable_download) 
     task_exec(tc.reset) 
     task_exec(tc.configure_task) 
     task_exec(tc.execute_basic_command)
