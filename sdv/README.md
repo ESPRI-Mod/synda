@@ -14,6 +14,14 @@ Install Synda (from source or system package).
 
 Note: depending on which tests to run, SDT module, SDP module or both must be installed.
 
+### Test scripts dependency
+
+Test scripts need the *fabric* python package
+
+To install it, run
+
+    aptitude install fabric
+
 ### Test scripts installation
 
 Run commands below
