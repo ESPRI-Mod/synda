@@ -35,6 +35,11 @@ def stop():
     fabric_run("sudo service synda stop")
 
 @fabric.api.task
+def reset():
+    fabric_run("sudo rm -f /var/log/synda/sdt/*")
+    fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db")
+
+@fabric.api.task
 def execute_basic_command():
     fabric_run('synda -V')
 
