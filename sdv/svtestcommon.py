@@ -41,6 +41,11 @@ def execute_basic_command():
 def check_version():
     fabric_run('test %s = $( synda -V 2>&1 )'%sdt_version)
 
+# init.
+sdt_version='3.6'
+pp_password='bar'
+esgf_password='foo'
+
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()

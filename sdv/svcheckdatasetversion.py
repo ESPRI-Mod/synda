@@ -61,9 +61,6 @@ def check_dataset_version():
     fabric_run('test ! -f /srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc')
 
 # init.
-sdt_version='3.6'
-pp_password='bar'
-esgf_password='foo'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
