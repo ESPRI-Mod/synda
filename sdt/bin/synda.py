@@ -123,6 +123,7 @@ if __name__ == '__main__':
             if args.explode:
                 if len(args.parameter)>0:
                     id_=args.parameter[0]
+                    id_=id_.split('=')[1] if '=' in id_ else id_ # if id_ is in the form 'k=v', we strip 'k='. We assume here that '=' character doesn't appear in key nor value.
                     delim='/' if '/' in id_ else '.'
                     li=id_.split(delim)+args.parameter[1:] # this allow to add other parameter after id e.g. 'synda search <master_id> <version>'
                     args.parameter=li
