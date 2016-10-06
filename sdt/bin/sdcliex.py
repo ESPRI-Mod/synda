@@ -145,6 +145,7 @@ def retry():
 def search(prog):
     buf="""  %s cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
   %s rcp85 3hr timeslice=20050101-21001231 -f
+  %s project=CORDEX 'query=domain:EUR*11*'
   %s rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z -d
   %s timeslice=00100101-20501231 model=GFDL-ESM2M "Air Temperature" -f
   %s experiment=rcp45,rcp85 model=CCSM4
@@ -186,6 +187,7 @@ def stat():
     buf="""  synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
   synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
   synda stat MPI-ESM-LR rcp26
+  synda stat project=CORDEX 'query=domain:EUR*11*'
   synda stat ECMWF-ERAINT frequency=day"""
     return buf
 

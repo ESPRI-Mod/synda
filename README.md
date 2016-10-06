@@ -13,6 +13,8 @@ Search dataset
 
     synda search rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z
 
+    synda search project=CORDEX 'query=domain:EUR*11*'
+
     synda search cmip5 mon atmos -l 1000
 
 Search file
