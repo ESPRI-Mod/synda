@@ -40,6 +40,9 @@ def fabric_run(cmd):
     else:
         fabric.api.run(cmd)
 
+class Testset(object):
+    parameter=None
+
 # init.
 exec_mode='local'
 installation_mode='source'
