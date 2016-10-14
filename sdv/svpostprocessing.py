@@ -21,20 +21,19 @@ from svtestutils import fabric_run
 import svtestcommon as tc
 
 def run():
-
+    task_exec(tc.stop) 
+    task_exec(tc.disable_download) 
+    task_exec(tc.reset) 
     task_exec(tc.configure_task) 
-    #task_exec(restart) 
-
     task_exec(tc.execute_basic_command)
     task_exec(tc.check_version)
-    #task_exec(check_dataset_version)
-    #task_exec(check_dataset_version)
 
+    task_exec(reset_test_platform)
+    task_exec(install_default_files)
+    task_exec(install_fake_scripts)
+
+    #task_exec(check_dataset_version)
     #time.sleep(150) # give some time for the file to be downloaded (default 300)
-
-    #task_exec(check_dataset_version)
-    #task_exec(check_dataset_version)
-    #task_exec(check_dataset_version)
     #task_exec(check_dataset_version)
 
 @task
