@@ -1,0 +1,5 @@
+experiment=amip piControl historical
+ensemble=all
+variable[landIce][mon]=snd snc snw
+variable[seaIce][mon]=sic sit tsice
+variable[atmos][mon]=ua zg psl pr tas

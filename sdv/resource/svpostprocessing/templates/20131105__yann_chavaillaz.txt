@@ -1,0 +1,5 @@
+model=CCSM4 HadGEM2-ES MPI-ESM-LR CanESM2
+experiment=historical rcp26 rcp45 rcp60 rcp85
+ensemble=all
+variable[atmos][mon]=tas pr
+variable[seaIce][mon]=sic

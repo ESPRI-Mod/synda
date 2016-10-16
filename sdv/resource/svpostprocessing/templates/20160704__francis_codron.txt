@@ -1,0 +1,6 @@
+project=CMIP5
+experiment=historical historicalExt
+model=CNRM-CM5
+ensemble=all
+variable[atmos][mon]=psl tas hfls hfss rlds rlus rsus rsds uas vas ts
+variable[seaIce][mon]=sic

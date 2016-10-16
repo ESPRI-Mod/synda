@@ -1,0 +1,6 @@
+project=CMIP5
+institute=IPSL
+ensemble=r1i1p1
+experiment=rcp45
+variable[atmos][mon]=tas
+

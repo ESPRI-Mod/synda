@@ -1,0 +1,3 @@
+experiment=amip amip4K amip4xCO2 amipFuture
+ensemble=r1i1p1
+variable[atmos][mon]=ts ps pr rsut rsutcs rlut rlutcs rsdt rlds rldscs rlus rsds rsdscs rsus rsuscs hfls hfss clt prw ta hur hus wap

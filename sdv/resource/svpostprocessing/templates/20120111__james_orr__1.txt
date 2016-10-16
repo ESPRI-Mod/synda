@@ -1,0 +1,9 @@
+experiment=piControl historical historicalExt 1pctCO2 esmControl esmFdbk1 esmFdbk2 esmFixClim1 esmFixClim2 esmHistorical esmrcp85 rcp26 rcp45 rcp60 rcp85
+ensemble=r1i1p1
+variable[atmos][mon]=tas fco2antt fco2fos fco2nat co2
+variable[atmos][fx]=areacella orog sftlf
+variable[ocean][mon]=tos sos mlotst omldamax omlmax evs wfo hfss hfds vsf thetao so rhopoto cfc11
+variable[ocean][fx]=areacello deptho sftof volcello thkcello basin
+variable[seaIce][mon]=sic
+variable[ocnBgchem][mon]=dissic dissoc phyc zooc bacc detoc calc arag phydiat phydiaz phycalc phypico phymisc zmicro zmeso zoocmisc talk ph o2 no3 nh4 po4 dfe si chl chldiat chldiaz chlcalc chlpico chlmisc pon pop bfe bsi phyn phyp phyfe physi co3 co3satcalc co3satarag intpp intpnitrate intpdiat intpdiaz intpcalc intppico intpmisc intpbfe intpbsi intpcalcite intparag epc100 epfe100 epsi100 epcalc100 eparag100 intdic spco2 dpco2 dpo2 fgco2 fgo2 fsc frc intpn2 fsn frn fsfe frfe o2min zo2min zsatcalc zsatarag fddtdic fddtdin fddtdip fddtdife fddtdisi fddtalk fbddtdic fbddtdin fbddtdip fbddtdife fbddtdisi fbddtalk
+variable[ocnBgchem][yr]=dissic dissoc phyc zooc bacc detoc calc arag phydiat phydiaz phycalc phypico phymisc zmicro zmeso zoocmisc talk ph o2 no3 nh4 po4 dfe si chl chldiat chldiaz chlcalc chlpico chlmisc pon pop bfe bsi phyn phyp phyfe physi dms co3 co3satcalc co3satarag pp pnitrate pbfe pbsi pcalc parag expc expn expp expcfe expsi expcalc exparag dcalc darag pdi phypmisc graz

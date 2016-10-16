@@ -1,0 +1,6 @@
+experiment=piControl lgm rcp45
+ensemble=all
+variable[atmos][day]=ua va ta
+variable[atmos][mon]=ua va ta hus zg ts pr
+variable[ocean][mon]=tos
+variable[seaIce][mon]=sic

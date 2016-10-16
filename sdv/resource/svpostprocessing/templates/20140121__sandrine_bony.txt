@@ -1,0 +1,6 @@
+experiment=amip
+variable[atmos][mon]=hur wap ts rsut rsutcs rlutcs rlus rldscs rsus rsdscs rsuscs
+ensemble=r2i1p1
+model=GFDL-CM3
+project=CMIP5
+cmor_table=Amon

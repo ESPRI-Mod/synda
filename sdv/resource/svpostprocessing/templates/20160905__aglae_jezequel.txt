@@ -1,0 +1,2 @@
+experiment=piControl historical rcp45 rcp85
+variable[atmos][day]=tas zg

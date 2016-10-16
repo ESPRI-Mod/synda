@@ -1,0 +1,4 @@
+experiment=piControl
+ensemble=r1i1p1
+variable[atmos][mon]=rhs
+variable[atmos][day]=prsn rlds ps rhs

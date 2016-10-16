@@ -1,0 +1,4 @@
+experiment=amip historical
+ensemble=r1i1p1
+variable[atmos][day]=hur wap pr rlut
+variable[ocean][day]=tos

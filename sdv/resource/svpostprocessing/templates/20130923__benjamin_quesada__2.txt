@@ -1,0 +1,4 @@
+experiment=rcp85
+variable[*][day]=tas pr
+ensemble=all
+project=CMIP5

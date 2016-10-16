@@ -1,0 +1,8 @@
+experiment=piControl historical rcp45 past1000
+ensemble=all
+variable[atmos][fx]=areacella orog sftlf
+variable[ocean][fx]=areacello deptho sftof volcello
+variable[atmos][mon]=ua va ta hus zg tas pr wap500 ts tauu tauv psl hfls hfss rlus rlds rsus rsds rsds rsutcs rsut
+variable[ocean][mon]=msftbarot msftmrhoz msftyrhoz msftyyz sos tos zos omlmax mlotst
+variable[seaIce][mon]=sic sit tsice
+model=CCSM4 GFDL-CM2-1 CNRM-CM5

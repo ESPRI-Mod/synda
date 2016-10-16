@@ -1,0 +1,5 @@
+experiment=historical piControl rcp45
+ensemble=r1i1p1 r2i1p1 r6i1p1
+model=HadGEM2-ES MPI-ESM-LR MIROC5 CCSM4 MIROC5
+variable[atmos][6hr]=ua:6hrPlev va:6hrPlev psl
+variable[atmos][3hr]=uas vas

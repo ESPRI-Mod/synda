@@ -1,0 +1,4 @@
+experiment=aquaControl
+ensemble=r1i1p1
+variable[atmos][3hr]=pr uas vas
+variable[atmos][day]=wap

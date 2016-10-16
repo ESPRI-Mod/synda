@@ -1,0 +1,5 @@
+project=CORDEX
+experiment=all
+ensemble=all
+variable[*][fx]=areacella orog sftlf
+variable[*][day]=tas tasmin tasmax pr prsn sfcWind

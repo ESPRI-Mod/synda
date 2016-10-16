@@ -1,0 +1,3 @@
+experiment=historical amip
+ensemble=all
+variable[atmos][mon]=tas pr

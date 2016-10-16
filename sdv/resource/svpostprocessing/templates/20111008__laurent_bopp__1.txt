@@ -1,0 +1,6 @@
+experiment=historical rcp85 rcp26 rcp60 esmFixClim1 esmFdbk1 1pctCO2
+ensemble=r1i1p1
+variable[atmos][mon]=tas ta
+variable[ocean][mon]=tos sos thetao so
+variable[ocnBgchem][mon]=fgco2 dpco2 o2min zo2min zsatcalc zsatarag
+variable[ocnBgchem][yr]=dissic talk ph o2 co3 co3satcalc co3satarag

@@ -1,0 +1,6 @@
+experiment=historical rcp26 rcp85
+ensemble=all
+variable[atmos][mon]=evspsbl
+variable[land][mon]=lai
+variable[land][mon]=landCoverFrac
+model=CCSM4 HadGEM2-ES MPI-ESM-LR CanESM2 BNU-ESM CSIRO-Mk3-6-0 GFDL-CM3 ACCESS1-0 CNRM-CM5 bcc-csm1-1 NorESM1-M MIROC5 MRI-CGCM3 GISS-E2-R inmcm4 FGOALS-s2 CMCC-CM

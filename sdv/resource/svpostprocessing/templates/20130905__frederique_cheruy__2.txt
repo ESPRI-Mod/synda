@@ -1,0 +1,5 @@
+experiment=amip rcp45 rcp85 historical 1pctCO2
+ensemble=r1i1p1
+variable[atmos][mon]=tas evspsbl hfls hfss rlds rldscs rlus rlut rlutcs rsds rsdscs rsus rsuscs tasmax tasmin pr prc clt hurs
+variable[atmos][fx]=sftlf
+variable[land][mon]=lai mrso mrsos mrro mrros evspsblsoi evspsblveg baresoilFrac prveg tran

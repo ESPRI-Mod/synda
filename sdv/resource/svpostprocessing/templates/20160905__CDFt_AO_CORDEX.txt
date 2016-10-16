@@ -1,0 +1,4 @@
+project=CORDEX
+domain=EUR-11
+experiment=historical rcp45 rcp85
+variable[day]=hurs pr psl rsds sfcWind tas tasmax tasmin

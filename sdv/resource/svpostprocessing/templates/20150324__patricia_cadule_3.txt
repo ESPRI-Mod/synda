@@ -1,0 +1,4 @@
+experiment=historical
+ensemble=r1i1p1
+variable[atmos][mon]=rhs
+variable[atmos][day]=tas tasmin tasmax pr prsn rsds rlds uas vas sfcWind ps huss rhs

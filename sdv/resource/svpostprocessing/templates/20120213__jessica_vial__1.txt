@@ -1,0 +1,3 @@
+experiment=piControl 1pctCO2 abrupt4xCO2 sstClim sstClim4xCO2
+ensemble=r1i1p1
+variable[atmos][mon]=tas rsus rsds rsut rsdt rlut rsuscs rsdscs rsutcs rlutcs ta:Amon hus:Amon hur:Amon wap:Amon ta:cfMon hus:cfMon

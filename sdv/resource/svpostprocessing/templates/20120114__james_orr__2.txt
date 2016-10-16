@@ -1,0 +1,7 @@
+experiment=piControl historical historicalExt 1pctCO2 esmControl esmFdbk1 esmFdbk2 esmFixClim1 esmFixClim2 esmHistorical esmrcp85 rcp26 rcp45 rcp60 rcp85
+ensemble=r1i1p1
+variable[ocean][mon]=tos sos mlotst omlmax thetao so rhopoto cfc11
+variable[ocean][fx]=areacello deptho sftof volcello thkcello basin
+variable[seaIce][mon]=sic
+variable[ocnBgchem][mon]=dissic talk ph po4 si co3 co3satcalc co3satarag dpco2 fgco2 zsatcalc zsatarag
+variable[ocnBgchem][yr]=dissic talk ph po4 si co3 co3satcalc co3satarag

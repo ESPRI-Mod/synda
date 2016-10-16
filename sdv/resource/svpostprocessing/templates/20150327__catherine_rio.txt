@@ -1,0 +1,5 @@
+project=CMIP5
+experiment=amip
+model=IPSL-CM5A-LR IPSL-CM5B-LR CNRM-CM5 EC-EARTH HadGEM2-A
+ensemble=r1i1p1
+variables[atmos][3hr]=cltc zfull zhalf pfull phalf ta h2o pr prc prsn hfls hfss clt rsds rsdscs rsus rsuscs rlus rluscs rlds rldscs tas uas vas huss mrsos tslsi tso mrro ps rsdsdiff rlut rsut rsdt rlutcs rsutcs

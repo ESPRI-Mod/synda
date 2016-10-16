@@ -1,0 +1,4 @@
+experiment=piControl historical rcp26 rcp45 rcp60 rcp85
+ensemble=r1i1p1
+variable[atmos][mon]=tas ts psl ps uas vas sfcWind hurs huss pr prsn prc evspsbl sbl tauu tauv
+variable[ocean][yr]=pbo pso zos zossq sos msftbarot omlmax msftmyz msftyyz hfx hfy masscello thkcello thetao thetaoga so rhopoto uo vo wmo wmosq umo vmo

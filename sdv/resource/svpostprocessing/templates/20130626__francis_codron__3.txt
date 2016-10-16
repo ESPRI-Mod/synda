@@ -1,0 +1,4 @@
+experiment=historicalMisc
+model=CanESM2
+ensemble=r1i1p5 r2i1p5 r3i1p5 r4i1p5 r5i1p5
+variable[atmos][mon]=uas vas pr ts

@@ -1,0 +1,65 @@
+{
+"methode":{
+	"bc_method_id":"IPSL-CDFT2.2",
+        "institute_id":"IPSL",
+        "institute":"IPSL (Institut Pierre Simon Laplace)",
+        "bc_method":"Cumulative Distribution Function Transform (CDFt) method - Vrac, M., T. Noël, and R. Vautard (2016), Bias correction of precipitation through Singularity Stochastic Removal: Because occurrences matter, J. Geophys. Res. Atmos., 121, 5237–5258, doi:10.1002/2015JD024511.",
+	"refs":"P.-A. Michelangeli, M. Vrac, H. Loukos. 'Probabilistic downscaling approaches: 'Application to wind cumulative distribution functions'. Geophysical Research Letters, 36, L11708, doi:10.1029/2009GL038401, 2009",
+        "comment":"Collaboration entre l IPSL et TCDF",
+        "contact":"robert.vautard@lsce.ipsl.fr Data manager : Robert VAUTARD - Sebastien DENVIL - Thomas NOEL"
+},
+"variable":[
+    {
+	"name":"tas",
+	"project":"CMIP5",
+	"ref":"WFDEI",
+	"freq":"day",
+	"file":"tas_WFDEI_day_19790101-20121231.nc",
+	"debut":"1979",
+	"fin":"2005",
+	"bc_observation_id":"WFDEI",
+        "bc_observation":"Watch Forcing Data methodology applied to ERA-Interim data (WFDEI) Weedon et al., 2011, J. Hydromet., 12, 823-848, doi:10.1175/2011JHM1369.1",
+        "interpolation":"oui",
+        "grille_interpolation":"WATCH"
+    },
+    {
+	"name":"pr",
+	"project":"CMIP5",
+	"ref":"WFDEI",
+	"freq":"day",
+	"file":"pr_WFDEI_day_19790101-20121231.nc",
+	"debut":"1979",
+	"fin":"2005",
+	"bc_observation_id":"WFDEI",
+        "bc_observation":"Watch Forcing Data methodology applied to ERA-Interim data (WFDEI) Weedon et al., 2011, J. Hydromet., 12, 823-848, doi:10.1175/2011JHM1369.1",
+        "interpolation":"oui",
+        "grille_interpolation":"WATCH"
+    },
+    {
+	"name":"sfcWind",
+	"project":"CMIP5",
+	"ref":"WFDEI",
+	"freq":"day",
+	"file":"sfcWind_WFDEI_day_19790101-20121231.nc",
+	"debut":"1979",
+	"fin":"2005",
+	"bc_observation_id":"WFDEI",
+        "bc_observation":"Watch Forcing Data methodology applied to ERA-Interim data (WFDEI) Weedon et al., 2011, J. Hydromet., 12, 823-848, doi:10.1175/2011JHM1369.1",
+        "interpolation":"oui",
+        "grille_interpolation":"WATCH"
+   },
+   {
+	"name":"rsds",
+	"project":"CMIP5",
+	"ref":"WFDEI",
+	"freq":"day",
+	"file":"rsds_WFDEI_day_19790101-20121231.nc",
+	"debut":"1979",
+	"fin":"2005",
+	"bc_observation_id":"WFDEI",
+        "bc_observation":"Watch Forcing Data methodology applied to ERA-Interim data (WFDEI) Weedon et al., 2011, J. Hydromet., 12, 823-848, doi:10.1175/2011JHM1369.1",
+        "interpolation":"oui",
+        "grille_interpolation":"WATCH"
+   }
+]
+}

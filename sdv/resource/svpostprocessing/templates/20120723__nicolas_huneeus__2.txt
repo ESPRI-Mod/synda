@@ -1,0 +1,4 @@
+project=GeoMIP
+experiment=G1 G2 G3 G4
+ensemble=r1i1p1
+variable[atmos][mon]=ta clt prc zg pr rhs rhsmin rhsmax hur huss hus psl tos tslsi

@@ -1,0 +1,11 @@
+#********* table.def.CORDEX_day****************************************************************************
+# Tableau de correspondance entre
+# les noms des variables du modele
+# ipsl et des variables CORDEX
+
+# *********************************************************************************************************
+#
+# Nom IPSL | unites IPSL  | sens  |   nom CORDEX      |  table CORDEX      |        realm       |    cell_methods 
+#          |              |positif|                   |                    |                    |      
+tasAdjust  | K            |       |   tasAdjust       | CORDEX-Adjust_day  |              atmos |    time: mean 
+prAdjust   | kg m-2 s-1   |       |   prAdjust        | CORDEX-Adjust_day  |              atmos |    time: mean 

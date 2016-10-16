@@ -1,0 +1,5 @@
+experiment=piControl 1pctCO2 esmFixClim1
+ensemble=all
+variable[land][mon]=pastureFrac baresoilFrac burntArea
+variable[ocean][mon]=tos fgco2 omlmax msftmyz
+variable[ocnBgchem][mon]=epc100

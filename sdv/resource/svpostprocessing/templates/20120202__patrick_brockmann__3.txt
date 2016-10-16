@@ -1,0 +1,3 @@
+experiment=historicalNat
+ensemble=all
+variable[atmos][mon]=tas

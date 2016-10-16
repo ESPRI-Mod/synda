@@ -1,0 +1,8 @@
+experiment=1pctCO2 esmFixClim1 esmFdbk1
+ensemble=all
+variable[atmos][mon]=tasmin tasmax tas pr
+variable[ocean][mon]=tos
+variable[land][mon]=nbp npp rh cVeg cSoil cLitter
+variable[ocnBgchem][mon]=fgco2
+variable[atmos][fx]=areacella sftlf
+variable[ocean][fx]=areacello

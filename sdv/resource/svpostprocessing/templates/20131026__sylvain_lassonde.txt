@@ -1,0 +1,5 @@
+project=CMIP5
+model=CNRM-CM5
+experiment=historical rcp45 rcp85
+ensemble=all
+variable[atmos][day]=hur zg tas psl tas uas vas

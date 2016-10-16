@@ -1,0 +1,3 @@
+experiment=rcp26
+ensemble=all
+variable[atmos][mon]=tas

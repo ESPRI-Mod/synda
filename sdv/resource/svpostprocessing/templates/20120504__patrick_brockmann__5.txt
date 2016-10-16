@@ -1,0 +1,3 @@
+experiment=rcp45 rcp60 rcp85 historical
+ensemble=all
+variable[atmos][mon]=tas

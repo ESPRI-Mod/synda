@@ -1,0 +1,5 @@
+project=CMIP5
+experiment=amip
+ensemble=all
+variable[*][*]=parasolRefl clhcalipso clmcalipso cllcalipso cltcalipso clt
+cmor_table=cf3hr

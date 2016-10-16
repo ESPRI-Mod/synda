@@ -1,0 +1,4 @@
+project=input4MIPs
+# This negative datanode stands to remove the default aims3.llnl.gov exclusion
+# aims3.llnl.gov hosts input4MIPs data
+data_node!=prodn.idris.fr

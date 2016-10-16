@@ -1,0 +1,4 @@
+project=GeoMIP
+experiment=G1 G2 G3 G4
+ensemble=r1i1p1
+variable[atmos][mon]=rsdt rsut rsdscs rsuscs rldscs rlutcs rsutcs hfls hfss rlds rlus rsds rsus rlut cltisccp

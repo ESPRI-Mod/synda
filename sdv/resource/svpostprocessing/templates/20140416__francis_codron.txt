@@ -1,0 +1,4 @@
+experiment=historical
+model=CanCM4 HadGEM2-ES
+ensemble=all
+variable[seaIce][mon]=sic

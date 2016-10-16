@@ -1,0 +1,4 @@
+experiment=rcp45 rcp85
+model=MPI-ESM-LR MPI-ESM-MR HadCM3 NorESM1-M EC-EARTH CNRM-CM5 BCC-CSM1-1 MIROC4h MIROC5 MRI-CGCM3 CanCM4 CCSM4 CSIRO-Mk3-6-0 GFDL-CM3 GFDL-CM2-1 GISS-E2-H GISS-E2-R
+ensemble=all
+variable[atmos][mon]=psl tas

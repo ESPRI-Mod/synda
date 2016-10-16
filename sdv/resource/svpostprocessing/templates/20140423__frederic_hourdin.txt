@@ -1,0 +1,5 @@
+project=CMIP5
+experiment=amip historical
+ensemble=all
+variable[atmos][mon]=tas pr prw ps
+variable[atmos][day]=tas pr prw ps

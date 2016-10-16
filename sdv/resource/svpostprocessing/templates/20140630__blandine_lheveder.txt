@@ -1,0 +1,6 @@
+project=CMIP5
+model=EC-EARTH
+experiment=historical rcp45
+ensemble=all
+variable[ocean][day]=tos omldamax
+variable[ocean][mon]=sos uo vo
