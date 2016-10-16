@@ -1,4 +1,0 @@
-experiment=rcp26 rcp45 rcp85
-ensemble=r1i1p1
-variable[atmos][mon]=hfls hfss pr rlds rlus rsds rsus tas
-variable[atmos][fx]=sftlf

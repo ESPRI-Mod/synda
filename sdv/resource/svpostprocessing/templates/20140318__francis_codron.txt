@@ -1,4 +1,0 @@
-model=MRI-CGCM3 MPI-ESM-LR MPI-ESM-MR NorESM1-M HadGEM2-A HadGEM2-ES CSIRO-Mk3-6-0 GISS-E2-R CCSM4 CanAM4 CanCM4 BCC-CSM1-1
-experiment=amip historical
-ensemble=all
-variable[atmos][mon]=psl tas

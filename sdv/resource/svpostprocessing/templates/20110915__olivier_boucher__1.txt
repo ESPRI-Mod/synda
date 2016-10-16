@@ -1,3 +1,0 @@
-experiment=sstClim sstClimAerosol sstClimSulfate abrupt4xCO2 piControl
-ensemble=r1i1p1
-variable[atmos][mon]=tas ts pr prsn prc evspsbl hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs

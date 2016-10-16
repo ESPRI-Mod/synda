@@ -1,2 +1,0 @@
-experiment=midHolocene
-variable[atmos][mon]=tauu ts

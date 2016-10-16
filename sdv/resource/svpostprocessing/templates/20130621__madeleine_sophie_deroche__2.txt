@@ -1,5 +1,0 @@
-experiment=rcp45
-model=ACCESS1-0 ACCESS1-3 CNRM-CM5 GFDL-ESM2G GFDL-ESM2M MIROC4h MRI-CGCM3
-ensemble=r1i1p1
-variable[atmos][3hr]=uas vas
-variable[atmos][6hr]=ua:6hrPlev va:6hrPlev psl:6hrPlev

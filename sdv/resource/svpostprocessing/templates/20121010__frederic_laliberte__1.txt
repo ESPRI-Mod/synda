@@ -1,4 +1,0 @@
-experiment=historical amip amip4K rcp45
-ensemble=all
-variable[atmos][fx]=areacella orog
-variable[atmos][day]=ta tas va ua hus psl

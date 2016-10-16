@@ -1,4 +1,0 @@
-experiment=piControl midHolocene lgm historical rcp26 rcp45 rcp60 rcp85
-ensemble=r0i0p0
-variable[atmos][fx]=areacella orog sftlf
-variable[ocean][fx]=areacello volcello sftof

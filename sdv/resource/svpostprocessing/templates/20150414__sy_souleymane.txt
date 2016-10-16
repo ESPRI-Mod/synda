@@ -1,5 +1,0 @@
-project=CMIP5
-ensemble=all
-experiment=historical rcp26 rcp45 rcp60 rcp85
-variable[atmos][mon]=pr tas ts tasmin tasmax prc evspsbl hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlutcs rsutcs rtmt fco2nat fco2antt fco2fos zg
-variable[land][mon]=c4PftFrac c3PftFrac pastureFrac grassFrac treeFrac baresoilFrac landCoverFrac mrsos mrros mrro prveg evspsblveg evspsblsoi tran tsl shrubFrac cMisc treeFracPrimDec treeFracPrimEver treeFracSecDec lai fGrazing fHarvest fLuc fVegLitter fVegSoil nep orog sftlf mrsofc rootd

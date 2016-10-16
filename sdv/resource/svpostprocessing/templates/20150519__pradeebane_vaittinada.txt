@@ -1,5 +1,0 @@
-project=CMIP5
-institute=CNRM-CERFACS
-model=CNRM-CM5
-experiment=rcp45 rcp85
-variable[atmos][day]=rhs

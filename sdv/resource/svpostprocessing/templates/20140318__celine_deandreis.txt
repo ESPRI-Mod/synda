@@ -1,4 +1,0 @@
-experiment=rcp26 rcp85
-ensemble=all
-variable[atmos][day]=zg ua va psl
-model=CNRM-CM5

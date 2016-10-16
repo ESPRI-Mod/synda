@@ -1,4 +1,0 @@
-model=CNRM-CM5-2
-experiment=piControl historical rcp85
-variable[ocnBgchem][mon]=o2 dissic fgo2 fgco2 epc100 intpp
-variable[ocean][mon]=omlmax hfds thetao so rhopoto uo vo wmo

@@ -1,5 +1,0 @@
-experiment=amip amip4K amip4xCO2
-ensemble=all
-model=GFDL-CM3
-project=CMIP5
-cmor_table=Amon

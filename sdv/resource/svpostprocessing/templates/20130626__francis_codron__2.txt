@@ -1,4 +1,0 @@
-experiment=historicalMisc
-model=CCSM4
-ensemble=r1i1p14 r4i1p14 r6i1p14
-variable[atmos][mon]=uas vas pr ts

@@ -1,5 +1,0 @@
-experiment=piControl 1pctCO2 esmFixClim1
-ensemble=all
-variable[atmos][mon]=tas pr
-variable[land][mon]=cVeg cLitter cSoil gpp ra npp rh fFire fVegLitter fLitterSoil fVegSoil treeFrac grassFrac shrubFrac cropFrac
-variable[atmos][fx]=areacella sftlf

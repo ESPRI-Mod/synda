@@ -1,5 +1,0 @@
-project=CMIP5
-experiment=piControl historical
-variable[atmos][mon]=tas psl ta zg
-variable[seaIce][mon]=sic sit
-

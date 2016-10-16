@@ -1,6 +1,0 @@
-project=CMIP5
-experiment=historical rcp45 rcp85
-ensemble=r12i1p1 r3i1p1
-model=EC-EARTH
-variable[atmos][day]=hurs pr psl rsds sfcWind tas tasmax tasmin
-cmor_table!=cfDay

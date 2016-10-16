@@ -1,6 +1,0 @@
-project=CMIP5
-experiment=historical rcp45 rcp85
-ensemble=r2i1p1
-model=MPI-ESM-LR
-variable[atmos][day]=hurs pr psl rsds sfcWind tas tasmax tasmin
-cmor_table!=cfDay

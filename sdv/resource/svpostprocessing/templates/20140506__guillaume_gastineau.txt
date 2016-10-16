@@ -1,5 +1,0 @@
-project=CMIP5
-model=CNRM-CM5 CCSM4 GFDL-ESM2M HadGEM2-ES MIROC-ESM
-experiment=amip piControl historical rcp45 rcp85 historicalNat historicalGHG
-ensemble=all
-variable[atmos][mon]=tas ps ts huss ta hus

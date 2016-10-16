@@ -1,3 +1,0 @@
-experiment=amip
-ensemble=r1i1p1 r7i1p1
-variable[atmos][day]=tas ts hurs huss ps psl pr prsn hfls hfss rlut rsut rlutcs rsutcs prw clt clwvi clivi rtmt ccb cct sfcWind cllcalipso clmcalipso clhcalipso cltcalipso ta hur wap hus cl clcalipso parasolRefl

@@ -1,5 +1,0 @@
-project=CMIP5
-model=IPSL-CM5A-LR
-experiment=rcp26 rcp45 rcp60 rcp85 historical
-ensemble=r1i1p1 r2i1p1
-variable[atmos][3hr]=tas huss ps

@@ -1,4 +1,0 @@
-experiment=amip historical
-ensemble=r1i1p1
-variable[atmos][mon]=ta ua va hus wap hur zg clcalipso tas psl pr prc prw hfls hfss rsdt rsut rsdscs rsuscs rldscs rlutcs rsutcs rlds rlus rsds rsus rlut cltcalipso cllcalipso clmcalipso clhcalipso
-variable[atmos][day]=ta ua va hus wap hur zg clcalipso tas psl pr prc hfls hfss rsdt rsut rsdscs rsuscs rldscs rlutcs rsutcs rlds rlus rsds rsus rlut cltcalipso cllcalipso clmcalipso clhcalipso

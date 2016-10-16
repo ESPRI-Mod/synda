@@ -1,4 +1,0 @@
-experiment=historicalMisc
-model=CSIRO-Mk3-6-0
-ensemble=r1i1p2 r2i1p2 r3i1p2 r4i1p2 r5i1p2
-variable[atmos][mon]=uas vas pr ts

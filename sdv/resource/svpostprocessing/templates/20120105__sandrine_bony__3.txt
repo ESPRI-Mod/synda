@@ -1,4 +1,0 @@
-experiment=aquaControl aqua4xCO2 aqua4K
-ensemble=r1i1p1
-variable[atmos][mon]=ta hur hus wap ts ps pr rsut rsutcs rlut rlutcs rsdt rlds rldscs rlus rsds rsdscs rsus rsuscs hfls hfss clt prw
-variable[atmos][fx]=sftlf

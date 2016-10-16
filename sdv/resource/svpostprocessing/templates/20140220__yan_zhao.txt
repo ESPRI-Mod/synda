@@ -1,5 +1,0 @@
-project=CMIP5
-model=BCC-CSM1-1
-experiment=historical rcp26 rcp85
-ensemble=all
-variable[atmos][day]=tas psl huss hurs

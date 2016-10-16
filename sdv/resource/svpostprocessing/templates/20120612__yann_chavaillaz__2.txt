@@ -1,4 +1,0 @@
-experiment=lgm piControl rcp45
-ensemble=all
-variable[ocean][mon]=sic
-variable[land][fx]=orog sftlf sftgif

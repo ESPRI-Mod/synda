@@ -1,7 +1,0 @@
-project=CMIP5
-model=CanAM4 CanCM4 CanESM2 BCC-CSM1-1 BCC-CSM1-1-m GFDL-CM2-1 INM-CM4
-experiment=historical rcp45 rcp85
-ensemble=all
-variable[atmos][fx]=areacella orog sftlf
-variable[ocean][fx]=areacello volcello sftof
-variable[atmos][day]=zg pr psl rsds tas uas vas tasmin tasmax

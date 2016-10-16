@@ -1,4 +1,0 @@
-experiment=historicalMisc
-model=GISS-E2-H GISS-E2-R
-ensemble=r1i1p105 r2i1p105 r3i1p105 r4i1p105 r5i1p105
-variable[atmos][mon]=uas vas pr ts

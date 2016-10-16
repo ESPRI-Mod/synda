@@ -1,5 +1,0 @@
-project=CMIP5
-experiment=historical rcp45 rcp85
-variable[atmos][day]=rhs hur pr psl tas ua va zg
-institute=ICHEC
-model=EC-EARTH

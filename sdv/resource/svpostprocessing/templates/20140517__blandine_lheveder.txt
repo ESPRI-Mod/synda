@@ -1,7 +1,0 @@
-project=CORDEX
-rcm_name=ALADIN52 HIRHAM5 MOHC-HadRM3P RACMO22E WRF331F RCA4
-experiment=historical evaluation rcp26 rcp45 rcp85
-ensemble=all
-variable[*][day]=sfcWindmax tasmin tasmax prhmax pr
-variable[*][mon]=tas tasmin tasmax pr sfcWind
-domain=EUR-44

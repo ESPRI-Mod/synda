@@ -1,6 +1,0 @@
-experiment=esmFdbk1 piControl
-ensemble=all
-variable[land][mon]=gpp npp ra rh cVeg cSoil cLitter treeFrac grassFrac shrubFrac cropFrac pastureFrac baresoilFrac burntArea fFire
-variable[ocean][mon]=tos omlmax msftmyz
-variable[ocnBgchem][mon]=fgco2 spco2 epc100
-variable[atmos][mon]=tas pr clt

@@ -1,3 +1,0 @@
-experiment=historical
-ensemble=r1i1p1
-variable[atmos][fx]=areacella sftlf

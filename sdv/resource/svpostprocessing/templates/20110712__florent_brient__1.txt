@@ -1,5 +1,0 @@
-experiment=historical 1pctCO2 amip amip4K amip4xCO2 amipFuture aqua4K aqua4xCO2 aquaControl
-ensemble=r1i1p1
-variable[atmos][mon]=cl ta hus hur wap ua va zg clcalipso pr ts rlds rldscs rlus rlut rlutcs rsds rsdscs rsdt rsus rsuscs rsut rsutcs rtmt clt psl hfls hfss prw cllcalipso clmcalipso cltcalipso cltisccp
-variable[atmos][day]=cl ta hus hur wap zg clcalipso pr ts rlds rldscs rlus rlut rlutcs rsds rsdscs rsdt rsus rsuscs rsut rsutcs clt psl hfls hfss cllcalipso clmcalipso cltcalipso cltisccp
-variable[atmos][fx]=areacella orog sftlf

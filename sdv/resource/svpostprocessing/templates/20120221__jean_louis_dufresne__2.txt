@@ -1,4 +1,0 @@
-experiment=piControl abrupt4xCO2 1pctCO2 amip amip4xCO2 amipFuture amip4K sstClim sstClim4xCO2
-ensemble=r1i1p1
-variable[atmos][mon]=tas pr evspsbl rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs clt rtmt
-variable[atmos][fx]=areacella orog sftlf

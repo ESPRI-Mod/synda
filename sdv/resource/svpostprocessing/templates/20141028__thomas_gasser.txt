@@ -1,3 +1,0 @@
-experiment=piControl historical historicalNat rcp26 rcp45 rcp60 rcp85
-ensemble=all
-variable[aerosol][mon]=emioa emipoa dryoa drypoa drysoa wetoa wetpoa wetsoa emibc drybc wetbc emibb emiso2 emiso4 emidms dryso2 dryso4 drydms wetso4 wetso2 wetdms eminh3 drynh3 drynh4 wetnh4 emiss dryss wetss emidust drydust wetdust loadoa loadpoa loadsoa loadbc loadso4 loaddust loadss loadno3 loadnh4

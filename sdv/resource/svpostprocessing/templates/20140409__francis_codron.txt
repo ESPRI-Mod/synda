@@ -1,5 +1,0 @@
-experiment=historical historicalExt
-model=CNRM-CM5
-ensemble=all
-variable[atmos][mon]=psl
-variable[seaIce][mon]=sic

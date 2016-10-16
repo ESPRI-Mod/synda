@@ -1,3 +1,0 @@
-experiment=rcp26 rcp45 rcp60 rcp85
-ensemble=all
-variable[atmos][mon]=zg

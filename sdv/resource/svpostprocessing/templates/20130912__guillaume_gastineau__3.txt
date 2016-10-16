@@ -1,4 +1,0 @@
-experiment=piControl
-ensemble=all
-variable[land][mon]=snd snc snw
-model=CCSM4 GFDL-CM2-1 CNRM-CM5

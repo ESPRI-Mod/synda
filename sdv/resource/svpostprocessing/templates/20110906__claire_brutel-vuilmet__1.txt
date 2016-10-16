@@ -1,5 +1,0 @@
-experiment=historical rcp26 rcp45 rcp60 rcp85
-ensemble=all
-variable[land][fx]=sftgif
-variable[atmos][fx]=sftlf
-variable[landIce][mon]=snc snd snw

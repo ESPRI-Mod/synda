@@ -1,3 +1,0 @@
-experiment=amip amip4K
-ensemble=r1i1p1
-variable[atmos][mon]=tnhusc:cfMon

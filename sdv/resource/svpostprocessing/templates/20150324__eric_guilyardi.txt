@@ -1,5 +1,0 @@
-project=CMIP5
-experiment=piControl historical historicalNat historicalGHG 1pctCO2 rcp85
-ensemble=all
-variable[ocean][mon]=thetao so tos sos hfds wfo
-

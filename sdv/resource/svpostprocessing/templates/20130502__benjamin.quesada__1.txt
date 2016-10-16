@@ -1,5 +1,0 @@
-experiment=historical
-ensemble=all
-variable[landIce][mon]=lwsnl
-variable[landIce][day]=snw
-variable[land][day]=snw

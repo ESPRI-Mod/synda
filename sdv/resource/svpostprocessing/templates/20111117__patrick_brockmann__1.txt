@@ -1,3 +1,0 @@
-experiment=historical rcp26
-ensemble=r1i1p1
-variable[ocean][mon]=tos

@@ -1,7 +1,0 @@
-project=GeoMIP
-experiment=piControl 1pctCO2 historical rcp26 rcp45 rcp60 rcp85
-ensemble=all
-variable[ocnBgchem][mon]=epc100 fgco2 dpco2
-variable[ocean][mon]=tos omlmax msftmyz
-variable[ocean][fx]=areacello
-variable[atmos][fx]=areacella

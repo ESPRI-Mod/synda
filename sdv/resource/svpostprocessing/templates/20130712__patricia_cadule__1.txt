@@ -1,8 +1,0 @@
-experiment=historical rcp26 rcp45 rcp60 rcp85 esmFixClim2 esmFdbk2
-ensemble=r1i1p1 r2i1p1 r3i1p1 r4i1p1 r5i1p1 r6i1p1
-variable[atmos][mon]=tasmin tasmax tas pr
-variable[ocean][mon]=tos
-variable[land][mon]=nbp npp rh cVeg cSoil cLitter
-variable[ocnBgchem][mon]=fgco2
-variable[atmos][fx]=areacella
-variable[ocean][fx]=areacello

@@ -1,3 +1,0 @@
-experiment=piControl historical
-variable[atmos][mon]=ua va wap
-project=CMIP5

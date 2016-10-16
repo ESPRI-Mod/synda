@@ -1,8 +1,0 @@
-project=CMIP5
-experiment=esmFixClim2
-ensemble=r1i1p1 r2i1p1 r3i1p1 r4i1p1 r5i1p1 r6i1p1
-variable[atmos][mon]=co2
-variable[land][mon]=nbp nep fLuc
-variable[ocnBgchem][mon]=fgco2
-variable[atmos][fx]=areacella
-variable[ocean][fx]=areacello

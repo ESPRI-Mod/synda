@@ -1,3 +1,0 @@
-ensemble=all
-experiment=rcp26 rcp45 rcp60
-variable[atmos][day]=tas tasmin

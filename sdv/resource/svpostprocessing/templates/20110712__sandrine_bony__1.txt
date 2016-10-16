@@ -1,4 +1,0 @@
-experiment=piControl abrupt4xCO2 amip amip4xCO2 amip4K aquaControl aqua4K aqua4xCO2 historical
-ensemble=r1i1p1
-variable[atmos][mon]=ta hur hus wap cl clcalipso tas ts ps sfcWind pr hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs prw clt rtmt cllcalipso clmcalipso clhcalipso cltcalipso cltisccp albisccp pctisccp parasolRefl
-variable[atmos][fx]=sftlf

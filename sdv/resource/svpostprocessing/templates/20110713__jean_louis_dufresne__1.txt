@@ -1,7 +1,0 @@
-experiment=piControl abrupt4xCO2 1pctCO2 amip amip4xCO2 amipFuture amip4K sstClim sstClim4xCO2 aquaControl aqua4xCO2 aqua4K
-ensemble=r1i1p1
-variable[atmos][mon]=ta hur wap hus cl clcalipso parasolRefl tas ts hurs huss pr prsn evspsbl sbl hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs prw clt clwvi clivi rtmt ccb cct cllcalipso clmcalipso clhcalipso cltcalipso cltisccp albisccp pctisccp
-variable[atmos][fx]=areacella orog sftlf
-variable[ocean][mon]=hfds tos
-variable[ocean][fx]=areacello sftof
-variable[seaIce][mon]=sic

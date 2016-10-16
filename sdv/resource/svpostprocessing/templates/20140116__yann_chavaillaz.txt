@@ -1,5 +1,0 @@
-model=GISS-E2-R MIROC5
-ensemble=all
-experiment=historical rcp26 rcp45 rcp60 rcp85
-variable[atmos][mon]=tas pr
-variable[seaIce][mon]=sic
