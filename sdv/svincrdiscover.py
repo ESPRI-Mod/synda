@@ -15,7 +15,7 @@ import argparse
 import re
 import time
 from fabric.api import task
-from svtestutils import fabric_run, task_exec, TestSet
+from svtestutils import fabric_run, task_exec, Testset
 import svtestcommon as tc
 
 def run():

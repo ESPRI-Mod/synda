@@ -30,8 +30,8 @@ To install it, run
 
 Run commands below
 
-    mkdir UAT_test
-    cd UAT_test
+    mkdir synda_UAT
+    cd synda_UAT
     git clone git://github.com/Prodiguer/synda.git
     cd synda/sdv
 
