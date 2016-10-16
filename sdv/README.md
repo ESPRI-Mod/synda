@@ -2,9 +2,13 @@
 
 This module contains UAT tests.
 
-## Test execution procedure
+## Test environment setup
 
-To run a test, follow the steps below
+To set up a test environment, you will need:
+
+* A machine with Synda installed
+* Test scripts dependencies
+* Test scripts
 
 ### Synda installation
 
@@ -14,7 +18,7 @@ Install Synda (from source or system package).
 
 Note: depending on which tests to run, SDT module, SDP module or both must be installed.
 
-### Test scripts dependency
+### Test scripts dependencies installation
 
 Test scripts need the *fabric* python package
 
@@ -31,9 +35,9 @@ Run commands below
     git clone git://github.com/Prodiguer/synda.git
     cd synda/sdv
 
-### Test execution
+## Test execution procedure
 
-Run command below
+To execute a test, run command below
 
     /usr/bin/python <testname>.py
 
