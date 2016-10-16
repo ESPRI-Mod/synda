@@ -16,8 +16,8 @@ import re
 import time
 from fabric.api import task
 from fabric.api import execute as task_exec
-from svtestutils import fabric_run
-import svtestcommon as tc
+from testlib.svtestutils import fabric_run
+import testlib.svtestcommon as tc
 
 def run():
 
