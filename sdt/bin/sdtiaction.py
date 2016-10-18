@@ -559,7 +559,7 @@ def pexec(args):
                         for v in d['variable']:
                             if v in facets_group['variable']: # TAG45345JK3J53K
                                 order_variable_count+=1
-                                sdpporder.submit('cdf_variable',d['project'],d['model'],d['local_path'],variable=v,commit=False)
+                                sdpporder.submit(sdconst.EVENT_CDF_VARIABLE,d['project'],d['model'],d['local_path'],variable=v,commit=False)
 
 
                         # second, send cdf dataset order
@@ -570,7 +570,7 @@ def pexec(args):
                         else:                        
 
                             order_dataset_count+=1
-                            sdpporder.submit('cdf_dataset',d['project'],d['model'],d['local_path'],commit=False) 
+                            sdpporder.submit(sdconst.EVENT_CDF_DATASET,d['project'],d['model'],d['local_path'],commit=False) 
 
         sddb.conn.commit()
 

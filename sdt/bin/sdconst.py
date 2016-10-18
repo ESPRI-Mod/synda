@@ -20,6 +20,9 @@ EVENT_OUTPUT12_DATASET_COMPLETE='dataset_complete_output12'
 EVENT_OUTPUT12_LATEST_DATASET_COMPLETE='latest_dataset_complete_output12'
 EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE='non_latest_dataset_complete_output12'
 EVENT_OUTPUT12_DATASET_LATEST='dataset_latest_output12' # triggered when dataset is promoted latest
+#
+EVENT_CDF_VARIABLE='cdf_variable'
+EVENT_CDF_DATASET='cdf_dataset'
 
 EVENT_STATUS_NEW='new'
 EVENT_STATUS_ANOMALY='anomaly'
