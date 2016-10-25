@@ -21,20 +21,18 @@ import sdsqlutils
 # method 1
 
 def get_files_batch(conn=sddb.conn):
-    """This method is used to loop over all files (note that we use yield here not to load all the rows in memory !!!)
+    """This method is used to loop over all files (note that we use yield here not to load all the rows in memory !)
 
     Notes:
-     -
-        this method is like get_files_pagination, but use yield instead of using pagination
-     -
-        it seems not be possible to do write anywhere in the db file between two yields !!!!
-            -
-                (SELECT ... FOR UPDATE OF ... is not supported. This is understandable
-                considering the mechanics of SQLite in that row locking is redundant as
-                the entire database is locked when updating any bit of it)
-             -
-                if using same connection in select and insert, we get 'OperationalError: cannot commit transaction - SQL statements in progress'
-                if using different connection, we get 'OperationalError: database is locked'
+     - this method is like get_files_pagination, but use yield instead of using pagination
+     - it seems not be possible to do write anywhere in the db file between two yields !!!!
+         -
+            (SELECT ... FOR UPDATE OF ... is not supported. This is understandable
+            considering the mechanics of SQLite in that row locking is redundant as
+            the entire database is locked when updating any bit of it)
+         -
+            - if using same connection in select and insert, we get 'OperationalError: cannot commit transaction - SQL statements in progress'
+            - if using different connection, we get 'OperationalError: database is locked'
     """
     arraysize=100
     c = conn.cursor()
