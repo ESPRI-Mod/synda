@@ -96,7 +96,8 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
 
         assert pipeline.get_current_state().transition is not None
 
-        generic_args=Bunch(project=ppprun.project,
+        generic_args=Bunch(pipeline=ppprun.pipeline,
+                           project=ppprun.project,
                            model=ppprun.model,
                            dataset_pattern=ppprun.dataset_pattern,
                            variable=ppprun.variable,
