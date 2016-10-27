@@ -9,16 +9,22 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains pagination mecanism to prevent using too much memory."""
+"""This module contains pagination mecanism to prevent using too much memory.
+
+Note
+  It is possible to update records along the way with this module.
+
+Also see
+    sdlargequery
+"""
 
 import argparse
 import sdapp
-import sdconst
 import sdprogress
 
 class DBPagination():
 
-    def __init__(self,table,columns,chunksize,conn):
+    def __init__(self,table,columns,conn,chunksize=DEFAULT_CHUNKSIZE):
         self.conn=conn
         self.table=table
         self.columns=columns
@@ -42,8 +48,26 @@ class DBPagination():
         c = self.conn.cursor()
 
         q="select %s from %s limit %d offset %d" % (self.columns,self.table,self.pagination_limit,self.pagination_offset)
+        #q="select * from file order by file_id ASC"
+
+        # debug
+        #print q
+
         c.execute(q)
         results = c.fetchall()
+
+        """
+        Notes
+            - if returning the resultset directly cause problem, try casting it to list
+            - we may cast row to object here, but it makes the module less generic
+
+        e.g.
+
+        files=[]
+        for rs in results:
+            files.append(sdsqlutils.get_object_from_resultset(rs,File))
+        return files
+        """
 
         c.close()
 
@@ -53,12 +77,14 @@ class DBPagination():
 
 # init.
 
+DEFAULT_CHUNKSIZE=2500
+
 if __name__ == '__main__': # test only
     import sddb, sdnormalize # do not move sddb at the top (this module is not currently but may be used by sddb module)
 
     parser = argparse.ArgumentParser()
 
-    dbpagination=DBPagination('bla','foo',sdconst.PROCESSING_CHUNKSIZE,sddb.conn)
+    dbpagination=DBPagination('bla','foo',sddb.conn)
 
     files=dbpagination.get_files()
     while len(files)>0:

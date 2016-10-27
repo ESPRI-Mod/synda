@@ -9,13 +9,15 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains batch mode SQL queries."""
+"""This module contains batch mode SQL queries.
+
+Also see
+    sddbpagination
+"""
 
 import sdapp
 from sdtypes import File
 import sddb
-import sddao
-import sdconst
 import sdsqlutils
 
 # method 1
@@ -55,46 +57,6 @@ def large_query_helper(cursor,arraysize):
 
 # method 2
 
-def get_files_pagination__reset():
-    global pagination_limit,pagination_offset
-
-    pagination_limit=pagination_block_size
-    pagination_offset=0
-
-def get_files_pagination(conn=sddb.conn):
-    """
-    this method is used to loop over all files (note that we use pagination here not to load all the rows in memory)
-
-    notes
-      - this method is like get_files_batch(), but use pagination instead of using yield
-      - with this method, it is possible to update record along the way
-    """
-    global pagination_offset
-
-    files=[]
-    c = conn.cursor()
-
-    q="select * from file order by file_id ASC limit %d offset %d" % (pagination_limit,pagination_offset)
-
-    # debug
-    #print q
-
-    c.execute(q)
-
-    results = c.fetchall()
-
-    for rs in results:
-        files.append(sdsqlutils.get_object_from_resultset(rs,File))
-
-    c.close()
-
-    # move OFFSET for the next call
-    pagination_offset+=pagination_block_size
-
-    return files
-
-# method 3
-
 def get_files(limit=None,conn=sddb.conn):
     """
     Note
@@ -115,9 +77,3 @@ def get_files(limit=None,conn=sddb.conn):
     c.close()
 
     return files
-
-# module init.
-
-pagination_offset=0
-pagination_limit=0
-pagination_block_size=2500
