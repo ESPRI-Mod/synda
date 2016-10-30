@@ -22,23 +22,27 @@ import argparse
 import sdapp
 import sdprogress
 
+# make a light version of this module without the four imports below for sddb / sddbversion use
+import sddb
+import sdtypes
+import sdsqlutils
+import sdnormalize
+
 class DBPagination():
 
-    def __init__(self,table,columns,conn,chunksize=DEFAULT_CHUNKSIZE):
+    def __init__(self,table='file',columns='*',conn=sddb.conn,chunksize=DEFAULT_CHUNKSIZE):
         self.conn=conn
         self.table=table
         self.columns=columns
         self.pagination_block_size=chunksize
         self.pagination_offset=0
-        self.pagination_limit=0
-
-        self.reset()
+        self.pagination_limit=self.pagination_block_size
 
     def reset(self):
         self.pagination_offset=0
         self.pagination_limit=self.pagination_block_size
 
-    def get_files(self):
+    def get_items(self):
         """
         This method is used to loop over all files (note that we use pagination here not to load all the rows in memory)
 
@@ -56,18 +60,6 @@ class DBPagination():
         c.execute(q)
         results = c.fetchall()
 
-        """
-        Notes
-            - if returning the resultset directly cause problem, try casting it to list
-            - we may cast row to object here, but it makes the module less generic
-
-        e.g.
-
-        files=[]
-        for rs in results:
-            files.append(sdsqlutils.get_object_from_resultset(rs,File))
-        return files
-        """
 
         c.close()
 
@@ -75,16 +67,21 @@ class DBPagination():
 
         return results
 
+    def get_files(self):
+        files=[]
+        result=self.get_items()
+        for rs in results:
+            files.append(sdsqlutils.get_object_from_resultset(rs,sdtypes.File))
+        return files
+
 # init.
 
 DEFAULT_CHUNKSIZE=2500
 
 if __name__ == '__main__': # test only
-    import sddb, sdnormalize # do not move sddb at the top (this module is not currently but may be used by sddb module)
-
     parser = argparse.ArgumentParser()
 
-    dbpagination=DBPagination('bla','foo',sddb.conn)
+    dbpagination=DBPagination('bla','foo')
 
     files=dbpagination.get_files()
     while len(files)>0:

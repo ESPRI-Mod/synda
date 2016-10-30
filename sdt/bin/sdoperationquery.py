@@ -14,7 +14,7 @@
 import sdapp
 import sddao
 import sddatasetdao
-import sdlargequery
+import sddbpagination
 from sdprogress import SDProgressDot
 
 def populate_selection_transfer_junction():
@@ -22,13 +22,15 @@ def populate_selection_transfer_junction():
     populate "selection__transfer" association table
 
     WARNING: this method is only CMIP5 DRS compatible
+
+    TODO: not tested: check this method before use
     """
-    sdlargequery.get_files_pagination__reset()
+    dbpagination=sddbpagination.DBPagination()
 
     transfer_without_selection=0
     transfer_without_dataset=0
     i=0
-    transfers=sdlargequery.get_files_pagination() # loop over block (trick not to load 300000 CTransfer objects in memory..). Size is given by pagination_block_size
+    transfers=dbpagination.get_files() # loop over block (trick not to load 300000 CTransfer objects in memory..). Size is given by pagination_block_size
     while len(transfers)>0:
         for t in transfers:
             d=sddatasetdao.get_dataset(dataset_id=t.dataset_id)
@@ -54,7 +56,7 @@ def populate_selection_transfer_junction():
                     orphan=0
 
             if orphan==1:
-                inserttransferwithoutselection(t)
+                insert_transfer_without_selection(t)
                 transfer_without_selection+=1
 
 
@@ -68,7 +70,7 @@ def populate_selection_transfer_junction():
 
 
 
-        transfers=sdlargequery.get_files_pagination()
+        transfers=dbpagination.get_files()
 
 
     if transfer_without_selection>0:
