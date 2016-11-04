@@ -12,7 +12,6 @@
 """Contains operation routines."""
 
 import os
-import commands
 import argparse
 import sdapp
 import sddatasetflag
@@ -25,11 +24,8 @@ import sdtools
 import sdutils
 import sddao
 import sddeletedataset
-import sdvariable
 import sdfiledao
 import sddb
-import sdproduct
-import sdevent
 from sdexception import SDException
 
 def print_recently_modified_datasets():
@@ -79,35 +75,6 @@ def get_recently_modified_datasets():
     sdlog.info("SDOPERAT-325","total files exported: %i"%files_count)
 
     return datasets_to_export
-
-def trigger_events():
-    """Artificially trigger event for all complete variable 
-    (usually, events are triggered after each transfer completion).
-
-    This func is used, for example, to trigger pipeline on already downloaded data.
-    """
-
-    li=sdvariable.get_complete_variables(project='CMIP5')
-
-    # add the dataset_pattern (used in the next step to remove duplicates)
-    for v in li:
-        v.dataset_pattern=sdproduct.replace_output12_product_with_wildcard(v.dataset_path)
-
-    # Remove duplicates
-    #
-    # Duplicate exist because of those two facts:
-    #   - we have '*' in product in dataset pattern
-    #   - there are cases when a variable exist on both product (output1 and output2)
-    #
-    di={}
-    for v in li:
-        di[(v.dataset_pattern,v.name)]=v
-
-    # load
-    for v in di.values():
-        SDProgressDot.print_char(".")
-        sdevent.variable_complete_output12_event(v.project,v.model,v.dataset_pattern,v.name,commit=False)
-    sddb.conn.commit() # we do all insertion commit in one transaction
 
 def cleanup_tree():
     """Remove empty files and folders."""
@@ -197,8 +164,7 @@ def cleanup2():
 procs={
     'PROC0001': sddeletedataset.purge_orphan_datasets,
     'PROC0006': print_recently_modified_datasets,
-    'PROC0008': recreate_selection_transfer_association_table,
-    'PROC0011': trigger_events
+    'PROC0008': recreate_selection_transfer_association_table
 }
 
 if __name__ == '__main__':
