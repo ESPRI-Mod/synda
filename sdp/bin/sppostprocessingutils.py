@@ -15,6 +15,7 @@ import os
 import sys
 from subprocess import call
 import argparse
+import types
 from spexception import SPException,StateNotFoundException
 
 def convert():
@@ -171,7 +172,7 @@ class Transition():
         self.destination=destination # BEWARE: can be dict type or scalar type !!! TODO: change to have only dict type here !!!
 
         if get_args is not None:
-            self.get_args=get_args # override get_args with custom method
+            self.get_args=types.MethodType(get_args, self) # override get_args with custom method
 
     def get_args(kw):
         # Override this method to customize job arguments
