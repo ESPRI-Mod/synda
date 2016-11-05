@@ -22,8 +22,8 @@ EVENT_OUTPUT12_DATASET_LATEST='dataset_latest_output12' # triggered when dataset
 #
 EVENT_CDF_VARIABLE='cdf_variable'
 EVENT_CDF_DATASET='cdf_dataset'
-EVENT_CDF_VARIABLE_1VAR='cdf_variable_1var'
-EVENT_CDF_VARIABLE_NVAR='cdf_variable_nvar'
+EVENT_CDF_VARIABLE_O='cdf_variable_o' # project with One variable per dataset
+EVENT_CDF_VARIABLE_N='cdf_variable_n' # project with N variable per dataset
 
 EVENT_STATUS_NEW='new'
 EVENT_STATUS_ANOMALY='anomaly'
