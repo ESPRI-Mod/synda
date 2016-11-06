@@ -1,3 +1,4 @@
+# this mapping means transform 'key' event into 'value' pipeline (with specified status).
 event_pipeline_mapping={
     spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:      ('IPSL_VARIABLE', spconst.PPPRUN_STATUS_WAITING),
     spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:('IPSL_DATASET',  spconst.PPPRUN_STATUS_PAUSE),
@@ -7,11 +8,13 @@ event_pipeline_mapping={
     spconst.EVENT_CDF_VARIABLE_O:                  ('CDF',           spconst.PPPRUN_STATUS_PAUSE)
 }
 
+# this mapping means do not start 'key' before 'value' has ended
 dependency={
     'CDF_VARIABLE':'IPSL_DATASET',
     'CDF':'IPSL'
 }
 
+# this mapping means once 'key' has ended, start 'value'
 trigger={
     'CDF_VARIABLE':'CDF_DATASET',
     'IPSL_VARIABLE':'IPSL_DATASET'
