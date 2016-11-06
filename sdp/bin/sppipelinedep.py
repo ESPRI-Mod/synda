@@ -17,25 +17,22 @@ Note
 
 import os
 import sys
-import copy
 import imp
 import spconfig
 from spexception import SPException
 
 sys.path.insert(0, spconfig.pipeline_folder) # this is because of sdpipelineutils.py. TODO: try to find a better way to prevent doing that
 
-def load(name):
-    if name not in pipelines:
-        dep_file='%s/%s.py'%(spconfig.pipeline_folder,name)
+def get_module():
+    name='spbindings'
+
+    dep_file='%s/%s.py'%(spconfig.pipeline_folder,name)
         
-        if not os.path.exists(dep_file):
-            raise SPException("SPPIPDEP-001","Pipeline definition file not found (%s)"%dep_file)
+    if not os.path.exists(dep_file):
+        raise SPException("SPPIPDEP-001","Pipeline dependency file not found (%s)"%dep_file)
 
-        pipeline_definition_module=imp.load_source(name, dep_file)
-        pipelines[name]=pipeline_definition_module.get_pipeline()
+    pipeline_dependency_module=imp.load_source(name, dep_file)
 
-    return copy.deepcopy(pipelines[name])
+    return pipeline_dependency_module
 
 # init.
-
-pipelines={}

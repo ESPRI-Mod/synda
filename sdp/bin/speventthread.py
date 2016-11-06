@@ -18,6 +18,7 @@ import splog
 import speventdao
 import spppprdao
 import spconfig
+import sppipelinedep
 import spconst
 import spdb
 from sptypes import PPPRun
@@ -41,49 +42,6 @@ def get_pipeline_dependency(name,dataset_pattern,variable,conn):
         return pipeline_dependencies[0]
     else:
         assert False # currently, one pipeline can only have one dep max
-
-def process_event(e,conn):
-    if e.name==spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:
-        pipeline='IPSL_VARIABLE'
-        create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
-
-    elif e.name==spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:
-        pipeline='IPSL_DATASET'
-        assert e.variable == ''
-        create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn)
-
-    elif e.name==spconst.EVENT_VARIABLE_COMPLETE:
-        pipeline='IPSL'
-        create_pipeline(pipeline,spconst.PPPRUN_STATUS_WAITING,e,conn)
-
-    elif e.name==spconst.EVENT_CDF_VARIABLE:
-        if is_one_var_per_ds(e.project):
-            pipeline='CDF'
-            pipe_dep_name='IPSL'
-            variable=e.variable
-        else:
-            pipeline='CDF_VARIABLE'
-            pipe_dep_name='IPSL_DATASET' # maybe use IPSL_VARIABLE here (i.e. IPSL_DATASET may be done while IPSL_VARIABLE is running..)
-            variable=''
-
-        # retrieve dependency
-        pipeline_dependency=get_pipeline_dependency(pipe_dep_name,e.dataset_pattern,variable,conn)
-
-        # compute status
-        status=get_new_pipeline_status(pipeline_dependency,e)
-
-        create_pipeline(pipeline,status,e,conn)
-
-    elif e.name==spconst.EVENT_CDF_DATASET:
-
-        assert e.project not in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET
-        assert e.variable == ''
-
-        pipeline='CDF_DATASET'
-        create_pipeline(pipeline,spconst.PPPRUN_STATUS_PAUSE,e,conn) # called for each variable, but duplicate dataset are ignored(i.e. for some project, a dataset is a group of variable)
-
-    else:
-        raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))
 
 def consume_events():
     try:
@@ -118,6 +76,35 @@ def is_one_var_per_ds(project):
     else:
         return False
 
+def process_event(e,conn):
+
+    # retrieve pipeline from event
+
+    if e.name not in pipelinedep.mapping:
+        raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))
+
+    pipeline_name,start_status=pipelinedep.mapping[e.name]
+    
+
+    # retrieve start dependency if any
+
+    if pipeline_name in pipelinedep.dependency:
+        start_dependency=pipelinedep.dependency[pipeline_name]
+    else:
+        start_dependency=None
+
+
+    # process start dependency
+
+    if start_dependency is not None:
+        pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,e.variable,conn) # retrieve dependency
+        start_status=get_new_pipeline_status(pipeline_dependency,e)                                     # compute start status
+
+
+    # main
+
+    create_pipeline(pipeline_name,start_status,e,conn)
+
 def get_new_pipeline_status(pipeline_dependency,e):
 
     if pipeline_dependency is not None:
@@ -148,5 +135,6 @@ def stop():
 
 # init.
 
+pipelinedep=sppipelinedep.get_module()
 stop_event=threading.Event()
 event_thread=threading.Thread(name='event_thread', target=events_loop, args=(stop_event,))
