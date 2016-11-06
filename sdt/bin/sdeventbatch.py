@@ -30,6 +30,7 @@ from sdprogress import SDProgressDot
 def file_():
     """This func mimic end of transfer event for all files and trigger corresponding event.
     """
+    sdlog.info("SDEVENTB-002","Reset eot events")
 
     # check that only files with 'done' status exist
     li=sdfilequery.get_download_status(args.project)
