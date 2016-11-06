@@ -1,3 +1,4 @@
+# rename to event_pipeline_mapping
 mapping={
     spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:      ('IPSL_VARIABLE', spconst.PPPRUN_STATUS_WAITING),
     spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:('IPSL_DATASET',  spconst.PPPRUN_STATUS_PAUSE),
@@ -10,4 +11,9 @@ mapping={
 dependency={
     'CDF_VARIABLE':'IPSL_DATASET',
     'CDF':'IPSL'
+}
+
+trigger={
+    'CDF_VARIABLE':'CDF_DATASET',
+    'IPSL_VARIABLE':'IPSL_DATASET'
 }

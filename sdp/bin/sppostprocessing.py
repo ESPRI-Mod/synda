@@ -17,6 +17,7 @@ import json
 from bunch import Bunch
 from spexception import SPException,NoPostProcessingTaskWaitingException,PipelineRunningException
 from sptypes import JOBRun,PPPRun
+import sppipelinedep
 import splog
 import spdb
 import spconst
@@ -191,8 +192,8 @@ def job_done(job): # note: this method name does not implied that the job comple
         spppprdao.update_ppprun(ppprun,conn)
         spjobrdao.add_jobrun(job,conn)
 
-        if ppprun.pipeline in ['IPSL_VARIABLE','CDF_VARIABLE']: # TODO: move this in external pipeline configuration file
-            dependent_pipeline='IPSL_DATASET' if ppprun.pipeline=='IPSL_VARIABLE' else 'CDF_DATASET' # TODO: move this in external pipeline configuration file
+        if ppprun.pipeline in pipelinedep.trigger:
+            dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
             trigger_dataset_pipeline(ppprun.pipeline,dependent_pipeline,ppprun,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
 
         conn.commit()
@@ -263,6 +264,8 @@ class Execute():
             #splog.debug("SPPOSTPR-008","%s"%stdout)
 
 # init.
+
+pipelinedep=sppipelinedep.get_module()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
