@@ -41,7 +41,7 @@ def transfer_status_count(status=None,conn=sddb.conn):
     c.close()
     return count
 
-def get_download_status(project):
+def get_download_status(project=None):
     li=[]
 
     c = sddb.conn.cursor()

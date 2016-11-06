@@ -23,13 +23,18 @@ import sdproduct
 import sdmodifyquery
 import sdevent
 import sddbpagination
+import sdfilequery
 from sdexception import SDException
 from sdprogress import SDProgressDot
 
 def file_():
+    """This func mimic end of transfer event for all files and trigger corresponding event.
+    """
 
     # check that only files with 'done' status exist
-    TODO
+    li=sdfilequery.get_download_status(args.project)
+    if len(li)>1:
+        raise SDException('SDEVENTB-001',"Incorrect files status (status must be 'done' for all files before running this func)")
 
     # reset files status from done to waiting
     sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_DONE,sdconst.TRANSFER_STATUS_WAITING)
