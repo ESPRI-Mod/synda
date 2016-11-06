@@ -167,3 +167,6 @@ def get_download_speed_over_time():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
+
+    li=get_download_status()
+    print li
