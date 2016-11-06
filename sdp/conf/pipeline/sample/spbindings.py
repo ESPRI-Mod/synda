@@ -1,5 +1,4 @@
-# rename to event_pipeline_mapping
-mapping={
+event_pipeline_mapping={
     spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:      ('IPSL_VARIABLE', spconst.PPPRUN_STATUS_WAITING),
     spconst.EVENT_OUTPUT12_LATEST_DATASET_COMPLETE:('IPSL_DATASET',  spconst.PPPRUN_STATUS_PAUSE),
     spconst.EVENT_VARIABLE_COMPLETE:               ('IPSL',          spconst.PPPRUN_STATUS_WAITING),

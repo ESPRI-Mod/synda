@@ -74,10 +74,10 @@ def process_event(e,conn):
 
     # retrieve pipeline from event
 
-    if e.name not in pipelinedep.mapping:
+    if e.name not in pipelinedep.event_pipeline_mapping:
         raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))
 
-    pipeline_name,start_status=pipelinedep.mapping[e.name]
+    pipeline_name,start_status=pipelinedep.event_pipeline_mapping[e.name]
     
 
     # retrieve start dependency if any
