@@ -13,7 +13,6 @@
 
 import argparse
 import sdapp
-from sdprogress import SDProgressDot
 import sdlog
 import sdtools
 import sdutils
@@ -22,13 +21,37 @@ import sdvariable
 import sdfiledao
 import sddb
 import sdproduct
+import sdmodifyquery
 import sdevent
 from sdexception import SDException
+from sdprogress import SDProgressDot
 
 def file_():
+
+    # check that only files with 'done' status exist
     TODO
-    f=sddao.get_file(file_functional_id=args.file_functional_id)
-    file_complete_event(f)
+
+    # reset files status from done to waiting
+    sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_DONE,sdconst.TRANSFER_STATUS_WAITING)
+
+    # reset dataset status to empty, and dataset latest flag to false
+    sdmodifyquery.wipeout_datasets_flags(status=sdconst.DATASET_STATUS_EMPTY)
+
+    # mimic end of transfer
+    TODO
+    dbpagination=DBPagination()
+    files=dbpagination.get_files()
+    while len(files)>0:
+        for f in files:
+
+            # PAYLOAD
+            sddb.conn.execute("update file set checksum_type=? where file_id=?",(checksum_type,f.file_id))
+            sdfiledao.update_file(tr) # set status to done
+            file_complete_event(f) # trigger end of transfer file event for all files
+
+        conn.commit() # commit block
+        files=dbpagination.get_files() # next block
+        sdprogress.SDProgressDot.print_char(".")
 
 def variable():
     """Artificially trigger event for all complete variable 
