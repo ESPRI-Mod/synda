@@ -1,4 +1,5 @@
 - Version 1.2 - 
+	- move hard-coded pipeline dependencies into configuration files.
 - Version 1.1 - 20160919
 	- add CORDEX support.
 	- add pexec support.
