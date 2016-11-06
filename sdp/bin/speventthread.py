@@ -70,12 +70,6 @@ def consume_events():
     except Exception, e:
         traceback.print_exc(file=open(spconfig.stacktrace_log_file,"a"))
 
-def is_one_var_per_ds(project):
-    if project in spconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
-        return True
-    else:
-        return False
-
 def process_event(e,conn):
 
     # retrieve pipeline from event
