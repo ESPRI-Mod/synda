@@ -16,13 +16,13 @@ import sdapp
 import sdlog
 import sdtools
 import sdutils
-import sddao
 import sdvariable
 import sdfiledao
 import sddb
 import sdproduct
 import sdmodifyquery
 import sdevent
+import sddbpagination
 from sdexception import SDException
 from sdprogress import SDProgressDot
 
@@ -38,19 +38,25 @@ def file_():
     sdmodifyquery.wipeout_datasets_flags(status=sdconst.DATASET_STATUS_EMPTY)
 
     # mimic end of transfer
-    TODO
-    dbpagination=DBPagination()
+    dbpagination=sddbpagination.DBPagination()
     files=dbpagination.get_files()
     while len(files)>0:
         for f in files:
 
-            # PAYLOAD
-            sddb.conn.execute("update file set checksum_type=? where file_id=?",(checksum_type,f.file_id))
-            sdfiledao.update_file(tr) # set status to done
-            file_complete_event(f) # trigger end of transfer file event for all files
 
-        conn.commit() # commit block
+            # PAYLOAD
+
+            # set status to done
+            f.status=sdconst.TRANSFER_STATUS_DONE
+            sdfiledao.update_file(tr)
+
+            # trigger end of transfer file event for all files
+            sdevent.file_complete_event(f)
+
+
+        conn.commit()                  # commit block
         files=dbpagination.get_files() # next block
+
         sdprogress.SDProgressDot.print_char(".")
 
 def variable():
