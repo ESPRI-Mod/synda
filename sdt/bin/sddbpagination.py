@@ -29,6 +29,7 @@ import sdsqlutils
 import sdnormalize
 
 class DBPagination():
+    DEFAULT_CHUNKSIZE=2500
 
     def __init__(self,table='file',columns='*',conn=sddb.conn,chunksize=DEFAULT_CHUNKSIZE):
         self.conn=conn
@@ -75,8 +76,6 @@ class DBPagination():
         return files
 
 # init.
-
-DEFAULT_CHUNKSIZE=2500
 
 if __name__ == '__main__': # test only
     parser = argparse.ArgumentParser()
