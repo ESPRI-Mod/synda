@@ -42,7 +42,7 @@ def run(files):
             # only gridftp
 
             if protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
-                sdlog.debug('SYNPROTO-001','Fallback to gridftp as http url is missing')
+                sdlog.warning('SYNPROTO-001','Fallback to gridftp as http url is missing')
 
             file['url']=file['url_gridftp']
 
