@@ -27,7 +27,7 @@ def run():
 
     task_exec(tc.stop) 
     task_exec(tc.disable_download) 
-    task_exec(tc.configure_task) 
+    task_exec(tc.configure) 
     task_exec(tc.execute_basic_command)
     task_exec(tc.check_version)
 

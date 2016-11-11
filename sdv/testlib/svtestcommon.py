@@ -16,7 +16,7 @@ import fabric.api
 from svtestutils import fabric_run
 
 @fabric.api.task
-def configure_task():
+def configure():
 
     # post-processing password
     fabric_run("sudo sed -i '3s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%(pp_password,)) # beware: line number specific
