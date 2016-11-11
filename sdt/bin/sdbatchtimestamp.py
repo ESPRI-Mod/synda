@@ -39,6 +39,7 @@ def run(squeries,metadata,parallel):
     return metadata
 
 def add_dataset_timestamp(files,datasets_timestamps):
+    dataset_with_missing_timestamp=set()
 
     for f in files:
         dataset_functional_id=f['dataset_functional_id']
@@ -46,8 +47,10 @@ def add_dataset_timestamp(files,datasets_timestamps):
         if dataset_functional_id in datasets_timestamps:
             f['dataset_timestamp']=datasets_timestamps[dataset_functional_id]
         else:
-            sdlog.info("SYNDABTI-200","dataset timestamp not found (%s)"%dataset_functional_id)
+            dataset_with_missing_timestamp.add(dataset_functional_id)
 
+    for dataset_functional_id in dataset_with_missing_timestamp:
+        sdlog.info("SYNDABTI-200","dataset timestamp not found (%s)"%dataset_functional_id)
 
     return files
 
