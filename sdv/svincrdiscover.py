@@ -26,9 +26,13 @@ def run():
     task_exec(tc.check_version)
 
     task_exec(tc.reset) 
+
+    print 'Performing light test'
     light_test()
 
     task_exec(tc.reset) 
+
+    print 'Performing heavy test'
     heavy_test()
 
 def light_test():
