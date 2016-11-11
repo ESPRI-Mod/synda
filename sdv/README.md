@@ -37,10 +37,12 @@ Run commands below
 
 ## Test execution procedure
 
-To execute a test, run command below
+To execute a test, run commands below
 
+    cd <testname>
     /usr/bin/python <testname>.py
 
 Example
 
+    cd svincrdiscover
     /usr/bin/python svincrdiscover.py
