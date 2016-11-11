@@ -26,6 +26,10 @@ def task_exec(task):
     print
     print
 
+def title(s):
+    print '*** %s ***'%s
+    print 
+
 def fabric_run(cmd):
 
     if installation_mode=='source':

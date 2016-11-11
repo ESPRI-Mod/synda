@@ -15,7 +15,7 @@ import argparse
 import re
 import time
 from fabric.api import task
-from testlib.svtestutils import fabric_run, task_exec, Testset
+from testlib.svtestutils import fabric_run, task_exec, Testset, title
 import testlib.svtestcommon as tc
 
 def run():
@@ -27,12 +27,12 @@ def run():
 
     task_exec(tc.reset) 
 
-    print 'Performing light test'
+    title('Performing light test')
     light_test()
 
     task_exec(tc.reset) 
 
-    print 'Performing heavy test'
+    title('Performing heavy test')
     heavy_test()
 
 def light_test():
