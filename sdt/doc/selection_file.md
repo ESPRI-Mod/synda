@@ -94,7 +94,8 @@ Example
 ### Notes
 
 * Blank line are ignored.
-* Selection files may include comments, prefixed by specific characters (#)
+* Selection files may include comments, prefixed by specific characters (#).
+* Trailing comments are not supported.
 
 ## Selection file parameter
 

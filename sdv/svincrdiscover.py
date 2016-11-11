@@ -61,8 +61,7 @@ def heavy_test():
 
 @task
 def normal_discovery():
-    date_t1='2015-11-01T01:00:00Z'
-    fabric_run('synda install -y -s %s to=%s'%(light_testset.selection_file,date_t1))
+    fabric_run('synda install -y -s %s'%(light_testset.selection_file,))
 
 @task
 def check_normal_discovery_result():
@@ -70,7 +69,7 @@ def check_normal_discovery_result():
 
 @task
 def incremental_discovery():
-    fabric_run('synda install -i -y %s'%(light_testset.parameter,))
+    fabric_run('synda install -i -y -s %s'%(light_testset.selection_file,))
 
 @task
 def check_incremental_discovery_result():
