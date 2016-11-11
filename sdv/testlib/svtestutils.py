@@ -49,6 +49,7 @@ def fabric_run(cmd):
 
 class Testset(object):
     parameter=None
+    selection_file=None
 
 # init.
 exec_mode='local'

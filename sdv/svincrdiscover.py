@@ -47,7 +47,7 @@ def light_test():
 
     print
 
-    print 'At T2 (current time), a incremental discovery is performed'
+    print 'At T2 (current time), an incremental discovery is performed'
     task_exec(incremental_discovery)
     task_exec(check_incremental_discovery_result)
 
@@ -62,7 +62,7 @@ def heavy_test():
 @task
 def normal_discovery():
     date_t1='2015-11-01T01:00:00Z'
-    fabric_run('synda install -y %s to=%s'%(light_testset.parameter,date_t1))
+    fabric_run('synda install -y -s %s to=%s'%(light_testset.selection_file,date_t1))
 
 @task
 def check_normal_discovery_result():
@@ -91,7 +91,7 @@ def check_that_incremental_discovery_fetched_only_the_delta():
 # init.
     
 light_testset=Testset()
-light_testset.parameter='CMIP5 output1 MOHC HadGEM2-ES rcp85 mon atmos Amon r1i1p1'
+light_testset.selection_file='./resource/svincrdiscover/template/light.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
