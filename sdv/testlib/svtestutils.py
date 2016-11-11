@@ -23,6 +23,9 @@ def task_exec(task):
 
     fabric.api.execute(task)
 
+    print
+    print
+
 def fabric_run(cmd):
 
     if installation_mode=='source':
