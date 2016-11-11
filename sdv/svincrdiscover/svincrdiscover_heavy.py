@@ -62,7 +62,7 @@ def check_that_incremental_discovery_fetched_only_the_delta():
 # init.
     
 testset=Testset()
-testset.selection_file='./resource/svincrdiscover/template/heavy.txt'
+testset.selection_file='./resource/template/heavy.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()

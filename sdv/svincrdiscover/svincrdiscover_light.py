@@ -66,7 +66,7 @@ def check_incremental_discovery_result():
 # init.
     
 testset=Testset()
-testset.selection_file='./resource/svincrdiscover/template/light.txt'
+testset.selection_file='./resource/template/light.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
