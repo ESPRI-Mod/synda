@@ -19,6 +19,8 @@ from testlib.svtestutils import fabric_run, task_exec, Testset, title
 import testlib.svtestcommon as tc
 
 def run():
+    title('Performing light test')
+
     task_exec(tc.stop) 
     task_exec(tc.disable_download) 
     task_exec(tc.configure_task) 
@@ -26,16 +28,6 @@ def run():
     task_exec(tc.check_version)
 
     task_exec(tc.reset) 
-
-    title('Performing light test')
-    light_test()
-
-    task_exec(tc.reset) 
-
-    title('Performing heavy test')
-    heavy_test()
-
-def light_test():
 
     print 'At T1 (some months ago), a normal (full) discovery is performed'
     task_exec(normal_discovery)
@@ -51,17 +43,9 @@ def light_test():
     task_exec(incremental_discovery)
     task_exec(check_incremental_discovery_result)
 
-def heavy_test():
-    task_exec(install_large_template)
-    task_exec(install_large_template_full_discovery_db_backup)
-    task_exec(incremental_discovery)
-    task_exec(check_incremental_discovery_result)
-    task_exec(check_that_incremental_discovery_fetched_only_the_delta)
-    print 'Incremental discovery took %d minutes to complete'%999
-
 @task
 def normal_discovery():
-    fabric_run('synda install -y -s %s'%(light_testset.selection_file,))
+    fabric_run('synda install -y -s %s'%(testset.selection_file,))
 
 @task
 def check_normal_discovery_result():
@@ -69,28 +53,16 @@ def check_normal_discovery_result():
 
 @task
 def incremental_discovery():
-    fabric_run('synda install -i -y -s %s'%(light_testset.selection_file,))
+    fabric_run('synda install -i -y -s %s'%(testset.selection_file,))
 
 @task
 def check_incremental_discovery_result():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
 
-@task
-def install_large_template():
-    fabric_run('TODO')
-
-@task
-def install_large_template_full_discovery_db_backup():
-    fabric_run('TODO')
-
-@task
-def check_that_incremental_discovery_fetched_only_the_delta():
-    fabric_run('test ! -f grep SYDPROXY-100 /var/log/synda/sdt/discovery.log')
-
 # init.
     
-light_testset=Testset()
-light_testset.selection_file='./resource/svincrdiscover/template/light.txt'
+testset=Testset()
+testset.selection_file='./resource/svincrdiscover/template/light.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
