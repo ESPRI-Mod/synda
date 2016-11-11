@@ -11,12 +11,16 @@
 
 """This script contains user acceptance testing (UAT) routines."""
 
+import sys
 import argparse
 import re
 import time
 import fabric.api
 from fabric.api import task
 from fabric.api import execute as task_exec
+
+sys.path.append("..")
+
 from testlib.svtestutils import fabric_run
 import testlib.svtestcommon as tc
 

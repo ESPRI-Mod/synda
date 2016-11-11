@@ -11,10 +11,14 @@
 
 """This script contains UAT test for incremental discovery."""
 
+import sys
 import argparse
 import re
 import time
 from fabric.api import task
+
+sys.path.append("..")
+
 from testlib.svtestutils import fabric_run, task_exec, Testset, title
 import testlib.svtestcommon as tc
 
