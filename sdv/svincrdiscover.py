@@ -42,7 +42,10 @@ def light_test():
     task_exec(check_normal_discovery_result)
 
     print 'A few weeks pass, without any discovery being run..'
+
     time.sleep(5)
+
+    print
 
     print 'At T2 (current time), a incremental discovery is performed'
     task_exec(incremental_discovery)
