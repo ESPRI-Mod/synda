@@ -16,6 +16,7 @@ Notes
 """
 
 import sys
+import os
 import sdconst
 
 def check_daemon():
