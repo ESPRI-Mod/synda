@@ -73,7 +73,7 @@ def incremental_discovery():
 
 @task
 def check_incremental_discovery_result():
-    fabric_run('test $(synda list limit=0 -f | wc -l) -eq TODO')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
 
 @task
 def install_large_template():
