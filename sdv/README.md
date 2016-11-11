@@ -4,9 +4,9 @@ This module contains UAT tests.
 
 ## Test environment setup
 
-To set up a test environment, you will need:
+To set up a test environment, you will need to install:
 
-* A machine with Synda installed
+* Synda
 * Test scripts dependencies
 * Test scripts
 
@@ -14,7 +14,7 @@ To set up a test environment, you will need:
 
 Log on the test machine.
 
-Install Synda (from source or system package).
+Install Synda (from source or system package) using [this link](https://github.com/Prodiguer/synda#installation)
 
 Note: depending on which tests to run, SDT module, SDP module or both must be installed.
 
