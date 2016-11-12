@@ -39,7 +39,7 @@ import sdpipelineprocessing
 from sdexception import SDException
 import sdprogress
 
-def run(metadata):
+def run(metadata,timestamp_right_boundary=None):
     """
     Returns
         Number of enqueued items.
@@ -80,6 +80,8 @@ def run(metadata):
 
         if sdconfig.progress:
             sdprogress.ProgressThread.stop() # spinner stop
+
+        histo_crea_date=sdtime.search_api_datetime_format_to_sqlite_datetime_format(timestamp_right_boundary) if timestamp_right_boundary is not None else None
 
         sdhistorydao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id)
 
