@@ -40,14 +40,6 @@ def run():
     print 'Incremental discovery took %d minutes to complete'%999
 
 @task
-def incremental_discovery():
-    fabric_run('synda install -i -y -s %s'%(testset.selection_file,))
-
-@task
-def check_incremental_discovery_result():
-    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
-
-@task
 def install_large_template():
     fabric_run('TODO')
 
@@ -56,13 +48,21 @@ def install_large_template_full_discovery_db_backup():
     fabric_run('TODO')
 
 @task
+def incremental_discovery():
+    fabric_run('synda install -i -y -s %s'%(testset.selection_file,))
+
+@task
+def check_incremental_discovery_result():
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
+
+@task
 def check_that_incremental_discovery_fetched_only_the_delta():
     fabric_run('test ! -f grep SYDPROXY-100 /var/log/synda/sdt/discovery.log')
 
 # init.
     
 testset=Testset()
-testset.selection_file='./resource/template/heavy.txt'
+testset.selection_file='./resource/template/heavy/heavy.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
