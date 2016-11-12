@@ -97,14 +97,14 @@ def file_full_search(args,stream=None):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
                 previous_run=sdhistory.get_previous_run(selection_filename,'add')
-                crea_date=previous_run['crea_date']
+                dt=previous_run['crea_date']
 
                 # convert datetime format
-                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(crea_date)
+                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
 
 
                 # add incremental mode filters
-
+                #
                 # sample
                 #     from='2015-10-19T22:00:00Z'
                 #
@@ -113,7 +113,7 @@ def file_full_search(args,stream=None):
                 #
                 # more info
                 #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
-
+                #
                 sdstream.set_scalar(stream,'from',datetime)
 
             else:
