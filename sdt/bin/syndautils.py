@@ -99,6 +99,14 @@ def file_full_search(args,stream=None):
                 previous_run=sdhistory.get_previous_run(selection_filename,'add')
                 dt=previous_run['crea_date']
 
+
+                # to prevent UTC vs localtime time issue
+                # (history.crea_date is in localtime while search-api timestamp is in UTC time)
+                # we systematically substract 72 hours to the left boundary
+                #
+                dt=sdtime.substract_hour(dt,72)
+
+
                 # convert datetime format
                 search_api_datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
 
