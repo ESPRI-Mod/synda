@@ -59,7 +59,19 @@ def substract_hour(s,count):
     """
     format = '%Y-%m-%d %H:%M:%S.%f'
     dt=datetime.datetime.strptime(s,format) - datetime.timedelta(hours=count)
-    return dt.isoformat(" ")
+    return datetime_to_isoformat_FIXED(dt)
+
+def datetime_to_isoformat_FIXED(dt):
+    """
+    Original datetime isoformat method returns
+        - A) YYYY-MM-DDTHH:MM:SS.mmmmmm if microsecond is not 0
+        - B) YYYY-MM-DDTHH:MM:SS        if microsecond is 0
+
+    This func fixes this issue and always returns A format
+    """
+    s=dt.isoformat(" ")
+    s=s if len(s)==26 else s+'.000000'
+    return s
 
 def compute_time_delta(start_date,end_date):
     format = '%Y-%m-%d %H:%M:%S.%f'
