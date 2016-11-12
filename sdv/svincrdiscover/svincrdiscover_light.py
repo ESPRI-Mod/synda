@@ -19,7 +19,7 @@ from fabric.api import task
 
 sys.path.append("..")
 
-from testlib.svtestutils import fabric_run, task_exec, Testset, title
+from testlib.svtestutils import fabric_run, task_exec, title
 import testlib.svtestcommon as tc
 
 def run():
@@ -49,7 +49,7 @@ def run():
 
 @task
 def normal_discovery():
-    fabric_run('synda install -y -s %s'%(testset.selection_file,))
+    fabric_run('synda install -y -s %s'%(testset_with_right_boundary,))
 
 @task
 def check_normal_discovery_result():
@@ -57,16 +57,16 @@ def check_normal_discovery_result():
 
 @task
 def incremental_discovery():
-    fabric_run('synda install -i -y -s %s'%(testset.selection_file,))
+    fabric_run('synda install -i -y -s %s'%(full_testset,))
 
 @task
 def check_incremental_discovery_result():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
 
 # init.
-    
-testset=Testset()
-testset.selection_file='./resource/template/light.txt'
+
+testset_with_right_boundary='./resource/template/light/light_with_right_boundary.txt'
+full_testset='./resource/template/light.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
