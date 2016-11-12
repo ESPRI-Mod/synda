@@ -105,7 +105,7 @@ def _install(metadata,interactive,timestamp_right_boundary=None):
     # install
     if installation_confirmed:
         import sdenqueue
-        sdenqueue.run(metadata)
+        sdenqueue.run(metadata,timestamp_right_boundary)
 
         if interactive:
             print_stderr("%i file(s) enqueued"%count_new)
