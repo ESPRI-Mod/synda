@@ -47,6 +47,8 @@ def run():
     task_exec(incremental_discovery)
     task_exec(check_incremental_discovery_result)
 
+    print 'Test complete successfully'
+
 @task
 def normal_discovery():
     fabric_run('synda install -y -s %s'%(testset_with_right_boundary,))
@@ -61,7 +63,7 @@ def incremental_discovery():
 
 @task
 def check_incremental_discovery_result():
-    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2474')
 
 # init.
 
