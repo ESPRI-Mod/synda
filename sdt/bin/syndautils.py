@@ -93,7 +93,7 @@ def file_full_search(args,stream=None):
 
             selection_filename=os.path.basename(args.selection_file)
 
-            if sdhistory.previous_run_exists(selection_filename,'install'):
+            if sdhistory.previous_run_exists(selection_filename,'add'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
                 previous_run=sdhistory.get_previous_run(selection_filename,'install')

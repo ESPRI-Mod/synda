@@ -51,7 +51,7 @@ def run():
 
 @task
 def normal_discovery():
-    fabric_run('synda install -y -s %s'%(testset_with_right_boundary,))
+    fabric_run('synda install -y --timestamp_right_boundary %s -s %s'%(date_t1,testset,))
 
 @task
 def check_normal_discovery_result():
@@ -59,7 +59,7 @@ def check_normal_discovery_result():
 
 @task
 def incremental_discovery():
-    fabric_run('synda install -i -y -s %s'%(full_testset,))
+    fabric_run('synda install -i -y -s %s'%(testset,))
 
 @task
 def check_incremental_discovery_result():
@@ -67,8 +67,8 @@ def check_incremental_discovery_result():
 
 # init.
 
-testset_with_right_boundary='./resource/template/light/light_with_right_boundary.txt'
-full_testset='./resource/template/light/light_full.txt'
+testset='./resource/template/light/light.txt'
+date_t1='2015-11-01T01:00:00Z'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
