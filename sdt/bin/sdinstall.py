@@ -50,9 +50,9 @@ def run(args,metadata=None):
 
     interactive=not args.yes
 
-    return install(metadata,interactive)
+    return install(metadata,interactive,args.timestamp_right_boundary)
 
-def install(metadata,interactive):
+def install(metadata,interactive,timestamp_right_boundary=None):
     import sddaemon
 
 
