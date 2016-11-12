@@ -96,7 +96,7 @@ def file_full_search(args,stream=None):
             if sdhistory.previous_run_exists(selection_filename,'add'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
-                previous_run=sdhistory.get_previous_run(selection_filename,'install')
+                previous_run=sdhistory.get_previous_run(selection_filename,'add')
 
 
                 # add incremental mode filters
