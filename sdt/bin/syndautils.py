@@ -100,7 +100,7 @@ def file_full_search(args,stream=None):
                 dt=previous_run['crea_date']
 
                 # convert datetime format
-                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
+                search_api_datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
 
 
                 # add incremental mode filters
@@ -114,7 +114,7 @@ def file_full_search(args,stream=None):
                 # more info
                 #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
                 #
-                sdstream.set_scalar(stream,'from',datetime)
+                sdstream.set_scalar(stream,'from',search_api_datetime)
 
             else:
                 sdlog.info('SYNUTILS-008','No previous run found')
