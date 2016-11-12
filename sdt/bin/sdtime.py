@@ -12,6 +12,7 @@
 """This module contains time functions."""
 
 import argparse
+import re
 import time
 import datetime
 
@@ -33,6 +34,16 @@ def compute_duration(start_date,end_date):
             return 1
         else:
             return duration
+
+def sqlite_datetime_format_to_search_api_datetime_format(s):
+    """
+    input format example: 2016-11-12 15:59:15.981983
+    output format example: 2016-11-12T15:59:15Z
+    """
+    if len(s)==26:
+        s=re.sub('\.[^.]+$','',s)
+
+    return s.replace(' ','T')
 
 def compute_time_delta(start_date,end_date):
     format = '%Y-%m-%d %H:%M:%S.%f'
