@@ -64,7 +64,7 @@ def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=Tru
 
 def file_full_search(args,stream=None):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
-    import sdsearch,sdlog,sdhistory,sdstream
+    import sdsearch,sdlog,sdhistory,sdstream,sdtime
 
     if stream is None:
         stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
@@ -98,12 +98,14 @@ def file_full_search(args,stream=None):
 
                 previous_run=sdhistory.get_previous_run(selection_filename,'add')
 
+                # convert datetime format
+                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(previous_run['crea_date'])
+
 
                 # add incremental mode filters
 
                 # sample
                 #     from='2015-10-19T22:00:00Z'
-                #     to=NOW
                 #
                 # note
                 #     'from' and 'to' filters refer to 'timestamp' attribute
@@ -111,7 +113,7 @@ def file_full_search(args,stream=None):
                 # more info
                 #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
 
-                sdstream.set_scalar(stream,'from',previous_run['crea_date'])
+                sdstream.set_scalar(stream,'from',datetime)
 
             else:
                 sdlog.info('SYNUTILS-008','No previous run found')
