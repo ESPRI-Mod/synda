@@ -85,7 +85,7 @@ def run(metadata,timestamp_right_boundary=None):
 
         sdhistorydao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id,crea_date=histo_crea_date)
 
-    sdlog.info("SDENQUEU-001","%i new files added (total size=%i,selection=%s)"%(count,total_size,selection_filename))
+    sdlog.info("SDENQUEU-001","%i new file(s) added (total size=%i,selection=%s)"%(count,total_size,selection_filename))
 
     return count
 
