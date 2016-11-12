@@ -35,6 +35,14 @@ def compute_duration(start_date,end_date):
         else:
             return duration
 
+def search_api_datetime_format_to_sqlite_datetime_format(s):
+    """
+    input format example: 2016-11-12T15:59:15Z
+    output format example: 2016-11-12 15:59:15.981983
+    """
+    s=re.sub('Z$','.888888',s) # arbitrary
+    return s.replace('T',' ')
+
 def sqlite_datetime_format_to_search_api_datetime_format(s):
     """
     input format example: 2016-11-12 15:59:15.981983
