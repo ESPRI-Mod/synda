@@ -54,6 +54,9 @@ def sqlite_datetime_format_to_search_api_datetime_format(s):
     return s.replace(' ','T')
 
 def substract_hour(s,count):
+    """
+    input format example: 2016-11-12 15:59:15.981983
+    """
     format = '%Y-%m-%d %H:%M:%S.%f'
     dt=datetime.datetime.strptime(s,format) - datetime.timedelta(hours=count)
     return dt.isoformat(" ")
