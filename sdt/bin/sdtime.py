@@ -41,7 +41,7 @@ def sqlite_datetime_format_to_search_api_datetime_format(s):
     output format example: 2016-11-12T15:59:15Z
     """
     if len(s)==26:
-        s=re.sub('\.[^.]+$','',s)
+        s=re.sub('\.[^.]+$','Z',s)
 
     return s.replace(' ','T')
 
