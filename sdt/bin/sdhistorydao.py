@@ -18,9 +18,12 @@ import sdtime
 
 _HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id"
 
-def add_history_line(action,selection_filename=None,insertion_group_id=None,conn=sddb.conn):
+def add_history_line(action,selection_filename=None,insertion_group_id=None,conn=sddb.conn,crea_date=None):
+
+    crea_date=sdtime.now() if crea_date is None else crea_date
+
     c = conn.cursor()
-    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id) values (?,?,?,?)",(action, selection_filename, sdtime.now(), insertion_group_id))
+    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id) values (?,?,?,?)",(action, selection_filename, crea_date, insertion_group_id))
     c.close()
     conn.commit()
 
