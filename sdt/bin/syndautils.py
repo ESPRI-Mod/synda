@@ -97,9 +97,10 @@ def file_full_search(args,stream=None):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
                 previous_run=sdhistory.get_previous_run(selection_filename,'add')
+                crea_date=previous_run['crea_date']
 
                 # convert datetime format
-                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(previous_run['crea_date'])
+                datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(crea_date)
 
 
                 # add incremental mode filters
