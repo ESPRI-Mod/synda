@@ -66,7 +66,7 @@ def check_incremental_discovery_result():
 # init.
 
 testset_with_right_boundary='./resource/template/light/light_with_right_boundary.txt'
-full_testset='./resource/template/light.txt'
+full_testset='./resource/template/light/light_full.txt'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
