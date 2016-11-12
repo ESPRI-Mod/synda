@@ -53,6 +53,11 @@ def sqlite_datetime_format_to_search_api_datetime_format(s):
 
     return s.replace(' ','T')
 
+def substract_hour(s,count):
+    format = '%Y-%m-%d %H:%M:%S.%f'
+    dt=datetime.datetime.strptime(s,format) - datetime.timedelta(hours=count)
+    return dt.isoformat(" ")
+
 def compute_time_delta(start_date,end_date):
     format = '%Y-%m-%d %H:%M:%S.%f'
     sta=datetime.datetime.strptime(start_date,format)
