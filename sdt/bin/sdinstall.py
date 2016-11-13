@@ -118,6 +118,8 @@ def _install(metadata,interactive,timestamp_right_boundary=None):
         if interactive:
             print_stderr('Abort.')
 
+    sdlog.info("SYNDINST-025","Task complete")
+
     return (0,count_new)
 
 # init.
