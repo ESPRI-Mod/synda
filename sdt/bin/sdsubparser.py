@@ -39,11 +39,14 @@ def add_incremental_mode_argument(parser,subc):
 
 def add_timestamp_boundaries(parser,hidden=True):
 
-    left_limit_help_msg='' # "'timestamp' left limit"
-    right_limit_help_msg='' # "'timestamp' right limit"
+    # default is to hide everything (advanced options are not shown by default)
+    left_limit_help_msg=argparse.SUPPRESS
+    right_limit_help_msg=argparse.SUPPRESS
 
-    left_limit_help_msg=argparse.SUPPRESS if hidden else left_limit_help_msg
-    right_limit_help_msg=argparse.SUPPRESS if hidden else right_limit_help_msg
+    if not hidden:
+        if sdconfig.show_advanced_options:
+            left_limit_help_msg="'timestamp' left limit"
+            right_limit_help_msg="'timestamp' right limit"
 
     # redundant with 'to' and 'from' search-api parameters, but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
     parser.add_argument('-L','--timestamp_left_boundary',help=left_limit_help_msg)

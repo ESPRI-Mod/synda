@@ -288,6 +288,8 @@ searchapi_output_format=sdconst.SEARCH_API_OUTPUT_FORMAT_JSON
 # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
 next_url_on_error=config.getboolean('download','http_fallback')
 
+show_advanced_options=False
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n','--name',default=None,help='Name of the parameter to be displayed (if not set, all parameters are displayed)')
