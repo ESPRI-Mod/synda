@@ -125,7 +125,7 @@ def file_foobar(args):
 
 def dataset_count(args):
     import sdquickcount
-    result=sdquickcount.run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_DATASET)
+    result=sdquickcount.run(stream=args.stream,parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_DATASET)
 
     if not args.dry_run:
         print "%i dataset(s) found"%result.num_found
@@ -135,7 +135,7 @@ def variable_count(args):
 
 def file_count(args):
     import sdquickcount
-    result=sdquickcount.run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_FILE)
+    result=sdquickcount.run(stream=args.stream,parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_FILE)
 
     if not args.dry_run:
         print "%i file(s) found"%result.num_found
