@@ -198,6 +198,7 @@ prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
 prevent_ihm_and_ihm=False    # prevent IHM/IHM concurrent accesses
 
 log_domain_inconsistency=True # this is to prevent flooding log file with domain message during debugging session (i.e. set it to false when debugging).
+print_domain_inconsistency=True # If true, domain inconsistencies are printed on stderr
 
 dataset_filter_mecanism_in_file_context='dataset_id' # dataset_id | query
 
