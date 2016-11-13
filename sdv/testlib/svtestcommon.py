@@ -31,6 +31,10 @@ def disable_download():
     fabric_run("sudo sed -i 's|^download=true|download=false|' /etc/synda/sdt/sdt.conf")
 
 @fabric.api.task
+def do_not_print_domain_inconsistency():
+    fabric_run("sudo sed -i 's|^print_domain_inconsistency=True|print_domain_inconsistency=False|' /usr/share/python/synda/sdt/bin/sdconfig.py")
+
+@fabric.api.task
 def restart():
     fabric_run("sudo service synda restart")
 
