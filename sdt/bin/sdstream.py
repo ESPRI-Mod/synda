@@ -75,7 +75,13 @@ def is_stream(o):
     """
     assert o is not None
     assert isinstance(o,list)
-    assert len(o)>0 # a stream contains at least one facets_group
+
+
+    if len(o)==0:
+
+        # a stream contains at least one facets_group
+        return False
+
 
     if isinstance(o[0],dict): # This test is based on the fact that stream contains only dict and parameter contains only str)
         # list contains dict, so it's a stream
