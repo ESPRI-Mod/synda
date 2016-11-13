@@ -29,6 +29,7 @@ import sdi18n
 import sdsubparser
 import sdtools
 import sdconfig
+import sdexception
 
 def set_stream_type(args):
     import sddeferredbefore
@@ -65,8 +66,7 @@ def set_stream_type(args):
     elif args.type_ in (sdconst.SA_TYPE_FILE,):
         sddeferredbefore.add_forced_parameter(args.stream,'type',sdconst.SA_TYPE_FILE)
     else:
-        from sdexception import SDException
-        raise SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
+        raise sdexception.SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
 
 if __name__ == '__main__':
 
