@@ -32,6 +32,8 @@ def run():
 
     task_exec(tc.reset) 
 
+    task_exec(tc.retrieve_parameters)
+
     task_exec(normal_discovery)
     task_exec(check_normal_discovery_result)
     task_exec(incremental_discovery)

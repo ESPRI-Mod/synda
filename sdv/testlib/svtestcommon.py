@@ -48,6 +48,10 @@ def reset():
     fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db")
 
 @fabric.api.task
+def retrieve_parameters():
+    fabric_run('synda update')
+
+@fabric.api.task
 def execute_basic_command():
     fabric_run('synda -V')
 
