@@ -39,8 +39,11 @@ def add_incremental_mode_argument(parser,subc):
 
 def add_timestamp_boundaries(parser,hidden=True):
 
-    left_limit_help_msg=argparse.SUPPRESS if hidden else "'timestamp' left limit"
-    right_limit_help_msg=argparse.SUPPRESS if hidden else "'timestamp' right limit"
+    left_limit_help_msg='' # "'timestamp' left limit"
+    right_limit_help_msg='' # "'timestamp' right limit"
+
+    left_limit_help_msg=argparse.SUPPRESS if hidden else left_limit_help_msg
+    right_limit_help_msg=argparse.SUPPRESS if hidden else right_limit_help_msg
 
     # redundant with 'to' and 'from' search-api parameters, but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
     parser.add_argument('--timestamp_left_boundary',help=left_limit_help_msg)
@@ -126,8 +129,8 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'count',help='Count dataset',example=sdcliex.count())
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     add_parameter_argument(subparser)
-    sdcommonarg.add_type_grp(subparser)
     add_timestamp_boundaries(subparser,hidden=False)
+    sdcommonarg.add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',note=sdi18n.m0023)
     add_action_argument(subparser,choices=['start','stop','status'])
@@ -215,6 +218,7 @@ def run(subparsers):
     subparser.add_argument('-e','--explode',action='store_true',help=argparse.SUPPRESS) # explode id into individual facets (hidden option mainly used for debug)
     subparser.add_argument('-l','--limit',type=int,default=sdconfig.get_default_limit('search'),help=sdi18n.m0024)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
+    add_timestamp_boundaries(subparser,hidden=False)
     sdcommonarg.add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'selection',common_option=False,help='List selection files')
