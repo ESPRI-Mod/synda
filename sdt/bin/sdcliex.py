@@ -39,7 +39,8 @@ def contact():
 def count():
     buf="""  synda count
   synda count CMIP5
-  synda count obs4MIPs -f"""
+  synda count obs4MIPs -f
+  synda count -s selection.txt --timestamp_left_boundary 2012-01-01T01:00:00Z --timestamp_right_boundary 2015-01-01T01:00:00Z"""
     return buf
 
 def daemon():

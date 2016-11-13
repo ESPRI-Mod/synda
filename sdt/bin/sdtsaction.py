@@ -103,6 +103,17 @@ def dump(args):
         dataset_dump(args)
 
 def count(args):
+    import sdstream
+
+
+    # timestamp filters
+    #(maybe move this code in synda.py)
+    if args.timestamp_left_boundary is not None:
+        sdstream.set_scalar(args.stream,'from',args.timestamp_left_boundary)
+    if args.timestamp_right_boundary is not None:
+        sdstream.set_scalar(args.stream,'to',args.timestamp_right_boundary)
+
+
     if args.type_==sdconst.SA_TYPE_FILE:
         file_count(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:

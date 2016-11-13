@@ -127,6 +127,7 @@ def run(subparsers):
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     add_parameter_argument(subparser)
     sdcommonarg.add_type_grp(subparser)
+    add_timestamp_boundaries(subparser,hidden=False)
 
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',note=sdi18n.m0023)
     add_action_argument(subparser,choices=['start','stop','status'])
