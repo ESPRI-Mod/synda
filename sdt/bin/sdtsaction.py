@@ -55,12 +55,18 @@ def list_(args):
         dataset_list(args)
 
 def search(args):
-    import sdearlystreamutils
+    import sdearlystreamutils,sdstream
 
     if args.replica:
-        import sdstream, sddeferredafter
+        import sddeferredafter
         sdstream.set_scalar(args.stream,'keep_replica','true')
         sddeferredafter.add_forced_parameter(args.stream,'nearest','false')
+
+    # timestamp filters
+    if args.timestamp_left_boundary is not None:
+        sdstream.set_scalar(args.stream,'from',args.timestamp_left_boundary)
+    if args.timestamp_right_boundary is not None:
+        sdstream.set_scalar(args.stream,'to',args.timestamp_right_boundary)
 
     if args.type_==sdconst.SA_TYPE_FILE:
         file_search(args)
@@ -107,7 +113,6 @@ def count(args):
 
 
     # timestamp filters
-    #(maybe move this code in synda.py)
     if args.timestamp_left_boundary is not None:
         sdstream.set_scalar(args.stream,'from',args.timestamp_left_boundary)
     if args.timestamp_right_boundary is not None:
