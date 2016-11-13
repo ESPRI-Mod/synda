@@ -1,6 +1,7 @@
 - Version 3.6 - 
 	- use search-api json format instead of xml.
 	- add end-of-transfer events replay mode (trigger all EOT events in batch mode).
+	- add 'synda count' action.
 - Version 3.5 - 20160919
 	- use requests (pypi) to resolve openid.
 	- add ~/.sdt/conf/credentials.conf

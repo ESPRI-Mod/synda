@@ -36,6 +36,10 @@ def contact():
     buf=""""""
     return buf
 
+def count():
+    buf="""  synda count CMIP5"""
+    return buf
+
 def daemon():
     buf="""  synda daemon start
   synda daemon stop"""

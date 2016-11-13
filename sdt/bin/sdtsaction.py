@@ -102,6 +102,14 @@ def dump(args):
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
+def count(args):
+    if args.type_==sdconst.SA_TYPE_FILE:
+        file_count(args)
+    elif args.type_==sdconst.SA_TYPE_AGGREGATION:
+        print_stderr('%s operation is not available yet for variable/aggregation type'%args.action)   
+    elif args.type_==sdconst.SA_TYPE_DATASET:
+        dataset_count(args)
+
 # o=======================================================o
 
 def dataset_foobar(args):
@@ -112,6 +120,25 @@ def variable_foobar(args):
 
 def file_foobar(args):
     print_stderr('Not implemented yet.')   
+
+# o-------------------------------------------------------o
+
+def dataset_count(args):
+    import sdquickcount
+    result=sdquickcount.run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_DATASET)
+
+    if not args.dry_run:
+        print "%i dataset(s) found"%result.num_found
+
+def variable_count(args):
+    print_stderr('Not implemented yet.')   
+
+def file_count(args):
+    import sdquickcount
+    result=sdquickcount.run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_FILE)
+
+    if not args.dry_run:
+        print "%i file(s) found"%result.num_found
 
 # o-------------------------------------------------------o
 
@@ -397,6 +424,7 @@ variable_light_fields=','.join(sdconst.LIGHT_FIELDS)
 file_light_fields=','.join(sdconst.LIGHT_FIELDS)
 
 actions={
+    'count':count,
     'dump':dump,
     'list':list_, 
     'search':search, 
