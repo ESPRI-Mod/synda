@@ -46,7 +46,7 @@ def normal_discovery():
 
 @task
 def check_normal_discovery_result():
-    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 42722')
 
 @task
 def incremental_discovery():
