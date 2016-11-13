@@ -79,10 +79,10 @@ def _install(metadata,interactive,timestamp_right_boundary=None):
     if count_new<1:
 
         if interactive:
-            if count_total>0:
-                print_stderr("Nothing to install (matching files are already installed or waiting in the download queue). To monitor transfers status and progress, use 'synda queue' command.")
-            else:
-                print_stderr('Nothing to install (0 file found).')
+        if count_total>0:
+            print_stderr("Nothing to install (matching files are already installed or waiting in the download queue). To monitor transfers status and progress, use 'synda queue' command.")
+        else:
+            print_stderr('Nothing to install (0 file found).')
 
         return (0,0)
 
