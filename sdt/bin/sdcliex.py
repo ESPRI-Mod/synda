@@ -37,7 +37,9 @@ def contact():
     return buf
 
 def count():
-    buf="""  synda count CMIP5"""
+    buf="""  synda count
+  synda count CMIP5
+  synda count obs4MIPs -f"""
     return buf
 
 def daemon():
