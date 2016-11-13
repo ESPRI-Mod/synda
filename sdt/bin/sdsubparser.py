@@ -37,10 +37,14 @@ def add_incremental_mode_argument(parser,subc):
 
     parser.add_argument('-i','--incremental', action='store_true',help=msg)
 
-def add_timestamp_boundaries(parser):
+def add_timestamp_boundaries(parser,hidden=True):
+
+    left_limit_help_msg=argparse.SUPPRESS if hidden else "'timestamp' left limit"
+    right_limit_help_msg=argparse.SUPPRESS if hidden else "'timestamp' right limit"
+
     # redundant with 'to' and 'from' search-api parameters, but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
-    parser.add_argument('--timestamp_left_boundary',help=argparse.SUPPRESS) # timestamp left boundary filter (hidden option mainly used for debug)
-    parser.add_argument('--timestamp_right_boundary',help=argparse.SUPPRESS) # timestamp right boundary filter (hidden option mainly used for debug)
+    parser.add_argument('--timestamp_left_boundary',help=left_limit_help_msg)
+    parser.add_argument('--timestamp_right_boundary',help=right_limit_help_msg)
 
 def add_common_option(parser,**kw):
 
@@ -163,7 +167,7 @@ def run(subparsers):
     add_ni_option(subparser)
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'install')
-    add_timestamp_boundaries(subparser)
+    add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
@@ -223,7 +227,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'stat')
-    add_timestamp_boundaries(subparser)
+    add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
@@ -233,7 +237,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_ni_option(subparser)
     add_incremental_mode_argument(subparser,'upgrade')
-    add_timestamp_boundaries(subparser)
+    add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
     subparser.add_argument('-e','--exclude_from',metavar='FILE',help='Read exclude selection-file from FILE')
 
     subparser=create_subparser(subparsers,'variable',selection=False,no_default=False,help='Print variable',example=sdcliex.variable())
