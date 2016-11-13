@@ -26,14 +26,6 @@ def add_verbose_option(parser):
     # TODO: use this => parser.add_argument('--verbosity','-v', action='count', default=0)
     parser.add_argument('--verbose',action='store_true',help='verbose mode') # '-v' not used to prevent collision
 
-def add_type_grp(parser):
-    type_grp=parser.add_mutually_exclusive_group(required=False)
-    type_grp.add_argument('-a','--aggregation',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-    type_grp.add_argument('-d','--dataset',dest='type_',action='store_const',const=sdconst.SA_TYPE_DATASET)
-    type_grp.add_argument('-f','--file',dest='type_',action='store_const',const=sdconst.SA_TYPE_FILE)
-    type_grp.add_argument('-v','--variable',dest='type_',action='store_const',const=sdconst.SA_TYPE_AGGREGATION)
-
-
 def add_ni_option(parser): # 'ni' means 'Non-Interactive'
     parser.add_argument('-y','--yes',action='store_true',help='assume "yes" as answer to all prompts and run non-interactively')
 
@@ -132,7 +124,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata',example=sdcliex.dump())
     add_parameter_argument(subparser)
-    add_type_grp(subparser)
+    sdcommonarg.add_type_grp(subparser)
     add_dump_option(subparser)
 
     subparser=create_subparser(subparsers,'facet',no_default=False,help='Facet discovery',example=sdcliex.facet())
@@ -173,7 +165,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'list',no_default=False,help='List installed dataset',example=sdcliex.list()) # here no_default is a flag to decide if we show no_default option or not
     subparser.set_defaults(no_default=True) # here no_default is the real option
     add_parameter_argument(subparser)
-    add_type_grp(subparser)
+    sdcommonarg.add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'metric',selection=False,no_default=False,help='Display performance and disk usage metrics',example=sdcliex.metric())
     subparser.add_argument('--groupby','-g',choices=['data_node','project','model'],default='data_node',help='Group-by clause')
@@ -213,14 +205,14 @@ def run(subparsers):
     subparser.add_argument('-e','--explode',action='store_true',help=argparse.SUPPRESS) # explode id into individual facets (hidden option mainly used for debug)
     subparser.add_argument('-l','--limit',type=int,default=sdconfig.get_default_limit('search'),help=sdi18n.m0024)
     subparser.add_argument('-r','--replica',action='store_true',help='show replica')
-    add_type_grp(subparser)
+    sdcommonarg.add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'selection',common_option=False,help='List selection files')
 
     subparser=create_subparser(subparsers,'show',help='Display detailed information about dataset',example=sdcliex.show())
     add_parameter_argument(subparser)
     add_lsearch_option(subparser)
-    #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
+    #sdcommonarg.add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
     add_verbose_option(subparser)
 
     subparser=create_subparser(subparsers,'stat',help='Display summary information about dataset',example=sdcliex.stat())
@@ -247,6 +239,6 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'version',help='List all versions of a dataset',example=sdcliex.version())
     add_parameter_argument(subparser)
-    #add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
+    #sdcommonarg.add_type_grp(subparser) # disabled as type depend on user input (e.g. file_functional_id, dataset_functional_id, etc..)
 
     subparser=create_subparser(subparsers,'watch',common_option=False,help='Display running transfer')
