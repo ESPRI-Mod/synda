@@ -46,8 +46,8 @@ def add_timestamp_boundaries(parser,hidden=True):
     right_limit_help_msg=argparse.SUPPRESS if hidden else right_limit_help_msg
 
     # redundant with 'to' and 'from' search-api parameters, but useful when debugging a 'selection_file' (no need to edit the 'selection_file')
-    parser.add_argument('--timestamp_left_boundary',help=left_limit_help_msg)
-    parser.add_argument('--timestamp_right_boundary',help=right_limit_help_msg)
+    parser.add_argument('-L','--timestamp_left_boundary',help=left_limit_help_msg)
+    parser.add_argument('-R','--timestamp_right_boundary',help=right_limit_help_msg)
 
 def add_common_option(parser,**kw):
 
