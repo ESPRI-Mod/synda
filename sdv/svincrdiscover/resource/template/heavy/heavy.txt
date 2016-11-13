@@ -1,3 +1,4 @@
+replica=false
 project=CMIP5
 experiment=piControl
 ensemble=r1i1p1

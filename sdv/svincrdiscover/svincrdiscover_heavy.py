@@ -67,8 +67,8 @@ def check_that_incremental_discovery_fetched_only_the_delta():
 testset=Testset()
 testset.selection_file='./resource/template/heavy/heavy.txt'
 
-first_discovery_timestamp_right_boundary='2016-04-01T01:00:00Z'
-second_discovery_timestamp_right_boundary='2016-05-01T01:00:00Z'
+first_discovery_timestamp_right_boundary='2012-03-19T01:00:00Z'
+second_discovery_timestamp_right_boundary='2012-03-25T01:00:00Z'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
