@@ -29,9 +29,23 @@ import sdi18n
 import sdcliex
 import sdtypes
 import sdaddap
+import sddeferredbefore
+import sdcommonarg
 from sdexception import SDException
 
-def run(stream=None,path=None,parameter=[],index_host=None,dry_run=False):
+def run(stream=None,path=None,parameter=[],index_host=None,dry_run=False,type_=sdconst.SA_TYPE_DATASET):
+
+
+    # type management
+    if stream is not None:
+        sddeferredbefore.add_forced_parameter(stream,'type',type_)
+    else:
+
+        # if stream is None, we assume 'parameter' mode
+        # (see TAGJFJ4R4JKFFJD for more informations)
+        sddeferredbefore.add_forced_parameter(parameter,'type',type_)
+
+
     queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False,count=True)
 
     if len(queries)<1:
@@ -75,10 +89,18 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
 
     parser.add_argument('-i','--index_host')
-    parser.add_argument('-y','--dry_run',action='store_true')
+    parser.add_argument('-z','--dry_run',action='store_true')
+
+    sdcommonarg.add_type_grp(parser)
 
     args = parser.parse_args()
 
-    result=run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run)
+    result=run(parameter=args.parameter,index_host=args.index_host,dry_run=args.dry_run,type_=args.type_)
 
-    print "%i"%result.num_found
+    if not args.dry_run:
+        if args.type_==sdconst.SA_TYPE_DATASET:
+            print "%i dataset(s) found"%result.num_found
+        elif args.type_==sdconst.SA_TYPE_FILE:
+            print "%i file(s) found"%result.num_found
+        else:
+            print 'Not implemented yet'
