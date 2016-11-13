@@ -98,7 +98,7 @@ def dump(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_dump(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        print_stderr('%s operation is not available for variable/aggregation type'%args.subcommand)   
+        print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
@@ -106,7 +106,7 @@ def count(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_count(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        print_stderr('%s operation is not available yet for variable/aggregation type'%args.subcommand)   
+        print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_count(args)
 
