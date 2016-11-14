@@ -61,6 +61,9 @@ def check_incremental_discovery_result():
 @task
 def check_that_incremental_discovery_fetched_only_the_delta():
 
+    # be sure that a previous record was found in history table
+    fabric_run('! grep -q "SYNUTILS-008 No previous run found" /var/log/synda/sdt/discovery.log')
+
     # check number of file retrieved from ESGF index during first discovery
     fabric_run("test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | head -1 | sed 's/^.*(\(.*\) files)/\\1/') -eq 19525")
 
