@@ -62,10 +62,10 @@ def check_incremental_discovery_result():
 def check_that_incremental_discovery_fetched_only_the_delta():
 
     # check number of file retrieved from ESGF index during first discovery
-    fabric_run('test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | head -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 19525')
+    fabric_run("test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | head -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 19525")
 
     # check number of file retrieved from ESGF index during second discovery
-    fabric_run('test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | tail -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 98')
+    fabric_run("test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | tail -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 98")
 
 # init.
     
