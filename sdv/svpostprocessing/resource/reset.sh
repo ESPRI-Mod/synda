@@ -1,4 +1,3 @@
-
 #!/bin/bash -e
 synda_wo stop
 sudo service sdt stop
