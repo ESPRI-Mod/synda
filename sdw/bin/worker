@@ -190,10 +190,10 @@ def process_jobs(service,args):
             else:
                 # Run job
 
-                if args.TODO:
-                    run_job(job,args) # warning: job gets modified here
-                else:
+                if args.uat_mode:
                     run_job_fake(job,args) # warning: job gets modified here
+                else:
+                    run_job(job,args) # warning: job gets modified here
 
             service.job_done(job)
             if args.one_item_only:
@@ -396,6 +396,7 @@ if __name__ == '__main__':
     parser.add_argument('-1', '--one_item_only', action = 'store_true', default = False, help = 'Apply process on only one database entry')
     parser.add_argument('-v', '--verbose', action = 'store_true')
     parser.add_argument('-V', '--version', action = 'version', version = "%(prog)s ({0})".format(VERSION), help = 'Program version')
+    parser.add_argument('-x', '--uat_mode', action = 'store_true',help = 'Special mode used for UAT (User Acceptance Testing).')
     args=parser.parse_args()
 
     if args.action=='help':
