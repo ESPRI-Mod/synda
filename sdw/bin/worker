@@ -104,6 +104,23 @@ def script_exists(script_dir,job_class,extension):
     else:
         return False
 
+def run_job_fake(job,args):
+    """
+    This func is used by the test framework. It mimics 'run_job' func behaviour.
+    """
+    status=0 # fake success
+    #status=1 # fake failure
+
+    if status==0:
+        job['error']=False
+        job['error_msg']=None
+    else:
+        job['error']=True
+        job['error_msg']="Post-processing task complete with errors"
+
+    job['shell_script_status']=status
+    job['transition_return_code']=None # this is always None in case of shell script (i.e. shell script cannot return a transition_return_code)
+
 def run_job(job,args):
     """Fork the process if Shell script or loads the module if Python script, both work on job dictionnary to communicate with the worker"""
 
@@ -171,8 +188,13 @@ def process_jobs(service,args):
                 job['error']=False
                 job['error_msg']=None
             else:
-                # Run process on job
-                run_job(job,args) # warning: job gets modified here
+                # Run job
+
+                if args.TODO:
+                    run_job(job,args) # warning: job gets modified here
+                else:
+                    run_job_fake(job,args) # warning: job gets modified here
+
             service.job_done(job)
             if args.one_item_only:
                 break
@@ -349,7 +371,7 @@ user=None
 group=None
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = """Post-processing worker used to fork Shell child-process or load python script as module.\nThe worker deals with sdp database from synchro-data to input CMIP5 variable to each process.\nThe worker returns job status to the database with run_log.\n\nThis script contains RPC client skeleton.""", formatter_class = argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description = """Post-processing worker used to fork Shell child-process or load python script as module.\nThe worker deals with sdp database from synda to input CMIP5 variable to each process.\nThe worker returns job status to the database with run_log.\n\nThis script contains RPC client skeleton.""", formatter_class = argparse.RawTextHelpFormatter)
 
     # positional args
 
@@ -366,8 +388,8 @@ if __name__ == '__main__':
     #parser.add_argument('-o', '--order', choices = ['aspgf','fifo'], default = 'fifo', help = """Pipeline processing order.""") # 'aspgf' means 'Already Started Pipelines Go First' 
 
     parser.add_argument('-p', '--port', default = port, help = 'Remote service port')
-    parser.add_argument('-P', '--pipeline', default = None, help = """Only processes specified pipeline.\nAvailable pipelines are:\n- CMIP5_001\n- CMIP5_002""")
-    parser.add_argument('-s', '--script_dir', default = script_dir, help = """Process script directory (default = /prodigfs/esg/ArchiveTools/sdp/script)""")
+    parser.add_argument('-P', '--pipeline', default = None, help = """Only processes specified pipeline.""")
+    parser.add_argument('-s', '--script_dir', default = script_dir, help = """Process script directory""")
     parser.add_argument('-t', '--test', action = 'store_true', default = False, help = 'Test server connection')
     parser.add_argument('-T', '--timeout', type = int, default = 1000, help = 'Remote service timeout')
     parser.add_argument('-u', '--username', default = 'sdpp', help = 'Remote service username')
