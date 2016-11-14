@@ -37,8 +37,8 @@ def run():
     task_exec(normal_discovery)
     task_exec(check_normal_discovery_result)
     task_exec(incremental_discovery)
-    #task_exec(check_incremental_discovery_result)
-    #task_exec(check_that_incremental_discovery_fetched_only_the_delta)
+    task_exec(check_incremental_discovery_result)
+    task_exec(check_that_incremental_discovery_fetched_only_the_delta)
 
     print 'Incremental discovery took %d minutes to complete'%999
 
@@ -56,11 +56,16 @@ def incremental_discovery():
 
 @task
 def check_incremental_discovery_result():
-    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 2473')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 19566')
 
 @task
 def check_that_incremental_discovery_fetched_only_the_delta():
-    fabric_run('test ! -f grep SYDPROXY-100 /var/log/synda/sdt/discovery.log')
+
+    # check number of file retrieved from ESGF index during first discovery
+    fabric_run('test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | head -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 19525')
+
+    # check number of file retrieved from ESGF index during second discovery
+    fabric_run('test $(grep SDSEARCH-584 /var/log/synda/sdt/discovery.log | tail -1 | sed 's/^.*(\(.*\) files)/\1/') -eq 98')
 
 # init.
     
