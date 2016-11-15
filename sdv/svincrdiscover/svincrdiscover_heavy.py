@@ -42,6 +42,8 @@ def run():
 
     print 'Incremental discovery took %d minutes to complete'%999
 
+    print 'Test complete successfully !'
+
 @task
 def normal_discovery():
     fabric_run('synda install -y --timestamp_right_boundary %s -s %s'%(first_discovery_timestamp_right_boundary,testset.selection_file,))

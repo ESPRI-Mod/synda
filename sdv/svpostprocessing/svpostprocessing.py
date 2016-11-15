@@ -56,7 +56,10 @@ def run():
     task_exec(check_pp_events_transfer_result)
 
     # start pp pipelines
-    task_exec()
+    task_exec(start_pp_pipelines)
+    task_exec(check_pp_pipelines_result)
+
+    print 'Test complete successfully !'
 
 @task
 def confirm_test_platform_is_ready():
