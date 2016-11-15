@@ -33,12 +33,18 @@ def title(s):
 def fabric_run(cmd):
 
     if installation_mode=='source':
-        cmd=cmd.replace('sudo service synda','synda daemon')
+
         cmd=cmd.replace('sudo ','')
+
+        # SDT
+        cmd=cmd.replace('service synda','synda daemon')
+        cmd=cmd.replace('service sdt','synda daemon')
         cmd=cmd.replace('/etc/synda/sdt','%s/sdt/conf'%home)
         cmd=cmd.replace('/var/log/synda/sdt','%s/sdt/log'%home)
         cmd=cmd.replace('/var/lib/synda/sdt','%s/sdt/db'%home)
         cmd=cmd.replace('/usr/share/python/synda/sdt/bin','%s/sdt/lib/sd'%home)
+
+        # SDP
 
     elif installation_mode=='system_package':
         pass # nothing to do as this is the default
