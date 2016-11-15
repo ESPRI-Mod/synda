@@ -25,14 +25,14 @@ from testlib.svtestutils import fabric_run
 import testlib.svtestcommon as tc
 
 def run():
-    task_exec(tc.stop) 
-    task_exec(tc.disable_download) 
-    task_exec(tc.reset) 
-    task_exec(tc.configure) 
+    task_exec(confirm_test_platform_is_ready)
+
+    task_exec(tc.stop)
     task_exec(tc.execute_basic_command)
     task_exec(tc.check_version)
 
     task_exec(reset_test_platform)
+
     task_exec(install_default_files)
     task_exec(install_fake_scripts)
 
@@ -41,8 +41,8 @@ def run():
     #task_exec(check_dataset_version)
 
 @task
-def check_dataset_version():
-    fabric_run('synda check dataset_version')
+def reset_test_platform():
+    fabric_run('%s'%reset_script)
 
 @task
 def check_dataset_version():
@@ -65,6 +65,9 @@ def check_dataset_version():
     fabric_run('test ! -f /srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc')
 
 # init.
+
+reset_script='./resource/reset.sh'
+scripts_pp='./resource/scripts_pp'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
