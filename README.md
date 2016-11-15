@@ -15,7 +15,7 @@ Search dataset
 
     synda search project=CORDEX 'query=domain:EUR*11*'
 
-    synda search cmip5 mon atmos -l 1000
+    synda search cmip5 mon atmos -l 5000
 
 Search file
 
