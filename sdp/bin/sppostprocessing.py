@@ -203,9 +203,10 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 def trigger_pipeline(ending,dependent_pipeline,conn):
     if is_variable_level_pipeline(ending):
-    if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
-        pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
+        if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
+            pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
     else:
+        pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
