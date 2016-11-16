@@ -65,6 +65,10 @@ def reset_sdp():
     fabric_run("sudo rm -f /var/lib/synda/sdp/sdp.db")
 
 @fabric.api.task
+def pause():
+    fabric_run('read -p "Press any key to continue.." -s -n 1 ; echo')
+
+@fabric.api.task
 def reset_data():
     fabric_run('read -p "\"$(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)\" folder will be removed. Do you want to continue ? (y/n)" -s -n 1 ; test $REPLY = y ; echo')
     fabric_run("sudo rm -rf $(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)")

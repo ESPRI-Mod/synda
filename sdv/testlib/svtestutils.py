@@ -26,6 +26,9 @@ def task_exec(task):
     print
     print
 
+    if interactive:
+        raw_input('Press any key to continue..')
+
 def title(s):
     print '*** %s ***'%s
     print 
@@ -73,6 +76,8 @@ home=os.environ['HOME']
 
 # verbosity mode
 #fabric.state.output['running'] = False
+
+interactive=False
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
