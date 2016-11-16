@@ -201,10 +201,10 @@ def job_done(job): # note: this method name does not implied that the job comple
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
-def trigger_pipeline(variable_pipeline,dataset_pipeline,ppprun,conn):
+def trigger_pipeline(variable_pipeline,dependent_pipeline,ppprun,conn):
 
     if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
-        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
+        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
         if len(li)==1:
             dataset_ppprun=li[0]
             if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
