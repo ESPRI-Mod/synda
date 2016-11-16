@@ -202,7 +202,6 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 def trigger_pipeline(variable_pipeline,dataset_pipeline,ppprun,conn):
 
-    if ppprun.pipeline==variable_pipeline: # this block must be executed at the end of variable pipeline
         if ppprun.status==spconst.PPPRUN_STATUS_DONE:
             if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
                 li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
