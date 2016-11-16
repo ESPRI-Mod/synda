@@ -217,8 +217,14 @@ def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is
             pass
     elif trigger_type in (spconst.TRIGGER_TYPE_V2V,):
         li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+
+        if len(li)<1:
+            splog.info("SPPOSTPR-264","Dep not found (%s,%s,%s)"%(dependent_pipeline,ending.variable,ending.dataset_pattern))
     elif trigger_type in (spconst.TRIGGER_TYPE_D2D,):
         li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+
+        if len(li)<1:
+            splog.info("SPPOSTPR-262","Dep not found (%s,%s,%s)"%(dependent_pipeline,ending.variable,ending.dataset_pattern))
     else:
         splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
 
