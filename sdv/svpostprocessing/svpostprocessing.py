@@ -25,16 +25,21 @@ from testlib.svtestutils import fabric_run
 import testlib.svtestcommon as tc
 
 def run():
+
+    # check env.
     task_exec(tc.execute_basic_sdt_command)
     task_exec(tc.execute_basic_sdp_command)
     task_exec(tc.check_sdt_version)
     task_exec(tc.check_sdp_version)
 
+    # stop daemons
     task_exec(tc.stop_sdt)
     task_exec(tc.stop_sdp)
     task_exec(tc.stop_sdw)
 
-    task_exec(reset_platform)
+    # reset
+    task_exec(tc.reset_sdt)
+    task_exec(tc.reset_sdp)
 
     # discovery
     task_exec(install_CMIP5)
@@ -51,7 +56,7 @@ def run():
     task_exec(trigger_CDF)
     task_exec(check_CDF_trigger_result)
 
-    # pp events transfer
+    # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
     time.sleep(50) # give some time for pp events to be transfered from SDT to SDP
     task_exec(check_pp_events_transfer_result)
