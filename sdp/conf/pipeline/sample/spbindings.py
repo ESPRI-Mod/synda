@@ -1,3 +1,5 @@
+import spconst
+
 # this mapping means transform 'key' event into 'value' pipeline (with specified status).
 event_pipeline_mapping={
     spconst.EVENT_OUTPUT12_VARIABLE_COMPLETE:      ('IPSL_VARIABLE', spconst.PPPRUN_STATUS_WAITING),
