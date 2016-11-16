@@ -201,23 +201,25 @@ def job_done(job): # note: this method name does not implied that the job comple
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
-def trigger_pipeline(ending,dependent_pipeline,conn):
+def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn):
     if is_variable_level_pipeline(ending):
-        # NV|1V
+        # NV|1V to ?
+
+        if not foreachrow:
+            # NV to ?
 
         if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
             # all sibling variable pipelines are complete
-            # NV
 
             pause_to_waiting(dependent_pipeline,ending,conn)
 
         else:
-            # 1V
+            # 1V to ?
 
             pass
 
     else:
-        # D
+        # D to ?
 
         pause_to_waiting(dependent_pipeline,ending,conn)
 
