@@ -16,6 +16,6 @@ dependency={
 
 # this mapping means once 'key' has ended, start 'value'
 trigger={
-    'CDF_VARIABLE':'CDF_DATASET',
-    'IPSL_VARIABLE':'IPSL_DATASET'
+    'CDF_VARIABLE':('CDF_DATASET','NV2D'),
+    'IPSL_VARIABLE':('IPSL_DATASET','NV2D')
 }

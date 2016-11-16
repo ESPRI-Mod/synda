@@ -194,7 +194,7 @@ def job_done(job): # note: this method name does not implied that the job comple
 
         if ppprun.status==spconst.PPPRUN_STATUS_DONE:
             if ppprun.pipeline in pipelinedep.trigger:
-                dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
+                dependent_pipeline,trigger_type=pipelinedep.trigger[ppprun.pipeline]
                 trigger_pipeline(ppprun,dependent_pipeline,trigger_type,conn)
 
         conn.commit()
@@ -202,21 +202,29 @@ def job_done(job): # note: this method name does not implied that the job comple
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
 def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is an alias for the pipeline which just ends
+    li=[]
 
-    if trigger_type in ('NV2D','NV2NV'):
-
+    if trigger_type in ('NV2D',):
         if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
             # all sibling variable pipelines are complete
 
-            pause_to_waiting(dependent_pipeline,ending,trigger_type,conn)
-
+            # retrieve dataset ppprun
+            li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
         else:
             # some variable pipeline are not complete
 
+            # nothing to do
             pass
+    elif trigger_type in ('V2V',):
+        li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+    elif trigger_type in ('D2D',):
+        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+    else:
+        splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
 
-    elif trigger_type in ('V2V','D2D'):
-        pause_to_waiting(dependent_pipeline,ending,trigger_type,conn)
+
+    for ppprun in li:
+        pause_to_waiting(ppprun)
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -237,7 +245,7 @@ def restart_pipeline(ppprun,status,conn):
     spppprdao.update_ppprun(ppprun,conn)
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
 
-def pause_to_waiting_helper(ppprun):
+def pause_to_waiting(ppprun):
     if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
         ppprun.status=spconst.PPPRUN_STATUS_WAITING
         ppprun.last_mod_date=sptime.now()
@@ -248,26 +256,6 @@ def is_variable_level_pipeline(ppprun):
         return False
     else:
         return True
-
-def pause_to_waiting(dependent_pipeline,ending,trigger_type,conn):
-
-    if trigger_type in ('V2V','NV2V'):
-
-        li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-        if len(li)==1:
-            ppprun=li[0]
-            pause_to_waiting_helper(ppprun)
-        else:
-            splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
-
-    elif trigger_type in ('D2D','D2NV','NV2D','NV2VN'):
-
-        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-        if len(li)==1:
-            ppprun=li[0]
-            pause_to_waiting_helper(ppprun)
-        else:
-            pass
 
 class Execute():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
