@@ -260,6 +260,22 @@ def is_variable_level_pipeline(ppprun):
 
 def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
 
+    if foreachrow:
+
+    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+    if len(li)==1:
+        # (D|NV) to (D|1V)
+
+        ppprun=li[0]
+        if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+            pause_to_waiting_helper(ppprun)
+    else:
+        # (D|NV) to (NV)
+
+        pass
+
+    else:
+
     li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     if len(li)==1:
         # (D|NV) to (D|1V)
