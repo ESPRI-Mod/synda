@@ -1,8 +1,3 @@
-#!/bin/bash -e
-synda_wo stop
-sudo service sdt stop
-sudo service sdp stop
-sleep 8
 rm -f /var/lib/synda/sdt/sdt.db
 rm -f /var/lib/synda/sdp/sdp.db
 rm -f /var/log/synda/sdp/*

@@ -40,12 +40,29 @@ def restart():
 
 @fabric.api.task
 def stop():
-    fabric_run("sudo service synda stop")
+   stop_sdt()
+
+@fabric.api.task
+def stop_sdt():
+    fabric_run("sudo service synda sdt")
+
+@fabric.api.task
+def stop_sdp():
+    fabric_run("sudo service synda sdp")
 
 @fabric.api.task
 def reset():
+    reset_sdt()
+
+@fabric.api.task
+def reset_sdt():
     fabric_run("sudo rm -f /var/log/synda/sdt/*")
     fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db")
+
+@fabric.api.task
+def reset_sdp():
+    fabric_run("sudo rm -f /var/log/synda/sdp/*")
+    fabric_run("sudo rm -f /var/lib/synda/sdp/sdp.db")
 
 @fabric.api.task
 def retrieve_parameters():
@@ -53,14 +70,31 @@ def retrieve_parameters():
 
 @fabric.api.task
 def execute_basic_command():
+    execute_basic_sdt_command()
+
+@fabric.api.task
+def execute_basic_sdt_command():
     fabric_run('synda -V')
 
 @fabric.api.task
+def execute_basic_sdp_command():
+    fabric_run('synda_pp -V')
+
+@fabric.api.task
 def check_version():
+    check_sdt_version()
+
+@fabric.api.task
+def check_sdt_version():
     fabric_run('test %s = $( synda -V 2>&1 )'%sdt_version)
+
+@fabric.api.task
+def check_sdp_version():
+    fabric_run('test %s = $( synda_pp -V 2>&1 )'%sdp_version)
 
 # init.
 sdt_version='3.6'
+sdp_version='1.2'
 pp_password='bar'
 esgf_password='foo'
 

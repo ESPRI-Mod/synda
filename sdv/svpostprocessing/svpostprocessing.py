@@ -25,15 +25,16 @@ from testlib.svtestutils import fabric_run
 import testlib.svtestcommon as tc
 
 def run():
-    task_exec(confirm_test_platform_is_ready)
-
-    task_exec(tc.execute_basic_command)
-    task_exec(tc.check_version)
-
-    task_exec(reset_test_platform)
+    task_exec(tc.execute_basic_sdt_command)
+    task_exec(tc.execute_basic_sdp_command)
+    task_exec(tc.check_sdt_version)
+    task_exec(tc.check_sdp_version)
 
     task_exec(tc.stop_sdt)
     task_exec(tc.stop_sdp)
+    task_exec(tc.stop_sdw)
+
+    task_exec(reset_platform)
 
     # discovery
     task_exec(install_CMIP5)
@@ -66,7 +67,7 @@ def confirm_test_platform_is_ready():
     fabric_run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
 
 @task
-def reset_test_platform():
+def reset_platform():
     fabric_run('%s'%reset_script)
 
 @task
