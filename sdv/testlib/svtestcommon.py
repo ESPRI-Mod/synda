@@ -56,13 +56,19 @@ def reset():
 
 @fabric.api.task
 def reset_sdt():
-    fabric_run("sudo rm -f /var/log/synda/sdt/*")
-    fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db")
+    fabric_run("sudo rm -f /var/log/synda/sdt/*")      # reset log
+    fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db") # reset DB
 
 @fabric.api.task
 def reset_sdp():
     fabric_run("sudo rm -f /var/log/synda/sdp/*")
     fabric_run("sudo rm -f /var/lib/synda/sdp/sdp.db")
+
+@fabric.api.task
+def reset_data():
+    fabric_run('read -p "\"$(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)\" folder will be removed. Do you want to continue ? (y/n)" -s -n 1 ; test $REPLY = y ; echo')
+    fabric_run("sudo rm -rf $(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)")
+    fabric_run("sudo mkdir -p $(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)")
 
 @fabric.api.task
 def retrieve_parameters():

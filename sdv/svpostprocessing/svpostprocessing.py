@@ -37,9 +37,12 @@ def run():
     task_exec(tc.stop_sdp)
     task_exec(tc.stop_sdw)
 
-    # reset
+    # reset log n DB
     task_exec(tc.reset_sdt)
     task_exec(tc.reset_sdp)
+
+    # reset data
+    task_exec(tc.reset_data)
 
     # discovery
     task_exec(install_CMIP5)
@@ -68,15 +71,8 @@ def run():
     print 'Test complete successfully !'
 
 @task
-def confirm_test_platform_is_ready():
-    fabric_run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
-
-@task
-def reset_platform():
-    fabric_run('%s'%reset_script)
-
-@task
 def install_CMIP5():
+    fabric_run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
     fabric_run('test -f /tmp/foobar')
 
 @task
