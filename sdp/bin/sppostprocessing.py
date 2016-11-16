@@ -195,38 +195,28 @@ def job_done(job): # note: this method name does not implied that the job comple
         if ppprun.status==spconst.PPPRUN_STATUS_DONE:
             if ppprun.pipeline in pipelinedep.trigger:
                 dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
-                trigger_pipeline(ppprun,dependent_pipeline,foreachrow,conn)
+                trigger_pipeline(ppprun,dependent_pipeline,trigger_type,conn)
 
         conn.commit()
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
-def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn): # 'ending' is an alias for the pipeline which just ends
-    if is_variable_level_pipeline(ending):
-        # NV|1V to ?
+def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is an alias for the pipeline which just ends
 
-        if not foreachrow:
-            # NV to ?
+    if trigger_type in ('NV2D','NV2NV'):
 
-            if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
-                # all sibling variable pipelines are complete
+        if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
+            # all sibling variable pipelines are complete
 
-                pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
-
-            else:
-                # some variable pipeline are not complete
-
-                pass
+            pause_to_waiting(dependent_pipeline,ending,trigger_type,conn)
 
         else:
-            # 1V to ?
+            # some variable pipeline are not complete
 
-            pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
+            pass
 
-    else:
-        # D to ?
-
-        pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
+    elif trigger_type in ('V2V','D2D'):
+        pause_to_waiting(dependent_pipeline,ending,trigger_type,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
