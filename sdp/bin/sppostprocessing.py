@@ -248,9 +248,10 @@ def restart_pipeline(ppprun,status,conn):
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
 
 def pause_to_waiting_helper(ppprun):
-    ppprun.status=spconst.PPPRUN_STATUS_WAITING
-    ppprun.last_mod_date=sptime.now()
-    spppprdao.update_ppprun(ppprun,conn)
+    if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+        ppprun.status=spconst.PPPRUN_STATUS_WAITING
+        ppprun.last_mod_date=sptime.now()
+        spppprdao.update_ppprun(ppprun,conn)
 
 def is_variable_level_pipeline(ppprun):
     if ppprun.variable=='':
@@ -261,18 +262,14 @@ def is_variable_level_pipeline(ppprun):
 def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
 
     if foreachrow:
+        # (D|NV) to (1V)
 
-        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+        li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
         if len(li)==1:
-            # (D|NV) to (D|1V)
-
             ppprun=li[0]
-            if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-                pause_to_waiting_helper(ppprun)
+            pause_to_waiting_helper(ppprun)
         else:
-            # (D|NV) to (NV)
-
-            pass
+            splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
 
     else:
 
@@ -281,8 +278,7 @@ def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
             # (D|NV) to (D|1V)
 
             ppprun=li[0]
-            if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-                pause_to_waiting_helper(ppprun)
+            pause_to_waiting_helper(ppprun)
         else:
             # (D|NV) to (NV)
 
