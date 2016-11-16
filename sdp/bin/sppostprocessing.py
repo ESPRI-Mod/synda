@@ -252,6 +252,10 @@ def is_variable_level_pipeline(ppprun):
         return True
 
 def pause_to_waiting(dependent_pipeline,ending,conn):
+
+    # TODO: to distinguishe between D,1V and NV in dependent_pipeline, a new parameter must added in trigger dict
+    #       (currently, D is assumed)
+
     li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     if len(li)==1:
         # (D|NV) to (D|1V)
