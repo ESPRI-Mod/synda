@@ -206,9 +206,9 @@ def trigger_pipeline(ending,dependent_pipeline,conn):
         if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
             # all sibling variable pipelines are complete
 
-            pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
+            pause_to_waiting(dependent_pipeline,ending,conn)
     else:
-        pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
+        pause_to_waiting(dependent_pipeline,ending,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -235,8 +235,8 @@ def is_variable_level_pipeline(ppprun):
     else:
         return True
 
-def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
-    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+def pause_to_waiting(dependent_pipeline,ending,conn):
+    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     if len(li)==1:
         dataset_ppprun=li[0]
         if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
