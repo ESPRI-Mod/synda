@@ -195,7 +195,7 @@ def job_done(job): # note: this method name does not implied that the job comple
         if ppprun.status==spconst.PPPRUN_STATUS_DONE:
             if ppprun.pipeline in pipelinedep.trigger:
                 dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
-                trigger_pipeline(ppprun,dependent_pipeline,foreachrow,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
+                trigger_pipeline(ppprun,dependent_pipeline,foreachrow,conn)
 
         conn.commit()
     finally:
