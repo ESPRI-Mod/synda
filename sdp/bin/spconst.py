@@ -53,3 +53,7 @@ PARAM_TYPE_FREE='param_type_free'
 DEFAULT_PRIORITY=1000
 #
 PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
+#
+TRIGGER_TYPE_NV2D='NV2D' # N 'variable pipeline' trigger 'dataset pipeline'
+TRIGGER_TYPE_V2V='V2V'   # 'variable pipeline' trigger 'variable pipeline'
+TRIGGER_TYPE_D2D='D2D'   # 'dataset pipeline' trigger 'dataset pipeline'

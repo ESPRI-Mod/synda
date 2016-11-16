@@ -204,7 +204,7 @@ def job_done(job): # note: this method name does not implied that the job comple
 def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is an alias for the pipeline which just ends
     li=[]
 
-    if trigger_type in ('NV2D',):
+    if trigger_type in (spconst.TRIGGER_TYPE_NV2D,):
         if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
             # all sibling variable pipelines are complete
 
@@ -215,9 +215,9 @@ def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is
 
             # nothing to do
             pass
-    elif trigger_type in ('V2V',):
+    elif trigger_type in (spconst.TRIGGER_TYPE_V2V,):
         li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-    elif trigger_type in ('D2D',):
+    elif trigger_type in (spconst.TRIGGER_TYPE_D2D,):
         li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     else:
         splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
