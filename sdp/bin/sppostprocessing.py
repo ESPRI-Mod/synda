@@ -192,6 +192,7 @@ def job_done(job): # note: this method name does not implied that the job comple
         spppprdao.update_ppprun(ppprun,conn)
         spjobrdao.add_jobrun(job,conn)
 
+        if ppprun.status==spconst.PPPRUN_STATUS_DONE:
         if ppprun.pipeline in pipelinedep.trigger:
             dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
             trigger_pipeline(ppprun.pipeline,dependent_pipeline,ppprun,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
@@ -202,7 +203,6 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 def trigger_pipeline(variable_pipeline,dataset_pipeline,ppprun,conn):
 
-    if ppprun.status==spconst.PPPRUN_STATUS_DONE:
         if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
             li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
             if len(li)==1:
