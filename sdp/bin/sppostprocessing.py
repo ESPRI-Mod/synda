@@ -204,15 +204,7 @@ def job_done(job): # note: this method name does not implied that the job comple
 def trigger_pipeline(ending_pipeline,dependent_pipeline,ppprun,conn):
 
     if all_variable_complete(ending_pipeline,ppprun.dataset_pattern,conn):
-        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-        if len(li)==1:
-            dataset_ppprun=li[0]
-            if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-
-                dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
-                dataset_ppprun.last_mod_date=sptime.now()
-
-                spppprdao.update_ppprun(dataset_ppprun,conn)
+        pause_to_waiting(dependent_pipeline,ppprun.dataset_pattern,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -232,6 +224,17 @@ def restart_pipeline(ppprun,status,conn):
     # save
     spppprdao.update_ppprun(ppprun,conn)
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
+
+def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
+    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+    if len(li)==1:
+        dataset_ppprun=li[0]
+        if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+
+            dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
+            dataset_ppprun.last_mod_date=sptime.now()
+
+            spppprdao.update_ppprun(dataset_ppprun,conn)
 
 class Execute():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
