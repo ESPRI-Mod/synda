@@ -262,31 +262,31 @@ def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
 
     if foreachrow:
 
-    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-    if len(li)==1:
-        # (D|NV) to (D|1V)
+        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+        if len(li)==1:
+            # (D|NV) to (D|1V)
 
-        ppprun=li[0]
-        if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-            pause_to_waiting_helper(ppprun)
+            ppprun=li[0]
+            if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+                pause_to_waiting_helper(ppprun)
+        else:
+            # (D|NV) to (NV)
+
+            pass
+
     else:
-        # (D|NV) to (NV)
 
-        pass
+        li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
+        if len(li)==1:
+            # (D|NV) to (D|1V)
 
-    else:
+            ppprun=li[0]
+            if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+                pause_to_waiting_helper(ppprun)
+        else:
+            # (D|NV) to (NV)
 
-    li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
-    if len(li)==1:
-        # (D|NV) to (D|1V)
-
-        ppprun=li[0]
-        if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-            pause_to_waiting_helper(ppprun)
-    else:
-        # (D|NV) to (NV)
-
-        pass
+            pass
 
 class Execute():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
