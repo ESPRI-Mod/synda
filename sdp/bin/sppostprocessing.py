@@ -202,7 +202,6 @@ def job_done(job): # note: this method name does not implied that the job comple
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
 def trigger_pipeline(ending,dependent_pipeline,dataset_pattern,conn):
-
     if all_variable_complete(ending.pipeline,dataset_pattern,conn):
         pause_to_waiting(dependent_pipeline,dataset_pattern,conn)
 
