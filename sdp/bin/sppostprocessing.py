@@ -202,17 +202,17 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 def trigger_pipeline(variable_pipeline,dataset_pipeline,ppprun,conn):
 
-        if ppprun.status==spconst.PPPRUN_STATUS_DONE:
-            if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
-                li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
-                if len(li)==1:
-                    dataset_ppprun=li[0]
-                    if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+    if ppprun.status==spconst.PPPRUN_STATUS_DONE:
+        if all_variable_complete(variable_pipeline,ppprun.dataset_pattern,conn):
+            li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ppprun.dataset_pattern,pipeline=dataset_pipeline,conn=conn)
+            if len(li)==1:
+                dataset_ppprun=li[0]
+                if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
 
-                        dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
-                        dataset_ppprun.last_mod_date=sptime.now()
+                    dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
+                    dataset_ppprun.last_mod_date=sptime.now()
 
-                        spppprdao.update_ppprun(dataset_ppprun,conn)
+                    spppprdao.update_ppprun(dataset_ppprun,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
