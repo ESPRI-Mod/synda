@@ -195,13 +195,13 @@ def job_done(job): # note: this method name does not implied that the job comple
         if ppprun.status==spconst.PPPRUN_STATUS_DONE:
             if ppprun.pipeline in pipelinedep.trigger:
                 dependent_pipeline=pipelinedep.trigger[ppprun.pipeline]
-                trigger_pipeline(ppprun,dependent_pipeline,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
+                trigger_pipeline(ppprun,dependent_pipeline,foreachrow,conn) # if all variable 'done', switch dataset pipeline from 'pause' to 'waiting'
 
         conn.commit()
     finally:
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
-def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn):
+def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn): # 'ending' is an alias for the pipeline which just ends
     if is_variable_level_pipeline(ending):
         # NV|1V to ?
 
@@ -221,7 +221,7 @@ def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn):
         else:
             # 1V to ?
 
-            pass
+            pause_to_waiting(dependent_pipeline,ending,conn)
 
     else:
         # D to ?
