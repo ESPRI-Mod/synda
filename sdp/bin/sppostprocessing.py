@@ -211,7 +211,7 @@ def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn): # 'ending' is a
             if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
                 # all sibling variable pipelines are complete
 
-                pause_to_waiting(dependent_pipeline,ending,conn)
+                pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
 
             else:
                 # some variable pipeline are not complete
@@ -221,12 +221,12 @@ def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn): # 'ending' is a
         else:
             # 1V to ?
 
-            pause_to_waiting(dependent_pipeline,ending,conn)
+            pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
 
     else:
         # D to ?
 
-        pause_to_waiting(dependent_pipeline,ending,conn)
+        pause_to_waiting(dependent_pipeline,ending,foreachrow,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -258,10 +258,7 @@ def is_variable_level_pipeline(ppprun):
     else:
         return True
 
-def pause_to_waiting(dependent_pipeline,ending,conn):
-
-    # TODO: to distinguishe between D,1V and NV in dependent_pipeline, a new parameter must added in trigger dict
-    #       (currently, D is assumed)
+def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
 
     li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     if len(li)==1:
