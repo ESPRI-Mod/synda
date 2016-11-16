@@ -202,8 +202,10 @@ def job_done(job): # note: this method name does not implied that the job comple
         spdb.disconnect(conn) # if exception occur, we do the rollback here
 
 def trigger_pipeline(ending,dependent_pipeline,conn):
+    if is_variable_level_pipeline(ending):
     if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
         pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
+    else:
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -223,6 +225,12 @@ def restart_pipeline(ppprun,status,conn):
     # save
     spppprdao.update_ppprun(ppprun,conn)
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
+
+def is_variable_level_pipeline(ppprun):
+    if ppprun.variable=='':
+        return False
+    else:
+        return True
 
 def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
     li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline=dependent_pipeline,conn=conn)
