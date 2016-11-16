@@ -259,10 +259,9 @@ def is_variable_level_pipeline(ppprun):
     else:
         return True
 
-def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
+def pause_to_waiting(dependent_pipeline,ending,trigger_type,conn):
 
-    if foreachrow:
-        # (D|NV) to (1V)
+    if trigger_type in ('V2V','NV2V'):
 
         li=spppprdao.get_pppruns(order='fifo',variable=ending.variable,dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
         if len(li)==1:
@@ -271,17 +270,13 @@ def pause_to_waiting(dependent_pipeline,ending,foreachrow,conn):
         else:
             splog.info("SPPOSTPR-201","We shouldn't be here (%s,%s)"%(ending.variable,ending.dataset_pattern))
 
-    else:
+    elif trigger_type in ('D2D','D2NV','NV2D','NV2VN'):
 
         li=spppprdao.get_pppruns(order='fifo',dataset_pattern=ending.dataset_pattern,pipeline=dependent_pipeline,conn=conn)
         if len(li)==1:
-            # (D|NV) to (D|1V)
-
             ppprun=li[0]
             pause_to_waiting_helper(ppprun)
         else:
-            # (D|NV) to (NV)
-
             pass
 
 class Execute():
