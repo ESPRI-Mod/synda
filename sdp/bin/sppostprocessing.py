@@ -203,11 +203,22 @@ def job_done(job): # note: this method name does not implied that the job comple
 
 def trigger_pipeline(ending,dependent_pipeline,conn):
     if is_variable_level_pipeline(ending):
+        # NV|1V
+
         if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
             # all sibling variable pipelines are complete
+            # NV
 
             pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
+
+        else:
+            # 1V
+
+            pass
+
     else:
+        # D
+
         pause_to_waiting(dependent_pipeline,ending.dataset_pattern,conn)
 
 def restart_pipeline(ppprun,status,conn):
@@ -238,6 +249,8 @@ def is_variable_level_pipeline(ppprun):
 def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
     li=spppprdao.get_pppruns(order='fifo',dataset_pattern=dataset_pattern,pipeline=dependent_pipeline,conn=conn)
     if len(li)==1:
+        # (D|NV) to (D|1V)
+
         dataset_ppprun=li[0]
         if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
 
@@ -245,6 +258,10 @@ def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
             dataset_ppprun.last_mod_date=sptime.now()
 
             spppprdao.update_ppprun(dataset_ppprun,conn)
+    else:
+        # (D|NV) to (NV)
+
+        pass
 
 class Execute():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
