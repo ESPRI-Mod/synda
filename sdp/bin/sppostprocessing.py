@@ -240,6 +240,11 @@ def restart_pipeline(ppprun,status,conn):
     spppprdao.update_ppprun(ppprun,conn)
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
 
+def pause_to_waiting_helper(ppprun):
+    ppprun.status=spconst.PPPRUN_STATUS_WAITING
+    ppprun.last_mod_date=sptime.now()
+    spppprdao.update_ppprun(ppprun,conn)
+
 def is_variable_level_pipeline(ppprun):
     if ppprun.variable=='':
         return False
@@ -251,13 +256,9 @@ def pause_to_waiting(dependent_pipeline,dataset_pattern,conn):
     if len(li)==1:
         # (D|NV) to (D|1V)
 
-        dataset_ppprun=li[0]
-        if dataset_ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
-
-            dataset_ppprun.status=spconst.PPPRUN_STATUS_WAITING
-            dataset_ppprun.last_mod_date=sptime.now()
-
-            spppprdao.update_ppprun(dataset_ppprun,conn)
+        ppprun=li[0]
+        if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
+            pause_to_waiting_helper(ppprun)
     else:
         # (D|NV) to (NV)
 
