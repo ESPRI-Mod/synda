@@ -208,10 +208,15 @@ def trigger_pipeline(ending,dependent_pipeline,foreachrow,conn):
         if not foreachrow:
             # NV to ?
 
-        if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
-            # all sibling variable pipelines are complete
+            if all_variable_complete(ending.pipeline,ending.dataset_pattern,conn):
+                # all sibling variable pipelines are complete
 
-            pause_to_waiting(dependent_pipeline,ending,conn)
+                pause_to_waiting(dependent_pipeline,ending,conn)
+
+            else:
+                # some variable pipeline are not complete
+
+                pass
 
         else:
             # 1V to ?
