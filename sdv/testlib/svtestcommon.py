@@ -55,6 +55,12 @@ def reset():
     reset_sdt()
 
 @fabric.api.task
+def reset_all():
+    reset_sdt()
+    reset_sdp()
+    reset_data()
+
+@fabric.api.task
 def reset_sdt():
     fabric_run("sudo rm -f /var/log/synda/sdt/*")      # reset log
     fabric_run("sudo rm -f /var/lib/synda/sdt/sdt.db") # reset DB
