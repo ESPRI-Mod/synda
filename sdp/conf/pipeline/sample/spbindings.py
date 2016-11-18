@@ -11,8 +11,8 @@ event_pipeline_mapping={
 }
 
 # this mapping means
-#  - when creating 'value' pipeline, set it's status to 'waiting' if 'key' pipeline is done, else 'pause'
-#  - once 'key' pipeline has ended, start 'value' pipeline
+#  - when creating 'value pipeline', set it's status to 'waiting' if 'key pipeline' is done, else 'pause'
+#  - once 'key pipeline' has ended, start 'value pipeline'
 trigger={
     'CDF_VARIABLE':('CDF_DATASET',spconst.TRIGGER_TYPE_NV2D),
     'IPSL_VARIABLE':('IPSL_DATASET',spconst.TRIGGER_TYPE_NV2D),
