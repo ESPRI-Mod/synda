@@ -86,6 +86,7 @@ def process_event(e,conn):
     reverse_trigger=dict((v[0], k) for k, v in pipelinedep.trigger.iteritems()) # TODO: replace this with a bidirectional dict. Maybe also add loop to allow multiple dependencies.
 
     if pipeline_name in reverse_trigger:
+        splog.info('SPEVENTT-044',"dependency found (new_pipeline=%s,dependency=%s)"%(pipeline_name,reverse_trigger[pipeline_name]))
         start_dependency=reverse_trigger[pipeline_name]
     else:
         start_dependency=None
