@@ -39,12 +39,17 @@ def run():
     task_exec(tc.stop_sdp)
     task_exec(tc.stop_sdw)
 
-    # reset log n DB
-    task_exec(tc.reset_sdt)
-    task_exec(tc.reset_sdp)
+    task_exec(tc.reset_all)
+    task_exec(install_CMIP5)
+    TODO
 
-    # reset data
-    task_exec(tc.reset_data)
+    task_exec(tc.reset_all)
+    task_exec(install_CORDEX)
+    TODO
+
+    task_exec(tc.reset_all)
+    task_exec(install_CMIP5)
+    task_exec(trigger_CDF)
 
     # discovery
     task_exec(install_CMIP5)
@@ -74,20 +79,20 @@ def run():
 
 @task
 def install_CMIP5():
-    fabric_run('sudo synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac')
-    fabric_run('test -f /tmp/foobar')
+    fabric_run('sudo synda install -s 20160503_test_CMIP5.txt')
 
 @task
 def install_CORDEX():
-    fabric_run('sudo synda stat CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac | grep "Done files count: 1"')
+    fabric_run('sudo synda install -s 20160503_test_CORDEX.txt')
 
 @task
 def trigger_CDF():
-    fabric_run('sudo synda remove -y CMIP5 MPI-M MPI-ESM-LR decadal1995 mon baresoilFrac')
+    fabric_run('sudo synda pexec cdf -s 20160503_test_CMIP5.txt')
 
 @task
 def start_pp_pipelines():
     fabric_run('synda_wo -x start')
+    fabric_run('test -f /tmp/foobar')
 
 @task
 def fake():
