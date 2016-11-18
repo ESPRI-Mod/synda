@@ -82,8 +82,11 @@ def process_event(e,conn):
 
     # retrieve start dependency if any
 
-    if pipeline_name in pipelinedep.dependency:
-        start_dependency=pipelinedep.dependency[pipeline_name]
+    # this is to access the 'trigger' dict from the 'value' side
+    reverse_trigger=dict((v[0], k) for k, v in pipelinedep.trigger.iteritems()) # TODO: replace this with a bidirectional dict. Maybe also add loop to allow multiple dependencies.
+
+    if pipeline_name in reverse_trigger:
+        start_dependency=reverse_trigger[pipeline_name]
     else:
         start_dependency=None
 

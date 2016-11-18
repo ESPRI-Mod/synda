@@ -10,14 +10,12 @@ event_pipeline_mapping={
     spconst.EVENT_CDF_VARIABLE_O:                  ('CDF',           spconst.PPPRUN_STATUS_PAUSE)
 }
 
-# this mapping means do not start 'key' before 'value' has ended
-dependency={
-    'CDF_VARIABLE':'IPSL_DATASET',
-    'CDF':'IPSL'
-}
-
-# this mapping means once 'key' has ended, start 'value'
+# this mapping means
+#  - when creating 'value' pipeline, set it's status to 'waiting' if 'key' pipeline is done, else 'pause'
+#  - once 'key' pipeline has ended, start 'value' pipeline
 trigger={
     'CDF_VARIABLE':('CDF_DATASET',spconst.TRIGGER_TYPE_NV2D),
-    'IPSL_VARIABLE':('IPSL_DATASET',spconst.TRIGGER_TYPE_NV2D)
+    'IPSL_VARIABLE':('IPSL_DATASET',spconst.TRIGGER_TYPE_NV2D),
+    'IPSL_DATASET':('CDF_VARIABLE',spconst.TRIGGER_TYPE_D2NV),
+    'IPSL':('CDF',spconst.TRIGGER_TYPE_D2D)
 }
