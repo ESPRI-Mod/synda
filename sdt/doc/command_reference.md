@@ -176,7 +176,7 @@ description
       - a detailed description of the error,
       - the number of dataset versions in which it was found,
       - the number of datasets to which it applies, ie datasets with at
-        least one version having in error.
+        least one version having an error.
   file_variable
     list files having more than one variable
   selection
