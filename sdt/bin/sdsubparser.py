@@ -255,7 +255,7 @@ def run(subparsers):
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     subparser.add_argument('-p','--project',help='Retrieve project specific parameters for the specified project')
 
-    subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help='Perform an upgrade (retrieve new version for all selection files)')
+    subparser=create_subparser(subparsers,'upgrade',selection=False,no_default=False,help="Run 'install' command for all selection files")
     add_parameter_argument(subparser)
     add_ni_option(subparser)
     add_incremental_mode_argument(subparser,'upgrade')
