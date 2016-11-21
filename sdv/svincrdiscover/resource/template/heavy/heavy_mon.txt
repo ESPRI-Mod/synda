@@ -1,8 +1,0 @@
-experiment=piControl historical rcp26 rcp45 rcp60 rcp85
-ensemble=r1i1p1
-variable[atmos][mon]=ta hur wap hus tas ts psl ps uas vas sfcWind hurs huss pr prsn prc evspsbl sbl tauu tauv hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs prw clt clwvi clivi rtmt ccb cct ci sci
-variable[ocean][mon]=masscello thkcello thetao thetaoga so rhopoto uo vo wmo wmosq umo vmo masso volo zosga zossga zostoga soga pbo pso zos zossq sos msftbarot omlmax msftmyz msftyyz hfx hfy htovovrt pr prsn evs friver ficeberg fsitherm wfo vsfpr vsfevap vsfsit vsf vsfcorr sfdsi sfriver hfgeou hfrainds hfevapds hfrunoffds rlds hfls hfss rsntds hfcorr rsds hfds tauuo tauvo tauucorr tauvcorr
-variable[ocean][fx]=areacello deptho sftof volcello
-variable[land][mon]=mrsos mrso mrfso mrros mrro prveg evspsblveg evspsblsoi
-variable[land][fx]=sftgif
-variable[seaIce][mon]=sic sit sim evap snd snc ialb ssi tsice tsnint pr prsn ageice grFrazil grCongel grLateral snoToIce snomelt tmelt bmelt hcice rsdssi rsussi rldssi rlussi hfssi hflssi sblsi transix transiy strairx strairy strocnx strocny streng divice ridgice
