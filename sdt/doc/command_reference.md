@@ -16,6 +16,7 @@ Available subcommands are:
     certificate  Manage X509 certificate
     check        Perform check over ESGF metadata
     contact      Print contact information
+    count        Count dataset
     daemon       Daemon management
     dump         Display raw metadata
     facet        Facet discovery
@@ -39,7 +40,7 @@ Available subcommands are:
     show         Display detailed information about dataset
     stat         Display summary information about dataset
     update       Update ESGF parameter local cache
-    upgrade      Perform an upgrade (retrieve new version for all selection files)
+    upgrade      Run 'install' command for all selection files
     variable     Print variable
     version      List all versions of a dataset
     watch        Display running transfer
@@ -91,18 +92,100 @@ examples
 Perform check over ESGF metadata
 
 ```
-usage: synda check [-h] [-z] [{dataset_version,file_variable}]
+usage: synda check [-h] [-z] [-p FILE | -r FILE]
+                   [{dataset_version,file_variable,selection}]
+                   [parameter [parameter ...]]
 
 positional arguments:
-  {dataset_version,file_variable}
+  {dataset_version,file_variable,selection}
                         action
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -z, --dry_run
+  -p FILE, --playback FILE
+                        Read metadata from FILE
+  -r FILE, --record FILE
+                        Write metadata to FILE
+
+description
+  dataset_version
+    synda check dataset_version [search_parameter ...] checks the
+    correctness and consistency of dataset version numbers in all dataset
+    versions (or, if search parameters are given, those that match those
+    parameters).
+
+    The first check consists in verifying that version numbers are
+    syntactically valid. The "version" field is deemed valid if it matches
+    (case-insensitively) the Python regular expression /^(\d+)$/ or, as an
+    extension, /^v(\d+)$/. A missing "version" field is the same as a
+    "version" field set to "0".
+
+    The second check only applies to datasets which have more than one
+    version. It consists in verifying that all the versions of a dataset
+    have unique version numbers. An integral version number is extracted
+    from the value of each "version" field by converting the string
+    matched by the capture group in the regular expressions above to an
+    integer. For example, a "version" field set to "20160101" would match
+    regexp /^(\d+)$/ therefore the version number would be 20160101. There
+    must be no duplicated version numbers in all the versions of a
+    dataset. Note that this test is more stringent than merely checking
+    for duplicated "version" fields : a dataset with two versions having
+    "version" fields set to "1" and "01" respectively would not pass
+    because both have version number 1.
+
+    If all the versions of a dataset have a "timestamp" field, a third
+    check is done. The versions of a dataset are sorted by time stamp and
+    the sequence numbers are examined. Gaps in the sequence are accepted
+    but the numbers must be increasing. For example, this dataset would
+    pass :
+
+                           timestamp             version
+                           2016-01-01T00:00:00Z  1
+                           2016-01-02T00:00:00Z  20160102
+
+    but this one would not :
+
+                           timestamp             version
+                           2016-01-01T00:00:00Z  20160101
+                           2016-01-02T00:00:00Z  2
+
+    The report is in plain text format and is written to standard output.
+    FIXME mention the option to get PDF format instead. It comprises four
+    parts :
+
+    - A header which gives the date and time of execution and the Synda
+      command line.
+
+    - For every dataset with errors, the name of the dataset and, for each
+      of its versions, the "timestamp" and "version" fields along with a
+      list of the errors found in this dataset version, if any.
+
+    - Statistics :
+      - the number of dataset versions found
+      - ... with a "timestamp" field
+      - ... without a "timestamp" field
+      - the number of datasets found
+      - ... with a "timestamp" field on all  of their versions
+      - ... with a "timestamp" field on some of their versions
+      - ... with a "timestamp" field on none of their versions
+
+    - For each type of error,
+      - a detailed description of the error,
+      - the number of dataset versions in which it was found,
+      - the number of datasets to which it applies, ie datasets with at
+        least one version having in error.
+  file_variable
+    list files having more than one variable
+  selection
+    check if selection files parameters are valid
 
 examples
   synda check dataset_version
+  synda check file_variable CMIP5 atmos orog
+  synda check selection
 ```
 
 ### contact
@@ -114,6 +197,38 @@ usage: synda contact [-h]
 
 optional arguments:
   -h, --help  show this help message and exit
+```
+
+### count
+
+Count dataset
+
+```
+usage: synda count [-h] [-s SELECTION_FILE] [-n] [-z] [-i INDEX_HOST]
+                   [-a | -d | -f | -v]
+                   [parameter [parameter ...]]
+
+positional arguments:
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s SELECTION_FILE, --selection_file SELECTION_FILE
+  -n, --no_default      prevent loading default value
+  -z, --dry_run
+  -i INDEX_HOST, --index_host INDEX_HOST
+                        Retrieve parameters from the specified index
+  -a, --aggregation
+  -d, --dataset
+  -f, --file
+  -v, --variable
+
+examples
+  synda count
+  synda count CMIP5
+  synda count obs4MIPs -f
+  synda count -s selection.txt --timestamp_left_boundary 2012-01-01T01:00:00Z --timestamp_right_boundary 2015-01-01T01:00:00Z
 ```
 
 ### daemon
@@ -145,7 +260,8 @@ usage: synda dump [-h] [-s SELECTION_FILE] [-n] [-z] [-a | -d | -f | -v] [-A]
                   [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -177,17 +293,17 @@ examples
 Facet discovery
 
 ```
-usage: synda facet [-h] [-s SELECTION_FILE] [-n] [-z]
+usage: synda facet [-h] [-s SELECTION_FILE] [-z]
                    facet_name [parameter [parameter ...]]
 
 positional arguments:
   facet_name            Facet name
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
-  -n, --no_default      prevent loading default value
   -z, --dry_run
 
 examples
@@ -209,7 +325,8 @@ usage: synda get [-h] [-s SELECTION_FILE] [-z] [--verify_checksum]
                  [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -221,7 +338,8 @@ optional arguments:
                         Destination folder
   --force, -f           Overwrite local file if exists
   --network_bandwidth_test, -n
-                        Prevent disk I/O to measure network throughput. When this option is used, local file is set to /dev/null.
+                        Prevent disk I/O to measure network throughput. When
+                        this option is used, local file is set to /dev/null.
   --openid OPENID, -o OPENID
                         ESGF openid
   --password PASSWORD, -p PASSWORD
@@ -283,20 +401,23 @@ usage: synda install [-h] [-s SELECTION_FILE] [-n] [-z] [-y] [-i]
                      [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
-  -y, --yes             assume "yes" as answer to all prompts and run non-interactively
-  -i, --incremental     Install files which appeared since last run (experimental)
+  -y, --yes             assume "yes" as answer to all prompts and run non-
+                        interactively
+  -i, --incremental     Install files which appeared since last run
+                        (experimental)
 
 examples
   synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
   synda install sfcWind_ARC-44_ECMWF-ERAINT_evaluation_r1i1p1_AWI-HIRHAM5_v1_sem_197903-198011.nc
-  synda stat MPI-ESM-LR rcp26
+  synda install MPI-ESM-LR rcp26
 
 notes
   'install' command is asynchronous, the transfer is handled by a
@@ -324,7 +445,8 @@ usage: synda list [-h] [-s SELECTION_FILE] [-z] [-a | -d | -f | -v]
                   [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -356,7 +478,8 @@ optional arguments:
   --metric {rate,size}, -m {rate,size}
                         Metric name
   --project PROJECT, -p PROJECT
-                        Project name (must be used with '--groupby=model' else ignored)
+                        Project name (must be used with '--groupby=model' else
+                        ignored)
 
 examples
   synda metric -g data_node -m rate -p CMIP5
@@ -372,7 +495,8 @@ usage: synda open [-h] [-s SELECTION_FILE] [-z] [--geometry GEOMETRY]
                   [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -449,20 +573,27 @@ examples
 Remove dataset
 
 ```
-usage: synda remove [-h] [-s SELECTION_FILE] [-n] [-z]
+usage: synda remove [-h] [-s SELECTION_FILE] [-n] [-z] [-y] [--verbose] [-m]
                     [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
+  -y, --yes             assume "yes" as answer to all prompts and run non-
+                        interactively
+  --verbose             verbose mode
+  -m, --keep_data       Remove only metadata
 
 examples
   synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+  synda remove status=error -n
+  synda remove data_node=vesg.ipsl.upmc.fr,tds.ucar.edu,esgnode2.nci.org.au status=error -n
   synda remove CMIP5 MIROC-ESM historicalNat mon
 ```
 
@@ -513,18 +644,25 @@ optional arguments:
 Search dataset
 
 ```
-usage: synda search [-h] [-s SELECTION_FILE] [-n] [-z] [-r]
+usage: synda search [-h] [-s SELECTION_FILE] [-n] [-z] [-l LIMIT] [-r]
                     [-a | -d | -f | -v]
                     [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
+  -l LIMIT, --limit LIMIT
+                        Set the total number of returned results. By default,
+                        returns the first 100 records matching the given
+                        constraints. Limit can be also be changed through the
+                        keyword parameters limit=. The system imposes a
+                        maximum value of limit <= 10,000.
   -r, --replica         show replica
   -a, --aggregation
   -d, --dataset
@@ -534,7 +672,8 @@ optional arguments:
 examples
   synda search cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
   synda search rcp85 3hr timeslice=20050101-21001231 -f
-  synda search rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z
+  synda search project=CORDEX 'query=domain:EUR*11*'
+  synda search rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z -d
   synda search timeslice=00100101-20501231 model=GFDL-ESM2M "Air Temperature" -f
   synda search experiment=rcp45,rcp85 model=CCSM4
   synda search project=CMIP5 realm=atmos
@@ -581,14 +720,16 @@ usage: synda show [-h] [-s SELECTION_FILE] [-n] [-z] [-l] [--verbose]
                   [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
-  -l, --localsearch     search in local data repository (already installed dataset)
+  -l, --localsearch     search in local data repository (already installed
+                        dataset)
   --verbose             verbose mode
 
 examples
@@ -605,19 +746,22 @@ usage: synda stat [-h] [-s SELECTION_FILE] [-n] [-z] [-i]
                   [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
   -s SELECTION_FILE, --selection_file SELECTION_FILE
   -n, --no_default      prevent loading default value
   -z, --dry_run
-  -i, --incremental     Install files which appeared since last run (experimental)
+  -i, --incremental     Limit action on files which appeared since last run
+                        (experimental)
 
 examples
   synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
   synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
   synda stat MPI-ESM-LR rcp26
+  synda stat project=CORDEX 'query=domain:EUR*11*'
   synda stat ECMWF-ERAINT frequency=day
 ```
 
@@ -633,24 +777,30 @@ optional arguments:
   -i INDEX_HOST, --index_host INDEX_HOST
                         Retrieve parameters from the specified index
   -p PROJECT, --project PROJECT
-                        Retrieve project specific parameters for the specified project
+                        Retrieve project specific parameters for the specified
+                        project
 ```
 
 ### upgrade
 
-Perform an upgrade (retrieve new version for all selection files)
+Run 'install' command for all selection files
 
 ```
-usage: synda upgrade [-h] [-z] [-y] [-i] [parameter [parameter ...]]
+usage: synda upgrade [-h] [-z] [-y] [-i] [-e FILE] [parameter [parameter ...]]
 
 positional arguments:
-  parameter          search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
-  -h, --help         show this help message and exit
+  -h, --help            show this help message and exit
   -z, --dry_run
-  -y, --yes          assume "yes" as answer to all prompts and run non-interactively
-  -i, --incremental  Install files which appeared since last run (experimental)
+  -y, --yes             assume "yes" as answer to all prompts and run non-
+                        interactively
+  -i, --incremental     Install files which appeared since last run
+                        (experimental)
+  -e FILE, --exclude_from FILE
+                        Read exclude selection-file from FILE
 ```
 
 ### variable
@@ -661,7 +811,8 @@ Print variable
 usage: synda variable [-h] [-z] [-l] [-s] [-S] [parameter [parameter ...]]
 
 positional arguments:
-  parameter            search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter            search parameters. Format is name=value1,value2.. ...
+                       Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help           show this help message and exit
@@ -691,7 +842,8 @@ usage: synda version [-h] [-s SELECTION_FILE] [-n] [-z]
                      [parameter [parameter ...]]
 
 positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted.
+  parameter             search parameters. Format is name=value1,value2.. ...
+                        Most of the time, parameter name can be omitted.
 
 optional arguments:
   -h, --help            show this help message and exit
