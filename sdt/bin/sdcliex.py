@@ -29,7 +29,9 @@ def certificate():
     return buf
 
 def check():
-    buf="""  synda check dataset_version"""
+    buf="""  synda check dataset_version
+  synda check file_variable CMIP5 atmos orog
+  synda check selection"""
     return buf
 
 def contact():
