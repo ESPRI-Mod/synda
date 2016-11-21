@@ -18,6 +18,7 @@ import sdconst
 import sdprint
 import sdconfig
 import sdcommonarg
+import sddescription
 
 def add_lsearch_option(parser):
     parser.add_argument('-l','--localsearch',action='store_true',help='search in local data repository (already installed dataset)')
@@ -84,8 +85,12 @@ def build_epilog(kw):
     """This func build sections used in argparse 'epilog' feature."""
     li=[]
 
+    description=kw.get('description',None)
     example=kw.get('example',None)
     note=kw.get('note',None)
+
+    if description:
+        li.append(build_epilog_section('description',description))
 
     if example:
         li.append(build_epilog_section('examples',example))
@@ -105,6 +110,15 @@ def create_subparser(subparsers,subcommand,**kw):
 
     epilog=build_epilog(kw)
 
+
+    # to print 'description' at the top,
+    # remove 'description' from 'build_epilog' func
+    # and use code below
+    #
+    #description=kw.get('description')
+    #,description=description <= add this as argument to 'subparsers.add_parser'
+
+
     subparser = subparsers.add_parser(subcommand,usage=kw.get('usage',None),help=kw.get('help'),epilog=epilog,formatter_class=argparse.RawDescriptionHelpFormatter)
 
     if kw.get('common_option',True):
@@ -122,7 +136,7 @@ def run(subparsers):
     subparser.add_argument('-p','--password',help='ESGF password')
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
-    subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check())
+    subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check(),description=sddescription.check())
     sdcommonarg.add_playback_record_options(subparser)
     add_action_argument(subparser,choices=['dataset_version','file_variable','selection'])
     add_parameter_argument(subparser)
