@@ -355,7 +355,7 @@ def unprivileged_user_mode(mode):
 
 # script init.
 
-VERSION = '{0} {1}-{2}-{3}'.format('v1.0', '2015', '01', '21')
+VERSION = '{0} {1}-{2}-{3}'.format('v1.0', '2016', '11', '21')
 quit=False
 password=None # 'Remote service password'
 tmp_folder='/tmp'
