@@ -136,7 +136,7 @@ def run(subparsers):
     subparser.add_argument('-p','--password',help='ESGF password')
     subparser.add_argument('-x','--force_renew_ca_certificates',action='store_true',help='Force renew CA certificates')
 
-    subparser=create_subparser(subparsers,'check',selection=False,no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check(),description=sddescription.check())
+    subparser=create_subparser(subparsers,'check',no_default=False,help='Perform check over ESGF metadata',example=sdcliex.check(),description=sddescription.check())
     sdcommonarg.add_playback_record_options(subparser)
     add_action_argument(subparser,choices=['dataset_version','file_variable','selection'])
     add_parameter_argument(subparser)
