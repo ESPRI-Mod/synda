@@ -140,6 +140,7 @@ def run(subparsers):
     sdcommonarg.add_playback_record_options(subparser)
     add_action_argument(subparser,choices=['dataset_version','file_variable','selection'])
     add_parameter_argument(subparser)
+    subparser.add_argument('-o','--output_format',help='Set output format',default='text',choices=['text','pdf'])
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
