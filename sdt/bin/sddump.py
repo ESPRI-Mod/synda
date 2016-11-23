@@ -12,7 +12,7 @@
 """This module dumps data in bulk mode.
 
 Example of use
-    sddump.py type=Dataset searchapi_host=esgf-data.dkrz.de -a timestamp
+    sddump.py CMIP5 atmos searchapi_host=esgf-data.dkrz.de -f timestamp
 """
 
 import argparse
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     parser.add_argument('parameter',nargs='*',default=[])
 
     parser.add_argument('-f','--fields',default=sdfields.get_sample_fields())
-    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
+    parser.add_argument('-F','--format',choices=sdprint.formats,default='indent')
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
 
