@@ -55,7 +55,7 @@ def check():
                            2016-01-02T00:00:00Z  2
 
     By default, the report is in plain text format and is written to standard
-    output. The pdf format can be used instead throught the use of
+    output. The pdf format can be used instead through the use of
     '--output_format' option.
     
     The report comprises four parts :
