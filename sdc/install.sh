@@ -536,7 +536,11 @@ install_sp_application ()
 
     tar xzvf $pp_archive
     cd $sp_package
+
     $PYTHON_CMD setup.py install --install-scripts=$pp_lib
+
+    # chmod conf file
+    chmod go-r "$pp_cred_file"
 
     # create symlink in 'bin'
     cd $sp_root/bin
@@ -780,6 +784,7 @@ pp_url="$sp_url_prefix/${pp_archive}"
 sp_root="$g__prefix/sdp"
 pp_lib="$sp_root/lib/sd"
 pp_conf_file="$sp_root/conf/sdp.conf"
+pp_cred_file="$sp_root/conf/credentials.conf"
 #
 python_pkg_install_cmd="pip install" # "pip install" or easy_install
 WGET_CMD="wget --no-check-certificate"
