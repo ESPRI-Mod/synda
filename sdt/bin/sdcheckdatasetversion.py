@@ -91,7 +91,7 @@ def run(args):
     versatile_print('Date: %s' % time.strftime('%Y-%m-%d %H:%M:%S %z'))
     versatile_print('Command line:')
     # FIXME make sure we have the exact command line, including options
-    print_wrapped('synda check dataset_version %s' % ' '.join(args.parameter))
+    print_wrapped(' '.join(sys.argv))
 
     if args.output_format=='text':
         sys.stdout.flush()
