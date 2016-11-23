@@ -22,17 +22,20 @@ import sddatasetversion
 
 OUT_WIDTH = 80
 
+def versatile_print(s):
+    print s
+
 def print_framed(str):
     tbl = texttable.Texttable()
     tbl.set_cols_dtype(['t'])
     tbl.set_cols_align(['c'])
     tbl.add_row([str])
     tbl.set_cols_width([OUT_WIDTH - 2 - 2])
-    print tbl.draw()
+    versatile_print(tbl.draw())
 
 def print_wrapped(str):
     tw = textwrap.TextWrapper(width = OUT_WIDTH - 1, initial_indent = '  ', subsequent_indent = '    ', break_on_hyphens = False)
-    print '\\\n'.join(tw.wrap(str))
+    versatile_print('\\\n'.join(tw.wrap(str)))
 
 def run(args):
 
@@ -76,9 +79,9 @@ def run(args):
     total_errors = 0
 
     print_framed('Synda report on errors in dataset versions')
-    print
-    print 'Date: %s' % time.strftime('%Y-%m-%d %H:%M:%S %z')
-    print 'Command line:'
+    versatile_print()
+    versatile_print('Date: %s' % time.strftime('%Y-%m-%d %H:%M:%S %z'))
+    versatile_print('Command line:')
     # FIXME make sure we have the exact command line, including options
     print_wrapped('synda check dataset_version %s' % ' '.join(args.parameter))
     sys.stdout.flush()
@@ -124,7 +127,7 @@ def run(args):
         # print how many version exist for each dataset
         """
         for master_id,dataset_versions in dsv_grouped_by_master_id.iteritems():
-            print '%s => %i'%(master_id,dataset_versions.count())
+            versatile_print('%s => %i'%(master_id,dataset_versions.count()))
         """
 
         # Add "vfn" & "vernum" keys to every dsv_info
@@ -185,22 +188,22 @@ def run(args):
         for master_id in sorted(datasets_with_errors):
             dsv_list = dsv_grouped_by_master_id[master_id]['dsv']
             nmax = len(dsv_list)
-            print '\nDataset "%s":' % (master_id)
+            versatile_print('\nDataset "%s":' % (master_id))
             dataset_errors = 0
             for n, dsv_info in enumerate(dsv_list, 1):
-                print '  Version %d/%d: time stamp "%s", version string "%s":' % (n, nmax, dsv_info['timestamp'], dsv_info['verstr'])
+                versatile_print('  Version %d/%d: time stamp "%s", version string "%s":' % (n, nmax, dsv_info['timestamp'], dsv_info['verstr']))
                 err_flags = dsv_info['err_flags']
                 if err_flags == 0:
-                    print '    No errors'
+                    versatile_print('    No errors')
                 else:
                     if err_flags & DSV_ERR_FMT:
-                        print '    Version string is not in any known format'
+                        versatile_print('    Version string is not in any known format')
                     if err_flags & DSV_ERR_NUM:
-                        print '    Cannot extract version number from version string'
+                        versatile_print('    Cannot extract version number from version string')
                     if err_flags & DSV_ERR_DUP:
-                        print '    Version string is a duplicate of another version string in the same dataset'
+                        versatile_print('    Version string is a duplicate of another version string in the same dataset')
                     if err_flags & DSV_ERR_SEQ:
-                        print '    Version number is not greater than previous version (%s -> %s)' % (dsv_list[n - 1]['vernum'], dsv_info['vernum'])
+                        versatile_print('    Version number is not greater than previous version (%s -> %s)' % (dsv_list[n - 1]['vernum'], dsv_info['vernum']))
                     dsv_errors = 0
                     bits = dsv_info['err_flags']
                     while bits != 0:
@@ -209,22 +212,22 @@ def run(args):
                         bits >>= 1
                     dataset_errors += dsv_errors
                     dsv_with_errors += 1
-            print '  Dataset has %d error(s)' % (dataset_errors)
+            versatile_print('  Dataset has %d error(s)' % (dataset_errors))
             total_errors += dataset_errors
 
     # Write a summary
     digits = len('%d' % (len(all_dsv)))
-    print '\nFound %d dataset versions(s), of which' % (len(all_dsv))
-    print '  %*d have a timestamp field' % (digits, stats['dsv_with_timestamp'])
-    print '  %*d lack a timestamp field' % (digits, stats['dsv_without_timestamp'])
+    versatile_print('\nFound %d dataset versions(s), of which' % (len(all_dsv)))
+    versatile_print('  %*d have a timestamp field' % (digits, stats['dsv_with_timestamp']))
+    versatile_print('  %*d lack a timestamp field' % (digits, stats['dsv_without_timestamp']))
 
     #digits = len('%d' % (len(dsv_grouped_by_master_id)))
-    print '\nFound %d dataset(s), of which' % (len(dsv_grouped_by_master_id))
-    print '  %*d have a timestamp field on all  of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 1 else 0, dsv_grouped_by_master_id.values())))
-    print '  %*d have a timestamp field on some of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 3 else 0, dsv_grouped_by_master_id.values())))
-    print '  %*d have a timestamp field on none of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 2 else 0, dsv_grouped_by_master_id.values())))
+    versatile_print('\nFound %d dataset(s), of which' % (len(dsv_grouped_by_master_id)))
+    versatile_print('  %*d have a timestamp field on all  of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 1 else 0, dsv_grouped_by_master_id.values()))))
+    versatile_print('  %*d have a timestamp field on some of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 3 else 0, dsv_grouped_by_master_id.values()))))
+    versatile_print('  %*d have a timestamp field on none of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 2 else 0, dsv_grouped_by_master_id.values()))))
 
-    print '\nBreakdown of errors:'
+    versatile_print('\nBreakdown of errors:')
     tbl = texttable.Texttable()
     tbl.set_cols_dtype(['i', 'i', 't'])
     tbl.set_cols_align(['r', 'r', 'l'])
@@ -248,10 +251,10 @@ def run(args):
     dsv_digits = max(8, digits)
     dsc_width = OUT_WIDTH - 2 - ds_digits - 3 - dsv_digits - 3 - 2
     tbl.set_cols_width([ds_digits, dsv_digits, dsc_width])
-    print tbl.draw()
+    versatile_print(tbl.draw())
 
-    print '\nA total of %d errors were found' % (total_errors)
-    print 'End of report'
+    versatile_print('\nA total of %d errors were found' % (total_errors))
+    versatile_print('End of report')
     if (total_errors != 0):
         status = 1
 
