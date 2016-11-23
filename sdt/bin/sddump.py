@@ -21,6 +21,7 @@ import sdprint
 import sdsearch
 import sdfields
 import sdstreamutils
+import sddeferredafter
 
 def run():
     pass
@@ -32,13 +33,12 @@ def dump_ESGF(parameter=None,selection_file=None,fields=None,dry_run=False,playb
     (e.g. when a new attribute is decided to be stored in Synda,
     all already downloaded files metadata must be updated).
     """
+    stream=sdstreamutils.get_stream(parameter=parameter,selection_file=selection_file,no_default=no_default)
+
+    sddeferredafter.add_forced_parameter(stream,'replica',False)
 
     assert fields is not None
-
-    parameter.append("fields=%s"%fields)
-    parameter.append("replica=false")
-
-    stream=sdstreamutils.get_stream(parameter=parameter,selection_file=selection_file,no_default=no_default)
+    sddeferredafter.add_forced_parameter(stream,'fields',fields)
 
     metadata=sdsearch.run(stream=stream,post_pipeline_mode=None,dry_run=dry_run,playback=playback,record=record)
     return metadata.get_files()
