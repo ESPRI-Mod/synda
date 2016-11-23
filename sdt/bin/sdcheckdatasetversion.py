@@ -19,11 +19,13 @@ import sdexception
 import sddump
 import sdtypes
 import sddatasetversion
+import sdtxt2pdf
+import StringIO
 
 OUT_WIDTH = 80
 
-def versatile_print(s):
-    print s
+def versatile_print(s=''):
+    output.write(s+'\n')
 
 def print_framed(str):
     tbl = texttable.Texttable()
@@ -38,6 +40,12 @@ def print_wrapped(str):
     versatile_print('\\\n'.join(tw.wrap(str)))
 
 def run(args):
+    global output
+
+    if args.output_format=='text':
+        output=sys.stdout
+    elif args.output_format=='pdf':
+        output=StringIO.StringIO()
 
     DSV_ERR_FMT = 1
     DSV_ERR_NUM = 2
@@ -258,4 +266,10 @@ def run(args):
     if (total_errors != 0):
         status = 1
 
+    if args.output_format=='pdf':
+        sdtxt2pdf.run(output,'/tmp/foobar.pdf',False)
+
     return status
+
+# init.
+output=None
