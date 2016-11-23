@@ -269,7 +269,7 @@ def run(args):
         status = 1
 
     if args.output_format=='pdf':
-        sdtxt2pdf.run(output,'/tmp/foobar.pdf',False)
+        sdtxt2pdf.run(output,args.outfile,False)
 
     return status
 
