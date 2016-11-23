@@ -35,7 +35,7 @@ def dump_ESGF(parameter=None,selection_file=None,fields=None,dry_run=False,playb
     """
     stream=sdstreamutils.get_stream(parameter=parameter,selection_file=selection_file,no_default=no_default)
 
-    sddeferredafter.add_forced_parameter(stream,'replica',False)
+    sddeferredafter.add_forced_parameter(stream,'replica','false')
 
     sddeferredafter.add_forced_parameter(stream,'type',type_)
 
