@@ -54,9 +54,11 @@ def check():
                            2016-01-01T00:00:00Z  20160101
                            2016-01-02T00:00:00Z  2
 
-    The report is in plain text format and is written to standard output.
-    FIXME mention the option to get PDF format instead. It comprises four
-    parts :
+    By default, the report is in plain text format and is written to standard
+    output. The pdf format can be used instead throught the use of
+    '--output_format' option.
+    
+    The report comprises four parts :
 
     - A header which gives the date and time of execution and the Synda
       command line.
