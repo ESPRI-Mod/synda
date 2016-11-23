@@ -40,7 +40,7 @@ Available subcommands are:
     show         Display detailed information about dataset
     stat         Display summary information about dataset
     update       Update ESGF parameter local cache
-    upgrade      Run 'install' command for all selection files
+    upgrade      Run 'install' command on all selection files
     variable     Print variable
     version      List all versions of a dataset
     watch        Display running transfer
@@ -92,7 +92,8 @@ examples
 Perform check over ESGF metadata
 
 ```
-usage: synda check [-h] [-z] [-p FILE | -r FILE]
+usage: synda check [-h] [-s SELECTION_FILE] [-z] [-p FILE | -r FILE]
+                   [-o {text,pdf}]
                    [{dataset_version,file_variable,selection}]
                    [parameter [parameter ...]]
 
@@ -104,11 +105,14 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  -s SELECTION_FILE, --selection_file SELECTION_FILE
   -z, --dry_run
   -p FILE, --playback FILE
                         Read metadata from FILE
   -r FILE, --record FILE
                         Write metadata to FILE
+  -o {text,pdf}, --output_format {text,pdf}
+                        Set output format
 
 description
   dataset_version
@@ -152,9 +156,11 @@ description
                            2016-01-01T00:00:00Z  20160101
                            2016-01-02T00:00:00Z  2
 
-    The report is in plain text format and is written to standard output.
-    FIXME mention the option to get PDF format instead. It comprises four
-    parts :
+    By default, the report is in plain text format and is written to standard
+    output. The pdf format can be used instead throught the use of
+    '--output_format' option.
+    
+    The report comprises four parts :
 
     - A header which gives the date and time of execution and the Synda
       command line.
@@ -176,7 +182,7 @@ description
       - a detailed description of the error,
       - the number of dataset versions in which it was found,
       - the number of datasets to which it applies, ie datasets with at
-        least one version having an error.
+        least one version having in error.
   file_variable
     list files having more than one variable
   selection
@@ -783,7 +789,7 @@ optional arguments:
 
 ### upgrade
 
-Run 'install' command for all selection files
+Run 'install' command on all selection files
 
 ```
 usage: synda upgrade [-h] [-z] [-y] [-i] [-e FILE] [parameter [parameter ...]]
