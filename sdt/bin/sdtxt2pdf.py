@@ -12,7 +12,6 @@
 """This module make a PDF file from a text file."""
 
 import sys
-import getopt
 import reportlab.lib.pagesizes
 import reportlab.graphics.shapes
 import reportlab.pdfgen

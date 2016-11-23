@@ -13,3 +13,4 @@ setuptools==19.7
 requests
 beautifulsoup4
 texttable
+reportlab
