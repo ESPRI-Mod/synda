@@ -20,11 +20,12 @@ import sdapp
 import sdprint
 import sdsearch
 import sdfields
+import sdstreamutils
 
 def run():
     pass
 
-def dump_ESGF(parameter=None,path=None,fields=None,dry_run=False,playback=None,record=None):
+def dump_ESGF(parameter=None,selection_file=None,fields=None,dry_run=False,playback=None,record=None,no_default=True):
     """This func dumps fields for all ESGF matching files/datasets.
 
     Initially designed to batch update attribute in Synda database
@@ -37,7 +38,9 @@ def dump_ESGF(parameter=None,path=None,fields=None,dry_run=False,playback=None,r
     parameter.append("fields=%s"%fields)
     parameter.append("replica=false")
 
-    metadata=sdsearch.run(parameter=parameter,path=path,post_pipeline_mode=None,dry_run=dry_run,playback=playback,record=record)
+    stream=sdstreamutils.get_stream(parameter=parameter,selection_file=selection_file,no_default=no_default)
+
+    metadata=sdsearch.run(stream=stream,post_pipeline_mode=None,dry_run=dry_run,playback=playback,record=record)
     return metadata.get_files()
 
 if __name__ == '__main__':

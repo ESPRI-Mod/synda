@@ -28,6 +28,9 @@ def check_daemon():
             sys.exit(3)
 
 def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=True,raise_exception_if_empty=False):
+    """
+    TODO: merge me with sdstreamutils.get_stream
+    """
     import sdbuffer, sdparse, sdstream, sdconfig, sddeferredbefore, sdexception
 
     if parameter is None:
