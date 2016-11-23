@@ -96,7 +96,7 @@ def run(args):
     if args.output_format=='text':
         sys.stdout.flush()
 
-    all_dsv = sddump.dump_ESGF(parameter=args.parameter,fields='master_id,version,timestamp',dry_run=args.dry_run,record=args.record,playback=args.playback)
+    all_dsv = sddump.dump_ESGF(parameter=args.parameter,selection_file=args.selection_file,fields='master_id,version,timestamp',dry_run=args.dry_run,record=args.record,playback=args.playback)
 
     if not args.dry_run:
 
