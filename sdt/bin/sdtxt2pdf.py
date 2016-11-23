@@ -12,16 +12,16 @@
 """This module make a PDF file from a text file."""
 
 import sys
+import argparse
 import reportlab.lib.pagesizes
 import reportlab.graphics.shapes
 import reportlab.pdfgen
 
 def run(ifile,opathname,draw_frame):
-    ifile = open(infile, "r")
     t2p = Txt2pdf(opathname, draw_frame=draw_frame)
+    ifile.seek(0)
     for iline in ifile.readlines():
         t2p.line(iline.rstrip())
-    ifile.close()
     t2p.finish()
 
 def err(str):
@@ -103,11 +103,13 @@ class Txt2pdf:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('infile')
-    parser.add_argument('-f','--frame',dest=draw_frame,action='store_true')
-    parser.add_argument('-o','--outfile',dest=opathname,required=True)
+    parser.add_argument('-f','--frame',action='store_true')
+    parser.add_argument('-o','--outfile',required=True)
     args=parser.parse_args()
 
-    run(args.infile,args.opathname,args.draw_frame)
+    ifile = open(args.infile, "r")
+    run(ifile,args.outfile,args.frame)
+    ifile.close()
 
     # FIXME catch and report errors
 

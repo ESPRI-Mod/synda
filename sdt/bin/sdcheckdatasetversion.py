@@ -92,7 +92,9 @@ def run(args):
     versatile_print('Command line:')
     # FIXME make sure we have the exact command line, including options
     print_wrapped('synda check dataset_version %s' % ' '.join(args.parameter))
-    sys.stdout.flush()
+
+    if args.output_format=='text':
+        sys.stdout.flush()
 
     all_dsv = sddump.dump_ESGF(parameter=args.parameter,fields='master_id,version,timestamp',dry_run=args.dry_run,record=args.record,playback=args.playback)
 
