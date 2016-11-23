@@ -16,6 +16,14 @@ import reportlab.lib.pagesizes
 import reportlab.graphics.shapes
 import reportlab.pdfgen
 
+def run(ifile,opathname,draw_frame):
+    ifile = open(infile, "r")
+    t2p = Txt2pdf(opathname, draw_frame=draw_frame)
+    for iline in ifile.readlines():
+        t2p.line(iline.rstrip())
+    ifile.close()
+    t2p.finish()
+
 def err(str):
     print >>sys.stderr, "txt2pdf: ", str, "\n";
 
@@ -99,12 +107,7 @@ if __name__ == '__main__':
     parser.add_argument('-o','--outfile',dest=opathname,required=True)
     args=parser.parse_args()
 
-    ifile = open(args.infile, "r")
-    t2p = Txt2pdf(args.opathname, draw_frame=args.draw_frame)
-    for iline in ifile.readlines():
-        t2p.line(iline.rstrip())
-    ifile.close()
-    t2p.finish()
+    run(args.infile,args.opathname,args.draw_frame)
 
     # FIXME catch and report errors
 
