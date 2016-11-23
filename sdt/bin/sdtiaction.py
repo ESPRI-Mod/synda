@@ -95,7 +95,7 @@ def check(args):
         subset_filter=['model=CNRM-CM5','project=specs','realm=atmos','variable=tas']
         #subset_filter=['project=specs']
 
-        files=sddump.dump_ESGF(parameter=['type=File']+subset_filter,fields=sdfields.get_file_variable_fields(),dry_run=args.dry_run)
+        files=sddump.dump_ESGF(parameter=subset_filter,fields=sdfields.get_file_variable_fields(),dry_run=args.dry_run,type_='File')
 
         if not args.dry_run:
             print '%i file(s) retrieved'%len(files)
