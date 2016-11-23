@@ -24,7 +24,7 @@ import sdfields
 def run():
     pass
 
-def dump_ESGF(parameter,fields=None,dry_run=False,playback=None,record=None):
+def dump_ESGF(parameter=None,fields=None,dry_run=False,playback=None,record=None):
     """This func dumps fields for all ESGF matching files/datasets.
 
     Initially designed to batch update attribute in Synda database
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
 
-    files=dump_ESGF(args.parameter,args.fields,dry_run=args.dry_run)
+    files=dump_ESGF(parameter=args.parameter,fields=args.fields,dry_run=args.dry_run)
 
     if not args.dry_run:
         sdprint.print_format(files,args.format)

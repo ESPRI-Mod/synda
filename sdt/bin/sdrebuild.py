@@ -98,7 +98,7 @@ def set_timestamp_when_empty__BATCH_MODE_1():
 
     Not used.
     """
-    datasets=sddump.dump_ESGF(['type=Dataset','searchapi_host=esgf-data.dkrz.de'],fields=sdfields.get_timestamp_fields())
+    datasets=sddump.dump_ESGF(parameter=['type=Dataset','searchapi_host=esgf-data.dkrz.de'],fields=sdfields.get_timestamp_fields())
 
     sdlog.info("SDREBUIL-008","%i dataset(s) retrieved from ESGF."%len(datasets))
     sdlog.info("SDREBUIL-012","Start updating timestamp in local database.")
