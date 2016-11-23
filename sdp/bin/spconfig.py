@@ -17,6 +17,14 @@ import ConfigParser
 from spexception import SPException
 # this module do not import 'spapp' to prevent circular reference
 
+def is_file_read_access_OK(path):
+    try:
+        with open(path) as fh:
+            pass
+        return True
+    except:
+        return False
+
 def get_data_folder():
     if config.has_option('path','data_path'):
         path=config.get('path','data_path')
@@ -65,6 +73,7 @@ bin_folder="%s/bin"%root_folder
 
 cleanup_tree_script="%s/spcleanup_tree.sh"%bin_folder
 configuration_file="%s/sdp.conf"%conf_folder
+credentials_file="%s/credentials.conf"%conf_folder
 stacktrace_log_file="%s/stacktrace.log"%log_folder
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
@@ -74,6 +83,9 @@ default_options={'pipeline_path':"%s/pipeline"%conf_folder}
 
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
+
+if is_file_read_access_OK(credentials_file):
+    config.read(credentials_file)
 
 pipeline_folder=config.get('path','pipeline_path')
 
