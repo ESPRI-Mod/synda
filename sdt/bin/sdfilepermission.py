@@ -49,7 +49,7 @@ def chown_file(uid,gid):
     li=[sdconfig.daemon_pid_file,sdconfig.ihm_pid_file]
     chown_files(li,uid,gid)
 
-    # proxy cert file
+    # sdt credentials file
     li=[sdconfig.credential_file]
     chown_files(li,uid,gid)
 
