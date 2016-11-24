@@ -88,7 +88,7 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 certificate_file='%s/server.pem'%tmp_folder
 
-default_options={'pipeline_path':default_pipeline_folder}
+default_options={'pipeline_path':default_pipeline_folder} # only when key is missing (i.e. line with key but without value ('foobar=') do NOT trigger default value)
 
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
