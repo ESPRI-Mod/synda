@@ -25,6 +25,13 @@ def is_file_read_access_OK(path):
     except:
         return False
 
+def get_path(name,default_value):
+    path=config.get('path',name)
+    if len(path)>0:
+        return path
+    else:
+        return default_value
+
 def get_data_folder():
     if config.has_option('path','data_path'):
         path=config.get('path','data_path')
@@ -71,6 +78,8 @@ else:
 
 bin_folder="%s/bin"%root_folder
 
+default_pipeline_folder='%s/pipeline'%conf_folder
+
 cleanup_tree_script="%s/spcleanup_tree.sh"%bin_folder
 configuration_file="%s/sdp.conf"%conf_folder
 credentials_file="%s/credentials.conf"%conf_folder
@@ -79,7 +88,7 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 certificate_file='%s/server.pem'%tmp_folder
 
-default_options={'pipeline_path':"%s/pipeline"%conf_folder}
+default_options={'pipeline_path':default_pipeline_folder}
 
 config = ConfigParser.ConfigParser(default_options)
 config.read(configuration_file)
@@ -87,7 +96,7 @@ config.read(configuration_file)
 if is_file_read_access_OK(credentials_file):
     config.read(credentials_file)
 
-pipeline_folder=config.get('path','pipeline_path')
+pipeline_folder=get_path('pipeline_path',default_pipeline_folder):
 
 data_folder=get_data_folder()
 
