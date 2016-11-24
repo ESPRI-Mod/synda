@@ -114,6 +114,6 @@ def get_client_country():
     return country
 
 def country_code_to_country_name(code):
-    country=pycountry.countries.get(alpha2=code)
+    country=pycountry.countries.get(alpha_2=code)
     return country.name
 
