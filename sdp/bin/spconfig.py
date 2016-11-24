@@ -96,7 +96,7 @@ config.read(configuration_file)
 if is_file_read_access_OK(credentials_file):
     config.read(credentials_file)
 
-pipeline_folder=get_path('pipeline_path',default_pipeline_folder):
+pipeline_folder=get_path('pipeline_path',default_pipeline_folder)
 
 data_folder=get_data_folder()
 
