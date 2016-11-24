@@ -37,6 +37,10 @@ def chown_folder(uid,gid):
 
 def chown_file(uid,gid):
 
+    # sdp credentials file
+    li=[spconfig.credentials_file]
+    chown_files(li,uid,gid)
+
     # db file
     li=[spconfig.db_file]
     chown_files(li,uid,gid)
