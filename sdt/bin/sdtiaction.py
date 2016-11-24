@@ -523,7 +523,7 @@ def param(args):
     sdparam.print_(args)
 
 def pexec(args):
-    import sdsearch, sdpporder, sddb, syndautils, sdconst, sdpostpipelineutils, sdhistorydao, sddeferredbefore
+    import sdsearch, sdpporder, sddb, syndautils, sdconst, sdpostpipelineutils, sdhistorydao, sddeferredbefore, sddomainutils
 
     if args.order_name=='cdf':
         selection_filename=None
