@@ -557,7 +557,7 @@ def pexec(args):
                         # first, send cdf variable order
                         # (note: total number of variable event is given by: "total+=#variable for each ds")
                         for v in d['variable']:
-                            if v in facets_group['variable']: # TAG45345JK3J53K
+                            if v in facets_group['variable']: # TAG45345JK3J53K (we check here that the variable has been asked for in the first place)
                                 order_variable_count+=1
 
                                 # hack
