@@ -537,7 +537,7 @@ def pexec(args):
         order_dataset_count=0
         for facets_group in stream: # we need to process each facets_group one by one because of TAG45345JK3J53K
             
-            metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset')
+            metadata=sdsearch.run(stream=[facets_group],post_pipeline_mode='dataset') # TAGJ43KJ234JK
 
             dataset_found_count+=metadata.count()
 
