@@ -51,20 +51,20 @@ def build_dataset_local_path(f):
             #
             # cast list to scalar if any
             #
-            # this is needed when an attribute type is list, but the attribute only contains one item.
+            # this is needed when an attribute type is 'list' AND the attribute contains exactly one item.
             #
             # currently, it is used only for the following case:
             #     - we trigger CDF event for CORDEX dataset (ie which is a project with one var per dataset)
             #     - at TAGJ43KJ234JK, we build a dataset local path in a DATASET pipeline context,
             #       which mean that the variable attribute have the 'list' type (see sdpostxptransform for details) 
-            #     - so we solve this case here but casting list to scalar (this is okay because there is only
+            #     - so we solve this case here by casting list to scalar (this is ok because there is only
             #       one item in the dataset variable attribute with the CORDEX project (not true for every project)
             #
             values={}
             for key in keys:
                 values[key]=sdtools.scalar(f[key])
 
-            path=custom_dataset_template%f
+            path=custom_dataset_template%values
         else:
             raise SDException('SDLOCALP-014',"'local_path_drs_template' must be set when 'local_path_format' is set to 'custom'.")
 
