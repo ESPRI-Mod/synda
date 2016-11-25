@@ -103,6 +103,15 @@ def grep(li,pattern):
         expr = re.compile(pattern)
         return filter(expr.search,li)
 
+def scalar(val):
+    if isinstance(val,list):
+        if len(val)==1:
+            return val[0]
+        else:
+            assert False
+    else:
+        return val
+
 def extract_keys_from_template(template):
     class MapAndRecord(object):
         def __init__(self):
