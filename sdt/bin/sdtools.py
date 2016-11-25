@@ -103,6 +103,20 @@ def grep(li,pattern):
         expr = re.compile(pattern)
         return filter(expr.search,li)
 
+def extract_keys_from_template(template):
+    class MapAndRecord(object):
+        def __init__(self):
+            self.keys=[]
+        def __getitem__(self, key):
+            self.keys.append(key)
+            return 'VALUE'
+
+    mr=MapAndRecord()
+
+    template%mr
+
+    return mr.keys
+
 def grep_light(li,pattern):
 
     if pattern is None:
