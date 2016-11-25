@@ -235,7 +235,7 @@ def trigger_pipeline(ending,dependent_pipeline,trigger_type,conn): # 'ending' is
 
 
     for ppprun in li:
-        pause_to_waiting(ppprun)
+        pause_to_waiting(ppprun,conn)
 
 def restart_pipeline(ppprun,status,conn):
 
@@ -256,7 +256,7 @@ def restart_pipeline(ppprun,status,conn):
     spppprdao.update_ppprun(ppprun,conn)
     splog.info("SPPOSTPR-202","Pipeline updated (%s)"%str(ppprun))
 
-def pause_to_waiting(ppprun):
+def pause_to_waiting(ppprun,conn):
     if ppprun.status==spconst.PPPRUN_STATUS_PAUSE:
         ppprun.status=spconst.PPPRUN_STATUS_WAITING
         ppprun.last_mod_date=sptime.now()
