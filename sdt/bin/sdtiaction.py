@@ -553,6 +553,7 @@ def pexec(args):
                 for d in metadata.get_files(): # warning: load list in memory
                     if d['status']==sdconst.DATASET_STATUS_COMPLETE:
 
+                        # TAG45J4K45JK
 
                         # first, send cdf variable order
                         # (note: total number of variable event is given by: "total+=#variable for each ds")
@@ -561,8 +562,11 @@ def pexec(args):
                                 order_variable_count+=1
 
                                 # hack
-                                if sddomainutils.is_one_var_per_ds(d['project']):
+                                if sddomainutils.is_one_var_per_ds(d['project']): # maybe move this test at TAG45J4K45JK line, and replace 'EVENT_CDF_VARIABLE_O' by a dataset level event (note however that the choice about passing 'EVENT_CDF_VARIABLE_O' event as variable or dataset is arbitrary, both work. But passing as variable is a bit strange as variable appears in both dataset_pattern and variable columns)
                                     e_name=sdconst.EVENT_CDF_VARIABLE_O
+
+                                    # this case is a bit awkward as we have 'variable' in both dataset_pattern and variable columns..
+
                                 else:
                                     e_name=sdconst.EVENT_CDF_VARIABLE_N
 
