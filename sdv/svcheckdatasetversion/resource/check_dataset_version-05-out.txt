@@ -1,0 +1,45 @@
++------------------------------------------------------------------------------+
+|                  Synda report on errors in dataset versions                  |
++------------------------------------------------------------------------------+
+
+Date: 2016-10-05 21:10:15 +0200
+Command line:
+  synda check dataset_version /home/aym/sdt/bin/synda check --playback\
+    check_dataset_version-05-in.json dataset_version
+
+Found 4 dataset versions(s), of which
+  4 have a timestamp field
+  0 lack a timestamp field
+
+Found 3 dataset(s), of which
+  3 have a timestamp field on all  of their versions
+  0 have a timestamp field on some of their versions
+  0 have a timestamp field on none of their versions
+
+Breakdown of errors:
++----------+----------+--------------------------------------------------------+
+| Datasets |  Dataset | Description of the error                               |
+|          | versions |                                                        |
++----------+----------+--------------------------------------------------------+
+|        0 |        0 | Malformed version string. The "version" field does not |
+|          |          | match (case-insensitively) any of the following Python |
+|          |          | regular expressions:                                   |
+|          |          | ^v(\d+)$                                               |
+|          |          | ^(\d+)$                                                |
++----------+----------+--------------------------------------------------------+
+|        0 |        0 | Cannot extract version number from version string.     |
++----------+----------+--------------------------------------------------------+
+|        0 |        0 | Duplicate version number. The integer extracted from   |
+|          |          | the "version" field has the same value as that of      |
+|          |          | another version of the same dataset.                   |
++----------+----------+--------------------------------------------------------+
+|        0 |        0 | Sequence error. The integer extracted from the         |
+|          |          | "version" field is not strictly greater than that for  |
+|          |          | the previous version in timestamp order of the same    |
+|          |          | dataset.                                               |
++----------+----------+--------------------------------------------------------+
+|        0 |        0 | One or more of the above                               |
++----------+----------+--------------------------------------------------------+
+
+A total of 0 error(s) were found
+End of report

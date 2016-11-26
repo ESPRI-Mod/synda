@@ -1,0 +1,26 @@
+[
+ {
+  "master_id": "data_set.01",
+  "version": "20160101",
+  "attached_parameters": {
+    "selection_filename": "cli",
+    "searchapi_host": "x"
+  }
+ },
+ {
+  "master_id": "data_set.02",
+  "version": "20160101",
+  "attached_parameters": {
+    "selection_filename": "cli",
+    "searchapi_host": "x"
+  }
+ },
+ {
+  "master_id": "data_set.03",
+  "version": "20160101",
+  "attached_parameters": {
+    "selection_filename": "cli",
+    "searchapi_host": "x"
+  }
+ }
+]
