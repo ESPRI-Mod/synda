@@ -147,7 +147,7 @@ def run(args):
                 dsv_info['vfn'] = vfn
                 dsv_info['vernum'] = vernum
 
-        # Initialise the per-data set error counters and per-data set version
+        # Initialise the per-data-set error counters and per-data-set version
         # error flags
         for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
             ds_info['errors'] = 0
@@ -201,7 +201,11 @@ def run(args):
             versatile_print('\nDataset "%s":' % (master_id))
             dataset_errors = 0
             for n, dsv_info in enumerate(dsv_list, 1):
-                versatile_print('  Version %d/%d: time stamp "%s", version string "%s":' % (n, nmax, dsv_info['timestamp'], dsv_info['verstr']))
+                if 'timestamp' in dsv_info:
+                    ts = '"%s"' % dsv_info['timestamp']
+                else:
+                    ts = 'none'
+                versatile_print('  Version %d/%d: time stamp %s, version string "%s":' % (n, nmax, ts, dsv_info['verstr']))
                 err_flags = dsv_info['err_flags']
                 if err_flags == 0:
                     versatile_print('    No errors')
@@ -213,7 +217,7 @@ def run(args):
                     if err_flags & DSV_ERR_DUP:
                         versatile_print('    Version string is a duplicate of another version string in the same dataset')
                     if err_flags & DSV_ERR_SEQ:
-                        versatile_print('    Version number is not greater than previous version (%s -> %s)' % (dsv_list[n - 1]['vernum'], dsv_info['vernum']))
+                        versatile_print('    Version number is not greater than previous version (%s -> %s)' % (dsv_list[n - 2]['vernum'], dsv_info['vernum']))
                     dsv_errors = 0
                     bits = dsv_info['err_flags']
                     while bits != 0:
@@ -263,7 +267,7 @@ def run(args):
     tbl.set_cols_width([ds_digits, dsv_digits, dsc_width])
     versatile_print(tbl.draw())
 
-    versatile_print('\nA total of %d errors were found' % (total_errors))
+    versatile_print('\nA total of %d error(s) were found' % (total_errors))
     versatile_print('End of report')
     if (total_errors != 0):
         status = 1
