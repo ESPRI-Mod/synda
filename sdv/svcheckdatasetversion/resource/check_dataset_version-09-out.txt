@@ -4,8 +4,7 @@
 
 Date: 2016-10-05 21:10:21 +0200
 Command line:
-  synda check dataset_version /home/aym/sdt/bin/synda check --playback\
-    check_dataset_version-09-in.json dataset_version
+  synda check --playback check_dataset_version-09-in.json dataset_version
 
 Found 4 dataset versions(s), of which
   0 have a timestamp field
