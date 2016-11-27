@@ -91,7 +91,9 @@ def reset_data():
     data_folder=fabric_run('/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder')
     fabric.state.output['running'] = True
 
-    answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
+    # confirm
+    #answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
+    answer=True
 
     if answer:
         fabric_run("sudo rm -rf %s"%data_folder)
