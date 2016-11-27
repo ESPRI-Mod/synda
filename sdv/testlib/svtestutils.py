@@ -48,14 +48,15 @@ def fabric_run(cmd):
         cmd=cmd.replace('/usr/share/python/synda/sdt/bin','%s/sdt/lib/sd'%home)
 
         # SDP
+        cmd=cmd.replace('service sdp','spdaemon')
 
     elif installation_mode=='system_package':
         pass # nothing to do as this is the default
 
     if exec_mode=='local':
-        fabric.api.local(cmd)
+        fabric.api.local(cmd,shell='/bin/bash')
     else:
-        fabric.api.run(cmd)
+        fabric.api.run(cmd,shell='/bin/bash')
 
 class Testset(object):
     parameter=None
