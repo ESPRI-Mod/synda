@@ -63,7 +63,7 @@ def exec_wrapper(name):
 
 def discovery(project):
     exec_wrapper('install_%s'%project)
-    task_exec('check_install_result_%s'%project) # cmi stands for 'CMip5 Install'
+    exec_wrapper('check_install_result_%s'%project)
 
 def download(project):
     task_exec(tc.start_sdt)
@@ -90,15 +90,23 @@ def CDF_postprocessing(project):
 
 @task
 def install_CMIP5():
-    fabric_run('sudo synda install -s 20160503_test_CMIP5.txt')
+    fabric_run('sudo synda install -y -s ./resource/template/CMIP5.txt')
+
+@task
+def check_install_result_CMIP5():
+    fabric_run('foobar')
 
 @task
 def install_CORDEX():
-    fabric_run('sudo synda install -s 20160503_test_CORDEX.txt')
+    fabric_run('sudo synda install -y -s ./resource/template/CORDEX.txt')
+
+@task
+def check_install_result_CORDEX():
+    fabric_run('foobar')
 
 @task
 def trigger_CDF():
-    fabric_run('sudo synda pexec cdf -s 20160503_test_CMIP5.txt')
+    fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
 
 @task
 def start_pp_pipelines():
