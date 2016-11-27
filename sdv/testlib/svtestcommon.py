@@ -12,8 +12,8 @@
 """This script contains UAT test for incremental discovery."""
 
 import argparse
-import fabric.api
-from svtestutils import fabric_run
+import fabric
+from svtestutils import fabric_run, query_yes_no
 
 @fabric.api.task
 def configure():
@@ -80,9 +80,17 @@ def pause():
 
 @fabric.api.task
 def reset_data():
-    fabric_run('read -p "\"$(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)\" folder will be removed. Do you want to continue ? (y/n)" -s -n 1 ; test $REPLY = y ; echo')
-    fabric_run("sudo rm -rf $(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)")
-    fabric_run("sudo mkdir -p $(/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder)")
+    fabric.state.output['running'] = False
+    data_folder=fabric_run('/usr/share/python/synda/sdt/bin/sdconfig.py -n data_folder')
+    fabric.state.output['running'] = True
+
+    answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
+
+    if answer:
+        fabric_run("sudo rm -rf %s"%data_folder)
+        fabric_run("sudo mkdir -p %s"%data_folder)
+    else:
+        raise Exception('Test cancelled !')
 
 @fabric.api.task
 def retrieve_parameters():

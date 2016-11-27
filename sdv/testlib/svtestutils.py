@@ -12,6 +12,7 @@
 """This script contains UAT test for incremental discovery."""
 
 import os
+import sys
 import argparse
 import fabric.api
 
@@ -54,13 +55,48 @@ def fabric_run(cmd):
         pass # nothing to do as this is the default
 
     if exec_mode=='local':
-        fabric.api.local(cmd,shell='/bin/bash')
+        result=fabric.api.local(cmd,shell='/bin/bash',capture=True)
     else:
-        fabric.api.run(cmd,shell='/bin/bash')
+        result=fabric.api.run(cmd,shell='/bin/bash')
+
+    return result
 
 class Testset(object):
     parameter=None
     selection_file=None
+
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    Args:
+        - "question" is a string that is presented to the user.
+        - "default" is the presumed answer if the user just hits <Enter>.
+
+    Returns:
+        - True if answer is yes
+        - False if answer is no
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stderr.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stderr.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
 
 # init.
 exec_mode='local'

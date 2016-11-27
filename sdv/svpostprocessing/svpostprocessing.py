@@ -31,7 +31,7 @@ def run():
     task_exec(tc.check_sdt_version)
     task_exec(tc.check_sdp_version)
 
-    task_exec(tc.pause)
+    #task_exec(tc.pause)
 
     # stop daemons
     task_exec(tc.stop_sdt)
