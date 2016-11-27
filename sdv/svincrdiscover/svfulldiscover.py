@@ -35,9 +35,9 @@ def run():
     task_exec(tc.retrieve_parameters)
 
     task_exec(full_discovery_step_1)
-    task_exec(check_full_discovery_result)
+    task_exec(check_fds1_result)
     task_exec(full_discovery_step_2)
-    task_exec(check_full_discovery_result)
+    task_exec(check_fds2_result)
     task_exec(check_that_full_discovery_fetched_all_metadata)
 
     print 'Full discovery took %d minutes to complete'%999
@@ -49,14 +49,15 @@ def full_discovery_step_1():
     fabric_run('synda install -y --timestamp_right_boundary %s -s %s'%(first_discovery_timestamp_right_boundary,testset.selection_file,))
 
 @task
-def check_full_discovery_result():
+def check_fds1_result():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 19525')
 
+@task
 def full_discovery_step_2():
     fabric_run('synda install -y --timestamp_right_boundary %s -s %s'%(second_discovery_timestamp_right_boundary,testset.selection_file,))
 
 @task
-def check_full_discovery_result():
+def check_fds2_result():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 19566')
 
 @task
