@@ -44,11 +44,11 @@ def stop():
 
 @fabric.api.task
 def stop_sdt():
-    fabric_run("sudo service synda sdt")
+    fabric_run("sudo service sdt stop")
 
 @fabric.api.task
 def stop_sdp():
-    fabric_run("sudo service synda sdp")
+    fabric_run("sudo service sdp stop")
 
 @fabric.api.task
 def reset():

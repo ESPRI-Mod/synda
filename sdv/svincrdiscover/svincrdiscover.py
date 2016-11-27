@@ -75,7 +75,7 @@ def check_that_incremental_discovery_fetched_only_the_delta():
 # init.
     
 testset=Testset()
-testset.selection_file='./resource/template/heavy/heavy.txt'
+testset.selection_file='./resource/template/JT_T1_CMIP5.txt'
 
 first_discovery_timestamp_right_boundary='2012-03-19T01:00:00Z'
 second_discovery_timestamp_right_boundary='2012-03-25T01:00:00Z'
