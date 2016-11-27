@@ -543,6 +543,7 @@ install_sp_application ()
     chmod go-r "$pp_cred_file"
 
     # create symlink in 'bin'
+    # TODO: no need to symlink every files as only 'spdaemon' is needed
     cd $sp_root/bin
     create_sp_symlink
     cd -
