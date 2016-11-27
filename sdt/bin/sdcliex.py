@@ -34,6 +34,10 @@ def check():
   synda check selection"""
     return buf
 
+def config():
+    buf=""""""
+    return buf
+
 def contact():
     buf=""""""
     return buf

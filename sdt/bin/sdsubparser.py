@@ -143,6 +143,9 @@ def run(subparsers):
     subparser.add_argument('-F','--output_format',help='Set output format',default='text',choices=['text','pdf'])
     subparser.add_argument('-o','--outfile',default='/tmp/dataset_version_report.pdf')
 
+    subparser=create_subparser(subparsers,'config',common_option=False,help='Print configuration information',example=sdcliex.config())
+    subparser.add_argument('-n','--name',default=None,help='Name of the parameter to be displayed (if not set, all parameters are displayed)')
+
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
     subparser=create_subparser(subparsers,'count',help='Count dataset',example=sdcliex.count())

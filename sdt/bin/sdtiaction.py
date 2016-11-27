@@ -124,6 +124,10 @@ def check(args):
 
     return status
 
+def config(args):
+    import sdconfig
+    sdconfig.print_(args.name)
+
 def contact(args):
     import sdi18n
     print sdi18n.m0018
@@ -699,6 +703,7 @@ actions={
     'autoremove':autoremove,
     'certificate':certificate, 
     'check':check, 
+    'config':config,
     'contact':contact,
     'daemon':daemon, 
     'facet':facet,
