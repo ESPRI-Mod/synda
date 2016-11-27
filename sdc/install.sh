@@ -549,6 +549,7 @@ install_sp_application ()
 
     # download then store 'worker' script in 'bin' folder
     wget -O $sp_root/bin/synda_wo https://raw.githubusercontent.com/Prodiguer/synda/master/sdw/bin/worker
+    chmod +x $sp_root/bin/synda_wo
 
     post_install_msg="$post_install_msg\nsynda-pp application has been installed in $sp_root"
 }
