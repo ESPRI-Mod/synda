@@ -547,6 +547,9 @@ install_sp_application ()
     create_sp_symlink
     cd -
 
+    # download then store 'worker' script in 'bin' folder
+    wget -O $sp_root/bin/synda_wo https://raw.githubusercontent.com/Prodiguer/synda/master/sdw/bin/worker
+
     post_install_msg="$post_install_msg\nsynda-pp application has been installed in $sp_root"
 }
 
@@ -782,7 +785,7 @@ sp_package=sdp-${sp_version}
 pp_archive=${sp_package}.tar.gz
 pp_url="$sp_url_prefix/${pp_archive}"
 sp_root="$g__prefix/sdp"
-pp_lib="$sp_root/lib/sd"
+pp_lib="$sp_root/lib/sp"
 pp_conf_file="$sp_root/conf/sdp.conf"
 pp_cred_file="$sp_root/conf/credentials.conf"
 #
