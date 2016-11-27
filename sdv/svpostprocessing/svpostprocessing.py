@@ -33,6 +33,18 @@ def run():
 
     #task_exec(tc.pause)
 
+    download('CMIP5')
+    ipsl_postprocessing('CMIP5')
+
+    download('CORDEX')
+    ipsl_postprocessing('CORDEX')
+
+    download('CMIP5')
+    ipsl_postprocessing('CMIP5')
+    cdf_postprocessing('CMIP5')
+
+def download():
+
     # stop daemons
     task_exec(tc.stop_sdt)
     task_exec(tc.stop_sdp)
@@ -40,15 +52,19 @@ def run():
 
     task_exec(tc.reset_all)
     task_exec(install_CMIP5)
-    TODO
+    task_exec(check_cmi_result) # cmi stands for 'CMip5 Install'
 
     task_exec(tc.reset_all)
     task_exec(install_CORDEX)
-    TODO
+    task_exec(check_coi_result) # coi stands for 'COrdex Install'
 
     task_exec(tc.reset_all)
     task_exec(install_CMIP5)
     task_exec(trigger_CDF)
+    task_exec(check_cdf_result)
+
+
+    WTF ?
 
     # discovery
     task_exec(install_CMIP5)
