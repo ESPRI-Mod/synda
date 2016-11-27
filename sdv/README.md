@@ -1,14 +1,16 @@
 # Synda validation module
 
-This module contains UAT tests.
+This module contains Synda Application Tests.
 
 ## Test environment setup
 
-To set up a test environment, you will need to install:
+To set up a test environment, you will need to:
 
-* Synda
-* Test scripts dependencies
-* Test scripts
+* Install Synda
+* Install Test scripts dependencies
+* Install Test scripts
+
+Next three sections describe each step.
 
 ### Synda installation
 
