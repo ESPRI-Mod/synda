@@ -57,35 +57,36 @@ def run():
 
     print 'Test complete successfully !'
 
-@task
+def exec_wrapper(name):
+    fu=globals()[name] 
+    task_exec(fu)
+
 def discovery(project):
-    task_exec('install_%s'%project)
+    exec_wrapper('install_%s'%project)
     task_exec('check_install_result_%s'%project) # cmi stands for 'CMip5 Install'
 
-@task
 def download(project):
     task_exec(tc.start_sdt)
     time.sleep(300) # give some time for the file to be downloaded
     task_exec('check_download_result_%s'%project)
 
-@task
 def transfer_events(project):
     # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
     time.sleep(50) # give some time for pp events to be transfered from SDT to SDP
     task_exec(check_transfer_events_result)
 
-@task
 def IPSL_postprocessing(project):
     transfer_events(project)
     task_exec(start_pp_pipelines)
     task_exec('check_IPSL_postprocessing_result_%s'%project)
 
-@task
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project)
     task_exec('check_CDF_postprocessing_result_%s'%project)
+
+# -- tasks -- #
 
 @task
 def install_CMIP5():
