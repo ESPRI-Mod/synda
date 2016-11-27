@@ -39,8 +39,15 @@ def restart():
     fabric_run("sudo service synda restart")
 
 @fabric.api.task
+def stop_all():
+    stop_sdt()
+    stop_sdp()
+    stop_sdw()
+
+@fabric.api.task
 def stop():
-   stop_sdt()
+    """TODO: remove me."""
+    stop_sdt()
 
 @fabric.api.task
 def stop_sdt():

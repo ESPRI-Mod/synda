@@ -33,53 +33,41 @@ def run():
 
     #task_exec(tc.pause)
 
+    # download & IPSL pipeline
+
+    task_exec(tc.stop_all) # stop daemons
+    task_exec(tc.reset_all)
+    discovery('CMIP5')
     download('CMIP5')
     ipsl_postprocessing('CMIP5')
 
+    task_exec(tc.stop_all) # stop daemons
+    task_exec(tc.reset_all)
+    discovery('CORDEX')
     download('CORDEX')
     ipsl_postprocessing('CORDEX')
 
+    # download & CDF pipeline
+
+    task_exec(tc.stop_all) # stop daemons
+    task_exec(tc.reset_all)
     download('CMIP5')
-    ipsl_postprocessing('CMIP5')
-    cdf_postprocessing('CMIP5')
+    IPSL_postprocessing('CMIP5')
+    CDF_postprocessing('CMIP5')
 
-def download():
+    print 'Test complete successfully !'
 
-    # stop daemons
-    task_exec(tc.stop_sdt)
-    task_exec(tc.stop_sdp)
-    task_exec(tc.stop_sdw)
+def discovery(project):
+    task_exec('install_%s'%project)
+    task_exec('check_install_result_%s'%project) # cmi stands for 'CMip5 Install'
 
-    task_exec(tc.reset_all)
-    task_exec(install_CMIP5)
-    task_exec(check_cmi_result) # cmi stands for 'CMip5 Install'
-
-    task_exec(tc.reset_all)
-    task_exec(install_CORDEX)
-    task_exec(check_coi_result) # coi stands for 'COrdex Install'
-
-    task_exec(tc.reset_all)
-    task_exec(install_CMIP5)
-    task_exec(trigger_CDF)
-    task_exec(check_cdf_result)
-
-
-    WTF ?
-
-    # discovery
-    task_exec(install_CMIP5)
-    task_exec(check_CMIP5_installation_result)
-    task_exec(install_CORDEX)
-    task_exec(check_CORDEX_installation_result)
-
-    # download
+def download(project):
     task_exec(tc.start_sdt)
     time.sleep(300) # give some time for the file to be downloaded
-    task_exec(check_download_result)
+    task_exec('check_download_result_%s'%project)
 
-    # pexec
-    task_exec(trigger_CDF)
-    task_exec(check_CDF_trigger_result)
+ssss
+def IPSL_postprocessing(project)
 
     # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
@@ -90,7 +78,12 @@ def download():
     task_exec(start_pp_pipelines)
     task_exec(check_pp_pipelines_result)
 
-    print 'Test complete successfully !'
+    task_exec('check_ipsl_postprocessing_result_%s'%project)
+
+def CDF_postprocessing(project)
+    task_exec(trigger_CDF)
+    task_exec(check_CDF_postprocessing_result_%s'%project)
+ssss
 
 @task
 def install_CMIP5():
@@ -115,7 +108,6 @@ def fake():
 
 # init.
 
-reset_script='./resource/reset.sh'
 scripts_pp='./resource/scripts_pp'
 
 if __name__=='__main__':
