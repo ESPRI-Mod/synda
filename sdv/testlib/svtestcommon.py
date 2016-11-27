@@ -51,6 +51,10 @@ def stop_sdp():
     fabric_run("sudo service sdp stop")
 
 @fabric.api.task
+def stop_sdw():
+    fabric_run("sudo synda_wo stop")
+
+@fabric.api.task
 def reset():
     reset_sdt()
 
