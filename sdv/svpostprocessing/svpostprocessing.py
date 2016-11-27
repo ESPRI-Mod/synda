@@ -17,11 +17,10 @@ import re
 import time
 import fabric.api
 from fabric.api import task
-from fabric.api import execute as task_exec
 
 sys.path.append("..")
 
-from testlib.svtestutils import fabric_run
+from testlib.svtestutils import fabric_run, task_exec, Testset, title
 import testlib.svtestcommon as tc
 
 def run():
