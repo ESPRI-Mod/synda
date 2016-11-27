@@ -66,24 +66,21 @@ def download(project):
     time.sleep(300) # give some time for the file to be downloaded
     task_exec('check_download_result_%s'%project)
 
-ssss
-def IPSL_postprocessing(project)
-
+def transfer_events(project):
     # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
     time.sleep(50) # give some time for pp events to be transfered from SDT to SDP
-    task_exec(check_pp_events_transfer_result)
+    task_exec(check_transfer_events_result)
 
-    # start pp pipelines
+def IPSL_postprocessing(project)
+    transfer_events(project)
     task_exec(start_pp_pipelines)
-    task_exec(check_pp_pipelines_result)
-
-    task_exec('check_ipsl_postprocessing_result_%s'%project)
+    task_exec('check_IPSL_postprocessing_result_%s'%project)
 
 def CDF_postprocessing(project)
     task_exec(trigger_CDF)
-    task_exec(check_CDF_postprocessing_result_%s'%project)
-ssss
+    transfer_events(project)
+    task_exec('check_CDF_postprocessing_result_%s'%project)
 
 @task
 def install_CMIP5():
