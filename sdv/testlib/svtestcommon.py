@@ -35,6 +35,14 @@ def enable_download():
     fabric_run("sudo sed -i 's|^download=false|download=true|' /etc/synda/sdt/sdt.conf")
 
 @fabric.api.task
+def disable_eventthread():
+    fabric_run("sudo sed -i 's|^eventthread=1|eventthread=0|' /etc/synda/sdp/sdp.conf")
+
+@fabric.api.task
+def enable_eventthread():
+    fabric_run("sudo sed -i 's|^eventthread=0|eventthread=1|' /etc/synda/sdp/sdp.conf")
+
+@fabric.api.task
 def do_not_print_domain_inconsistency():
     fabric_run("sudo sed -i 's|^print_domain_inconsistency=True|print_domain_inconsistency=False|' /usr/share/python/synda/sdt/bin/sdconfig.py")
 

@@ -99,11 +99,16 @@ def check_install_result_CMIP5():
 
 @task
 def check_download_result_CMIP5():
+
+    # check that all files are done
     fabric_run('test $(synda list limit=0 -f | grep "^done" | wc -l) -eq 4')
+
+    # check that corresponding events have been created
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 6""")
 
 @task
 def check_transfer_events_result():
-    fabric_run('test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event" | wc -l) -eq 4')
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
 def install_CORDEX():
