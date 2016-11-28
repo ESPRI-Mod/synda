@@ -11,12 +11,17 @@
 
 """This module contains args shared across multiple modules."""
 
+import argparse
 import sdconst
 
-def add_playback_record_options(parser):
+def add_playback_record_options(parser,hidden=False):
     grp=parser.add_mutually_exclusive_group(required=False)
-    grp.add_argument('-p','--playback',help='Read metadata from FILE',metavar='FILE')
-    grp.add_argument('-r','--record',help='Write metadata to FILE',metavar='FILE')
+
+    playback_help='Read metadata from FILE' if not hidden else argparse.SUPPRESS
+    record_help='Write metadata to FILE' if not hidden else argparse.SUPPRESS
+
+    grp.add_argument('-p','--playback',help=playback_help,metavar='FILE')
+    grp.add_argument('-r','--record',help=record_help,metavar='FILE')
 
 def add_type_grp(parser):
     type_grp=parser.add_mutually_exclusive_group(required=False)
