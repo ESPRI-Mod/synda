@@ -27,6 +27,14 @@ def configure():
     fabric_run("sudo sed -i '7s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%(esgf_password,)) # beware: line number specific
 
 @fabric.api.task
+def disable_postprocessing():
+    fabric_run("sudo sed -i 's|^post_processing=true|post_processing=false|' /etc/synda/sdt/sdt.conf")
+
+@fabric.api.task
+def enable_postprocessing():
+    fabric_run("sudo sed -i 's|^post_processing=false|post_processing=true|' /etc/synda/sdt/sdt.conf")
+
+@fabric.api.task
 def disable_download():
     fabric_run("sudo sed -i 's|^download=true|download=false|' /etc/synda/sdt/sdt.conf")
 

@@ -61,6 +61,7 @@ def run():
 
 def prepare():
     task_exec(tc.stop_all)
+    task_exec(check_sa_result)
     task_exec(tc.disable_eventthread)
     task_exec(tc.reset_all)
 
@@ -96,6 +97,11 @@ def transfer_events(project):
     task_exec(check_transfer_events_result)
 
 # -- tasks -- #
+
+@task
+def check_sa_result(): # sa stands for "Stop All"
+    fabric_run('! pgrep spdaemon')
+    fabric_run('! pgrep synda')
 
 @task
 def install_CMIP5():
