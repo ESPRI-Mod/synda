@@ -94,8 +94,9 @@ def download(project):
 
 def IPSL_postprocessing(project):
     transfer_events(project)
-    create_pp_pipelines
+    create_pp_pipelines()
     task_exec(start_pp_pipelines)
+    time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     task_exec('check_IPSL_postprocessing_result_%s'%project)
 
 def transfer_events(project):
@@ -109,9 +110,16 @@ def transfer_events(project):
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project)
-    task_exec(create_pp_pipelines)
+    create_pp_pipelines()
     task_exec(start_pp_pipelines)
+    time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     task_exec('check_CDF_postprocessing_result_%s'%project)
+
+def create_pp_pipelines():
+    task_exec(tc.enable_eventthread)
+    task_exec(tc.restart_sdp)
+    time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
+    task_exec(check_ppprun_creation_result)
 
 # -- tasks -- #
 
@@ -142,6 +150,10 @@ def check_transfer_events_result():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
+def check_IPSL_postprocessing_result_CMIP5():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='old'" | wc -l) -eq 6""")
+
+@task
 def install_CORDEX():
     fabric_run('sudo synda install -y -s ./resource/template/CORDEX.txt')
 
@@ -150,20 +162,16 @@ def check_install_result_CORDEX():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 4')
 
 @task
+def check_IPSL_postprocessing_result_CORDEX():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='old'" | wc -l) -eq 6""")
+
+@task
 def trigger_CDF():
     fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
 
 @task
-def create_pp_pipelines():
-    task_exec(tc.enable_eventthread)
-    task_exec(tc.restart_sdp)
-    time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
-    task_exec(check_ppprun_creation_result)
-
-@task
 def start_pp_pipelines():
     fabric_run('synda_wo -x start')
-    fabric_run('test -f /tmp/foobar')
 
 @task
 def fake():
@@ -174,6 +182,7 @@ def fake():
 time_to_wait_for_download=50
 time_to_wait_for_transferring_event=20
 time_to_wait_for_ppprun_creation=10
+time_to_wait_to_complete_postprocessing_jobs=45
 
 scripts_pp='./resource/scripts_pp'
 
