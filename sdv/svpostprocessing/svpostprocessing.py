@@ -94,7 +94,11 @@ def install_CMIP5():
 
 @task
 def check_install_result_CMIP5():
-    fabric_run('foobar')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 4')
+
+@task
+def check_download_result_CMIP5():
+    fabric_run('test $(synda list limit=0 -f | grep "^done" | wc -l) -eq 4')
 
 @task
 def install_CORDEX():
@@ -102,7 +106,7 @@ def install_CORDEX():
 
 @task
 def check_install_result_CORDEX():
-    fabric_run('foobar')
+    fabric_run('test $(synda list limit=0 -f | wc -l) -eq 4')
 
 @task
 def trigger_CDF():
