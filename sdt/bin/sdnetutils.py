@@ -24,6 +24,7 @@ import sdconfig
 import sdpoodlefix
 import httplib
 import sdtrace
+import ssl
 
 class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
     """HTTP handler that transmits an X509 certificate as part of the request."""
@@ -157,5 +158,24 @@ def get_search_api_parser():
         return sdjson
     else:
         assert False
+
+def allow_self_signed_certificate():
+    """Handle target environment that doesn't support HTTPS verification.
+
+    This is needed for example to allow SDT<=>SDP communication over
+    JSONRPC/HTTPS using a self_signed_certificate (in a Python 2.7+ context).
+
+    For more information, see https://www.python.org/dev/peps/pep-0476
+    """
+
+    try:
+        _create_unverified_https_context = ssl._create_unverified_context
+        ssl._create_default_https_context = _create_unverified_https_context
+    except AttributeError:
+        # legacy Python that doesn't verify HTTPS certificates by default
+
+        pass
+
+# init.
 
 search_api_parser=get_search_api_parser()
