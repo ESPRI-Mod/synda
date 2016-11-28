@@ -67,7 +67,10 @@ def prepare():
     time.sleep(10) # give some time for daemons start to be effective
     task_exec(tc.test_sdt_sdp_communication)
 
-    # stop all
+    # test sdw / sdp communication
+    task_exec(tc.test_sdw_sdp_communication)
+
+    # stop all daemons
     task_exec(tc.stop_all)
     time.sleep(time_to_wait_for_daemon_to_stop) # give some time for daemons stop to be effective
     task_exec(check_sa_result)
