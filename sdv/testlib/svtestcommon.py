@@ -12,6 +12,7 @@
 """This script contains UAT test for incremental discovery."""
 
 import argparse
+import time
 import fabric
 from svtestutils import fabric_run, query_yes_no
 
@@ -68,11 +69,15 @@ def restart():
 
 @fabric.api.task
 def restart_sdt():
-    fabric_run("sudo service sdt restart")
+    stop_sdt()
+    time.sleep(4)
+    start_sdt()
 
 @fabric.api.task
 def restart_sdp():
-    fabric_run("sudo service sdp restart")
+    stop_sdp()
+    time.sleep(4)
+    start_sdp()
 
 @fabric.api.task
 def stop_all():
