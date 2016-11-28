@@ -26,36 +26,43 @@ import testlib.svtestcommon as tc
 def run():
 
     # check env.
+
     task_exec(tc.execute_basic_sdt_command)
     task_exec(tc.execute_basic_sdp_command)
     task_exec(tc.check_sdt_version)
     task_exec(tc.check_sdp_version)
 
-    #task_exec(tc.pause)
 
-    # download & IPSL pipeline
+    # download & IPSL pipeline (CMIP5)
 
-    task_exec(tc.stop_all) # stop daemons
-    task_exec(tc.reset_all)
+    prepare()
     discovery('CMIP5')
     download('CMIP5')
     IPSL_postprocessing('CMIP5')
 
-    task_exec(tc.stop_all) # stop daemons
-    task_exec(tc.reset_all)
+
+    # download & IPSL pipeline (CORDEX)
+
+    prepare()
     discovery('CORDEX')
     download('CORDEX')
     IPSL_postprocessing('CORDEX')
 
-    # download & CDF pipeline
 
-    task_exec(tc.stop_all) # stop daemons
-    task_exec(tc.reset_all)
+    # download & IPSL pipeline & CDF pipeline (CMIP5)
+
+    prepare()
     download('CMIP5')
     IPSL_postprocessing('CMIP5')
     CDF_postprocessing('CMIP5')
 
+
     print 'Test complete successfully !'
+
+def prepare():
+    task_exec(tc.stop_all)
+    task_exec(tc.disable_eventthread)
+    task_exec(tc.reset_all)
 
 def exec_wrapper(name):
     fu=globals()[name] 
@@ -72,6 +79,7 @@ def download(project):
     exec_wrapper('check_download_result_%s'%project)
 
 def IPSL_postprocessing(project):
+    task_exec(tc.enable_eventthread)
     transfer_events(project)
     task_exec(start_pp_pipelines)
     task_exec('check_IPSL_postprocessing_result_%s'%project)
