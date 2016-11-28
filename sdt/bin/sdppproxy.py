@@ -22,6 +22,7 @@ import argparse
 import sdlog
 import sdconfig
 import sdtrace
+import sdnetutils
 from sdexception import RemoteException
 
 def event(events):
@@ -61,6 +62,8 @@ def get_service():
     return service
 
 # module init.
+
+sdnetutils.allow_self_signed_certificate()
 
 host=sdconfig.config.get('post_processing','host')
 port=sdconfig.config.get('post_processing','port')
