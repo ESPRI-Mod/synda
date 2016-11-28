@@ -86,19 +86,20 @@ def IPSL_postprocessing(project):
     task_exec(start_pp_pipelines)
     task_exec('check_IPSL_postprocessing_result_%s'%project)
 
+def transfer_events(project):
+    """Transfer events from SDT to SDP."""
+    task_exec(tc.start_sdp)
+    task_exec(tc.enable_postprocessing)
+    task_exec(tc.restart_sdt)
+    time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
+    task_exec(check_transfer_events_result)
+
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project)
     task_exec(create_pp_pipelines)
     task_exec(start_pp_pipelines)
     task_exec('check_CDF_postprocessing_result_%s'%project)
-
-def transfer_events(project):
-    """Transfer events from SDT to SDP."""
-    task_exec(tc.enable_postprocessing)
-    task_exec(tc.start_sdp)
-    time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
-    task_exec(check_transfer_events_result)
 
 # -- tasks -- #
 
