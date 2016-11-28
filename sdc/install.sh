@@ -429,7 +429,7 @@ install_sp_additional_packages ()
 {
     # install pypi python modules in virtualenv
     # maybe freeze those version: cryptography==0.6 cffi==0.8.6 python-jsonrpc==0.5.1
-    $python_pkg_install_cmd pyOpenSSL humanize tabulate progress python-jsonrpc python-daemon==1.6.1 retrying
+    $python_pkg_install_cmd pyOpenSSL humanize tabulate progress python-jsonrpc python-daemon==1.6.1 retrying bunch
     # pygraphviz
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
