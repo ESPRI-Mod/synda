@@ -80,18 +80,21 @@ def download(project):
     exec_wrapper('check_download_result_%s'%project)
 
 def IPSL_postprocessing(project):
-    task_exec(tc.enable_eventthread)
     transfer_events(project)
+    create_pp_pipelines
     task_exec(start_pp_pipelines)
     task_exec('check_IPSL_postprocessing_result_%s'%project)
 
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project)
+    task_exec(create_pp_pipelines)
+    task_exec(start_pp_pipelines)
     task_exec('check_CDF_postprocessing_result_%s'%project)
 
 def transfer_events(project):
-    # transfer events from SDT to SDP
+    """Transfer events from SDT to SDP."""
+    task_exec(tc.enable_postprocessing)
     task_exec(tc.start_sdp)
     time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
     task_exec(check_transfer_events_result)
@@ -137,6 +140,13 @@ def trigger_CDF():
     fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
 
 @task
+def create_pp_pipelines():
+    task_exec(tc.enable_eventthread)
+    task_exec(tc.restart_sdp)
+    time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
+    task_exec(check_ppprun_creation_result)
+
+@task
 def start_pp_pipelines():
     fabric_run('synda_wo -x start')
     fabric_run('test -f /tmp/foobar')
@@ -149,6 +159,8 @@ def fake():
 
 time_to_wait_for_download=50
 time_to_wait_for_transferring_event=20
+time_to_wait_for_ppprun_creation=10
+
 scripts_pp='./resource/scripts_pp'
 
 if __name__=='__main__':

@@ -67,6 +67,14 @@ def restart():
     fabric_run("sudo service synda restart")
 
 @fabric.api.task
+def restart_sdt():
+    fabric_run("sudo service sdt restart")
+
+@fabric.api.task
+def restart_sdp():
+    fabric_run("sudo service sdp restart")
+
+@fabric.api.task
 def stop_all():
     stop_sdt()
     stop_sdp()
