@@ -39,13 +39,13 @@ def run():
     task_exec(tc.reset_all)
     discovery('CMIP5')
     download('CMIP5')
-    ipsl_postprocessing('CMIP5')
+    IPSL_postprocessing('CMIP5')
 
     task_exec(tc.stop_all) # stop daemons
     task_exec(tc.reset_all)
     discovery('CORDEX')
     download('CORDEX')
-    ipsl_postprocessing('CORDEX')
+    IPSL_postprocessing('CORDEX')
 
     # download & CDF pipeline
 
