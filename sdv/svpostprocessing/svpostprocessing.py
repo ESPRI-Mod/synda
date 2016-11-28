@@ -61,6 +61,7 @@ def run():
 
 def prepare():
     task_exec(tc.stop_all)
+    time.sleep(6) # give some time for daemons stop to be effective
     task_exec(check_sa_result)
     task_exec(tc.disable_eventthread)
     task_exec(tc.reset_all)
