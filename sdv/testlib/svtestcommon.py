@@ -80,6 +80,10 @@ def restart_sdp():
     start_sdp()
 
 @fabric.api.task
+def test_sdt_sdp_communication():
+    fabric_run("sudo /usr/share/python/synda/sdt/bin/sdppproxy.py -v")
+
+@fabric.api.task
 def stop_all():
     stop_sdt()
     stop_sdp()

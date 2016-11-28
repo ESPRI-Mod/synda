@@ -60,10 +60,22 @@ def run():
     print 'Test complete successfully !'
 
 def prepare():
+
+    # test sdt / sdp communication
+    task_exec(tc.start_sdt)
+    task_exec(tc.start_sdp)
+    time.sleep(10) # give some time for daemons start to be effective
+    task_exec(tc.test_sdt_sdp_communication)
+
+    # stop all
     task_exec(tc.stop_all)
     time.sleep(6) # give some time for daemons stop to be effective
     task_exec(check_sa_result)
+
+    # configure
     task_exec(tc.disable_eventthread)
+
+    # reset
     task_exec(tc.reset_all)
 
 def exec_wrapper(name):
