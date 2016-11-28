@@ -194,6 +194,7 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'install')
     add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
+    sdcommonarg.add_playback_record_options(subparser,hidden=False)
 
     subparser=create_subparser(subparsers,'intro',common_option=False,help='Print introduction to synda command')
 
