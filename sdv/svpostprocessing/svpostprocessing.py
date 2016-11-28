@@ -69,7 +69,7 @@ def prepare():
 
     # stop all
     task_exec(tc.stop_all)
-    time.sleep(6) # give some time for daemons stop to be effective
+    time.sleep(time_to_wait_for_daemon_to_stop) # give some time for daemons stop to be effective
     task_exec(check_sa_result)
 
     # configure
@@ -150,8 +150,12 @@ def check_transfer_events_result():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
+def check_ppprun_creation_result():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting','pause')" | wc -l) -eq 6""")
+
+@task
 def check_IPSL_postprocessing_result_CMIP5():
-    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='old'" | wc -l) -eq 6""")
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='done'" | wc -l) -eq 6""")
 
 @task
 def install_CORDEX():
@@ -183,6 +187,7 @@ time_to_wait_for_download=140
 time_to_wait_for_transferring_event=20
 time_to_wait_for_ppprun_creation=10
 time_to_wait_to_complete_postprocessing_jobs=45
+time_to_wait_for_daemon_to_stop=20
 
 scripts_pp='./resource/scripts_pp'
 
