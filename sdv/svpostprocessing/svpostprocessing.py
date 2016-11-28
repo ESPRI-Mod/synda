@@ -75,7 +75,7 @@ def discovery(project):
 def download(project):
     task_exec(tc.enable_download)
     task_exec(tc.start_sdt)
-    time.sleep(50) # give some time for the file to be downloaded
+    time.sleep(time_to_wait_for_download) # give some time for the file to be downloaded
     exec_wrapper('check_download_result_%s'%project)
 
 def IPSL_postprocessing(project):
@@ -92,7 +92,7 @@ def CDF_postprocessing(project):
 def transfer_events(project):
     # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
-    time.sleep(20) # give some time for pp events to be transfered from SDT to SDP
+    time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
     task_exec(check_transfer_events_result)
 
 # -- tasks -- #
@@ -141,6 +141,8 @@ def fake():
 
 # init.
 
+time_to_wait_for_download=50
+time_to_wait_for_transferring_event=20
 scripts_pp='./resource/scripts_pp'
 
 if __name__=='__main__':
