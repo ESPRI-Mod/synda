@@ -71,12 +71,6 @@ def download(project):
     time.sleep(50) # give some time for the file to be downloaded
     exec_wrapper('check_download_result_%s'%project)
 
-def transfer_events(project):
-    # transfer events from SDT to SDP
-    task_exec(tc.start_sdp)
-    time.sleep(20) # give some time for pp events to be transfered from SDT to SDP
-    task_exec(check_transfer_events_result)
-
 def IPSL_postprocessing(project):
     transfer_events(project)
     task_exec(start_pp_pipelines)
@@ -86,6 +80,12 @@ def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project)
     task_exec('check_CDF_postprocessing_result_%s'%project)
+
+def transfer_events(project):
+    # transfer events from SDT to SDP
+    task_exec(tc.start_sdp)
+    time.sleep(20) # give some time for pp events to be transfered from SDT to SDP
+    task_exec(check_transfer_events_result)
 
 # -- tasks -- #
 
@@ -100,6 +100,10 @@ def check_install_result_CMIP5():
 @task
 def check_download_result_CMIP5():
     fabric_run('test $(synda list limit=0 -f | grep "^done" | wc -l) -eq 4')
+
+@task
+def check_transfer_events_result():
+    fabric_run('test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event" | wc -l) -eq 4')
 
 @task
 def install_CORDEX():
