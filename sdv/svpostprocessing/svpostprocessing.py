@@ -66,14 +66,15 @@ def discovery(project):
     exec_wrapper('check_install_result_%s'%project)
 
 def download(project):
+    task_exec(tc.enable_download)
     task_exec(tc.start_sdt)
-    time.sleep(300) # give some time for the file to be downloaded
-    task_exec('check_download_result_%s'%project)
+    time.sleep(50) # give some time for the file to be downloaded
+    exec_wrapper('check_download_result_%s'%project)
 
 def transfer_events(project):
     # transfer events from SDT to SDP
     task_exec(tc.start_sdp)
-    time.sleep(50) # give some time for pp events to be transfered from SDT to SDP
+    time.sleep(20) # give some time for pp events to be transfered from SDT to SDP
     task_exec(check_transfer_events_result)
 
 def IPSL_postprocessing(project):
