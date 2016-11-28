@@ -179,7 +179,7 @@ def fake():
 
 # init.
 
-time_to_wait_for_download=50
+time_to_wait_for_download=140
 time_to_wait_for_transferring_event=20
 time_to_wait_for_ppprun_creation=10
 time_to_wait_to_complete_postprocessing_jobs=45
