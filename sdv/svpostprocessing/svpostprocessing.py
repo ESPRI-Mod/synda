@@ -61,6 +61,20 @@ def run():
 
 def prepare():
 
+    # stop all daemons
+    task_exec(tc.stop_all)
+    time.sleep(time_to_wait_for_daemon_to_stop) # give some time for daemons stop to be effective
+    task_exec(check_sa_result)
+
+    # configure
+    task_exec(tc.disable_eventthread)
+
+    # reset
+    task_exec(tc.reset_all)
+
+    # start all daemons
+    task_exec(tc.start_all)
+
     # test sdt / sdp communication
     task_exec(tc.start_sdt)
     task_exec(tc.start_sdp)
@@ -74,12 +88,6 @@ def prepare():
     task_exec(tc.stop_all)
     time.sleep(time_to_wait_for_daemon_to_stop) # give some time for daemons stop to be effective
     task_exec(check_sa_result)
-
-    # configure
-    task_exec(tc.disable_eventthread)
-
-    # reset
-    task_exec(tc.reset_all)
 
 def exec_wrapper(name):
     fu=globals()[name] 
@@ -123,6 +131,10 @@ def create_pp_pipelines():
     task_exec(tc.restart_sdp)
     time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
     task_exec(check_ppprun_creation_result)
+
+
+def start_pp_pipelines():
+    task_exec(tc.start_sdw)
 
 # -- tasks -- #
 
@@ -175,10 +187,6 @@ def check_IPSL_postprocessing_result_CORDEX():
 @task
 def trigger_CDF():
     fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
-
-@task
-def start_pp_pipelines():
-    fabric_run('synda_wo -x start')
 
 @task
 def fake():

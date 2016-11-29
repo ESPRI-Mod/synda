@@ -56,12 +56,25 @@ def do_not_print_domain_inconsistency():
     fabric_run("sudo sed -i 's|^print_domain_inconsistency=True|print_domain_inconsistency=False|' /usr/share/python/synda/sdt/bin/sdconfig.py")
 
 @fabric.api.task
+def start_all():
+    start_sdp()
+    time.sleep(3)
+    start_sdw()
+    time.sleep(2)
+    start_sdt()
+    time.sleep(2)
+
+@fabric.api.task
 def start_sdt():
     fabric_run("sudo service sdt start")
 
 @fabric.api.task
 def start_sdp():
     fabric_run("sudo service sdp start")
+
+@fabric.api.task
+def start_sdw():
+    fabric_run('synda_wo -x start')
 
 @fabric.api.task
 def restart():
