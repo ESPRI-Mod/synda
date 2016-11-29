@@ -179,6 +179,15 @@ def check_install_result_CORDEX():
     fabric_run('test $(synda list limit=0 -f | wc -l) -eq 10')
 
 @task
+def check_download_result_CORDEX():
+
+    # check that all files are done
+    fabric_run('test $(synda list limit=0 -f | grep "^done" | wc -l) -eq 10')
+
+    # check that corresponding events have been created
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 1""")
+
+@task
 def check_IPSL_postprocessing_result_CORDEX():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='old'" | wc -l) -eq 6""")
 
