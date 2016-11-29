@@ -115,7 +115,7 @@ def transfer_events(project):
     task_exec(tc.enable_postprocessing)
     task_exec(tc.restart_sdt)
     time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
-    task_exec(check_transfer_events_result)
+    exec_wrapper("check_transfer_events_result_%s"%project)
 
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
@@ -134,7 +134,7 @@ def create_pp_pipelines():
 def start_pp_pipelines():
     task_exec(tc.start_sdw)
 
-# -- tasks -- #
+# -------------------------- tasks -------------------------- #
 
 @task
 def check_sa_result(): # sa stands for "Stop All"
@@ -159,7 +159,7 @@ def check_download_result_CMIP5():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 6""")
 
 @task
-def check_transfer_events_result():
+def check_transfer_events_result_CMIP5():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
@@ -186,6 +186,10 @@ def check_download_result_CORDEX():
 
     # check that corresponding events have been created
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 1""")
+
+@task
+def check_transfer_events_result_CORDEX():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 1""")
 
 @task
 def check_IPSL_postprocessing_result_CORDEX():
