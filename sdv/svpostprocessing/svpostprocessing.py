@@ -192,12 +192,12 @@ def check_transfer_events_result_CORDEX():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 1""")
 
 @task
-def check_ppprun_creation_result_CMIP5():
+def check_ppprun_creation_result_CORDEX():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting','pause')" | wc -l) -eq 1""")
 
 @task
 def check_IPSL_postprocessing_result_CORDEX():
-    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='old'" | wc -l) -eq 6""")
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='done'" | wc -l) -eq 1""")
 
 @task
 def trigger_CDF():
