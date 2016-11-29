@@ -72,13 +72,11 @@ def prepare():
     # reset
     task_exec(tc.reset_all)
 
-    # start all daemons
-    task_exec(tc.start_all)
+    # start sdt daemon
+    task_exec(tc.start_sdt)
+    time.sleep(10) # give some time for daemon start to be effective
 
     # test sdt / sdp communication
-    task_exec(tc.start_sdt)
-    task_exec(tc.start_sdp)
-    time.sleep(10) # give some time for daemons start to be effective
     task_exec(tc.test_sdt_sdp_communication)
 
     # test sdw / sdp communication
