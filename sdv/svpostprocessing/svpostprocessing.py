@@ -52,6 +52,7 @@ def run():
     # download & IPSL pipeline & CDF pipeline (CMIP5)
 
     prepare()
+    discovery('CMIP5')
     download('CMIP5')
     IPSL_postprocessing('CMIP5')
     CDF_postprocessing('CMIP5')
