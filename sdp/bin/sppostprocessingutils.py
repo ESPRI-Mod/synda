@@ -18,6 +18,36 @@ import argparse
 import types
 from spexception import SPException,StateNotFoundException
 
+def increment_state_code(sta):
+    nbr=int(sta[1:])
+    nbr+=100
+    nbr_s='%04d'%nbr
+    return 'S'+nbr_s
+
+def build_light_pipeline(pipeline_name,tasks):
+    ppp=PostProcessingPipeline(pipeline_name)
+
+    curr_state='S0100'
+    dest_state='S0200'
+    for i,task in enumerate(tasks):
+        t=Transition(name=task,destination=dest_state)
+
+        if i==0:
+            s=State(name=curr_state,transition=t,initial=True)
+        else:
+            s=State(name=curr_state,transition=t)
+
+        ppp.add(s)
+
+        curr_state=increment_state_code(curr_state)
+        dest_state=increment_state_code(dest_state)
+
+    # add final state (with no transition attached)
+    s=State(name=curr_state,transition=None)
+    ppp.add(s)
+
+    return ppp
+
 def convert():
     #convert -delay 50 /tmp/*.png -loop 0 animated.gif
     pass
@@ -196,3 +226,9 @@ class State():
 
     def __str__(self):
         return "%s==(%s)==>%s"%(self.source, self.transition.name, self.transition.destination)
+
+if __name__ == '__main__':
+    name='P001'
+    tasks=['t1','t2','t3']
+    ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
+    render(ppp)

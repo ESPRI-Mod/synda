@@ -12,7 +12,7 @@
 """Contains P001 pipeline definition."""
 
 import sppipelineutils
-from sppostprocessingutils import PostProcessingPipeline,State,Transition
+import sppostprocessingutils 
 
 def get_pipeline():
     return ppp
@@ -20,15 +20,7 @@ def get_pipeline():
 # init.
 
 name='P001'
-ppp=PostProcessingPipeline(name)
 
-t0=Transition(name='remove_duplicate',destination='S0200')
-t1=Transition(name='time_axis_normalization',destination='S0300')
-t2=Transition(name='remove_tmp_files',destination='S0400')
+tasks=['remove_duplicate','time_axis_normalization','remove_tmp_files']
 
-s0=State(name='S0100',transition=t0,initial=True)
-s1=State(name='S0200',transition=t1)
-s2=State(name='S0300',transition=t2)
-s3=State(name='S0400',transition=None)
-
-ppp.add(s0,s1,s2,s3)
+ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
