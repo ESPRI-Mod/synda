@@ -51,7 +51,9 @@ def fabric_run(cmd):
         # SDP
         cmd=cmd.replace('service sdp','spdaemon')
         cmd=cmd.replace('/etc/synda/sdp','%s/sdp/conf'%home)
+        cmd=cmd.replace('/var/log/synda/sdp','%s/sdp/log'%home)
         cmd=cmd.replace('/var/lib/synda/sdp','%s/sdp/db'%home)
+        cmd=cmd.replace('/usr/share/python/synda/sdp/bin','%s/sdp/lib/sp'%home)
 
     elif installation_mode=='system_package':
         pass # nothing to do as this is the default
