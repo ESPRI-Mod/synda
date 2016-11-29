@@ -105,7 +105,7 @@ def download(project):
 
 def IPSL_postprocessing(project):
     transfer_events(project,'IPSL')
-    create_pp_pipelines(project)
+    create_pp_pipelines(project,'IPSL')
     start_pp_pipelines()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     exec_wrapper('check_IPSL_postprocessing_result_%s'%project)
@@ -121,16 +121,16 @@ def transfer_events(project,pipeline):
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project,'CDF')
-    create_pp_pipelines(project)
+    create_pp_pipelines(project,'CDF')
     start_pp_pipelines()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     exec_wrapper('check_CDF_postprocessing_result_%s'%project)
 
-def create_pp_pipelines(project):
+def create_pp_pipelines(project,pipeline):
     task_exec(tc.enable_eventthread)
     task_exec(tc.restart_sdp)
     time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
-    exec_wrapper("check_ppprun_creation_result_%s"%project)
+    exec_wrapper("check_ppprun_creation_result_%s_%s"%(project,pipeline))
 
 def start_pp_pipelines():
     task_exec(tc.start_sdw)
@@ -164,7 +164,7 @@ def check_transfer_events_result_CMIP5_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
-def check_ppprun_creation_result_CMIP5():
+def check_ppprun_creation_result_CMIP5_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting','pause')" | wc -l) -eq 6""")
 
 @task
@@ -193,7 +193,7 @@ def check_transfer_events_result_CORDEX_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 1""")
 
 @task
-def check_ppprun_creation_result_CORDEX():
+def check_ppprun_creation_result_CORDEX_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting','pause')" | wc -l) -eq 1""")
 
 @task
@@ -207,6 +207,10 @@ def trigger_CDF():
 @task
 def check_transfer_events_result_CMIP5_CDF():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 12""")
+
+@task
+def check_ppprun_creation_result_CMIP5_CDF():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting')" | wc -l) -eq 6""")
 
 @task
 def check_CDF_postprocessing_result_CMIP5():
