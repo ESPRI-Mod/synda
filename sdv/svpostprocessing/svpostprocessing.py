@@ -104,23 +104,23 @@ def download(project):
     exec_wrapper('check_download_result_%s'%project)
 
 def IPSL_postprocessing(project):
-    transfer_events(project)
+    transfer_events(project,'IPSL')
     create_pp_pipelines(project)
     start_pp_pipelines()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     exec_wrapper('check_IPSL_postprocessing_result_%s'%project)
 
-def transfer_events(project):
+def transfer_events(project,pipeline):
     """Transfer events from SDT to SDP."""
     task_exec(tc.start_sdp)
     task_exec(tc.enable_postprocessing)
     task_exec(tc.restart_sdt)
     time.sleep(time_to_wait_for_transferring_event) # give some time for pp events to be transfered from SDT to SDP
-    exec_wrapper("check_transfer_events_result_%s"%project)
+    exec_wrapper("check_transfer_events_result_%s_%s"%(project,pipeline))
 
 def CDF_postprocessing(project):
     task_exec(trigger_CDF)
-    transfer_events(project)
+    transfer_events(project,'CDF')
     create_pp_pipelines(project)
     start_pp_pipelines()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
@@ -160,7 +160,7 @@ def check_download_result_CMIP5():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 6""")
 
 @task
-def check_transfer_events_result_CMIP5():
+def check_transfer_events_result_CMIP5_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 6""")
 
 @task
@@ -189,7 +189,7 @@ def check_download_result_CORDEX():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='new'" | wc -l) -eq 1""")
 
 @task
-def check_transfer_events_result_CORDEX():
+def check_transfer_events_result_CORDEX_IPSL():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 1""")
 
 @task
@@ -203,6 +203,10 @@ def check_IPSL_postprocessing_result_CORDEX():
 @task
 def trigger_CDF():
     fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
+
+@task
+def check_transfer_events_result_CMIP5_CDF():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 12""")
 
 @task
 def fake():
