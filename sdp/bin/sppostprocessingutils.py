@@ -230,5 +230,13 @@ class State():
 if __name__ == '__main__':
     name='P001'
     tasks=['t1','t2','t3']
-    ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
-    render(ppp)
+    ppp=build_light_pipeline(name,tasks)
+
+    f='%s.png'%name
+    graph=render(ppp)
+    graph.draw(f, prog='dot')
+
+    """
+    if args.viewer:
+        view(f)
+    """
