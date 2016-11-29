@@ -72,8 +72,8 @@ def prepare():
     # reset
     task_exec(tc.reset_all)
 
-    # start sdt daemon
-    task_exec(tc.start_sdt)
+    # start sdp daemon
+    task_exec(tc.start_sdp)
     time.sleep(10) # give some time for daemon start to be effective
 
     # test sdt / sdp communication
