@@ -209,6 +209,10 @@ def check_transfer_events_result_CMIP5_CDF():
     fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 12""")
 
 @task
+def check_CDF_postprocessing_result_CMIP5():
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='done'" | wc -l) -eq 12""")
+
+@task
 def fake():
     fabric_run('test ! -f /srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc')
 
