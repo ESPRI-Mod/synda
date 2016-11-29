@@ -56,6 +56,10 @@ def do_not_print_domain_inconsistency():
     fabric_run("sudo sed -i 's|^print_domain_inconsistency=True|print_domain_inconsistency=False|' /usr/share/python/synda/sdt/bin/sdconfig.py")
 
 @fabric.api.task
+def set_pipeline_folder_path():
+    fabric_run("""sudo sed -i "s|^pipeline_path=.*$|pipeline_path=$HOME/synda_UAT/synda/sdv/svpostprocessing/resource/pipeline|" /etc/synda/sdp/sdp.conf""")
+
+@fabric.api.task
 def start_all():
     start_sdp()
     time.sleep(3)
