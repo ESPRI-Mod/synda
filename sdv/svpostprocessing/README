@@ -3,9 +3,12 @@ Requirement
     before running this test:
         indexes=esgf-data.dkrz.de
         default_index=esgf-data.dkrz.de
-Note
-    When run, this test makes some changes in the Synda configuration that you
-    may want to revert once the test is done. Changes in SDT configuration file
-    (sdt.conf) concern 'download' and 'post_processing' parameters. Changes in
-    SDP configuration file (sdp.conf) concern 'pipeline_path' and
-    'eventthread' parameters.
+Notes
+    - When run, this test makes some changes in the Synda configuration that you
+      may want to revert once the test is done. Changes in SDT configuration file
+      (sdt.conf) concern 'download' and 'post_processing' parameters. Changes in
+      SDP configuration file (sdp.conf) concern 'pipeline_path' and
+      'eventthread' parameters.
+    - To test external scripts (not done currently), edit 'worker' script and
+      replace '/opt/synda-ipsl/scripts_pp' with '$uat_t3/resource/scripts_pp' in
+      'script_dir' parameter.
