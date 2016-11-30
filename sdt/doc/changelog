@@ -21,7 +21,7 @@
 	- add sdsqlitedict module.
 	- add sdmts module.
 	- add 'ignorecase' filter for 'upgrade' and 'facet' subcommands.
-	- remove '-n' option from 'synda facet' command.
+	- remove '-n' option from 'synda facet' subcommand.
 	- do not stop daemon anymore when error occurs during download (except for certificate renewal error).
 	- always print stacktrace when error occurs (ST_DEBUG env. var. is not used anymore).
 	- write yes/no confirmation message on stderr.
@@ -30,10 +30,10 @@
 	- add 'url_replace' selection file parameter.
 	- add 'http_fallback' option (switch protocol on error).
 	- add 'default_listing_size' configuration option.
-	- add '-m' option to 'synda remove' command.
+	- add '-m' option to 'synda remove' subcommand.
 	- ergonomy improvements.
 - Version 3.4 - 20160504
-	- add 'synda variable' command
+	- add 'synda variable' subcommand
 	- add 'synda get' subcommand.
 	- remove 'synda test' subcommand ('synda test' is replaced by 'synda get').
 	- add urllib2 based download impl.
@@ -44,19 +44,19 @@
 	- improve obs4MIPs project support.
 	- user documentation reorganization.
 	- add parameter reference documentation.
-	- add command reference documentation.
+	- add commands reference documentation.
 	- add selection file documentation.
 - Version 3.3 - 20160404
 	- localpath DRS can be customized by user in configuration file (local_path_drs_template).
 	- add hpss configuration parameter to retry transfer on error.
-	- add index_host and project options to the 'synda update' command
+	- add index_host and project options to the 'synda update' subcommand
 	- add examples for each subcommands.
 	- use argparse.RawTextHelpFormatter in subcommand help.
 	- add globus online support.
 	- set gridftp port range to 50000-51000.
 	- in sdget.sh and sdgetg.sh, '-v' option replace '-d' option (verbose replace debug_level).
 	- add new 'value' format for synda dump '-F' option.
-	- enable debug mode when using synda test <url> command.
+	- enable debug mode when using synda test <url> subcommand.
 	- 'synda list' now list everything by default.
 	- add missing initialization in install.sh (g__transfer=0).
 	- add configuration file documentation.
