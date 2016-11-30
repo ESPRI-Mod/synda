@@ -92,7 +92,7 @@ def process_event(e,conn):
         # retrieve dependency
         start_dependency=reverse_trigger[pipeline_name]
 
-        start_status=get_new_pipeline_status(start_dependency,e,conn) # compute start status
+        start_status=get_new_pipeline_status(start_dependency,e,conn) # override 'start_status'
     else:
         start_dependency=None
 
@@ -108,6 +108,7 @@ def get_new_pipeline_status(start_dependency,e,conn):
     if pipeline_dependency is not None:
         splog.info('SPEVENTT-046',"dependency found in ppprun table (dependency=%s)"%(start_dependency,))
         if pipeline_dependency.status==spconst.PPPRUN_STATUS_DONE:
+            splog.info('SPEVENTT-048',"Create with WAITING status as dependent pipeline is done (dependency=%s,dataset_pattern=%s,variable=%s)"%(start_dependency,e.dataset_pattern,e.variable))
             status=spconst.PPPRUN_STATUS_WAITING
         else:
             splog.info('SPEVENTT-010','Create with PAUSE status as dependent pipeline is not done (dataset_pattern=%s,variable=%s)'%(e.dataset_pattern,e.variable))
