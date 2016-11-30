@@ -214,7 +214,7 @@ def check_transfer_events_result_CMIP5_CDF():
 
 @task
 def check_ppprun_creation_result_CMIP5_CDF():
-    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting')" | wc -l) -eq 6""")
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status in ('waiting')" | wc -l) -eq 3""")
 
 @task
 def check_CDF_postprocessing_result_CMIP5():

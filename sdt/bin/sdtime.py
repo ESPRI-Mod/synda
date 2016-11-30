@@ -112,6 +112,10 @@ class SDTimer():
 
     @classmethod
     def get_elapsed_time(cls,start_time):
+        """
+        Returns:
+            duration (in seconds)
+        """
         stop_time=datetime.datetime.now()
         delt=stop_time-start_time
 

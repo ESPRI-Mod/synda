@@ -19,7 +19,7 @@ from fabric.api import task
 
 sys.path.append("..")
 
-from testlib.svtestutils import fabric_run, task_exec, Testset, title
+from testlib.svtestutils import fabric_run, task_exec, Testset, title, SDTimer
 import testlib.svtestcommon as tc
 
 def run():
@@ -36,11 +36,14 @@ def run():
 
     task_exec(normal_discovery)
     task_exec(check_normal_discovery_result)
+
+    start_time=SDTimer.get_time()
     task_exec(incremental_discovery)
+    elapsed_time=SDTimer.get_elapsed_time(start_time)
     task_exec(check_incremental_discovery_result)
     task_exec(check_that_incremental_discovery_fetched_only_the_delta)
 
-    print 'Incremental discovery took %d minutes to complete'%999
+    print 'Incremental discovery took %d seconds to complete'%elapsed_time
 
     print 'Test complete successfully !'
 
