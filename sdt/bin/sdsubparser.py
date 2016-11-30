@@ -148,7 +148,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'contact',common_option=False,help='Print contact information')
 
-    subparser=create_subparser(subparsers,'count',help='Count dataset',example=sdcliex.count())
+    subparser=create_subparser(subparsers,'count',help='Count file / dataset',example=sdcliex.count())
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     add_parameter_argument(subparser)
     add_timestamp_boundaries(subparser,hidden=False)
