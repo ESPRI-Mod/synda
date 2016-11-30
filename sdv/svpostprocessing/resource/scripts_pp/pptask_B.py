@@ -1,45 +1,59 @@
-#!/bin/bash -e
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
 
-# Description
-#   This script fake doing some post-processing work
-#
-# Usage
-#   ./pptask.sh
+##################################
+#  @program        synchro-data
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @license        CeCILL (http://dods.ipsl.jussieu.fr/jripsl/synchro_data/LICENSE)
+##################################
 
-# ------ functions ------ #
+"""This module check if files appear in both output1 and output2."""
 
-curdate ()
-{
-    date +'%Y/%m/%d %I:%M:%S %p'
-}
+import os, argparse, logging
 
-msg ()
-{
-    l__code="${1}"
-    l__msg="${2}"
+def intersect(a, b):
+     return list(set(a) & set(b))
 
-    echo "$(curdate) ${l__code} ${l__msg}" 1>&2
-}
+def get_output12_dataset_paths(path):
+    """Return tuple with output1 based dataset path and output2 based dataset path."""
 
+    assert "/*/" in path
 
-# --------- arguments & initialization --------- #
+    o1=path.replace("/*/","/output1/")
+    o2=path.replace("/*/","/output2/")
 
-while [ "${1}" != "" ]; do
-    case "${1}" in
-        "--project")            shift; project="${1}"         ;;
-        "--src_variable_path")  shift; process_path="${1}"    ;;
-        "--dest_variable_path") shift; main_path="${1}"       ;;
-    esac
-    shift
-done
+    tu=(o1,o2)
 
+    return tu
 
-# --------- main --------- #
+def is_duplicate(output1_path,output2_path):
+    if os.path.exists(output1_path) and os.path.exists(output2_path):
+        output1_files = os.listdir(output1_path)
+        output2_files = os.listdir(output2_path)
 
-msg "INFO" "pptask.sh started"
+        interset_files=intersect(output1_files,output2_files)
 
-# post-processing task goes here
+        if len(interset_files)>0:
+            return True
+        else:
+            return False
+    else:
+        return False
 
-msg "INFO" "pptask.sh complete"
+def run(job):
+    logging.info('is_duplicate.py start')
 
-exit 0
+    (path_output1,path_output2)=get_output12_dataset_paths(job['full_path_variable'])
+    if is_duplicate(path_output1,path_output2):
+        job['transition_return_code']=1
+    else:
+        job['transition_return_code']=0
+
+    logging.info('is_duplicate.py complete')
+    return job
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
