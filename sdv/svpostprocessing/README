@@ -1,0 +1,11 @@
+Requirement
+    The following parameters must be set in SDT configuration file (sdt.conf)
+    before running this test:
+        indexes=esgf-data.dkrz.de
+        default_index=esgf-data.dkrz.de
+Note
+    When run, this test makes some changes in the Synda configuration that you
+    may want to revert once the test is done. Changes in SDT configuration file
+    (sdt.conf) concern 'download' and 'post_processing' parameters. Changes in
+    SDP configuration file (sdp.conf) concern 'pipeline_path' and
+    'eventthread' parameters.
