@@ -19,7 +19,7 @@ from fabric.api import task
 
 sys.path.append("..")
 
-from testlib.svtestutils import fabric_run, task_exec, Testset, title
+from testlib.svtestutils import fabric_run, task_exec, Testset, title, SDTimer
 import testlib.svtestcommon as tc
 
 def run():
@@ -36,11 +36,13 @@ def run():
 
     task_exec(full_discovery_step_1)
     task_exec(check_fds1_result)
+    start_time=SDTimer.get_time()
     task_exec(full_discovery_step_2)
+    elapsed_time=SDTimer.get_elapsed_time(start_time)
     task_exec(check_fds2_result)
     task_exec(check_that_full_discovery_fetched_all_metadata)
 
-    print 'Full discovery took %d minutes to complete'%999
+    print 'Full discovery took %d seconds to complete'%elapsed_time
 
     print 'Test complete successfully !'
 
