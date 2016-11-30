@@ -158,8 +158,8 @@ def reset_data():
     fabric.state.output['running'] = True
 
     # confirm
-    #answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
-    answer=True
+    answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
+    #answer=True
 
     if answer:
         fabric_run("sudo rm -rf %s"%data_folder)
