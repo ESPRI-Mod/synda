@@ -226,8 +226,8 @@ def fake():
 
 # init.
 
-#time_to_wait_for_download=300
-time_to_wait_for_download=35 # fake download mode
+time_to_wait_for_download=300
+#time_to_wait_for_download=35 # fake download mode
 
 time_to_wait_for_transferring_event=20
 time_to_wait_for_ppprun_creation=10
