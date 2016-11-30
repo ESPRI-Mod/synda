@@ -84,15 +84,16 @@ def process_event(e,conn):
     # manage start dependency
 
     # this is to access the 'trigger' dict from the 'value' side
-    reverse_trigger=dict((v[0], k) for k, v in pipelinedep.trigger.iteritems()) # TODO: replace this with a bidirectional dict. Maybe also add loop to allow multiple dependencies.
+    reverse_trigger=dict((v[0], (k,v[1])) for k, v in pipelinedep.trigger.iteritems()) # TODO: replace this with a bidirectional dict. Maybe also add loop to allow multiple dependencies.
 
     if pipeline_name in reverse_trigger:
         splog.info('SPEVENTT-044',"starting dependency exists for this pipeline in configuration file (new_pipeline=%s,dependency=%s)"%(pipeline_name,reverse_trigger[pipeline_name]))
 
         # retrieve dependency
-        start_dependency=reverse_trigger[pipeline_name]
+        start_dependency=reverse_trigger[pipeline_name][0]
+        dependency_type=reverse_trigger[pipeline_name][1]
 
-        start_status=get_new_pipeline_status(start_dependency,e,conn) # override 'start_status'
+        start_status=get_new_pipeline_status(start_dependency,dependency_type,e,conn) # override 'start_status'
     else:
         start_dependency=None
 
@@ -102,9 +103,31 @@ def process_event(e,conn):
 
     create_pipeline(pipeline_name,start_status,e,conn)
 
-def get_new_pipeline_status(start_dependency,e,conn):
+def get_new_pipeline_status(start_dependency,dependency_type,e,conn):
 
-    pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,e.variable,conn) # retrieve dependency
+
+    if dependency_type==spconst.TRIGGER_TYPE_D2NV:
+        # N to 1 (memo: works in reverse with D2NV). we want to find one dataset from N var.
+
+        v_='' # unset variable so to match the dataset
+    elif dependency_type==spconst.TRIGGER_TYPE_D2D:
+        # 1 to 1
+
+        v_=e.variable # default is ok
+    elif dependency_type==spconst.TRIGGER_TYPE_NV2D:
+        # 1 to N (memo: works in reverse with NV2D). we want to find N var from one dataset.
+
+        # hack: we force to dummy value so it will always be PAUSE and then
+        # triggered at the end of the last 'variable' pipeline (in
+        # postprocessing.job_done func). A better way maybe to call
+        # 'all_variable_complete' func here.
+        #
+        # TODO: improve consistency with logging message below ('SPEVENTT-010','SPEVENTT-018',..)
+        #
+        v_='doesnt_exist'
+
+
+    pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,v_,conn) # retrieve dependency
     if pipeline_dependency is not None:
         splog.info('SPEVENTT-046',"dependency found in ppprun table (dependency=%s)"%(start_dependency,))
         if pipeline_dependency.status==spconst.PPPRUN_STATUS_DONE:
