@@ -13,8 +13,21 @@
 
 import os
 import sys
+import datetime
 import argparse
 import fabric.api
+
+class SDTimer():
+    @classmethod
+    def get_time(cls):
+        return datetime.datetime.now()
+
+    @classmethod
+    def get_elapsed_time(cls,start_time):
+        stop_time=datetime.datetime.now()
+        delt=stop_time-start_time
+
+        return (delt.microseconds + (delt.seconds + delt.days * 24 * 3600) * 10**6) / 10**6 # microsecond is present here, but disappear after the last division. duration unit is second.
 
 def task_exec(task):
 
