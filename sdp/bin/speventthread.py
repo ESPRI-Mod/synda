@@ -117,14 +117,14 @@ def get_new_pipeline_status(start_dependency,dependency_type,e,conn):
     elif dependency_type==spconst.TRIGGER_TYPE_NV2D:
         # 1 to N (memo: works in reverse with NV2D). we want to find N var from one dataset.
 
-        # hack: we force to dummy value so it will always be PAUSE and then
-        # triggered at the end of the last 'variable' pipeline (in
-        # postprocessing.job_done func). A better way maybe to call
-        # 'all_variable_complete' func here.
+        # hack: we force status to PAUSE here.
         #
-        # TODO: improve consistency with logging message below ('SPEVENTT-010','SPEVENTT-018',..)
+        # The trigger will happen at the end of the last 'variable' pipeline
+        # (in postprocessing.job_done func). A better way maybe is to call
+        # 'all_variable_complete' func here. Also maybe merging both dep code
+        # (in postprocessing.job_done and here) would improve clarity..
         #
-        v_='doesnt_exist'
+        return spconst.PPPRUN_STATUS_PAUSE
 
 
     pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,v_,conn) # retrieve dependency
