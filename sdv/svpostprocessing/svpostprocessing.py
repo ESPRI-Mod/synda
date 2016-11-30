@@ -55,6 +55,7 @@ def run():
     discovery('CMIP5')
     download('CMIP5')
     IPSL_postprocessing('CMIP5')
+    stop_worker()
     CDF_postprocessing('CMIP5')
 
 
@@ -106,7 +107,7 @@ def download(project):
 def IPSL_postprocessing(project):
     transfer_events(project,'IPSL')
     create_pp_pipelines(project,'IPSL')
-    start_pp_pipelines()
+    start_worker()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     exec_wrapper('check_IPSL_postprocessing_result_%s'%project)
 
@@ -122,7 +123,7 @@ def CDF_postprocessing(project):
     task_exec(trigger_CDF)
     transfer_events(project,'CDF')
     create_pp_pipelines(project,'CDF')
-    start_pp_pipelines()
+    start_worker()
     time.sleep(time_to_wait_to_complete_postprocessing_jobs)
     exec_wrapper('check_CDF_postprocessing_result_%s'%project)
 
@@ -132,8 +133,11 @@ def create_pp_pipelines(project,pipeline):
     time.sleep(time_to_wait_for_ppprun_creation) # give some time for ppprun to be created
     exec_wrapper("check_ppprun_creation_result_%s_%s"%(project,pipeline))
 
-def start_pp_pipelines():
+def start_worker():
     task_exec(tc.start_sdw)
+
+def stop_worker():
+    task_exec(tc.stop_sdw)
 
 # -------------------------- tasks -------------------------- #
 
@@ -223,7 +227,7 @@ def fake():
 # init.
 
 #time_to_wait_for_download=300
-time_to_wait_for_download=15 # fake download mode
+time_to_wait_for_download=35 # fake download mode
 
 time_to_wait_for_transferring_event=20
 time_to_wait_for_ppprun_creation=10
