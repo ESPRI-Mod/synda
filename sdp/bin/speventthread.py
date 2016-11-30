@@ -80,32 +80,33 @@ def process_event(e,conn):
     pipeline_name,start_status=pipelinedep.event_pipeline_mapping[e.name]
     
 
-    # retrieve start dependency if any
+
+    # manage start dependency
 
     # this is to access the 'trigger' dict from the 'value' side
     reverse_trigger=dict((v[0], k) for k, v in pipelinedep.trigger.iteritems()) # TODO: replace this with a bidirectional dict. Maybe also add loop to allow multiple dependencies.
 
     if pipeline_name in reverse_trigger:
-        splog.info('SPEVENTT-044',"dependency found (new_pipeline=%s,dependency=%s)"%(pipeline_name,reverse_trigger[pipeline_name]))
+        splog.info('SPEVENTT-044',"starting dependency exists for this pipeline in configuration file (new_pipeline=%s,dependency=%s)"%(pipeline_name,reverse_trigger[pipeline_name]))
+
+        # retrieve dependency
         start_dependency=reverse_trigger[pipeline_name]
+
+        start_status=get_new_pipeline_status(start_dependency,e,conn) # compute start status
     else:
         start_dependency=None
 
-
-    # process start dependency
-
-    if start_dependency is not None:
-        pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,e.variable,conn) # retrieve dependency
-        start_status=get_new_pipeline_status(pipeline_dependency,e)                                     # compute start status
 
 
     # main
 
     create_pipeline(pipeline_name,start_status,e,conn)
 
-def get_new_pipeline_status(pipeline_dependency,e):
+def get_new_pipeline_status(start_dependency,e,conn):
 
+    pipeline_dependency=get_pipeline_dependency(start_dependency,e.dataset_pattern,e.variable,conn) # retrieve dependency
     if pipeline_dependency is not None:
+        splog.info('SPEVENTT-046',"dependency found in ppprun table (dependency=%s)"%(start_dependency,))
         if pipeline_dependency.status==spconst.PPPRUN_STATUS_DONE:
             status=spconst.PPPRUN_STATUS_WAITING
         else:
