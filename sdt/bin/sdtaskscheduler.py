@@ -205,6 +205,8 @@ def event_loop():
 
         time.sleep(main_loop_sleep)
 
+        sdlog.debug("SDTSCHED-400","end of event loop")
+
     print
     sdlog.info("SDTSCHED-901","Scheduler successfully stopped",stderr=True)
 
