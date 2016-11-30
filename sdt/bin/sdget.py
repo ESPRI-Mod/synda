@@ -35,6 +35,9 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
     killed=False
     script_stderr=None
 
+    if sdconfig.fake_download:
+        return (0,False,'')
+
     transfer_protocol=sdutils.get_transfer_protocol(url)
 
 

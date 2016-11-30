@@ -291,6 +291,9 @@ next_url_on_error=config.getboolean('download','http_fallback')
 
 show_advanced_options=False
 
+# when true, allow fast cycle for test (used for UAT)
+fake_download=False
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n','--name',default=None,help='Name of the parameter to be displayed (if not set, all parameters are displayed)')
