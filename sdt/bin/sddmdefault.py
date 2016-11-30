@@ -57,6 +57,12 @@ class Download():
             sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
             raise
 
+        if sdconfig.fake_download:
+            tr.status=sdconst.TRANSFER_STATUS_DONE
+            tr.error_msg=""
+            tr.sdget_error_msg=""
+            return
+
         (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
                                                                    tr.get_full_local_path(),
                                                                    debug=False,
