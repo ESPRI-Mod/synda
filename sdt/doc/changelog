@@ -1,16 +1,16 @@
 - Version 3.6 - 
 	- use search-api json format instead of xml.
 	- add end-of-transfer events replay mode (trigger all EOT events in batch mode).
-	- add 'synda count' action.
-	- add 'synda config' action.
+	- add 'synda count' subcommand.
+	- add 'synda config' subcommand.
 - Version 3.5 - 20160919
 	- use requests (pypi) to resolve openid.
 	- add ~/.sdt/conf/credentials.conf
 	- add ~/.sdt/conf/sdt.conf
 	- remove ~/.syndarc
-	- add 'open' action.
-	- add 'check' action for selection.
-	- add 'check' action for file's variable.
+	- add 'open' subcommand.
+	- add 'check' subcommand for selection.
+	- add 'check' subcommand for file's variable.
 	- use myproxyclient latest version.
 	- add 'default_path' option in sdt.conf.
 	- use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script).
@@ -105,7 +105,7 @@
 	- add 'next replica' action (batch mode)
 	- move default selection files in 'sdt/conf/default'
 	- move configuration file in 'sdt/conf' folder
-	- add 'history' action
+	- add 'history' subcommand
 	- move lfae_mode into sdt.conf
 	- gridftp support
 - Version 2.9 - 20141103
@@ -141,7 +141,7 @@
 	- load readonly tables in memory to speed up the discovery process
 	- add CMOR tables cache system
 	- add orphan transfer detection (without selection match)
-	- "stat" action rewriting
+	- "stat" subcommand rewriting
 	- add db_path option in configuration file
 - Version 2.6 - 20130418
 	- add "search-api-nocache" discovery engine
@@ -240,15 +240,15 @@
 - Version 1.5 - 20120118
 	- move models loop inside the feeder
 	- add CMOR tablename forcing in template
-	- add stat action
+	- add stat subcommand
 	- add syncmode check in start.sh
 	- move product out of local_image column
 - Version 1.4 - 20120114
 	- set myproxy-logon as default (change procedure in README to use "install.sh -a")
-	- add delete action
-	- add cancel action
-	- add retry action
-	- add info action
+	- add delete subcommand
+	- add cancel subcommand
+	- add retry subcommand
+	- add info subcommand
 	- merge output1 and output2 into output
 	- improve installation process
 	- use synchronous events to control the daemon
