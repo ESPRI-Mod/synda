@@ -71,6 +71,7 @@ def prepare():
     # configure
     task_exec(tc.disable_eventthread)
     task_exec(tc.set_pipeline_folder_path)
+    #task_exec(tc.set_ipsl_indexes)
 
     # reset
     task_exec(tc.reset_all)
@@ -238,6 +239,13 @@ scripts_pp='./resource/scripts_pp'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('action',nargs='?')
     args = parser.parse_args()
 
-    run()
+    if args.action is None:
+        run()
+    elif args.action=='reset':
+
+        prepare()
+
+        sys.stderr.write('Ok\n')
