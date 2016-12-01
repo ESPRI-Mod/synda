@@ -28,6 +28,11 @@ def configure():
     fabric_run("sudo sed -i '7s|password=foobar|password=%s|' /etc/synda/sdt/credentials.conf"%(esgf_password,)) # beware: line number specific
 
 @fabric.api.task
+def set_dkrz_indexes():
+    fabric_run("""sudo sed -i "s|^indexes=.*$|indexes=esgf-data.dkrz.de|" /etc/synda/sdt/sdt.conf""")
+    fabric_run("""sudo sed -i "s|^default_index=.*$|default_index=esgf-data.dkrz.de|" /etc/synda/sdt/sdt.conf""")
+
+@fabric.api.task
 def disable_postprocessing():
     fabric_run("sudo sed -i 's|^post_processing=true|post_processing=false|' /etc/synda/sdt/sdt.conf")
 
@@ -126,10 +131,6 @@ def stop_sdp():
 @fabric.api.task
 def stop_sdw():
     fabric_run("sudo synda_wo stop")
-
-@fabric.api.task
-def reset():
-    reset_sdt()
 
 @fabric.api.task
 def reset_all():

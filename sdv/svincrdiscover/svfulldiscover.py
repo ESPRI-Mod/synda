@@ -30,7 +30,7 @@ def run():
     task_exec(tc.execute_basic_command)
     task_exec(tc.check_version)
 
-    task_exec(tc.reset) 
+    task_exec(tc.reset_sdt) 
 
     task_exec(tc.retrieve_parameters)
 
@@ -81,6 +81,17 @@ second_discovery_timestamp_right_boundary='2012-03-25T01:00:00Z'
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('action',nargs='?')
     args = parser.parse_args()
 
-    run()
+    if args.action is None:
+        run()
+    elif args.action=='reset':
+
+        task_exec(tc.stop) 
+        task_exec(tc.reset_sdt) 
+        task_exec(tc.disable_download) 
+        task_exec(tc.do_not_print_domain_inconsistency) 
+        task_exec(tc.set_dkrz_indexes) 
+
+        sys.stderr.write('Ok\n')
