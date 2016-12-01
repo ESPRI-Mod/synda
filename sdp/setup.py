@@ -8,7 +8,7 @@ setup(name='sdp',
         scripts=[os.path.join('bin',f) for f in os.listdir('bin')], 
         data_files=[('conf',['conf/sdp.conf']),
                     ('conf',['conf/credentials.conf']),
-                    ('conf/pipeline',glob.glob(os.path.join('conf/pipeline', '*.py'))), # TODO: also recursively include sample folder (note: just removing '.py' is not enough)
+                    ('conf/pipeline',glob.glob(os.path.join('conf/pipeline', '*.py'))),
                     ('doc',['doc/LICENSE']),
                     ('data',''),
                     ('log',''),
