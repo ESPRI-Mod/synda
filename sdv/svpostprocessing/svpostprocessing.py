@@ -249,4 +249,8 @@ if __name__=='__main__':
 
         prepare()
 
+        task_exec(tc.enable_download)
+        task_exec(tc.enable_postprocessing)
+        task_exec(tc.enable_eventthread)
+
         sys.stderr.write('Ok\n')
