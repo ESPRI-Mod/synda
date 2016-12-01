@@ -159,7 +159,7 @@ def reset_data():
     fabric.state.output['running'] = True
 
     # confirm
-    answer=query_yes_no('%s folder will be removed. Do you want to continue ?'%data_folder, default="no")
+    answer=query_yes_no("""'%s' folder will be removed. Do you want to continue ?"""%data_folder, default="no")
     #answer=True
 
     if answer:
