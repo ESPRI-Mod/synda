@@ -1,7 +1,0 @@
-project=CMIP5
-institute=IPSL
-model=IPSL-CM5A-LR
-ensemble=r1i1p1
-experiment=historical, rcp45
-variable[atmos][day]=tas
-latest=true
