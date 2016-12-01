@@ -149,7 +149,7 @@ def check_sa_result(): # sa stands for "Stop All"
 
 @task
 def install_CMIP5():
-    fabric_run('sudo synda install -y -s ./resource/template/CMIP5.txt')
+    fabric_run('sudo synda install -y -s ./resource/template/JT_T3_CMIP5.txt')
 
 @task
 def check_install_result_CMIP5():
@@ -178,7 +178,7 @@ def check_IPSL_postprocessing_result_CMIP5():
 
 @task
 def install_CORDEX():
-    fabric_run('sudo synda install -y -s ./resource/template/CORDEX.txt')
+    fabric_run('sudo synda install -y -s ./resource/template/JT_T3_CORDEX.txt')
 
 @task
 def check_install_result_CORDEX():
@@ -207,7 +207,8 @@ def check_IPSL_postprocessing_result_CORDEX():
 
 @task
 def trigger_CDF():
-    fabric_run('sudo synda pexec cdf -s ./resource/template/CMIP5.txt')
+    fabric_run('sudo synda pexec cdf -s ./resource/template/JT_T3_CMIP5.txt')
+
 
 @task
 def check_transfer_events_result_CMIP5_CDF():
