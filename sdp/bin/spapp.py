@@ -30,7 +30,7 @@ def cleanup():
 
 def is_daemon():
 
-    # the parent of a daemon is always Init, so check for ppid 1 
+    # the parent of a daemon is always 'Init', so check for ppid 1 
     if os.getppid() == 1:
 
         # note that in some case, some non-daemon also have init as parent
