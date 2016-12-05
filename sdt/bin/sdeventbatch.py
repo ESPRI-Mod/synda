@@ -28,8 +28,8 @@ from sdexception import SDException
 from sdprogress import SDProgressDot
 
 def file_():
-    """This func mimic end of transfer event for all files and trigger corresponding event.
-    """
+    """This func perform a fake end of transfer event."""
+
     sdlog.info("SDEVENTB-002","Reset 'end of transfer' events")
 
     # check that only files with 'done' status exist
