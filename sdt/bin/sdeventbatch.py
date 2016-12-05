@@ -66,11 +66,7 @@ def file_():
         sdprogress.SDProgressDot.print_char(".")
 
 def variable():
-    """Artificially trigger event for all complete variable 
-    (usually, events are triggered after each transfer completion).
-
-    This func is used, for example, to trigger pipeline on already downloaded data.
-    """
+    """Trigger event for all complete variable."""
 
     li=sdvariable.get_complete_variables(project='CMIP5')
 
