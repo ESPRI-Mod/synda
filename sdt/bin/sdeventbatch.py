@@ -33,7 +33,7 @@ def file_():
     sdlog.info("SDEVENTB-002","Reset 'end of transfer' events")
 
     # check that only files with 'done' status exist
-    li=sdfilequery.get_download_status(args.project)
+    li=sdfilequery.get_download_status()
     if len(li)>1:
         raise SDException('SDEVENTB-001',"Incorrect files status (status must be 'done' for all files before running this func)")
 
