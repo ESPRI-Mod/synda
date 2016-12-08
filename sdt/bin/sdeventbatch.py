@@ -51,6 +51,7 @@ def file_():
     while len(files)>0:
         for f in files:
 
+            sdlog.info("SDEVENTB-003","trigger eot event on %s"%f.file_functional_id)
 
             # PAYLOAD
 
@@ -66,7 +67,7 @@ def file_():
             sdevent.file_complete_event(f)
 
 
-        conn.commit()                  # commit block
+        sddb.conn.commit()             # commit block
         files=dbpagination.get_files() # next block
 
         sdprogress.SDProgressDot.print_char(".")
