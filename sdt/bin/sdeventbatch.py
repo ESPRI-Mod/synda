@@ -26,8 +26,8 @@ import sdevent
 import sddbpagination
 import sdfilequery
 import sdconst
+import sdprogress
 from sdexception import SDException
-from sdprogress import SDProgressDot
 
 def file_():
     """This func perform a fake end of transfer event."""
