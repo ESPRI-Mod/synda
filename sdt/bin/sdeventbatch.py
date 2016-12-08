@@ -18,6 +18,7 @@ import sdtools
 import sdutils
 import sdvariable
 import sdfiledao
+import sddatasetdao
 import sddb
 import sdproduct
 import sdmodifyquery
@@ -56,6 +57,10 @@ def file_():
             # set status to done
             f.status=sdconst.TRANSFER_STATUS_DONE
             sdfiledao.update_file(f)
+
+            # retrieve the dataset
+            d=sddatasetdao.get_dataset(dataset_id=f.dataset_id)
+            f.dataset=d
 
             # trigger end of transfer file event for all files
             sdevent.file_complete_event(f)
