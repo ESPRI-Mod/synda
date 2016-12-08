@@ -24,6 +24,7 @@ import sdmodifyquery
 import sdevent
 import sddbpagination
 import sdfilequery
+import sdconst
 from sdexception import SDException
 from sdprogress import SDProgressDot
 
