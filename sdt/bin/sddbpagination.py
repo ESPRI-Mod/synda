@@ -72,7 +72,8 @@ class DBPagination():
         files=[]
         results=self.get_items()
         for rs in results:
-            files.append(sdsqlutils.get_object_from_resultset(rs,sdtypes.File))
+            f=sdsqlutils.get_object_from_resultset(rs,sdtypes.File)
+            files.append(f)
         return files
 
 # init.
