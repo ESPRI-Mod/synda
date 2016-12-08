@@ -55,7 +55,7 @@ def file_():
 
             # set status to done
             f.status=sdconst.TRANSFER_STATUS_DONE
-            sdfiledao.update_file(tr)
+            sdfiledao.update_file(f)
 
             # trigger end of transfer file event for all files
             sdevent.file_complete_event(f)
