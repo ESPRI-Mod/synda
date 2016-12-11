@@ -83,4 +83,7 @@ if __name__ == '__main__':
         print url
         print username
 
-    print get_service().test1(1,2)
+    try:
+        print get_service().test1(1,2)
+    except urllib2.URLError as e:
+        raise RemoteException("SDPPPROX-101","Network error occured (%s)"%str(e))
