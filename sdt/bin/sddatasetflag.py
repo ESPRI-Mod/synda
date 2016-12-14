@@ -11,6 +11,7 @@
 
 """Contains local dataset flags refresh routines."""
 
+import argparse
 import sdapp
 import sddb
 import sddao
@@ -343,3 +344,43 @@ def update_datasets__status_and_latest():
     sdlog.info("SYDDFLAG-630","modified datasets: %i"%datasets_modified_count)
 
     return datasets_modified_count
+
+def update_incomplete_datasets_status():
+    """
+    Set status flag for datasets with incomplete status.
+
+    When removing error and waiting transfers (e.g. with 'synda reset' func),
+    the dataset status become incorrect (i.e. it remains on 'empty' or
+    'in-progress', while all transfers are now 'done'). This func fix this
+    problem.
+
+    Note
+        This func doesn't handle the 'latest' flag
+
+    TODO
+        Also handle the 'latest' flag in this func
+    """
+    datasets_modified_count=0
+
+    incomplete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_EMPTY)+sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_IN_PROGRESS)
+
+    for d in incomplete_datasets:
+
+        # store dataset current state
+        l__status=d.status
+
+        # compute new 'status' flag
+        d.status=compute_dataset_status(d)
+        sddatasetdao.update_dataset(d)
+
+        # check if the dataset has changed
+        if l__status!=d.status:
+            datasets_modified_count+=1
+
+    sdlog.info("SYDDFLAG-180","modified datasets: %i"%datasets_modified_count)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
+    update_incomplete_datasets_status()
