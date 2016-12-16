@@ -197,8 +197,8 @@ def check_sdp_version():
     fabric_run('test %s = $( synda_pp -V 2>&1 )'%sdp_version)
 
 # init.
-sdt_version='3.6'
-sdp_version='1.2'
+sdt_version='3.7'
+sdp_version='1.3'
 pp_password='bar'
 esgf_password='foo'
 
