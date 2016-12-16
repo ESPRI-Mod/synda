@@ -567,15 +567,15 @@ def pexec(args):
 
                                 # hack
                                 if sddomainutils.is_one_var_per_ds(d['project']): # maybe move this test at TAG45J4K45JK line, and replace 'EVENT_CDF_VARIABLE_O' by a dataset level event (note however that the choice about passing 'EVENT_CDF_VARIABLE_O' event as variable or dataset is arbitrary, both work. But passing as variable is a bit strange as variable appears in both dataset_pattern and variable columns)
-                                    e_name=sdconst.EVENT_CDF_VARIABLE_O
+                                    e_names=[sdconst.EVENT_CDF_INT_VARIABLE_O, sdconst.EVENT_CDF_COR_VARIABLE_O]
 
                                     # this case is a bit awkward as we have 'variable' in both dataset_pattern and variable columns..
 
                                 else:
-                                    e_name=sdconst.EVENT_CDF_VARIABLE_N
+                                    e_names=[sdconst.EVENT_CDF_INT_VARIABLE_N, sdconst.EVENT_CDF_COR_VARIABLE_N]
 
-                                sdpporder.submit(e_name,d['project'],d['model'],d['local_path'],variable=v,commit=False)
-
+                                for e_name in e_names:
+                                    sdpporder.submit(e_name,d['project'],d['model'],d['local_path'],variable=v,commit=False)
 
                         # second, send cdf dataset order
                         if d['project'] in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
@@ -585,7 +585,10 @@ def pexec(args):
                         else:                        
 
                             order_dataset_count+=1
-                            sdpporder.submit(sdconst.EVENT_CDF_DATASET,d['project'],d['model'],d['local_path'],commit=False) 
+
+                            e_names=[sdconst.EVENT_CDF_INT_DATASET, sdconst.EVENT_CDF_COR_DATASET]
+                            for e_name in e_names:
+                                    sdpporder.submit(e_name,d['project'],d['model'],d['local_path'],commit=False)
 
         sddb.conn.commit()
 

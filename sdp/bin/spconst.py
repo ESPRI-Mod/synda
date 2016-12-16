@@ -20,10 +20,15 @@ EVENT_OUTPUT12_LATEST_DATASET_COMPLETE='latest_dataset_complete_output12'
 EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE='non_latest_dataset_complete_output12'
 EVENT_OUTPUT12_DATASET_LATEST='dataset_latest_output12' # triggered when dataset is promoted latest
 #
-EVENT_CDF_VARIABLE='cdf_variable'
-EVENT_CDF_DATASET='cdf_dataset'
-EVENT_CDF_VARIABLE_O='cdf_variable_o' # project with One variable per dataset
-EVENT_CDF_VARIABLE_N='cdf_variable_n' # project with N variable per dataset
+EVENT_CDF_INT_VARIABLE='cdf_int_variable' # not used
+EVENT_CDF_INT_DATASET='cdf_int_dataset'
+EVENT_CDF_INT_VARIABLE_O='cdf_int_variable_o' # project with One variable per dataset
+EVENT_CDF_INT_VARIABLE_N='cdf_int_variable_n' # project with N variable per dataset
+
+EVENT_CDF_COR_VARIABLE='cdf_cor_variable' # not used
+EVENT_CDF_COR_DATASET='cdf_cor_dataset'
+EVENT_CDF_COR_VARIABLE_O='cdf_cor_variable_o' # project with One variable per dataset
+EVENT_CDF_COR_VARIABLE_N='cdf_cor_variable_n' # project with N variable per dataset
 
 EVENT_STATUS_NEW='new'
 EVENT_STATUS_ANOMALY='anomaly'
