@@ -30,7 +30,7 @@ import sdprogress
 from sdexception import SDException
 
 def file_():
-    """This func perform a fake end of transfer event."""
+    """This func perform a fake 'end of transfer' event."""
 
     sdlog.info("SDEVENTB-002","Reset 'end of transfer' events")
 
@@ -42,7 +42,7 @@ def file_():
     # reset files status from done to waiting
     sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_DONE,sdconst.TRANSFER_STATUS_WAITING)
 
-    # reset dataset status to empty, and dataset latest flag to false
+    # reset dataset status to empty, and dataset 'latest' flag to false
     sdmodifyquery.wipeout_datasets_flags(status=sdconst.DATASET_STATUS_EMPTY)
 
     # mimic end of transfer
