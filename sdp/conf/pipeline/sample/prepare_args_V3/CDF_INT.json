@@ -1,0 +1,205 @@
+{
+  "spatial_interpolation": {
+    "S2200": {
+      "CMIP5": {
+        "input-dir": {
+          "root": ["esgf/process", "before", "project"],
+          "product": "merge"
+        },
+        "output-dir": {
+          "root": ["esgf/process", "before", "project"],
+          "product": "interpolated-output",
+          "grid_label": ["gr1", "after", "ensemble"]
+        }
+      },
+      "CORDEX": {
+        "tas": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmin": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmax": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "pr": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "sfcWind": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"]
+          },
+          "output-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          }
+        },
+        "rsds": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"]
+          },
+          "output-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          }
+        }
+      }
+    }
+  },
+"qc_qa": {
+    "S2300": {
+      "CMIP5": {
+        "input-dir": {
+          "root": ["esgf/process", "before", "project"],
+          "product": "interpolated-output",
+          "grid_label": ["gr1", "after", "ensemble"]
+        },
+          "output-dir": null
+      },
+      "CORDEX": {
+        "tas": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmin": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmax": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "pr": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "sfcWind": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": null
+        },
+        "rsds": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": null
+        }
+      }
+    }
+  },
+  "copy": {
+    "S2300": {
+      "CMIP5": {
+        "input-dir": {
+          "root": ["esgf/process", "before", "project"],
+          "product": "interpolated-output",
+          "grid_label": ["gr1", "after", "ensemble"]
+        },
+        "output-dir": {
+          "root": ["project", "before", "project"],
+          "product": "interpolated-output",
+          "grid_label": ["gr1", "after", "ensemble"]
+        }
+      },
+      "CORDEX": {
+        "tas": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmin": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmax": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "pr": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "sfcWind": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": {
+            "root": ["project", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          }
+        },
+        "rsds": {
+          "input-dir": {
+            "root": ["esgf/process", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": {
+            "root": ["project", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          }
+        }
+      }
+    }
+  },
+  "latest": {
+    "S2400": {
+      "CMIP5": {
+        "input-dir": {
+          "root": ["project", "before", "project"],
+          "product": "interpolated-output",
+          "grid_label": ["gr1", "after", "ensemble"]
+        },
+        "output-dir": null
+      },
+      "CORDEX": {
+        "tas": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmin": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "tasmax": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "pr": {
+          "input-dir": null,
+          "output-dir": null
+        },
+        "sfcWind": {
+          "input-dir": {
+            "root": ["project", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": null
+        },
+        "rsds": {
+          "input-dir": {
+            "root": ["project", "before", "project"],
+            "product": "interpolated-output",
+            "domain": "EUR-50"
+          },
+          "output-dir": null
+        }
+      }
+    }
+  }
+}
