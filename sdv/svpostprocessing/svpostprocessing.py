@@ -212,7 +212,7 @@ def trigger_CDF():
 
 @task
 def check_transfer_events_result_CMIP5_CDF():
-    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 12""")
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdt/sdt.db "select * from event where status='old'" | wc -l) -eq 18""")
 
 @task
 def check_ppprun_creation_result_CMIP5_CDF():
@@ -220,7 +220,7 @@ def check_ppprun_creation_result_CMIP5_CDF():
 
 @task
 def check_CDF_postprocessing_result_CMIP5():
-    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='done'" | wc -l) -eq 12""")
+    fabric_run("""test $(sqlite3  /var/lib/synda/sdp/sdp.db "select * from ppprun where status='done'" | wc -l) -eq 18""")
 
 @task
 def fake():
