@@ -549,6 +549,11 @@ install_sp_application ()
     cd -
 
     # download then store 'worker' script in 'bin' folder
+    #
+    # WARNING: SDW is always the HEAD version (ie each new run of the
+    # "install.sh" script may install a different version of SDW (if someone commited
+    # in github in the meantime, of course))
+    #
     wget -O $sp_root/bin/synda_wo https://raw.githubusercontent.com/Prodiguer/synda/master/sdw/bin/worker
     chmod +x $sp_root/bin/synda_wo
 

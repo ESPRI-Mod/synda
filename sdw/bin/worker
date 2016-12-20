@@ -406,8 +406,6 @@ if __name__ == '__main__':
 
     check_user_group()
 
-    print 'Log files path set to %s'%args.logdir
-
     if args.test_write_access is not None:
         if os.path.isfile(args.test_write_access):
             sys.stderr.write('Cannot perform write test: file already exists (%s)\n'%args.test_write_access)
@@ -422,6 +420,8 @@ if __name__ == '__main__':
             os.unlink(args.test_write_access)
         sys.stderr.write('Write test successfully completed (%s)\n'%args.test_write_access)
         sys.exit(0)
+
+    print 'Log files path set to %s'%args.logdir
 
     url='https://%s:%s/jsonrpc'%(args.host,args.port)
 
