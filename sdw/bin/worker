@@ -396,6 +396,7 @@ if __name__ == '__main__':
     parser.add_argument('-1', '--one_item_only', action = 'store_true', default = False, help = 'Apply process on only one database entry')
     parser.add_argument('-v', '--verbose', action = 'store_true')
     parser.add_argument('-V', '--version', action = 'version', version = "%(prog)s ({0})".format(VERSION), help = 'Program version')
+    parser.add_argument('-w', '--test_write_access')
     parser.add_argument('-x', '--uat_mode', action = 'store_true',help = 'Special mode used for UAT (User Acceptance Testing).')
     args=parser.parse_args()
 
@@ -406,6 +407,21 @@ if __name__ == '__main__':
     check_user_group()
 
     print 'Log files path set to %s'%args.logdir
+
+    if args.test_write_access is not None:
+        if os.path.isfile(args.test_write_access):
+            sys.stderr.write('Cannot perform write test: file already exists (%s)\n'%args.test_write_access)
+            sys.exit(1)
+        if user and group:
+            uid=pwd.getpwnam(user).pw_uid
+            gid=grp.getgrnam(group).gr_gid
+            os.setgid(gid)
+            os.setuid(uid)
+        with open(args.test_write_access,'w') as fh:
+            fh.write('write test\n')
+            os.unlink(args.test_write_access)
+        sys.stderr.write('Write test successfully completed (%s)\n'%args.test_write_access)
+        sys.exit(0)
 
     url='https://%s:%s/jsonrpc'%(args.host,args.port)
 
