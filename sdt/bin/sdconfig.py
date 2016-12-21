@@ -60,8 +60,9 @@ def is_special_user():
     """
     Notes
         - special-user can be
-            - root (when using system package installation)
-            - <user> who performed synda installation from source (can be root or a normal user)
+            - root (system package installation)
+            - normal user with ST_HOME set, if 'system_pkg_as_normal_user' is set to true (system package installation)
+            - root or normal user, with ST_HOME set (synda source installation)
     """
 
     if system_pkg_install:
@@ -70,7 +71,15 @@ def is_special_user():
         if sdtools.is_root():
             return True
         else:
-            return False
+            if system_pkg_as_normal_user:
+
+                if sdtools.is_file_read_access_OK(credential_file):
+                    return True
+                else:
+                    return False
+
+            else:
+                return False
 
     else:
         # in source based installation, the special-user can be any user
