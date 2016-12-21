@@ -75,7 +75,9 @@ def process_event(e,conn):
     # retrieve pipeline from event
 
     if e.name not in pipelinedep.event_pipeline_mapping:
-        raise SPException("SPEVENTT-004","Unsupported event (%s)"%str(e))
+        splog.info('SPEVENTT-004',"Ignore event as not declared in spbindings file (%s)"%str(e))
+        e.status=spconst.EVENT_STATUS_OLD # mark events as done
+        return
 
     pipeline_name,start_status=pipelinedep.event_pipeline_mapping[e.name]
     

@@ -38,6 +38,6 @@ class Event():
         self.status=spconst.EVENT_STATUS_NEW
         self.__dict__.update( kwargs )
     def __str__(self):
-        return self.name
+        return '%s,%s'%(self.name,self.project)
 
 # init.
