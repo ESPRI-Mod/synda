@@ -88,8 +88,9 @@ def is_special_user():
 # Init module.
 
 system_pkg_install=False
+system_pkg_as_normal_user=False # experimental
 
-if not system_pkg_install:
+if (not system_pkg_install) or system_pkg_as_normal_user:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
