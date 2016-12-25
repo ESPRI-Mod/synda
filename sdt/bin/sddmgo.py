@@ -223,7 +223,7 @@ def activate_endpoint(api, ep=None):
 
     code, reason, reqs = api.endpoint_activation_requirements(ep, type='delegate_proxy')
     public_key = reqs.get_requirement_value("delegate_proxy", "public_key")
-    proxy = x509_proxy.create_proxy_from_file(certificate_file, public_key, lifetime_hours=72)
+    proxy = x509_proxy.create_proxy_from_file(sdconfig.esgf_x509_proxy, public_key, lifetime_hours=72)
     reqs.set_requirement_value("delegate_proxy", "proxy_chain", proxy)
     try:
         code, reason, result = api.endpoint_activate(ep, reqs)
@@ -319,10 +319,6 @@ class LocalEndpointDict(EndpointDict):
 #
 # module init.
 #
-
-# Determine a location of an ESGF X.509 credential
-certdirprefix=sdconfig.tmp_folder if sdconfig.system_pkg_install else os.environ.get('HOME')
-certificate_file='%s/.esg/credentials.pem' % certdirprefix
 
 # sdt/conf/credentails.conf
 globus_username = sdconfig.config.get('globustransfer', 'username')
