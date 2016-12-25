@@ -16,6 +16,7 @@ import argparse
 import sdconst
 import sdtools
 import sdcfloader
+import sdconfigutils
 import sdcfbuilder
 from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
@@ -103,27 +104,20 @@ if (not system_pkg_install) or system_pkg_as_normal_user:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
-    root_folder=os.environ['ST_HOME']
-
-    bin_folder="%s/bin"%root_folder
-    tmp_folder="%s/tmp"%root_folder
-    log_folder="%s/log"%root_folder
-    conf_folder="%s/conf"%root_folder
-
-    default_selection_folder="%s/selection"%root_folder
-    default_db_folder="%s/db"%root_folder
-    default_data_folder="%s/data"%root_folder
-    default_sandbox_folder="%s/sandbox"%root_folder
+    paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
 else:
-    bin_folder='/usr/share/python/synda/sdt/bin'
-    tmp_folder='/var/tmp/synda/sdt'
-    log_folder='/var/log/synda/sdt'
-    conf_folder='/etc/synda/sdt'
+    paths=sdconfigutils.PackageSystemPaths()
 
-    default_selection_folder='/etc/synda/sdt/selection'
-    default_db_folder='/var/lib/synda/sdt'
-    default_data_folder='/srv/synda/sdt/data'
-    default_sandbox_folder='/srv/synda/sdt/sandbox'
+# aliases
+bin_folder=paths.bin_folder
+tmp_folder=paths.tmp_folder
+log_folder=paths.log_folder
+conf_folder=paths.conf_folder
+#
+default_selection_folder=paths.default_selection_folder
+default_db_folder=paths.default_db_folder
+default_data_folder=paths.default_data_folder
+default_sandbox_folder=paths.default_sandbox_folder
 
 default_folder_default_path="%s/default"%conf_folder
 
