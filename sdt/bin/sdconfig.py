@@ -61,17 +61,29 @@ def is_openid_set():
 
 system_pkg_install=False
 
-# set system folders
+# set system folders (aka binaries-folder aka install-folder)
 if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
-    paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
+    install_paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
 else:
-    paths=sdconfigutils.PackageSystemPaths()
+    install_paths=sdconfigutils.PackageSystemPaths()
 
 # set user folders
 user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
+
+
+if sdtools.is_file_rw_access_OK(sdconfig.credential_file)
+    paths=install_paths
+else:
+    # if we are here, it means we have NO access to the machine-wide credential file.
+    # Also it means we are not in daemon mode (daemon mode is currently only
+    # available for admin-user. see TAG43J2K253J43 for more infos.)
+
+    user_paths.create_tree()
+    paths=user_paths
+
 
 # aliases
 bin_folder=paths.bin_folder
@@ -130,20 +142,6 @@ lowmem=True
 fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
-
-if not is_special_user():
-    # if we are here, it means we have no access to the machine-wide credential file.
-
-    # also if we are here, we are not in daemon mode (daemon mode is
-    # currently only available for special-user. see TAG43J2K253J43 for more
-    # infos.)
-
-    # create USER credential file sample
-    if not os.path.exists(user_credential_file):
-        if not os.path.exists(user_conf_dir):
-            os.makedirs(user_conf_dir)
-        sdcfbuilder.create_credential_file_sample(user_credential_file)
-        os.chmod(user_credential_file,0600)
 
 config=sdcfloader.load(configuration_file,credential_file)
 

@@ -12,6 +12,8 @@
 """This module contains sdconfig utils."""
 
 import os
+import sdcfbuilder
+import sdtools
 
 class Paths(object):
     def add_common_paths(self):
@@ -33,6 +35,9 @@ class PackageSystemPaths(Paths):
 
         self.add_common_paths()
 
+    def create_tree():
+        pass # nothing to do as done when installing from package
+
 class SourceInstallPaths(Paths):
     def __init__(self,root_folder):
         self.bin_folder="%s/bin"%root_folder
@@ -47,5 +52,41 @@ class SourceInstallPaths(Paths):
 
         self.add_common_paths()
 
+    def create_tree():
+        pass # nothing to do as done when installing from source
+
 class UserPaths(SourceInstallPaths):
-    pass
+    """This class contains 'user instance' paths.
+
+    Notes
+        -
+            'user instance' means a SDT environment specific to each user (no
+            centralization, each user has his own selection files, his own local
+            database, his own X.509 certificate, his own data files,
+            etc.. Only binaries are shared)
+        -
+            Currently, there is only one daemon per machine, but this may change in the
+            future (i.e. maybe remove sysv/systemd service and allow one daemon per user).
+            TAG43J2K253J43
+    """
+
+    def create_tree():
+
+        # create folder
+        li=[self.bin_folder,
+            self.tmp_folder,
+            self.log_folder,
+            self.conf_folder,
+
+            self.default_selection_folder,
+            self.default_db_folder,
+            self.default_data_folder,
+            self.default_sandbox_folder]
+
+        sdtools.mkdir(li)
+
+
+        # create USER credential sample file
+        if not os.path.exists(self.credential_file):
+            sdcfbuilder.create_credential_file_sample(self.credential_file)
+            os.chmod(self.credential_file,0600)
