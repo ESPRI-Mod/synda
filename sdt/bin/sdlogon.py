@@ -27,12 +27,8 @@ import sdexception
 def print_certificate():
     import os, sdutils
 
-    certdirprefix=sdconfig.tmp_folder if sdconfig.system_pkg_install else os.environ.get('HOME')
-
-    certificate_file='%s/.esg/credentials.pem'%certdirprefix
-
-    if os.path.isfile(certificate_file):
-        (sdget_status,stdout,stderr)=sdutils.get_status_output(['/usr/bin/openssl','x509','-in',certificate_file,'-text'],shell=False)
+    if os.path.isfile(sdconfig.esgf_x509_proxy):
+        (sdget_status,stdout,stderr)=sdutils.get_status_output(['/usr/bin/openssl','x509','-in',sdconfig.esgf_x509_proxy,'-text'],shell=False)
         print stdout
     else:
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
