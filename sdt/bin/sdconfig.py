@@ -57,44 +57,6 @@ def is_openid_set():
     else:
         return True
 
-def is_special_user():
-    """
-    Notes
-        - special-user can be
-            - root (system package installation)
-            - normal user with ST_HOME set, if 'system_pkg_as_normal_user' is set to true (system package installation)
-            - root or normal user, with ST_HOME set (synda source installation)
-    """
-
-    if system_pkg_install:
-        # in system package based installation, root is always the special-user
-
-        if sdtools.is_root():
-            return True
-        else:
-            if system_pkg_as_normal_user:
-
-                if sdtools.is_file_read_access_OK(credential_file):
-                    return True
-                else:
-                    return False
-
-            else:
-                return False
-
-    else:
-        # in source based installation, the special-user can be any user
-
-        if sdtools.is_file_read_access_OK(credential_file):
-
-            # note that root is always considered 'special-user'
-            # because of the side-effect that he have access to all files.
-            # maybe use 'file owner' here instead to fix this.
-
-            return True
-        else:
-            return False
-
 # Init module.
 
 system_pkg_install=False
