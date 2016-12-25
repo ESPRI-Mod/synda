@@ -82,7 +82,9 @@ parseoutput=0 # not used for now (but needed to keep the same public interface a
 verbosity=0
 timeout=360 # not used for now (but needed to keep the same public interface as sdget.sh)
 certdirprefix=
-while getopts 'c:dhp:t:v' OPTION
+tmpdir=/tmp # not used for now (but needed to keep the same public interface as sdget.sh)
+logdir=/tmp # not used for now (but needed to keep the same public interface as sdget.sh)
+while getopts 'c:dhl:p:t:T:v' OPTION
 do
   case $OPTION in
   c)    certdirprefix=$OPTARG
@@ -92,9 +94,13 @@ do
   h)    usage
         exit 0
         ;;
+  l)    logdir=$OPTARG
+        ;;
   p)    parseoutput=$OPTARG
         ;;
   t)    timeout=$OPTARG
+        ;;
+  T)    tmpdir=$OPTARG
         ;;
   v)    (( verbosity=verbosity+1 ))
         ;;

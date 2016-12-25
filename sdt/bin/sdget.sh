@@ -183,7 +183,9 @@ always_log_wget_output=0
 parse_output=1
 wget_timeout=360
 certdirprefix=
-while getopts 'ac:dhp:st:v' OPTION
+tmpdir=/tmp
+logdir=/tmp
+while getopts 'ac:dhl:p:st:T:v' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1
@@ -195,11 +197,15 @@ do
   h)    usage
         exit 0
         ;;
+  l)    logdir=$OPTARG
+        ;;
   p)    parse_output=$OPTARG
         ;;
   s)    show_progress_dot=1
         ;;
   t)    wget_timeout=$OPTARG
+        ;;
+  T)    tmpdir=$OPTARG
         ;;
   v)    (( verbosity=verbosity+1 ))
         ;;
@@ -242,22 +248,6 @@ system_pkg_install="0"
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
-
-# set log & tmp dir.
-if [ "$system_pkg_install" = "0" ]; then
-
-    # check root folder
-    if [ -z "$ST_HOME" ]; then
-        err "Root directory not found ($ST_HOME)"
-        exit 4
-    fi
-
-    tmpdir="${ST_HOME}/tmp"
-    logdir="${ST_HOME}/log"
-else
-    tmpdir=/var/tmp/synda/sdt
-    logdir=/var/log/synda/sdt
-fi
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 debug_file=$logdir/debug.log
