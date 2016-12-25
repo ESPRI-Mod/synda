@@ -38,7 +38,7 @@ def print_certificate():
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
 @retry(wait_fixed=50000,retry_on_exception=lambda e: isinstance(e, sdexception.SDException)) # 50000 => 50 seconds
-def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificate=False,quiet=True):
+def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificate=False):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
@@ -49,10 +49,10 @@ def renew_certificate_with_retry_highfreq(openid,password,force_renew_certificat
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate,quiet=quiet)
+    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate)
 
 @retry(wait_exponential_multiplier=1800000, wait_exponential_max=86400000,retry_on_exception=lambda e: isinstance(e, sdexception.SDException)) # 1800000 => 30mn, 86400000 => 24 hours
-def renew_certificate_with_retry(openid,password,force_renew_certificate=False,quiet=True):
+def renew_certificate_with_retry(openid,password,force_renew_certificate=False):
     """
     Retry mecanism when ESGF IDP cannot be reached.
 
@@ -66,9 +66,9 @@ def renew_certificate_with_retry(openid,password,force_renew_certificate=False,q
         - when the daemon is stopped, this retry is cancelled using SIGTERM
           (seems not working for now as it only stops on 'kill -9' TBC)
     """
-    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate,quiet=quiet)
+    renew_certificate(openid,password,force_renew_certificate=force_renew_certificate)
 
-def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
+def renew_certificate(openid,password,force_renew_certificate=False,force_renew_ca_certificates=False):
     """Renew ESGF certificate using sdmyproxy module."""
 
     # extract info from openid
@@ -90,6 +90,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
-    renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True,quiet=False,debug=True)
+    renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
 
     print_stderr("Certificate successfully renewed")
