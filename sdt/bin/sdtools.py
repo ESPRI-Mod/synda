@@ -27,6 +27,17 @@ def is_file_read_access_OK(path):
     except:
         return False
 
+def is_file_write_access_OK(path):
+    try:
+        with open(path,'w') as fh:
+            pass
+        return True
+    except:
+        return False
+
+def is_file_rw_access_OK(path):
+    return (is_file_read_access_OK(path) and is_file_write_access_OK(path))
+
 def trace(tracefile,scriptname,status,stdout,stderr):
     with open(tracefile,'a') as fh:
         fh.write("'%s' script returned an error\n"%scriptname)
