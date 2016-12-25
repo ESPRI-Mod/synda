@@ -70,4 +70,5 @@ synda intro | more
 * $HOME/sdt/db
 * $HOME/sdt/log
 * $HOME/sdt/tmp
-* $HOME/.esg/certificates
+* $HOME/sdt/tmp/.esg
+* $HOME/sdt/tmp/.esg/certificates

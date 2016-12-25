@@ -1,3 +1,5 @@
+- Version 3.7 -
+	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
 - Version 3.6 - 20161204
 	- use search-api json format instead of xml.
 	- add end-of-transfer events replay mode (trigger all EOT events in batch mode).

@@ -140,64 +140,10 @@ stacktrace_log_file="%s/stacktrace.log"%log_folder
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-# set security_dir
-if sdtools.is_daemon():
+# set ESGF security_dir
+security_dir="%s/.esg"%tmp_folder
 
-    # better keep tmp_folder for this case
-    # (if HOME is used here, it can be root or daemon
-    # unprivileged user which increase complexity)
-
-    security_dir="%s/.esg"%tmp_folder
-else:
-
-    #if system_pkg_install:
-    if is_special_user():
-
-        # we may use HOME in this case too,
-        # but when doing that, this error occurs (on sl67 with rpm pkg):
-        #
-        # Starting synda daemon (sdt): Traceback (most recent call last):
-        #   File "/usr/share/python/synda/sdt/bin/sddaemon.py", line 39, in <module>
-        #     import sdconfig
-        #   File "/usr/share/python/synda/sdt/bin/sdconfig.py", line 170, in <module>
-        #     security_dir="%s/.esg"%os.environ['HOME']
-        #   File "/usr/share/python/synda/sdt/lib64/python2.6/UserDict.py", line 22, in __getitem__
-        #     raise KeyError(key)
-        # KeyError: 'HOME'
-
-
-        security_dir="%s/.esg"%tmp_folder
-    else:
-
-        # OLD
-        #security_dir="%s/.esg"%os.environ['HOME']
-
-        # TAGJ4K53J45
-        #
-        # 'OLD' has been disabled, because error below occurs when running 'service' command as a non-special user (vagrant user on sl67 with rpm pkg)
-        #
-        # [vagrant@localhost ~]$ service synda status
-        # Traceback (most recent call last):
-        #   File "/usr/share/python/synda/sdt/bin/sddaemon.py", line 36, in <module>
-        #     import sdconfig
-        #   File "/usr/share/python/synda/sdt/bin/sdconfig.py", line 162, in <module>
-        #     security_dir="%s/.esg"%os.environ['HOME']
-        #   File "/usr/share/python/synda/sdt/lib64/python2.6/UserDict.py", line 22, in __getitem__
-        #     raise KeyError(key)
-        # KeyError: 'HOME'
-
-        # NEW
-        if 'HOME' in os.environ:
-            security_dir="%s/.esg"%os.environ['HOME']
-        else:
-            # we shouldn't be here
-            # (the only reason is TAGJ4K53J45)
-
-            # this is just to prevent TAGJ4K53J45 ugly error
-            # (i.e. the folder will not be used to store certificate as we are here only via 'service synda' command)
-            security_dir="%s/.esg"%tmp_folder
-
-# set x509 paths
+# Determine location of ESGF X.509 credential
 esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
