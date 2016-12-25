@@ -61,6 +61,7 @@ def is_openid_set():
 
 system_pkg_install=False
 
+# set system folders
 if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
@@ -144,7 +145,7 @@ if not is_special_user():
         sdcfbuilder.create_credential_file_sample(user_credential_file)
         os.chmod(user_credential_file,0600)
 
-config=sdcfloader.load(configuration_file,credential_file,user_configuration_file,user_credential_file,special_user=is_special_user())
+config=sdcfloader.load(configuration_file,credential_file)
 
 # aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')

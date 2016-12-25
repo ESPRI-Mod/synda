@@ -20,37 +20,14 @@ import argparse
 import ConfigParser
 import sdtools
 
-def load(configuration_file,credential_file,user_configuration_file,user_credential_file,special_user=True):
+def load(configuration_file,credential_file):
 
     config = ConfigParser.ConfigParser(default_options)
 
-    # load system-wide options
-    load_param(config,configuration_file)
-    load_credential(config,credential_file,special_user)
-
-    # per-user options override global options
-    if not sdtools.is_daemon(): # daemon only use global options. Currently, there is only one daemon per machine, but this may change in the future (i.e. maybe remove sysv/systemd service and allow one daemon per user). TAG43J2K253J43
-        load_user_param(config,user_configuration_file)
-
-        if not special_user: # for now, with 'special user', 'machine-wide' credential cannot be overrided by 'per-user' credential. This may change in the future.
-            load_user_credential(config,user_credential_file)
+    config.read(configuration_file)
+    config.read(credential_file)
 
     return config
-
-def load_param(config,f):
-    config.read(f)
-
-def load_credential(config,f,special_user):
-    if special_user:
-        config.read(f)
-
-def load_user_param(config,f):
-    if os.path.exists(f):
-        config.read(f)
-
-def load_user_credential(config,f):
-    if os.path.exists(f):
-        config.read(f)
 
 # init.
 
