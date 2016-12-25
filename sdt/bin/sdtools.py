@@ -19,6 +19,13 @@ import re
 import glob
 import argparse
 
+def mkdir(paths):
+    for p in paths:
+        try:
+            os.makedirs(p)
+        except OSError as e:
+            pass
+
 def is_file_read_access_OK(path):
     try:
         with open(path) as fh:
