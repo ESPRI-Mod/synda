@@ -108,6 +108,9 @@ if (not system_pkg_install) or system_pkg_as_normal_user:
 else:
     paths=sdconfigutils.PackageSystemPaths()
 
+# set user folders
+user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
+
 # aliases
 bin_folder=paths.bin_folder
 tmp_folder=paths.tmp_folder
@@ -118,18 +121,11 @@ default_selection_folder=paths.default_selection_folder
 default_db_folder=paths.default_db_folder
 default_data_folder=paths.default_data_folder
 default_sandbox_folder=paths.default_sandbox_folder
+#
+default_folder_default_path=paths.default_folder_default_path
+configuration_file=paths.configuration_file
+credential_file=paths.credential_file
 
-default_folder_default_path="%s/default"%conf_folder
-
-
-configuration_file="%s/sdt.conf"%conf_folder
-credential_file="%s/credentials.conf"%conf_folder
-
-user_root_dir=os.path.expanduser("~/.sdt")
-user_conf_dir=os.path.join(user_root_dir,'conf')
-
-user_configuration_file=os.path.join(user_conf_dir,"sdt.conf")
-user_credential_file=os.path.join(user_conf_dir,"credentials.conf")
 
 stacktrace_log_file="%s/stacktrace.log"%log_folder
 
