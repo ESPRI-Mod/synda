@@ -243,8 +243,6 @@ if [ $debug -eq 1 ]; then
     always_log_wget_output=1
 fi
 
-system_pkg_install="0"
-
 USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
