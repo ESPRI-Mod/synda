@@ -223,9 +223,6 @@ nearest_schedule='post' # pre | post
 
 unknown_value_behaviour='error' # error | warning
 
-# this is to switch between 'sdmyproxy.py' and 'sdlogon.sh'
-use_myproxy_module=True
-
 mono_host_retry=False
 proxymt_progress_stat=False
 poddlefix=True
@@ -267,7 +264,6 @@ bin_folder="%s/bin"%root_folder
 data_download_script_http="%s/sdget.sh"%bin_folder
 data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
 
-logon_script="%s/sdlogon.sh"%bin_folder
 cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 
 default_selection_file="%s/default.txt"%default_folder

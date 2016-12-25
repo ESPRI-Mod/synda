@@ -77,10 +77,7 @@ def renew_certificate(openid,password,force_renew_certificate=False,quiet=True,d
         sdlog.error("SYDLOGON-800","Exception occured while processing openid (%s)"%str(e))
         raise
 
-    if sdconfig.use_myproxy_module:
-        renew_certificate_new(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet=quiet,debug=debug,force_renew_ca_certificates=force_renew_ca_certificates)
-    else:
-        renew_certificate_old(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet=quiet,debug=debug,force_renew_ca_certificates=force_renew_ca_certificates)
+    renew_certificate_new(hostname,port,username,password,force_renew_certificate=force_renew_certificate,quiet=quiet,debug=debug,force_renew_ca_certificates=force_renew_ca_certificates)
 
 def renew_certificate_new(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False): # TODO: remove quiet and debug argument when removing sdlogon.sh (i.e. only here to keep the same func signature)
     """Renew ESGF certificate using sdmyproxy module."""
@@ -90,45 +87,6 @@ def renew_certificate_new(hostname,port,username,password,force_renew_certificat
     except Exception,e:
         sdlog.error("SYDLOGON-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
         raise
-
-def renew_certificate_old(hostname,port,username,password,force_renew_certificate=False,quiet=True,debug=False,force_renew_ca_certificates=False):
-    """Renew ESGF certificate using 'sdlogon.sh' script."""
-
-    # TODO: move this log into the script so to print only when expired
-    #sdlog.info("SYDLOGON-002","Renew certificate..")
-
-    # note: password is not used in this func: this is normal (it is retrieved by the shell script)
-
-    argv=[sdconfig.logon_script,'-h',hostname,'-p',port,'-s',sdconfig.security_dir,'-u',username]
-
-    if not quiet:
-        argv.append('-v')
-
-    if force_renew_certificate:
-        argv.append('-r')
-
-    if force_renew_ca_certificates:
-        argv.append('-x')
-
-    (status,stdout,stderr)=sdutils.get_status_output(argv)
-    if status!=0:
-
-        # print script stdxxx output (useful to debug certificate problem)
-        if quiet:
-            with open(sdconfig.stacktrace_log_file,'a') as fh:
-                fh.write("'%s' script returned an error\n"%os.path.basename(sdconfig.logon_script))
-                fh.write('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
-        else:
-            print_stderr("'%s' script returned an error\n"%os.path.basename(sdconfig.logon_script))
-            print_stderr('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
-
-        sdlog.error("SYDLOGON-040","Exception occured while retrieving certificate (status=%i)"%status)
-
-        raise sdexception.CertificateRenewalException("SYDLOGON-001","Cannot retrieve certificate from ESGF (hostname=%s,port=%s)"%(hostname,port))
-    else:
-        if debug:
-            print_stderr("'%s' script stdxxx (debug mode)\n"%os.path.basename(sdconfig.logon_script))
-            print_stderr('status=%s\nstdout=%s\nstderr=%s\n'%(status,stdout.rstrip(os.linesep),stderr.rstrip(os.linesep)))
 
 # init.
 
