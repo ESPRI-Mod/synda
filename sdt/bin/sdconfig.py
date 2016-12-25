@@ -97,7 +97,7 @@ def is_special_user():
 # Init module.
 
 system_pkg_install=False
-system_pkg_as_normal_user=False # experimental
+system_pkg_as_normal_user=False # Experimental. This is to store files in a normal-user homedir when system_pkg_install is True.
 
 if (not system_pkg_install) or system_pkg_as_normal_user:
     if 'ST_HOME' not in os.environ:
