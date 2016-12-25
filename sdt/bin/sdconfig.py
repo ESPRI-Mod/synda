@@ -241,7 +241,7 @@ if not is_special_user():
     # currently only available for special-user. see TAG43J2K253J43 for more
     # infos.)
 
-    # create user credential file sample
+    # create USER credential file sample
     if not os.path.exists(user_credential_file):
         if not os.path.exists(user_conf_dir):
             os.makedirs(user_conf_dir)
