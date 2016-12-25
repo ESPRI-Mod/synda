@@ -104,6 +104,8 @@ if (not system_pkg_install) or system_pkg_as_normal_user:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
     root_folder=os.environ['ST_HOME']
+
+    bin_folder="%s/bin"%root_folder
     tmp_folder="%s/tmp"%root_folder
     log_folder="%s/log"%root_folder
     conf_folder="%s/conf"%root_folder
@@ -113,7 +115,7 @@ if (not system_pkg_install) or system_pkg_as_normal_user:
     default_data_folder="%s/data"%root_folder
     default_sandbox_folder="%s/sandbox"%root_folder
 else:
-    root_folder='/usr/share/python/synda/sdt'
+    bin_folder='/usr/share/python/synda/sdt/bin'
     tmp_folder='/var/tmp/synda/sdt'
     log_folder='/var/log/synda/sdt'
     conf_folder='/etc/synda/sdt'
@@ -147,7 +149,7 @@ security_dir="%s/.esg"%tmp_folder
 esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
-check_path(root_folder)
+check_path(bin_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
@@ -205,7 +207,6 @@ selection_folder=get_path('selection_path',default_selection_folder)
 db_folder=get_path('db_path',default_db_folder)
 data_folder=get_path('data_path',default_data_folder)
 sandbox_folder=get_path('sandbox_path',default_sandbox_folder)
-bin_folder="%s/bin"%root_folder
 
 data_download_script_http="%s/sdget.sh"%bin_folder
 data_download_script_gridftp="%s/sdgetg.sh"%bin_folder
