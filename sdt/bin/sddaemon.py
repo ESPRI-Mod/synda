@@ -152,7 +152,12 @@ def unprivileged_user_mode():
     gid=grp.getgrnam(group).gr_gid
 
     # be sure file permission works for unprivileged user
-    sdfilepermission.run(uid,gid)
+    #
+    # shouldn't be needed anymore as this is now handled externaly
+    # (after installation, all synda files are group-writable and belongs to
+    # the synda group).
+    #
+    #sdfilepermission.run(uid,gid)
 
     # set_daemon process identity
     context.uid = uid
