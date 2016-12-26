@@ -41,5 +41,5 @@ if not tableAlreadyPopulated(tablename="version"):
     insertVersion()
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-	parser.add_argument('-p', '--procedure',required=True,default=None)
+    parser.add_argument('-p', '--procedure',required=True,default=None)
     args = parser.parse_args()
