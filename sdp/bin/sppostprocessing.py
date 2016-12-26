@@ -95,7 +95,11 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
         pipeline=sppipeline.get_pipeline(ppprun.pipeline)
         pipeline.set_current_state(ppprun.state)
 
-        assert pipeline.get_current_state().transition is not None
+        assert pipeline.get_current_state().transition is not None # transition of a waiting job is never None
+
+        # be sure that transition from ppprun table matches computed transition from pipeline definition
+        # (should always be the case, except if someone perform incorrect manual modifications in the database)
+        assert pipeline.get_current_state().transition==ppprun.transition
 
         generic_args=Bunch(pipeline=ppprun.pipeline,
                            project=ppprun.project,
