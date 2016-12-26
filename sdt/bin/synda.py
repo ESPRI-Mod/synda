@@ -29,6 +29,7 @@ import sdi18n
 import sdsubparser
 import sdtools
 import sdconfig
+import sdpermission
 import sdexception
 
 def set_stream_type(args):
@@ -87,17 +88,15 @@ if __name__ == '__main__':
     #
     # There is no way to check mutex as 'dest' argparse feature is used. Maybe
     # use add_mutually_exclusive_group(), but currently, doing so makes the
-    # help look ugly. So better leave it as is until argparse handle this case
+    # help looks ugly. So better leave it as is until argparse handle this case
     # smoothly.
 
-
     # -- permission check -- #
-    if sdconfig.system_pkg_install:
-        if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
-            if not sdtools.is_root():
-                sdtools.print_stderr("You need to be root to perform this command.")
-                sys.exit(1)
 
+    if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
+        if not sdpermission.is_admin():
+            sdtools.print_stderr(sdi18n.m0027)
+            sys.exit(1)
 
     # -- subcommand routing -- #
 
