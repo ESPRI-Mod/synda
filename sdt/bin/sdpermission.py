@@ -27,5 +27,5 @@ def is_admin():
     """
     return sdtools.is_file_rw_access_OK(sdconfig.credential_file) # ie user must be admin if he can read passwd file (either root, in synda group or the install user)
 
-if is_regular_user():
+def is_regular_user():
     return not is_admin()
