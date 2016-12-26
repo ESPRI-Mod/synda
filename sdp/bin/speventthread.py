@@ -72,15 +72,25 @@ def consume_events():
 
 def process_event(e,conn):
 
-    # retrieve pipeline from event
+
+    # ignore event based on project
+
+    if e.project not in spconst.AUTHORIZED_PROJECT:
+        splog.info('SPEVENTT-024',"Event ignored (%s)"%str(e))
+        e.status=spconst.EVENT_STATUS_OLD # mark events as done
+        return
+
+    # ignore unknown event
 
     if e.name not in pipelinedep.event_pipeline_mapping:
         splog.info('SPEVENTT-004',"Ignore event as not declared in spbindings file (%s)"%str(e))
         e.status=spconst.EVENT_STATUS_OLD # mark events as done
         return
 
+
+    # retrieve the pipeline which is binded to the event
+
     pipeline_name,start_status=pipelinedep.event_pipeline_mapping[e.name]
-    
 
 
     # manage start dependency
