@@ -11,6 +11,7 @@
 
 """This script contains database I/O routines."""
 
+import os
 import argparse
 import sqlite3
 import atexit
@@ -74,6 +75,19 @@ def disconnect():
         conn.close()
 
     conn=None
+
+    # hack
+    #
+    # force sqlite db file to be group writable
+    #
+    # It should be done with umask when creating the db, but seems not working due to a bug.
+    #
+    # more info
+    #   http://www.mail-archive.com/sqlite-users@mailinglists.sqlite.org/msg59080.html
+    #   https://code.djangoproject.com/ticket/19292
+    #
+    if os.path.exists(sdconfig.db_file):
+        os.chmod(sdconfig.db_file,0664)
 
 def is_connected():
     if (conn==None):
