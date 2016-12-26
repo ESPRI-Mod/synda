@@ -12,11 +12,13 @@
 """This module contains paths and configuration parameters."""
 
 import os
+import sys
 import argparse
 import sdconst
 import sdtools
 import sdcfloader
 import sdconfigutils
+import sdi18n
 import sdcfbuilder
 from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
@@ -61,6 +63,7 @@ def is_openid_set():
 
 os.umask(0002)
 
+read_only_mode_for_regular_user=False
 per_user_environment=False # Experimental. Non-working as multi-daemon support not implemented yet.
 system_pkg_install=False
 
@@ -88,11 +91,16 @@ else:
         user_paths.create_tree()
         paths=user_paths
     else:
-        # being here means we use machine-wide synda environment as non-admin synda user,
-        # and so can only perform RO task (eg synda search)
+        if read_only_mode_for_regular_user:
+            # being here means we use machine-wide synda environment as non-admin synda user,
+            # and so can only perform RO task (eg synda search)
 
-        paths=install_paths
+            paths=install_paths
+        else:
+            # being here means synda application can only be used by root or admin (admin means being in the synda group)
 
+            sdtools.print_stderr(sdi18n.m0027)
+            sys.exit(1)
 
 # aliases
 bin_folder=paths.bin_folder
