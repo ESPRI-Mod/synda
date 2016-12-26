@@ -25,12 +25,14 @@ def autoremove(args):
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
 
 def certificate(args):
-    status=0
     import sdconfig,sdlogon
     if args.action is None:
         sdlogon.print_certificate()
+        return 0
     else:
         if args.action=="renew":
+
+            # retrieve openid and passwd
             if args.openid and args.password:
                 # use credential from CLI
 
@@ -56,10 +58,10 @@ def certificate(args):
                 return 1
         elif args.action=="print":
             sdlogon.print_certificate()
+            return 0
         else:
             print_stderr('Not implemented yet.')   
-
-    return status
+            return 1
 
 def check(args):
     import sddump,sdcheckdatasetversion,sdfields
