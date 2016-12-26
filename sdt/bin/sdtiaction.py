@@ -44,7 +44,6 @@ def certificate(args):
                     pwd=sdconfig.password
                 else:
                     print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.credential_file)   
-
                     status=1
 
             # retrieve certificate
