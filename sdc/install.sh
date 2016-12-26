@@ -229,33 +229,8 @@ update_transfer_environment_pre_install ()
         err "INSTALL-ERR408" "Incorrect new version"
     fi
 
-    if [ "$current_version" = "2.9" ]; then
-        if [ ! -d $st_root/conf ]; then # this is to prevent running this code again in case of reinstalling 2.9 over 2.9
-
-            # remove obsolete logfile
-            rm -f $st_root/log/get_data.log
-            rm -f $st_root/log/get_data__debug.log
-
-            # move config file
-            mkdir $st_root/conf
-            mv $st_root/sdt.conf $st_root/conf
-
-            # remove sample default files
-            rm -f $st_root/selection/sample/default*
-
-            # move default files
-            mkdir $st_root/conf/default
-            find $st_root/selection -name "default*" -exec mv {} $st_root/conf/default \;
-        fi
-    fi
-
-    # tmp hack just in case (remove asap)
-    #
-    # (this is because early 3.0 beta release did not had this code yet (i.e. obsolete log files removed))
-    #
-    # remove obsolete logfile
-    rm -f $st_root/log/get_data.log
-    rm -f $st_root/log/get_data__debug.log
+    # payload goes here
+    # ..
 }
 
 update_transfer_environment_post_install ()
