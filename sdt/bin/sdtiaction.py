@@ -50,7 +50,7 @@ def certificate(args):
 
             # retrieve certificate
             try:
-                sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
+                sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,force_renew_ca_certificates=args.force_renew_ca_certificates)
                 print_stderr('Certificate successfully renewed.')
                 return 0
             except Exception,e:
