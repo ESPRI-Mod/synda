@@ -70,7 +70,7 @@ class UserPaths(SourceInstallPaths):
             TAG43J2K253J43
     """
 
-    def create_tree():
+    def create_tree(self):
 
         # create folder
         li=[self.bin_folder,
