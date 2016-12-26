@@ -59,6 +59,8 @@ def is_openid_set():
 
 # Init module.
 
+os.umask(0002)
+
 per_user_environment=False # Experimental. Non-working as multi-daemon support not implemented yet.
 system_pkg_install=False
 

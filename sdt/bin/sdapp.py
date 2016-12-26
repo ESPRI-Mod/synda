@@ -49,6 +49,8 @@ def who_am_i():
 
 # Init.
 
+os.umask(0002)
+
 name='transfer'
 version='3.7'
 sdapputils.set_exception_handler()
