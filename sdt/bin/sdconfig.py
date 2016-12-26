@@ -77,7 +77,7 @@ else:
 user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
 
 
-if sdtools.is_file_rw_access_OK(install_paths.credential_file)
+if sdtools.is_file_rw_access_OK(install_paths.credential_file):
     paths=install_paths
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
