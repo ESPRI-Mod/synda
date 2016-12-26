@@ -59,6 +59,7 @@ def is_openid_set():
 
 # Init module.
 
+per_user_environment=False # Experimental. Non-working as multi-daemon support not implemented yet.
 system_pkg_install=False
 
 # set system folders (aka binaries-folder aka install-folder)
@@ -81,8 +82,14 @@ else:
     # Also it means we are not in daemon mode (daemon mode is currently only
     # available for admin-user. see TAG43J2K253J43 for more infos.)
 
-    user_paths.create_tree()
-    paths=user_paths
+    if per_user_environment:
+        user_paths.create_tree()
+        paths=user_paths
+    else:
+        # being here means we use machine-wide synda environment as non-admin synda user,
+        # and so can only perform RO task (eg synda search)
+
+        paths=install_paths
 
 
 # aliases
