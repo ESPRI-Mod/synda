@@ -212,3 +212,5 @@ m0024="""Set the total number of returned results. By default, returns the first
 m0025="""sudo service synda start"""
 
 m0026="""synda daemon start"""
+
+m0027="You must either be root, or part of the synda admin group to perform this command."
