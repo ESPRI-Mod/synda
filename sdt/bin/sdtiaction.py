@@ -44,16 +44,16 @@ def certificate(args):
                     pwd=sdconfig.password
                 else:
                     print_stderr('Error: OpenID not set in configuration file (%s).'%sdconfig.credential_file)   
-                    status=1
+                    return 1
 
             # retrieve certificate
             try:
                 sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,quiet=False,debug=args.debug,force_renew_ca_certificates=args.force_renew_ca_certificates)
                 print_stderr('Certificate successfully renewed.')
-                status=0
+                return 0
             except Exception,e:
                 print_stderr('Error occurs while renewing certificate (%s)'%str(e))
-                status=1
+                return 1
         elif args.action=="print":
             sdlogon.print_certificate()
         else:
