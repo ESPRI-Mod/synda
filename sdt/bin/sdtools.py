@@ -36,7 +36,7 @@ def is_file_read_access_OK(path):
 
 def is_file_write_access_OK(path):
     try:
-        with open(path,'w') as fh:
+        with open(path,'a') as fh:
             pass
         return True
     except:
