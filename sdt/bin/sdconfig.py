@@ -63,8 +63,7 @@ def is_openid_set():
 
 os.umask(0002)
 
-read_only_mode_for_regular_user=False
-per_user_environment=False # Experimental. Non-working as multi-daemon support not implemented yet.
+per_user_environment=True # Non fully working as multi-daemon support not implemented yet. But works for basic command (eg 'synda get')
 system_pkg_install=False
 
 # set system folders (aka binaries-folder aka install-folder)
@@ -84,23 +83,20 @@ if sdtools.is_file_rw_access_OK(install_paths.credential_file):
     paths=install_paths
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
-    # Also it means we are not in daemon mode (daemon mode is currently only
-    # available for admin-user. see TAG43J2K253J43 for more infos.)
 
     if per_user_environment:
+        # Being here means we use machine-wide synda environment as non-admin synda user,
+        # and so can only perform RO task (eg synda search, synda get, etc..)
+        # Also it means we are not in daemon mode (daemon mode is currently only
+        # available for admin-user. see TAG43J2K253J43 for more infos.)
+
         user_paths.create_tree()
         paths=user_paths
     else:
-        if read_only_mode_for_regular_user:
-            # being here means we use machine-wide synda environment as non-admin synda user,
-            # and so can only perform RO task (eg synda search)
+        # being here means synda application can only be used by root or admin (admin means being in the synda group)
 
-            paths=install_paths
-        else:
-            # being here means synda application can only be used by root or admin (admin means being in the synda group)
-
-            sdtools.print_stderr(sdi18n.m0027)
-            sys.exit(1)
+        sdtools.print_stderr(sdi18n.m0027)
+        sys.exit(1)
 
 # aliases
 bin_folder=paths.bin_folder
