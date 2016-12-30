@@ -261,3 +261,10 @@ def ls(path,filter_='*'):
             files.append(file_)
 
     return files
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--file',required=True)
+    args = parser.parse_args()
+
+    print is_file_rw_access_OK(args.file)
