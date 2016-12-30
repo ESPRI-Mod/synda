@@ -87,7 +87,13 @@ def disconnect():
     #   https://code.djangoproject.com/ticket/19292
     #
     if os.path.exists(sdconfig.db_file):
-        os.chmod(sdconfig.db_file,0664)
+        if not sdtools.is_group_writable(sdconfig.db_file):
+            if sdtools.set_file_permission(sdconfig.db_file):
+                sdlog.info("SDDATABA-003","File permissions have been modified ('%s')"%sdconfig.db_file)
+            else:
+                # we come here when user have not enough priviledge to set file permission
+
+                sdlog.info("SDDATABA-004","Missing privilege to modify file permissions ('%s')"%sdconfig.db_file)
 
 def is_connected():
     if (conn==None):
