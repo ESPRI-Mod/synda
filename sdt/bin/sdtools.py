@@ -15,6 +15,7 @@
 
 import sys
 import os
+import stat
 import re
 import glob
 import argparse
@@ -65,6 +66,10 @@ def set_file_permission(path,mode=0664):
             return False
     except Exception as e:
         return False
+
+def is_group_writable(filepath):
+    st = os.stat(filepath)
+    return bool(st.st_mode & stat.S_IWGRP)
     
 def is_file_rw_access_OK(path):
     return (is_file_read_access_OK(path) and is_file_write_access_OK(path))
