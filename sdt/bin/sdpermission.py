@@ -25,7 +25,7 @@ def is_admin():
           have access to all files. Maybe use 'file owner' here instead to fix
           this.
     """
-    return sdtools.is_file_rw_access_OK(sdconfig.credential_file) # ie user must be admin if he can read passwd file (either root, in synda group or the install user)
+    return sdtools.is_file_read_access_OK(sdconfig.credential_file) # ie user must be admin if he can read passwd file (either root, in synda group or the install user)
 
 def is_regular_user():
     return not is_admin()
