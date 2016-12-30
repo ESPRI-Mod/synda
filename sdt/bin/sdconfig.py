@@ -63,7 +63,6 @@ def is_openid_set():
 
 os.umask(0002)
 
-per_user_environment=True # Non fully working as multi-daemon support not implemented yet. But works for basic command (eg 'synda get')
 system_pkg_install=False
 
 # set system folders (aka binaries-folder aka install-folder)
@@ -84,11 +83,14 @@ if sdtools.is_file_rw_access_OK(install_paths.credential_file):
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
 
-    if per_user_environment:
+    if os.environ.get('SDT_USER_ENV','0')=='1':
         # Being here means we use machine-wide synda environment as non-admin synda user,
         # and so can only perform RO task (eg synda search, synda get, etc..)
         # Also it means we are not in daemon mode (daemon mode is currently only
         # available for admin-user. see TAG43J2K253J43 for more infos.)
+
+        # Non fully working as multi-daemon support not implemented yet. But works for
+        # basic command (eg 'synda get')
 
         user_paths.create_tree()
         paths=user_paths
