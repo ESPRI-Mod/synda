@@ -118,6 +118,6 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--name',required=True,choices=[sdconst.LOGGER_FEEDER,sdconst.LOGGER_CONSUMER])
     args = parser.parse_args()
 
-    set_logger(args.name)
+    set_default_logger(args.name)
 
     info('SYNDALOG-001','test1')
