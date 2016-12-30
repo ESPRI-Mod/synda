@@ -42,6 +42,30 @@ def is_file_write_access_OK(path):
     except:
         return False
 
+def set_file_permission(path,mode=0664):
+    """
+    Returns:
+        True if file permissions have been changed.
+
+        False if file permissions have not been changed or if user doesn't have
+              enough privilege to set file permission.
+    """
+    assert os.path.isfile(path)
+
+    try:
+        bef=os.stat(path).st_mode
+        os.chmod(path,mode)
+        aft=os.stat(path).st_mode
+
+        if bef!=aft:
+            # file permission have been changed
+
+            return True
+        else:
+            return False
+    except Exception as e:
+        return False
+    
 def is_file_rw_access_OK(path):
     return (is_file_read_access_OK(path) and is_file_write_access_OK(path))
 
