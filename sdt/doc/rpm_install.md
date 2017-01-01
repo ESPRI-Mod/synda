@@ -72,6 +72,8 @@ sudo service synda restart
 
 ## Usage
 
+To execute synda command, you must either be root, or part of the synda group.
+
 A quickstart guide is available by running 'intro' subcommand
 
 ```
