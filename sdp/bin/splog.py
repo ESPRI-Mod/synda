@@ -27,8 +27,8 @@ LEVELS = {'debug': logging.DEBUG,
           'critical': logging.CRITICAL}
 
 def die(code,msg):
-	critical(code,msg)
-	sys.exit(1)
+    critical(code,msg)
+    sys.exit(1)
 
 def debug(code,message,stdout=False,stderr=False,logfile=True):
     log(code,message,logging.DEBUG,stdout,stderr,logfile)
