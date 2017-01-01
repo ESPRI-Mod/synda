@@ -57,6 +57,8 @@ def who_am_i():
 
 # Init.
 
+os.umask(0002)
+
 name='postprocessing'
 version='1.3'
 spapputils.set_exception_handler()

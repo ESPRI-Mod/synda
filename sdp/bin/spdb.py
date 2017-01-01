@@ -11,10 +11,13 @@
 
 """This script contains database I/O routines."""
 
+import os
 import sqlite3
 import spapp
 import spconfig
 import spdbobj
+import splog
+import sptools
 
 def connect():
 
@@ -46,6 +49,25 @@ def connect():
 def disconnect(conn):
     if is_connected(conn):
         conn.close()
+
+    # hack
+    #
+    # force sqlite db file to be group writable
+    #
+    # It should be done with umask when creating the db, but seems not working due to a bug.
+    #
+    # more info
+    #   http://www.mail-archive.com/sqlite-users@mailinglists.sqlite.org/msg59080.html
+    #   https://code.djangoproject.com/ticket/19292
+    #
+    if os.path.exists(spconfig.db_file):
+        if not sptools.is_group_writable(spconfig.db_file):
+            if sptools.set_file_permission(spconfig.db_file):
+                splog.info("SPDATABA-003","File permissions have been modified ('%s')"%spconfig.db_file)
+            else:
+                # we come here when user have not enough priviledge to set file permission
+
+                splog.info("SPDATABA-004","Missing privilege to modify file permissions ('%s')"%spconfig.db_file)
 
 def is_connected(conn):
     if (conn==None):

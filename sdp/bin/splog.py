@@ -82,6 +82,8 @@ def set_logger(name):
 
 # module init.
 
+os.umask(0002)
+
 create_logger(spconst.LOGGER,spconst.LOGFILE)
 
 logger=logging.getLogger(spconst.LOGGER)

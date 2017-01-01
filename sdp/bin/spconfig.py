@@ -60,6 +60,8 @@ def check_path(path):
 
 # init module.
 
+os.umask(0002)
+
 system_pkg_install=False
 
 if not system_pkg_install:

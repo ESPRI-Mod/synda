@@ -139,6 +139,8 @@ def unprivileged_user_mode():
 
 # init.
 
+os.umask(0002)
+
 # quit=0 #  this line is for a 'while loop' based daemon
 pidfile=daemon.pidfile.PIDLockFile(spconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=spconfig.tmp_folder, pidfile=pidfile,)
