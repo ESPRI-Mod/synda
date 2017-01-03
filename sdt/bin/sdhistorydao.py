@@ -23,7 +23,7 @@ def add_history_line(action,selection_filename=None,insertion_group_id=None,conn
     crea_date=sdtime.now() if crea_date is None else crea_date
 
     c = conn.cursor()
-    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id, selection_file_checksum) values (?,?,?,?)",(action, selection_filename, crea_date, insertion_group_id))
+    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id, selection_file_checksum) values (?,?,?,?,?)",(action, selection_filename, crea_date, insertion_group_id,selection_file_checksum))
     c.close()
     conn.commit()
 
