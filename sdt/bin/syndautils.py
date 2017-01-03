@@ -67,7 +67,7 @@ def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=Tru
 
 def file_full_search(args,stream=None):
     """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
-    import sdsearch,sdlog,sdhistory,sdstream,sdtime
+    import sdsearch,sdlog,sdhistory,sdstream,sdtime,sdselectionfileutils
 
     if stream is None:
         stream=get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
@@ -94,12 +94,12 @@ def file_full_search(args,stream=None):
 
             sdlog.info('SYNUTILS-002','Starting file discovery (incremental mode enabled)')
 
-            selection_filename=os.path.basename(args.selection_file)
+            selection_filename=os.path.basename(selection_file)
 
             if sdhistory.previous_run_exists(selection_filename,'add'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
-                if not sdhistory.file_changed_since_last_run(selection_filename,sdconst.ACTION_ADD):
+                if not sdhistory.file_changed_since_last_run(selection_file,sdconst.ACTION_ADD):
                     sdlog.info('SYNUTILS-006',"Selection file hasn't changed since last run")
 
                     previous_run=sdhistory.get_previous_run(selection_filename,'add')
