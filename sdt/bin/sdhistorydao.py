@@ -18,7 +18,7 @@ import sdtime
 
 _HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id,selection_file_checksum"
 
-def add_history_line(action,selection_filename=None,insertion_group_id=None,conn=sddb.conn,crea_date=None,selection_file_checksum=None):
+def add_history_line(action,selection_filename=None,insertion_group_id=None,crea_date=None,selection_file_checksum=None,conn=sddb.conn):
 
     crea_date=sdtime.now() if crea_date is None else crea_date
 
