@@ -13,5 +13,8 @@ setuptools==19.7
 requests
 beautifulsoup4
 texttable
+
+# latest pillow version breaks test
 pillow==3.4.2
+
 reportlab
