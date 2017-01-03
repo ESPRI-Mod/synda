@@ -60,6 +60,7 @@ def build(buffer,load_default=None):
 
     # merge some outer attributes with inner attributes (else they are not returned by merge_facets() method)
     process_parameter("selection_filename=%s"%selection.filename,selection)
+    process_parameter("selection_file=%s"%selection.path,selection)
 
     # load default (file containing default parameters for all projects)
     default_selection=load_default_file(sdconfig.default_selection_file,load_default)

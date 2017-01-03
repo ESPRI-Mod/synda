@@ -24,7 +24,7 @@ import sdapp
 import sdlog
 import sddb
 import sdsimplefilter
-import sdhistorydao
+import sdhistory
 import sdfiledao
 import sddatasetdao
 import sdutils
@@ -50,6 +50,8 @@ def run(metadata,timestamp_right_boundary=None):
 
     f=metadata.get_one_file()
     selection_filename=sdpostpipelineutils.get_attached_parameter__global([f],'selection_filename') # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+    selection_file=sdpostpipelineutils.get_attached_parameter__global([f],'selection_file') # note that if no files are found at all for this selection (no matter the status), then 'selection_file' will be blank
+    
 
     metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
 
@@ -83,7 +85,7 @@ def run(metadata,timestamp_right_boundary=None):
 
         histo_crea_date=sdtime.search_api_datetime_format_to_sqlite_datetime_format(timestamp_right_boundary) if timestamp_right_boundary is not None else None
 
-        sdhistorydao.add_history_line(sdconst.ACTION_ADD,selection_filename,insertion_group_id,crea_date=histo_crea_date)
+        sdhistory.add_history_line(action=sdconst.ACTION_ADD,selection_file=selection_file,insertion_group_id=insertion_group_id,crea_date=histo_crea_date)
 
     sdlog.info("SDENQUEU-001","%i new file(s) added (total size=%i,selection=%s)"%(count,total_size,selection_filename))
 
