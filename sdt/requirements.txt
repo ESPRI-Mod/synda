@@ -13,4 +13,5 @@ setuptools==19.7
 requests
 beautifulsoup4
 texttable
+pillow==3.4.2
 reportlab
