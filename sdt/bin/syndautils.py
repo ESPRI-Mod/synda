@@ -94,6 +94,8 @@ def file_full_search(args,stream=None):
 
             sdlog.info('SYNUTILS-002','Starting file discovery (incremental mode enabled)')
 
+            selection_file=sdselectionfileutils.find_selection_file(args.selection_file)
+
             selection_filename=os.path.basename(selection_file)
 
             if sdhistory.previous_run_exists(selection_filename,'add'):
