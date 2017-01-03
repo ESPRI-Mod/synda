@@ -76,7 +76,7 @@ def file_full_search(args,stream=None):
 
 
 
-    # incremental mode management (experimental)
+    # incremental mode management
 
     if args.subcommand in ('install','stat'): # prevent incremental mode for 'remove' subcommand
 
@@ -99,33 +99,33 @@ def file_full_search(args,stream=None):
             if sdhistory.previous_run_exists(selection_filename,'add'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
-                previous_run=sdhistory.get_previous_run(selection_filename,'add')
-                dt=previous_run['crea_date']
+                    previous_run=sdhistory.get_previous_run(selection_filename,'add')
+                    dt=previous_run['crea_date']
 
 
-                # to prevent UTC vs localtime time issue
-                # (history.crea_date is in localtime while search-api timestamp is in UTC time)
-                # we systematically substract 72 hours to the left boundary
-                #
-                dt=sdtime.substract_hour(dt,72)
+                    # to prevent UTC vs localtime time issue
+                    # (history.crea_date is in localtime while search-api timestamp is in UTC time)
+                    # we systematically substract 72 hours to the left boundary
+                    #
+                    dt=sdtime.substract_hour(dt,72)
 
 
-                # convert datetime format
-                search_api_datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
+                    # convert datetime format
+                    search_api_datetime=sdtime.sqlite_datetime_format_to_search_api_datetime_format(dt)
 
 
-                # add incremental mode filters
-                #
-                # sample
-                #     from='2015-10-19T22:00:00Z'
-                #
-                # note
-                #     'from' and 'to' filters refer to 'timestamp' attribute
-                #
-                # more info
-                #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
-                #
-                sdstream.set_scalar(stream,'from',search_api_datetime)
+                    # add incremental mode filters
+                    #
+                    # sample
+                    #     from='2015-10-19T22:00:00Z'
+                    #
+                    # note
+                    #     'from' and 'to' filters refer to 'timestamp' attribute
+                    #
+                    # more info
+                    #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
+                    #
+                    sdstream.set_scalar(stream,'from',search_api_datetime)
 
             else:
                 sdlog.info('SYNUTILS-008','No previous run found')
