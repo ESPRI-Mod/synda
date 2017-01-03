@@ -99,6 +99,9 @@ def file_full_search(args,stream=None):
             if sdhistory.previous_run_exists(selection_filename,'add'):
                 sdlog.info('SYNUTILS-004','Previous run exists')
 
+                if not sdhistory.file_changed_since_last_run(selection_filename,sdconst.ACTION_ADD):
+                    sdlog.info('SYNUTILS-006',"Selection file hasn't changed since last run")
+
                     previous_run=sdhistory.get_previous_run(selection_filename,'add')
                     dt=previous_run['crea_date']
 
@@ -126,6 +129,9 @@ def file_full_search(args,stream=None):
                     #     https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
                     #
                     sdstream.set_scalar(stream,'from',search_api_datetime)
+
+                else:
+                    sdlog.info('SYNUTILS-007',"Selection file has changed since last run")
 
             else:
                 sdlog.info('SYNUTILS-008','No previous run found')
