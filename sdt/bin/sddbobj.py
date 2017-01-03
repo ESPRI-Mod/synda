@@ -36,6 +36,11 @@ def create_tables(conn):
             - timestamp column contains is the ESGF timestamp attribute (aka "last update")
         - 'generic_cache' table
             - 'realm' column is a group of keys/values (e.g. rtt, geo, etc..)
+        - 'history' table
+            - 'selection_file' column is not used (it was initially added in
+              case 'selection_filename' column would not be sufficient for
+              incremental mode. It may be removed by 2018, once we are sure
+              we don't need it).
         - other tables
             - a dataset is a set of one or more variables
             - 'file_without_dataset' table contains orphan files (dataset doesn't exist for those files)
