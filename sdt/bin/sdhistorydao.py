@@ -16,7 +16,7 @@ import sddb
 import sdsqlutils
 import sdtime
 
-_HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id"
+_HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id,selection_file_checksum"
 
 def add_history_line(action,selection_filename=None,insertion_group_id=None,conn=sddb.conn,crea_date=None):
 
