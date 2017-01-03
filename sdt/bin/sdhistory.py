@@ -15,7 +15,9 @@ Note
     Local repository changelog is stored in 'history' table.
 """
 
+import os
 import sdapp
+import sdutils
 import sdhistorydao
 
 def previous_run_exists(selection_filename,action):
@@ -29,3 +31,15 @@ def previous_run_exists(selection_filename,action):
 def get_previous_run(selection_filename,action):
     di=sdhistorydao.get_latest_history_line(selection_filename=selection_filename,action=action)
     return di
+
+def file_changed_since_last_run(selection_file,action):
+
+    # retrieve current checksum
+    current_checksum=sdutils.compute_checksum(selection_file)
+
+    # retrieve previous run checksum
+    selection_filename=os.path.basename(selection_file)
+    previous_run=get_previous_run(selection_filename,action)
+    previous_checksum=previous_run['selection_file_checksum']
+
+    return (previous_checksum==current_checksum)
