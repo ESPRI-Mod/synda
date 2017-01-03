@@ -43,3 +43,19 @@ def file_changed_since_last_run(selection_file,action):
     previous_checksum=previous_run['selection_file_checksum']
 
     return (previous_checksum==current_checksum)
+
+def add_history_line(action=None,selection_file=None,insertion_group_id=None,crea_date=None):
+
+    # check
+    assert action is not None
+    assert selection_file is not None
+
+    # compute checksum
+    if selection_file==sdconst.SELECTION_FROM_CMDLINE:
+        cs=None
+    else:
+        cs=sdutils.compute_checksum(selection_file)
+
+    # main
+    selection_filename=os.path.basename(selection_file)
+    sdhistorydao.add_history_line(action,selection_filename=selection_filename,insertion_group_id=insertion_group_id,crea_date=crea_date,selection_file_checksum=cs)
