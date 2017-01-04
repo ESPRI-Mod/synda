@@ -234,7 +234,10 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     #
     # Note: the same problem may occur for other search-api parameter
     #
-    del params['version']
+    try:
+        del params['version']
+    except:
+        pass
 
     # Third pass to fetch file attributes which can also be used as search criterias (e.g. title). TAG543534563
     #
