@@ -44,7 +44,9 @@ def param_values(key):
 
 def extract_item(identifier,key):
     """Extract item from functional identifier."""
-    for param_value in param_values(key):
+    li=param_values(key)
+    for param_value in li:
+        assert param_value is not None
         if match(param_value,identifier):
             return param_value
 
@@ -52,6 +54,8 @@ def extract_item(identifier,key):
 
 def match(param_value,identifier):
     delimiter='.' # TAG54543
+
+    assert param_value is not None
 
     # prepare value
     value_=delimiter+param_value+delimiter # tricks to prevent nested matches (e.g. when searching for 'HadGEM2-AO' model, 'HadGEM2-A' model is returned instead..)
