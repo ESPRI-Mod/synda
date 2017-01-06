@@ -161,7 +161,7 @@ Example:
 
 Notes:
 
-    * To enable this parameter, 'local_path_format' parameter must be set to 'custom'
-    * Each variable included in the 'local_path_drs_template' must be present
-      as a standalone attribute in the file metadata. If it is missing, you can
-      use a constant value instead (e.g. use 'output' instead of '%(product)s').
+* To enable this parameter, 'local_path_format' parameter must be set to 'custom'
+* Each variable included in the 'local_path_drs_template' must be present
+as a standalone attribute in the file metadata. If it is missing, you can
+use a constant value instead (e.g. use 'output' instead of '%(product)s').
