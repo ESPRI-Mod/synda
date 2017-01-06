@@ -41,11 +41,11 @@ def build_dataset_local_path(f):
                     val=f[key]
                     if isinstance(val,list):
                         if len(val)==0:
-                            raise SDException('SDLOCALP-018',"Key used in 'local_path_drs_template' but value missing in file's attributes (%s,%s)"%(f['dataset_functional_id'],val))
+                            raise SDException('SDLOCALP-018',"'%s' key used in 'local_path_drs_template' but value missing in file's attributes (%s,%s)"%(key,f['dataset_functional_id'],val))
                         elif len(val)>1:
                             raise SDException('SDLOCALP-016',"Only scalar value can be used in 'local_path_drs_template' (%s,%s)"%(f['dataset_functional_id'],val))
                 else:
-                    raise SDException('SDLOCALP-020',"Key used in 'local_path_drs_template' but value missing in file's attributes (%s)"%(f['dataset_functional_id'],))
+                    raise SDException('SDLOCALP-020',"'%s' key used in 'local_path_drs_template' but value missing in file's attributes (%s)"%(key,f['dataset_functional_id'],))
 
             # hack
             #
