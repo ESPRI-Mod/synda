@@ -160,6 +160,7 @@ Example:
     local_path_drs_template=%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
 
 Notes:
+
     * To enable this parameter, 'local_path_format' parameter must be set to 'custom'
     * Each variable included in the 'local_path_drs_template' must be present
       as a standalone attribute in the file metadata. If it is missing, you can
