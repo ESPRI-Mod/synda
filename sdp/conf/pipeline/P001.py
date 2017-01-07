@@ -21,6 +21,6 @@ def get_pipeline():
 
 name='P001'
 
-tasks=['remove_duplicate','time_axis_normalization','remove_tmp_files']
+tasks=['task1','task2','task3']
 
 ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
