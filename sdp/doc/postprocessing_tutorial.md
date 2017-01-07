@@ -60,8 +60,18 @@ Edit this file so it looks like
 
 FIXME
 
+## Start SDT service
+
+FIXME
+
+## Start SDP service
+
+FIXME
+
+## Start SDW service
+
+FIXME
+
 ## Download files
 
 Now the environment is ready, we can download some files.
-
-
