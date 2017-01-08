@@ -21,6 +21,6 @@ def get_pipeline():
 
 name='P001'
 
-tasks=['task1','task2','task3']
+tasks=['foo','bar','foobar']
 
 ppp=sppostprocessingutils.build_light_pipeline(name,tasks)

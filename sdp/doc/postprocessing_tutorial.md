@@ -76,7 +76,7 @@ We first create a directory to store the scripts.
 
     mkdir /tmp/synda_pp_scripts
 
-We now create the three scripts corresponding to three pipeline tasks
+We then create the three scripts corresponding to three pipeline tasks
 that have been defined.
 
     cd /tmp/synda_pp_scripts
@@ -85,6 +85,8 @@ that have been defined.
     cp foobar.sh bar.sh
 
 ## Start SDT service
+
+This is the files transfer service.
 
 To start the service, run command below
 
