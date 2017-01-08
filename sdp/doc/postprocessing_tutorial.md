@@ -73,20 +73,28 @@ FIXME
 
 ## Start SDT service
 
-synda daemon start
+To start the service, run command below
+
+    $ synda daemon start
 
 ## Start SDP service
 
-This is the post-processing server side daemon.
+This is the server side post-processing daemon.
 
-$ synda_pp start
+To start the service, run command below
+
+    $ synda_pp daemon start
 
 ## Start SDW service
 
-This is the post-processing client side daemon.
+This is the client side post-processing daemon.
 
-$ synda_wo start
+To start the service, run command below
+
+    $ synda_wo start
 
 ## Download files
 
 Now the environment is ready, we can download some files.
+
+    $ synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
