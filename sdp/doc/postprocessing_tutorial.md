@@ -97,7 +97,7 @@ This is the files transfer service.
 
 To start the service, run command below
 
-    $ synda daemon start
+    synda daemon start
 
 ## Start SDP service
 
@@ -105,7 +105,7 @@ This is the server side post-processing daemon.
 
 To start the service, run command below
 
-    $ synda_pp daemon start
+    synda_pp daemon start
 
 ## Start SDW service
 
@@ -113,17 +113,17 @@ This is the client side post-processing daemon (aka 'worker').
 
 To start the service, run command below
 
-    $ synda_wo start
+    synda_wo start
 
 ## Test communication between Synda modules
 
 Test communication between SDW and SDP
 
-    $ synda_wo -t -v
+    synda_wo -t -v
 
 Test communication between SDT and SDP
 
-    $ $ST_HOME/lib/sd/sdppproxy.py -v
+    $ST_HOME/lib/sd/sdppproxy.py -v
 
 It tests failed, check if credentials are correctly set in files below then
 restart all daemons.
@@ -136,4 +136,4 @@ restart all daemons.
 
 Now the environment is ready, we can download some files.
 
-    $ synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+    synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
