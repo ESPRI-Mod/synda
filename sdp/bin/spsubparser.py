@@ -55,3 +55,4 @@ def run(subparsers):
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
 
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',example=spcliex.daemon())
+    subparser.add_argument('action',nargs='?',default='status',choices=['status','start','stop'])
