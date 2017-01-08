@@ -123,14 +123,14 @@ Test communication between SDW and SDP
 
 Test communication between SDT and SDP
 
-    $ST_HOME/lib/sd/sdppproxy.py -v
+    $ $ST_HOME/lib/sd/sdppproxy.py -v
 
 It tests failed, check if credentials are correctly set in files below then
 restart all daemons.
 
-    * $SP_HOME/conf/credentials.conf
-    * $SP_HOME/bin/synda_wo
-    * $ST_HOME/conf/credentials.conf
+* $SP_HOME/conf/credentials.conf
+* $SP_HOME/bin/synda_wo
+* $ST_HOME/conf/credentials.conf
 
 ## Download files
 
