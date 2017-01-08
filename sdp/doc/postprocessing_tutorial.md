@@ -72,7 +72,17 @@ initial pipeline status to 'waiting'.
 
 ## Job scripts creation
 
-FIXME
+We first create a directory to store the scripts.
+
+    mkdir /tmp/synda_pp_scripts
+
+We now create the three scripts corresponding to three pipeline tasks
+that have been defined.
+
+Those file can be downloaded from Github
+
+    cd /tmp/synda_pp_scripts
+    wget
 
 ## Start SDT service
 
