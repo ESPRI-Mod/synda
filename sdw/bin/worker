@@ -377,7 +377,7 @@ if __name__ == '__main__':
 
     # positional args
 
-    parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status','help','daemon']) # FIXME: remove start,stop,status choices from this argument
+    parser.add_argument('subcommand',nargs='?',default=None,choices=['start','stop','status','help','daemon']) # FIXME: remove start,stop,status choices from this argument
     #parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status']) # FIXME: replace with subparser
 
     # non-positional args
@@ -403,7 +403,7 @@ if __name__ == '__main__':
     parser.add_argument('-x', '--uat_mode', action = 'store_true',help = 'Special mode used for UAT (User Acceptance Testing).')
     args=parser.parse_args()
 
-    if args.action=='help':
+    if args.subcommand=='help':
         parser.print_help()
         sys.exit(0)
 
@@ -432,7 +432,7 @@ if __name__ == '__main__':
     if password is None:
         password=getpass.getpass()
 
-    if args.action is None:
+    if args.subcommand is None:
         # non-daemon mode
 
         signal.signal(signal.SIGTERM, stop)
@@ -457,11 +457,11 @@ if __name__ == '__main__':
 
         logfile=get_logfile(args.logdir,'worker.log')
 
-        if args.action == 'start':
+        if args.subcommand == 'start':
             start_daemon(args)
-        elif args.action == 'stop':
+        elif args.subcommand == 'stop':
             stop_daemon(pidfile)
-        elif args.action == 'status':
+        elif args.subcommand == 'status':
             print daemon_status()
         else:
-            raise Exception('Incorrect value for action')
+            raise Exception('Incorrect value for subcommand')
