@@ -79,10 +79,10 @@ We first create a directory to store the scripts.
 We now create the three scripts corresponding to three pipeline tasks
 that have been defined.
 
-Those file can be downloaded from Github
-
     cd /tmp/synda_pp_scripts
-    wget
+    wget -O foobar.sh https://raw.githubusercontent.com/Prodiguer/synda/master/sdw/script/template.sh
+    cp foobar.sh foo.sh
+    cp foobar.sh bar.sh
 
 ## Start SDT service
 
