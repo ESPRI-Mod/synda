@@ -117,7 +117,7 @@ Test communication between SDW and SDP
 
 Test communication between SDT and SDP
 
-    /usr/share/python/synda/sdt/bin/sdppproxy.py -v
+    $ST_HOME/lib/sd/sdppproxy.py -v
 
 It tests failed, check if credentials are correctly set in files below
 
