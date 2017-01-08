@@ -9,6 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
+EVENT_FILE_COMPLETE='file_complete'
 EVENT_VARIABLE_COMPLETE='variable_complete'
 EVENT_DATASET_COMPLETE='dataset_complete'
 EVENT_DATASET_LATEST='dataset_latest'

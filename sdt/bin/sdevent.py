@@ -54,6 +54,17 @@ def file_complete_event(tr):
     """
     sdlog.log("SYDEVENT-001","'file_complete_event' triggered (%s)"%tr.file_functional_id,event_triggered_log_level)
 
+    if sdconfig.file_complete_event_enabled:
+        event=Event(name=sdconst.EVENT_FILE_COMPLETE)
+        event.project=tr.project
+        event.model=tr.model
+        event.dataset_pattern=tr.dataset.local_path
+        event.variable=tr.variable
+        event.filename_pattern=tr.filename
+        event.crea_date=sdtime.now()
+        event.priority=sdconst.DEFAULT_PRIORITY
+        sdeventdao.add_event(event,commit=True)
+
     # update dataset (all except 'latest' flag)
     tr.dataset.status=sddatasetflag.compute_dataset_status(tr.dataset)
     tr.dataset.last_done_transfer_date=tr.end_date
