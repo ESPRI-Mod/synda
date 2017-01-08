@@ -30,7 +30,7 @@ We will define a new pipeline called P001.
 
 To do this, we must edit the file *P001.py*.
 
-This file is located in ${SP_HOME}/sdp/pipeline/P001.py
+This file is located in ${SP_HOME}/conf/pipeline/P001.py
 
 Edit this file so it looks like this:
 
@@ -55,7 +55,7 @@ bar and foobar), which will run sequentially one after the other.
 
 The binding file is used to bind events to pipelines.
 
-This file is located in ${SP_HOME}/sdp/pipeline/spbindings.py
+This file is located in ${SP_HOME}/conf/pipeline/spbindings.py
 
 For this tutorial, this file content must be
 
@@ -81,6 +81,7 @@ that have been defined.
 
     cd /tmp/synda_pp_scripts
     wget -O foobar.sh https://raw.githubusercontent.com/Prodiguer/synda/master/sdw/script/template.sh
+    chmod +x foobar.sh
     cp foobar.sh foo.sh
     cp foobar.sh bar.sh
 
@@ -102,11 +103,27 @@ To start the service, run command below
 
 ## Start SDW service
 
-This is the client side post-processing daemon.
+This is the client side post-processing daemon (aka 'worker').
 
 To start the service, run command below
 
     $ synda_wo start
+
+## Test communication between Synda modules
+
+Test communication between SDW and SDP
+
+    $ synda_wo -t -v
+
+Test communication between SDT and SDP
+
+    /usr/share/python/synda/sdt/bin/sdppproxy.py -v
+
+It tests failed, check if credentials are correctly set in files below
+
+    * $SP_HOME/conf/credentials.conf
+    * $SP_HOME/bin/synda_wo
+    * $ST_HOME/conf/credentials.conf
 
 ## Download files
 
