@@ -24,6 +24,12 @@ For this tutorial, SDP must be installed from source.
 
 See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdp/doc/src_install.md)
 
+## Configuration
+
+Set 'post_processing' to true in $ST_HOME/conf/sdt.conf
+
+    post_processing=true
+
 ## Pipeline definition file creation
 
 We will define a new pipeline called P001.
@@ -130,4 +136,4 @@ restart all daemons.
 
 Now the environment is ready, we can download some files.
 
-    $ synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+    $ synda install -y cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
