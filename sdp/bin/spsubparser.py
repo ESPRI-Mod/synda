@@ -53,3 +53,5 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=spcliex.queue())
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
+
+    subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',example=spcliex.daemon())

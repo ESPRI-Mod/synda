@@ -24,29 +24,13 @@ For this tutorial, SDP must be installed from source.
 
 See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdp/doc/src_install.md)
 
-## Bindings file creation
-
-The binding file is used to bind event to pipeline.
-
-This file is located in pipeline/spbindings.py
-
-For this tutorial, this file must configured as below
-
-    import spconst
-
-    event_pipeline_mapping={
-        spconst.EVENT_VARIABLE_COMPLETE: ('P001', spconst.PPPRUN_STATUS_WAITING)
-    }
-
-    trigger={}
-
 ## Pipeline definition file creation
 
-We now have to define a new pipeline called P001.
+We will define a new pipeline called P001.
 
 To do this, we must edit the file *P001.py*.
 
-This file is located in pipeline/spbindings.py
+This file is located in ${SP_HOME}/sdp/pipeline/P001.py
 
 Edit this file so it looks like 
 
@@ -64,21 +48,44 @@ Edit this file so it looks like
 
     ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
 
+## Binding file creation
+
+The binding file is used to bind events to pipelines.
+
+This file is located in ${SP_HOME}/sdp/pipeline/spbindings.py
+
+For this tutorial, this file must configured as below
+
+    import spconst
+
+    event_pipeline_mapping={
+        spconst.EVENT_FILE_COMPLETE: ('P001', spconst.PPPRUN_STATUS_WAITING)
+    }
+
+    trigger={}
+
+This code binds the EVENT_FILE_COMPLETE event to P001 pipeline, and set the
+initial pipeline status to 'waiting'.
+
 ## Job scripts creation
 
 FIXME
 
 ## Start SDT service
 
-FIXME
+synda daemon start
 
 ## Start SDP service
 
-FIXME
+This is the post-processing server side daemon.
+
+$ synda_pp start
 
 ## Start SDW service
 
-FIXME
+This is the post-processing client side daemon.
+
+$ synda_wo start
 
 ## Download files
 

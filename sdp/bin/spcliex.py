@@ -15,6 +15,10 @@ Note
     spcliex means 'Synda Post-processing Command LIne EXample'
 """
 
+def daemon():
+    buf="""  synda daemon status"""
+    return buf
+
 def queue():
     buf="""  synda queue"""
     return buf
