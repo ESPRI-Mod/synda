@@ -377,8 +377,8 @@ if __name__ == '__main__':
 
     # positional args
 
-    parser.add_argument('subcommand',nargs='?',default=None,choices=['start','stop','status','help','daemon']) # FIXME: remove start,stop,status choices from this argument
-    #parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status']) # FIXME: replace with subparser
+    parser.add_argument('subcommand',nargs='?',default=None,choices=['start','stop','status','help','daemon']) # FIXME: remove start,stop,status choices from this argument. This is currently that way to allow old behaviour (i.e. using action as first argument, without using 'daemon' subcommand). TAGJ4K54
+    parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status']) # FIXME: replace with subparser
 
     # non-positional args
 
@@ -432,7 +432,13 @@ if __name__ == '__main__':
     if password is None:
         password=getpass.getpass()
 
-    if args.subcommand is None:
+    if (args.subcommand=='daemon' 
+            or (args.subcommand in ['start','stop','status'])): # FIXME: TAGJ4K54
+        daemon_mode=True
+    else:
+        daemon_mode=False
+
+    if not daemon_mode:
         # non-daemon mode
 
         signal.signal(signal.SIGTERM, stop)
@@ -451,17 +457,28 @@ if __name__ == '__main__':
     else:
         # daemon mode
 
+
+        # hack (TAGJ4K54)
+        if args.subcommand=='daemon':
+            action_=args.action # may be None
+
+            if action_ is None:
+                action_='status'
+        else:
+            action_=args.subcommand
+
+
         pidfile=daemon.pidfile.PIDLockFile(pid_file)
         context=daemon.DaemonContext(working_directory=tmp_folder, pidfile=pidfile,)
         context.signal_map={ signal.SIGTERM: stop, }
 
         logfile=get_logfile(args.logdir,'worker.log')
 
-        if args.subcommand == 'start':
+        if action_ == 'start':
             start_daemon(args)
-        elif args.subcommand == 'stop':
+        elif action_ == 'stop':
             stop_daemon(pidfile)
-        elif args.subcommand == 'status':
+        elif action_ == 'status':
             print daemon_status()
         else:
-            raise Exception('Incorrect value for subcommand')
+            raise Exception('Incorrect value for action (%s)'%action_)
