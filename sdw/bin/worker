@@ -377,7 +377,8 @@ if __name__ == '__main__':
 
     # positional args
 
-    parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status','help'])
+    parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status','help','daemon']) # FIXME: remove start,stop,status choices from this argument
+    #parser.add_argument('action',nargs='?',default=None,choices=['start','stop','status']) # FIXME: replace with subparser
 
     # non-positional args
 
