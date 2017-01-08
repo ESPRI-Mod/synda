@@ -11,6 +11,7 @@
 
 """This module contains code related to logging."""
 
+import os
 import sys
 import logging
 import argparse
