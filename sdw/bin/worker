@@ -307,7 +307,7 @@ def start_daemon(args):
 
                 # start job processing
                 logging.info("Daemon starting ...")
-                service = pyjsonrpc.HttpClient(url, args.username, password, args.timeout) # Create database connection service
+                service = pyjsonrpc.HttpClient(url, args.username, password, args.timeout)
                 process_jobs_with_retry(service,args)
                 logging.info("Daemon stopped")
 
