@@ -32,7 +32,7 @@ To do this, we must edit the file *P001.py*.
 
 This file is located in ${SP_HOME}/sdp/pipeline/P001.py
 
-Edit this file so it looks like 
+Edit this file so it looks like this:
 
     import sppipelineutils
     import sppostprocessingutils
@@ -44,9 +44,12 @@ Edit this file so it looks like
 
     name='P001'
 
-    tasks=['task1','task2','task3']
+    tasks=['foo','bar','foobar']
 
     ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
+
+This code basically means that P001 pipeline is composed of three tasks (foo,
+bar and foobar), which will run sequentially one after the other.
 
 ## Binding file creation
 
@@ -54,7 +57,7 @@ The binding file is used to bind events to pipelines.
 
 This file is located in ${SP_HOME}/sdp/pipeline/spbindings.py
 
-For this tutorial, this file must configured as below
+For this tutorial, this file content must be
 
     import spconst
 
