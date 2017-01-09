@@ -31,7 +31,11 @@ def get_module():
     if not os.path.exists(dep_file):
         raise SPException("SPPIPDEP-001","Pipeline dependency file not found (%s)"%dep_file)
 
-    pipeline_dependency_module=imp.load_source(name, dep_file)
+    try:
+        sys.dont_write_bytecode = True
+        pipeline_dependency_module=imp.load_source(name, dep_file)
+    finally:
+        sys.dont_write_bytecode = False
 
     return pipeline_dependency_module
 
