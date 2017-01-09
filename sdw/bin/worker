@@ -160,8 +160,12 @@ def run_job(job,args):
 
         (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh')]+script_input_parameters,shell=False)
         logging.debug('Script return code: {0}'.format(status))
-        logging.debug('Script stdout: {0}'.format(stdout))
-        logging.debug('Script stderr: {0}'.format(stderr))
+
+        stdout_prefix='\n' if is_string_multiline(stdout) else ''
+        stderr_prefix='\n' if is_string_multiline(stderr) else ''
+
+        logging.debug('Script stdout: {0}{1}'.format(stdout_prefix,stdout))
+        logging.debug('Script stderr: {0}{1}'.format(stderr_prefix,stderr))
 
         if status==0:
             job['error']=False
@@ -174,6 +178,12 @@ def run_job(job,args):
         job['transition_return_code']=None # this is always None in case of shell script (i.e. shell script cannot return a transition_return_code)
     else:
         raise Exception('No script found for this job class (job_class=%s)'%job['job_class'])
+
+def is_string_multiline(s):
+    if s.count('\n')>=2:
+        return True
+    else:
+        return False
 
 def process_jobs(service,args):
     try:
