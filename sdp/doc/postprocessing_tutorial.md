@@ -123,7 +123,7 @@ This is the client side post-processing daemon (aka 'worker').
 
 To start the service, run command below
 
-    synda_wo start
+    synda_wo --script_dir /tmp/synda_pp_scripts start
 
 ## Test communication between Synda modules
 
