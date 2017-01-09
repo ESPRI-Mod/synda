@@ -99,7 +99,7 @@ def get_job(job_class=None,pipeline=None,order=None): # note that 'job_class' is
 
         # be sure that transition from ppprun table matches computed transition from pipeline definition
         # (should always be the case, except if someone perform incorrect manual modifications in the database)
-        assert pipeline.get_current_state().transition==ppprun.transition
+        assert pipeline.get_current_state().transition.name==ppprun.transition
 
         generic_args=Bunch(pipeline=ppprun.pipeline,
                            project=ppprun.project,
