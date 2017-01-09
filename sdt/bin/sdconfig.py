@@ -59,6 +59,15 @@ def is_openid_set():
     else:
         return True
 
+def is_event_enabled(event,project):
+    if event==sdconst.EVENT_FILE_COMPLETE:
+        return False
+    elif event==sdconst.EVENT_VARIABLE_COMPLETE:
+        if project=='CMIP5':
+            return False # CMIP5 use special output12 event
+        else:
+            return True
+
 # Init module.
 
 os.umask(0002)
@@ -211,8 +220,6 @@ show_advanced_options=False
 
 # when true, allow fast cycle for test (used for UAT)
 fake_download=False
-
-file_complete_event_enabled=False # experimental
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

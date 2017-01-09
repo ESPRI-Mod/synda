@@ -54,7 +54,7 @@ def file_complete_event(tr):
     """
     sdlog.log("SYDEVENT-001","'file_complete_event' triggered (%s)"%tr.file_functional_id,event_triggered_log_level)
 
-    if sdconfig.file_complete_event_enabled:
+    if sdconfig.is_event_enabled(sdconst.EVENT_FILE_COMPLETE,tr.project):
         event=Event(name=sdconst.EVENT_FILE_COMPLETE)
         event.project=tr.project
         event.model=tr.model
@@ -76,7 +76,7 @@ def file_complete_event(tr):
 def variable_complete_event(project,model,dataset,variable,commit=True):
     sdlog.log("SYDEVENT-002","'variable_complete_event' triggered (%s,%s)"%(dataset.dataset_functional_id,variable),event_triggered_log_level)
 
-    if project!='CMIP5': # CMIP5 use special output12 event
+    if sdconfig.is_event_enabled(sdconst.EVENT_VARIABLE_COMPLETE,project):
         event=Event(name=sdconst.EVENT_VARIABLE_COMPLETE)
         event.project=project
         event.model=model
