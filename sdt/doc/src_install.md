@@ -8,8 +8,8 @@ This documents contains instructions to install Synda from source.
 
 Linux distribution with Python 2.6+.
 
-If possible, a local file system should be preferred over a parallel distributed
-file system for the database file.
+A local file system should be preferred over a parallel distributed file system
+for the database file.
 
 ## Dependencies
 
