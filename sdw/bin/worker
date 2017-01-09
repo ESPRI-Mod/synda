@@ -159,9 +159,9 @@ def run_job(job,args):
             script_input_parameters.append(v)
 
         (status,stdout,stderr)=get_status_output([get_script_path(args.script_dir,job['job_class'],'.sh')]+script_input_parameters,shell=False)
-        logging.debug('Script return code: {0}\n'.format(status))
-        logging.debug('Script stdout: {0}\n'.format(stdout))
-        logging.debug('Script stderr: {0}\n'.format(stderr))
+        logging.debug('Script return code: {0}'.format(status))
+        logging.debug('Script stdout: {0}'.format(stdout))
+        logging.debug('Script stderr: {0}'.format(stderr))
 
         if status==0:
             job['error']=False
