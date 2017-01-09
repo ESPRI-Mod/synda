@@ -34,6 +34,8 @@ chmod +x ./install.sh
 ./install.sh
 ```
 
+Note: the ```-d``` option of the ```install.sh``` script can be used to install a specific version.
+
 ## Configuration
 
 * Add lines below in your shell configuration file (e.g. '.bashrc')
