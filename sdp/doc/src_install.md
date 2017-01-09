@@ -32,6 +32,8 @@ Install the application (as normal user or root):
     chmod +x ./install.sh
     ./install.sh postprocessing
 
+Note: the ~~-d~~ option of the ~~install.sh~~ script can be used to install a specific version.
+
 ## Configuration
 
 * Run command below in $HOME/sdp/tmp folder
