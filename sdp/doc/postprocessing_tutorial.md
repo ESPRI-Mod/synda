@@ -12,7 +12,7 @@ Linux distribution with Python 2.6+.
 
 SDT is the Synda module in charge of files transfer.
 
-For this tutorial, SDT must be installed from source.
+For this tutorial, SDT must be installed from source and SDT version must be greater or equal to 3.7.
 
 See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdt/doc/src_install.md)
 
@@ -20,17 +20,27 @@ See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdt/doc/s
 
 SDP is the Synda module in charge of files post-processing.
 
-For this tutorial, SDP must be installed from source.
+For this tutorial, SDP must be installed from source and SDP version must be greater or equal to 1.3.
 
 See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdp/doc/src_install.md)
 
 ## Configuration
 
-Set 'post_processing' to true in $ST_HOME/conf/sdt.conf
+### SDT module
+
+#### Event
+
+FIXME
+
+#### Enable post-processing
+
+Set 'post_processing' parameter to true in $ST_HOME/conf/sdt.conf
 
     post_processing=true
 
-## Pipeline definition file creation
+### SDP module
+
+#### Pipeline definition file creation
 
 We will define a new pipeline called P001.
 
@@ -57,7 +67,7 @@ Edit this file so it looks like this:
 This code basically means that P001 pipeline is composed of three tasks (foo,
 bar and foobar), which will run sequentially one after the other.
 
-## Binding file creation
+#### Binding file creation
 
 The binding file is used to bind events to pipelines.
 
@@ -76,7 +86,7 @@ For this tutorial, this file content must be
 This code binds the EVENT_FILE_COMPLETE event to P001 pipeline, and set the
 initial pipeline status to 'waiting'.
 
-## Job scripts creation
+#### Job scripts creation
 
 We first create a directory to store the scripts.
 
