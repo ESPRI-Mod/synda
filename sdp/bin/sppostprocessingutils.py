@@ -204,7 +204,7 @@ class Transition():
         if get_args is not None:
             self.get_args=types.MethodType(get_args, self) # override get_args with custom method
 
-    def get_args(kw):
+    def get_args(self,kw):
         # Override this method to customize job arguments
 
         #args=dict( (k, kw[k]) for k in ['project'] ) # filter not to send all generic args
