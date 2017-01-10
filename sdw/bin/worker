@@ -90,11 +90,11 @@ def get_logfile(log_dir,filename):
 def run_test(service):
     try:
         buf = service.test1(1,2)
+        print buf
         print "Connection test successfully completed"
     except URLError,e:
         logging.info('Error occur while contacting the JSONRPC server. Are JSONRPC connection parameters correctly set (i.e. login, passwd, url...) ?')
         raise
-    print buf
 
 def get_script_path(script_dir,job_class,extension):
     return '%s/%s%s'%(script_dir,job_class,extension)
