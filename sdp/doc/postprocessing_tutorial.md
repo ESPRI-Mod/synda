@@ -138,6 +138,37 @@ restart the three daemons.
 
 ## Download files
 
-Now the environment is ready, we can download some files.
+Let's download some files.
 
     synda install -y sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
+
+After a few minutes, the file should have been transferred and the jobs should have been triggered.
+
+To check the result, let's see the logfile
+
+    vi $SP_HOME/log/worker.log
+
+If all went well, the logfile should look like this
+
+    2017/01/10 09:09:56 AM INFO Processing job (transition=foo,args={u'pipeline': u'P001', u'data_folder': u'/home/jerome/sdp/data', u'project': u'CORDEX', u'variable': u's
+    fcWind', u'model': u'RCA4-SN', u'dataset_pattern': u'cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123'},job_class=foo,start_date=2017-01-10 09:09:56.791281,ppprun_id=1,error_msg=None)
+    2017/01/10 09:09:56 AM DEBUG Script return code: 0
+    2017/01/10 09:09:56 AM DEBUG Script stdout:  
+    2017/01/10 09:09:56 AM DEBUG Script stderr: 
+    2017-01-10 09:09:56 - INF001 - foo.sh script started
+    2017-01-10 09:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+    2017-01-10 09:09:56 - INF003 - foo.sh script ends.
+    2017/01/10 09:09:56 AM INFO Processing job (transition=bar,args={u'pipeline': u'P001', u'data_folder': u'/home/jerome/sdp/data', u'project': u'CORDEX', u'variable': u'sfcWind', u'model': u'RCA4-SN', u'dataset_pattern': u'cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123'},job_class=bar,start_date=2017-01-10 09:09:56.887659,ppprun_id=1,error_msg=None)
+    2017/01/10 09:09:56 AM DEBUG Script return code: 0
+    2017/01/10 09:09:56 AM DEBUG Script stdout:  
+    2017/01/10 09:09:56 AM DEBUG Script stderr: 
+    2017-01-10 09:09:56 - INF001 - bar.sh script started
+    2017-01-10 09:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+    2017-01-10 09:09:56 - INF003 - bar.sh script ends.
+    2017/01/10 09:09:57 AM INFO Processing job (transition=foobar,args={u'pipeline': u'P001', u'data_folder': u'/home/jerome/sdp/data', u'project': u'CORDEX', u'variable': u'sfcWind', u'model': u'RCA4-SN', u'dataset_pattern': u'cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123'},job_class=foobar,start_date=2017-01-10 09:09:56.985872,ppprun_id=1,error_msg=None)
+    2017/01/10 09:09:57 AM DEBUG Script return code: 0
+    2017/01/10 09:09:57 AM DEBUG Script stdout: 
+    2017/01/10 09:09:57 AM DEBUG Script stderr: 
+    2017-01-10 09:09:57 - INF001 - foobar.sh script started
+    2017-01-10 09:09:57 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+    2017-01-10 09:09:57 - INF003 - foobar.sh script ends.
