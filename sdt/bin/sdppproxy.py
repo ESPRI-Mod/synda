@@ -85,5 +85,6 @@ if __name__ == '__main__':
 
     try:
         print get_service().test1(1,2)
+        print "Connection test successfully completed"
     except urllib2.URLError as e:
         raise RemoteException("SDPPPROX-101","Network error occured (%s)"%str(e))
