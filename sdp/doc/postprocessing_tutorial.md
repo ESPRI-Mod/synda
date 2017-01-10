@@ -28,12 +28,6 @@ See instructions [here](https://github.com/Prodiguer/synda/blob/master/sdp/doc/s
 
 ### SDT module
 
-#### Event
-
-FIXME
-
-#### Enable post-processing
-
 Set 'post_processing' parameter to true in $ST_HOME/conf/sdt.conf
 
     post_processing=true
