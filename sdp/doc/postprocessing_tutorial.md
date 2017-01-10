@@ -58,7 +58,7 @@ This file content must be:
 
     ppp=sppostprocessingutils.build_light_pipeline(name,tasks)
 
-This code basically means that P001 pipeline is composed of three tasks (foo,
+This code basically means that P001 pipeline is composed of 3 tasks (foo,
 bar and foobar), which will run sequentially one after the other.
 
 #### Binding file creation
@@ -86,7 +86,7 @@ We first create a directory to store the scripts.
 
     mkdir /tmp/synda_pp_scripts
 
-We then create the three scripts corresponding to three pipeline tasks
+We then create the 3 scripts corresponding to the 3 pipeline tasks
 that have been defined.
 
     cd /tmp/synda_pp_scripts
