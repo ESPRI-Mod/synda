@@ -36,13 +36,13 @@ Set 'post_processing' parameter to true in $ST_HOME/conf/sdt.conf
 
 #### Pipeline definition file creation
 
-We will define a new pipeline called P001.
+We will define a pipeline called P001.
 
-To do this, we must edit the file *P001.py*.
+Edit the file below:
 
-This file is located in ${SP_HOME}/conf/pipeline/P001.py
+    ${SP_HOME}/conf/pipeline/P001.py
 
-Edit this file so it looks like this:
+This file content must be:
 
     import sppipelineutils
     import sppostprocessingutils
