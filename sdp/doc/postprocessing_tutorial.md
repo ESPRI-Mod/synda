@@ -138,7 +138,7 @@ restart the three daemons.
 
 ## Download files
 
-Let's download some files.
+Let's download a file
 
     synda install -y sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
 
