@@ -129,8 +129,8 @@ Test communication between SDT and SDP
 
     $ST_HOME/lib/sd/sdppproxy.py -v
 
-It tests failed, check if credentials are correctly set in files below then
-restart the three daemons.
+If tests failed, check if credentials are correctly set in files below then
+restart the services.
 
 * $SP_HOME/conf/credentials.conf
 * $SP_HOME/bin/synda_wo
