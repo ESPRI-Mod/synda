@@ -248,7 +248,7 @@ init_ve ()
     ve_dir=${1}
 
     if [ ! -f $ve_dir/bin/activate ]; then
-        err "INSTALL-ERR002" "activate not found"
+        err "INSTALL-ERR002" "$ve_dir doesn't look like an existing Synda installation (activate not found)"
     fi
 
     source $ve_dir/bin/activate
