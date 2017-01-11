@@ -17,8 +17,7 @@ Full error stack
 This bug affects 3.6 version installed from source (RPM 3.6 and DEB 3.6 should
 not be affected). It has been fixed in 3.7.
 
-
-It can be fixed by downgrading the pypi pillow package
+It can be fixed in 3.6 by downgrading the pypi pillow package
 
     pip install pillow==3.4.2
 
