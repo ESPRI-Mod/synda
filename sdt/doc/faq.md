@@ -1,5 +1,27 @@
 # Synda FAQ
 
+### required = {'jpeg', 'zlib'} - SyntaxError: invalid syntax
+
+Full error stack
+
+    Collecting pillow>=2.4.0 (from reportlab)
+      Using cached Pillow-4.0.0.tar.gz
+        Complete output from command python setup.py egg_info:
+        Traceback (most recent call last):
+          File "<string>", line 1, in <module>
+          File "/tmp/root/pip-build-525vF6/pillow/setup.py", line 138
+            required = {'jpeg', 'zlib'}
+                              ^
+        SyntaxError: invalid syntax
+
+This bug affects 3.6 version installed from source (RPM 3.6 and DEB 3.6 should
+not be affected). It has been fixed in 3.7.
+
+
+It can be fixed by downgrading the pypi pillow package
+
+    pip install pillow==3.4.2
+
 ### NoSectionError: No section: 'esgf_credential'
 
 Run commands below
