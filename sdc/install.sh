@@ -801,7 +801,7 @@ rm -rf $tmpdir/sdp-*
 
 check_dependencies
 
-# alias 'python' to the highest version
+# alias 'python' to the Python 2 highest version
 set_default_python_version python2.6
 set_default_python_version python2.7
 
