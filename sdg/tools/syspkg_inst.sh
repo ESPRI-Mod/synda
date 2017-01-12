@@ -64,4 +64,4 @@ cp mkproxy $client_dir
 popd
 
 # install python-nexus-client
-easy_install https://github.com/globusonline/python-nexus-client/archive/integration.zip
+pip install https://github.com/globusonline/python-nexus-client/archive/integration.zip
