@@ -251,7 +251,7 @@ init_ve ()
         err "INSTALL-ERR002" "$ve_dir doesn't look like a Synda installation folder (activate not found)"
     fi
 
-    source $ve_dir/bin/activate
+    source $ve_dir/bin/activate # set PATH to the ve python
 
     check_python_installation
 }
@@ -331,7 +331,7 @@ install_ve ()
     tar xzvf ${virtual_env_archive_name}
     cd ${virtual_env_package_name}
     $PYTHON_CMD virtualenv.py --distribute --unzip-setuptools $ve_dest_dir
-    source $ve_dest_dir/bin/activate
+    source $ve_dest_dir/bin/activate # set PATH to the ve python
 }
 
 fix_myproxyclient ()
