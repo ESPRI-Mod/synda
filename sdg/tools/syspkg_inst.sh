@@ -1,11 +1,15 @@
 #!/bin/bash
 #
+# Description
+#  This script install 'globustransfer' module over a system package based Synda
+#  installation (.rpm or .deb).
+#
 # Requirement
 #  Synda 3.3+ must be installed from system package (rpm or deb) before running
-#  this script
+#  this script.
 #
 # Usage
-#  Run this script as root to install 'globustransfer' module
+#  Run this script as root to install 'globustransfer' module.
 #
 # Status
 #  Developement
