@@ -74,7 +74,7 @@ os.umask(0002)
 
 system_pkg_install=False
 
-# set system folders (aka binaries-folder aka install-folder)
+# set synda folders paths (aka install-folders)
 if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
