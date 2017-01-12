@@ -369,10 +369,10 @@ install_sg_application ()
     # (program written in C to create a proxy certificate from a public key)
     #
     client_dir=$st_root/lib/$PYTHON_CMD/site-packages/globusonline/transfer/api_client/x509_proxy/
-    mkdir $tmpdir/mkproxy
+    mkdir -p $tmpdir/mkproxy
     pushd $tmpdir/mkproxy
-    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
-    wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
+    wget --no-check-certificate https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
+    wget --no-check-certificate https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
     make
     cp mkproxy $client_dir
     popd
