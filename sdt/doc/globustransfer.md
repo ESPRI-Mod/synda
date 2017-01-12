@@ -5,7 +5,7 @@
 * Synda 3.3+
 
 * Synda must be installed from source to transfer files with Globus Transfer
-(not available yet with system package based installation).
+(Globus Transfer is yet not available with .rpm and .deb system package).
 
 ## Installation
 
