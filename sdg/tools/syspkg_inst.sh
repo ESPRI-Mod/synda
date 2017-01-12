@@ -54,10 +54,11 @@ source /usr/share/python/synda/sdt/bin/activate
 pip install globusonline-transfer-api-client
 
 # install mkproxy
+rm -rf /var/tmp/synda/sdt/mkproxy
 mkdir /var/tmp/synda/sdt/mkproxy
 pushd /var/tmp/synda/sdt/mkproxy
-wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
-wget https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
+wget --no-check-certificate https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/mkproxy.c
+wget --no-check-certificate https://raw.githubusercontent.com/globusonline/transfer-api-client-python/master/mkproxy/Makefile
 make
 cp mkproxy $client_dir
 popd
