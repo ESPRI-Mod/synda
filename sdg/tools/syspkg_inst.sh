@@ -51,7 +51,7 @@ source /usr/share/python/synda/sdt/bin/activate
 # main
 
 # install go transfer API
-pip instal globusonline-transfer-api-client
+pip install globusonline-transfer-api-client
 
 # install mkproxy
 mkdir /var/tmp/synda/sdt/mkproxy
