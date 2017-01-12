@@ -379,7 +379,7 @@ install_sg_application ()
     popd
 
     # install python-nexus-client
-    easy_install https://github.com/globusonline/python-nexus-client/archive/integration.zip
+    $python_pkg_install_cmd https://github.com/globusonline/python-nexus-client/archive/integration.zip
 }
 
 install_st_additional_packages ()
