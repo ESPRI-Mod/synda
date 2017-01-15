@@ -1,4 +1,5 @@
-- Version 1.3 -
+- Version 1.4 -
+- Version 1.3 - 20170115
 	- synda group can be used instead of sudo (system package).
 - Version 1.2 - 20161204
 	- move hard-coded pipeline dependencies into configuration files.
