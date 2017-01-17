@@ -421,12 +421,14 @@ def update_datasets_status():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    #parser.add_argument()
+    parser.add_argument('action',choices=['update_incomplete_datasets_status','update_complete_datasets_status','update_datasets_status'])
     args = parser.parse_args()
 
-    update_incomplete_datasets_status()
-    """
-    if :
-    else:
+    if args.action=='update_incomplete_datasets_status':
+        update_incomplete_datasets_status()
+    elif args.action=='update_complete_datasets_status':
         update_complete_datasets_status()
-    """
+    elif args.action=='update_datasets_status':
+        update_datasets_status()
+    else:
+        assert False
