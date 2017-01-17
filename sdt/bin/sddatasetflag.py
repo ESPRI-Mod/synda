@@ -251,6 +251,31 @@ def compute_dataset_status(d):
 
     return l__status
 
+def update_datasets_status(datasets):
+    """
+    Update status flag for datasets
+
+    Note
+        This func doesn't handle the 'latest' flag
+    """
+    datasets_modified_count=0
+
+    for d in datasets:
+
+        # store dataset current state
+        l__status=d.status
+
+        # compute new 'status' flag
+        d.status=compute_dataset_status(d)
+        sddatasetdao.update_dataset(d)
+
+        # check if the dataset has changed
+        if l__status!=d.status:
+            sdlog.info("SYDDFLAG-188","Dataset status has been changed from %s to %s (%s)"%(l__status,d.status,d.dataset_functional_id))
+            datasets_modified_count+=1
+
+    sdlog.info("SYDDFLAG-192","Modified datasets: %i"%datasets_modified_count)
+
 def qualitycheck_ok(dataset_versions,d):
     """
     based on some statistics, this method accepts or deny 'latest' promotion for the dataset 'd'
@@ -354,33 +379,28 @@ def update_incomplete_datasets_status():
     'in-progress', while all transfers are now 'done'). This func fix this
     problem.
 
-    Note
-        This func doesn't handle the 'latest' flag
+    Notes
+        - This func doesn't handle the 'latest' flag
+        - This func is quite the same as 'update_complete_datasets_status'
+          func, but is faster as it doesn't processes complete dataset (which
+          are the largest part of all the datasets).
 
     TODO
         Also handle the 'latest' flag in this func
     """
-    datasets_modified_count=0
-
     incomplete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_EMPTY)+sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_IN_PROGRESS)
+    update_datasets_status(incomplete_datasets)
 
-    for d in incomplete_datasets:
-
-        # store dataset current state
-        l__status=d.status
-
-        # compute new 'status' flag
-        d.status=compute_dataset_status(d)
-        sddatasetdao.update_dataset(d)
-
-        # check if the dataset has changed
-        if l__status!=d.status:
-            datasets_modified_count+=1
-
-    sdlog.info("SYDDFLAG-180","modified datasets: %i"%datasets_modified_count)
+# init.
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    #parser.add_argument()
     args = parser.parse_args()
 
     update_incomplete_datasets_status()
+    """
+    if :
+    else:
+        update_complete_datasets_status()
+    """
