@@ -253,7 +253,7 @@ def compute_dataset_status(d):
 
 def update_datasets_status_HELPER(datasets):
     """
-    Update status flag for datasets
+    Refresh datasets status flag
 
     Note
         This func doesn't handle the 'latest' flag
@@ -390,6 +390,29 @@ def update_incomplete_datasets_status():
     """
     incomplete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_EMPTY)+sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_IN_PROGRESS)
     update_datasets_status_HELPER(incomplete_datasets)
+
+def update_complete_datasets_status():
+    """
+    Update status flag for datasets with complete status.
+
+    Notes
+        - This func is used to fix inconsistencies, when dataset have complete status,
+          but some of its files are not 'done' yet.
+        - This func doesn't handle the 'latest' flag
+    """
+    complete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_COMPLETE)
+    update_datasets_status_HELPER(complete_datasets)
+
+def update_datasets_status():
+    """
+    Update status flag for all datasets.
+
+    Notes
+        - This func is used to fix inconsistencies.
+        - This func doesn't handle the 'latest' flag
+    """
+    datasets=sddatasetdao.get_datasets()
+    update_datasets_status_HELPER(datasets)
 
 # init.
 
