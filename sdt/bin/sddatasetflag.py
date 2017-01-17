@@ -251,7 +251,7 @@ def compute_dataset_status(d):
 
     return l__status
 
-def update_datasets_status(datasets):
+def update_datasets_status_HELPER(datasets):
     """
     Update status flag for datasets
 
@@ -389,7 +389,7 @@ def update_incomplete_datasets_status():
         Also handle the 'latest' flag in this func
     """
     incomplete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_EMPTY)+sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_IN_PROGRESS)
-    update_datasets_status(incomplete_datasets)
+    update_datasets_status_HELPER(incomplete_datasets)
 
 # init.
 
