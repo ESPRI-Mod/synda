@@ -61,6 +61,12 @@ def upgrade_db(conn,current_db_version,new_db_version):
 
 # -- upgrade procs -- #
 
+def upgrade_38(conn):
+
+    # put schema upgrade code here if any
+
+    sddbversionutils.update_db_version(conn,'3.8')
+
 def upgrade_37(conn):
 
     # put schema upgrade code here if any
@@ -121,6 +127,7 @@ def upgrade_30(conn):
 # init.
 
 upgrade_procs={
+    '3.8': upgrade_38,
     '3.7': upgrade_37,
     '3.6': upgrade_36,
     '3.5': upgrade_35,

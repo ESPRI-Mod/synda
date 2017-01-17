@@ -52,7 +52,7 @@ def who_am_i():
 os.umask(0002)
 
 name='transfer'
-version='3.7'
+version='3.8'
 sdapputils.set_exception_handler()
 
 # maybe remove the two mkdir below as it is a bit overkill

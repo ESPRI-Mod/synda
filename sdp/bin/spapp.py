@@ -60,7 +60,7 @@ def who_am_i():
 os.umask(0002)
 
 name='postprocessing'
-version='1.3'
+version='1.4'
 spapputils.set_exception_handler()
 
 if who_am_i()=='ihm':
