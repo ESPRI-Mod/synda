@@ -388,6 +388,7 @@ def update_incomplete_datasets_status():
     TODO
         Also handle the 'latest' flag in this func
     """
+    sdlog.info("SYDDFLAG-182","Update incomplete datasets status")
     incomplete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_EMPTY)+sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_IN_PROGRESS)
     update_datasets_status_HELPER(incomplete_datasets)
 
@@ -400,6 +401,7 @@ def update_complete_datasets_status():
           but some of its files are not 'done' yet.
         - This func doesn't handle the 'latest' flag
     """
+    sdlog.info("SYDDFLAG-184","Update complete datasets status")
     complete_datasets=sddatasetdao.get_datasets(status=sdconst.DATASET_STATUS_COMPLETE)
     update_datasets_status_HELPER(complete_datasets)
 
@@ -411,6 +413,7 @@ def update_datasets_status():
         - This func is used to fix inconsistencies.
         - This func doesn't handle the 'latest' flag
     """
+    sdlog.info("SYDDFLAG-186","Update status for all datasets")
     datasets=sddatasetdao.get_datasets()
     update_datasets_status_HELPER(datasets)
 
