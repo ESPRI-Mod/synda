@@ -13,7 +13,7 @@ Synda DEB packages are available for Debian, Ubuntu and Mint.
 Add IPSL Synda repository
 
 ```
-echo deb http://sd-53687.dedibox.fr/synda/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
+echo deb http://sd-104052.dedibox.fr/synda/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda.list
 ```
 
 where &lt;distro-name&gt; can be one of
@@ -46,7 +46,7 @@ Synda 3.2 DEB package contains a bug which prevent running application under cer
 Run the command below to fix it
 
 ```
-sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+sudo wget http://sd-104052.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
 ```
 
 ## Configuration

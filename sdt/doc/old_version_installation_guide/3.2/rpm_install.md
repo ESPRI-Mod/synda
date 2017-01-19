@@ -23,7 +23,7 @@ sudo yum install epel-release -y
 To install synda RPM package, use
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/rpm/<package-name> -y
+sudo yum install http://sd-104052.dedibox.fr/synda/rpm/<package-name> -y
 ```
 
 where &lt;package-name&gt; can be one of
@@ -44,7 +44,7 @@ Example
 To install Synda on Scientific Linux 6.7, do
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/rpm/synda-3.2-1.x86_64_scientific67.rpm 
+sudo yum install http://sd-104052.dedibox.fr/synda/rpm/synda-3.2-1.x86_64_scientific67.rpm 
 ```
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
@@ -70,7 +70,7 @@ Synda 3.2 RPM package contains a bug which prevent running application under cer
 Run the command below to fix it
 
 ```
-sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+sudo wget http://sd-104052.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
 ```
 
 ## Configuration

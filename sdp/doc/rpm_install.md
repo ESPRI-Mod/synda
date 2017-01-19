@@ -29,7 +29,7 @@ sudo yum install epel-release -y
 To install *sdp* RPM package, use
 
 ```
-wget http://sd-53687.dedibox.fr/synda/sdp/rpm/<package-name>
+wget http://sd-104052.dedibox.fr/synda/sdp/rpm/<package-name>
 sudo yum install -y <package-name>
 ```
 
@@ -51,7 +51,7 @@ Example
 To install *sdp* on Scientific Linux 6.7, do
 
 ```
-sudo yum install http://sd-53687.dedibox.fr/synda/sdp/rpm/synda-pp-1.2-1.x86_64_scientific67.rpm 
+sudo yum install http://sd-104052.dedibox.fr/synda/sdp/rpm/synda-pp-1.2-1.x86_64_scientific67.rpm 
 ```
 
 If you need a distro/version that is not listed, you can open a github issue so we can add it to the list.
