@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script contains UAT test for incremental discovery."""
+"""This script contains UAT test common routines."""
 
 import argparse
 import time
