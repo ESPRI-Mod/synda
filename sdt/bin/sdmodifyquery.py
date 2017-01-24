@@ -11,6 +11,8 @@
 
 """This module contains transfers attributes update queries."""
 
+import argparse
+import string
 import sdapp
 import sddb
 import sdlog
@@ -49,3 +51,23 @@ def wipeout_datasets_flags(status=None,latest=0,conn=sddb.conn):
     c.execute("update dataset set status=?, latest=?",(status,latest,))
     conn.commit()
     c.close()
+
+def localpath_replace(from_,to,conn=sddb.conn):
+    conn.create_function("SUBSTRING_REPLACE", 3, string.replace) # use python as sqlite replace is only available in recent version
+    conn.execute("UPDATE file SET local_path=SUBSTRING_REPLACE(local_path,?,?);",(from_,to))
+    conn.execute("UPDATE dataset SET local_path=SUBSTRING_REPLACE(local_path,?,?);",(from_,to))
+    conn.execute("UPDATE event SET dataset_pattern=SUBSTRING_REPLACE(dataset_pattern,?,?);",(from_,to))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('action',choices=['local_path_replace'])
+    parser.add_argument('from_')
+    parser.add_argument('to')
+    args = parser.parse_args()
+
+    if args.action=='local_path_replace':
+        sdlog.info("SDMODIFQ-100","Modify local_path in metadata (from=%s,to=%s)"%(args.from_,args.to))
+        localpath_replace(args.from_,args.to)
+        sddb.conn.commit()
+    else:
+        raise Exception('Incorrect argument(s)')
