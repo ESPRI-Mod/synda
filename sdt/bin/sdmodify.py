@@ -17,6 +17,7 @@ Notes
       (i.e. stream must be duplicate free and each file must contain status attribute).
 """
 
+import argparse
 import sdapp
 import sdmodifyquery
 import sdreplica
