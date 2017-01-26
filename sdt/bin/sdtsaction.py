@@ -17,6 +17,7 @@ Note
 """
 
 import sdconst
+import sdfields
 import sdprint
 import sdconfig
 from sdtools import print_stderr
@@ -202,7 +203,7 @@ def dataset_search(args):
     import sddeferredafter, sdrdataset, sdstream
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
-    sddeferredafter.add_forced_parameter(args.stream,'fields',dataset_light_fields)
+    sddeferredafter.add_forced_parameter(args.stream,'fields',sdfields.get_dataset_light_fields())
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
 
@@ -219,7 +220,7 @@ def variable_search(args):
     import sddeferredafter, sdrdataset, sdrvariable
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
-    sddeferredafter.add_forced_parameter(args.stream,'fields',variable_light_fields)
+    sddeferredafter.add_forced_parameter(args.stream,'fields',sdfields.get_variable_light_fields())
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
 
@@ -434,10 +435,6 @@ def file_dump(args):
             print_stderr("File not found")   
 
 # init.
-
-dataset_light_fields=','.join(sdconst.LIGHT_FIELDS)
-variable_light_fields=','.join(sdconst.LIGHT_FIELDS)
-file_light_fields=','.join(sdconst.LIGHT_FIELDS)
 
 actions={
     'count':count,

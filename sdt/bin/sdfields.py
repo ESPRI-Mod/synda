@@ -25,4 +25,13 @@ def get_file_variable_fields():
 def get_dataset_version_fields():
     return ','.join(sdconst.DATASET_VERSION_FIELDS)
 
+def get_file_light_fields():
+    return ','.join(sdconst.LIGHT_FIELDS)
+
+def get_variable_light_fields():
+    return ','.join(sdconst.LIGHT_FIELDS)
+
+def get_dataset_light_fields():
+    return ','.join(sdconst.LIGHT_FIELDS)
+
 # init.
