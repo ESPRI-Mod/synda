@@ -52,7 +52,7 @@ def get_facet_value_early(orig_stream,name,extract_item=False):
     if len(li)==0:
         return None
     elif len(li)==1:
-        return li[1]
+        return li[0]
     else:
         raise sdexception.TooMuchValueException(code='SDEARLSU-001',msg=name)
 
