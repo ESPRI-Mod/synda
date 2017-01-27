@@ -21,15 +21,31 @@ import sdtools
 from sdtools import print_stderr
 import sdexception
 
+def test_facet_value_early(orig_stream,name,value,extract_item=False):
+    """
+    Notes
+        - If the parameter is not present, this func return False
+        - This func is intended to retrieve only singleton parameters (i.e.
+          parameters which can appear only once in the Sfile)
+    """
+    actual_val=get_facet_value_early(orig_stream,name,extract_item)
+
+    if actual_val is None:
+        return False
+    else:
+        if actual_val==value:
+            return True
+        else:
+            return False
+
 def get_facet_value_early(orig_stream,name,extract_item=False):
     """
     Notes
-        - this func is intended to retrieve only singleton parameters (i.e.
+        - This func is intended to retrieve only singleton parameters (i.e.
           parameters which can appear only once in the Sfile)
-        -
-            For clarity, prefer to use get_facet_values_early() directly
-            and process each case using else/if block
-            (as in "is_one_variable_per_dataset_project" or in "dataset_version")
+        - For clarity, you may prefer to use get_facet_values_early() function
+          and process each case using else/if block (as in
+          "is_one_variable_per_dataset_project" or in "dataset_version")
     """
     li=get_facet_values_early(orig_stream,name,extract_item)
 
