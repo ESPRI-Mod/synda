@@ -19,16 +19,18 @@ import sys
 import sdconst
 import sdtools
 from sdtools import print_stderr
+import sdexception
 
 def get_facet_value_early(orig_stream,name,extract_item=False):
     """
-    Note
-        For clarity, prefer to use get_facet_values_early() directly
-        and process each case using else/if block
-        (as in "is_one_variable_per_dataset_project" or in "dataset_version")
+    Notes
+        - this func is intended to retrieve only singleton parameters (i.e.
+          parameters which can appear only once in the Sfile)
+        -
+            For clarity, prefer to use get_facet_values_early() directly
+            and process each case using else/if block
+            (as in "is_one_variable_per_dataset_project" or in "dataset_version")
     """
-    import sdexception
-
     li=get_facet_values_early(orig_stream,name,extract_item)
 
     if len(li)==0:
@@ -36,7 +38,7 @@ def get_facet_value_early(orig_stream,name,extract_item=False):
     elif len(li)==1:
         return li[1]
     else:
-        raise sdexception.TooMuchValueException()
+        raise sdexception.TooMuchValueException(code='SDEARLSU-001',msg=name)
 
 def exists_facet_value_early(orig_stream,name,extract_item=False):
     li=get_facet_values_early(orig_stream,name,extract_item)
