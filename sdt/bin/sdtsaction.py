@@ -17,7 +17,6 @@ Note
 """
 
 import sdconst
-import sdfields
 import sdprint
 import sdconfig
 from sdtools import print_stderr
@@ -200,7 +199,7 @@ def file_list(args):
 # o-------------------------------------------------------o
 
 def dataset_search(args):
-    import sddeferredafter, sdrdataset, sdstream
+    import sddeferredafter, sdrdataset, sdstream, sdfields
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
     sddeferredafter.add_forced_parameter(args.stream,'fields',sdfields.get_dataset_light_fields())
@@ -217,7 +216,7 @@ def dataset_search(args):
                 sdrdataset.print_list(datasets)
 
 def variable_search(args):
-    import sddeferredafter, sdrdataset, sdrvariable
+    import sddeferredafter, sdrdataset, sdrvariable, sdfields
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
     sddeferredafter.add_forced_parameter(args.stream,'fields',sdfields.get_variable_light_fields())
