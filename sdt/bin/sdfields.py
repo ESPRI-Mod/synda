@@ -34,4 +34,10 @@ def get_variable_light_fields():
 def get_dataset_light_fields():
     return ','.join(sdconst.LIGHT_FIELDS)
 
+def get_all_dataset_fields():
+    return '*'
+
+def get_all_variable_fields():
+    return '*'
+
 # init.
