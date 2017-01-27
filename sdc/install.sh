@@ -425,10 +425,14 @@ install_st_additional_packages ()
     $python_pkg_install_cmd pyOpenSSL psutil humanize tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests beautifulsoup4 texttable reportlab
 
     # install lxml pypi python modules in virtualenv (old versions only)
+    (
+    set +e 
     vercomp $st_version 3.6
     if [ $? -eq 2 ]; then
          $python_pkg_install_cmd lxml==3.3.5
     fi
+    exit 0
+    ) # subshell is used here to prevent setting "+e" option globally (i.e. for the all script)
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
         $python_pkg_install_cmd argparse
