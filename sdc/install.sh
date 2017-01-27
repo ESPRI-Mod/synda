@@ -122,6 +122,43 @@ check_dependencies ()
     check_dependency sqlite3
 }
 
+# from http://stackoverflow.com/questions/4023830/how-compare-two-strings-in-dot-separated-version-format-in-bash
+vercomp () {
+    # Returns
+    #  0 => '='
+    #  1 => '>'
+    #  2 => '<'
+
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+    done
+    return 0
+}
+
 st_is_running ()
 {
     # check if daemon is running
@@ -386,7 +423,12 @@ install_st_additional_packages ()
 {
     # install pypi python modules in virtualenv
     $python_pkg_install_cmd pyOpenSSL psutil humanize tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests beautifulsoup4 texttable reportlab
-    # lxml==3.3.5
+
+    # install lxml pypi python modules in virtualenv (old versions only)
+    vercomp $st_version 3.6
+    if [ $? -eq 2 ]; then
+         $python_pkg_install_cmd lxml==3.3.5
+    fi
 
     if [ "$PYTHON_CMD" = "python2.6" ]; then
         $python_pkg_install_cmd argparse
