@@ -219,10 +219,13 @@ def dataset_search(args):
                 sdrdataset.print_list(datasets)
 
 def variable_search(args):
-    import sddeferredafter, sdrdataset, sdrvariable, sdfields
+    import sddeferredafter, sdrdataset, sdrvariable, sdfields, sdearlystreamutils
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
-    sddeferredafter.add_forced_parameter(args.stream,'fields',sdfields.get_variable_light_fields())
+
+    lpcme=sdearlystreamutils.test_facet_value_early(args.stream,'local_path_format','custom') # lpcme means 'Local Path Custom Mode Enabled'
+    fields_=sdfields.get_all_variable_fields() if lpcme else sdfields.get_variable_light_fields()
+    sddeferredafter.add_forced_parameter(args.stream,'fields',fields_)
 
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
 
