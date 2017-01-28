@@ -65,7 +65,7 @@ find $data_path -type f -empty -delete
 #       rmdir: missing operand
 #       Try `rmdir --help' for more information.
 #       --->
-#   - "-e" option is used here to inhibit rmdir error.
+#   - "+e" option is used here to inhibit rmdir error.
 #       - rmdir error happens for example in the following case:
 #           - rpm package based installation
 #           - openid set, but CMIP5 role missing
