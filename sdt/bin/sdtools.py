@@ -291,6 +291,31 @@ def ls(path,filter_='*'):
 
     return files
 
+def walk_backward_without_sibling(path):
+    """
+    Return
+        Paths list
+    Sample
+        '/1/2/3' returns ['/1','/1/2','/1/2/3']
+    Note
+        Walk from bottom to top.
+    """
+
+    # build each parents path
+    tmp=[]
+    paths=[]
+    for folder in path.split('/'):
+        tmp.append(folder)
+        paths.append(tmp[:]) # we need copy here, not reference (http://stackoverflow.com/questions/8744113/python-list-by-value-not-by-reference)
+
+    # merge
+    paths=['/'.join(p) for p in paths]
+
+    # remove firt path, which is always empty (artifact)
+    del paths[0]
+
+    return paths
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f','--file',required=True)
