@@ -18,7 +18,7 @@ import sdexception
 import sddelete
 import sddeletefile
 import sddeletedataset
-import sdoperation
+import sdcleanup
 import sdtypes
 import syndautils
 import sdearlystreamutils
@@ -146,7 +146,7 @@ def remove(metadata,remove_all=True):
 
     # Fourth step is to remove orphan folder (DATA)
     if remove_all:
-        sdoperation.cleanup_tree()
+        sdcleanup.full_cleanup()
 
 # init.
 
