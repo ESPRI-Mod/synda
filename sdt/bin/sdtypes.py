@@ -341,7 +341,7 @@ class CommonIO(object):
     def get_files(self): # warning: load list in memory
         return self.store.get_files()
 
-    def get_chunks(self,io_mode):
+    def get_chunks(self,io_mode=sdconst.PROCESSING_FETCH_MODE_GENERATOR):
         assert not isinstance(self.store,list)
         return self.store.get_chunks(io_mode)
 
