@@ -151,6 +151,7 @@ def remove(metadata,remove_all=True):
         # part
         paths=sdmdcommon.get_attributes(metadata,'local_path')
         paths=[os.path.dirname(p) for p in paths] # remove filenames
+        paths=[sdtypes.build_full_local_path(p) for p in paths] # switch to full path
         sdcleanup.part_cleanup(paths)
 
         # full
