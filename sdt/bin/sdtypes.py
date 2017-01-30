@@ -27,6 +27,14 @@ import sdconst
 import sdtools
 from sdexception import SDException
 
+def build_full_local_path(local_path,prefix=sdconfig.data_folder):
+
+    # this is to be sure self.local_path is not a full path (if it is, os.path.join() in code near after doesn't work properly)
+    if len(local_path)>0:
+        assert local_path[0]!='/'
+
+    return os.path.join(prefix,local_path)
+
 class Variable():
     def __init__(self,**kwargs):
         self.__dict__.update( kwargs )
@@ -135,12 +143,7 @@ class Selection():
 
 class BaseType():
     def get_full_local_path(self,prefix=sdconfig.data_folder):
-
-        # this is to be sure self.local_path is not a full path (if it is, os.path.join() func below doesn't work properly)
-        if len(self.local_path)>0:
-            assert self.local_path[0]!='/'
-
-        return os.path.join(prefix,self.local_path)
+        return build_full_local_path(self.local_path,prefix)
 
 class File(BaseType):
     def __init__(self,**kwargs):
