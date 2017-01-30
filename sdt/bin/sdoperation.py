@@ -11,22 +11,18 @@
 
 """Contains operation routines."""
 
-import os
 import argparse
 import sdapp
 import sddatasetflag
 from sdprogress import SDProgressDot
-import sdconfig
 import sdlog
 import sdlatestquery
 import sddatasetquery
-import sdtools
 import sdutils
 import sddao
 import sddeletedataset
 import sdfiledao
 import sddb
-from sdexception import SDException
 
 def print_recently_modified_datasets():
     """Export to prodiguer.
@@ -75,21 +71,6 @@ def get_recently_modified_datasets():
     sdlog.info("SDOPERAT-325","total files exported: %i"%files_count)
 
     return datasets_to_export
-
-def cleanup_tree():
-    """Remove empty files and folders."""
-    sdlog.info("SDOPERAT-008","Starting cleanup in %s."%sdconfig.data_folder)
-
-    # TODO: this method is only used for incremental mode and it would be usefull to be able to also have a full mode cleanup
-
-    argv=[sdconfig.cleanup_tree_script,sdconfig.data_folder]
-
-    (status,stdout,stderr)=sdutils.get_status_output(argv)
-    if status!=0:
-        sdtools.trace(sdconfig.stacktrace_log_file,os.path.basename(sdconfig.cleanup_tree_script),status,stdout,stderr)
-        raise SDException("SDOPERAT-001","Error occurs during tree cleanup")
-
-    sdlog.info("SDOPERAT-010","Cleanup done.")
 
 def recreate_selection_transfer_association_table():
     """Reset "selection__transfer" association table (populate from scratch)."""
