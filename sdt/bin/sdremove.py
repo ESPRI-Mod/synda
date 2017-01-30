@@ -146,6 +146,12 @@ def remove(metadata,remove_all=True):
 
     # Fourth step is to remove orphan folder (DATA)
     if remove_all:
+
+        # new
+        #paths=sdmdcommon.get_attributes(metadata,'local_path')
+        #sdcleanup.part_cleanup(paths)
+
+        # old
         sdcleanup.full_cleanup()
 
 # init.
