@@ -15,6 +15,7 @@ import sys
 import argparse
 from sdtools import print_stderr,print_stdout
 import sdexception
+import sdmdcommon
 import sddelete
 import sddeletefile
 import sddeletedataset
@@ -147,12 +148,13 @@ def remove(metadata,remove_all=True):
     # Fourth step is to remove orphan folder (DATA)
     if remove_all:
 
-        # new
-        #paths=sdmdcommon.get_attributes(metadata,'local_path')
-        #sdcleanup.part_cleanup(paths)
+        # part
+        paths=sdmdcommon.get_attributes(metadata,'local_path')
+        paths=[os.path.dirname(p) for p in paths] # remove filenames
+        sdcleanup.part_cleanup(paths)
 
-        # old
-        sdcleanup.full_cleanup()
+        # full
+        #sdcleanup.full_cleanup()
 
 # init.
 
