@@ -23,8 +23,8 @@ from sdexception import SDException
 def remove_empty_files(path):
     for p in sdtools.walk_backward_without_sibling(path):
         for x in os.listdir(p):
-            if os.isfile(x):
-                if not os.islink(x):
+            if os.path.isfile(x):
+                if not os.path.islink(x):
                     f = '%s/%s' % (p,x)
                     if os.path.getsize(f)==0:
                         try:

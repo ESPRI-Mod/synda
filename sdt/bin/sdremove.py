@@ -11,6 +11,7 @@
 
 """This module contains 'synda remove' related routines."""
 
+import os
 import sys
 import argparse
 from sdtools import print_stderr,print_stdout
@@ -149,10 +150,10 @@ def remove(metadata,remove_all=True):
     if remove_all:
 
         # part
-        paths=sdmdcommon.get_attributes(metadata,'local_path')
-        paths=[os.path.dirname(p) for p in paths] # remove filenames
+        paths=sdmdcommon.get_attributes(metadata,'local_path')  # retrieve paths
+        paths=[os.path.dirname(p) for p in paths]               # remove filenames
         paths=[sdtypes.build_full_local_path(p) for p in paths] # switch to full path
-        sdcleanup.part_cleanup(paths)
+        sdcleanup.part_cleanup(paths)                           # remove paths
 
         # full
         #sdcleanup.full_cleanup()
