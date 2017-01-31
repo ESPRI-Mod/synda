@@ -1,5 +1,7 @@
 - Version 3.8 - 
+	- follow symlinks during 'synda remove' operation.
 	- add manual routines to refresh dataset status.
+	- new cleanup algo for 'synda remove' command (run faster).
 - Version 3.7 - 20170115
 	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
 	- disable sdfilepermission module.

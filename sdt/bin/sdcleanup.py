@@ -20,18 +20,25 @@ import sdtools
 import sdutils
 from sdexception import SDException
 
+def ignore(f):
+    if f.endswith('.nc'):
+        return False
+    else:
+        return True
+
 def remove_empty_files(path):
     for p in sdtools.walk_backward_without_sibling(path):
-        for x in os.listdir(p):
-            if os.path.isfile(x):
-                if not os.path.islink(x):
-                    f = '%s/%s' % (p,x)
-                    if os.path.getsize(f)==0:
-                        try:
-                            sdlog.info("SYNCLEAN-090","Remove empty file (%s)"%(f,))
-                            os.remove(f)
-                        except Exception as e:
-                            sdlog.warning("SYNCLEAN-040","Error occurs during file deletion (%s,%s)"%(f,str(e)))
+        for name in os.listdir(p):
+            f = '%s/%s' % (p,name)
+            if not ignore(f): # this is not to remove files at top of the tree, not related with synda (e.g. every hidden file in HOME dir)
+                if os.path.isfile(f):
+                    if not os.path.islink(f):
+                        if os.path.getsize(f)==0:
+                            try:
+                                sdlog.info("SYNCLEAN-090","Remove empty file (%s)"%(f,))
+                                os.remove(f)
+                            except Exception as e:
+                                sdlog.warning("SYNCLEAN-040","Error occurs during file deletion (%s,%s)"%(f,str(e)))
 
 def full_cleanup():
     """Remove empty files and folders."""
@@ -50,17 +57,19 @@ def full_cleanup():
 def part_cleanup(paths):
     """Remove empty files and folders."""
 
-    sdlog.info("SYNCLEAN-018","Starting cleanup")
+    sdlog.info("SYNCLEAN-018","Cleanup begin")
 
     paths=sorted(paths, reverse=True) # maybe overkill (idea is that reverse order may allow the suppression of empty sibling, but as all paths to be removed will go through a os.removedirs call it should work anyway)
 
     for p in paths:
+        sdlog.info("SYNCLEAN-060","Check for empty file and directory in %s"%p)
 
         # remove empty files
+        sdlog.debug("SYNCLEAN-120","Remove empty files (%s)"%(path,))
         remove_empty_files(p)
 
         # remove empty directories starting from leaves
-        sdlog.debug("SYNCLEAN-100","os.removedirs(%s)"%(p,))
+        sdlog.debug("SYNCLEAN-140","Remove empty dirs (%s)"%(p,))
         os.removedirs(p)
 
     # as the previous command may also remove 'data' folder (when all data have been removed), we re-create 'data' if missing
