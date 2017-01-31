@@ -52,7 +52,7 @@ def part_cleanup(paths):
 
     sdlog.info("SYNCLEAN-018","Starting cleanup")
 
-    paths=sorted(paths, reverse=True) # maybe overkill
+    paths=sorted(paths, reverse=True) # maybe overkill (idea is that reverse order may allow the suppression of empty sibling, but as all paths to be removed will go through a os.removedirs call it should work anyway)
 
     for p in paths:
 
