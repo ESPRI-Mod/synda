@@ -28,7 +28,7 @@ def remove_empty_files(path):
                     f = '%s/%s' % (p,x)
                     if os.path.getsize(f)==0:
                         try:
-                            sdlog.debug("SYNCLEAN-090","os.remove(%s)"%(f,))
+                            sdlog.debug("SYNCLEAN-090","Remove empty file (%s)"%(f,))
                             os.remove(f)
                         except Exception as e:
                             sdlog.warning("SYNCLEAN-040","Error occurs during file deletion (%s,%s)"%(f,str(e)))
