@@ -153,6 +153,7 @@ def remove(metadata,remove_all=True):
         paths=sdmdcommon.get_attributes(metadata,'local_path')  # retrieve paths
         paths=[os.path.dirname(p) for p in paths]               # remove filenames
         paths=[sdtypes.build_full_local_path(p) for p in paths] # switch to full path
+        paths=[os.path.realpath(p) for p in paths]              # follow symlink
         sdcleanup.part_cleanup(paths)                           # remove paths
 
         # full

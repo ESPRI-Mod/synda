@@ -80,7 +80,7 @@ find $data_path -type f -empty -delete
 #             is handled in a specific way and is not inhibited by --ignore-fail-on-non-empty flag)
 #   - subshell is used here to prevent setting "+e" option globally (i.e. for the all script)
 #
-( set +e ; find $data_path -type d -empty | sort -r | xargs -r rmdir --ignore-fail-on-non-empty -p ; exit 0 )
+( set +e ; find -L $data_path -type d -empty | sort -r | xargs -r rmdir --ignore-fail-on-non-empty -p ; exit 0 )
 
 # as the previous command may also remove 'data' folder (when all data have been removed), we re-create 'data' if missing
 if [ ! -d $data_path ]; then
