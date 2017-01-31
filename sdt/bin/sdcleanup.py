@@ -65,15 +65,19 @@ def part_cleanup(paths):
         sdlog.info("SYNCLEAN-060","Check for empty file and directory in %s"%p)
 
         # remove empty files
-        sdlog.debug("SYNCLEAN-120","Remove empty files (%s)"%(path,))
+        sdlog.debug("SYNCLEAN-120","Remove empty files (%s)"%(p,))
         remove_empty_files(p)
 
         # remove empty directories starting from leaves
         sdlog.debug("SYNCLEAN-140","Remove empty dirs (%s)"%(p,))
-        os.removedirs(p)
+        try:
+            os.removedirs(p)
+        except OSError as e:
+            pass # Neutralize exception (needed as removedirs raise exception at first non empty dir).
 
     # as the previous command may also remove 'data' folder (when all data have been removed), we re-create 'data' if missing
-    os.makedirs(sdconfig.data_folder)
+    if not os.path.isdir(sdconfig.data_folder):
+        os.makedirs(sdconfig.data_folder)
 
     sdlog.info("SYNCLEAN-020","Cleanup done.")
 
