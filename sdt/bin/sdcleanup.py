@@ -63,6 +63,9 @@ def part_cleanup(paths):
         sdlog.debug("SYNCLEAN-100","os.removedirs(%s)"%(p,))
         os.removedirs(p)
 
+    # as the previous command may also remove 'data' folder (when all data have been removed), we re-create 'data' if missing
+    os.makedirs(sdconfig.data_folder)
+
     sdlog.info("SYNCLEAN-020","Cleanup done.")
 
 if __name__ == '__main__':
