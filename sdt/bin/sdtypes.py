@@ -28,12 +28,18 @@ import sdtools
 from sdexception import SDException
 
 def build_full_local_path(local_path,prefix=sdconfig.data_folder):
+    add_prefix=True
 
-    # this is to be sure self.local_path is not a full path (if it is, os.path.join() in code near after doesn't work properly)
     if len(local_path)>0:
-        assert local_path[0]!='/'
+        if local_path[0]=='/':
+            add_prefix=False
 
-    return os.path.join(prefix,local_path)
+    if add_prefix:
+        path=os.path.join(prefix,local_path)
+    else:
+        path=local_path
+
+    return path
 
 class Variable():
     def __init__(self,**kwargs):
