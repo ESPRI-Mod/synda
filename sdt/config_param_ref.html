@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration parameter reference &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
+        <link rel="next" title="Selection file parameter reference" href="selection_file_param_ref.html"/>
+        <link rel="prev" title="Upgrade from DEB package" href="deb_upgrade.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration parameter reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file_param_ref.html">Selection file parameter reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select_indexes.html">ESGF index selection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+      
+    <li>Configuration parameter reference</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdt/config_param_ref.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration-parameter-reference">
+<span id="config-param-ref-sdt"></span><h1>Configuration parameter reference<a class="headerlink" href="#configuration-parameter-reference" title="Permalink to this headline">¶</a></h1>
+<p>This document describes each parameter used in <code class="docutils literal"><span class="pre">sdt.conf</span></code> file to configure Synda.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="14%" />
+<col width="6%" />
+<col width="17%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Section</th>
+<th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Default value</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>[daemon]</td>
+<td>user</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Set daemon user.
+The daemon must be started by root for this parameter to work.</td>
+</tr>
+<tr class="row-odd"><td>[daemon]</td>
+<td>group</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Set daemon group.
+The daemon must be started by root for this parameter to work.</td>
+</tr>
+<tr class="row-even"><td>[download]</td>
+<td>max_parallel_download</td>
+<td><em>int</em></td>
+<td>8</td>
+<td>Set the number of parallel download.</td>
+</tr>
+<tr class="row-odd"><td>[download]</td>
+<td>hpss</td>
+<td><em>boolean</em></td>
+<td>True</td>
+<td>Gives HPSS service some time to move data from tape to disk.</td>
+</tr>
+<tr class="row-even"><td>[download]</td>
+<td>http_fallback</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>If GridFTP transfer fails, GridFTP URL is automatically replaced with HTTP URL.</td>
+</tr>
+<tr class="row-odd"><td>[module]</td>
+<td>download</td>
+<td><em>boolean</em></td>
+<td>True</td>
+<td>If true, download files from ESGF.
+To use synda in discovery or post-processing mode only, set this parameter to false.</td>
+</tr>
+<tr class="row-even"><td>[module]</td>
+<td>post_processing</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>If true, send download completion events to the post-processing module.</td>
+</tr>
+<tr class="row-odd"><td>[module]</td>
+<td>globustransfer</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>If true, use Globus Transfer platform to download files.</td>
+</tr>
+<tr class="row-even"><td>[post_processing]</td>
+<td>host</td>
+<td><em>string</em></td>
+<td>localhost</td>
+<td>Post-processing daemon host.</td>
+</tr>
+<tr class="row-odd"><td>[post_processing]</td>
+<td>port</td>
+<td><em>int</em></td>
+<td>8090</td>
+<td>Post-processing daemon port.</td>
+</tr>
+<tr class="row-even"><td>[log]</td>
+<td>verbosity_level</td>
+<td><em>string</em></td>
+<td>info</td>
+<td>Log verbosity level.</td>
+</tr>
+<tr class="row-odd"><td>[log]</td>
+<td>scheduler_profiling</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Log code profiling information.</td>
+</tr>
+<tr class="row-even"><td>[core]</td>
+<td>metadata_server_type</td>
+<td><em>string</em></td>
+<td>esgf_search_api</td>
+<td>Type of metadata server.
+Possible values are: <code class="docutils literal"><span class="pre">esgf_search_api</span></code>, <code class="docutils literal"><span class="pre">thredds_catalog</span></code> and <code class="docutils literal"><span class="pre">apache_default_listing</span></code>.</td>
+</tr>
+<tr class="row-odd"><td>[core]</td>
+<td>default_path</td>
+<td><em>string</em></td>
+<td><code class="docutils literal"><span class="pre">$HOME/sdt/conf/default</span></code>
+or <code class="docutils literal"><span class="pre">/etc/synda/sdt/default</span></code></td>
+<td>Default directory path for default selection files.</td>
+</tr>
+<tr class="row-even"><td>[core]</td>
+<td>selection_path</td>
+<td><em>string</em></td>
+<td><code class="docutils literal"><span class="pre">$HOME/sdt/selection</span></code>
+or <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code></td>
+<td>Default directory path for selection files.</td>
+</tr>
+<tr class="row-odd"><td>[core]</td>
+<td>data_path</td>
+<td><em>string</em></td>
+<td><code class="docutils literal"><span class="pre">$HOME/sdt/data</span></code>
+or <code class="docutils literal"><span class="pre">/srv/synda/sdt/data</span></code></td>
+<td>Default data directory path.</td>
+</tr>
+<tr class="row-even"><td>[core]</td>
+<td>db_path</td>
+<td><em>string</em></td>
+<td><code class="docutils literal"><span class="pre">$HOME/sdt/db</span></code>
+or <code class="docutils literal"><span class="pre">/var/lib/synda/sdt</span></code></td>
+<td>Default database directory.</td>
+</tr>
+<tr class="row-odd"><td>[core]</td>
+<td>sandbox_path</td>
+<td><em>string</em></td>
+<td><code class="docutils literal"><span class="pre">$HOME/sdt/sandbox</span></code>
+or <code class="docutils literal"><span class="pre">/srv/synda/sdt/sandbox</span></code></td>
+<td>Default sandbox directory path.</td>
+</tr>
+<tr class="row-even"><td>[interface]</td>
+<td>unicode_term</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Use unicode characters for progress bar.</td>
+</tr>
+<tr class="row-odd"><td>[interface]</td>
+<td>progress</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Show progress bar for time consuming task.</td>
+</tr>
+<tr class="row-even"><td>[interface]</td>
+<td>default_listing_size</td>
+<td><em>string</em></td>
+<td>small</td>
+<td>This parameter drives how many results are displayed by default for &#8220;search&#8221;, &#8220;list&#8221; and &#8220;dump&#8221; subcommands.
+Possible values are: &#8220;small&#8221;, &#8220;medium&#8221; and &#8220;big&#8221;.</td>
+</tr>
+<tr class="row-odd"><td>[behaviour]</td>
+<td>onemgf</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Improve search performance.</td>
+</tr>
+<tr class="row-even"><td>[behaviour]</td>
+<td>check_parameter</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Perform parameter typo detection (name and value).</td>
+</tr>
+<tr class="row-odd"><td>[behaviour]</td>
+<td>ignorecase</td>
+<td><em>boolean</em></td>
+<td>True</td>
+<td>Automatically fix incorrect case.</td>
+</tr>
+<tr class="row-even"><td>[behaviour]</td>
+<td>nearest</td>
+<td><em>boolean</em></td>
+<td>False</td>
+<td>Automatically select the nearest file replica.</td>
+</tr>
+<tr class="row-odd"><td>[behaviour]</td>
+<td>nearest_mode</td>
+<td><em>string</em></td>
+<td>geolocation</td>
+<td>Set nearest replica algorithm.
+Possible values are: &#8220;geolocation&#8221; and &#8220;rtt&#8221;.</td>
+</tr>
+<tr class="row-even"><td>[behaviour]</td>
+<td>lfae_mode</td>
+<td><em>string</em></td>
+<td>abort</td>
+<td>Set which policies to adopt when a download starts and local file already exists (lfae).
+Possible values are: &#8220;keep&#8221;, &#8220;replace&#8221; and &#8220;abort&#8221;.</td>
+</tr>
+<tr class="row-odd"><td>[behaviour]</td>
+<td>incorrect_checksum_action</td>
+<td><em>string</em></td>
+<td>remove</td>
+<td>Set which policies to adopt when checksum doesn&#8217;t match.
+Possible values are: &#8220;remove&#8221; and &#8220;keep&#8221;.</td>
+</tr>
+<tr class="row-even"><td>[index]</td>
+<td>indexes</td>
+<td><em>string</em></td>
+<td>pcmdi.llnl.gov</td>
+<td>Set the indexes list to use for large operation.
+This parameter is used for load-balancing on several indexes, to speed up large search-API requests.</td>
+</tr>
+<tr class="row-odd"><td>[index]</td>
+<td>default_index</td>
+<td><em>string</em></td>
+<td>pcmdi.llnl.gov</td>
+<td>Set the index to use in priority.</td>
+</tr>
+<tr class="row-even"><td>[locale]</td>
+<td>country</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Set the country in which synda is installed.
+Used to compute nearest replica when &#8220;geolocation&#8221; mode is used.</td>
+</tr>
+<tr class="row-odd"><td>[globus]</td>
+<td>esgf_endpoints</td>
+<td><em>string</em></td>
+<td>/esg/config/esgf_endpoints.xml</td>
+<td>Set globus endpoints.</td>
+</tr>
+<tr class="row-even"><td>[globus]</td>
+<td>destination_endpoint</td>
+<td><em>string</em></td>
+<td>destination#endpoint</td>
+<td>Set destination endpoint.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="selection_file_param_ref.html" class="btn btn-neutral float-right" title="Selection file parameter reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="deb_upgrade.html" class="btn btn-neutral" title="Upgrade from DEB package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

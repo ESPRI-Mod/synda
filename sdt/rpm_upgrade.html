@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Upgrade from RPM package &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
+        <link rel="next" title="Upgrade from DEB package" href="deb_upgrade.html"/>
+        <link rel="prev" title="Upgrade from source" href="src_upgrade.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src_upgrade.html">Upgrade from source</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrade from RPM package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pre-upgrade">Pre-upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#post-upgrade">Post-upgrade</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deb_upgrade.html">Upgrade from DEB package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+      
+    <li>Upgrade from RPM package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdt/rpm_upgrade.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="upgrade-from-rpm-package">
+<span id="rpm-upgrade-sdt"></span><h1>Upgrade from RPM package<a class="headerlink" href="#upgrade-from-rpm-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pre-upgrade">
+<h2>Pre-upgrade<a class="headerlink" href="#pre-upgrade" title="Permalink to this headline">¶</a></h2>
+<p>Stop service with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdt stop
+</pre></div>
+</div>
+<p>Backup folders below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>/etc/synda/sdt
+/var/log/synda/sdt
+/var/lib/synda/sdt
+</pre></div>
+</div>
+</div>
+<div class="section" id="upgrade">
+<h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
+<p>Remove previous package version:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum erase synda
+</pre></div>
+</div>
+<p>Install new package version following <a class="reference internal" href="rpm_install.html#rpm-install-sdt"><span class="std std-ref">installation from RPM package</span></a>.</p>
+</div>
+<div class="section" id="post-upgrade">
+<h2>Post-upgrade<a class="headerlink" href="#post-upgrade" title="Permalink to this headline">¶</a></h2>
+<p>Stop service with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdt stop
+</pre></div>
+</div>
+<p>As configuration files located in /etc/synda/sdt have been reinitialized during upgrade, you need to re-enter your openid and password, as well as any other parameter you may have set to a non-default value.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can use a diff program to compare post-upgrade configuration files over pre-upgrade configuration files (from the backup).</p>
+</div>
+<p>Restore database from backup in <code class="docutils literal"><span class="pre">/var/lib/synda/sdt</span></code> (replace the existing file).</p>
+<p>Restart service with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdt restart
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deb_upgrade.html" class="btn btn-neutral float-right" title="Upgrade from DEB package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="src_upgrade.html" class="btn btn-neutral" title="Upgrade from source" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

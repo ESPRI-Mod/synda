@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ESGF replication &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
+        <link rel="next" title="Synda Files and Folders" href="../files.html"/>
+        <link rel="prev" title="Worker User Guide" href="worker_user_guide.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="worker_user_guide.html">Worker User Guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ESGF replication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-installation">Synda installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-selection-file-to-describe-which-data-to-replicate">Create a selection file to describe which data to replicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-republication-pipeline">Create a republication pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-discovery">File discovery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#files-download">Files download</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#files-processing">Files processing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
+      
+    <li>ESGF replication</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdp/replication.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="esgf-replication">
+<span id="replication-sdp"></span><h1>ESGF replication<a class="headerlink" href="#esgf-replication" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how to implement a full ESGF replication pipeline:</p>
+<a class="reference internal image-reference" href="../images/synda_replication.png"><img alt="Basic replication pipeline" class="align-center" src="../images/synda_replication.png" style="width: 949.0px; height: 519.0px;" /></a>
+</div>
+<div class="section" id="synda-installation">
+<h2>Synda installation<a class="headerlink" href="#synda-installation" title="Permalink to this headline">¶</a></h2>
+<p>See synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM package</span></a>, <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB package</span></a> or <a class="reference internal" href="../sdt/src_install.html#src-install-sdt"><span class="std std-ref">sources</span></a>.
+Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM package</span></a>, <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB package</span></a> or <a class="reference internal" href="src_install.html#src-install-sdp"><span class="std std-ref">sources</span></a>.</p>
+</div>
+<div class="section" id="create-a-selection-file-to-describe-which-data-to-replicate">
+<h2>Create a selection file to describe which data to replicate<a class="headerlink" href="#create-a-selection-file-to-describe-which-data-to-replicate" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../sdt/selection_file.html#selection-file"><span class="std std-ref">the selection file section</span></a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can create many selection files (e.g. one per project). Selection file(s) must be stored in the &#8220;selection&#8221; folder.</p>
+</div>
+</div>
+<div class="section" id="create-a-republication-pipeline">
+<h2>Create a republication pipeline<a class="headerlink" href="#create-a-republication-pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>This republication pipeline is at least composed of 2 tasks to apply on each replicated dataset:</dt>
+<dd><ul class="first last simple">
+<li>The mapfile generation,</li>
+<li>The ESGF publication as replicas.</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="scripts">
+<h3>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">mapfile.sh</span></code> that will generate mapfiles using the <code class="docutils literal"><span class="pre">`esgprep</span> <span class="pre">mapfile</span></code> command-line &lt;<a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">http://is-enes-data.github.io/esgf-prepare/</a>&gt;`_. The script content should like:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
+
+<span class="c1"># Description</span>
+<span class="c1">#   This script generates ESGF mapfile.</span>
+<span class="c1">#   Processes by dataset.</span>
+
+<span class="c1"># --------- arguments &amp; initialization --------- #</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> in
+        <span class="s2">&quot;--project&quot;</span><span class="o">)</span>          shift<span class="p">;</span> <span class="nv">project</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>          <span class="p">;;</span>
+        <span class="s2">&quot;--dataset_pattern&quot;</span><span class="o">)</span>  shift<span class="p">;</span> <span class="nv">input_dataset</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>    <span class="p">;;</span>
+    <span class="k">esac</span>
+    <span class="nb">shift</span>
+<span class="k">done</span>
+
+<span class="nv">ESGCET_PATH</span><span class="o">=</span><span class="s2">&quot;/esg/config/esgcet/&quot;</span>
+
+<span class="c1"># --------- main --------- #</span>
+
+msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;mapfile.sh started&quot;</span>
+
+esgprep mapfile -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> -v <span class="se">\</span>
+                --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
+                --log <span class="se">\</span>
+                --max-threads <span class="m">16</span> <span class="se">\</span>
+                --no-cleanup <span class="se">\</span>
+                <span class="si">${</span><span class="nv">input_dataset</span><span class="si">}</span>
+
+msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;mapfile.sh complete&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">publication.sh</span></code> that will publish the generated mapfile as replica. The script content should like:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
+
+<span class="c1"># Description</span>
+<span class="c1">#   This script publishes mapfiles.</span>
+<span class="c1">#   Processes by dataset.</span>
+
+<span class="c1"># --------- arguments &amp; initialization --------- #</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> in
+        <span class="s2">&quot;--project&quot;</span><span class="o">)</span>          shift<span class="p">;</span> <span class="nv">project</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>          <span class="p">;;</span>
+        <span class="s2">&quot;--dataset_pattern&quot;</span><span class="o">)</span>  shift<span class="p">;</span> <span class="nv">input_dataset</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>    <span class="p">;;</span>
+    <span class="k">esac</span>
+    <span class="nb">shift</span>
+<span class="k">done</span>
+
+<span class="c1"># INI files directory</span>
+<span class="nv">ESGCET_PATH</span><span class="o">=</span><span class="s2">&quot;/esg/config/esgcet/&quot;</span>
+<span class="c1"># Indexnode hostname</span>
+<span class="nv">MYPROXY_HOST</span><span class="o">=</span><span class="s2">&quot;esgf-node.fr&quot;</span>
+<span class="c1"># myproxy-logon port</span>
+<span class="nv">MYPROXY_PORT</span><span class="o">=</span><span class="s2">&quot;7512&quot;</span>
+<span class="c1"># Publisher&#39;s openID login registered</span>
+<span class="nv">MYPROXY_LOGIN</span><span class="o">=</span><span class="s2">&quot;xxxxxx&quot;</span>
+<span class="c1"># Publisher&#39;s openID password</span>
+<span class="nv">MYPROXY_PASSWD</span><span class="o">=</span><span class="s2">&quot;xxxxxx&quot;</span>
+
+<span class="c1"># --------- main --------- #</span>
+
+msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;replication.sh started&quot;</span>
+
+<span class="c1"># Loads ESGF environment</span>
+<span class="nb">source</span> /etc/esg.env
+
+<span class="c1"># Checkup directories and temporary files</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    msg <span class="s2">&quot;ERROR&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span><span class="s2"> does not exist. STOP.&quot;</span> &gt;<span class="p">&amp;</span>2
+    <span class="nb">exit</span> 1
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    msg <span class="s2">&quot;ERROR&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.globus does not exist. STOP.&quot;</span> &gt;<span class="p">&amp;</span>2
+    <span class="nb">exit</span> 1
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> -f <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    msg <span class="s2">&quot;WARNING&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.globus/certificate-file already exists. Deleted.&quot;</span> &gt;<span class="p">&amp;</span>2
+    rm -f <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file
+<span class="k">fi</span>
+
+<span class="c1"># Retrieve mapfile name with an esgprep dry run</span>
+<span class="nv">uuid</span><span class="o">=</span><span class="k">$(</span>uuidgen<span class="k">)</span>
+esgprep mapfile -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> -v <span class="se">\</span>
+                --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
+                --no-checksum <span class="se">\</span>
+                --mapfile <span class="s2">&quot;{dataset_id}.</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+                <span class="si">${</span><span class="nv">input_dir</span><span class="si">}</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> 2&gt; /dev/null
+<span class="nv">mapfile_orig</span><span class="o">=</span><span class="k">$(</span>ls /tmp/map <span class="p">|</span> grep <span class="s2">&quot;</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nv">mapfile</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">mapfile_orig</span><span class="si">}</span> <span class="p">|</span> sed <span class="s2">&quot;s|\.</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">||g&quot;</span><span class="k">)</span>
+rm -fr /tmp/map/<span class="si">${</span><span class="nv">mapfile_orig</span><span class="si">}</span>
+
+<span class="c1"># Gets proxy certificates for publication</span>
+msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Get ESGF certificates...&quot;</span>
+cat <span class="si">${</span><span class="nv">MYPROXY_PASSWD</span><span class="si">}</span> <span class="p">|</span> myproxy-logon -b -T -s <span class="si">${</span><span class="nv">MYPROXY_HOST</span><span class="si">}</span> -p <span class="si">${</span><span class="nv">MYPROXY_PORT</span><span class="si">}</span> -l <span class="si">${</span><span class="nv">MYPROXY_LOGIN</span><span class="si">}</span> -o <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file -S
+
+<span class="c1"># Initialize node and controlled vocabulary</span>
+esginitialize -c -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span>
+
+msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Publishing </span><span class="si">${</span><span class="nv">mapfile</span><span class="si">}</span><span class="s2"> on datanode...&quot;</span>
+<span class="c1"># Datanode publication</span>
+esgpublish -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="se">\</span>
+           --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
+           --thredds <span class="se">\</span>
+           --service fileservice <span class="se">\</span>
+           --set-replica <span class="se">\</span>
+           --map <span class="si">${</span><span class="nv">mapfile_dir</span><span class="si">}${</span><span class="nv">mapfile</span><span class="si">}</span>
+msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Publishing </span><span class="si">${</span><span class="nv">mapfile</span><span class="si">}</span><span class="s2"> on indexnode...&quot;</span>
+<span class="c1">#Indexnode publication</span>
+esgpublish -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="se">\</span>
+           --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
+           --publish <span class="se">\</span>
+           --noscan <span class="se">\</span>
+           --service fileservice <span class="se">\</span>
+           --set-replica <span class="se">\</span>
+           --map <span class="si">${</span><span class="nv">mapfile_dir</span><span class="si">}${</span><span class="nv">mapfile</span><span class="si">}</span>
+
+msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;replication.sh complete&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pipeline-definition">
+<h3>Pipeline definition<a class="headerlink" href="#pipeline-definition" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/republication.py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/republication.py</span></code> for package installation. This file content must be:</li>
+</ul>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sppipelineutils</span>
+<span class="kn">import</span> <span class="nn">sppostprocessingutils</span>
+
+<span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">ppp</span>
+
+<span class="n">name</span><span class="o">=</span><span class="s1">&#39;republication&#39;</span>
+
+<span class="n">tasks</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mapfile&#39;</span><span class="p">,</span><span class="s1">&#39;publication&#39;</span><span class="p">]</span>
+
+<span class="n">ppp</span> <span class="o">=</span> <span class="n">sppostprocessingutils</span><span class="o">.</span><span class="n">build_light_pipeline</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">tasks</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/spbindings/py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code> for package installation. This file content must be:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spconst</span>
+
+<span class="c1"># Mapping: a &#39;key&#39; event into the corresponding tuple of &#39;value&#39; pipeline with starting &#39;status&#39;</span>
+<span class="n">event_pipeline_mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_DATASET_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;republication&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="file-discovery">
+<h2>File discovery<a class="headerlink" href="#file-discovery" title="Permalink to this headline">¶</a></h2>
+<p>Install your selection file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
+</pre></div>
+</div>
+<p>Or upgrade the file discovery:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda upgrade
+</pre></div>
+</div>
+<p>At this point, files metadata are stored in local database and data download can begin.</p>
+</div>
+<div class="section" id="files-download">
+<h2>Files download<a class="headerlink" href="#files-download" title="Permalink to this headline">¶</a></h2>
+<p>To start the download, in single-user installation, run command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda daemon start
+</pre></div>
+</div>
+<p>In multi-user installation, run command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>service sdt start
+</pre></div>
+</div>
+</div>
+<div class="section" id="files-processing">
+<h2>Files processing<a class="headerlink" href="#files-processing" title="Permalink to this headline">¶</a></h2>
+<p>To start the post-processing, in single-user installation, run command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_pp daemon start
+</pre></div>
+</div>
+<p>In multi-user installation, run command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>service sdp start
+</pre></div>
+</div>
+<p>Then, run the worker:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo --script_dir /your/scripts start
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../files.html" class="btn btn-neutral float-right" title="Synda Files and Folders" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="worker_user_guide.html" class="btn btn-neutral" title="Worker User Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

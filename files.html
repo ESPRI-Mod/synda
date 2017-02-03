@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Synda Files and Folders &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="index.html"/>
+        <link rel="next" title="Synda Command reference" href="command_ref.html"/>
+        <link rel="prev" title="ESGF replication" href="sdp/replication.html"/> 
+
+  
+  <script src="static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="sdt/sdt.html">Synda Transfer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdp/sdp.html">Synda Post-Processing Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Synda Files and Folders</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="sources/files.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="synda-files-and-folders">
+<span id="files"></span><h1>Synda Files and Folders<a class="headerlink" href="#synda-files-and-folders" title="Permalink to this headline">¶</a></h1>
+<p>This document describes most important files and folders in use in Synda.</p>
+<div class="section" id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">credentials.conf</span></code></dt>
+<dd>This file contains user credentials (e.g. ESGF openid).
+Location is <code class="docutils literal"><span class="pre">$HOME/{sdt,sdp}/conf/credentials.conf</span></code> for source installation
+and <code class="docutils literal"><span class="pre">/etc/synda/{sdt,sdp}/credentials.conf</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">sdt.conf</span></code></dt>
+<dd>This file contains configuration parameters for transfer module.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/conf/sdt.conf</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">sdp.conf</span></code></dt>
+<dd>This file contains configuration parameters for transfer module.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdp/conf/sdp.conf</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/etc/synda/sdp/sdp.conf</span></code> for system package installation.</dd>
+</dl>
+</div>
+<div class="section" id="folders">
+<h2>Folders<a class="headerlink" href="#folders" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">data</span></code></dt>
+<dd>This folder contains ESGF files downloaded in tracking mode.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/data</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/srv/synda/sdt/data</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">sandbox</span></code></dt>
+<dd>This folder contains ESGF files downloaded in non-tracking mode.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/sandbox</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/srv/synda/sdt/sandbox</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">log</span></code></dt>
+<dd>This folder contains log files.
+Location is <code class="docutils literal"><span class="pre">$HOME/{sdt,sdp}/log</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/var/log/synda/{sdt,sdp}</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">selection</span></code></dt>
+<dd>This folder contains selection files.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/selection</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">default</span></code></dt>
+<dd>This folder contains selection parameters default values.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/conf/default</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/etc/synda/sdt/default</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">pipeline</span></code></dt>
+<dd>This folder contains pipelines definition scripts.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdp/conf/pipeline</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline</span></code> for system package installation.</dd>
+</dl>
+</div>
+<div class="section" id="databases">
+<h2>Databases<a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">sdt.db</span></code></dt>
+<dd>This file contains the dataset and file entries to track downloads.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdt/db/sdt.db</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/var/lib/synda/sdt/sdt.db</span></code> for system package installation.</dd>
+<dt><code class="docutils literal"><span class="pre">sdp.db</span></code></dt>
+<dd>This file contains the post-processing entries to track pipeline execution.
+Location is <code class="docutils literal"><span class="pre">$HOME/sdp/db/sdp.db</span></code> for source installation and
+<code class="docutils literal"><span class="pre">/var/lib/synda/sdp/sdp.db</span></code> for system package installation.</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="command_ref.html" class="btn btn-neutral float-right" title="Synda Command reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sdp/replication.html" class="btn btn-neutral" title="ESGF replication" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

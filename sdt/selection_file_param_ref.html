@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Selection file parameter reference &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
+        <link rel="next" title="ESGF index selection" href="select_indexes.html"/>
+        <link rel="prev" title="Configuration parameter reference" href="config_param_ref.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="config_param_ref.html">Configuration parameter reference</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Selection file parameter reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#search-api-parameter">Search-api parameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-download-parameters">Synda download parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-remote-search-parameters">Synda remote search parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-local-search-parameters">Synda local search parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-formatting-parameters">Synda formatting parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="select_indexes.html">ESGF index selection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+      
+    <li>Selection file parameter reference</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdt/selection_file_param_ref.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="selection-file-parameter-reference">
+<span id="selection-file-param-ref"></span><h1>Selection file parameter reference<a class="headerlink" href="#selection-file-parameter-reference" title="Permalink to this headline">¶</a></h1>
+<p>This document describes each parameter used in a selection file.</p>
+<div class="section" id="search-api-parameter">
+<h2>Search-api parameter<a class="headerlink" href="#search-api-parameter" title="Permalink to this headline">¶</a></h2>
+<p>Those parameters are described <a class="reference external" href="https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API">here</a></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Those parameters are specific to Synda and cannot be used directly with the Search-api.</p>
+</div>
+</div>
+<div class="section" id="synda-download-parameters">
+<h2>Synda download parameters<a class="headerlink" href="#synda-download-parameters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="7%" />
+<col width="39%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Default value</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>protocol</td>
+<td><em>string</em></td>
+<td>http</td>
+<td>Select which protocol to use to download the data.
+The two currently supported protocols are HTTP and GridFTP.</td>
+</tr>
+<tr class="row-odd"><td>searchapi_host</td>
+<td><em>string</em></td>
+<td>&lt;index.default_index&gt; from sdt.conf file
+or random index from &lt;index.indexes&gt; in parallel mode</td>
+<td>Set which ESGF index to use for files discovery.</td>
+</tr>
+<tr class="row-even"><td>url_replace</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Replace all occurrences of substring in url.</td>
+</tr>
+<tr class="row-odd"><td>priority</td>
+<td><em>int</em></td>
+<td>1000</td>
+<td>Set download priority.</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|
+</pre></div>
+</div>
+</div>
+<div class="section" id="synda-remote-search-parameters">
+<h2>Synda remote search parameters<a class="headerlink" href="#synda-remote-search-parameters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="14%" />
+<col width="21%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Default value</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>timeslice</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Select files inside &lt;timeslice&gt;.</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search atmos mon tasmin CMIP5 CNRM-CM5 <span class="nv">timeslice</span><span class="o">=</span>197001-198512 -f
+</pre></div>
+</div>
+</div>
+<div class="section" id="synda-local-search-parameters">
+<h2>Synda local search parameters<a class="headerlink" href="#synda-local-search-parameters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="11%" />
+<col width="17%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Default value</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>local_path</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Select files matching &lt;local_path&gt;.</td>
+</tr>
+<tr class="row-odd"><td>error_msg</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Select files matching &lt;error_msg&gt;.</td>
+</tr>
+<tr class="row-even"><td>insertion_group_id</td>
+<td><em>int</em></td>
+<td>&nbsp;</td>
+<td>Select files matching &lt;insertion_group_id&gt;.</td>
+</tr>
+<tr class="row-odd"><td>status</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Select files matching download &lt;status&gt;.</td>
+</tr>
+<tr class="row-even"><td>sdget_status</td>
+<td><em>int</em></td>
+<td>&nbsp;</td>
+<td>Select files matching &lt;sdget_status&gt;.</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda list <span class="nv">local_path</span><span class="o">=</span>CMIP5/output1/NCAR/CCSM4/rcp60/mon/land/Lmon/r1i1p1
+synda list <span class="s2">&quot;error_msg=local file already exists,&quot;</span> -f
+synda list <span class="nv">insertion_group_id</span><span class="o">=</span><span class="m">71</span> -f
+synda list <span class="nv">status</span><span class="o">=</span>error -f
+synda list <span class="nv">sdget_status</span><span class="o">=</span><span class="m">1</span> -f
+</pre></div>
+</div>
+</div>
+<div class="section" id="synda-formatting-parameters">
+<h2>Synda formatting parameters<a class="headerlink" href="#synda-formatting-parameters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="6%" />
+<col width="9%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Default value</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>local_path_format</td>
+<td><em>string</em></td>
+<td>treevar</td>
+<td>Set local path format.
+If set to &#8220;treevar&#8221;, the dataset DRS is used to build the local path and a folder is added to group files by variable.
+If set to &#8220;tree&#8221;, the dataset DRS is used to build the local path.
+If set to &#8220;custom&#8221;, the local path is built based on template defined in &lt;local_path_drs_template&gt; variable.
+If set to &#8220;notree&#8221;, all files are stored in the same folder.</td>
+</tr>
+<tr class="row-odd"><td>local_path_product_format</td>
+<td><em>string</em></td>
+<td>normal</td>
+<td>If set to &#8220;normal&#8221;, product folders (e.g. &#8220;output1&#8221; and &#8220;output2&#8221;) are kept in local path.
+If set to &#8220;remove&#8221;, product folders level are removed from local path and products sub-folders are merged.
+If set to &#8220;merge&#8221;, product folders are merged into one folder called &#8220;output&#8221; and products sub-folders are merged.</td>
+</tr>
+<tr class="row-even"><td>local_path_project_format</td>
+<td><em>string</em></td>
+<td>uc</td>
+<td>If set to &#8220;uc&#8221;, local path project folder is converted to uppercase.</td>
+</tr>
+<tr class="row-odd"><td>local_path_drs_template</td>
+<td><em>string</em></td>
+<td>&nbsp;</td>
+<td>Contain the local path custom template.</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>local_path_drs_template=%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">To enable <code class="docutils literal"><span class="pre">local_path_drs_template</span></code>, <code class="docutils literal"><span class="pre">local_path_format</span></code> parameter must be set to &#8220;custom&#8221;. Each variable included in <code class="docutils literal"><span class="pre">local_path_drs_template</span></code> must be present as a standalone attribute in the file metadata. If it is missing, you can use a constant value instead (e.g. &#8220;output&#8221; instead of &#8220;%(product)s&#8221;).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="select_indexes.html" class="btn btn-neutral float-right" title="ESGF index selection" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

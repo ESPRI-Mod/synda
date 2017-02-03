@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Download with Globus &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
+        <link rel="next" title="ESGF replication" href="replication.html"/>
+        <link rel="prev" title="Download with GridFTP" href="gridftp.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gridftp.html">Download with GridFTP</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Download with Globus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requirement">Requirement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+      
+    <li>Download with Globus</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdt/globustransfer.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="download-with-globus">
+<span id="globus"></span><h1>Download with Globus<a class="headerlink" href="#download-with-globus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirement">
+<h2>Requirement<a class="headerlink" href="#requirement" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Synda 3.3+</li>
+<li>Synda must be installed from source to transfer files with Globus Transfer (not available yet with system package based installation).</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>First you need to retrieve the installer:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
+chmod +x ./install.sh
+</pre></div>
+</div>
+<p>Then use one of the methods below to install the globus module.</p>
+<ul class="simple">
+<li>Install <code class="docutils literal"><span class="pre">globustransfer</span></code> module over an already existing synda installation:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./install.sh globustransfer
+</pre></div>
+</div>
+<ul class="simple">
+<li>Install a new installation of synda and globustransfer:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./install.sh synda globustransfer
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">sdt/conf/credentials.conf</span></code></li>
+</ul>
+<div class="highlight-text"><div class="highlight"><pre><span></span>[globustransfer]
+username=
+password=
+</pre></div>
+</div>
+<ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">sdt/conf/sdt.conf</span></code></li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>module<span class="o">]</span>
+<span class="nv">globustransfer</span><span class="o">=</span>1
+
+<span class="o">[</span>globustransfer<span class="o">]</span>
+<span class="nv">destination_endpoint</span> <span class="o">=</span> destination#endpoint
+<span class="nv">esgf_endpoints</span> <span class="o">=</span> /esg/config/esgf_endpoints.xml
+</pre></div>
+</div>
+<ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">/esg/config/esgf_endpoints.xml</span></code></li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span> <span class="nv">standalone</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>?&gt;
+&lt;endpoints <span class="nv">xmlns</span><span class="o">=</span><span class="s2">&quot;http://www.esgf.org/whitelist&quot;</span>&gt;
+    &lt;endpoint
+        <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;cedaesgf#esgf-data1&quot;</span>
+        <span class="nv">gridftp</span><span class="o">=</span><span class="s2">&quot;esgf-data1.ceda.ac.uk:2811&quot;</span>
+        <span class="nv">path_out</span><span class="o">=</span><span class="s2">&quot;/&quot;</span>
+        <span class="nv">path_in</span><span class="o">=</span>”/”
+    /&gt;
+    &lt;endpoint
+    <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;esganl#7c3cf794-d9a4-11e5-ac97-22000b460624&quot;</span>
+        <span class="nv">gridftp</span><span class="o">=</span><span class="s2">&quot;esg.anl.gov:2811&quot;</span>
+        <span class="nv">path_out</span><span class="o">=</span><span class="s2">&quot;/&quot;</span>
+        <span class="nv">path_in</span><span class="o">=</span>”/”
+    /&gt;
+    &lt;endpoint
+        <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;esganl#5a43068a-d669-11e5-9765-22000b9da45e&quot;</span>
+        <span class="nv">gridftp</span><span class="o">=</span><span class="s2">&quot;app006.cels.anl.gov:2811&quot;</span>
+        <span class="nv">path_out</span><span class="o">=</span><span class="s2">&quot;/&quot;</span>
+        <span class="nv">path_in</span><span class="o">=</span>”/”
+    /&gt;
+&lt;/endpoints&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="replication.html" class="btn btn-neutral float-right" title="ESGF replication" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gridftp.html" class="btn btn-neutral" title="Download with GridFTP" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

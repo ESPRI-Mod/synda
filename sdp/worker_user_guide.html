@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Worker User Guide &mdash; synda 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
+        <link rel="next" title="ESGF replication" href="replication.html"/>
+        <link rel="prev" title="User guide" href="user_guide.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Worker User Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test">Test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-management">Error management</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">synda</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
+      
+    <li>Worker User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../sources/sdp/worker_user_guide.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="worker-user-guide">
+<span id="user-guide-sdw"></span><h1>Worker User Guide<a class="headerlink" href="#worker-user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>A Python daemon (whom we call a “worker”) deals with the database using a Remote Procedure Call (RPC) client skeleton.
+For any waiting job the worker inputs the corresponding (atomic) dataset to each process.
+Any transition with waiting status is handle by the worker that forks a Shell child-process or loads a Python script as
+module, accordingly to the job. Finally the worker returns the job status and updates the corresponding database entry
+to reach the next transition. No more jobs appears when all atomic datasets and datasets reach the done status.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Edit <code class="docutils literal"><span class="pre">synda_wo</span></code> and set the :ref:<code class="docutils literal"><span class="pre">`sdp</span></code> service password &lt;config-param-ref-sdp&gt;` as global variable.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="test">
+<h2>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<p>Test communication between <code class="docutils literal"><span class="pre">sdw</span></code> and <code class="docutils literal"><span class="pre">sdp</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -t -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>usage: synda_wo_dev <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-H &lt;host&gt;<span class="o">]</span> <span class="o">[</span>-P &lt;port&gt;<span class="o">]</span> <span class="o">[</span>-j &lt;job_class&gt;<span class="o">]</span>
+                    <span class="o">[</span>-l &lt;logdir&gt;<span class="o">]</span> <span class="o">[</span>-p &lt;pipeline&gt;<span class="o">]</span> <span class="o">[</span>-s &lt;path&gt;<span class="o">]</span> <span class="o">[</span>-t<span class="o">]</span>
+                    <span class="o">[</span>-T &lt;timeout&gt;<span class="o">]</span> <span class="o">[</span>-u &lt;user&gt;<span class="o">]</span> <span class="o">[</span>-g &lt;group&gt;<span class="o">]</span> <span class="o">[</span>-1<span class="o">]</span> <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-V<span class="o">]</span>
+                    <span class="o">[{</span>start,stop,status<span class="o">}]</span>
+
+Post-processing worker used to fork Shell child-process or load python script as module.
+The worker deals
+            with sdp database from synchro-data to input CMIP5 variable to each process.
+The worker returns job status
+            to the database with run_log.
+
+This script contains RPC client skeleton.
+
+positional arguments:
+  <span class="o">{</span>start,stop,status<span class="o">}</span>
+
+optional arguments:
+  -h, --help           show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  -d, --debug          Debug mode
+  -H &lt;host&gt;            Remote service hostname
+  -P &lt;port&gt;            Remote service port
+  -j &lt;job_class&gt;       Only processes specified job class.
+                       Multiple values can be <span class="nb">set</span> using comma as delimiter.
+  -l &lt;logdir&gt;          Logfile directory
+  -p &lt;pipeline&gt;        Only processes specified pipeline.
+  -s &lt;path&gt;            Process script directory
+  -t, --test           Test server connection
+  -T &lt;timeout&gt;         Remote service timeout
+  -u &lt;user&gt;            Unprivileged user
+  -g &lt;group&gt;           Unprivileged group
+  -1, --one-item-only  Apply process on only one database entry
+  -v, --verbose        Verbose mode
+  -V, --version        Program version
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-management">
+<h2>Error management<a class="headerlink" href="#error-management" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-information-about-errors">
+<h3>Getting information about errors<a class="headerlink" href="#getting-information-about-errors" title="Permalink to this headline">¶</a></h3>
+<p>Log files below contain useful information about errors:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">worker.log</span></code> contains information regarding the worker execution.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If no <code class="docutils literal"><span class="pre">-l</span></code> flag, log files are stored in <code class="docutils literal"><span class="pre">$HOME/sdw/log</span></code> folder (source installation) and <code class="docutils literal"><span class="pre">/var/log/synda/sdw</span></code> folder (system package installation).</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="replication.html" class="btn btn-neutral float-right" title="ESGF replication" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="user_guide.html" class="btn btn-neutral" title="User guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, RACIAZEK, J..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
