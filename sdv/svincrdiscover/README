@@ -1,5 +1,0 @@
-Requirement
-    The following parameters must be set in SDT configuration file (sdt.conf)
-    before running this test:
-        indexes=esgf-node.ipsl.fr,esgf-data.dkrz.de,esgf-index1.ceda.ac.uk
-        default_index=esgf-node.ipsl.upmc.fr

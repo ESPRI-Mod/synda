@@ -1,5 +1,0 @@
-replica=false
-project=CMIP5
-experiment=piControl
-ensemble=r1i1p1
-variable[atmos][mon]=ta hur wap hus tas ts psl ps uas vas sfcWind hurs huss pr prsn prc evspsbl sbl tauu tauv hfls hfss rlds rlus rsds rsus rsdscs rsuscs rldscs rsdt rsut rlut rlutcs rsutcs prw clt clwvi clivi rtmt ccb cct ci sci
