@@ -49,6 +49,10 @@ def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
                         fh.write("%s\n"%item)
                 elif isinstance(v,basestring):
                     fh.write("%s\n"%v)
+                elif isinstance(v,int):
+                    fh.write("%d\n"%v)
+                elif isinstance(v,float):
+                    fh.write("%f\n"%v)
 
 formats=['raw','line','indent','value']
 
