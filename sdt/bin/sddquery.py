@@ -118,7 +118,7 @@ def search_api_parameters(facets_group):
 
     return new_facets_group
 
-def synchro_data_parameters(facets_group):
+def synda_parameters(facets_group):
     """Keeps only Synda parameters."""
     new_facets_group={}
 
