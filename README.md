@@ -41,6 +41,8 @@ Explore metadata
 
     synda variable | less
 
+    synda variable "Air Temperature"
+
     synda variable wind_speed_of_gust
 
     export COLUMNS ; synda variable -s | cut -c 1-20 | column | less
