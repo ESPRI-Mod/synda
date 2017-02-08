@@ -37,7 +37,7 @@ import sdconfig
 import sdutils
 import sdtools
 import sdpermission
-import sdfilepermission
+#import sdfilepermission
 from sdexception import SDException
 
 def get_daemon_status():
