@@ -108,12 +108,12 @@ def start():
             unprivileged_user_mode()
 
     if not is_running():
-        with context:
-            try:
+        try:
+            with context:
                 main_loop()
-            except Exception, e:
-                import sdtrace
-                sdtrace.log_exception()
+        except Exception, e:
+            import sdtrace
+            sdtrace.log_exception()
 
 
 
