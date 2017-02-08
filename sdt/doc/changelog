@@ -6,6 +6,7 @@
 	- add write test in sddaemon module.
 	- store stacktrace file in /tmp.
 	- add uuid to stacktrace file name.
+	- move try/except block upstream to enclose the daemon context.
 - Version 3.7 - 20170115
 	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
 	- disable sdfilepermission module.
