@@ -40,4 +40,8 @@ def log_exception(stderr=False):
     if stderr:
         traceback.print_exc(file=sys.stderr)
 
+def debug(msg):
+    with open('/tmp/synda_debug.log','a') as fh:
+        fh.write("====== %s =======\n"%msg)
+
 # init.
