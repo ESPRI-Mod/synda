@@ -13,6 +13,7 @@
 
 import os
 import sys
+import uuid
 import argparse
 import sdconst
 import sdtools
@@ -125,7 +126,7 @@ configuration_file=paths.configuration_file
 credential_file=paths.credential_file
 
 
-stacktrace_log_file="%s/stacktrace.log"%log_folder
+stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
