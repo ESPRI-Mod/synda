@@ -89,7 +89,7 @@ def main_loop():
 def test_write_access(file_):
     if os.path.isfile(file_):
         sys.stderr.write('Cannot perform write test: file already exists (%s)\n'%file_)
-        sys.exit(1)
+        sys.exit(1) # FIXME: move exit() call upstream
     if user and group:
         uid=pwd.getpwnam(user).pw_uid
         gid=grp.getgrnam(group).gr_gid
