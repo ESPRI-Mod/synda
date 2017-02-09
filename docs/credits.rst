@@ -3,11 +3,6 @@
 Credits
 =======
 
-Developer/Author
-****************
-
-`Jérôme RACIAZEK <jripsl@ipsl.jussieu.fr>`_ (`UPMC <http://www.upmc.fr/>`_/`IPSL <https://www.ipsl.fr/>`_)
-
 Contributors
 ************
 
@@ -18,7 +13,7 @@ Contributors
 Contacts
 ********
 
-To submit bugs, suggestions or ideas, please address your comments to `Jérôme RACIAZEK <jripsl@ipsl.jussieu.fr>`_
+To submit bugs, suggestions or ideas, please address your comments to `Sebastien Denvil <sdipsl@ipsl.jussieu.fr>`_
 or post your issue on our `GitHub repository <https://github.com/Prodiguer/synda>`_.
 
 Acknowledgment
@@ -35,4 +30,3 @@ Materials
 *********
 
  - :download:`ESGF F2F 2015 - SYNDA.pdf <_download/ESGF2015-SYNDA.pdf>`
- - :download:`SYNDA.odp <_download/SYNDA.odp>`
