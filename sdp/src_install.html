@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Installation from source &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Installation from RPM package" href="rpm_install.html"/>
         <link rel="prev" title="Synda Post-Processing Module" href="sdp.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,58 +44,30 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#usage">Usage</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#installation">Installation</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Installation from source</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#files-location">Files location</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="rpm_install.html">Installation from RPM package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deb_install.html">Installation from DEB package</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#usage">Usage</a></li>
@@ -105,18 +75,45 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -131,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -146,16 +137,13 @@
     <li>Installation from source</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/src_install.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdp/src_install.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="installation-from-source">
 <span id="src-install-sdp"></span><h1>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h1>
@@ -170,48 +158,48 @@
 <ul class="simple">
 <li>for RHEL and derivative (Centos, Scientific Linux, Fedora, etc.)</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install bc gcc python python-pip python-devel openssl-devel sqlite sqlite-devel zlib-devel libffi-devel
+<div class="highlight-bash"><div class="highlight"><pre>sudo yum install bc gcc python python-pip python-devel openssl-devel sqlite sqlite-devel zlib-devel libffi-devel
 </pre></div>
 </div>
 <ul class="simple">
 <li>for Debian and derivative (Ubuntu, Mint, etc.)</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install bc gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libz-dev libffi-dev
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install bc gcc python python-pip python-dev libssl-dev sqlite3 libsqlite-dev libz-dev libffi-dev
 </pre></div>
 </div>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install the application (as normal user or root):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
+<div class="highlight-bash"><div class="highlight"><pre>wget --no-check-certificate https://raw.githubusercontent.com/Prodiguer/synda/master/sdc/install.sh
 chmod +x ./install.sh
 ./install.sh postprocessing
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal"><span class="pre">-d</span></code> option of the <code class="docutils literal"><span class="pre">install.sh</span></code> script can be used to install a specific version.</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">-d</span></tt> option of the <tt class="docutils literal"><span class="pre">install.sh</span></tt> script can be used to install a specific version.</p>
 </div>
 </div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Run command below in <code class="docutils literal"><span class="pre">$HOME/sdp/tmp</span></code> folder:</li>
+<li>Run command below in <tt class="docutils literal"><span class="pre">$HOME/sdp/tmp</span></tt> folder:</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>openssl req -new -x509 -keyout server.pem -out server.pem -days <span class="m">365</span> -nodes
+<div class="highlight-bash"><div class="highlight"><pre>openssl req -new -x509 -keyout server.pem -out server.pem -days <span class="m">365</span> -nodes
 </pre></div>
 </div>
 <ul class="simple">
 <li>Add lines below in your shell configuration file (e.g. &#8216;.bashrc&#8217;)</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SP_HOME</span><span class="o">=</span><span class="nv">$HOME</span>/sdp
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$SP_HOME</span>/bin:<span class="nv">$PATH</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">SP_HOME</span><span class="o">=</span><span class="nv">$HOME</span>/sdp
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$SP_HOME</span>/bin:<span class="nv">$PATH</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="files-location">
 <h2>Files location<a class="headerlink" href="#files-location" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">$HOME</span>/sdp/doc
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$HOME</span>/sdp/doc
 <span class="nv">$HOME</span>/sdp/bin
 <span class="nv">$HOME</span>/sdp/conf
 <span class="nv">$HOME</span>/sdp/db
@@ -223,16 +211,15 @@ chmod +x ./install.sh
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sdp.html" class="btn btn-neutral" title="Synda Post-Processing Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sdp.html" class="btn btn-neutral" title="Synda Post-Processing Module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -241,14 +228,12 @@ chmod +x ./install.sh
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -272,7 +257,7 @@ chmod +x ./install.sh
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Installation from RPM package &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Installation from DEB package" href="deb_install.html"/>
         <link rel="prev" title="Installation from source" href="src_install.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,76 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="src_install.html">Installation from source</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Installation from RPM package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#files-location">Files location</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="deb_install.html">Installation from DEB package</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -130,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -145,32 +137,29 @@
     <li>Installation from RPM package</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/rpm_install.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/rpm_install.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="installation-from-rpm-package">
 <span id="rpm-install-sdt"></span><h1>Installation from RPM package<a class="headerlink" href="#installation-from-rpm-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">synda</span></code> RPM package is available for RHEL6 and RHEL7. On RHEL5, <code class="docutils literal"><span class="pre">synda</span></code> can only be installed from source.</p>
+<p><tt class="docutils literal"><span class="pre">synda</span></tt> RPM package is available for RHEL6 and RHEL7. On RHEL5, <tt class="docutils literal"><span class="pre">synda</span></tt> can only be installed from source.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>EPEL repository must be installed.</p>
 <p>To install EPEL, use</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install epel-release -y
+<div class="highlight-bash"><div class="highlight"><pre>sudo yum install epel-release -y
 </pre></div>
 </div>
 <p>To install synda RPM package, use</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>wget http://sd-53687.dedibox.fr/synda/sdt/rpm/&lt;package-name&gt;
+<div class="highlight-bash"><div class="highlight"><pre>wget http://sd-53687.dedibox.fr/synda/sdt/rpm/&lt;package-name&gt;
 sudo yum install -y &lt;package-name&gt;
 </pre></div>
 </div>
@@ -187,11 +176,11 @@ sudo yum install -y &lt;package-name&gt;
 <li>synda-3.6-1.x86_64_scientific67.rpm</li>
 <li>synda-3.6-1.x86_64_scientific71.rpm</li>
 </ul>
-<p>For example, to install <code class="docutils literal"><span class="pre">synda</span></code> on Scientific Linux 6.7, do</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/synda-3.6-1.x86_64_scientific67.rpm
+<p>For example, to install <tt class="docutils literal"><span class="pre">synda</span></tt> on Scientific Linux 6.7, do</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo yum install http://sd-53687.dedibox.fr/synda/sdt/rpm/synda-3.6-1.x86_64_scientific67.rpm
 </pre></div>
 </div>
-<p>If you need a distribution/version that is not listed, you can open a GitHub (see <a class="reference internal" href="../credits.html#credits"><span class="std std-ref">Credits</span></a>) we can add it to the list.</p>
+<p>If you need a distribution/version that is not listed, you can open a GitHub (see <a class="reference internal" href="../credits.html#credits"><em>Credits</em></a>) we can add it to the list.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">RPM packages are currently only available for 64 bits architecture.</p>
@@ -200,8 +189,8 @@ sudo yum install -y &lt;package-name&gt;
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Edit <code class="docutils literal"><span class="pre">/etc/synda/sdt/credentials.conf</span></code></li>
-<li>Edit <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code></li>
+<li>Edit <tt class="docutils literal"><span class="pre">/etc/synda/sdt/credentials.conf</span></tt></li>
+<li>Edit <tt class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></tt></li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -210,23 +199,23 @@ sudo yum install -y &lt;package-name&gt;
 <ul class="simple">
 <li>Restart service with</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdt restart
+<div class="highlight-bash"><div class="highlight"><pre>sudo service sdt restart
 </pre></div>
 </div>
 <ul class="simple">
 <li>A quickstart guide is available with</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda intro <span class="p">|</span> more
+<div class="highlight-bash"><div class="highlight"><pre>synda intro <span class="p">|</span> more
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">To execute <code class="docutils literal"><span class="pre">synda</span></code> commands, you must either be root, or part of the synda group.</p>
+<p class="last">To execute <tt class="docutils literal"><span class="pre">synda</span></tt> commands, you must either be root, or part of the synda group.</p>
 </div>
 </div>
 <div class="section" id="files-location">
 <h2>Files location<a class="headerlink" href="#files-location" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>/etc/synda/sdt
+<div class="highlight-bash"><div class="highlight"><pre>/etc/synda/sdt
 /srv/synda/sdt/data
 /srv/synda/sdt/sandbox
 /var/lib/synda/sdt
@@ -242,16 +231,15 @@ sudo yum install -y &lt;package-name&gt;
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="deb_install.html" class="btn btn-neutral float-right" title="Installation from DEB package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="deb_install.html" class="btn btn-neutral float-right" title="Installation from DEB package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="src_install.html" class="btn btn-neutral" title="Installation from source" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="src_install.html" class="btn btn-neutral" title="Installation from source"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -260,14 +248,12 @@ sudo yum install -y &lt;package-name&gt;
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -291,7 +277,7 @@ sudo yum install -y &lt;package-name&gt;
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Configuration parameter reference &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Selection file parameter reference" href="selection_file_param_ref.html"/>
         <link rel="prev" title="Upgrade from DEB package" href="deb_upgrade.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,70 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration parameter reference</a></li>
-<li class="toctree-l3"><a class="reference internal" href="selection_file_param_ref.html">Selection file parameter reference</a></li>
-<li class="toctree-l3"><a class="reference internal" href="select_indexes.html">ESGF index selection</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -124,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -139,20 +137,17 @@
     <li>Configuration parameter reference</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/config_param_ref.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/config_param_ref.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="configuration-parameter-reference">
 <span id="config-param-ref-sdt"></span><h1>Configuration parameter reference<a class="headerlink" href="#configuration-parameter-reference" title="Permalink to this headline">¶</a></h1>
-<p>This document describes each parameter used in <code class="docutils literal"><span class="pre">sdt.conf</span></code> file to configure Synda.</p>
+<p>This document describes each parameter used in <tt class="docutils literal"><span class="pre">sdt.conf</span></tt> file to configure Synda.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="10%" />
@@ -250,41 +245,41 @@ To use synda in discovery or post-processing mode only, set this parameter to fa
 <td><em>string</em></td>
 <td>esgf_search_api</td>
 <td>Type of metadata server.
-Possible values are: <code class="docutils literal"><span class="pre">esgf_search_api</span></code>, <code class="docutils literal"><span class="pre">thredds_catalog</span></code> and <code class="docutils literal"><span class="pre">apache_default_listing</span></code>.</td>
+Possible values are: <tt class="docutils literal"><span class="pre">esgf_search_api</span></tt>, <tt class="docutils literal"><span class="pre">thredds_catalog</span></tt> and <tt class="docutils literal"><span class="pre">apache_default_listing</span></tt>.</td>
 </tr>
 <tr class="row-odd"><td>[core]</td>
 <td>default_path</td>
 <td><em>string</em></td>
-<td><code class="docutils literal"><span class="pre">$HOME/sdt/conf/default</span></code>
-or <code class="docutils literal"><span class="pre">/etc/synda/sdt/default</span></code></td>
+<td><tt class="docutils literal"><span class="pre">$HOME/sdt/conf/default</span></tt>
+or <tt class="docutils literal"><span class="pre">/etc/synda/sdt/default</span></tt></td>
 <td>Default directory path for default selection files.</td>
 </tr>
 <tr class="row-even"><td>[core]</td>
 <td>selection_path</td>
 <td><em>string</em></td>
-<td><code class="docutils literal"><span class="pre">$HOME/sdt/selection</span></code>
-or <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code></td>
+<td><tt class="docutils literal"><span class="pre">$HOME/sdt/selection</span></tt>
+or <tt class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></tt></td>
 <td>Default directory path for selection files.</td>
 </tr>
 <tr class="row-odd"><td>[core]</td>
 <td>data_path</td>
 <td><em>string</em></td>
-<td><code class="docutils literal"><span class="pre">$HOME/sdt/data</span></code>
-or <code class="docutils literal"><span class="pre">/srv/synda/sdt/data</span></code></td>
+<td><tt class="docutils literal"><span class="pre">$HOME/sdt/data</span></tt>
+or <tt class="docutils literal"><span class="pre">/srv/synda/sdt/data</span></tt></td>
 <td>Default data directory path.</td>
 </tr>
 <tr class="row-even"><td>[core]</td>
 <td>db_path</td>
 <td><em>string</em></td>
-<td><code class="docutils literal"><span class="pre">$HOME/sdt/db</span></code>
-or <code class="docutils literal"><span class="pre">/var/lib/synda/sdt</span></code></td>
+<td><tt class="docutils literal"><span class="pre">$HOME/sdt/db</span></tt>
+or <tt class="docutils literal"><span class="pre">/var/lib/synda/sdt</span></tt></td>
 <td>Default database directory.</td>
 </tr>
 <tr class="row-odd"><td>[core]</td>
 <td>sandbox_path</td>
 <td><em>string</em></td>
-<td><code class="docutils literal"><span class="pre">$HOME/sdt/sandbox</span></code>
-or <code class="docutils literal"><span class="pre">/srv/synda/sdt/sandbox</span></code></td>
+<td><tt class="docutils literal"><span class="pre">$HOME/sdt/sandbox</span></tt>
+or <tt class="docutils literal"><span class="pre">/srv/synda/sdt/sandbox</span></tt></td>
 <td>Default sandbox directory path.</td>
 </tr>
 <tr class="row-even"><td>[interface]</td>
@@ -388,16 +383,15 @@ Used to compute nearest replica when &#8220;geolocation&#8221; mode is used.</td
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="selection_file_param_ref.html" class="btn btn-neutral float-right" title="Selection file parameter reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="selection_file_param_ref.html" class="btn btn-neutral float-right" title="Selection file parameter reference"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="deb_upgrade.html" class="btn btn-neutral" title="Upgrade from DEB package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="deb_upgrade.html" class="btn btn-neutral" title="Upgrade from DEB package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -406,14 +400,12 @@ Used to compute nearest replica when &#8220;geolocation&#8221; mode is used.</td
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -437,7 +429,7 @@ Used to compute nearest replica when &#8220;geolocation&#8221; mode is used.</td
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

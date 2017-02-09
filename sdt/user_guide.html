@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>User Guide &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Selection file" href="selection_file.html"/>
         <link rel="prev" title="ESGF index selection" href="select_indexes.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,83 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">User Guide</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-search"><code class="docutils literal"><span class="pre">synda</span> <span class="pre">search</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-param"><code class="docutils literal"><span class="pre">synda</span> <span class="pre">param</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-get"><code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-install"><code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#start-stop-downloading">Start/Stop downloading</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#error-management">Error management</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
-<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gridftp.html">Download with GridFTP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="globustransfer.html">Download with Globus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -137,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -152,109 +137,106 @@
     <li>User Guide</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/user_guide.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/user_guide.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="user-guide">
 <span id="user-guide-sdt"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>There are two ways of downloading data with Synda: using <code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code> command, and using <code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code> command.
-<code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code> is similar to <code class="docutils literal"><span class="pre">wget</span></code> command while <code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code> is similar to <code class="docutils literal"><span class="pre">apt-get</span></code> command (but asynchronous).
-<code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code> is handy to quickly download a few files, while <code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code> is intended to manage a large number of files.
-The differences between <code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code> and <code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code> are listed below:</p>
-<p><code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code>:
+<p>There are two ways of downloading data with Synda: using <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt> command, and using <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt> command.
+<tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt> is similar to <tt class="docutils literal"><span class="pre">wget</span></tt> command while <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt> is similar to <tt class="docutils literal"><span class="pre">apt-get</span></tt> command (but asynchronous).
+<tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt> is handy to quickly download a few files, while <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt> is intended to manage a large number of files.
+The differences between <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt> and <tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt> are listed below:</p>
+<p><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt>:
 - no tracking
 - no parallel download
 - no daemon involved
 - synchronous</p>
-<p><code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code>:
+<p><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt>:
 - tracking
 - parallel download
 - use daemon to manage download
 - asynchronous</p>
 </div>
 <div class="section" id="synda-search">
-<h2><code class="docutils literal"><span class="pre">synda</span> <span class="pre">search</span></code><a class="headerlink" href="#synda-search" title="Permalink to this headline">¶</a></h2>
+<h2><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">search</span></tt><a class="headerlink" href="#synda-search" title="Permalink to this headline">¶</a></h2>
 <p>Search criteria called facets are used to select which files to download. Search criteria can be set on command line first:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search atmos fx CMIP5
+<div class="highlight-bash"><div class="highlight"><pre>synda search atmos fx CMIP5
 </pre></div>
 </div>
 <p>or stored in a file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search -s &lt;selection-file&gt;
+<div class="highlight-bash"><div class="highlight"><pre>synda search -s &lt;selection-file&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="synda-param">
-<h2><code class="docutils literal"><span class="pre">synda</span> <span class="pre">param</span></code><a class="headerlink" href="#synda-param" title="Permalink to this headline">¶</a></h2>
+<h2><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">param</span></tt><a class="headerlink" href="#synda-param" title="Permalink to this headline">¶</a></h2>
 <p>To list facets:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda param
+<div class="highlight-bash"><div class="highlight"><pre>synda param
 </pre></div>
 </div>
 <p>To list facet values:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda param &lt;facet-key&gt;
+<div class="highlight-bash"><div class="highlight"><pre>synda param &lt;facet-key&gt;
 </pre></div>
 </div>
 <p>To search datasets on-the-fly:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search &lt;facet-value&gt;
+<div class="highlight-bash"><div class="highlight"><pre>synda search &lt;facet-value&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="synda-get">
-<h2><code class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></code><a class="headerlink" href="#synda-get" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda get <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
+<h2><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">get</span></tt><a class="headerlink" href="#synda-get" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>synda get <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
 </pre></div>
 </div>
-<p>The downloaded file(s) are stored in the <a class="reference internal" href="config_param_ref.html#config-param-ref-sdt"><span class="std std-ref">sandbox directory</span></a>. A different folder can be specified using <code class="docutils literal"><span class="pre">-d</span></code> option.</p>
+<p>The downloaded file(s) are stored in the <a class="reference internal" href="config_param_ref.html#config-param-ref-sdt"><em>sandbox directory</em></a>. A different folder can be specified using <tt class="docutils literal"><span class="pre">-d</span></tt> option.</p>
 <p>Download a dataset:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
+<div class="highlight-bash"><div class="highlight"><pre>synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
 </pre></div>
 </div>
 <p>Download a file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda get orog_fx_CanCM4_decadal1972_r0i0p0.nc
+<div class="highlight-bash"><div class="highlight"><pre>synda get orog_fx_CanCM4_decadal1972_r0i0p0.nc
 </pre></div>
 </div>
-<p>If download fails, you can search for another replica using <code class="docutils literal"><span class="pre">-r</span></code> option:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search -r  <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
+<p>If download fails, you can search for another replica using <tt class="docutils literal"><span class="pre">-r</span></tt> option:</p>
+<div class="highlight-bash"><div class="highlight"><pre>synda search -r  <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
 </pre></div>
 </div>
-<p>Then retry the download with the <code class="docutils literal"><span class="pre">data_node</span></code> parameter to specify which replica to use:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search -r orog_fx_CanCM4_decadal1972_r0i0p0.nc
+<p>Then retry the download with the <tt class="docutils literal"><span class="pre">data_node</span></tt> parameter to specify which replica to use:</p>
+<div class="highlight-bash"><div class="highlight"><pre>synda search -r orog_fx_CanCM4_decadal1972_r0i0p0.nc
 
 synda get -f orog_fx_CanCM4_decadal1972_r0i0p0.nc <span class="nv">data_node</span><span class="o">=</span>esgf2.dkrz.de
 </pre></div>
 </div>
 </div>
 <div class="section" id="synda-install">
-<h2><code class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></code><a class="headerlink" href="#synda-install" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
+<h2><tt class="docutils literal"><span class="pre">synda</span> <span class="pre">install</span></tt><a class="headerlink" href="#synda-install" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>synda install <span class="o">[</span> ID <span class="o">]</span> <span class="o">[</span> FACET <span class="o">]</span>...
 </pre></div>
 </div>
 <p>This command adds matching file(s) in the download queue and store tracking information in the local database.</p>
 <p>A background process checks the download queue regularly and download the files.</p>
-<p>The downloaded files are stored in the <a class="reference internal" href="config_param_ref.html#config-param-ref-sdt"><span class="std std-ref">data directory</span></a>.</p>
+<p>The downloaded files are stored in the <a class="reference internal" href="config_param_ref.html#config-param-ref-sdt"><em>data directory</em></a>.</p>
 <p>Install a dataset:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+<div class="highlight-bash"><div class="highlight"><pre>synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
 </pre></div>
 </div>
 <p>Install a variable:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
+<div class="highlight-bash"><div class="highlight"><pre>synda install cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
 </pre></div>
 </div>
 <p>Install a file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
+<div class="highlight-bash"><div class="highlight"><pre>synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 </pre></div>
 </div>
-<p>Install files matching facets stored in a <a class="reference internal" href="selection_file.html#selection-file"><span class="std std-ref">selection file</span></a>:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>project=CMIP5
+<p>Install files matching facets stored in a <a class="reference internal" href="selection_file.html#selection-file"><em>selection file</em></a>:</p>
+<div class="highlight-text"><div class="highlight"><pre>project=CMIP5
 model=CNRM-CM5 CSIRO-Mk3-6-0
 experiment=historical amip
 ensemble=r1i1p1
@@ -263,18 +245,18 @@ variable[ocean][fx]=areacello sftof
 variable[land][mon]=mrsos nppRoot nep
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -s sample_selection_01.txt
+<div class="highlight-bash"><div class="highlight"><pre>synda install -s sample_selection_01.txt
 </pre></div>
 </div>
 </div>
 <div class="section" id="start-stop-downloading">
 <h2>Start/Stop downloading<a class="headerlink" href="#start-stop-downloading" title="Permalink to this headline">¶</a></h2>
 <p>In source installation, run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda daemon <span class="o">[</span> start <span class="p">|</span> stop <span class="o">]</span>
+<div class="highlight-bash"><div class="highlight"><pre>synda daemon <span class="o">[</span> start <span class="p">|</span> stop <span class="o">]</span>
 </pre></div>
 </div>
 <p>In system package installation, run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>service sdt <span class="o">[</span> start <span class="p">|</span> stop <span class="o">]</span>
+<div class="highlight-bash"><div class="highlight"><pre>service sdt <span class="o">[</span> start <span class="p">|</span> stop <span class="o">]</span>
 </pre></div>
 </div>
 </div>
@@ -284,7 +266,7 @@ variable[land][mon]=mrsos nppRoot nep
 <h3>Changing replica for all file in errors<a class="headerlink" href="#changing-replica-for-all-file-in-errors" title="Permalink to this headline">¶</a></h3>
 <p>If download fails you can try another replica.</p>
 <p>To change the replica for all files in error, use command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda replica next
+<div class="highlight-bash"><div class="highlight"><pre>synda replica next
 </pre></div>
 </div>
 </div>
@@ -292,29 +274,28 @@ variable[land][mon]=mrsos nppRoot nep
 <h3>Getting information about errors<a class="headerlink" href="#getting-information-about-errors" title="Permalink to this headline">¶</a></h3>
 <p>Log files below contain useful information about errors:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">discovery.log</span></code> contains information regarding discovery.</li>
-<li><code class="docutils literal"><span class="pre">transfer.log</span></code> contains information regarding download.</li>
-<li><code class="docutils literal"><span class="pre">debug.log</span></code> contains low-level download information.</li>
+<li><tt class="docutils literal"><span class="pre">discovery.log</span></tt> contains information regarding discovery.</li>
+<li><tt class="docutils literal"><span class="pre">transfer.log</span></tt> contains information regarding download.</li>
+<li><tt class="docutils literal"><span class="pre">debug.log</span></tt> contains low-level download information.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Log files are stored in <code class="docutils literal"><span class="pre">$HOME/sdt/log</span></code> folder (source installation) and <code class="docutils literal"><span class="pre">/var/log/synda/sdt</span></code> folder (system package installation).</p>
+<p class="last">Log files are stored in <tt class="docutils literal"><span class="pre">$HOME/sdt/log</span></tt> folder (source installation) and <tt class="docutils literal"><span class="pre">/var/log/synda/sdt</span></tt> folder (system package installation).</p>
 </div>
 </div>
 </div>
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="selection_file.html" class="btn btn-neutral float-right" title="Selection file" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="selection_file.html" class="btn btn-neutral float-right" title="Selection file"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="select_indexes.html" class="btn btn-neutral" title="ESGF index selection" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="select_indexes.html" class="btn btn-neutral" title="ESGF index selection"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -323,14 +304,12 @@ variable[land][mon]=mrsos nppRoot nep
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -354,7 +333,7 @@ variable[land][mon]=mrsos nppRoot nep
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

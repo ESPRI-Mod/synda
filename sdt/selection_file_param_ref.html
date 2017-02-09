@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Selection file parameter reference &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="ESGF index selection" href="select_indexes.html"/>
         <link rel="prev" title="Configuration parameter reference" href="config_param_ref.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,77 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="config_param_ref.html">Configuration parameter reference</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Selection file parameter reference</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#search-api-parameter">Search-api parameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-download-parameters">Synda download parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-remote-search-parameters">Synda remote search parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-local-search-parameters">Synda local search parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synda-formatting-parameters">Synda formatting parameters</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="select_indexes.html">ESGF index selection</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -131,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -146,16 +137,13 @@
     <li>Selection file parameter reference</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/selection_file_param_ref.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/selection_file_param_ref.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="selection-file-parameter-reference">
 <span id="selection-file-param-ref"></span><h1>Selection file parameter reference<a class="headerlink" href="#selection-file-parameter-reference" title="Permalink to this headline">¶</a></h1>
@@ -210,7 +198,7 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|
+<div class="highlight-text"><div class="highlight"><pre>url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|
 </pre></div>
 </div>
 </div>
@@ -239,7 +227,7 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search atmos mon tasmin CMIP5 CNRM-CM5 <span class="nv">timeslice</span><span class="o">=</span>197001-198512 -f
+<div class="highlight-bash"><div class="highlight"><pre>synda search atmos mon tasmin CMIP5 CNRM-CM5 <span class="nv">timeslice</span><span class="o">=</span>197001-198512 -f
 </pre></div>
 </div>
 </div>
@@ -288,7 +276,7 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda list <span class="nv">local_path</span><span class="o">=</span>CMIP5/output1/NCAR/CCSM4/rcp60/mon/land/Lmon/r1i1p1
+<div class="highlight-bash"><div class="highlight"><pre>synda list <span class="nv">local_path</span><span class="o">=</span>CMIP5/output1/NCAR/CCSM4/rcp60/mon/land/Lmon/r1i1p1
 synda list <span class="s2">&quot;error_msg=local file already exists,&quot;</span> -f
 synda list <span class="nv">insertion_group_id</span><span class="o">=</span><span class="m">71</span> -f
 synda list <span class="nv">status</span><span class="o">=</span>error -f
@@ -342,27 +330,26 @@ If set to &#8220;merge&#8221;, product folders are merged into one folder called
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>local_path_drs_template=%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
+<div class="highlight-text"><div class="highlight"><pre>local_path_drs_template=%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">To enable <code class="docutils literal"><span class="pre">local_path_drs_template</span></code>, <code class="docutils literal"><span class="pre">local_path_format</span></code> parameter must be set to &#8220;custom&#8221;. Each variable included in <code class="docutils literal"><span class="pre">local_path_drs_template</span></code> must be present as a standalone attribute in the file metadata. If it is missing, you can use a constant value instead (e.g. &#8220;output&#8221; instead of &#8220;%(product)s&#8221;).</p>
+<p class="last">To enable <tt class="docutils literal"><span class="pre">local_path_drs_template</span></tt>, <tt class="docutils literal"><span class="pre">local_path_format</span></tt> parameter must be set to &#8220;custom&#8221;. Each variable included in <tt class="docutils literal"><span class="pre">local_path_drs_template</span></tt> must be present as a standalone attribute in the file metadata. If it is missing, you can use a constant value instead (e.g. &#8220;output&#8221; instead of &#8220;%(product)s&#8221;).</p>
 </div>
 </div>
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="select_indexes.html" class="btn btn-neutral float-right" title="ESGF index selection" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="select_indexes.html" class="btn btn-neutral float-right" title="ESGF index selection"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -371,14 +358,12 @@ If set to &#8220;merge&#8221;, product folders are merged into one folder called
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -402,7 +387,7 @@ If set to &#8220;merge&#8221;, product folders are merged into one folder called
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

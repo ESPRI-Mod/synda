@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Synda Post-Processing Module &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,14 +28,12 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="next" title="Installation from source" href="src_install.html"/>
         <link rel="prev" title="ESGF replication" href="../sdt/replication.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -45,84 +43,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Synda Post-Processing Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src_install.html">Installation from source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rpm_install.html">Installation from RPM package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deb_install.html">Installation from DEB package</a></li>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src_upgrade.html">Upgrade from source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rpm_upgrade.html">Upgrade from RPM package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deb_upgrade.html">Upgrade from DEB package</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="config_param_ref.html">Configuration parameter reference</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pipeline_file.html">Pipeline creation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User guide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="worker_user_guide.html">Worker User Guide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -137,29 +127,20 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
     <li>Synda Post-Processing Module</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/sdp.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdp/sdp.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="synda-post-processing-module">
 <span id="sdp"></span><h1>Synda Post-Processing Module<a class="headerlink" href="#synda-post-processing-module" title="Permalink to this headline">¶</a></h1>
@@ -205,16 +186,15 @@
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="src_install.html" class="btn btn-neutral float-right" title="Installation from source" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="src_install.html" class="btn btn-neutral float-right" title="Installation from source"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../sdt/replication.html" class="btn btn-neutral" title="ESGF replication" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../sdt/replication.html" class="btn btn-neutral" title="ESGF replication"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -223,14 +203,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -254,7 +232,7 @@
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

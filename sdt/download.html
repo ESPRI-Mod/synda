@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Basic download &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Download the nearest replica" href="download_replica.html"/>
         <link rel="prev" title="Selection file" href="selection_file.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,74 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Basic download</a></li>
-<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gridftp.html">Download with GridFTP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="globustransfer.html">Download with Globus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -128,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -143,26 +137,23 @@
     <li>Basic download</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/download.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/download.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="basic-download">
 <span id="download"></span><h1>Basic download<a class="headerlink" href="#basic-download" title="Permalink to this headline">¶</a></h1>
 <p>A session might go like:</p>
-<p>Set ESGF openid and passwd in <span class="xref std std-ref">credentials.conf</span>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>vi credentials.conf
+<p>Set ESGF openid and passwd in <em class="xref std std-ref">credentials.conf</em>.</p>
+<div class="highlight-bash"><div class="highlight"><pre>vi credentials.conf
 </pre></div>
 </div>
 <p>Search a dataset:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda search CMIP5 decadal1995 mon land
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda search CMIP5 decadal1995 mon land
 new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r2i2p1.v20120608
 new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r8i2p1.v20120608
 new  cmip5.output1.MIROC.MIROC4h.decadal1995.mon.land.Lmon.r5i1p1.v20120628
@@ -171,7 +162,7 @@ new  cmip5.output1.MRI.MRI-CGCM3.decadal1995.mon.land.Lmon.r5i1p1.v20110915
 </pre></div>
 </div>
 <p>List dataset variables:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda search -v cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda search -v cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
 cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.baresoilFrac.v20120529.aggregation
 cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.burntArea.v20120529.aggregation
 cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.c3PftFrac.v20120529.aggregation
@@ -179,12 +170,12 @@ cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.c3PftFrac.v20120
 </pre></div>
 </div>
 <p>List file(s) for a specific variable:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda search -f cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda search -f cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 new  8.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529.baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 </pre></div>
 </div>
 <p>Mark the file for download:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 <span class="m">1</span> file<span class="o">(</span>s<span class="o">)</span> will be added to the download queue.
 Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to <span class="k">continue</span>? <span class="o">[</span>Y/n<span class="o">]</span>
@@ -192,48 +183,47 @@ Do you want to <span class="k">continue</span>? <span class="o">[</span>Y/n<span
 </pre></div>
 </div>
 <p>Start the daemon:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda daemon start
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda daemon start
 </pre></div>
 </div>
 <p>Check download progress:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda queue
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda queue
 status      count  size
 running         <span class="m">1</span>  8.9 MB
 
-$ synda watch
+<span class="nv">$ </span>synda watch
 Current size    Total size    Download start date         Filename
 8.9 MB          8.9 MB        2015-12-15 10:31:53.848936  baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-$ synda queue
+<span class="nv">$ </span>synda queue
 status      count  size
 <span class="k">done</span>            <span class="m">1</span>  8.9 MB
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ find data -type f
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>find data -type f
 data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 </pre></div>
 </div>
 <p>To debug certificate issue, you can use:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda certificate renew
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda certificate renew
 </pre></div>
 </div>
 <p>To debug file transfer error, you can use:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ synda get &lt;file_url&gt;
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>synda get &lt;file_url&gt;
 </pre></div>
 </div>
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="download_replica.html" class="btn btn-neutral float-right" title="Download the nearest replica" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="download_replica.html" class="btn btn-neutral float-right" title="Download the nearest replica"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="selection_file.html" class="btn btn-neutral" title="Selection file" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="selection_file.html" class="btn btn-neutral" title="Selection file"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -242,14 +232,12 @@ data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/b
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -273,7 +261,7 @@ data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/b
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

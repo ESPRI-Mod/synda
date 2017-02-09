@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Download with GridFTP &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Download with Globus" href="globustransfer.html"/>
         <link rel="prev" title="Download the nearest replica" href="download_replica.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,79 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
-<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Download with GridFTP</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="globustransfer.html">Download with Globus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -133,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -148,16 +137,13 @@
     <li>Download with GridFTP</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/gridftp.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdt/gridftp.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="download-with-gridftp">
 <span id="gridftp"></span><h1>Download with GridFTP<a class="headerlink" href="#download-with-gridftp" title="Permalink to this headline">¶</a></h1>
@@ -168,46 +154,46 @@
 <div class="section" id="debian-and-derivative">
 <h3>Debian and derivative<a class="headerlink" href="#debian-and-derivative" title="Permalink to this headline">¶</a></h3>
 <p>Install the package with:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install globus-gass-copy-progs
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install globus-gass-copy-progs
 </pre></div>
 </div>
 </div>
 <div class="section" id="rhel-and-derivative">
 <h3>RHEL and derivative<a class="headerlink" href="#rhel-and-derivative" title="Permalink to this headline">¶</a></h3>
 <p>You need to install EPEL repository:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install epel-release -y
+<div class="highlight-bash"><div class="highlight"><pre>sudo yum install epel-release -y
 </pre></div>
 </div>
 <p>then install the package with:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install globus-gass-copy-progs
+<div class="highlight-bash"><div class="highlight"><pre>sudo yum install globus-gass-copy-progs
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p>To use GridFTP as default protocol, add <code class="docutils literal"><span class="pre">protocol=gridftp</span></code> parameter in <code class="docutils literal"><span class="pre">default.txt</span></code> file.</p>
+<p>To use GridFTP as default protocol, add <tt class="docutils literal"><span class="pre">protocol=gridftp</span></tt> parameter in <tt class="docutils literal"><span class="pre">default.txt</span></tt> file.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal"><span class="pre">default.txt</span></code> file location differs depending on which synda installation method has been used: <code class="docutils literal"><span class="pre">$ST_HOME/conf/default/default.txt</span></code> for source installation and <code class="docutils literal"><span class="pre">/etc/synda/sdt/default/default.txt</span></code> for system package installation.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">default.txt</span></tt> file location differs depending on which synda installation method has been used: <tt class="docutils literal"><span class="pre">$ST_HOME/conf/default/default.txt</span></tt> for source installation and <tt class="docutils literal"><span class="pre">/etc/synda/sdt/default/default.txt</span></tt> for system package installation.</p>
 </div>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Download a file using GridFTP protocol:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 pastureFrac <span class="nv">protocol</span><span class="o">=</span>gridftp
+<div class="highlight-bash"><div class="highlight"><pre>synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 pastureFrac <span class="nv">protocol</span><span class="o">=</span>gridftp
 </pre></div>
 </div>
 <p>Print GridFTP URL for a given file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda dump cmip5.output1.MPI-M.MPI-ESM-LR.1pctCO2.day.atmos.cfDay.r1i1p1.v20120314.albisccp_cfDay_MPI-ESM-LR_1pctCO2_r1i1p1_19700101-19891231.nc <span class="nv">limit</span><span class="o">=</span><span class="m">1</span> <span class="nv">protocol</span><span class="o">=</span>gridftp <span class="nv">replica</span><span class="o">=</span><span class="nb">false</span> -nf -C url
+<div class="highlight-bash"><div class="highlight"><pre>synda dump cmip5.output1.MPI-M.MPI-ESM-LR.1pctCO2.day.atmos.cfDay.r1i1p1.v20120314.albisccp_cfDay_MPI-ESM-LR_1pctCO2_r1i1p1_19700101-19891231.nc <span class="nv">limit</span><span class="o">=</span><span class="m">1</span> <span class="nv">protocol</span><span class="o">=</span>gridftp <span class="nv">replica</span><span class="o">=</span><span class="nb">false</span> -nf -C url
 </pre></div>
 </div>
 <p>Print a random GridFTP URL:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda dump <span class="nv">data_node</span><span class="o">=</span>bmbf-ipcc-ar5.dkrz.de <span class="nv">limit</span><span class="o">=</span><span class="m">1</span> <span class="nv">protocol</span><span class="o">=</span>gridftp -nf -C url
+<div class="highlight-bash"><div class="highlight"><pre>synda dump <span class="nv">data_node</span><span class="o">=</span>bmbf-ipcc-ar5.dkrz.de <span class="nv">limit</span><span class="o">=</span><span class="m">1</span> <span class="nv">protocol</span><span class="o">=</span>gridftp -nf -C url
 </pre></div>
 </div>
 <p>Print a list of GridFTP URLs:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda dump <span class="nv">protocol</span><span class="o">=</span>gridftp <span class="nv">variable</span><span class="o">=</span>tas <span class="nv">limit</span><span class="o">=</span><span class="m">1000</span> -f -C url
+<div class="highlight-bash"><div class="highlight"><pre>synda dump <span class="nv">protocol</span><span class="o">=</span>gridftp <span class="nv">variable</span><span class="o">=</span>tas <span class="nv">limit</span><span class="o">=</span><span class="m">1000</span> -f -C url
 </pre></div>
 </div>
 <div class="admonition note">
@@ -218,16 +204,15 @@
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="globustransfer.html" class="btn btn-neutral float-right" title="Download with Globus" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="globustransfer.html" class="btn btn-neutral float-right" title="Download with Globus"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="download_replica.html" class="btn btn-neutral" title="Download the nearest replica" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="download_replica.html" class="btn btn-neutral" title="Download the nearest replica"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -236,14 +221,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -267,7 +250,7 @@
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

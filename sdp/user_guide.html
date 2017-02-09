@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>User guide &mdash; synda 3.0 documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,15 +28,13 @@
   
 
   
-
-  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Worker User Guide" href="worker_user_guide.html"/>
         <link rel="prev" title="Pipeline creation" href="pipeline_file.html"/> 
 
   
-  <script src="../static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,79 +44,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> synda</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#usage">Usage</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#usage">Usage</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">User guide</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#start-post-processing">Start post-processing</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#start-sdw-service">Start <code class="docutils literal"><span class="pre">sdw</span></code> service</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#communication-test-between-modules">Communication test between modules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#error-management">Error management</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="worker_user_guide.html">Worker User Guide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -133,13 +128,7 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -148,16 +137,13 @@
     <li>User guide</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/user_guide.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../sources/sdp/user_guide.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main">
             
   <div class="section" id="user-guide">
 <span id="user-guide-sdp"></span><h1>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
@@ -172,68 +158,68 @@ freeing the resources. Thus, Synda allows a parallel, orderly and asynchronous p
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="sdt-module">
-<h3><code class="docutils literal"><span class="pre">sdt</span></code> module<a class="headerlink" href="#sdt-module" title="Permalink to this headline">¶</a></h3>
-<p>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">$ST\_HOME/conf/sdt.conf</span></code>:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>post_processing=true
+<h3><tt class="docutils literal"><span class="pre">sdt</span></tt> module<a class="headerlink" href="#sdt-module" title="Permalink to this headline">¶</a></h3>
+<p>Set <tt class="docutils literal"><span class="pre">post_processing</span></tt> parameter to <tt class="docutils literal"><span class="pre">true</span></tt> in <tt class="docutils literal"><span class="pre">$ST\_HOME/conf/sdt.conf</span></tt>:</p>
+<div class="highlight-text"><div class="highlight"><pre>post_processing=true
 </pre></div>
 </div>
 </div>
 <div class="section" id="sdp-module">
-<h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
+<h3><tt class="docutils literal"><span class="pre">sdp</span></tt> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Edit <code class="docutils literal"><span class="pre">/etc/synda/sdp/credentials.conf</span></code> file to configure the RPC server:</li>
+<li>Edit <tt class="docutils literal"><span class="pre">/etc/synda/sdp/credentials.conf</span></tt> file to configure the RPC server:</li>
 </ul>
-<div class="highlight-text"><div class="highlight"><pre><span></span>[rpcserver]
+<div class="highlight-text"><div class="highlight"><pre>[rpcserver]
 username=xxxxxx
 password=xxxxxx
 </pre></div>
 </div>
 <ul class="simple">
-<li><a class="reference internal" href="config_param_ref.html#config-param-ref-sdp"><span class="std std-ref">Edit configuration file</span></a>.</li>
-<li><a class="reference internal" href="pipeline_file.html#pipeline-file"><span class="std std-ref">Declare your pipelines and bindings</span></a>.</li>
+<li><a class="reference internal" href="config_param_ref.html#config-param-ref-sdp"><em>Edit configuration file</em></a>.</li>
+<li><a class="reference internal" href="pipeline_file.html#pipeline-file"><em>Declare your pipelines and bindings</em></a>.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="start-post-processing">
 <h2>Start post-processing<a class="headerlink" href="#start-post-processing" title="Permalink to this headline">¶</a></h2>
 <p>In source installation, run command below:`</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_pp daemon start
+<div class="highlight-bash"><div class="highlight"><pre>synda_pp daemon start
 </pre></div>
 </div>
 <p>In system package installation, run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>service sdp start
+<div class="highlight-bash"><div class="highlight"><pre>service sdp start
 </pre></div>
 </div>
 </div>
 <div class="section" id="start-sdw-service">
-<h2>Start <code class="docutils literal"><span class="pre">sdw</span></code> service<a class="headerlink" href="#start-sdw-service" title="Permalink to this headline">¶</a></h2>
-<p>When all the events are sent from <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> and all corresponding post-processing entries are created into <code class="docutils literal"><span class="pre">sdp.db</span></code> pending for execution by a <a class="reference internal" href="worker_user_guide.html#user-guide-sdw"><span class="std std-ref">Synda Worker</span></a>.</p>
+<h2>Start <tt class="docutils literal"><span class="pre">sdw</span></tt> service<a class="headerlink" href="#start-sdw-service" title="Permalink to this headline">¶</a></h2>
+<p>When all the events are sent from <tt class="docutils literal"><span class="pre">sdt</span></tt> to <tt class="docutils literal"><span class="pre">sdp</span></tt> and all corresponding post-processing entries are created into <tt class="docutils literal"><span class="pre">sdp.db</span></tt> pending for execution by a <a class="reference internal" href="worker_user_guide.html#user-guide-sdw"><em>Synda Worker</em></a>.</p>
 <p>This is the client side post-processing daemon (aka &#8220;worker&#8221;). To start the service, run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo --script_dir /your/scripts start
+<div class="highlight-bash"><div class="highlight"><pre>synda_wo --script_dir /your/scripts start
 </pre></div>
 </div>
 </div>
 <div class="section" id="communication-test-between-modules">
 <h2>Communication test between modules<a class="headerlink" href="#communication-test-between-modules" title="Permalink to this headline">¶</a></h2>
-<p>Test communication between <code class="docutils literal"><span class="pre">sdt</span></code> and <code class="docutils literal"><span class="pre">sdp</span></code></p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">$ST_HOME</span>/lib/sd/sdppproxy.py -v
+<p>Test communication between <tt class="docutils literal"><span class="pre">sdt</span></tt> and <tt class="docutils literal"><span class="pre">sdp</span></tt></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ST_HOME</span>/lib/sd/sdppproxy.py -v
 </pre></div>
 </div>
-<p>If tests failed, check if credentials and are :ref:<code class="docutils literal"><span class="pre">`sdp.conf</span></code> &lt;config-param-ref-sdp&gt;` are correctly set then restart the services.</p>
+<p>If tests failed, check if credentials and are :ref:<tt class="docutils literal"><span class="pre">`sdp.conf</span></tt> &lt;config-param-ref-sdp&gt;` are correctly set then restart the services.</p>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s download a file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -y sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
+<div class="highlight-bash"><div class="highlight"><pre>synda install -y sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
 </pre></div>
 </div>
 <p>After a few minutes, the file should have been transferred and the jobs should have been triggered.</p>
 <p>To check the result, let&#8217;s see the logfile:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>vi <span class="nv">$SP_HOME</span>/log/worker.log
+<div class="highlight-bash"><div class="highlight"><pre>vi <span class="nv">$SP_HOME</span>/log/worker.log
 </pre></div>
 </div>
 <p>If all went well, the logfile should look like this:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>2017/01/10 09:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_A,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;s</span>
+<div class="highlight-bash"><div class="highlight"><pre>2017/01/10 09:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_A,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;s</span>
 <span class="s1">fcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>foo,start_date<span class="o">=</span>2017-01-10 09:09:56.791281,ppprun_id<span class="o">=</span>1,error_msg<span class="o">=</span>None<span class="o">)</span>
 2017/01/10 09:09:56 AM DEBUG Script <span class="k">return</span> code: 0
 2017/01/10 09:09:56 AM DEBUG Script stdout:
@@ -264,28 +250,27 @@ password=xxxxxx
 <h3>Getting information about errors<a class="headerlink" href="#getting-information-about-errors" title="Permalink to this headline">¶</a></h3>
 <p>Log files below contain useful information about errors:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">daemon.log</span></code> contains information regarding the daemon execution.</li>
-<li><code class="docutils literal"><span class="pre">stacktrace.log</span></code> contains information regarding occurring errors.</li>
+<li><tt class="docutils literal"><span class="pre">daemon.log</span></tt> contains information regarding the daemon execution.</li>
+<li><tt class="docutils literal"><span class="pre">stacktrace.log</span></tt> contains information regarding occurring errors.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Log files are stored in <code class="docutils literal"><span class="pre">$HOME/sdp/log</span></code> folder (source installation) and <code class="docutils literal"><span class="pre">/var/log/synda/sdp</span></code> folder (system package installation).</p>
+<p class="last">Log files are stored in <tt class="docutils literal"><span class="pre">$HOME/sdp/log</span></tt> folder (source installation) and <tt class="docutils literal"><span class="pre">/var/log/synda/sdp</span></tt> folder (system package installation).</p>
 </div>
 </div>
 </div>
 </div>
 
 
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="worker_user_guide.html" class="btn btn-neutral float-right" title="Worker User Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="worker_user_guide.html" class="btn btn-neutral float-right" title="Worker User Guide"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pipeline_file.html" class="btn btn-neutral" title="Pipeline creation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pipeline_file.html" class="btn btn-neutral" title="Pipeline creation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -294,14 +279,12 @@ password=xxxxxx
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, CNRS.
-
+        &copy; Copyright 2017, RACIAZEK, J..
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
-
         </div>
       </div>
 
@@ -325,7 +308,7 @@ password=xxxxxx
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
