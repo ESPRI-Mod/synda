@@ -3,12 +3,7 @@
 Credits
 =======
 
-Contributors
-************
-
-`Sébastien DENVIL <sdipsl@ipsl.jussieu.fr>`_ (`CNRS <http://www.cnrs.fr/>`_/`IPSL <https://www.ipsl.fr/>`_)
-
-`Guillaume LEVAVASSEUR <glipsl@ipsl.jussieu.fr>`_ (`UPMC <http://www.upmc.fr/>`_/`IPSL <https://www.ipsl.fr/>`_)
+This software is developed by the french IPSL Global Climate Model Group.
 
 Contacts
 ********
