@@ -20,6 +20,18 @@ import re
 import glob
 import argparse
 
+def who_am_i():
+    """This func line checks if we are IHM or daemon.
+
+    Note
+        There are many different IHM commands, but only one daemon command
+    """
+
+    if not is_daemon():
+        return 'ihm'
+    else:
+        return 'daemon'
+
 def mkdir(paths):
     for p in paths:
         try:
