@@ -25,6 +25,25 @@ from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
+def get_security_dir():
+    """
+    security_dir_mode=sdconst.
+    if security_dir_mode==sdconst.:
+        if 'HOME' not in os.environ:
+            if  not in os.environ['HOME']:
+        security_dir="%s/.esg"%tmp_folder
+    elif security_dir_mode==sdconst.:
+        security_dir="%s/.esg"%tmp_folder
+        os.getuid()
+    elif security_dir_mode==sdconst.:
+        if sdtools.who_am_i()=='ihm':
+        elif sdtools.who_am_i()=='daemon':
+        security_dir="%s/.esg"%tmp_folder
+    else:
+        raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
+    """
+    return "%s/.esg"%tmp_folder
+
 def get_default_limit(command):
     return sdconst.DEFAULT_LIMITS[default_limits_mode][command]
 
@@ -41,7 +60,7 @@ def get_project_default_selection_file(project):
 
 def check_path(path):
     if not os.path.exists(path):
-        raise SDException("SDATYPES-101","Path not found (%s)"%path)
+        raise SDException("SDCONFIG-014","Path not found (%s)"%path)
 
 def print_(name):
     if name is None:
@@ -132,9 +151,9 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
 # set ESGF security_dir
-security_dir="%s/.esg"%tmp_folder
+security_dir=get_security_dir()
 
-# Determine location of ESGF X.509 credential
+# Set location of ESGF X.509 credential
 esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
 esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
