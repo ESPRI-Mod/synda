@@ -26,23 +26,24 @@ from sdexception import SDException
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
 def get_security_dir():
+    if security_dir_mode==sdconst.SECURITY_DIR_TMP:
+        security_dir="%s/.esg"%tmp_folder
+    else:
+        raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
+
     """
-    security_dir_mode=sdconst.
-    if security_dir_mode==sdconst.:
+    elif security_dir_mode==sdconst.SECURITY_DIR_HOME:
         if 'HOME' not in os.environ:
             if  not in os.environ['HOME']:
-        security_dir="%s/.esg"%tmp_folder
-    elif security_dir_mode==sdconst.:
         security_dir="%s/.esg"%tmp_folder
         os.getuid()
     elif security_dir_mode==sdconst.:
         if sdtools.who_am_i()=='ihm':
         elif sdtools.who_am_i()=='daemon':
         security_dir="%s/.esg"%tmp_folder
-    else:
-        raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
     """
-    return "%s/.esg"%tmp_folder
+
+    return security_dir
 
 def get_default_limit(command):
     return sdconst.DEFAULT_LIMITS[default_limits_mode][command]
@@ -234,6 +235,8 @@ searchapi_output_format=sdconst.SEARCH_API_OUTPUT_FORMAT_JSON
 next_url_on_error=config.getboolean('download','http_fallback')
 
 show_advanced_options=False
+
+security_dir_mode=sdconst.SECURITY_DIR_TMP
 
 # when true, allow fast cycle for test (used for UAT)
 fake_download=False
