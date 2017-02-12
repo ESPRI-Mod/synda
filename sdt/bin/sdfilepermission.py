@@ -28,7 +28,7 @@ def chown_folder(uid,gid):
     chown_files(li,uid,gid)
 
     # security folder
-    li=[sdconfig.security_dir]
+    li=[sdconfig.get_security_dir()]
     chown_files(li,uid,gid)
 
     # CA certificate folder

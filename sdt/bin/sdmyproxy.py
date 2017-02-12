@@ -109,8 +109,9 @@ def renew_certificate (host,port,username,password):
     sdlog.info("SDMYPROX-002","Renew certificate..")
 
     # we need a mkdir here to prevent 'No such file or directory' myproxyclient error (see TAGFERE5435 for more info)
-    if not os.path.isdir(sdconfig.security_dir):
-        os.makedirs(sdconfig.security_dir)
+    sd=sdconfig.get_security_dir()
+    if not os.path.isdir(sd):
+        os.makedirs(sd)
 
     # currently, we set bootstrap option everytime
     #

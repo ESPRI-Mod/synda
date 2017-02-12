@@ -150,12 +150,9 @@ stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-# set ESGF security_dir
-security_dir=get_security_dir()
-
 # Set location of ESGF X.509 credential
-esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
-esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
+esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
+esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
 
 check_path(bin_folder)
 
