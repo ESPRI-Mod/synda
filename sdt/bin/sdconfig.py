@@ -28,6 +28,22 @@ from sdexception import SDException
 def get_security_dir():
     if security_dir_mode==sdconst.SECURITY_DIR_TMP:
         security_dir="%s/.esg"%tmp_folder
+    elif security_dir_mode==sdconst.SECURITY_DIR_TMPUID:
+        security_dir="%s/%s/.esg"%(tmp_folder,str(os.getuid()))
+    elif security_dir_mode==sdconst.SECURITY_DIR_HOME:
+        if 'HOME' not in os.environ:
+            raise SDException('SDCONFIG-120',"HOME env. var. must be set when 'security_dir_mode' is set to %s"%sdconst.SECURITY_DIR_HOME)
+        security_dir="%s/.esg"%os.environ['HOME']
+    elif security_dir_mode==sdconst.SECURITY_DIR_MIXED:
+        wia=sdtools.who_am_i()
+        if wia=='ihm':
+            if 'HOME' not in os.environ:
+                raise SDException('SDCONFIG-121',"HOME env. var. must be set when 'security_dir_mode' is set to %s"%sdconst.SECURITY_DIR_HOME)
+            security_dir="%s/.esg"%os.environ['HOME']
+        elif wia=='daemon':
+            security_dir="%s/.esg"%tmp_folder
+        else:
+            assert False
     else:
         raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
 
