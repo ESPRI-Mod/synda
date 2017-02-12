@@ -6,11 +6,22 @@ Changelog
 Transfer Module
 ***************
 
-Version 3.7
-	- ESGF certificate path set to ``$HOME/sdt/tmp/.esg`` for source install
-	- disable ``sdfilepermission`` module
-	- add user personal env (``SDT_USER_ENV``)
-	- synda group can be used instead of ``sudo`` (system package)
+- Version 3.8 - 
+	- follow symlinks during 'synda remove' operation.
+	- add manual routines to refresh dataset status.
+	- new cleanup algo for 'synda remove' command (run faster).
+	- add full path support in 'local_path_drs_template' var.
+	- add write test in sddaemon module.
+	- store stacktrace file in /tmp.
+	- add uuid to stacktrace file name.
+	- move try/except block upstream to enclose the daemon context.
+- Version 3.7 - 20170115
+	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
+	- disable sdfilepermission module.
+	- add user personal env (SDT_USER_ENV).
+	- synda group can be used instead of sudo (system package).
+	- set specific version for pillow package.
+	- bugfixes.
 Version 3.6 - 2016-12-04
 	- use search-api json format instead of xml
 	- add end-of-transfer events replay mode (trigger all EOT events in batch mode)
