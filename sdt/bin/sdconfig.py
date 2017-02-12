@@ -31,18 +31,6 @@ def get_security_dir():
     else:
         raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
 
-    """
-    elif security_dir_mode==sdconst.SECURITY_DIR_HOME:
-        if 'HOME' not in os.environ:
-            if  not in os.environ['HOME']:
-        security_dir="%s/.esg"%tmp_folder
-        os.getuid()
-    elif security_dir_mode==sdconst.:
-        if sdtools.who_am_i()=='ihm':
-        elif sdtools.who_am_i()=='daemon':
-        security_dir="%s/.esg"%tmp_folder
-    """
-
     return security_dir
 
 def get_default_limit(command):
