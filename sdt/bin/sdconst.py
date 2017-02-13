@@ -214,6 +214,6 @@ ADMIN_SUBCOMMANDS=['autoremove','install','open','pexec','remove','reset','retry
 
 # security_dir values
 SECURITY_DIR_TMP='tmp'
-SECURITY_DIR_TMP='tmpuid'
+SECURITY_DIR_TMPUID='tmpuid'
 SECURITY_DIR_HOME='home'
 SECURITY_DIR_MIXED='mixed'

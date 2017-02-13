@@ -38,7 +38,7 @@ def get_security_dir():
         wia=sdtools.who_am_i()
         if wia=='ihm':
             if 'HOME' not in os.environ:
-                raise SDException('SDCONFIG-121',"HOME env. var. must be set when 'security_dir_mode' is set to %s"%sdconst.SECURITY_DIR_HOME)
+                raise SDException('SDCONFIG-121',"HOME env. var. must be set when 'security_dir_mode' is set to %s in a IHM context"%sdconst.SECURITY_DIR_MIXED)
             security_dir="%s/.esg"%os.environ['HOME']
         elif wia=='daemon':
             security_dir="%s/.esg"%tmp_folder
