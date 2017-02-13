@@ -188,10 +188,12 @@ stop_download_if_error_occurs=False # If true, stop download if error occurs dur
 config=sdcfloader.load(configuration_file,credential_file)
 
 
+# alias
+#
 # Do not move me upward nor downward
 # ('security_dir_mode' must be defined before any call to the get_security_dir() func, and config must be defined)
 #
-security_dir_mode=sdconst.SECURITY_DIR_TMPUID
+security_dir_mode=config.get('core','security_dir_mode')
 
 
 # Set location of ESGF X.509 credential
