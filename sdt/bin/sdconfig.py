@@ -155,10 +155,6 @@ stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-# Set location of ESGF X.509 credential
-esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
-esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
-
 check_path(bin_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
@@ -190,6 +186,18 @@ twophasesearch=False # Beware before enabling this: must be well tested/reviewed
 stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
 
 config=sdcfloader.load(configuration_file,credential_file)
+
+
+# Do not move me upward nor downward
+# ('security_dir_mode' must be defined before any call to the get_security_dir() func, and config must be defined)
+#
+security_dir_mode=sdconst.SECURITY_DIR_TMPUID
+
+
+# Set location of ESGF X.509 credential
+esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
+esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
+
 
 # aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')
@@ -239,8 +247,6 @@ searchapi_output_format=sdconst.SEARCH_API_OUTPUT_FORMAT_JSON
 next_url_on_error=config.getboolean('download','http_fallback')
 
 show_advanced_options=False
-
-security_dir_mode=sdconst.SECURITY_DIR_TMP
 
 # when true, allow fast cycle for test (used for UAT)
 fake_download=False
