@@ -1,5 +1,6 @@
 - Version 3.8 - 
-	- add subfolder named after the user UID, to the ESGF certificate path.
+	- add security_dir_mode option.
+	- add subfolder named after the user UID to the ESGF certificate path.
 	- follow symlinks during 'synda remove' operation.
 	- add manual routines to refresh dataset status.
 	- new cleanup algo for 'synda remove' command (run faster).
