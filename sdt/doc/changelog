@@ -1,4 +1,5 @@
 - Version 3.8 - 
+	- add subfolder named after the user UID, to the ESGF certificate path.
 	- follow symlinks during 'synda remove' operation.
 	- add manual routines to refresh dataset status.
 	- new cleanup algo for 'synda remove' command (run faster).
@@ -8,7 +9,7 @@
 	- add uuid to stacktrace file name.
 	- move try/except block upstream to enclose the daemon context.
 - Version 3.7 - 20170115
-	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
+	- ESGF certificate path set to Synda tmp dir for source install.
 	- disable sdfilepermission module.
 	- add user personal env (SDT_USER_ENV).
 	- synda group can be used instead of sudo (system package).
