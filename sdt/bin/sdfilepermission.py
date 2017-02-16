@@ -28,6 +28,7 @@ def chown_folder(uid,gid):
     chown_files(li,uid,gid)
 
     # security folder
+    assert False # this code needs review (with default security_dir_mode, there are two more subfolder levels that need to be processed as well (<uuid> and .esg))
     li=[sdconfig.get_security_dir()]
     chown_files(li,uid,gid)
 
