@@ -2,6 +2,7 @@
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.
 	- add subfolder to the ESGF certificate path (named after the user UID).
+	- all deletions now occurs synchronously (deferred mode is disabled).
 	- follow symlinks during 'synda remove' operation.
 	- add manual routines to refresh dataset status.
 	- new cleanup algo for 'synda remove' command (run faster).
