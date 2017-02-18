@@ -132,7 +132,8 @@ def run_soft_tasks():
     if sdconfig.download:
         sdtask.transfers_begin()
 
-    sdtask.delete_transfers()
+    # disabled for now (deletion occurs in realtime in interactive code)
+    #sdtask.delete_transfers()
 
     if sdconfig.config.getboolean('module','post_processing'):
         sdtask.process_async_event()

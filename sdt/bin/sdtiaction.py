@@ -21,8 +21,9 @@ from sdtools import print_stderr
 import sdexception
 
 def autoremove(args):
-    import sddeletedataset
+    import sddeletedataset,sddeletefile
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
+    sddeletefile.delete_transfers_lowmem()
 
 def certificate(args):
     import sdconfig,sdlogon
