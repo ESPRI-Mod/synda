@@ -102,7 +102,7 @@ def immediate_delete(tr):
             sdfiledao.delete_file(tr,commit=False)
 
 def immediate_md_delete(tr):
-    """Delete file (metadata only) """
+    """Delete file (metadata only)."""
     sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
     try:
         sdfiledao.delete_file(tr,commit=False)
