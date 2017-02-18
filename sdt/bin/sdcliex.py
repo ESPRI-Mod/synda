@@ -25,7 +25,8 @@ def cache():
 
 def certificate():
     buf="""  synda certificate renew
-  synda certificate print"""
+  synda certificate print
+  synda certificate info"""
     return buf
 
 def check():
