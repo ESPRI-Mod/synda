@@ -99,6 +99,13 @@ def reset():
     sdlog.info("SDDELETE-931","%i transfer(s) removed"%nbr)
     return nbr
 
+def delete_transfers_lowmem(remove_all):
+
+    # This code uses loop for lowmem machine compatibility
+    count=delete_transfers(100,remove_all)
+    while count > 0:
+        count=delete_transfers(100,remove_all)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
