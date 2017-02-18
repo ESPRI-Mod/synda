@@ -25,14 +25,17 @@ import sddb
 import sdfilequery
 
 def delete_transfers(limit=None,remove_all=True):
-    """
+    """Perform the deletion of DATA and METADATA.
+
     Returns
         how many files with TRANSFER_STATUS_DELETE status remain
 
-    Note
-        'limit' is used to delete only a subset of all files marked for
-        deletion each time this func is called. If 'limit' is None,
-        all files marked for deletion are removed.
+    Notes
+        - Can be called from the daemon code (deferred mode), or from
+          interactive code (immediate mode).
+        - 'limit' is used to delete only a subset of all files marked for
+          deletion each time this func is called. If 'limit' is None,
+          all files marked for deletion are removed.
     """
     transfer_list=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_DELETE,limit=limit)
 
@@ -99,7 +102,8 @@ def reset():
     sdlog.info("SDDELETE-931","%i transfer(s) removed"%nbr)
     return nbr
 
-def delete_transfers_lowmem(remove_all):
+def delete_transfers_lowmem(remove_all=True):
+    """Perform the full deletion of DATA and METADATA in lowmem mode."""
 
     # This code uses loop for lowmem machine compatibility
     count=delete_transfers(100,remove_all)
