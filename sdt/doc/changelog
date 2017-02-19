@@ -1,4 +1,5 @@
-- Version 3.8 - 
+- Version 3.9 - 
+- Version 3.8 - 20170219
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.
 	- add subfolder to the ESGF certificate path (named after the user UID).
