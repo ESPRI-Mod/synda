@@ -11,6 +11,7 @@
 	- store stacktrace file in /tmp.
 	- add uuid to stacktrace file name.
 	- move try/except block upstream to enclose the daemon context.
+	- fix permission in sys-pkg for /srv/synda/sdt folder (g+sw).
 - Version 3.7 - 20170115
 	- ESGF certificate path set to Synda tmp dir for source install.
 	- disable sdfilepermission module.
