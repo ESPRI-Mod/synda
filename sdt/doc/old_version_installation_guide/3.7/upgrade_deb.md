@@ -1,8 +1,8 @@
-# Synda RPM package upgrade guide
+# Synda Debian package upgrade guide
 
 ## Synopsis
 
-This document contains instructions to upgrade Synda version using RPM package.
+This document contains instructions to upgrade Synda version using Debian package.
 
 ## Procedure
 
@@ -16,11 +16,11 @@ Backup folders below
 
 ### Upgrade
 
-Remove previous package version using command below:
+Remove previous package version
 
-    sudo yum erase synda
+    sudo dpkg -P synda
 
-Install new package version using [this guide](rpm_install.md)
+Install new package version using [this guide](deb_install.md)
 
 ### Post-upgrade
 
@@ -38,13 +38,6 @@ Note: you can use a diff program to compare post-upgrade configuration files
 over pre-upgrade configuration files (from the backup).
 
 Restore database from backup in /var/lib/synda/sdt (replace the existing file).
-
-Run commands below as root to set group permission on Synda data :
-
-```
-find /srv/synda/sdt         -print0 | xargs -0 chown :synda
-find /srv/synda/sdt -type d -print0 | xargs -0 chmod g+ws
-```
 
 Restart service with
 

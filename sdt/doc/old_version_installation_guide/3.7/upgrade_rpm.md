@@ -39,13 +39,6 @@ over pre-upgrade configuration files (from the backup).
 
 Restore database from backup in /var/lib/synda/sdt (replace the existing file).
 
-Run commands below as root to set group permission on Synda data :
-
-```
-find /srv/synda/sdt         -print0 | xargs -0 chown :synda
-find /srv/synda/sdt -type d -print0 | xargs -0 chmod g+ws
-```
-
 Restart service with
 
 ```
