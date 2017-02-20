@@ -40,7 +40,7 @@ def cleanup():
 os.umask(0002)
 
 name='transfer'
-version='3.8'
+version='3.9'
 sdapputils.set_exception_handler()
 
 # maybe remove the two mkdir below as it is a bit overkill
