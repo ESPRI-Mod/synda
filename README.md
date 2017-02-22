@@ -1,6 +1,6 @@
 # *synda*
 
-New documentation available [here](http://prodiguer.github.io/synda/).
+More documentation available [here](http://prodiguer.github.io/synda/).
 
 ## Synopsis
 
