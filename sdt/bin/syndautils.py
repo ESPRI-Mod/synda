@@ -66,7 +66,13 @@ def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=Tru
     return stream # aka facets_groups
 
 def file_full_search(args,stream=None):
-    """This func systematically triggers full search (i.e. limit keyword cannot be used here)."""
+    """This func systematically triggers full search (i.e. limit keyword cannot be used here).
+
+    This func is currently being used in the following modules:
+        - sdinstall
+        - sdremove
+        - sdstat
+    """
     import sdsearch,sdlog,sdhistory,sdstream,sdtime,sdselectionfileutils
 
     if stream is None:
