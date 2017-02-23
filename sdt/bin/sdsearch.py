@@ -93,9 +93,20 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
     sdlog.info("SDSEARCH-594","Metadata processing end")
 
+
+
+    # moving code below inside sdfilepipeline module is not straightforward,
+    # because all datasets are retrieved in one row, so we don't want it
+    # to happen for each chunk (i.e. lowmem mecanism).
+    # so better keep it here for now.
+    # if this is also needed for, e.g. "synda dump" operation,
+    # just duplicate the code below at the right place.
+
     sdlog.info("SDSEARCH-620","Retrieve timestamps begins")
     metadata=fill_dataset_timestamp(squeries,metadata,parallel,action) # complete missing info
     sdlog.info("SDSEARCH-634","Retrieve timestamps ends")
+
+
 
     return metadata
 
