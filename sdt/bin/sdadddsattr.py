@@ -21,7 +21,7 @@ Notes
     - this module retrieves datasets attributes in batch mode.
 TODO
     - merge this module with 'sdbatchtimestamp' module to prevent download datasets twice
-    - only retrieve fields used in 'local_path_drs_template' (TAGJ43JK55J8K78)
+    - only retrieve fields used in 'local_path_drs_template' (TAGJ43JK55J8K78 and TAG3JKWW93K4J4JKDZS)
 """
 
 import argparse
