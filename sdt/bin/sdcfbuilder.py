@@ -48,6 +48,7 @@ def create_configuration_file_sample(path):
     config.set('log', 'scheduler_profiling', '0')
 
     config.add_section('core')
+    config.set('core', 'security_dir_mode', 'tmpuid')
     config.set('core', 'metadata_server_type', 'esgf_search_api')
     config.set('core', 'selection_path', '')
     config.set('core', 'default_path', '')

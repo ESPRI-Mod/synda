@@ -37,7 +37,7 @@ import sdconfig
 import sdutils
 import sdtools
 import sdpermission
-import sdfilepermission
+#import sdfilepermission
 from sdexception import SDException
 
 def get_daemon_status():
@@ -86,6 +86,20 @@ def main_loop():
 
     sdlog.info('SDDAEMON-034',"Daemon stopped")
 
+def test_write_access(file_):
+    if os.path.isfile(file_):
+        sys.stderr.write('Cannot perform write test: file already exists (%s)\n'%file_)
+        sys.exit(1) # FIXME: move exit() call upstream
+    if user and group:
+        uid=pwd.getpwnam(user).pw_uid
+        gid=grp.getgrnam(group).gr_gid
+        os.setgid(gid)
+        os.setuid(uid)
+    with open(file_,'w') as fh:
+        fh.write('write test\n')
+        os.unlink(file_)
+    sys.stderr.write('Write test successfully completed (%s)\n'%file_)
+
 def start():
 
     # run daemon as unprivileged user (if run as root and unprivileged user set in configuration file)
@@ -94,12 +108,12 @@ def start():
             unprivileged_user_mode()
 
     if not is_running():
-        with context:
-            try:
+        try:
+            with context:
                 main_loop()
-            except Exception, e:
-                import sdtrace
-                sdtrace.log_exception()
+        except Exception, e:
+            import sdtrace
+            sdtrace.log_exception()
 
 
 
@@ -200,3 +214,7 @@ if __name__ == "__main__":
         stop()
     elif args.action == 'status':
         print get_daemon_status()
+    elif args.action == 'test':
+        test_write_access('/var/tmp/synda/sdt/daemon.pid')
+    else:
+        print 'Incorrect argument'

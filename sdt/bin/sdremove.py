@@ -130,15 +130,12 @@ def remove(metadata,remove_all=True):
     nbr=sddelete.run(metadata)
     print_stderr("%i file(s) removed"%nbr)
 
-    # Second step, do the deletion (DATA and METADATA)
-    # (to do a deferred deletion (i.e. by the daemon), comment line below)
+    # Second step, do the deletion (DATA and METADATA) (to do a deferred
+    # deletion (i.e. by the daemon), comment line below and enable
+    # corresponding line in sdtask. Note that a code review is needed if both
+    # are enabled simultaneously (e.g. see TAGKRE45343J54K5JK))
     #
-    # Note
-    #    Use loop for lowmem machine compatibility
-    #
-    count=sddeletefile.delete_transfers(100,remove_all)
-    while count > 0:
-        count=sddeletefile.delete_transfers(100,remove_all)
+    sddeletefile.delete_transfers_lowmem(remove_all)
 
     if remove_all:
         print_stderr("Remove empty folders and files.. (may take some time)")

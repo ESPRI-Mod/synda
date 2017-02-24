@@ -211,3 +211,9 @@ DATASET_VERSION_FIELDS=['master_id','version','timestamp']+REQUIRED_FIELDS
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 
 ADMIN_SUBCOMMANDS=['autoremove','install','open','pexec','remove','reset','retry','update','upgrade']
+
+# security_dir values
+SECURITY_DIR_TMP='tmp'
+SECURITY_DIR_TMPUID='tmpuid'
+SECURITY_DIR_HOME='home'
+SECURITY_DIR_MIXED='mixed'

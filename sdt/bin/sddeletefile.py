@@ -25,24 +25,42 @@ import sddb
 import sdfilequery
 
 def delete_transfers(limit=None,remove_all=True):
-    """
+    """Perform the deletion of DATA and METADATA.
+
     Returns
         how many files with TRANSFER_STATUS_DELETE status remain
 
-    Note
-        'limit' is used to delete only a subset of all files marked for
-        deletion each time this func is called. If 'limit' is None,
-        all files marked for deletion are removed.
+    Notes
+        - Can be called from the daemon code (deferred mode), or from
+          interactive code (immediate mode).
+        - 'limit' is used to delete only a subset of all files marked for
+          deletion each time this func is called. If 'limit' is None,
+          all files marked for deletion are removed.
     """
     transfer_list=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_DELETE,limit=limit)
 
-    for tr in transfer_list:
-        if remove_all:
-            immediate_delete(tr)
-        else:
-            immediate_md_delete(tr)
+    try:
+        for tr in transfer_list:
+            if remove_all:
+                immediate_delete(tr)
+            else:
+                immediate_md_delete(tr)
 
-    sddb.conn.commit() # final commit (we do all deletion in one transaction).
+        sddb.conn.commit() # final commit (we do all deletion in one transaction).
+    except Exception as e:
+        sdlog.error("SDDELETE-880","Error occurs during files suppression (%s)"%(str(e),))
+
+        # no rollback here: i.e. we also commit if error occur (most likely a
+        # filesystem permission error). This is to keep medatata synced with
+        # data (else many files would have
+        # been removed from filesystem but with metadata still in db..).
+        #
+        # TODO: exception is too generic here:
+        #       improve this code by using a specific exception for "permission error".
+        #
+        sddb.conn.commit()
+
+        raise # fatal error
 
     return sdfilequery.transfer_status_count(status=sdconst.TRANSFER_STATUS_DELETE)
 
@@ -72,6 +90,7 @@ def immediate_delete(tr):
 
         except Exception,e:
             sdlog.error("SDDELETE-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
+            raise
     else:
         if tr.status == sdconst.TRANSFER_STATUS_DONE:
             # this case is not normal as the file should exist on filesystem when status is done
@@ -83,7 +102,7 @@ def immediate_delete(tr):
             sdfiledao.delete_file(tr,commit=False)
 
 def immediate_md_delete(tr):
-    """Delete file (metadata only) """
+    """Delete file (metadata only)."""
     sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
     try:
         sdfiledao.delete_file(tr,commit=False)
@@ -98,6 +117,14 @@ def reset():
 
     sdlog.info("SDDELETE-931","%i transfer(s) removed"%nbr)
     return nbr
+
+def delete_transfers_lowmem(remove_all=True):
+    """Perform the full deletion of DATA and METADATA in lowmem mode."""
+
+    # This code uses loop for lowmem machine compatibility
+    count=delete_transfers(100,remove_all)
+    while count > 0:
+        count=delete_transfers(100,remove_all)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

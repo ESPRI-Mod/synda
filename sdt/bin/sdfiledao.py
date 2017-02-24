@@ -35,6 +35,7 @@ def delete_file(tr,commit=True,conn=sddb.conn):
     c.execute("delete from file where file_id=?",(tr.file_id,))
     # note that we don't delete entries (if any) from post_processing tables (this will be done in a batch procedure which will be manually executed from time to time)
 
+    # TAGKRE45343J54K5JK
     if c.rowcount<>1:
         raise SDException("SYNCDDAO-908","file not found (file_id=%i,local_path=%s)"%(tr.file_id,tr.local_path,))
 

@@ -13,6 +13,7 @@
 
 import os
 import sys
+import uuid
 import argparse
 import sdconst
 import sdtools
@@ -23,6 +24,30 @@ import sdcfbuilder
 from sdexception import SDException
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
+
+def get_security_dir():
+    if security_dir_mode==sdconst.SECURITY_DIR_TMP:
+        security_dir="%s/.esg"%tmp_folder
+    elif security_dir_mode==sdconst.SECURITY_DIR_TMPUID:
+        security_dir="%s/%s/.esg"%(tmp_folder,str(os.getuid()))
+    elif security_dir_mode==sdconst.SECURITY_DIR_HOME:
+        if 'HOME' not in os.environ:
+            raise SDException('SDCONFIG-120',"HOME env. var. must be set when 'security_dir_mode' is set to %s"%sdconst.SECURITY_DIR_HOME)
+        security_dir="%s/.esg"%os.environ['HOME']
+    elif security_dir_mode==sdconst.SECURITY_DIR_MIXED:
+        wia=sdtools.who_am_i()
+        if wia=='ihm':
+            if 'HOME' not in os.environ:
+                raise SDException('SDCONFIG-121',"HOME env. var. must be set when 'security_dir_mode' is set to %s in a IHM context"%sdconst.SECURITY_DIR_MIXED)
+            security_dir="%s/.esg"%os.environ['HOME']
+        elif wia=='daemon':
+            security_dir="%s/.esg"%tmp_folder
+        else:
+            assert False
+    else:
+        raise SDException('SDCONFIG-020',"Incorrect value for security_dir_mode (%s)"%security_dir_mode)
+
+    return security_dir
 
 def get_default_limit(command):
     return sdconst.DEFAULT_LIMITS[default_limits_mode][command]
@@ -40,7 +65,7 @@ def get_project_default_selection_file(project):
 
 def check_path(path):
     if not os.path.exists(path):
-        raise SDException("SDATYPES-101","Path not found (%s)"%path)
+        raise SDException("SDCONFIG-014","Path not found (%s)"%path)
 
 def print_(name):
     if name is None:
@@ -125,17 +150,10 @@ configuration_file=paths.configuration_file
 credential_file=paths.credential_file
 
 
-stacktrace_log_file="%s/stacktrace.log"%log_folder
+stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
-
-# set ESGF security_dir
-security_dir="%s/.esg"%tmp_folder
-
-# Determine location of ESGF X.509 credential
-esgf_x509_proxy=os.path.join(security_dir,'credentials.pem')
-esgf_x509_cert_dir=os.path.join(security_dir,'certificates')
 
 check_path(bin_folder)
 
@@ -168,6 +186,20 @@ twophasesearch=False # Beware before enabling this: must be well tested/reviewed
 stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
 
 config=sdcfloader.load(configuration_file,credential_file)
+
+
+# alias
+#
+# Do not move me upward nor downward
+# ('security_dir_mode' must be defined before any call to the get_security_dir() func, and config must be defined)
+#
+security_dir_mode=config.get('core','security_dir_mode')
+
+
+# Set location of ESGF X.509 credential
+esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
+esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
+
 
 # aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')

@@ -35,24 +35,12 @@ def cleanup():
     if sdconfig.config.getboolean('interface','progress'):
         sdtools.set_terminal_cursor_visible()
 
-def who_am_i():
-    """This func line checks if we are IHM or daemon.
-
-    Note
-        There are many different IHM commands, but only one daemon command
-    """
-
-    if not sdtools.is_daemon():
-        return 'ihm'
-    else:
-        return 'daemon'
-
 # Init.
 
 os.umask(0002)
 
 name='transfer'
-version='3.8'
+version='3.9'
 sdapputils.set_exception_handler()
 
 # maybe remove the two mkdir below as it is a bit overkill
@@ -62,7 +50,7 @@ if not os.path.exists(sdconfig.log_folder):
 if not os.path.exists(sdconfig.tmp_folder):
     os.makedirs(sdconfig.tmp_folder)
 
-if who_am_i()=='ihm':
+if sdtools.who_am_i()=='ihm':
     sdtransientdbfilecleanup.run()
 
     if sdconfig.prevent_daemon_and_ihm:

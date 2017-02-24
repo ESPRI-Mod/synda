@@ -59,7 +59,7 @@ Default: false
 
 ### module.download
 
-If true, download files from ESGF. To use synda in discovery or post-processing
+If true, download files from ESGF. To use Synda in discovery or post-processing
 mode only, set this parameter to false.
 
 Type: boolean
@@ -125,6 +125,29 @@ If true, log code profiling information
 Type: boolean
 
 Default: 0
+
+--------------------------------------------------------
+
+### core.security_dir_mode
+
+Set the location of X509 certificates.
+
+Possible values are: "tmp", "tmpuid", "home" and "mixed".
+
+"tmp": all users certificates are stored in Synda tmp folder.
+
+"tmpuid": interactive user and daemon user certificates are stored into
+separate subfolders (named after the user UID) inside Synda tmp folder.
+
+"home": interactive user and daemon user certificates are stored in user home
+directory.
+
+"mixed": daemon user certificates is stored in Synda tmp folder and interactive
+user certificate is stored in user home directory.
+
+Type: string
+
+Default: 'tmpuid'
 
 --------------------------------------------------------
 

@@ -28,7 +28,15 @@ def delete_insertion_group(insertion_group_id):
             sddeletefile.deferred_delete(f.file_functional_id)
             sdlog.info("SDINSGRP-001","File marked for deletion (%s)"%f.file_functional_id)
         sddb.conn.commit() # final commit (we do all update in one transaction).
-        print "%i file(s) marked for deletion"%len(files)
+
+        # deferred mode
+        # if effective deletion is done by the daemon, uncomment this  line
+        #print "%i file(s) marked for deletion"%len(files)
+
+        # immediate mode
+        sddeletefile.delete_transfers_lowmem()
+        print "%i file(s) deleted"%len(files)
+
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
     else:
         print "Nothing to delete"

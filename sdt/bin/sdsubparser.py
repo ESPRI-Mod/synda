@@ -130,7 +130,7 @@ def run(subparsers):
     subparser=create_subparser(subparsers,'autoremove',selection=False,no_default=False,help='Remove old datasets versions')
 
     subparser=create_subparser(subparsers,'certificate',common_option=False,help='Manage X509 certificate',example=sdcliex.certificate())
-    add_action_argument(subparser,choices=['renew','print'])
+    add_action_argument(subparser,choices=['renew','info','print'])
     subparser.add_argument('-d','--debug',action='store_true',help='Display debug message')
     subparser.add_argument('-o','--openid',help='ESGF openid')
     subparser.add_argument('-p','--password',help='ESGF password')

@@ -21,8 +21,9 @@ from sdtools import print_stderr
 import sdexception
 
 def autoremove(args):
-    import sddeletedataset
+    import sddeletedataset,sddeletefile
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
+    sddeletefile.delete_transfers_lowmem()
 
 def certificate(args):
     import sdconfig,sdlogon
@@ -56,6 +57,10 @@ def certificate(args):
             except Exception,e:
                 print_stderr('Error occurs while renewing certificate (%s)'%str(e))
                 return 1
+        elif args.action=="info":
+            print 'ESGF CA certificates location: {}'.format(sdconfig.esgf_x509_cert_dir)
+            print 'ESGF user certificate location: {}'.format(sdconfig.esgf_x509_proxy)
+            return 0
         elif args.action=="print":
             sdlogon.print_certificate()
             return 0
