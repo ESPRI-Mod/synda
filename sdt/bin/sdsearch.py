@@ -33,6 +33,7 @@ import sdconst
 import sdtools
 import sdsqueries
 import sdbatchtimestamp
+import sdadddsattr
 import sdtypes
 import sdcommonarg
 from sdexception import SDException,MissingDatasetTimestampUrlException
@@ -106,6 +107,10 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
     metadata=fill_dataset_timestamp(squeries,metadata,parallel,action) # complete missing info
     sdlog.info("SDSEARCH-634","Retrieve timestamps ends")
 
+    if sdconfig.copy_ds_attrs:
+        sdlog.info("SDSEARCH-624","Retrieve datasets attrs begins")
+        metadata=copy_dataset_attrs(squeries,metadata,parallel,action)
+        sdlog.info("SDSEARCH-644","Retrieve datasets attrs ends")
 
 
     return metadata
@@ -140,6 +145,20 @@ def fill_dataset_timestamp(squeries,metadata,parallel,action):
     if action is not None:
         if action=='install':
             metadata=sdbatchtimestamp.run(squeries,metadata,parallel)
+
+    return metadata
+
+def copy_dataset_attrs(squeries,metadata,parallel,action):
+
+    # HACK
+    #
+    # retrieve dataset attrs in one row
+    #
+    # MEMO: when action is 'install', type is always 'File' (i.e. this code gets executed only for type=File)
+    #
+    if action is not None:
+        if action=='install':
+            metadata=sdadddsattr.run(squeries,metadata,parallel)
 
     return metadata
 
