@@ -24,7 +24,7 @@ or post your issue on our `GitHub repository <https://github.com/Prodiguer/synda
 Acknowledgment
 **************
 
-``synda`` has incorporated code from several sources. Users have contributed patches and suggestions over time. This work has been undertaken by IPSL and IS-ENES and France-Grilles.
+``synda`` has incorporated code from several sources. Users have contributed patches and suggestions over time. This work has been undertaken by IPSL, IS-ENES and ANR Convergence.
 
 Reference
 *********

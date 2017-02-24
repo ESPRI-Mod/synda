@@ -9,7 +9,7 @@ Introduction
 This document describes how to implement a full ESGF replication pipeline:
 
 .. image:: synda_replication.png
-   :scale: 50 %
+   :scale: 50%
    :alt: Basic replication pipeline
    :align: center
 
