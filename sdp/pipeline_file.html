@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Pipeline creation &mdash; synda 3.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,13 +28,15 @@
   
 
   
+
+  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="User guide" href="user_guide.html"/>
         <link rel="prev" title="Configuration parameter reference" href="config_param_ref.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,76 +46,74 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> synda</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#usage">Usage</a></li>
-</ul>
-</li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="config_param_ref.html">Configuration parameter reference</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pipeline creation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline-definition-file">Pipeline definition file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binding-file">Binding file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline-triggering">Pipeline triggering</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -128,7 +128,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -137,13 +143,16 @@
     <li>Pipeline creation</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../sources/sdp/pipeline_file.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../sources/sdp/pipeline_file.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="pipeline-creation">
 <span id="pipeline-file"></span><h1>Pipeline creation<a class="headerlink" href="#pipeline-creation" title="Permalink to this headline">¶</a></h1>
@@ -154,19 +163,19 @@ A &#8220;transition&#8221; is a post-process to apply to a dataset and is define
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The transition name has to be the same as the script you want to apply as post-process.
-For instance, in the case your post-process consist in executing the script <tt class="docutils literal"><span class="pre">copy.sh</span></tt> to each dataset the corresponding transition name is <tt class="docutils literal"><span class="pre">copy</span></tt>.</p>
+For instance, in the case your post-process consist in executing the script <code class="docutils literal"><span class="pre">copy.sh</span></code> to each dataset the corresponding transition name is <code class="docutils literal"><span class="pre">copy</span></code>.</p>
 </div>
 <p>We will define a pipeline called &#8220;my_pipeline&#8221; composed of 3 tasks (task_A, task_B, task_C), which will run sequentially one after the other.</p>
-<p>Edit the file <tt class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/my_pipeline.py</span></tt> for source installation or <tt class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/my_pipeline.py</span></tt> for package installation. This file content must be:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sppipelineutils</span>
+<p>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/my_pipeline.py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/my_pipeline.py</span></code> for package installation. This file content must be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sppipelineutils</span>
 <span class="kn">import</span> <span class="nn">sppostprocessingutils</span>
 
 <span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">ppp</span>
 
-<span class="n">name</span><span class="o">=</span><span class="s">&#39;my_pipeline&#39;</span>
+<span class="n">name</span><span class="o">=</span><span class="s1">&#39;my_pipeline&#39;</span>
 
-<span class="n">tasks</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;task_A&#39;</span><span class="p">,</span><span class="s">&#39;task_B&#39;</span><span class="p">,</span><span class="s">&#39;task_C&#39;</span><span class="p">]</span>
+<span class="n">tasks</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;task_A&#39;</span><span class="p">,</span><span class="s1">&#39;task_B&#39;</span><span class="p">,</span><span class="s1">&#39;task_C&#39;</span><span class="p">]</span>
 
 <span class="n">ppp</span> <span class="o">=</span> <span class="n">sppostprocessingutils</span><span class="o">.</span><span class="n">build_light_pipeline</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">tasks</span><span class="p">)</span>
 </pre></div>
@@ -174,38 +183,38 @@ For instance, in the case your post-process consist in executing the script <tt 
 </div>
 <div class="section" id="binding-file">
 <h2>Binding file<a class="headerlink" href="#binding-file" title="Permalink to this headline">¶</a></h2>
-<p>Synda post-processing pipelines relies on &#8220;events&#8221; send by <tt class="docutils literal"><span class="pre">sdt</span></tt> to <tt class="docutils literal"><span class="pre">sdp</span></tt> module. To configure which event leads to which pipeline, we binds events and pipelines through a Python dictionary.</p>
-<p>The binding file is used to bind events to pipelines. When a dataset, a variable or a file is downloaded by <tt class="docutils literal"><span class="pre">sdt</span></tt> an &#8220;event&#8221; can be sent to create a new post-processing entry in <tt class="docutils literal"><span class="pre">sdp.db</span></tt>.</p>
+<p>Synda post-processing pipelines relies on &#8220;events&#8221; send by <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> module. To configure which event leads to which pipeline, we binds events and pipelines through a Python dictionary.</p>
+<p>The binding file is used to bind events to pipelines. When a dataset, a variable or a file is downloaded by <code class="docutils literal"><span class="pre">sdt</span></code> an &#8220;event&#8221; can be sent to create a new post-processing entry in <code class="docutils literal"><span class="pre">sdp.db</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <dl class="last docutils">
 <dt>Only the following events can be binds to pipelines:</dt>
 <dd><ul class="first last simple">
-<li><tt class="docutils literal"><span class="pre">EVENT_FILE_COMPLETE</span></tt>: the pipeline is triggered when a file is downloaded.</li>
-<li><tt class="docutils literal"><span class="pre">EVENT_VARIABLE_COMPLETE</span></tt>: the pipeline is triggered when all files of a variable are downloaded.</li>
-<li><tt class="docutils literal"><span class="pre">EVENT_DATASET_COMPLETE</span></tt>: the pipeline is triggered when all files of a dataset are downloaded.</li>
-<li><tt class="docutils literal"><span class="pre">EVENT_DATASET_LATEST</span></tt>: the pipeline is triggered when a dataset is promoted latest.</li>
-<li><tt class="docutils literal"><span class="pre">EVENT_LATEST_DATASET_COMPLETE</span></tt>: the pipeline triggered when all files of a dataset are downloaded and the dataset is promoted latest.</li>
-<li><tt class="docutils literal"><span class="pre">EVENT_NON_LATEST_DATASET_COMPLETE</span></tt>: the pipeline triggered when all files of a dataset are downloaded and the dataset is not latest.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_FILE_COMPLETE</span></code>: the pipeline is triggered when a file is downloaded.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_VARIABLE_COMPLETE</span></code>: the pipeline is triggered when all files of a variable are downloaded.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_DATASET_COMPLETE</span></code>: the pipeline is triggered when all files of a dataset are downloaded.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_DATASET_LATEST</span></code>: the pipeline is triggered when a dataset is promoted latest.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_LATEST_DATASET_COMPLETE</span></code>: the pipeline triggered when all files of a dataset are downloaded and the dataset is promoted latest.</li>
+<li><code class="docutils literal"><span class="pre">EVENT_NON_LATEST_DATASET_COMPLETE</span></code>: the pipeline triggered when all files of a dataset are downloaded and the dataset is not latest.</li>
 </ul>
 </dd>
 <dt>Other events exists to deal with CMIP5-like project without considering the product facet:</dt>
 <dd><ul class="first last simple">
-<li><tt class="docutils literal"><span class="pre">EVENT_OUTPUT12_VARIABLE_COMPLETE</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">EVENT_OUTPUT12_DATASET_COMPLETE</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">EVENT_OUTPUT12_LATEST_DATASET_COMPLETE</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">EVENT_OUTPUT12_DATASET_LATEST</span></tt></li>
+<li><code class="docutils literal"><span class="pre">EVENT_OUTPUT12_VARIABLE_COMPLETE</span></code></li>
+<li><code class="docutils literal"><span class="pre">EVENT_OUTPUT12_DATASET_COMPLETE</span></code></li>
+<li><code class="docutils literal"><span class="pre">EVENT_OUTPUT12_LATEST_DATASET_COMPLETE</span></code></li>
+<li><code class="docutils literal"><span class="pre">EVENT_OUTPUT12_NON_LATEST_DATASET_COMPLETE</span></code></li>
+<li><code class="docutils literal"><span class="pre">EVENT_OUTPUT12_DATASET_LATEST</span></code></li>
 </ul>
 </dd>
 </dl>
 </div>
-<p>Edit the file <tt class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/spbindings/py</span></tt> for source installation or <tt class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></tt> for package installation. This file content must be:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">spconst</span>
+<p>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/spbindings/py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code> for package installation. This file content must be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spconst</span>
 
-<span class="c"># Mapping: a &#39;key&#39; event into the corresponding tuple of &#39;value&#39; pipeline with starting &#39;status&#39;</span>
+<span class="c1"># Mapping: a &#39;key&#39; event into the corresponding tuple of &#39;value&#39; pipeline with starting &#39;status&#39;</span>
 <span class="n">event_pipeline_mapping</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_VARIABLE_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;my_pipeline&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
+    <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_VARIABLE_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;my_pipeline&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -214,13 +223,13 @@ For instance, in the case your post-process consist in executing the script <tt 
 <h2>Pipeline triggering<a class="headerlink" href="#pipeline-triggering" title="Permalink to this headline">¶</a></h2>
 <p>The binding file is also used to trigger pipelines between each other.
 It could be useful to separate post-processing that to be apply at different DRS level (e.g., variable vs. dataset level).</p>
-<p>For instance, we defined another pipeline called <tt class="docutils literal"><span class="pre">my_pipeline_2</span></tt> composed of tasks at the dataset level. We want that this pipeline is triggerred when all the variable of a dataset have been processed.</p>
-<p>Edit the file <tt class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/spbindings/py</span></tt> for source installation or <tt class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></tt> for package installation. Add the content:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Mapping: when a &#39;key&#39; pipeline has ended, start the corresponding &#39;value&#39; pipeline</span>
-<span class="c"># This means to change the status of the &#39;value&#39; pipeline from &#39;pause&#39; to &#39;waiting&#39;</span>
-<span class="c"># when the &#39;key&#39; pipeline reach the &#39;done&#39; status</span>
+<p>For instance, we defined another pipeline called <code class="docutils literal"><span class="pre">my_pipeline_2</span></code> composed of tasks at the dataset level. We want that this pipeline is triggerred when all the variable of a dataset have been processed.</p>
+<p>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/spbindings/py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code> for package installation. Add the content:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Mapping: when a &#39;key&#39; pipeline has ended, start the corresponding &#39;value&#39; pipeline</span>
+<span class="c1"># This means to change the status of the &#39;value&#39; pipeline from &#39;pause&#39; to &#39;waiting&#39;</span>
+<span class="c1"># when the &#39;key&#39; pipeline reach the &#39;done&#39; status</span>
 <span class="n">trigger</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="s">&#39;my_pipeline&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;my_pipeline2&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">TRIGGER_TYPE_NV2D</span><span class="p">)</span>
+   <span class="s1">&#39;my_pipeline&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;my_pipeline2&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">TRIGGER_TYPE_NV2D</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -229,10 +238,10 @@ It could be useful to separate post-processing that to be apply at different DRS
 <dl class="last docutils">
 <dt>Only the following triggers are supported:</dt>
 <dd><ul class="first last simple">
-<li><tt class="docutils literal"><span class="pre">TRIGGER_TYPE_NV2D</span></tt>: N &#8220;variable pipeline&#8221; trigger &#8220;dataset pipeline&#8221;</li>
-<li><tt class="docutils literal"><span class="pre">TRIGGER_TYPE_V2V</span></tt>: &#8220;variable pipeline&#8221; triggers &#8220;variable pipeline&#8221;</li>
-<li><tt class="docutils literal"><span class="pre">TRIGGER_TYPE_D2D</span></tt>: &#8220;dataset pipeline&#8221; triggers &#8220;dataset pipeline&#8221;</li>
-<li><tt class="docutils literal"><span class="pre">TRIGGER_TYPE_D2NV</span></tt>: &#8220;dataset pipeline&#8221; triggers N &#8220;variable pipeline&#8221;</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_NV2D</span></code>: N &#8220;variable pipeline&#8221; trigger &#8220;dataset pipeline&#8221;</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_V2V</span></code>: &#8220;variable pipeline&#8221; triggers &#8220;variable pipeline&#8221;</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2D</span></code>: &#8220;dataset pipeline&#8221; triggers &#8220;dataset pipeline&#8221;</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2NV</span></code>: &#8220;dataset pipeline&#8221; triggers N &#8220;variable pipeline&#8221;</li>
 </ul>
 </dd>
 </dl>
@@ -241,15 +250,16 @@ It could be useful to separate post-processing that to be apply at different DRS
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -258,12 +268,14 @@ It could be useful to separate post-processing that to be apply at different DRS
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, RACIAZEK, J..
+        &copy; Copyright 2017, CNRS.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -287,7 +299,7 @@ It could be useful to separate post-processing that to be apply at different DRS
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

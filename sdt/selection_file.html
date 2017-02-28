@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Selection file &mdash; synda 3.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,13 +28,15 @@
   
 
   
+
+  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Basic download" href="download.html"/>
         <link rel="prev" title="User Guide" href="user_guide.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,76 +46,79 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> synda</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Selection file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#selection-file-format">Selection file format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selection-file-parameter">Selection file parameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selection-file-management">Selection file management</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdp/sdp.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gridftp.html">Download with GridFTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="globustransfer.html">Download with Globus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -128,7 +133,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -137,13 +148,16 @@
     <li>Selection file</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../sources/sdt/selection_file.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../sources/sdt/selection_file.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="selection-file">
 <span id="id1"></span><h1>Selection file<a class="headerlink" href="#selection-file" title="Permalink to this headline">¶</a></h1>
@@ -157,11 +171,11 @@ corresponding available files. The program may be run regularly to
 download the possible new files. Typically each file is associated with
 an analysis (cfmip, downscaling and so on). Create as many selection
 files as you want in the &#8220;selection&#8221; folder.</p>
-<p>Those selection files are stored in <tt class="docutils literal"><span class="pre">$HOME/sdt/selection</span></tt> folder (source
-installation) or <tt class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></tt> (system package
+<p>Those selection files are stored in <code class="docutils literal"><span class="pre">$HOME/sdt/selection</span></code> folder (source
+installation) or <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code> (system package
 installation).</p>
 <p>Example of a selection file</p>
-<div class="highlight-text"><div class="highlight"><pre>project=CMIP5
+<div class="highlight-text"><div class="highlight"><pre><span></span>project=CMIP5
 model=CNRM-CM5 CSIRO-Mk3-6-0
 experiment=historical amip
 ensemble=r1i1p1
@@ -180,11 +194,11 @@ variable[land][mon]=mrsos nppRoot nep
 <div class="section" id="realm-frequency-and-variable-s">
 <h3>Realm frequency and variable(s)<a class="headerlink" href="#realm-frequency-and-variable-s" title="Permalink to this headline">¶</a></h3>
 <p>Definition:</p>
-<div class="highlight-text"><div class="highlight"><pre>variable[&lt;realm&gt;][&lt;frequency&gt;]=&lt;variable1&gt; &lt;variable2&gt; [...]
+<div class="highlight-text"><div class="highlight"><pre><span></span>variable[&lt;realm&gt;][&lt;frequency&gt;]=&lt;variable1&gt; &lt;variable2&gt; [...]
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>variable[atmos][mon]=tas psl tasmin
+<div class="highlight-text"><div class="highlight"><pre><span></span>variable[atmos][mon]=tas psl tasmin
 </pre></div>
 </div>
 <div class="admonition note">
@@ -195,11 +209,11 @@ variable[land][mon]=mrsos nppRoot nep
 <div class="section" id="facet-s-and-variable-s">
 <h3>Facet(s) and variable(s)<a class="headerlink" href="#facet-s-and-variable-s" title="Permalink to this headline">¶</a></h3>
 <p>Definition:</p>
-<div class="highlight-text"><div class="highlight"><pre>variable[&lt;facet1&gt; &lt;facet2&gt; &lt;facet3&gt; [...]]=&lt;variable1&gt; &lt;variable2&gt; [...]
+<div class="highlight-text"><div class="highlight"><pre><span></span>variable[&lt;facet1&gt; &lt;facet2&gt; &lt;facet3&gt; [...]]=&lt;variable1&gt; &lt;variable2&gt; [...]
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>variable[rcp26 atmos mon]=tasmin tasmax
+<div class="highlight-text"><div class="highlight"><pre><span></span>variable[rcp26 atmos mon]=tasmin tasmax
 </pre></div>
 </div>
 <div class="admonition note">
@@ -210,22 +224,22 @@ variable[land][mon]=mrsos nppRoot nep
 <div class="section" id="name-and-value">
 <h3>Name and value<a class="headerlink" href="#name-and-value" title="Permalink to this headline">¶</a></h3>
 <p>Definition:</p>
-<div class="highlight-text"><div class="highlight"><pre>&lt;name&gt;=&lt;value&gt;
+<div class="highlight-text"><div class="highlight"><pre><span></span>&lt;name&gt;=&lt;value&gt;
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>experiment=rcp26
+<div class="highlight-text"><div class="highlight"><pre><span></span>experiment=rcp26
 </pre></div>
 </div>
 </div>
 <div class="section" id="standalone-value">
 <h3>Standalone value<a class="headerlink" href="#standalone-value" title="Permalink to this headline">¶</a></h3>
 <p>Definition:</p>
-<div class="highlight-text"><div class="highlight"><pre>&lt;value&gt;
+<div class="highlight-text"><div class="highlight"><pre><span></span>&lt;value&gt;
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>rcp26
+<div class="highlight-text"><div class="highlight"><pre><span></span>rcp26
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -236,7 +250,7 @@ variable[land][mon]=mrsos nppRoot nep
 </div>
 <div class="section" id="selection-file-parameter">
 <h2>Selection file parameter<a class="headerlink" href="#selection-file-parameter" title="Permalink to this headline">¶</a></h2>
-<p>See <a class="reference internal" href="selection_file_param_ref.html#selection-file-param-ref"><em>selection file parameter reference</em></a>.</p>
+<p>See <a class="reference internal" href="selection_file_param_ref.html#selection-file-param-ref"><span class="std std-ref">selection file parameter reference</span></a>.</p>
 </div>
 <div class="section" id="selection-file-management">
 <h2>Selection file management<a class="headerlink" href="#selection-file-management" title="Permalink to this headline">¶</a></h2>
@@ -244,7 +258,7 @@ variable[land][mon]=mrsos nppRoot nep
 <h3>Adding a selection file<a class="headerlink" href="#adding-a-selection-file" title="Permalink to this headline">¶</a></h3>
 <p>Create a new selection file in the &#8220;selection&#8221; folder and set the filters.</p>
 <p>Then run command below to start the discovery:</p>
-<div class="highlight-bash"><div class="highlight"><pre>synda install -s &lt;selection-file&gt;
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
 </pre></div>
 </div>
 </div>
@@ -252,14 +266,14 @@ variable[land][mon]=mrsos nppRoot nep
 <h3>Editing a selection file<a class="headerlink" href="#editing-a-selection-file" title="Permalink to this headline">¶</a></h3>
 <p>Edit the file and change filters accordingly.</p>
 <p>Then run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>synda install -s &lt;selection-file&gt;
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="removing-a-selection-file">
 <h3>Removing a selection file<a class="headerlink" href="#removing-a-selection-file" title="Permalink to this headline">¶</a></h3>
 <p>Run command below to remove files matching the selection file</p>
-<div class="highlight-bash"><div class="highlight"><pre>synda remove -s &lt;selection-file&gt;
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda remove -s &lt;selection-file&gt;
 </pre></div>
 </div>
 <p>Then manually remove the selection file from the &#8220;selection&#8221; folder.</p>
@@ -268,15 +282,16 @@ variable[land][mon]=mrsos nppRoot nep
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="download.html" class="btn btn-neutral float-right" title="Basic download"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="download.html" class="btn btn-neutral float-right" title="Basic download" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="user_guide.html" class="btn btn-neutral" title="User Guide"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="user_guide.html" class="btn btn-neutral" title="User Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -285,12 +300,14 @@ variable[land][mon]=mrsos nppRoot nep
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, RACIAZEK, J..
+        &copy; Copyright 2017, CNRS.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -314,7 +331,7 @@ variable[land][mon]=mrsos nppRoot nep
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

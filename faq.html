@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Frequently asked questions &mdash; synda 3.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,12 +28,14 @@
   
 
   
+
+  
     <link rel="top" title="synda 3.0 documentation" href="index.html"/>
         <link rel="next" title="Credits" href="credits.html"/>
         <link rel="prev" title="Synda Command reference" href="command_ref.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -43,76 +45,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> synda</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul>
-<li class="toctree-l1"><a class="reference internal" href="sdt/sdt.html">Synda Transfer Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sdt/sdt.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdt/sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdt/sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdt/sdt.html#usage">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sdp/sdp.html">Synda Post-Processing Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sdp/sdp.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdp/sdp.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdp/sdp.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdp/sdp.html#usage">Usage</a></li>
-</ul>
-</li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="sdt/sdt.html">Synda Transfer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="files.html#configuration-files">Configuration files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="files.html#folders">Folders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="files.html#databases">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#transfer-module">Transfer Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-jpeg-zlib-syntaxerror-invalid-syntax">required = {&#8216;jpeg&#8217;, &#8216;zlib&#8217;} - SyntaxError: invalid syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nosectionerror-no-section-esgf-credential">NoSectionError: No section: &#8216;esgf_credential&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581">urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt">sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importerror-no-module-named-sysconfig">ImportError: No module named sysconfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pkg-resources-distributionnotfound-setuptools-1-0-error">&#8216;pkg_resources.DistributionNotFound: setuptools&gt;=1.0&#8217; error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-argparse-was-already-imported-error">&#8216;Module argparse was already imported&#8217; error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving">&#8220;(&#8216;system library&#8217;, &#8216;fopen&#8217;, &#8216;No such file or directory&#8217;)&#8221; error during certificate retrieving</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error">&#8216;OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown&#8217; error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#no-module-named-datetime-error">&#8220;No module named datetime&#8221; error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error">AttributeError: &#8216;FFILibrary&#8217; object has no attribute &#8216;SSL_OP_NO_TICKET&#8217; error</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Synda Command reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="command_ref.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="command_ref.html#subcommands-description">Subcommands description</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Frequently asked questions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#transfer-module">Transfer Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing-module">Post-Processing Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="credits.html#contributors">Contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="credits.html#contacts">Contacts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="credits.html#acknowledgment">Acknowledgment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="credits.html#reference">Reference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="credits.html#materials">Materials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="log.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="log.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="license.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="license.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -127,20 +129,29 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
     <li>Frequently asked questions</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="sources/faq.txt" rel="nofollow"> View page source</a>
+          
+            <a href="sources/faq.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="frequently-asked-questions">
 <span id="faq"></span><h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
@@ -149,9 +160,9 @@
 <div class="section" id="required-jpeg-zlib-syntaxerror-invalid-syntax">
 <h3>required = {&#8216;jpeg&#8217;, &#8216;zlib&#8217;} - SyntaxError: invalid syntax<a class="headerlink" href="#required-jpeg-zlib-syntaxerror-invalid-syntax" title="Permalink to this headline">¶</a></h3>
 <p>Full error stack:</p>
-<div class="highlight-bash"><div class="highlight"><pre>Collecting pillow&gt;<span class="o">=</span>2.4.0 <span class="o">(</span>from reportlab<span class="o">)</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>Collecting pillow&gt;<span class="o">=</span>2.4.0 <span class="o">(</span>from reportlab<span class="o">)</span>
    Using cached Pillow-4.0.0.tar.gz
-      Complete output from <span class="nb">command </span>python setup.py egg_info:
+      Complete output from <span class="nb">command</span> python setup.py egg_info:
       Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
          File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1, in &lt;module&gt;
          File <span class="s2">&quot;/tmp/root/pip-build-525vF6/pillow/setup.py&quot;</span>, line 138
@@ -162,59 +173,59 @@
 </div>
 <p>This bug affects 3.6 version installed from source (RPM 3.6 and DEB 3.6 should not be affected). It has been fixed in 3.7.
 It can be fixed in 3.6 by downgrading the pypi pillow package:</p>
-<div class="highlight-bash"><div class="highlight"><pre>pip install <span class="nv">pillow</span><span class="o">==</span>3.4.2
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install <span class="nv">pillow</span><span class="o">==</span>3.4.2
 </pre></div>
 </div>
 </div>
 <div class="section" id="nosectionerror-no-section-esgf-credential">
 <h3>NoSectionError: No section: &#8216;esgf_credential&#8217;<a class="headerlink" href="#nosectionerror-no-section-esgf-credential" title="Permalink to this headline">¶</a></h3>
 <p>Run commands below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo sed -i -e <span class="s2">&quot;s/install/get&#39;,&#39;install/&quot;</span> /usr/share/python/synda/sdt/bin/sdconst.py
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo sed -i -e <span class="s2">&quot;s/install/get&#39;,&#39;install/&quot;</span> /usr/share/python/synda/sdt/bin/sdconst.py
 </pre></div>
 </div>
 </div>
 <div class="section" id="urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581">
 <h3>urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)<a class="headerlink" href="#urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581" title="Permalink to this headline">¶</a></h3>
 <p>Run commands below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>synda certificate renew -x
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda certificate renew -x
 </pre></div>
 </div>
 </div>
 <div class="section" id="sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt">
 <h3>sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)<a class="headerlink" href="#sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt" title="Permalink to this headline">¶</a></h3>
 <p>Run commands below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>mkdir -p /srv/synda/sdt
-sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir -p /srv/synda/sdt
+sudo wget http://sd-104052.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
 </pre></div>
 </div>
 </div>
 <div class="section" id="importerror-no-module-named-sysconfig">
 <h3>ImportError: No module named sysconfig<a class="headerlink" href="#importerror-no-module-named-sysconfig" title="Permalink to this headline">¶</a></h3>
-<p>This error occurs when installing Synda from source with an old version of <tt class="docutils literal"><span class="pre">install.sh</span></tt> script (&lt;20160215). Downloading the last version of install.sh script should fix the problem.</p>
+<p>This error occurs when installing Synda from source with an old version of <code class="docutils literal"><span class="pre">install.sh</span></code> script (&lt;20160215). Downloading the last version of install.sh script should fix the problem.</p>
 </div>
 <div class="section" id="pkg-resources-distributionnotfound-setuptools-1-0-error">
 <h3>&#8216;pkg_resources.DistributionNotFound: setuptools&gt;=1.0&#8217; error<a class="headerlink" href="#pkg-resources-distributionnotfound-setuptools-1-0-error" title="Permalink to this headline">¶</a></h3>
 <p>Run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo /usr/share/python/synda/sdt/bin/pip install <span class="nv">setuptools</span><span class="o">==</span>19.7
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo /usr/share/python/synda/sdt/bin/pip install <span class="nv">setuptools</span><span class="o">==</span>19.7
 </pre></div>
 </div>
 </div>
 <div class="section" id="module-argparse-was-already-imported-error">
 <h3>&#8216;Module argparse was already imported&#8217; error<a class="headerlink" href="#module-argparse-was-already-imported-error" title="Permalink to this headline">¶</a></h3>
 <p>Run command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>pip uninstall argparse
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip uninstall argparse
 </pre></div>
 </div>
 </div>
 <div class="section" id="system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving">
 <h3>&#8220;(&#8216;system library&#8217;, &#8216;fopen&#8217;, &#8216;No such file or directory&#8217;)&#8221; error during certificate retrieving<a class="headerlink" href="#system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving" title="Permalink to this headline">¶</a></h3>
-<p>Unset all X509 environment variables and remove <tt class="docutils literal"><span class="pre">~/.esg</span></tt> directory.</p>
+<p>Unset all X509 environment variables and remove <code class="docutils literal"><span class="pre">~/.esg</span></code> directory.</p>
 </div>
 <div class="section" id="opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error">
 <h3>&#8216;OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown&#8217; error<a class="headerlink" href="#opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error" title="Permalink to this headline">¶</a></h3>
 <p>This signals that the server does not trust the certificate issued by the MyProxy CA.</p>
 <p>Run commands below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>synda certificate renew -x
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda certificate renew -x
 </pre></div>
 </div>
 <p>If this doesn&#8217;t help, you can find more information <a class="reference external" href="https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs">here</a></p>
@@ -222,17 +233,17 @@ sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr
 <div class="section" id="no-module-named-datetime-error">
 <h3>&#8220;No module named datetime&#8221; error<a class="headerlink" href="#no-module-named-datetime-error" title="Permalink to this headline">¶</a></h3>
 <p>Remove virtualenv from the path:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:/usr/bin:/bin
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:/usr/bin:/bin
 </pre></div>
 </div>
 </div>
 <div class="section" id="attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error">
 <h3>AttributeError: &#8216;FFILibrary&#8217; object has no attribute &#8216;SSL_OP_NO_TICKET&#8217; error<a class="headerlink" href="#attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error" title="Permalink to this headline">¶</a></h3>
 <p>Run command below in <em>synda</em> virtualenv to retrieve pyopenssl HEAD version from GitHub:</p>
-<div class="highlight-bash"><div class="highlight"><pre>easy_install https://github.com/pyca/pyopenssl/tarball/master
+<div class="highlight-bash"><div class="highlight"><pre><span></span>easy_install https://github.com/pyca/pyopenssl/tarball/master
 </pre></div>
 </div>
-<p>Mere inforomation <a class="reference external" href="http://stackoverflow.com/questions/23006023/error-installing-pyopenssl">here</a></p>
+<p><a class="reference external" href="http://stackoverflow.com/questions/23006023/error-installing-pyopenssl">More information</a>.</p>
 </div>
 </div>
 <div class="section" id="post-processing-module">
@@ -241,15 +252,16 @@ sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="credits.html" class="btn btn-neutral float-right" title="Credits"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="credits.html" class="btn btn-neutral float-right" title="Credits" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="command_ref.html" class="btn btn-neutral" title="Synda Command reference"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="command_ref.html" class="btn btn-neutral" title="Synda Command reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -258,12 +270,14 @@ sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, RACIAZEK, J..
+        &copy; Copyright 2017, CNRS.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -287,7 +301,7 @@ sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr
       <script type="text/javascript" src="static/jquery.js"></script>
       <script type="text/javascript" src="static/underscore.js"></script>
       <script type="text/javascript" src="static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

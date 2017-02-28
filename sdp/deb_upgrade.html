@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Upgrade from DEB package &mdash; synda 3.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,13 +28,15 @@
   
 
   
+
+  
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Configuration parameter reference" href="config_param_ref.html"/>
         <link rel="prev" title="Upgrade from RPM package" href="rpm_upgrade.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,76 +46,75 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> synda</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sdt/sdt.html#usage">Usage</a></li>
-</ul>
-</li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdp.html#upgrade">Upgrade</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src_upgrade.html">Upgrade from source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpm_upgrade.html">Upgrade from RPM package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrade from DEB package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pre-upgrade">Pre-upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#post-upgrade">Post-upgrade</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#configuration-files">Configuration files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#folders">Folders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../files.html#databases">Databases</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#description">Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../command_ref.html#subcommands-description">Subcommands description</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../faq.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contributors">Contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#contacts">Contacts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#acknowledgment">Acknowledgment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#reference">Reference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../credits.html#materials">Materials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../log.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#transfer-module">Transfer Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html#post-processing-module">Post-Processing Module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -128,7 +129,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -137,24 +144,27 @@
     <li>Upgrade from DEB package</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../sources/sdp/deb_upgrade.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../sources/sdp/deb_upgrade.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="upgrade-from-deb-package">
 <span id="deb-upgrade-sdp"></span><h1>Upgrade from DEB package<a class="headerlink" href="#upgrade-from-deb-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="pre-upgrade">
 <h2>Pre-upgrade<a class="headerlink" href="#pre-upgrade" title="Permalink to this headline">¶</a></h2>
 <p>Stop service with:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo service sdp stop
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdp stop
 </pre></div>
 </div>
 <p>Backup folders below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>/etc/synda/sdp
+<div class="highlight-bash"><div class="highlight"><pre><span></span>/etc/synda/sdp
 /var/log/synda/sdp
 /var/lib/synda/sdp
 </pre></div>
@@ -163,15 +173,15 @@
 <div class="section" id="upgrade">
 <h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
 <p>Remove previous package version:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo dpkg -P synda-pp
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo dpkg -P synda-pp
 </pre></div>
 </div>
-<p>Install new package version following <a class="reference internal" href="deb_install.html#deb-install-sdp"><em>installation from DEB package</em></a>.</p>
+<p>Install new package version following <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">installation from DEB package</span></a>.</p>
 </div>
 <div class="section" id="post-upgrade">
 <h2>Post-upgrade<a class="headerlink" href="#post-upgrade" title="Permalink to this headline">¶</a></h2>
 <p>Stop service with:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo service sdp stop
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdp stop
 </pre></div>
 </div>
 <p>As configuration files located in /etc/synda/sdp have been reinitialized during upgrade, you need to re-enter your username and password, as well as any other parameter you may have set to a non-default value.</p>
@@ -179,24 +189,25 @@
 <p class="first admonition-title">Note</p>
 <p class="last">You can use a diff program to compare post-upgrade configuration files over pre-upgrade configuration files (from the backup).</p>
 </div>
-<p>Restore database from backup in <tt class="docutils literal"><span class="pre">/var/lib/synda/sdp</span></tt> (replace the existing file).</p>
+<p>Restore database from backup in <code class="docutils literal"><span class="pre">/var/lib/synda/sdp</span></code> (replace the existing file).</p>
 <p>Restart service with:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo service sdp restart
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service sdp restart
 </pre></div>
 </div>
 </div>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="config_param_ref.html" class="btn btn-neutral float-right" title="Configuration parameter reference"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="config_param_ref.html" class="btn btn-neutral float-right" title="Configuration parameter reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="rpm_upgrade.html" class="btn btn-neutral" title="Upgrade from RPM package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="rpm_upgrade.html" class="btn btn-neutral" title="Upgrade from RPM package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -205,12 +216,14 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, RACIAZEK, J..
+        &copy; Copyright 2017, CNRS.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -234,7 +247,7 @@
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
