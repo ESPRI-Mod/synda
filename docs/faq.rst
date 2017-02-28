@@ -117,7 +117,7 @@ Run command below in *synda* virtualenv to retrieve pyopenssl HEAD version from 
 
     easy_install https://github.com/pyca/pyopenssl/tarball/master
 
-Mere inforomation `here <http://stackoverflow.com/questions/23006023/error-installing-pyopenssl>`_
+`More information <http://stackoverflow.com/questions/23006023/error-installing-pyopenssl>`_.
 
 
 Post-Processing Module

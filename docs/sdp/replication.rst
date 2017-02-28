@@ -39,22 +39,20 @@ On *synda-host*:
 
  - Set ``post_processing`` parameter to ``true`` in ``sdt.conf``.
  - Set ``http_fallback`` parameter to ``true`` in ``sdt.conf``.
- - Set ``check_parameter`` parameter to ``0`` in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]``section.
+ - Set ``check_parameter`` parameter to 0 in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
  - Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
 
 .. code-block:: text
+
     [module]
     post_processing=true
-    [...]
-
+    ...
     [download]
     http_fallback=true
-    [...]
-
+    ...
     [behaviour]
     check_parameter=0
-    [...]
-
+    ...
     [post_processing]
     host=xxx.xxx.xxx.xx
     port=18290
@@ -67,7 +65,7 @@ On *synda-host*:
     [post_processing]
     username=sdpp
     password=xxxxxx
-
+    ...
     [esgf_credential]
     openid=https://my.data.node/esgf-idp/openid/synda
     password=xxxxxxx
@@ -80,10 +78,11 @@ On *synda-host*:
  - Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
 
 .. code-block:: text
+
     [daemon]
     eventthread=1
     host=xxx.xxx.xxx.xx
-    [...]
+    ...
 
 - Copy the ``username`` and ``password`` in ``credentials.conf`` for RPC server from ``sdt`` configuration.
 

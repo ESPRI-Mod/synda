@@ -6,7 +6,7 @@ Changelog
 Transfer Module
 ***************
 
-- Version 3.8 - 2017-02-19
+Version 3.8 - 2017-02-19
 	- add ``info`` action to ``synda certificate`` command
 	- add security_dir_mode option
 	- add subfolder to the ESGF certificate path (named after the user UID)
@@ -20,7 +20,7 @@ Transfer Module
 	- add uuid to stacktrace file name
 	- move try/except block upstream to enclose the daemon context
 	- fix permission in sys-pkg for ``/srv/synda/sdt`` folder (g+sw)
-- Version 3.7 - 2017-01-15
+Version 3.7 - 2017-01-15
 	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
 	- disable sdfilepermission module.
 	- add user personal env (SDT_USER_ENV).
