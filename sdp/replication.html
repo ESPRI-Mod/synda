@@ -182,31 +182,30 @@ All user id that are <code class="docutils literal"><span class="pre">synda</spa
 <div class="section" id="sdt-module">
 <h3><code class="docutils literal"><span class="pre">sdt</span></code> module<a class="headerlink" href="#sdt-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 <li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 <li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to 0 in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section.</li>
 <li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 </ul>
-</div></blockquote>
-<div class="highlight-text"><div class="highlight"><pre><span></span>   [module]
-   post_processing=true
-   ...
-   [download]
-   http_fallback=true
-   ...
-   [behaviour]
-   check_parameter=0
-   ...
-   [post_processing]
-   host=xxx.xxx.xxx.xx
-   port=18290
-
-- Choose a password to configure RPC server in ``credentials.conf``.
-- Check the ESGF ``openid`` and ``password`` are valid in ``credentials.conf`` and register to appropriate ESGF groups.
+<div class="highlight-text"><div class="highlight"><pre><span></span>[module]
+post_processing=true
+...
+[download]
+http_fallback=true
+...
+[behaviour]
+check_parameter=0
+...
+[post_processing]
+host=xxx.xxx.xxx.xx
+port=18290
 </pre></div>
 </div>
+<ul class="simple">
+<li>Choose a password to configure RPC server in <code class="docutils literal"><span class="pre">credentials.conf</span></code>.</li>
+<li>Check the ESGF <code class="docutils literal"><span class="pre">openid</span></code> and <code class="docutils literal"><span class="pre">password</span></code> are valid in <code class="docutils literal"><span class="pre">credentials.conf</span></code> and register to appropriate ESGF groups.</li>
+</ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[post_processing]
 username=sdpp
 password=xxxxxx
@@ -219,14 +218,11 @@ password=xxxxxxx
 </div>
 <div class="section" id="sdp-module">
 <h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>On <em>synda-host</em>:</dt>
-<dd><ul class="first last simple">
+<p>On <em>synda-host</em>:</p>
+<ul class="simple">
 <li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>.</li>
 <li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 </ul>
-</dd>
-</dl>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[daemon]
 eventthread=1
 host=xxx.xxx.xxx.xx
@@ -282,11 +278,9 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 <div class="section" id="pipeline-definition">
 <h4>Pipeline definition<a class="headerlink" href="#pipeline-definition" title="Permalink to this headline">¶</a></h4>
 <p>On <em>synda-host</em>:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/republication.py</span></code>. This file content must be:</li>
 </ul>
-</div></blockquote>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sppostprocessingutils</span>
 
 <span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">():</span>
@@ -492,28 +486,27 @@ The worker run the corresponding script and returns the job result to <code clas
 </pre></div>
 </div>
 <p>The worker allows you to:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>Pick up only one item to process from <code class="docutils literal"><span class="pre">sdp</span></code>:</li>
 </ul>
-</div></blockquote>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>   synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -1
-
-- Filter the transitions to process:
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -1
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>   synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -j mapfile
-
-- Filter the pipeline to process:
+<ul class="simple">
+<li>Filter the transitions to process:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -j mapfile
 </pre></div>
 </div>
+<ul class="simple">
+<li>Filter the pipeline to process:</li>
+</ul>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -p republication
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
 <p>By default, the worker log is <code class="docutils literal"><span class="pre">/var/log/sdw/worker.log</span></code>. On <em>worker-host</em> you must submit a log directory:</p>
-<p class="last">synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; &#8211;script_dir /your/scripts -l /my/logs</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -l /my/logs
+</pre></div>
 </div>
 </div>
 </div>
