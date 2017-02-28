@@ -6,16 +6,21 @@ Changelog
 Transfer Module
 ***************
 
-- Version 3.8 - 
-	- follow symlinks during 'synda remove' operation.
-	- add manual routines to refresh dataset status.
-	- new cleanup algo for 'synda remove' command (run faster).
-	- add full path support in 'local_path_drs_template' var.
-	- add write test in sddaemon module.
-	- store stacktrace file in /tmp.
-	- add uuid to stacktrace file name.
-	- move try/except block upstream to enclose the daemon context.
-- Version 3.7 - 20170115
+- Version 3.8 - 2017-02-19
+	- add ``info`` action to ``synda certificate`` command
+	- add security_dir_mode option
+	- add subfolder to the ESGF certificate path (named after the user UID)
+	- all deletions now occurs synchronously (deferred mode is disabled)
+	- follow symlinks during ``synda remove`` operation
+	- add manual routines to refresh dataset status
+	- new cleanup algo for ``synda remove`` command (run faster)
+	- add full path support in ``local_path_drs_template`` var
+	- add write test in sddaemon module
+	- store stacktrace file in /tmp
+	- add uuid to stacktrace file name
+	- move try/except block upstream to enclose the daemon context
+	- fix permission in sys-pkg for ``/srv/synda/sdt`` folder (g+sw)
+- Version 3.7 - 2017-01-15
 	- ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.
 	- disable sdfilepermission module.
 	- add user personal env (SDT_USER_ENV).
@@ -313,7 +318,7 @@ Version 1.0 - 2011-09-09
 Post-Processing Module
 **********************
 
-Version 1.3
+Version 1.3 - 2017-01-15
     - *synda* group can be used instead of ``sudo`` (system package)
 Version 1.2 - 2016-12-04
     - move hard-coded pipeline dependencies into configuration files

@@ -15,7 +15,7 @@ Add IPSL Synda repository
 
 .. code-block:: bash
 
-    echo deb http://sd-53687.dedibox.fr/synda/sdp/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda-pp.list
+    echo deb http://sd-104052.dedibox.fr/synda/sdp/deb/repo/<distro-name>/ ipslrepo contrib | sudo tee /etc/apt/sources.list.d/synda-pp.list
 
 where <distro-name> can be one of
 
