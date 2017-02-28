@@ -37,10 +37,10 @@ Synda configuration
 
 On *synda-host*:
 
- - Set ``post_processing`` parameter to ``true`` in ``sdt.conf``.
- - Set ``http_fallback`` parameter to ``true`` in ``sdt.conf``.
- - Set ``check_parameter`` parameter to 0 in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
- - Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+- Set ``post_processing`` parameter to ``true`` in ``sdt.conf``.
+- Set ``http_fallback`` parameter to ``true`` in ``sdt.conf``.
+- Set ``check_parameter`` parameter to 0 in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
+- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
 
 .. code-block:: text
 
@@ -57,8 +57,8 @@ On *synda-host*:
     host=xxx.xxx.xxx.xx
     port=18290
 
- - Choose a password to configure RPC server in ``credentials.conf``.
- - Check the ESGF ``openid`` and ``password`` are valid in ``credentials.conf`` and register to appropriate ESGF groups.
+- Choose a password to configure RPC server in ``credentials.conf``.
+- Check the ESGF ``openid`` and ``password`` are valid in ``credentials.conf`` and register to appropriate ESGF groups.
 
 .. code-block:: text
 
@@ -74,8 +74,9 @@ On *synda-host*:
 --------------
 
 On *synda-host*:
- - Set ``eventhread`` parameter to ``1`` in ``sdp.conf``.
- - Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+
+- Set ``eventhread`` parameter to ``1`` in ``sdp.conf``.
+- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
 
 .. code-block:: text
 
@@ -135,7 +136,7 @@ Pipeline definition
 
 On *synda-host*:
 
- - Edit the file ``/etc/synda/sdp/pipeline/republication.py``. This file content must be:
+- Edit the file ``/etc/synda/sdp/pipeline/republication.py``. This file content must be:
 
 .. code-block:: python
 
@@ -360,26 +361,26 @@ The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` c
 
 The worker allows you to:
 
- - Pick up only one item to process from ``sdp``:
+- Pick up only one item to process from ``sdp``:
 
 .. code-block:: bash
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -1
 
- - Filter the transitions to process:
+- Filter the transitions to process:
 
 .. code-block:: bash
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -j mapfile
 
- - Filter the pipeline to process:
+- Filter the pipeline to process:
 
 .. code-block:: bash
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p republication
 
-.. note::
+By default, the worker log is ``/var/log/sdw/worker.log``. On *worker-host* you must submit a log directory:
 
-    By default, the worker log is ``/var/log/sdw/worker.log``. On *worker-host* you must submit a log directory:
+.. code-block:: bash
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -l /my/logs
