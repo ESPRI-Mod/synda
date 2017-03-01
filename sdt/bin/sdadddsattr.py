@@ -29,8 +29,8 @@ import sdapp
 import sdrun
 import copy
 import sdlog
-import sdconfig
 import sdpipelineprocessing
+from sdexception import MissingDatasetUrlException
 
 def run(squeries,metadata,parallel):
     datasets_attrs=None
@@ -55,25 +55,23 @@ def get_datasets_attrs(squeries,parallel):
     for q in squeries:
         q['url_tmp']=q['url']
 
-        if 'dataset_timestamp_url' not in q:
+        if 'dataset_attrs_url' not in q:
+            sdlog.info("SDADDDSA-300","dataset_attrs_url not found in query")
+            raise MissingDatasetUrlException()
 
-            sdlog.info("SDADDDSA-300","dataset_timestamp_url not found in query")
+        q['url']=q['dataset_attrs_url']
 
-            raise MissingDatasetTimestampUrlException() # just in case (should be always set for 'install' action)
 
-        q['url']=q['dataset_timestamp_url']
-
-    
     sdlog.info("SDADDDSA-301","Submit dataset queries..")
 
     # run
-    metadata=sdrun.run(squeries,parallel)
+    ds_metadata=sdrun.run(squeries,parallel)
 
     sdlog.info("SDADDDSA-304","Transform data struct..")
 
     # transform to dict for quick random access
     di={}
-    for d in metadata.get_files(): # warning: load list in memory
+    for d in ds_metadata.get_files(): # warning: load list in memory
         instance_id=d['instance_id']
         di[instance_id]=d
 

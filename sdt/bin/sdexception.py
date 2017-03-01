@@ -73,3 +73,6 @@ class OpenIDIncorrectFormatException(CertificateRenewalException):
     pass
 class OpenIDNotSetException(CertificateRenewalException):
     pass
+#
+class MissingDatasetUrlException(SDException):
+    pass
