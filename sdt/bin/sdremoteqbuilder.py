@@ -30,6 +30,7 @@ import sdlog
 import sddquery
 import sdpipelineutils
 import sdremotequtils
+import sdconfig
 import sdprint
 
 def run(facets_groups):
@@ -78,6 +79,14 @@ def build_query(facets_group):
             query['dataset_timestamp_url']=sdremotequtils.build_url(ds_timstap_facets,searchapi_host) # TAG3JKWW93K4J4JKDZS
 
 
+    # hack to retrieve datasets attrs in one row
+    if sdconfig.copy_ds_attrs:
+        if action is not None:
+            if action=='install':
+                ds_attrs_facets=transform_facets_for_dataset_attrs_retrieval(facets)
+                query['dataset_attrs_url']=sdremotequtils.build_url(ds_attrs_facets,searchapi_host) # TAG3JKWW93K4J4JKDZS
+
+
 
     return query
 
@@ -116,6 +125,17 @@ def transform_facets_for_dataset_timestamp_retrieval(facets):
     # Note that search-API 'fields' attribute can contains non-existent fields
     # (i.e. no error occurs in such case, non-existent fields are just ignored)
     facets_cpy['fields']=sdconst.TIMESTAMP_FIELDS
+
+    return facets_cpy
+
+def transform_facets_for_dataset_attrs_retrieval(facets):
+    """Force attributes for dataset attrs retrieval."""
+
+    # do not alter original facets object
+    facets_cpy=copy.deepcopy(facets)
+
+    facets_cpy['type']=['Dataset']
+    facets_cpy['fields']=['*']
 
     return facets_cpy
 
