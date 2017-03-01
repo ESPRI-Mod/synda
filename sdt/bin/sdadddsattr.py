@@ -20,7 +20,7 @@ Notes
     - 'sdadddsattr' means "SynDa ADD DataSet ATTRibutes"
     - this module retrieves datasets attributes in batch mode.
 TODO
-    - merge this module with 'sdbatchtimestamp' module to prevent download datasets twice
+    - merge this module with 'sdbatchtimestamp' module to prevent download datasets twice (TBC)
     - only retrieve fields used in 'local_path_drs_template' (TAGJ43JK55J8K78 and TAG3JKWW93K4J4JKDZS)
 """
 
@@ -31,7 +31,6 @@ import copy
 import sdlog
 import sdconfig
 import sdpipelineprocessing
-from sdexception import SDException
 
 def run(squeries,metadata,parallel):
     datasets_attrs=None
@@ -65,23 +64,18 @@ def get_datasets_attrs(squeries,parallel):
         q['url']=q['dataset_timestamp_url']
 
     
-    sdlog.info("SDADDDSA-301","Submit timestamp queries..")
+    sdlog.info("SDADDDSA-301","Submit dataset queries..")
 
     # run
     metadata=sdrun.run(squeries,parallel)
 
-    sdlog.info("SDADDDSA-304","Transform timestamp data struct..")
+    sdlog.info("SDADDDSA-304","Transform data struct..")
 
     # transform to dict for quick random access
     di={}
     for d in metadata.get_files(): # warning: load list in memory
         instance_id=d['instance_id']
-
-        try:
-            timestamp=get_timestamp(instance_id,d)
-            di[instance_id]=timestamp
-        except MissingTimestampException, e:
-            sdlog.info("SDADDDSA-500","dataset found but dataset timestamp is missing (%s)"%instance_id)
+        di[instance_id]=d
 
     # restore url
     for q in squeries:
