@@ -49,7 +49,7 @@ Post-Processing Module
 Copyright © Centre National de la Recherche Scientifique CNRS
             Commissariat à l'Énergie Atomique CEA
 
-``synchro_data_pp`` : climate models data post-processing program.
+``synda_pp`` : climate models data post-processing program.
 
 This software is a computer program whose purpose is to download files
 from the ESGF CMIP5 archive, for a list of variables, experiments and

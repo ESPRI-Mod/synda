@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'synda'
-copyright = u'2017, RACIAZEK, J.'
+copyright = u'2017, CNRS'
 author = u'RACIAZEK, J.'
 
 # The version info for the project you're documenting, acts as replacement for

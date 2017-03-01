@@ -56,7 +56,7 @@ Run commands below:
 .. code-block:: bash
 
     mkdir -p /srv/synda/sdt
-    sudo wget http://sd-53687.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+    sudo wget http://sd-104052.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
 
 
 ImportError: No module named sysconfig
@@ -117,7 +117,7 @@ Run command below in *synda* virtualenv to retrieve pyopenssl HEAD version from 
 
     easy_install https://github.com/pyca/pyopenssl/tarball/master
 
-Mere inforomation `here <http://stackoverflow.com/questions/23006023/error-installing-pyopenssl>`_
+`More information <http://stackoverflow.com/questions/23006023/error-installing-pyopenssl>`_.
 
 
 Post-Processing Module
