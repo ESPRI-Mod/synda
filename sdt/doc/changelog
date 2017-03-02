@@ -1,4 +1,5 @@
 - Version 3.9 - 
+	- add gridftp_opt option in sdt.conf.
 - Version 3.8 - 20170219
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.
