@@ -18,15 +18,16 @@ Synda installation
 
 We highly recommend to install Synda modules on a dedicated virtual machine using :ref:`RPM <rpm-install-sdt>` or :ref:`DEB <deb-install-sdt>` packages. This machine will be called *synda-host* in the following.
 
-See Synda installation from :ref:`RPM package <rpm-install-sdt>` or :ref:`DEB package <deb-install-sdt>`.
-
+First, see Synda installation from :ref:`RPM package <rpm-install-sdt>` or :ref:`DEB package <deb-install-sdt>`.
 Then, install Synda post-processing module from :ref:`RPM package <rpm-install-sdp>` or :ref:`DEB package <deb-install-sdp>`.
-
-However Synda needs to be installed as ``root`` on *synda-host*, it can be run with a normal user which is belonging to the ``synda`` Unix group.
 
 .. note::
 
-    The ``synda`` Unix group has to be declared by your system administrator prior to installation.
+    Synda needs to be installed as ``root`` on *synda-host*. Nevertheless, it can be run with a normal user which is belonging to the ``synda`` Unix group.
+
+.. note::
+
+    The ``synda`` Unix group has to be declared by your system administrator prior to the installation.
     All user id that are ``synda`` members will be able to run any ``synda [...]`` command.
 
 Synda configuration

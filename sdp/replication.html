@@ -168,12 +168,15 @@
 <div class="section" id="synda-installation">
 <h2>Synda installation<a class="headerlink" href="#synda-installation" title="Permalink to this headline">¶</a></h2>
 <p>We highly recommend to install Synda modules on a dedicated virtual machine using <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> packages. This machine will be called <em>synda-host</em> in the following.</p>
-<p>See Synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB package</span></a>.</p>
-<p>Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB package</span></a>.</p>
-<p>However Synda needs to be installed as <code class="docutils literal"><span class="pre">root</span></code> on <em>synda-host</em>, it can be run with a normal user which is belonging to the <code class="docutils literal"><span class="pre">synda</span></code> Unix group.</p>
+<p>First, see Synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB package</span></a>.
+Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB package</span></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal"><span class="pre">synda</span></code> Unix group has to be declared by your system administrator prior to installation.
+<p class="last">Synda needs to be installed as <code class="docutils literal"><span class="pre">root</span></code> on <em>synda-host</em>. Nevertheless, it can be run with a normal user which is belonging to the <code class="docutils literal"><span class="pre">synda</span></code> Unix group.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">synda</span></code> Unix group has to be declared by your system administrator prior to the installation.
 All user id that are <code class="docutils literal"><span class="pre">synda</span></code> members will be able to run any <code class="docutils literal"><span class="pre">synda</span> <span class="pre">[...]</span></code> command.</p>
 </div>
 </div>
