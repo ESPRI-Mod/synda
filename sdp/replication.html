@@ -215,6 +215,19 @@ openid=https://my.data.node/esgf-idp/openid/synda
 password=xxxxxxx
 </pre></div>
 </div>
+<ul class="simple">
+<li>If do not exist, add the following constants into <cite>/usr/share/python/synda/sdt/bin/sdconst.py</cite>:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EVENT_FILE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;file_complete&#39;</span>
+<span class="n">EVENT_VARIABLE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;variable_complete&#39;</span>
+<span class="n">EVENT_DATASET_COMPLETE</span><span class="o">=</span><span class="s1">&#39;dataset_complete&#39;</span>
+<span class="n">EVENT_DATASET_LATEST</span><span class="o">=</span><span class="s1">&#39;dataset_latest&#39;</span>
+<span class="n">EVENT_LATEST_DATASET_COMPLETE</span><span class="o">=</span><span class="s1">&#39;latest_dataset_complete&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li></li>
+</ul>
 </div>
 <div class="section" id="sdp-module">
 <h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
@@ -237,12 +250,43 @@ username=sdpp
 password=xxxxxx
 </pre></div>
 </div>
+<ul class="simple">
+<li>If do not exist, add the following constants in <cite>/usr/share/python/synda/sdp/bin/spconst.py</cite>:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EVENT_FILE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;file_complete&#39;</span>
+<span class="n">EVENT_VARIABLE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;variable_complete&#39;</span>
+<span class="n">EVENT_DATASET_COMPLETE</span><span class="o">=</span><span class="s1">&#39;dataset_complete&#39;</span>
+<span class="n">EVENT_DATASET_LATEST</span><span class="o">=</span><span class="s1">&#39;dataset_latest&#39;</span>
+<span class="n">EVENT_LATEST_DATASET_COMPLETE</span><span class="o">=</span><span class="s1">&#39;latest_dataset_complete&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add the project name you want to replicate to the <cite>AUTHORIZED_PROJECT</cite> list in <cite>/usr/share/python/synda/sdp/bin/spconst.py</cite>.</li>
+<li>Depending on its <em>Data Reference Syntax</em>, add the project name you want to replicate to the <cite>PROJECT_WITH_ONE_VARIABLE_PER_DATASET</cite> list in <cite>/usr/share/python/synda/sdp/bin/spconst.py</cite>.</li>
+</ul>
 </div>
 <div class="section" id="sdw-module">
 <h3><code class="docutils literal"><span class="pre">sdw</span></code> module<a class="headerlink" href="#sdw-module" title="Permalink to this headline">¶</a></h3>
 <p>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>.
 We will call <em>worker-host</em> the remote machine where the worker executes your scripts. <em>synda-host</em> and <em>worker-host</em> has to be accessible by the network each other without firewall constraints, etc.</p>
 <p>For instance, in the replication context, the Synda worker could be run on the ESGF data node used to publish the replicated data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>The worker is installed with <code class="docutils literal"><span class="pre">synda-pp</span></code> and can be found in <cite>/usr/bin/synda_wo</cite> on <em>synda-host</em>. As a standalone script, the worker can be move or copy outside of <em>synda-host</em>. You will only need to install the following required Python librairies (see also the file header):</dt>
+<dd><ul class="first last simple">
+<li>pip install python-daemon==1.6.1</li>
+<li>pip install python-jsonrpc==0.8.4</li>
+<li>pip install simplejson==3.10.0</li>
+<li>pip install retrying</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">In the context of the ESGF Replication Working Team, an up-to-date version of the worker is available here: <a class="reference download internal" href="../downloads/synda_wo" download=""><code class="xref download docutils literal"><span class="pre">synda_wo</span></code></a>.</p>
+</div>
 </div>
 <div class="section" id="target-data-to-replicate">
 <h3>Target data to replicate<a class="headerlink" href="#target-data-to-replicate" title="Permalink to this headline">¶</a></h3>
@@ -254,9 +298,8 @@ We will call <em>worker-host</em> the remote machine where the worker executes y
 <p>Copy those selection files on <em>synda-host</em> into the selection folder. This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code> by default or can be defined in <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code> with the <code class="docutils literal"><span class="pre">selection_path</span></code> parameter. See <a class="reference internal" href="../sdt/config_param_ref.html#config-param-ref-sdt"><span class="std std-ref">the synda configuration section</span></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">To allow Synda to discover files on another index node than those specified in the <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code>.
-You can use the <code class="docutils literal"><span class="pre">searchapi_host</span></code> selection file parameter.
-In that case, be careful to disable the facet checking in <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code> using <code class="docutils literal"><span class="pre">check_parameter=0</span></code>.</p>
+<p class="last">Use the <code class="docutils literal"><span class="pre">searchapi_host</span></code> selection file parameter to allow Synda to discover files on another index node than those specified in the <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code>.
+Be careful to disable the facet checking in <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code> using <code class="docutils literal"><span class="pre">check_parameter=0</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -302,7 +345,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 
 <span class="c1"># Mapping: a &#39;key&#39; event into the corresponding tuple of &#39;value&#39; pipeline with starting &#39;status&#39;</span>
 <span class="n">event_pipeline_mapping</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_DATASET_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;republication&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
+    <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_VARIABLE_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;republication&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -320,130 +363,16 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 <p class="last">Whether your scripts are run remotely or not, all the required dependencies, libraries, compiler, etc. have to be installed on <em>synda-host</em> or <em>worker-host</em>.</p>
 </div>
 <ul class="simple">
-<li>Edit <code class="docutils literal"><span class="pre">mapfile.sh</span></code> that will generate mapfiles using the <code class="docutils literal"><span class="pre">`esgprep</span> <span class="pre">mapfile</span></code> command-line &lt;<a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">http://is-enes-data.github.io/esgf-prepare/</a>&gt;`_. The script content should like:</li>
+<li>Edit <a class="reference download internal" href="../downloads/mapfile.sh" download=""><code class="xref download docutils literal"><span class="pre">mapfile.sh</span></code></a> that will generate mapfiles using the <code class="docutils literal"><span class="pre">`esgprep</span> <span class="pre">mapfile</span></code> command-line &lt;<a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">http://is-enes-data.github.io/esgf-prepare/</a>&gt;`_.</li>
+<li>Edit and configure <a class="reference download internal" href="../downloads/publication.sh" download=""><code class="xref download docutils literal"><span class="pre">publication.sh</span></code></a> that will publish the generated mapfile as replica. The script content should like:</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
-
-<span class="c1"># Description</span>
-<span class="c1">#   This script generates ESGF mapfile.</span>
-<span class="c1">#   Processes by dataset.</span>
-
-<span class="c1"># --------- arguments &amp; initialization --------- #</span>
-
-<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> in
-        <span class="s2">&quot;--project&quot;</span><span class="o">)</span>          shift<span class="p">;</span> <span class="nv">project</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>          <span class="p">;;</span>
-        <span class="s2">&quot;--dataset_pattern&quot;</span><span class="o">)</span>  shift<span class="p">;</span> <span class="nv">input_dataset</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>    <span class="p">;;</span>
-    <span class="k">esac</span>
-    <span class="nb">shift</span>
-<span class="k">done</span>
-
-<span class="nv">ESGCET_PATH</span><span class="o">=</span><span class="s2">&quot;/esg/config/esgcet/&quot;</span>
-
-<span class="c1"># --------- main --------- #</span>
-
-msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;mapfile.sh started&quot;</span>
-
-esgprep mapfile -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> -v <span class="se">\</span>
-                --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
-                --log <span class="se">\</span>
-                --max-threads <span class="m">16</span> <span class="se">\</span>
-                --no-cleanup <span class="se">\</span>
-                <span class="si">${</span><span class="nv">input_dataset</span><span class="si">}</span>
-
-msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;mapfile.sh complete&quot;</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li>Edit and configure <code class="docutils literal"><span class="pre">publication.sh</span></code> that will publish the generated mapfile as replica. The script content should like:</li>
+<p>Each script as two main section:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The initialization section deserializes the command-line argument submitted by the worker to the script.</li>
+<li>The main section apply the processing.</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
-
-<span class="c1"># Description</span>
-<span class="c1">#   This script publishes mapfiles.</span>
-<span class="c1">#   Processes by dataset.</span>
-
-<span class="c1"># --------- arguments &amp; initialization --------- #</span>
-
-<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> in
-        <span class="s2">&quot;--project&quot;</span><span class="o">)</span>          shift<span class="p">;</span> <span class="nv">project</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>          <span class="p">;;</span>
-        <span class="s2">&quot;--dataset_pattern&quot;</span><span class="o">)</span>  shift<span class="p">;</span> <span class="nv">input_dataset</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>    <span class="p">;;</span>
-    <span class="k">esac</span>
-    <span class="nb">shift</span>
-<span class="k">done</span>
-
-<span class="c1"># INI files directory</span>
-<span class="nv">ESGCET_PATH</span><span class="o">=</span><span class="s2">&quot;/esg/config/esgcet/&quot;</span>
-<span class="c1"># Indexnode hostname</span>
-<span class="nv">MYPROXY_HOST</span><span class="o">=</span><span class="s2">&quot;esgf-node.fr&quot;</span>
-<span class="c1"># myproxy-logon port</span>
-<span class="nv">MYPROXY_PORT</span><span class="o">=</span><span class="s2">&quot;7512&quot;</span>
-<span class="c1"># Publisher&#39;s openID login registered</span>
-<span class="nv">MYPROXY_LOGIN</span><span class="o">=</span><span class="s2">&quot;xxxxxx&quot;</span>
-<span class="c1"># Publisher&#39;s openID password</span>
-<span class="nv">MYPROXY_PASSWD</span><span class="o">=</span><span class="s2">&quot;xxxxxx&quot;</span>
-
-<span class="c1"># --------- main --------- #</span>
-
-msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;replication.sh started&quot;</span>
-
-<span class="c1"># Loads ESGF environment</span>
-<span class="nb">source</span> /etc/esg.env
-
-<span class="c1"># Checkup directories and temporary files</span>
-<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    msg <span class="s2">&quot;ERROR&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span><span class="s2"> does not exist. STOP.&quot;</span> &gt;<span class="p">&amp;</span>2
-    <span class="nb">exit</span> 1
-<span class="k">fi</span>
-<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    msg <span class="s2">&quot;ERROR&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.globus does not exist. STOP.&quot;</span> &gt;<span class="p">&amp;</span>2
-    <span class="nb">exit</span> 1
-<span class="k">fi</span>
-<span class="k">if</span> <span class="o">[</span> -f <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    msg <span class="s2">&quot;WARNING&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.globus/certificate-file already exists. Deleted.&quot;</span> &gt;<span class="p">&amp;</span>2
-    rm -f <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file
-<span class="k">fi</span>
-
-<span class="c1"># Retrieve mapfile name with an esgprep dry run</span>
-<span class="nv">uuid</span><span class="o">=</span><span class="k">$(</span>uuidgen<span class="k">)</span>
-esgprep mapfile -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> -v <span class="se">\</span>
-                --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
-                --no-checksum <span class="se">\</span>
-                --mapfile <span class="s2">&quot;{dataset_id}.</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
-                <span class="si">${</span><span class="nv">input_dir</span><span class="si">}</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> 2&gt; /dev/null
-<span class="nv">mapfile_orig</span><span class="o">=</span><span class="k">$(</span>ls /tmp/map <span class="p">|</span> grep <span class="s2">&quot;</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span>
-<span class="nv">mapfile</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">mapfile_orig</span><span class="si">}</span> <span class="p">|</span> sed <span class="s2">&quot;s|\.</span><span class="si">${</span><span class="nv">uuid</span><span class="si">}</span><span class="s2">||g&quot;</span><span class="k">)</span>
-rm -fr /tmp/map/<span class="si">${</span><span class="nv">mapfile_orig</span><span class="si">}</span>
-
-<span class="c1"># Gets proxy certificates for publication</span>
-msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Get ESGF certificates...&quot;</span>
-cat <span class="si">${</span><span class="nv">MYPROXY_PASSWD</span><span class="si">}</span> <span class="p">|</span> myproxy-logon -b -T -s <span class="si">${</span><span class="nv">MYPROXY_HOST</span><span class="si">}</span> -p <span class="si">${</span><span class="nv">MYPROXY_PORT</span><span class="si">}</span> -l <span class="si">${</span><span class="nv">MYPROXY_LOGIN</span><span class="si">}</span> -o <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.globus/certificate-file -S
-
-<span class="c1"># Initialize node and controlled vocabulary</span>
-esginitialize -c -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span>
-
-msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Publishing </span><span class="si">${</span><span class="nv">mapfile</span><span class="si">}</span><span class="s2"> on datanode...&quot;</span>
-<span class="c1"># Datanode publication</span>
-esgpublish -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="se">\</span>
-           --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
-           --thredds <span class="se">\</span>
-           --service fileservice <span class="se">\</span>
-           --set-replica <span class="se">\</span>
-           --map <span class="si">${</span><span class="nv">mapfile_dir</span><span class="si">}${</span><span class="nv">mapfile</span><span class="si">}</span>
-msg <span class="s2">&quot;INFO&quot;</span>  <span class="s2">&quot;Publishing </span><span class="si">${</span><span class="nv">mapfile</span><span class="si">}</span><span class="s2"> on indexnode...&quot;</span>
-<span class="c1">#Indexnode publication</span>
-esgpublish -i <span class="si">${</span><span class="nv">ESGCET_PATH</span><span class="si">}</span> <span class="se">\</span>
-           --project <span class="si">${</span><span class="nv">project</span><span class="p">,,</span><span class="si">}</span> <span class="se">\</span>
-           --publish <span class="se">\</span>
-           --noscan <span class="se">\</span>
-           --service fileservice <span class="se">\</span>
-           --set-replica <span class="se">\</span>
-           --map <span class="si">${</span><span class="nv">mapfile_dir</span><span class="si">}${</span><span class="nv">mapfile</span><span class="si">}</span>
-
-msg <span class="s2">&quot;INFO&quot;</span> <span class="s2">&quot;replication.sh complete&quot;</span>
-</pre></div>
-</div>
+</div></blockquote>
 </div>
 </div>
 </div>
@@ -482,7 +411,7 @@ The first transition of each complete dataset has a &#8220;waiting&#8221; status
 <p>At this point, the worker communicates with the <code class="docutils literal"><span class="pre">sdp</span></code> database to pick up information on a dataset pending for a transition to apply.
 The worker run the corresponding script and returns the job result to <code class="docutils literal"><span class="pre">sdp</span></code>. On success, the transition is set to &#8220;done&#8221; and replaced by the next one.</p>
 <p>The worker can be run as a daemon using the <code class="docutils literal"><span class="pre">start</span></code>, <code class="docutils literal"><span class="pre">stop</span></code> and <code class="docutils literal"><span class="pre">status</span></code> command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts start
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo start -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
 </div>
 <p>The worker allows you to:</p>
@@ -504,9 +433,13 @@ The worker run the corresponding script and returns the job result to <code clas
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -p republication
 </pre></div>
 </div>
-<p>By default, the worker log is <code class="docutils literal"><span class="pre">/var/log/sdw/worker.log</span></code>. On <em>worker-host</em> you must submit a log directory:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -l /my/logs
+<p>By default, the worker log is <code class="docutils literal"><span class="pre">/var/log/sdw/worker.log```on</span> <span class="pre">*synda-host*</span>&#160; <span class="pre">and</span> <span class="pre">``/tmp</span></code> on <em>worker-host</em>. On <em>worker-host</em> you can submit another log directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -l /your/logs
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All those examples can be combined safely.</p>
 </div>
 </div>
 </div>

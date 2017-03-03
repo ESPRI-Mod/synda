@@ -70,6 +70,18 @@ On *synda-host*:
     openid=https://my.data.node/esgf-idp/openid/synda
     password=xxxxxxx
 
+- If do not exist, add the following constants into `/usr/share/python/synda/sdt/bin/sdconst.py`:
+
+.. code-block:: python
+
+    EVENT_FILE_COMPLETE='file_complete'
+    EVENT_VARIABLE_COMPLETE='variable_complete'
+    EVENT_DATASET_COMPLETE='dataset_complete'
+    EVENT_DATASET_LATEST='dataset_latest'
+    EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
+
+-
+
 ``sdp`` module
 --------------
 
@@ -93,6 +105,20 @@ On *synda-host*:
     username=sdpp
     password=xxxxxx
 
+- If do not exist, add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py`:
+
+.. code-block:: python
+
+    EVENT_FILE_COMPLETE='file_complete'
+    EVENT_VARIABLE_COMPLETE='variable_complete'
+    EVENT_DATASET_COMPLETE='dataset_complete'
+    EVENT_DATASET_LATEST='dataset_latest'
+    EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
+
+- Add the project name you want to replicate to the `AUTHORIZED_PROJECT` list in `/usr/share/python/synda/sdp/bin/spconst.py`.
+
+- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the `PROJECT_WITH_ONE_VARIABLE_PER_DATASET` list in `/usr/share/python/synda/sdp/bin/spconst.py`.
+
 ``sdw`` module
 --------------
 
@@ -100,6 +126,18 @@ This is the client side post-processing module (aka "worker"). This single Pytho
 We will call *worker-host* the remote machine where the worker executes your scripts. *synda-host* and *worker-host* has to be accessible by the network each other without firewall constraints, etc.
 
 For instance, in the replication context, the Synda worker could be run on the ESGF data node used to publish the replicated data.
+
+.. note::
+
+    The worker is installed with ``synda-pp`` and can be found in `/usr/bin/synda_wo` on *synda-host*. As a standalone script, the worker can be move or copy outside of *synda-host*. You will only need to install the following required Python librairies (see also the file header):
+     - pip install python-daemon==1.6.1
+     - pip install python-jsonrpc==0.8.4
+     - pip install simplejson==3.10.0
+     - pip install retrying
+
+.. warning::
+
+    In the context of the ESGF Replication Working Team, an up-to-date version of the worker is available here: :download:`synda_wo <synda_wo>`.
 
 Target data to replicate
 ------------------------
@@ -114,9 +152,8 @@ Copy those selection files on *synda-host* into the selection folder. This folde
 
 .. warning::
 
-    To allow Synda to discover files on another index node than those specified in the ``/etc/synda/sdt/sdt.conf``.
-    You can use the ``searchapi_host`` selection file parameter.
-    In that case, be careful to disable the facet checking in ``/etc/synda/sdt/sdt.conf`` using ``check_parameter=0``.
+    Use the ``searchapi_host`` selection file parameter to allow Synda to discover files on another index node than those specified in the ``/etc/synda/sdt/sdt.conf``.
+    Be careful to disable the facet checking in ``/etc/synda/sdt/sdt.conf`` using ``check_parameter=0``.
 
 .. warning::
 
@@ -162,7 +199,7 @@ On *synda-host*:
 
     # Mapping: a 'key' event into the corresponding tuple of 'value' pipeline with starting 'status'
     event_pipeline_mapping = {
-        spconst.EVENT_DATASET_COMPLETE: ('republication', spconst.PPPRUN_STATUS_WAITING)
+        spconst.EVENT_VARIABLE_COMPLETE: ('republication', spconst.PPPRUN_STATUS_WAITING)
     }
 
 .. note::
@@ -179,130 +216,18 @@ Due to the RPC server connexion, those scripts can be run outside of *synda-host
 
     Whether your scripts are run remotely or not, all the required dependencies, libraries, compiler, etc. have to be installed on *synda-host* or *worker-host*.
 
-- Edit ``mapfile.sh`` that will generate mapfiles using the ```esgprep mapfile`` command-line <http://is-enes-data.github.io/esgf-prepare/>`_. The script content should like:
+- Edit :download:`mapfile.sh <mapfile.sh>` that will generate mapfiles using the ```esgprep mapfile`` command-line <http://is-enes-data.github.io/esgf-prepare/>`_.
 
-.. code-block:: bash
+- Edit and configure :download:`publication.sh <publication.sh>` that will publish the generated mapfile as replica. The script content should like:
 
-   #!/bin/bash -e
+Each script as two main section:
 
-   # Description
-   #   This script generates ESGF mapfile.
-   #   Processes by dataset.
+ - The initialization section deserializes the command-line argument submitted by the worker to the script.
+ - The main section apply the processing.
 
-   # --------- arguments & initialization --------- #
+.. warning:
 
-   while [ "${1}" != "" ]; do
-       case "${1}" in
-           "--project")          shift; project="${1}"          ;;
-           "--dataset_pattern")  shift; input_dataset="${1}"    ;;
-       esac
-       shift
-   done
-
-   ESGCET_PATH="/esg/config/esgcet/"
-
-   # --------- main --------- #
-
-   msg "INFO" "mapfile.sh started"
-
-   esgprep mapfile -i ${ESGCET_PATH} -v \
-                   --project ${project,,} \
-                   --log \
-                   --max-threads 16 \
-                   --no-cleanup \
-                   ${input_dataset}
-
-   msg "INFO" "mapfile.sh complete"
-
-- Edit and configure ``publication.sh`` that will publish the generated mapfile as replica. The script content should like:
-
-.. code-block:: bash
-
-   #!/bin/bash -e
-
-   # Description
-   #   This script publishes mapfiles.
-   #   Processes by dataset.
-
-   # --------- arguments & initialization --------- #
-
-   while [ "${1}" != "" ]; do
-       case "${1}" in
-           "--project")          shift; project="${1}"          ;;
-           "--dataset_pattern")  shift; input_dataset="${1}"    ;;
-       esac
-       shift
-   done
-
-   # INI files directory
-   ESGCET_PATH="/esg/config/esgcet/"
-   # Indexnode hostname
-   MYPROXY_HOST="esgf-node.fr"
-   # myproxy-logon port
-   MYPROXY_PORT="7512"
-   # Publisher's openID login registered
-   MYPROXY_LOGIN="xxxxxx"
-   # Publisher's openID password
-   MYPROXY_PASSWD="xxxxxx"
-
-   # --------- main --------- #
-
-   msg "INFO" "replication.sh started"
-
-   # Loads ESGF environment
-   source /etc/esg.env
-
-   # Checkup directories and temporary files
-   if [ ! -d ${ESGCET_PATH} ]; then
-       msg "ERROR" "${ESGCET_PATH} does not exist. STOP." >&2
-       exit 1
-   fi
-   if [ ! -d ${HOME}/.globus ]; then
-       msg "ERROR" "${HOME}/.globus does not exist. STOP." >&2
-       exit 1
-   fi
-   if [ -f ${HOME}/.globus/certificate-file ]; then
-       msg "WARNING" "${HOME}/.globus/certificate-file already exists. Deleted." >&2
-       rm -f ${HOME}/.globus/certificate-file
-   fi
-
-   # Retrieve mapfile name with an esgprep dry run
-   uuid=$(uuidgen)
-   esgprep mapfile -i ${ESGCET_PATH} -v \
-                   --project ${project,,} \
-                   --no-checksum \
-                   --mapfile "{dataset_id}.${uuid}" \
-                   ${input_dir} 1>&2 2> /dev/null
-   mapfile_orig=$(ls /tmp/map | grep "${uuid}")
-   mapfile=$(echo ${mapfile_orig} | sed "s|\.${uuid}||g")
-   rm -fr /tmp/map/${mapfile_orig}
-
-   # Gets proxy certificates for publication
-   msg "INFO"  "Get ESGF certificates..."
-   cat ${MYPROXY_PASSWD} | myproxy-logon -b -T -s ${MYPROXY_HOST} -p ${MYPROXY_PORT} -l ${MYPROXY_LOGIN} -o ${HOME}/.globus/certificate-file -S
-
-   # Initialize node and controlled vocabulary
-   esginitialize -c -i ${ESGCET_PATH}
-
-   msg "INFO"  "Publishing ${mapfile} on datanode..."
-   # Datanode publication
-   esgpublish -i ${ESGCET_PATH} \
-              --project ${project,,} \
-              --thredds \
-              --service fileservice \
-              --set-replica \
-              --map ${mapfile_dir}${mapfile}
-   msg "INFO"  "Publishing ${mapfile} on indexnode..."
-   #Indexnode publication
-   esgpublish -i ${ESGCET_PATH} \
-              --project ${project,,} \
-              --publish \
-              --noscan \
-              --service fileservice \
-              --set-replica \
-              --map ${mapfile_dir}${mapfile}
-
-   msg "INFO" "replication.sh complete"
+    The provided templates works with some functions to source with :download:`functions.sh <functions.sh>`.
 
 File discovery
 **************
@@ -357,7 +282,7 @@ The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` c
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts start
+    synda_wo start -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts
 
 The worker allows you to:
 
@@ -379,8 +304,13 @@ The worker allows you to:
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p republication
 
-By default, the worker log is ``/var/log/sdw/worker.log``. On *worker-host* you must submit a log directory:
+By default, the worker log is ``/var/log/sdw/worker.log```on *synda-host*  and ``/tmp`` on *worker-host*. On *worker-host* you can submit another log directory:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -l /my/logs
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -l /your/logs
+
+.. note::
+
+    All those examples can be combined safely.
+
