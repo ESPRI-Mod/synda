@@ -125,22 +125,26 @@ On *synda-host*:
 ``sdw`` module
 --------------
 
-This is the client side post-processing module (aka "worker"). This single Python script is fully independent from the Synda stack and can be run remotely or not from *synda-host*.
-We will call *worker-host* the remote machine where the worker executes your scripts. *synda-host* and *worker-host* has to be accessible by the network each other without firewall constraints, etc.
+This is the client side post-processing module (aka "worker"). This single Python script is fully independent from the Synda stack and can be run remotely or not from *synda-host*. In such a case you will only need to install the following required Python libraries (see also the file header):
+ - pip install python-daemon==1.6.1
+ - pip install python-jsonrpc==0.8.4
+ - pip install simplejson==3.10.0
+ - pip install retrying
 
-For instance, in the replication context, the Synda worker could be run on the ESGF data node used to publish the replicated data.
-
-.. note::
-
-    The worker is installed with ``synda-pp`` and can be found in ``/usr/bin/synda_wo`` on *synda-host*. As a standalone script, the worker can be move or copy outside of *synda-host*. You will only need to install the following required Python librairies (see also the file header):
-     - pip install python-daemon==1.6.1
-     - pip install python-jsonrpc==0.8.4
-     - pip install simplejson==3.10.0
-     - pip install retrying
+We will call *worker-host* the remote machine where the worker executes the post-processing scripts.
 
 .. warning::
 
-    In the context of the ESGF Replication Working Team, an up-to-date version of the worker is available here: :download:`synda_wo <synda_wo>`.
+    *synda-host* and *worker-host* has to be accessible through the network each other without firewall constraints, etc.
+
+.. note::
+
+    The worker is installed with ``synda-pp`` and can be found in ``/usr/bin/synda_wo`` on *synda-host*.
+
+.. warning::
+
+    In the context of the ESGF Replication Working Team, the Synda worker could be run on the ESGF data node (or ESGF Data Transfer Node) used to publish the replicated data.
+    A corresponding updated version of the worker is available here: :download:`synda_wo <synda_wo>`.
 
 Target data to replicate
 ------------------------

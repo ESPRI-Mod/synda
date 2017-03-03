@@ -271,13 +271,8 @@ password=xxxxxx
 </div>
 <div class="section" id="sdw-module">
 <h3><code class="docutils literal"><span class="pre">sdw</span></code> module<a class="headerlink" href="#sdw-module" title="Permalink to this headline">¶</a></h3>
-<p>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>.
-We will call <em>worker-host</em> the remote machine where the worker executes your scripts. <em>synda-host</em> and <em>worker-host</em> has to be accessible by the network each other without firewall constraints, etc.</p>
-<p>For instance, in the replication context, the Synda worker could be run on the ESGF data node used to publish the replicated data.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt>The worker is installed with <code class="docutils literal"><span class="pre">synda-pp</span></code> and can be found in <code class="docutils literal"><span class="pre">/usr/bin/synda_wo</span></code> on <em>synda-host</em>. As a standalone script, the worker can be move or copy outside of <em>synda-host</em>. You will only need to install the following required Python librairies (see also the file header):</dt>
+<dl class="docutils">
+<dt>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>. In such a case you will only need to install the following required Python libraries (see also the file header):</dt>
 <dd><ul class="first last simple">
 <li>pip install python-daemon==1.6.1</li>
 <li>pip install python-jsonrpc==0.8.4</li>
@@ -286,10 +281,19 @@ We will call <em>worker-host</em> the remote machine where the worker executes y
 </ul>
 </dd>
 </dl>
+<p>We will call <em>worker-host</em> the remote machine where the worker executes the post-processing scripts.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><em>synda-host</em> and <em>worker-host</em> has to be accessible through the network each other without firewall constraints, etc.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The worker is installed with <code class="docutils literal"><span class="pre">synda-pp</span></code> and can be found in <code class="docutils literal"><span class="pre">/usr/bin/synda_wo</span></code> on <em>synda-host</em>.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">In the context of the ESGF Replication Working Team, an up-to-date version of the worker is available here: <a class="reference download internal" href="../downloads/synda_wo" download=""><code class="xref download docutils literal"><span class="pre">synda_wo</span></code></a>.</p>
+<p class="last">In the context of the ESGF Replication Working Team, the Synda worker could be run on the ESGF data node (or ESGF Data Transfer Node) used to publish the replicated data.
+A corresponding updated version of the worker is available here: <a class="reference download internal" href="../downloads/synda_wo" download=""><code class="xref download docutils literal"><span class="pre">synda_wo</span></code></a>.</p>
 </div>
 </div>
 <div class="section" id="target-data-to-replicate">
