@@ -218,6 +218,10 @@ On *synda-host*:
 
 .. note::
 
+    A pipeline task is also called a Synda "transition".
+
+.. note::
+
     You can easily manage your pipeline definitions in another folder using the ``pipeline_path`` parameter in ``sdp.conf``. See :ref:`the synda configuration section <config-param-ref-sdp>`.
 
 Scripts
