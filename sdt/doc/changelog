@@ -1,6 +1,7 @@
 - Version 3.9 - 
 	- add gridftp_opt option in sdt.conf.
 	- dataset attributes can be used in 'local_path_drs_template'.
+	- use decimal prefix instead of binary prefix in 'synda metrics' command.
 - Version 3.8 - 20170219
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.
