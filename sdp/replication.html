@@ -168,8 +168,8 @@
 <div class="section" id="synda-installation">
 <h2>Synda installation<a class="headerlink" href="#synda-installation" title="Permalink to this headline">¶</a></h2>
 <p>We highly recommend to install Synda modules on a dedicated virtual machine using <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> packages. This machine will be called <em>synda-host</em> in the following.</p>
-<p>First, see Synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB package</span></a>.
-Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM package</span></a> or <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB package</span></a>.</p>
+<p>First, see Synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> package.
+Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB</span></a> package.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Synda needs to be installed as <code class="docutils literal"><span class="pre">root</span></code> on <em>synda-host</em>. Nevertheless, it can be run with a normal user which is belonging to the <code class="docutils literal"><span class="pre">synda</span></code> Unix group.</p>
@@ -177,7 +177,7 @@ Then, install Synda post-processing module from <a class="reference internal" hr
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <code class="docutils literal"><span class="pre">synda</span></code> Unix group has to be declared by your system administrator prior to the installation.
-All user id that are <code class="docutils literal"><span class="pre">synda</span></code> members will be able to run any <code class="docutils literal"><span class="pre">synda</span> <span class="pre">[...]</span></code> command.</p>
+All user ID that are <code class="docutils literal"><span class="pre">synda</span></code> members will be able to run any <code class="docutils literal"><span class="pre">synda</span> <span class="pre">[...]</span></code> command.</p>
 </div>
 </div>
 <div class="section" id="synda-configuration">
@@ -188,8 +188,8 @@ All user id that are <code class="docutils literal"><span class="pre">synda</spa
 <ul class="simple">
 <li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 <li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
-<li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to 0 in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section.</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
+<li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to <code class="docutils literal"><span class="pre">0</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section.</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[module]
 post_processing=true
@@ -207,8 +207,12 @@ port=18290
 </div>
 <ul class="simple">
 <li>Choose a password to configure RPC server in <code class="docutils literal"><span class="pre">credentials.conf</span></code>.</li>
-<li>Check the ESGF <code class="docutils literal"><span class="pre">openid</span></code> and <code class="docutils literal"><span class="pre">password</span></code> are valid in <code class="docutils literal"><span class="pre">credentials.conf</span></code> and register to appropriate ESGF groups.</li>
+<li>Set the ESGF <code class="docutils literal"><span class="pre">openid</span></code> and <code class="docutils literal"><span class="pre">password</span></code> in <code class="docutils literal"><span class="pre">credentials.conf</span></code>.</li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Ensure that your ESGF OpenID is valid and you registered to the appropriate ESGF groups.</p>
+</div>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[post_processing]
 username=sdpp
 password=xxxxxx
@@ -219,7 +223,7 @@ password=xxxxxxx
 </pre></div>
 </div>
 <ul class="simple">
-<li>If do not exist, add the following constants into <cite>/usr/share/python/synda/sdt/bin/sdconst.py</cite>:</li>
+<li>Add the following constants in <code class="docutils literal"><span class="pre">/usr/share/python/synda/sdt/bin/sdconst.py</span></code>:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EVENT_FILE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;file_complete&#39;</span>
 <span class="n">EVENT_VARIABLE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;variable_complete&#39;</span>
@@ -228,16 +232,13 @@ password=xxxxxxx
 <span class="n">EVENT_LATEST_DATASET_COMPLETE</span><span class="o">=</span><span class="s1">&#39;latest_dataset_complete&#39;</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li></li>
-</ul>
 </div>
 <div class="section" id="sdp-module">
 <h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
 <li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>.</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[daemon]
 eventthread=1
@@ -254,7 +255,7 @@ password=xxxxxx
 </pre></div>
 </div>
 <ul class="simple">
-<li>If do not exist, add the following constants in <cite>/usr/share/python/synda/sdp/bin/spconst.py</cite>:</li>
+<li>Add the following constants in <cite>/usr/share/python/synda/sdp/bin/spconst.py</cite>:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EVENT_FILE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;file_complete&#39;</span>
 <span class="n">EVENT_VARIABLE_COMPLETE</span><span class="o">=</span><span class="s1">&#39;variable_complete&#39;</span>

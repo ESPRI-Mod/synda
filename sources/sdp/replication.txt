@@ -18,8 +18,8 @@ Synda installation
 
 We highly recommend to install Synda modules on a dedicated virtual machine using :ref:`RPM <rpm-install-sdt>` or :ref:`DEB <deb-install-sdt>` packages. This machine will be called *synda-host* in the following.
 
-First, see Synda installation from :ref:`RPM package <rpm-install-sdt>` or :ref:`DEB package <deb-install-sdt>`.
-Then, install Synda post-processing module from :ref:`RPM package <rpm-install-sdp>` or :ref:`DEB package <deb-install-sdp>`.
+First, see Synda installation from :ref:`RPM<rpm-install-sdt>` or :ref:`DEB<deb-install-sdt>` package.
+Then, install Synda post-processing module from :ref:`RPM<rpm-install-sdp>` or :ref:`DEB<deb-install-sdp>` package.
 
 .. note::
 
@@ -28,7 +28,7 @@ Then, install Synda post-processing module from :ref:`RPM package <rpm-install-s
 .. note::
 
     The ``synda`` Unix group has to be declared by your system administrator prior to the installation.
-    All user id that are ``synda`` members will be able to run any ``synda [...]`` command.
+    All user ID that are ``synda`` members will be able to run any ``synda [...]`` command.
 
 Synda configuration
 *******************
@@ -40,8 +40,8 @@ On *synda-host*:
 
 - Set ``post_processing`` parameter to ``true`` in ``sdt.conf``.
 - Set ``http_fallback`` parameter to ``true`` in ``sdt.conf``.
-- Set ``check_parameter`` parameter to 0 in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
-- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+- Set ``check_parameter`` parameter to ``0`` in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdt.conf``.
 
 .. code-block:: text
 
@@ -59,7 +59,11 @@ On *synda-host*:
     port=18290
 
 - Choose a password to configure RPC server in ``credentials.conf``.
-- Check the ESGF ``openid`` and ``password`` are valid in ``credentials.conf`` and register to appropriate ESGF groups.
+- Set the ESGF ``openid`` and ``password`` in ``credentials.conf``.
+
+.. warning::
+
+    Ensure that your ESGF OpenID is valid and you registered to the appropriate ESGF groups.
 
 .. code-block:: text
 
@@ -71,7 +75,7 @@ On *synda-host*:
     openid=https://my.data.node/esgf-idp/openid/synda
     password=xxxxxxx
 
-- If do not exist, add the following constants into `/usr/share/python/synda/sdt/bin/sdconst.py`:
+- Add the following constants in ``/usr/share/python/synda/sdt/bin/sdconst.py``:
 
 .. code-block:: python
 
@@ -81,15 +85,13 @@ On *synda-host*:
     EVENT_DATASET_LATEST='dataset_latest'
     EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
 
--
-
 ``sdp`` module
 --------------
 
 On *synda-host*:
 
 - Set ``eventhread`` parameter to ``1`` in ``sdp.conf``.
-- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdp.conf``.
 
 .. code-block:: text
 
@@ -106,7 +108,7 @@ On *synda-host*:
     username=sdpp
     password=xxxxxx
 
-- If do not exist, add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py`:
+- Add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py`:
 
 .. code-block:: python
 
