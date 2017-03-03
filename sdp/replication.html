@@ -427,19 +427,19 @@ The first transition of each complete dataset has a &#8220;waiting&#8221; status
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
 </div>
-<p>At this point, the worker communicates with the <code class="docutils literal"><span class="pre">sdp</span></code> database to pick up information on a dataset pending for a transition to apply.
-The worker run the corresponding script and returns the job result to <code class="docutils literal"><span class="pre">sdp</span></code>. On success, the transition is set to &#8220;done&#8221; and replaced by the next one.</p>
+<p>At this point, the worker communicates with the <code class="docutils literal"><span class="pre">sdp.db</span></code> database to pick up information on a dataset pending for a transition to apply.
+The worker runs the corresponding script and returns the job result to <code class="docutils literal"><span class="pre">sdp.db</span></code>. On success, the transition is set to &#8220;done&#8221; and moved to the next one.</p>
 <p>The worker can be run as a daemon using the <code class="docutils literal"><span class="pre">start</span></code>, <code class="docutils literal"><span class="pre">stop</span></code> and <code class="docutils literal"><span class="pre">status</span></code> command:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo start -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In daemon mode, never stops (except in case of error) and regularly checks waiting jobs to process.</p>
+<p class="last">In daemon mode, the worker never stops (except in case of error) and regularly checks waiting jobs to process.</p>
 </div>
 <p>The worker is also able to:</p>
 <ul class="simple">
-<li>Pick up only one item to process from <code class="docutils literal"><span class="pre">sdp</span></code>:</li>
+<li>Pick up only one item to process from <code class="docutils literal"><span class="pre">sdp.db</span></code>:</li>
 </ul>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -1
 </pre></div>
@@ -447,16 +447,16 @@ The worker run the corresponding script and returns the job result to <code clas
 <ul class="simple">
 <li>Filter the transitions to process:</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -j mapfile
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -j transitionA,transitionB
 </pre></div>
 </div>
 <ul class="simple">
 <li>Filter the pipeline to process:</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -p republication
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -p pipelineA
 </pre></div>
 </div>
-<p>By default, the worker log is <code class="docutils literal"><span class="pre">/var/log/sdw/worker.log```on</span> <span class="pre">*synda-host*</span>&#160; <span class="pre">and</span> <span class="pre">``/tmp</span></code> on <em>worker-host</em>. On <em>worker-host</em> you can submit another log directory:</p>
+<p>By default, the worker log is <code class="docutils literal"><span class="pre">/var/log/sdw/worker.log</span></code> on <em>synda-host</em>  and <code class="docutils literal"><span class="pre">/tmp</span></code> on <em>worker-host</em>. On <em>worker-host</em> you can submit another log directory:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts -l /your/logs
 </pre></div>
 </div>

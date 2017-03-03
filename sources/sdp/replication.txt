@@ -293,8 +293,8 @@ Then, run the worker remotely (i.e., on *worker-host*) or not (i.e., on *synda-h
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts
 
-At this point, the worker communicates with the ``sdp`` database to pick up information on a dataset pending for a transition to apply.
-The worker run the corresponding script and returns the job result to ``sdp``. On success, the transition is set to "done" and replaced by the next one.
+At this point, the worker communicates with the ``sdp.db`` database to pick up information on a dataset pending for a transition to apply.
+The worker runs the corresponding script and returns the job result to ``sdp.db``. On success, the transition is set to "done" and moved to the next one.
 
 The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` command:
 
@@ -304,11 +304,11 @@ The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` c
 
 .. note::
 
-    In daemon mode, never stops (except in case of error) and regularly checks waiting jobs to process.
+    In daemon mode, the worker never stops (except in case of error) and regularly checks waiting jobs to process.
 
 The worker is also able to:
 
-- Pick up only one item to process from ``sdp``:
+- Pick up only one item to process from ``sdp.db``:
 
 .. code-block:: bash
 
@@ -318,15 +318,15 @@ The worker is also able to:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -j mapfile
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -j transitionA,transitionB
 
 - Filter the pipeline to process:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p republication
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p pipelineA
 
-By default, the worker log is ``/var/log/sdw/worker.log```on *synda-host*  and ``/tmp`` on *worker-host*. On *worker-host* you can submit another log directory:
+By default, the worker log is ``/var/log/sdw/worker.log`` on *synda-host*  and ``/tmp`` on *worker-host*. On *worker-host* you can submit another log directory:
 
 .. code-block:: bash
 
