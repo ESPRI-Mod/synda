@@ -55,7 +55,7 @@ def print_size(groupby,project_,dry_run=False):
 
     # prepare
     headers=[groupby.title(),'Size']                                      # prepare headers
-    li=[(t[0],humanize.naturalsize(t[1],binary=True)) for t in li]        # prepare body
+    li=[(t[0],humanize.naturalsize(t[1],gnu=False)) for t in li]        # prepare body
 
     # print
     print tabulate(li,headers=headers,tablefmt="plain",numalign="decimal")
