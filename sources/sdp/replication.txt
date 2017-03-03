@@ -234,16 +234,16 @@ Due to the RPC server connexion, those scripts can be run outside of *synda-host
 
     Whether your scripts are run remotely or not, all the required dependencies, libraries, compiler, etc. have to be installed on *synda-host* or *worker-host*.
 
-- Edit :download:`mapfile.sh <mapfile.sh>` that will generate mapfiles using the ```esgprep mapfile`` command-line <http://is-enes-data.github.io/esgf-prepare/>`_.
+- Edit :download:`mapfile.sh <mapfile.sh>` that will generate mapfiles using the ``esgprep mapfile`` command-line. See `esgf-prepare <http://is-enes-data.github.io/esgf-prepare/>`_.
 
-- Edit and configure :download:`publication.sh <publication.sh>` that will publish the generated mapfile as replica. The script content should like:
+- Edit and configure :download:`publication.sh <publication.sh>` that will publish the generated mapfiles as replica.
 
 Each script as two main section:
 
  - The initialization section deserializes the command-line argument submitted by the worker to the script.
- - The main section apply the processing.
+ - The main section apply the processing command.
 
-.. warning:
+.. warning::
 
     The provided templates works with some functions to source with :download:`functions.sh <functions.sh>`.
 
@@ -273,7 +273,7 @@ To start the download, run command below on *synda-host*:
 
     service sdt start
 
-At this point, the downloading is in progress and when a dataset is complete an event is create to trigger the corresponding pipeline creation.
+At this point, the downloading is in progress and when a dataset is complete a Synda event triggers the corresponding pipeline creation.
 
 Files processing
 ****************

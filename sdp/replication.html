@@ -378,16 +378,20 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 <p class="last">Whether your scripts are run remotely or not, all the required dependencies, libraries, compiler, etc. have to be installed on <em>synda-host</em> or <em>worker-host</em>.</p>
 </div>
 <ul class="simple">
-<li>Edit <a class="reference download internal" href="../downloads/mapfile.sh" download=""><code class="xref download docutils literal"><span class="pre">mapfile.sh</span></code></a> that will generate mapfiles using the <code class="docutils literal"><span class="pre">`esgprep</span> <span class="pre">mapfile</span></code> command-line &lt;<a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">http://is-enes-data.github.io/esgf-prepare/</a>&gt;`_.</li>
-<li>Edit and configure <a class="reference download internal" href="../downloads/publication.sh" download=""><code class="xref download docutils literal"><span class="pre">publication.sh</span></code></a> that will publish the generated mapfile as replica. The script content should like:</li>
+<li>Edit <a class="reference download internal" href="../downloads/mapfile.sh" download=""><code class="xref download docutils literal"><span class="pre">mapfile.sh</span></code></a> that will generate mapfiles using the <code class="docutils literal"><span class="pre">esgprep</span> <span class="pre">mapfile</span></code> command-line. See <a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">esgf-prepare</a>.</li>
+<li>Edit and configure <a class="reference download internal" href="../downloads/publication.sh" download=""><code class="xref download docutils literal"><span class="pre">publication.sh</span></code></a> that will publish the generated mapfiles as replica.</li>
 </ul>
 <p>Each script as two main section:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The initialization section deserializes the command-line argument submitted by the worker to the script.</li>
-<li>The main section apply the processing.</li>
+<li>The main section apply the processing command.</li>
 </ul>
 </div></blockquote>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The provided templates works with some functions to source with <a class="reference download internal" href="../downloads/functions.sh" download=""><code class="xref download docutils literal"><span class="pre">functions.sh</span></code></a>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -409,7 +413,7 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 <div class="highlight-bash"><div class="highlight"><pre><span></span>service sdt start
 </pre></div>
 </div>
-<p>At this point, the downloading is in progress and when a dataset is complete an event is create to trigger the corresponding pipeline creation.</p>
+<p>At this point, the downloading is in progress and when a dataset is complete a Synda event triggers the corresponding pipeline creation.</p>
 </div>
 <div class="section" id="files-processing">
 <h2>Files processing<a class="headerlink" href="#files-processing" title="Permalink to this headline">¶</a></h2>
