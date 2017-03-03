@@ -166,13 +166,14 @@ Copy those selection files on *synda-host* into the selection folder. This folde
 .. warning::
 
     Pay attention to any conflict with the default selection parameters that overwrite the selection file parameters.
-    Default parameters are defined into specific templates in the default folder on *synda-host*.
+    Default parameters are defined into specific templates in the ``default`` folder on *synda-host*.
     This folder is ``/etc/synda/sdt/default`` by default but can be defined in the synda configuration file using the ``default_path`` parameter. See :ref:`the synda configuration section <config-param-ref-sdt>`.
 
 Build a republication pipeline
 ------------------------------
 
 This republication pipeline is at least composed of 2 tasks to apply on each replicated dataset:
+
  - The mapfile generation,
  - The ESGF publication as replicas.
 
@@ -181,7 +182,7 @@ Pipeline definition
 
 On *synda-host*:
 
-- Edit the file ``/etc/synda/sdp/pipeline/republication.py``. This file content must be:
+- Edit the file ``/etc/synda/sdp/pipeline/republication.py``. It defines the pipeline and tasks name. This file content must be:
 
 .. code-block:: python
 
@@ -199,7 +200,7 @@ On *synda-host*:
     ppp = sppostprocessingutils.build_light_pipeline(name, tasks)
 
 
-- Edit the file ``/etc/synda/sdp/pipeline/spbindings.py``. This file content must be:
+- Edit the file ``/etc/synda/sdp/pipeline/spbindings.py``. It maps each Synda "event" with the corresponding pipeline and the status of the initial task. This file content must be:
 
 .. code-block:: python
 
@@ -212,7 +213,12 @@ On *synda-host*:
 
 .. note::
 
-    You can easily manage your pipeline definitions in another folder by using the ``pipeline_path`` parameter in ``sdp.conf``. See :ref:`the synda configuration section <config-param-ref-sdp>`.
+    A Synda "event" is the communication way between ``sdt`` and ``sdp`` to trigger the post-processing entries in ``sdp.db``.
+    Each entry corresponds to a dataset life-cycle into the post-processing pipeline.
+
+.. note::
+
+    You can easily manage your pipeline definitions in another folder using the ``pipeline_path`` parameter in ``sdp.conf``. See :ref:`the synda configuration section <config-param-ref-sdp>`.
 
 Scripts
 +++++++

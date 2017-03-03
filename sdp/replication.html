@@ -311,25 +311,24 @@ Be careful to disable the facet checking in <code class="docutils literal"><span
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Pay attention to any conflict with the default selection parameters that overwrite the selection file parameters.
-Default parameters are defined into specific templates in the default folder on <em>synda-host</em>.
+Default parameters are defined into specific templates in the <code class="docutils literal"><span class="pre">default</span></code> folder on <em>synda-host</em>.
 This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/default</span></code> by default but can be defined in the synda configuration file using the <code class="docutils literal"><span class="pre">default_path</span></code> parameter. See <a class="reference internal" href="../sdt/config_param_ref.html#config-param-ref-sdt"><span class="std std-ref">the synda configuration section</span></a>.</p>
 </div>
 </div>
 <div class="section" id="build-a-republication-pipeline">
 <h3>Build a republication pipeline<a class="headerlink" href="#build-a-republication-pipeline" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>This republication pipeline is at least composed of 2 tasks to apply on each replicated dataset:</dt>
-<dd><ul class="first last simple">
+<p>This republication pipeline is at least composed of 2 tasks to apply on each replicated dataset:</p>
+<blockquote>
+<div><ul class="simple">
 <li>The mapfile generation,</li>
 <li>The ESGF publication as replicas.</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <div class="section" id="pipeline-definition">
 <h4>Pipeline definition<a class="headerlink" href="#pipeline-definition" title="Permalink to this headline">¶</a></h4>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
-<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/republication.py</span></code>. This file content must be:</li>
+<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/republication.py</span></code>. It defines the pipeline and tasks name. This file content must be:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sppostprocessingutils</span>
 
@@ -346,7 +345,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 </pre></div>
 </div>
 <ul class="simple">
-<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code>. This file content must be:</li>
+<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code>. It maps each Synda &#8220;event&#8221; with the corresponding pipeline and the status of the initial task. This file content must be:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spconst</span>
 
@@ -358,7 +357,12 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can easily manage your pipeline definitions in another folder by using the <code class="docutils literal"><span class="pre">pipeline_path</span></code> parameter in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. See <a class="reference internal" href="config_param_ref.html#config-param-ref-sdp"><span class="std std-ref">the synda configuration section</span></a>.</p>
+<p class="last">A Synda &#8220;event&#8221; is the communication way between <code class="docutils literal"><span class="pre">sdt</span></code> and <code class="docutils literal"><span class="pre">sdp</span></code> to trigger the post-processing entries in <code class="docutils literal"><span class="pre">sdp.db</span></code>.
+Each entry corresponds to a dataset life-cycle into the post-processing pipeline.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can easily manage your pipeline definitions in another folder using the <code class="docutils literal"><span class="pre">pipeline_path</span></code> parameter in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. See <a class="reference internal" href="config_param_ref.html#config-param-ref-sdp"><span class="std std-ref">the synda configuration section</span></a>.</p>
 </div>
 </div>
 <div class="section" id="scripts">
