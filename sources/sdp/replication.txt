@@ -108,7 +108,7 @@ On *synda-host*:
     username=sdpp
     password=xxxxxx
 
-- Add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py`:
+- Add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py``:
 
 .. code-block:: python
 
@@ -118,9 +118,9 @@ On *synda-host*:
     EVENT_DATASET_LATEST='dataset_latest'
     EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
 
-- Add the project name you want to replicate to the `AUTHORIZED_PROJECT` list in `/usr/share/python/synda/sdp/bin/spconst.py`.
+- Add the project name you want to replicate to the ``AUTHORIZED_PROJECT` list in ``/usr/share/python/synda/sdp/bin/spconst.py`.
 
-- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the `PROJECT_WITH_ONE_VARIABLE_PER_DATASET` list in `/usr/share/python/synda/sdp/bin/spconst.py`.
+- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the ``PROJECT_WITH_ONE_VARIABLE_PER_DATASET` list in ``/usr/share/python/synda/sdp/bin/spconst.py`.
 
 ``sdw`` module
 --------------
@@ -132,7 +132,7 @@ For instance, in the replication context, the Synda worker could be run on the E
 
 .. note::
 
-    The worker is installed with ``synda-pp`` and can be found in `/usr/bin/synda_wo` on *synda-host*. As a standalone script, the worker can be move or copy outside of *synda-host*. You will only need to install the following required Python librairies (see also the file header):
+    The worker is installed with ``synda-pp`` and can be found in ``/usr/bin/synda_wo`` on *synda-host*. As a standalone script, the worker can be move or copy outside of *synda-host*. You will only need to install the following required Python librairies (see also the file header):
      - pip install python-daemon==1.6.1
      - pip install python-jsonrpc==0.8.4
      - pip install simplejson==3.10.0
