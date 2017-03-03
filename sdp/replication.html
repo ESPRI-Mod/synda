@@ -337,7 +337,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 <span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">ppp</span>
 
-<span class="c1"># Piepline name</span>
+<span class="c1"># Pipeline name</span>
 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;republication&#39;</span>
 
 <span class="c1"># Transitions/tasks list</span>
@@ -422,7 +422,11 @@ The worker run the corresponding script and returns the job result to <code clas
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo start -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
 </div>
-<p>The worker allows you to:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In daemon mode, never stops (except in case of error) and regularly checks waiting jobs to process.</p>
+</div>
+<p>The worker is also able to:</p>
 <ul class="simple">
 <li>Pick up only one item to process from <code class="docutils literal"><span class="pre">sdp</span></code>:</li>
 </ul>

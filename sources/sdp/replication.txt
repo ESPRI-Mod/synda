@@ -189,7 +189,7 @@ On *synda-host*:
     def get_pipeline():
         return ppp
 
-    # Piepline name
+    # Pipeline name
     name='republication'
 
     # Transitions/tasks list
@@ -291,7 +291,11 @@ The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` c
 
     synda_wo start -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts
 
-The worker allows you to:
+.. note::
+
+    In daemon mode, never stops (except in case of error) and regularly checks waiting jobs to process.
+
+The worker is also able to:
 
 - Pick up only one item to process from ``sdp``:
 
