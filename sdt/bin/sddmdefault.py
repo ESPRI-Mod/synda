@@ -40,12 +40,11 @@ class Download():
     @classmethod
     def run(cls,tr):
         cls.start_transfer_script(tr)
-        tr.end_date=sdtime.now()
 
-        # compute metrics
-        if tr.status==sdconst.TRANSFER_STATUS_DONE:
-            tr.duration=sdtime.compute_duration(tr.start_date,tr.end_date)
-            tr.rate=sdtools.compute_rate(tr.size,tr.duration)
+        # unset metrics fields if transfer did not complete successfully
+        if tr.status!=sdconst.TRANSFER_STATUS_DONE:
+            tr.duration=None
+            tr.rate=None
 
     @classmethod
     def start_transfer_script(cls,tr):
@@ -63,6 +62,7 @@ class Download():
             tr.sdget_error_msg=""
             return
 
+        # main
         (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
                                                                    tr.get_full_local_path(),
                                                                    debug=False,
@@ -72,9 +72,17 @@ class Download():
                                                                    buffered=True,
                                                                    hpss=hpss)
 
-        if tr.sdget_status==0:
 
-            assert tr.size is not None
+        # check
+        assert tr.size is not None
+
+        # compute metrics
+        tr.end_date=sdtime.now()
+        tr.duration=sdtime.compute_duration(tr.start_date,tr.end_date)
+        tr.rate=sdtools.compute_rate(tr.size,tr.duration)
+
+        # post-processing
+        if tr.sdget_status==0:
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
                 sdlog.error("SDDMDEFA-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
