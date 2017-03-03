@@ -108,7 +108,7 @@ On *synda-host*:
     username=sdpp
     password=xxxxxx
 
-- Add the following constants in `/usr/share/python/synda/sdp/bin/spconst.py``:
+- Add the following constants in ``/usr/share/python/synda/sdp/bin/spconst.py``:
 
 .. code-block:: python
 
@@ -118,9 +118,9 @@ On *synda-host*:
     EVENT_DATASET_LATEST='dataset_latest'
     EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
 
-- Add the project name you want to replicate to the ``AUTHORIZED_PROJECT` list in ``/usr/share/python/synda/sdp/bin/spconst.py`.
+- Add the project name you want to replicate to the ``AUTHORIZED_PROJECT`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
 
-- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the ``PROJECT_WITH_ONE_VARIABLE_PER_DATASET` list in ``/usr/share/python/synda/sdp/bin/spconst.py`.
+- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the ``PROJECT_WITH_ONE_VARIABLE_PER_DATASET`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
 
 ``sdw`` module
 --------------
