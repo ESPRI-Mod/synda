@@ -126,6 +126,7 @@ On *synda-host*:
 --------------
 
 This is the client side post-processing module (aka "worker"). This single Python script is fully independent from the Synda stack and can be run remotely or not from *synda-host*. In such a case you will only need to install the following required Python libraries (see also the file header):
+
  - pip install python-daemon==1.6.1
  - pip install python-jsonrpc==0.8.4
  - pip install simplejson==3.10.0

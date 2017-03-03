@@ -271,16 +271,15 @@ password=xxxxxx
 </div>
 <div class="section" id="sdw-module">
 <h3><code class="docutils literal"><span class="pre">sdw</span></code> module<a class="headerlink" href="#sdw-module" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>. In such a case you will only need to install the following required Python libraries (see also the file header):</dt>
-<dd><ul class="first last simple">
+<p>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>. In such a case you will only need to install the following required Python libraries (see also the file header):</p>
+<blockquote>
+<div><ul class="simple">
 <li>pip install python-daemon==1.6.1</li>
 <li>pip install python-jsonrpc==0.8.4</li>
 <li>pip install simplejson==3.10.0</li>
 <li>pip install retrying</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>We will call <em>worker-host</em> the remote machine where the worker executes the post-processing scripts.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
