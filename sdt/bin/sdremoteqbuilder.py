@@ -62,11 +62,12 @@ def build_query(facets_group):
     searchapi_host=facets_group.get('searchapi_host',None)
     action=facets_group.get('action',None)
 
-
     facets=sddquery.search_api_parameters(facets_group)
 
-
     query['url']=sdremotequtils.build_url(facets,searchapi_host)
+
+
+    # attached_parameters mngt
 
     query['attached_parameters']=sddquery.synda_parameters(facets_group)
 
