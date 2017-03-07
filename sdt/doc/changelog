@@ -7,7 +7,7 @@
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.
 	- add subfolder to the ESGF certificate path (named after the user UID).
-	- all deletions now occurs synchronously (deferred mode is disabled).
+	- all deletions now occur synchronously (deferred mode is disabled).
 	- follow symlinks during 'synda remove' operation.
 	- add manual routines to refresh dataset status.
 	- new cleanup algo for 'synda remove' command (run faster).
@@ -16,7 +16,7 @@
 	- store stacktrace file in /tmp.
 	- add uuid to stacktrace file name.
 	- move try/except block upstream to enclose the daemon context.
-	- fix permission in sys-pkg for /srv/synda/sdt folder (g+sw).
+	- change permissions in sys-pkg for /srv/synda/sdt folder (g+sw).
 - Version 3.7 - 20170115
 	- ESGF certificate path set to Synda tmp dir for source install.
 	- disable sdfilepermission module.
