@@ -39,6 +39,14 @@ chmod +x ./install.sh
 
 Note: the ```-d``` option of the ```install.sh``` script can be used to install a specific version.
 
+### Patch
+
+Synda 3.6 source package contains a bug which prevent running application.
+
+To fix it, downgrade the ```pillow``` package from 4.0 to 3.4.2 using command below
+
+    pip install pillow==3.4.2
+
 ## Configuration
 
 * Add lines below in your shell configuration file (e.g. '.bashrc')
