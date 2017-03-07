@@ -422,7 +422,7 @@ install_sg_application ()
 install_st_additional_packages ()
 {
     # install pypi python modules in virtualenv
-    $python_pkg_install_cmd pyOpenSSL psutil humanize tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests beautifulsoup4 texttable reportlab
+    $python_pkg_install_cmd pyOpenSSL psutil humanize tabulate progress pycountry python-jsonrpc python-daemon==1.6.1 retrying requests beautifulsoup4 texttable pillow==3.4.2 reportlab
 
     # install lxml pypi python modules in virtualenv (old versions only)
     (
