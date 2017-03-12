@@ -63,7 +63,7 @@ Explore metadata
 
 [Project](sdt/doc/project.md)
 
-More documentation available [here](http://prodiguer.github.io/synda/).
+More documentation available [here](http://prodiguer.github.io/synda/)
 
 ## Motivation
 
