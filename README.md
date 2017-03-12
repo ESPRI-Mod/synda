@@ -1,7 +1,5 @@
 # *synda*
 
-More documentation available [here](http://prodiguer.github.io/synda/).
-
 ## Synopsis
 
 *Synda* is a command line tool to search and download files from the Earth
@@ -64,6 +62,8 @@ Explore metadata
 [Howto & Tutorial](sdt/doc/howto_and_tutorial.md)
 
 [Project](sdt/doc/project.md)
+
+More documentation available [here](http://prodiguer.github.io/synda/).
 
 ## Motivation
 
