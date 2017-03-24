@@ -7,7 +7,11 @@ tabulate
 progress
 pycountry
 python-jsonrpc
+
 python-daemon==1.6.1
+# use version below to add supplementary groups support (Python 2.7+ only)
+#python-daemon==2.1.2
+
 retrying
 setuptools==19.7
 requests
