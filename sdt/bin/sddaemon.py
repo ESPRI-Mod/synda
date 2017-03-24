@@ -177,6 +177,26 @@ def unprivileged_user_mode():
     context.uid = uid
     context.gid = gid
 
+    # enable support for supplementary group
+    # (used for unprivileged mode)
+    #
+    # Depends on Python 2.7+ and python-daemon 2.1.1+
+    # 
+    # Note that 'python-daemon 2.1.1' is not the version installed by default by
+    # the synda installer, so to enable 'supplementary group' support, you need
+    # to run the following command: 
+    #
+    # <virtualenv_path>/pip install python-daemon==2.1.1
+    #
+    # Also note that Python must be 2.7+, i.e. it will not work with 2.6 as
+    # 'python-daemon 2.1.1' itself depends on 2.7+.
+    #
+    # TODO: modify synda installer (package and install.sh) so to set the right
+    #       python-daemon version automatically.
+    #
+    if hasattr(context, 'initgroups'):
+        context.initgroups=True
+
 # init.
 
 os.umask(0002)
