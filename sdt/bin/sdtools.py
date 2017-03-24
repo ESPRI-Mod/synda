@@ -20,6 +20,13 @@ import re
 import glob
 import argparse
 
+def is_27_or_higher():
+    """
+    Not used.
+    """
+
+    return sys.version_info >= (2,7)
+
 def who_am_i():
     """This func line checks if we are IHM or daemon.
 

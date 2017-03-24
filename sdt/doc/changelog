@@ -3,6 +3,7 @@
 	- dataset attributes can be used in 'local_path_drs_template'.
 	- use decimal prefix instead of binary prefix in 'synda metrics' command.
 	- do not include checksum computation time in download time metric.
+	- enable supplementary groups support if available.
 - Version 3.8 - 20170219
 	- add 'info' action to 'synda certificate' command.
 	- add security_dir_mode option.

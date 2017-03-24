@@ -1,9 +1,9 @@
-
-This patch enables support for supplementary group in 3.8
+Description
+    This patch enables support for supplementary group in 3.8
 
 Depends
     Python 2.7+
-    python-daemon 2.1.1+
+    python-daemon 2.1.2+
 
 Usage
     <stop daemon>
@@ -17,3 +17,6 @@ Usage
     -O /usr/share/python/synda/sdt/bin/sddaemon.py
 
     <start daemon>
+
+Note
+    This patch has been included in 3.9
