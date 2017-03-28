@@ -274,13 +274,17 @@ def run_job(job, args):
         if 'transition_return_code' not in job:
             job['transition_return_code'] = None
     elif script_exists(args.s, job['job_class'], '.sh'):
-        # Run job as shell script (fork)
+     	# Run job as shell script (fork)
         script_input_parameters = []
         for k, v in job['args'].iteritems():
-            assert ' ' not in k
-            assert ' ' not in v
-            script_input_parameters.append('--{0}'.format(k))
-            script_input_parameters.append(v)
+    	    if v:
+            	assert ' ' not in k
+            	assert ' ' not in v
+                script_input_parameters.append('--{0}'.format(k))
+                script_input_parameters.append(v)
+            else:
+    	    	if args.verbose:
+	    	        print 'Skip {0} parameter: {1}'.format(k, v)
         # Pass script_dir to shell script
         script_input_parameters.append('--{0}'.format('script-dir'))
         script_input_parameters.append(args.s)
