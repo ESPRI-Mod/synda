@@ -18,16 +18,17 @@ Synda installation
 
 We highly recommend to install Synda modules on a dedicated virtual machine using :ref:`RPM <rpm-install-sdt>` or :ref:`DEB <deb-install-sdt>` packages. This machine will be called *synda-host* in the following.
 
-See Synda installation from :ref:`RPM package <rpm-install-sdt>` or :ref:`DEB package <deb-install-sdt>`.
-
-Then, install Synda post-processing module from :ref:`RPM package <rpm-install-sdp>` or :ref:`DEB package <deb-install-sdp>`.
-
-However Synda needs to be installed as ``root`` on *synda-host*, it can be run with a normal user which is belonging to the ``synda`` Unix group.
+First, see Synda installation from :ref:`RPM<rpm-install-sdt>` or :ref:`DEB<deb-install-sdt>` package.
+Then, install Synda post-processing module from :ref:`RPM<rpm-install-sdp>` or :ref:`DEB<deb-install-sdp>` package.
 
 .. note::
 
-    The ``synda`` Unix group has to be declared by your system administrator prior to installation.
-    All user id that are ``synda`` members will be able to run any ``synda [...]`` command.
+    Synda needs to be installed as ``root`` on *synda-host*. Nevertheless, it can be run with a normal user which is belonging to the ``synda`` Unix group.
+
+.. note::
+
+    The ``synda`` Unix group has to be declared by your system administrator prior to the installation.
+    All user ID that are ``synda`` members will be able to run any ``synda [...]`` command.
 
 Synda configuration
 *******************
@@ -39,8 +40,8 @@ On *synda-host*:
 
 - Set ``post_processing`` parameter to ``true`` in ``sdt.conf``.
 - Set ``http_fallback`` parameter to ``true`` in ``sdt.conf``.
-- Set ``check_parameter`` parameter to 0 in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
-- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+- Set ``check_parameter`` parameter to ``0`` in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdt.conf``.
 
 .. code-block:: text
 
@@ -58,7 +59,11 @@ On *synda-host*:
     port=18290
 
 - Choose a password to configure RPC server in ``credentials.conf``.
-- Check the ESGF ``openid`` and ``password`` are valid in ``credentials.conf`` and register to appropriate ESGF groups.
+- Set the ESGF ``openid`` and ``password`` in ``credentials.conf``.
+
+.. warning::
+
+    Ensure that your ESGF OpenID is valid and you registered to the appropriate ESGF groups.
 
 .. code-block:: text
 
@@ -70,13 +75,23 @@ On *synda-host*:
     openid=https://my.data.node/esgf-idp/openid/synda
     password=xxxxxxx
 
+- Add the following constants in ``/usr/share/python/synda/sdt/bin/sdconst.py``:
+
+.. code-block:: python
+
+    EVENT_FILE_COMPLETE='file_complete'
+    EVENT_VARIABLE_COMPLETE='variable_complete'
+    EVENT_DATASET_COMPLETE='dataset_complete'
+    EVENT_DATASET_LATEST='dataset_latest'
+    EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
+
 ``sdp`` module
 --------------
 
 On *synda-host*:
 
 - Set ``eventhread`` parameter to ``1`` in ``sdp.conf``.
-- Check the ``host`` parameter is the *synda-host* IP in ``sdt.conf``.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdp.conf``.
 
 .. code-block:: text
 
@@ -93,13 +108,44 @@ On *synda-host*:
     username=sdpp
     password=xxxxxx
 
+- Add the following constants in ``/usr/share/python/synda/sdp/bin/spconst.py``:
+
+.. code-block:: python
+
+    EVENT_FILE_COMPLETE='file_complete'
+    EVENT_VARIABLE_COMPLETE='variable_complete'
+    EVENT_DATASET_COMPLETE='dataset_complete'
+    EVENT_DATASET_LATEST='dataset_latest'
+    EVENT_LATEST_DATASET_COMPLETE='latest_dataset_complete'
+
+- Add the project name you want to replicate to the ``AUTHORIZED_PROJECT`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
+
+- Depending on its *Data Reference Syntax*, add the project name you want to replicate to the ``PROJECT_WITH_ONE_VARIABLE_PER_DATASET`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
+
 ``sdw`` module
 --------------
 
-This is the client side post-processing module (aka "worker"). This single Python script is fully independent from the Synda stack and can be run remotely or not from *synda-host*.
-We will call *worker-host* the remote machine where the worker executes your scripts. *synda-host* and *worker-host* has to be accessible by the network each other without firewall constraints, etc.
+This is the client side post-processing module (aka "worker"). This single Python script is fully independent from the Synda stack and can be run remotely or not from *synda-host*. In such a case you will only need to install the following required Python libraries (see also the file header):
 
-For instance, in the replication context, the Synda worker could be run on the ESGF data node used to publish the replicated data.
+ - pip install python-daemon==1.6.1
+ - pip install python-jsonrpc==0.8.4
+ - pip install simplejson==3.10.0
+ - pip install retrying
+
+We will call *worker-host* the remote machine where the worker executes the post-processing scripts.
+
+.. warning::
+
+    *synda-host* and *worker-host* has to be accessible through the network each other without firewall constraints, etc.
+
+.. note::
+
+    The worker is installed with ``synda-pp`` and can be found in ``/usr/bin/synda_wo`` on *synda-host*.
+
+.. warning::
+
+    In the context of the ESGF Replication Working Team, the Synda worker could be run on the ESGF data node (or ESGF Data Transfer Node) used to publish the replicated data.
+    A corresponding updated version of the worker is available here: :download:`synda_wo <synda_wo>`.
 
 Target data to replicate
 ------------------------
@@ -114,20 +160,20 @@ Copy those selection files on *synda-host* into the selection folder. This folde
 
 .. warning::
 
-    To allow Synda to discover files on another index node than those specified in the ``/etc/synda/sdt/sdt.conf``.
-    You can use the ``searchapi_host`` selection file parameter.
-    In that case, be careful to disable the facet checking in ``/etc/synda/sdt/sdt.conf`` using ``check_parameter=0``.
+    Use the ``searchapi_host`` selection file parameter to allow Synda to discover files on another index node than those specified in the ``/etc/synda/sdt/sdt.conf``.
+    Be careful to disable the facet checking in ``/etc/synda/sdt/sdt.conf`` using ``check_parameter=0``.
 
 .. warning::
 
     Pay attention to any conflict with the default selection parameters that overwrite the selection file parameters.
-    Default parameters are defined into specific templates in the default folder on *synda-host*.
+    Default parameters are defined into specific templates in the ``default`` folder on *synda-host*.
     This folder is ``/etc/synda/sdt/default`` by default but can be defined in the synda configuration file using the ``default_path`` parameter. See :ref:`the synda configuration section <config-param-ref-sdt>`.
 
 Build a republication pipeline
 ------------------------------
 
 This republication pipeline is at least composed of 2 tasks to apply on each replicated dataset:
+
  - The mapfile generation,
  - The ESGF publication as replicas.
 
@@ -136,7 +182,7 @@ Pipeline definition
 
 On *synda-host*:
 
-- Edit the file ``/etc/synda/sdp/pipeline/republication.py``. This file content must be:
+- Edit the file ``/etc/synda/sdp/pipeline/republication.py``. It defines the pipeline and tasks name. This file content must be:
 
 .. code-block:: python
 
@@ -145,7 +191,7 @@ On *synda-host*:
     def get_pipeline():
         return ppp
 
-    # Piepline name
+    # Pipeline name
     name='republication'
 
     # Transitions/tasks list
@@ -154,7 +200,7 @@ On *synda-host*:
     ppp = sppostprocessingutils.build_light_pipeline(name, tasks)
 
 
-- Edit the file ``/etc/synda/sdp/pipeline/spbindings.py``. This file content must be:
+- Edit the file ``/etc/synda/sdp/pipeline/spbindings.py``. It maps each Synda "event" with the corresponding pipeline and the status of the initial task. This file content must be:
 
 .. code-block:: python
 
@@ -162,12 +208,21 @@ On *synda-host*:
 
     # Mapping: a 'key' event into the corresponding tuple of 'value' pipeline with starting 'status'
     event_pipeline_mapping = {
-        spconst.EVENT_DATASET_COMPLETE: ('republication', spconst.PPPRUN_STATUS_WAITING)
+        spconst.EVENT_VARIABLE_COMPLETE: ('republication', spconst.PPPRUN_STATUS_WAITING)
     }
 
 .. note::
 
-    You can easily manage your pipeline definitions in another folder by using the ``pipeline_path`` parameter in ``sdp.conf``. See :ref:`the synda configuration section <config-param-ref-sdp>`.
+    A Synda "event" is the communication way between ``sdt`` and ``sdp`` to trigger the post-processing entries in ``sdp.db``.
+    Each entry corresponds to a dataset life-cycle into the post-processing pipeline.
+
+.. note::
+
+    A pipeline task is also called a Synda "transition".
+
+.. note::
+
+    You can easily manage your pipeline definitions in another folder using the ``pipeline_path`` parameter in ``sdp.conf``. See :ref:`the synda configuration section <config-param-ref-sdp>`.
 
 Scripts
 +++++++
@@ -179,130 +234,18 @@ Due to the RPC server connexion, those scripts can be run outside of *synda-host
 
     Whether your scripts are run remotely or not, all the required dependencies, libraries, compiler, etc. have to be installed on *synda-host* or *worker-host*.
 
-- Edit ``mapfile.sh`` that will generate mapfiles using the ```esgprep mapfile`` command-line <http://is-enes-data.github.io/esgf-prepare/>`_. The script content should like:
+- Edit :download:`mapfile.sh <mapfile.sh>` that will generate mapfiles using the ``esgprep mapfile`` command-line. See `esgf-prepare <http://is-enes-data.github.io/esgf-prepare/>`_.
 
-.. code-block:: bash
+- Edit and configure :download:`publication.sh <publication.sh>` that will publish the generated mapfiles as replica.
 
-   #!/bin/bash -e
+Each script as two main section:
 
-   # Description
-   #   This script generates ESGF mapfile.
-   #   Processes by dataset.
+ - The initialization section deserializes the command-line argument submitted by the worker to the script.
+ - The main section apply the processing command.
 
-   # --------- arguments & initialization --------- #
+.. warning::
 
-   while [ "${1}" != "" ]; do
-       case "${1}" in
-           "--project")          shift; project="${1}"          ;;
-           "--dataset_pattern")  shift; input_dataset="${1}"    ;;
-       esac
-       shift
-   done
-
-   ESGCET_PATH="/esg/config/esgcet/"
-
-   # --------- main --------- #
-
-   msg "INFO" "mapfile.sh started"
-
-   esgprep mapfile -i ${ESGCET_PATH} -v \
-                   --project ${project,,} \
-                   --log \
-                   --max-threads 16 \
-                   --no-cleanup \
-                   ${input_dataset}
-
-   msg "INFO" "mapfile.sh complete"
-
-- Edit and configure ``publication.sh`` that will publish the generated mapfile as replica. The script content should like:
-
-.. code-block:: bash
-
-   #!/bin/bash -e
-
-   # Description
-   #   This script publishes mapfiles.
-   #   Processes by dataset.
-
-   # --------- arguments & initialization --------- #
-
-   while [ "${1}" != "" ]; do
-       case "${1}" in
-           "--project")          shift; project="${1}"          ;;
-           "--dataset_pattern")  shift; input_dataset="${1}"    ;;
-       esac
-       shift
-   done
-
-   # INI files directory
-   ESGCET_PATH="/esg/config/esgcet/"
-   # Indexnode hostname
-   MYPROXY_HOST="esgf-node.fr"
-   # myproxy-logon port
-   MYPROXY_PORT="7512"
-   # Publisher's openID login registered
-   MYPROXY_LOGIN="xxxxxx"
-   # Publisher's openID password
-   MYPROXY_PASSWD="xxxxxx"
-
-   # --------- main --------- #
-
-   msg "INFO" "replication.sh started"
-
-   # Loads ESGF environment
-   source /etc/esg.env
-
-   # Checkup directories and temporary files
-   if [ ! -d ${ESGCET_PATH} ]; then
-       msg "ERROR" "${ESGCET_PATH} does not exist. STOP." >&2
-       exit 1
-   fi
-   if [ ! -d ${HOME}/.globus ]; then
-       msg "ERROR" "${HOME}/.globus does not exist. STOP." >&2
-       exit 1
-   fi
-   if [ -f ${HOME}/.globus/certificate-file ]; then
-       msg "WARNING" "${HOME}/.globus/certificate-file already exists. Deleted." >&2
-       rm -f ${HOME}/.globus/certificate-file
-   fi
-
-   # Retrieve mapfile name with an esgprep dry run
-   uuid=$(uuidgen)
-   esgprep mapfile -i ${ESGCET_PATH} -v \
-                   --project ${project,,} \
-                   --no-checksum \
-                   --mapfile "{dataset_id}.${uuid}" \
-                   ${input_dir} 1>&2 2> /dev/null
-   mapfile_orig=$(ls /tmp/map | grep "${uuid}")
-   mapfile=$(echo ${mapfile_orig} | sed "s|\.${uuid}||g")
-   rm -fr /tmp/map/${mapfile_orig}
-
-   # Gets proxy certificates for publication
-   msg "INFO"  "Get ESGF certificates..."
-   cat ${MYPROXY_PASSWD} | myproxy-logon -b -T -s ${MYPROXY_HOST} -p ${MYPROXY_PORT} -l ${MYPROXY_LOGIN} -o ${HOME}/.globus/certificate-file -S
-
-   # Initialize node and controlled vocabulary
-   esginitialize -c -i ${ESGCET_PATH}
-
-   msg "INFO"  "Publishing ${mapfile} on datanode..."
-   # Datanode publication
-   esgpublish -i ${ESGCET_PATH} \
-              --project ${project,,} \
-              --thredds \
-              --service fileservice \
-              --set-replica \
-              --map ${mapfile_dir}${mapfile}
-   msg "INFO"  "Publishing ${mapfile} on indexnode..."
-   #Indexnode publication
-   esgpublish -i ${ESGCET_PATH} \
-              --project ${project,,} \
-              --publish \
-              --noscan \
-              --service fileservice \
-              --set-replica \
-              --map ${mapfile_dir}${mapfile}
-
-   msg "INFO" "replication.sh complete"
+    The provided templates works with some functions to source with :download:`functions.sh <functions.sh>`.
 
 File discovery
 **************
@@ -330,7 +273,7 @@ To start the download, run command below on *synda-host*:
 
     service sdt start
 
-At this point, the downloading is in progress and when a dataset is complete an event is create to trigger the corresponding pipeline creation.
+At this point, the downloading is in progress and when a dataset is complete a Synda event triggers the corresponding pipeline creation.
 
 Files processing
 ****************
@@ -350,18 +293,22 @@ Then, run the worker remotely (i.e., on *worker-host*) or not (i.e., on *synda-h
 
     synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts
 
-At this point, the worker communicates with the ``sdp`` database to pick up information on a dataset pending for a transition to apply.
-The worker run the corresponding script and returns the job result to ``sdp``. On success, the transition is set to "done" and replaced by the next one.
+At this point, the worker communicates with the ``sdp.db`` database to pick up information on a dataset pending for a transition to apply.
+The worker runs the corresponding script and returns the job result to ``sdp.db``. On success, the transition is set to "done" and moved to the next one.
 
 The worker can be run as a daemon using the ``start``, ``stop`` and ``status`` command:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts start
+    synda_wo start -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts
 
-The worker allows you to:
+.. note::
 
-- Pick up only one item to process from ``sdp``:
+    In daemon mode, the worker never stops (except in case of error) and regularly checks waiting jobs to process.
+
+The worker is also able to:
+
+- Pick up only one item to process from ``sdp.db``:
 
 .. code-block:: bash
 
@@ -371,16 +318,21 @@ The worker allows you to:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -j mapfile
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -j transitionA,transitionB
 
 - Filter the pipeline to process:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p republication
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -p pipelineA
 
-By default, the worker log is ``/var/log/sdw/worker.log``. On *worker-host* you must submit a log directory:
+By default, the worker log is ``/var/log/sdw/worker.log`` on *synda-host*  and ``/tmp`` on *worker-host*. On *worker-host* you can submit another log directory:
 
 .. code-block:: bash
 
-    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -l /my/logs
+    synda_wo -H <synda-host-IP> -w <rpc-password> --script_dir /your/scripts -l /your/logs
+
+.. note::
+
+    All those examples can be combined safely.
+
