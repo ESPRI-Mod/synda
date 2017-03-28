@@ -21,18 +21,17 @@ source ${scripts_path}/functions.sh
 # INI files directory
 ESGCET_PATH="/esg/config/esgcet/"
 # Indexnode hostname
-MYPROXY_HOST="vesgint-idx.ipsl.upmc.fr"
+MYPROXY_HOST="esgf-node.fr"
 # myproxy-logon port
 MYPROXY_PORT="7512"
 # Publisher's openID login registered
-#MYPROXY_LOGIN="syndatest_ipsl"
-MYPROXY_LOGIN="glipsl"
+MYPROXY_LOGIN="xxxxxxxx"
 # Publisher's openID password
-MYPROXY_PASSWD="6C/f7(Zbs*663#"
+MYPROXY_PASSWD="xxxxxxxx"
 # Root path
-ROOT_PATH="/prodigfs/prodigfs_test/esgf/mirror/"
+ROOT_PATH="/your/data/path"
 # Mapfile directory
-MAP_DIR="/home/esg-user/rt_mapfiles/"
+MAP_DIR="/your/mapfiles/path"
 
 # --------- main --------- #
 

@@ -85,7 +85,7 @@ def _get_args():
         '-w',
         metavar='<password>',
         type=str,
-        default='techAcMoac8',
+        default='xxxxxxxx',
         help='Remote service port (default is synda-dev)')
     parser.add_argument(
         '-j',
