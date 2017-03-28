@@ -1,0 +1,5 @@
+Description
+    This patch moves certificate-renewal method call in main loop
+
+    It prevents certificate renewal method from being called in each individual
+    thread (which may cause race problem).

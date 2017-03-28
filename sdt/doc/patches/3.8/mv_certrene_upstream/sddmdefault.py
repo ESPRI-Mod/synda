@@ -40,21 +40,15 @@ class Download():
     @classmethod
     def run(cls,tr):
         cls.start_transfer_script(tr)
+        tr.end_date=sdtime.now()
 
-        # unset metrics fields if transfer did not complete successfully
-        if tr.status!=sdconst.TRANSFER_STATUS_DONE:
-            tr.duration=None
-            tr.rate=None
+        # compute metrics
+        if tr.status==sdconst.TRANSFER_STATUS_DONE:
+            tr.duration=sdtime.compute_duration(tr.start_date,tr.end_date)
+            tr.rate=sdtools.compute_rate(tr.size,tr.duration)
 
     @classmethod
     def start_transfer_script(cls,tr):
-
-        # renew certificate if needed
-        try:
-            sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
-        except Exception,e:
-            sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
-            raise
 
         if sdconfig.fake_download:
             tr.status=sdconst.TRANSFER_STATUS_DONE
@@ -62,7 +56,6 @@ class Download():
             tr.sdget_error_msg=""
             return
 
-        # main
         (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
                                                                    tr.get_full_local_path(),
                                                                    debug=False,
@@ -72,17 +65,9 @@ class Download():
                                                                    buffered=True,
                                                                    hpss=hpss)
 
-
-        # check
-        assert tr.size is not None
-
-        # compute metrics
-        tr.end_date=sdtime.now()
-        tr.duration=sdtime.compute_duration(tr.start_date,tr.end_date)
-        tr.rate=sdtools.compute_rate(tr.size,tr.duration)
-
-        # post-processing
         if tr.sdget_status==0:
+
+            assert tr.size is not None
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
                 sdlog.error("SDDMDEFA-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
@@ -255,6 +240,14 @@ def transfers_end():
             raise
 
 def transfers_begin(transfers):
+
+    # renew certificate if needed
+    try:
+        sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
+    except Exception,e:
+        sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
+        raise
+
     for tr in transfers:
         start_transfer_thread(tr)
         time.sleep(1) # this sleep is not to be too agressive with datanodes

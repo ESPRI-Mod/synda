@@ -55,6 +55,10 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
     elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
 
+        gridftp_opt=sdconfig.config.get('download','gridftp_opt')
+        if len(gridftp_opt)>0:
+            os.environ["GRIDFTP_OPT"]=gridftp_opt
+
         li=prepare_args(url,full_local_path,sdconfig.data_download_script_gridftp,debug,timeout,verbosity,hpss)
 
         (status,script_stderr)=run_download_script(li,buffered)

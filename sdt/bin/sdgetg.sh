@@ -181,7 +181,10 @@ export GLOBUS_TCP_PORT_RANGE=50000,51000
 
 GRIDFTP_CMD=globus-url-copy
 
-GRIDFTP_OPT=""
+# note: GRIDFTP_OPT can be set directly in sdt.conf
+if [ -z "$GRIDFTP_OPT" ]; then
+    GRIDFTP_OPT=""
+fi
 
 # verbosity parameter
 if [ $verbosity -eq 3 ]; then
