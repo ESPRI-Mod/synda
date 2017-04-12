@@ -51,8 +51,8 @@ def check_replica_not_set_when_using_nearestpost(facets_groups):
         if sdconfig.nearest_schedule=='post':
             if sddquery.get_scalar(dquery,'nearest',False,bool):
                 if 'replica' in dquery:
-                    raise sdexception.SDException('SYDCHECK-010',msg)
-                    #conflict_between_replica_and_nearest_flags=True
+                    #raise sdexception.SDException('SYDCHECK-010',msg)
+                    conflict_between_replica_and_nearest_flags=True
 
     if conflict_between_replica_and_nearest_flags:
         sdlog.warning("SYDCHECK-043",msg,stderr=True)
