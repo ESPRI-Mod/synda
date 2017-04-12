@@ -42,7 +42,9 @@ def run(facets_groups):
 def check_replica_not_set_when_using_nearestpost(facets_groups):
     """Do not continue if 'replica' has been set ('replica' must not be set, as we want to search for the nearest in all existing copies of the file)."""
 
-    msg="'replica' facet must not be set when using 'sdnearestpost' module"
+    #msg="'replica' facet must not be set when using 'sdnearestpost' module"
+    msg="'replica' facet must not be set when using 'nearest' mode"
+
     conflict_between_replica_and_nearest_flags=False
 
     for dquery in facets_groups:
