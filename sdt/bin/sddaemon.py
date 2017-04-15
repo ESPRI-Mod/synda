@@ -136,6 +136,7 @@ def start():
 
     else:
         print 'Daemon is already running.'
+        print 'PID file location: %s'%sdconfig.daemon_pid_file
 
 def stop():
     if is_running():
