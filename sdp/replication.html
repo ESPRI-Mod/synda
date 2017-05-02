@@ -167,7 +167,8 @@
 </div>
 <div class="section" id="synda-installation">
 <h2>Synda installation<a class="headerlink" href="#synda-installation" title="Permalink to this headline">¶</a></h2>
-<p>We highly recommend to install Synda modules on a dedicated virtual machine using <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> packages. This machine will be called <em>synda-host</em> in the following.</p>
+<p>We highly recommend to install Synda modules on a dedicated virtual machine using <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> packages.
+Both Synda modules <code class="docutils literal"><span class="pre">sdt</span></code> and <code class="docutils literal"><span class="pre">sdp</span></code> are independent and can be installed on two different machines. In such a case, both machines have to be accessible through the network each other without firewall constraints, etc. In the following we assume that both modules are install on the same machine which we called <em>synda-host</em> in the following.</p>
 <p>First, see Synda installation from <a class="reference internal" href="../sdt/rpm_install.html#rpm-install-sdt"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="../sdt/deb_install.html#deb-install-sdt"><span class="std std-ref">DEB</span></a> package.
 Then, install Synda post-processing module from <a class="reference internal" href="rpm_install.html#rpm-install-sdp"><span class="std std-ref">RPM</span></a> or <a class="reference internal" href="deb_install.html#deb-install-sdp"><span class="std std-ref">DEB</span></a> package.</p>
 <div class="admonition note">
@@ -186,10 +187,10 @@ All user ID that are <code class="docutils literal"><span class="pre">synda</spa
 <h3><code class="docutils literal"><span class="pre">sdt</span></code> module<a class="headerlink" href="#sdt-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
-<li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
-<li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
-<li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to <code class="docutils literal"><span class="pre">0</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section.</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>.</li>
+<li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdt</span></code> to send the &#8220;SQL event&#8221; to the <code class="docutils literal"><span class="pre">sdp</span></code> database.</li>
+<li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allows Synda to slide from GridFTP to HTTP protocol in case of endpoint error (optional if not desired).</li>
+<li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to <code class="docutils literal"><span class="pre">0</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section (optional if not desired).</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdp``host IP address</strong>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[module]
 post_processing=true
@@ -198,7 +199,7 @@ post_processing=true
 http_fallback=true
 ...
 [behaviour]
-check_parameter=0
+check_parameter=1
 ...
 [post_processing]
 host=xxx.xxx.xxx.xx
@@ -237,8 +238,8 @@ password=xxxxxxx
 <h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
-<li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>.</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>.</li>
+<li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdp</span></code> to consume the received &#8220;SQL event&#8221; from <code class="docutils literal"><span class="pre">sdt</span></code> and create one pipeline entry per downloaded dataset/variable.</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdt``host IP address</strong>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[daemon]
 eventthread=1
@@ -280,14 +281,16 @@ password=xxxxxx
 <li>pip install retrying</li>
 </ul>
 </div></blockquote>
-<p>We will call <em>worker-host</em> the remote machine where the worker executes the post-processing scripts.</p>
+<p>The worker only needs to find the Bash or Python scripts you want to apply to each downloaded datasets. Each script corresponds to a Synda &#8220;task&#8221; (also called a &#8220;transition&#8221;).
+We will call <em>worker-host</em> the remote machine where the worker executes the post-processing scripts.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last"><em>synda-host</em> and <em>worker-host</em> has to be accessible through the network each other without firewall constraints, etc.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The worker is installed with <code class="docutils literal"><span class="pre">synda-pp</span></code> and can be found in <code class="docutils literal"><span class="pre">/usr/bin/synda_wo</span></code> on <em>synda-host</em>.</p>
+<p class="last">The worker is installed with <code class="docutils literal"><span class="pre">synda-pp</span></code> and can be found in <code class="docutils literal"><span class="pre">/usr/bin/synda_wo</span></code> on <em>synda-host</em>.
+To install it on a remote machine, just copy-paste the full file content.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -350,6 +353,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spconst</span>
 
 <span class="c1"># Mapping: a &#39;key&#39; event into the corresponding tuple of &#39;value&#39; pipeline with starting &#39;status&#39;</span>
+<span class="c1"># In the example below : Each &lt;variable completely downloaded&gt; leads to a &lt;republication&gt; pipeline entry starting with the &lt;waiting&gt; status.</span>
 <span class="n">event_pipeline_mapping</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">spconst</span><span class="o">.</span><span class="n">EVENT_VARIABLE_COMPLETE</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;republication&#39;</span><span class="p">,</span> <span class="n">spconst</span><span class="o">.</span><span class="n">PPPRUN_STATUS_WAITING</span><span class="p">)</span>
 <span class="p">}</span>
@@ -357,7 +361,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A Synda &#8220;event&#8221; is the communication way between <code class="docutils literal"><span class="pre">sdt</span></code> and <code class="docutils literal"><span class="pre">sdp</span></code> to trigger the post-processing entries in <code class="docutils literal"><span class="pre">sdp.db</span></code>.
+<p class="last">A Synda &#8220;event&#8221; is an SQL entry in a dedicated table that is copied from <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> in order to trigger the post-processing entries in <code class="docutils literal"><span class="pre">sdp.db</span></code>.
 Each entry corresponds to a dataset life-cycle into the post-processing pipeline.</p>
 </div>
 <div class="admonition note">
@@ -462,7 +466,8 @@ The worker runs the corresponding script and returns the job result to <code cla
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All those examples can be combined safely.</p>
+<p class="last">All those examples can be combined safely.
+Keep in mind that the default behavior is to process a pipeline &#8220;transition by transition&#8221; and not &#8220;entry by entry&#8221;. This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one. Synda will consider the next dataset/variable if the previous one falls into error or reach the pipeline end (i.e., with a <code class="docutils literal"><span class="pre">done</span></code> status).</p>
 </div>
 </div>
 </div>
