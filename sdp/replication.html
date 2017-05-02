@@ -190,7 +190,7 @@ All user ID that are <code class="docutils literal"><span class="pre">synda</spa
 <li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdt</span></code> to send the &#8220;SQL event&#8221; to the <code class="docutils literal"><span class="pre">sdp</span></code> database.</li>
 <li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allows Synda to slide from GridFTP to HTTP protocol in case of endpoint error (optional if not desired).</li>
 <li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to <code class="docutils literal"><span class="pre">0</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section (optional if not desired).</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdp``host IP address</strong>.</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdp`` host IP address</strong>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[module]
 post_processing=true
@@ -239,7 +239,7 @@ password=xxxxxxx
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
 <li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdp</span></code> to consume the received &#8220;SQL event&#8221; from <code class="docutils literal"><span class="pre">sdt</span></code> and create one pipeline entry per downloaded dataset/variable.</li>
-<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdt``host IP address</strong>.</li>
+<li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. <strong>If both modules have been installed on two different machines, this has to be the ``sdt`` host IP address</strong>.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[daemon]
 eventthread=1
@@ -467,7 +467,9 @@ The worker runs the corresponding script and returns the job result to <code cla
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">All those examples can be combined safely.
-Keep in mind that the default behavior is to process a pipeline &#8220;transition by transition&#8221; and not &#8220;entry by entry&#8221;. This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one. Synda will consider the next dataset/variable if the previous one falls into error or reach the pipeline end (i.e., with a <code class="docutils literal"><span class="pre">done</span></code> status).</p>
+Keep in mind that the default behavior is to process a pipeline &#8220;transition by transition&#8221; and not &#8220;entry by entry&#8221;.
+This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one.
+Synda will consider the next dataset/variable if the previous one falls into error or reaches the pipeline end (i.e., with a <code class="docutils literal"><span class="pre">done</span></code> status).</p>
 </div>
 </div>
 </div>

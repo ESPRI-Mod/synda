@@ -42,7 +42,7 @@ On *synda-host*:
 - Set ``post_processing`` parameter to ``true`` in ``sdt.conf``. This allows ``sdt`` to send the "SQL event" to the ``sdp`` database.
 - Set ``http_fallback`` parameter to ``true`` in ``sdt.conf`` to allows Synda to slide from GridFTP to HTTP protocol in case of endpoint error (optional if not desired).
 - Set ``check_parameter`` parameter to ``0`` in ``sdt.conf`` to allow Synda discovery on another index node than those specified in ``[index]`` section (optional if not desired).
-- Check the ``host`` parameter is the *synda-host* IP address in ``sdt.conf``. **If both modules have been installed on two different machines, this has to be the ``sdp``host IP address**.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdt.conf``. **If both modules have been installed on two different machines, this has to be the ``sdp`` host IP address**.
 
 .. code-block:: text
 
@@ -92,7 +92,7 @@ On *synda-host*:
 On *synda-host*:
 
 - Set ``eventhread`` parameter to ``1`` in ``sdp.conf``. This allows ``sdp`` to consume the received "SQL event" from ``sdt`` and create one pipeline entry per downloaded dataset/variable.
-- Check the ``host`` parameter is the *synda-host* IP address in ``sdp.conf``. **If both modules have been installed on two different machines, this has to be the ``sdt``host IP address**.
+- Check the ``host`` parameter is the *synda-host* IP address in ``sdp.conf``. **If both modules have been installed on two different machines, this has to be the ``sdt`` host IP address**.
 
 
 .. code-block:: text
@@ -340,4 +340,6 @@ By default, the worker log is ``/var/log/sdw/worker.log`` on *synda-host*  and `
 .. note::
 
     All those examples can be combined safely.
-    Keep in mind that the default behavior is to process a pipeline "transition by transition" and not "entry by entry". This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one. Synda will consider the next dataset/variable if the previous one falls into error or reach the pipeline end (i.e., with a ``done`` status).
+    Keep in mind that the default behavior is to process a pipeline "transition by transition" and not "entry by entry".
+    This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one.
+    Synda will consider the next dataset/variable if the previous one falls into error or reaches the pipeline end (i.e., with a ``done`` status).
