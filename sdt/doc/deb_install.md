@@ -39,6 +39,16 @@ Then install Synda package using command below
 sudo apt-get install synda --force-yes -y
 ```
 
+### Patch
+
+Synda 3.8 DEB package contains a bug which prevent running application under certain circumstances.
+
+Run the command below to fix it
+
+```
+sudo /usr/share/python/synda/sdt/bin/pip install myproxyclient==2.0.1
+```
+
 ## Configuration
 
 * Edit credentials file to set ESGF openid and password

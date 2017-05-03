@@ -52,6 +52,16 @@ If you need a distro/version that is not listed, you can open a github issue so 
 
 Note: RPM packages are currently only available for 64 bits architecture
 
+### Patch
+
+Synda 3.8 RPM package contains a bug which prevent running application under certain circumstances.
+
+Run the command below to fix it
+
+```
+sudo /usr/share/python/synda/sdt/bin/pip install myproxyclient==2.0.1
+```
+
 ## Configuration
 
 * Edit credentials file to set ESGF openid and password
