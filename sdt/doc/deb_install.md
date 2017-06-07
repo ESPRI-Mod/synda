@@ -20,6 +20,7 @@ where &lt;distro-name&gt; can be one of
 
 * ubuntu14
 * ubuntu12
+* ubuntu16
 * mint17
 * debian8
 
