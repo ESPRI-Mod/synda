@@ -166,7 +166,7 @@ def run(subparsers):
     subparser.add_argument('facet_name',help='Facet name')
     add_parameter_argument(subparser)
 
-    subparser=create_subparser(subparsers,'get',no_default=False,help='Download dataset',example=sdcliex.get())
+    subparser=create_subparser(subparsers,'get',no_default=False,help='Download dataset (sync)',example=sdcliex.get())
     subparser.add_argument('--verify_checksum','-c',action='store_true',help='Compare remote and local checksum')
     subparser.add_argument('--dest_folder','-d',default=sdconfig.files_dest_folder_for_get_subcommand,help='Destination folder')
     subparser.add_argument('--force','-f',action='store_true',help='Overwrite local file if exists')
@@ -189,7 +189,7 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
-    subparser=create_subparser(subparsers,'install',help='Install dataset',note=sdi18n.m0022,example=sdcliex.install())
+    subparser=create_subparser(subparsers,'install',help='Download dataset (async)',note=sdi18n.m0022,example=sdcliex.install())
     add_ni_option(subparser)
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'install')
