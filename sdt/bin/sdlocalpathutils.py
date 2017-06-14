@@ -24,7 +24,7 @@ def build_dataset_local_path(f):
         path="%(dataset_path)s"%f # note that we don't add var folder here (we do it only for the file local path)
     elif fmt=="tree":
         path="%(dataset_path)s"%f
-    elif fmt=="custom":
+    elif fmt=="custom" or fmt=="customvar": # TAGJ34234JK24
 
         # note: 'sdreducecol' filter must be disabled when using this format
 
@@ -89,6 +89,8 @@ def build_file_local_path(f):
         path="%(dataset_local_path)s/%(filename)s"%f
     elif fmt=="custom":
         path="%(dataset_local_path)s/%(filename)s"%f
+    elif fmt=="customvar": # TAGJ34234JK24
+        path="%(dataset_local_path)s/%(variable)s/%(filename)s"%f
     elif fmt=="homemade":
         path="%(dataset_local_path)s/%(filename)s"%f
     elif fmt=="notree":
