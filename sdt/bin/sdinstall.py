@@ -38,7 +38,7 @@ def run(args,metadata=None):
         try:
             metadata=syndautils.file_full_search(args)
         except sdexception.EmptySelectionException, e:
-            print_stderr('No packages will be installed, upgraded, or removed.')
+            print_stderr('No dataset will be installed, upgraded, or removed.')
             return (0,0)
         except sdexception.SDException, e:
             sdlog.info("SYNDINST-006","Exception occured during installation ('%s')"%str(e))
