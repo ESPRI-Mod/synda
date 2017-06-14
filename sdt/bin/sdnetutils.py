@@ -42,15 +42,7 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
     buf=HTTP_GET(url,timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
 
-    # HACK
-    #
-    # This is to prevent fatal error when document contain mixed encodings
-    #
-    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
-    #
-    if sdconfig.fix_encoding:
-        import sdencoding
-        buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
+    buf=fix_encoding(buf)
 
     try:
         di=search_api_parser.parse_metadata(buf)
@@ -84,6 +76,8 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
 def call_param_web_service(url,timeout):
     buf=HTTP_GET(url,timeout)
 
+    buf=fix_encoding(buf)
+
     try:
         params=search_api_parser.parse_parameters(buf)
     except Exception as e:
@@ -94,6 +88,20 @@ def call_param_web_service(url,timeout):
         raise SDException('SDNETUTI-003','Network error (%s)'%str(e))
 
     return params
+
+def fix_encoding(buf):
+
+    # HACK
+    #
+    # This is to prevent fatal error when document contain mixed encodings
+    #
+    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
+    #
+    if sdconfig.fix_encoding:
+        import sdencoding
+        buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
+
+    return buf
 
 def HTTP_GET_2(url,timeout=20,verify=True):
     """requests impl."""
