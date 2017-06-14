@@ -49,13 +49,6 @@ class Download():
     @classmethod
     def start_transfer_script(cls,tr):
 
-        # renew certificate if needed
-        try:
-            sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
-        except Exception,e:
-            sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
-            raise
-
         if sdconfig.fake_download:
             tr.status=sdconst.TRANSFER_STATUS_DONE
             tr.error_msg=""
@@ -255,6 +248,14 @@ def transfers_end():
             raise
 
 def transfers_begin(transfers):
+
+    # renew certificate if needed
+    try:
+        sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
+    except Exception,e:
+        sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
+        raise
+
     for tr in transfers:
         start_transfer_thread(tr)
         time.sleep(1) # this sleep is not to be too agressive with datanodes
