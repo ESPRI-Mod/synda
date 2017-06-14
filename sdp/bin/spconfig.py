@@ -90,6 +90,10 @@ daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 certificate_file='%s/server.pem'%tmp_folder
 
+# check
+if not os.path.isfile(certificate_file):
+    raise SPException("SPCONFIG-110","Server certificate not found (%s)"%certificate_file)
+
 default_options={'pipeline_path':default_pipeline_folder} # only when key is missing (i.e. line with key but without value ('foobar=') do NOT trigger default value)
 
 config = ConfigParser.ConfigParser(default_options)
