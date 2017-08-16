@@ -1,5 +1,9 @@
 # *sdw* User Guide
 
+## Dependencies
+
+    pip install retrying python-jsonrpc python-daemon==1.6.1
+
 ## Configuration
 
 Edit *worker* script and set variable below
