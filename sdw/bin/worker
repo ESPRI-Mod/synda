@@ -83,7 +83,7 @@ def get_unique_filename():
 def get_logfile(log_dir,filename):
 
     if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
+        os.makedirs(log_dir)
 
     return '%s/%s'%(log_dir,filename)
 
@@ -245,8 +245,9 @@ def process_jobs_with_retry(service,args):
     """
     process_jobs(service,args)
 
-def init_logger(logfile):
-    logging.basicConfig(filename=logfile,level=logging.DEBUG,format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
+def init_logger(s__log_level,logfile):
+    i__log_level=getattr(logging, s__log_level) # string to int
+    logging.basicConfig(filename=logfile,level=i__log_level,format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y/%m/%d %I:%M:%S %p')
 
 def run(args):
     """Test service connection or start processing jobs"""
@@ -319,7 +320,7 @@ def start_daemon(args):
             try:
 
                 # init logging
-                init_logger(logfile) # must be done after the double fork
+                init_logger(args.log_level,logfile) # must be done after the double fork
 
                 # start job processing
                 logging.info("Daemon starting ...")
@@ -404,6 +405,7 @@ if __name__ == '__main__':
     parser.add_argument('-H', '--host', default = host, help = 'Remote service hostname')
     parser.add_argument('-j', '--job_class', type=lambda s: s.split(','), required = False, metavar='JOB_CLASS', help = """Only processes specified job class.\nAvailable job classes are:\n- suppression_variable\n- coalesce\n- overlap\n- time_axis_normalization\n- cdscan\n- copy. \nMultiple values can be set using comma as delimiter (e.g. coalesce,overlap,copy).""")
     parser.add_argument('-l', '--logdir', default = get_log_dir(), help = """Logfile directory""")
+    parser.add_argument("-L", "--log_level", default='DEBUG', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], help="Set the logging level (default: %(default)s)")
 
     # This option is disabled for now as we need to always use crea_date as sort order
     #parser.add_argument('-o', '--order', choices = ['aspgf','fifo'], default = 'fifo', help = """Pipeline processing order.""") # 'aspgf' means 'Already Started Pipelines Go First' 
@@ -469,7 +471,7 @@ if __name__ == '__main__':
                 unprivileged_user_mode('interactive')
 
         # init logging
-        init_logger(logfile)
+        init_logger(args.log_level,logfile)
 
         run(args)
     else:
