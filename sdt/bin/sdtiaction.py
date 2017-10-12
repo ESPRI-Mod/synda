@@ -601,6 +601,56 @@ def pexec(args):
                 print_stderr("Post-processing task successfully submitted (order_dataset_count=%d,order_variable_count=%d)"%(order_dataset_count,order_variable_count))
         else:
             print_stderr('Data not found')
+
+    elif args.order_name=='cds':
+        selection_filename = None
+
+        # use search-api operator to build datasets list
+        stream = syndautils.get_stream(subcommand=args.subcommand, selection_file=args.selection_file, no_default=args.no_default)
+        sddeferredbefore.add_forced_parameter(stream, 'type', 'Dataset')
+
+        dataset_found_count = 0
+        order_variable_count = 0
+        for facets_group in stream:  # we need to process each facets_group one by one because of TAG45345JK3J53K
+
+            metadata = sdsearch.run(stream=[facets_group], post_pipeline_mode='dataset')  # TAGJ43KJ234JK
+
+            dataset_found_count += metadata.count()
+
+            if metadata.count() > 0:
+
+                # WART
+                # (gets overwritten at each iteration, but not a big deal as always the same value)
+                if selection_filename is None:  # this is to keep the first found value (i.e. if last facets_group is empty but not the previous ones do not keep the last one (which would be None))
+
+                    dataset = metadata.get_one_file()
+                    selection_filename = sdpostpipelineutils.get_attached_parameter__global([dataset], 'selection_filename')  # note that if no files are found at all for this selection (no matter the status), then the filename will be blank
+
+                for d in metadata.get_files():  # warning: load list in memory
+                    if d['status'] == sdconst.DATASET_STATUS_COMPLETE:
+
+                        # TAG45J4K45JK
+
+                        # send cds variable order
+                        # (note: total number of variable event is given by: "total+=#variable for each ds")
+                        for v in d['variable']:
+                            if v in facets_group['variable']:  # TAG45345JK3J53K (we check here that the variable has been asked for in the first place)
+                                order_variable_count += 1
+                                sdpporder.submit(sdconst.EVENT_CDS_VARIABLE, d['project'], d['model'], d['local_path'], variable=v, commit=False)
+
+        sddb.conn.commit()
+
+        if dataset_found_count > 0:
+            if order_variable_count == 0:
+                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")
+            else:
+                sdhistorydao.add_history_line(sdconst.ACTION_PEXEC, selection_filename)
+
+                print_stderr(
+                    "Post-processing task successfully submitted (order_variable_count=%d)" % (order_variable_count))
+        else:
+            print_stderr('Data not found')
+
     else:
         print_stderr("Invalid order name ('%s')"%args.order_name)
         return 1

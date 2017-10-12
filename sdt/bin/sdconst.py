@@ -32,6 +32,8 @@ EVENT_CDF_COR_DATASET='cdf_cor_dataset'
 EVENT_CDF_COR_VARIABLE_O='cdf_cor_variable_o' # project with One variable per dataset
 EVENT_CDF_COR_VARIABLE_N='cdf_cor_variable_n' # project with N variable per dataset
 
+EVENT_CDS_VARIABLE='cds_variable'
+
 EVENT_STATUS_NEW='new'
 EVENT_STATUS_ANOMALY='anomaly'
 EVENT_STATUS_OLD='old'

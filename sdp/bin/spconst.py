@@ -30,6 +30,8 @@ EVENT_CDF_COR_DATASET='cdf_cor_dataset'
 EVENT_CDF_COR_VARIABLE_O='cdf_cor_variable_o' # project with One variable per dataset
 EVENT_CDF_COR_VARIABLE_N='cdf_cor_variable_n' # project with N variable per dataset
 
+EVENT_CDS_VARIABLE='cds_variable'
+
 EVENT_STATUS_NEW='new'
 EVENT_STATUS_ANOMALY='anomaly'
 EVENT_STATUS_OLD='old'
@@ -57,8 +59,8 @@ PARAM_TYPE_FREE='param_type_free'
 #
 DEFAULT_PRIORITY=1000
 #
-AUTHORIZED_PROJECT=['CORDEX','CMIP5','CMIP6']
-PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6']
+AUTHORIZED_PROJECT=['CORDEX','CMIP5','CMIP6','c3scmip5','c3scordex']
+PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6','c3scmip5','c3scordex']
 #
 TRIGGER_TYPE_NV2D='NV2D' # N 'variable pipeline' trigger 'dataset pipeline'
 TRIGGER_TYPE_V2V='V2V'   # 'variable pipeline' triggers 'variable pipeline'

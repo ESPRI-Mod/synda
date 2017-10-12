@@ -218,7 +218,7 @@ def run(subparsers):
     subparser.add_argument('-c','--columns',type=int,default=1)
 
     subparser=create_subparser(subparsers,'pexec',help='Execute post-processing task')
-    subparser.add_argument('order_name',choices=['cdf'],help='Order name')
+    subparser.add_argument('order_name',choices=['cdf','cds'],help='Order name')
 
     subparser=create_subparser(subparsers,'queue',common_option=False,help='Display download queue status',example=sdcliex.queue())
     subparser.add_argument('project',nargs='?',default=None,help='ESGF project (e.g. CMIP5)')
