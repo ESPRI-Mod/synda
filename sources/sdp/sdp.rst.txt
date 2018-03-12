@@ -1,13 +1,13 @@
-.. _sdt:
+.. _sdp:
 
-Synda Transfer Module
-=====================
+Synda Post-Processing Module
+============================
 
 .. note:
 
    ``synda`` is the application name
-   ``sdt`` is the module name (synda is made of several modules)
-   ``synda`` is the RPM package name
+   ``sdp`` is the module name (synda is made of several modules)
+   ``synda-pp`` is the RPM package name
 
 Installation
 ************
@@ -36,8 +36,7 @@ Configuration
    :maxdepth: 1
 
    config_param_ref
-   selection_file_param_ref
-   select_indexes
+   pipeline_file
 
 Usage
 *****
@@ -46,9 +45,5 @@ Usage
    :maxdepth: 1
 
    user_guide
-   selection_file
-   download
-   download_replica
-   gridftp
-   globustransfer
+   worker_user_guide
    replication
