@@ -130,7 +130,7 @@ On *synda-host*:
 
 .. code-block:: python
 
-PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6','c3scmip5','c3scordex', 'input4mips']
+     PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6','c3scmip5','c3scordex', 'input4mips']
 
 
 ``sdw`` module
