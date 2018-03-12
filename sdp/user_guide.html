@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Worker User Guide" href="worker_user_guide.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
@@ -125,8 +134,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -135,25 +146,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
-      
-    <li>User guide</li>
+        
+      <li>User guide</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/user_guide.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdp/user_guide.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -163,7 +191,7 @@
 <span id="user-guide-sdp"></span><h1>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>Synda Post-Processing module is used to transform ESGF data files. In the centre is a &#8220;pipeline&#8221; database that list individual jobs to be run.
+<p>Synda Post-Processing module is used to transform ESGF data files. In the centre is a “pipeline” database that list individual jobs to be run.
 These jobs are claimed and processed by Workers - autonomous processes that are running on the compute farm and connect
 to the pipeline database to report about the progress of Jobs or claim some more. When a Worker discovers that
 its predefined time is up or that there are no more Jobs to do, it claims no more Jobs and exits the compute farm
@@ -208,7 +236,7 @@ password=xxxxxx
 <div class="section" id="start-sdw-service">
 <h2>Start <code class="docutils literal"><span class="pre">sdw</span></code> service<a class="headerlink" href="#start-sdw-service" title="Permalink to this headline">¶</a></h2>
 <p>When all the events are sent from <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> and all corresponding post-processing entries are created into <code class="docutils literal"><span class="pre">sdp.db</span></code> pending for execution by a <a class="reference internal" href="worker_user_guide.html#user-guide-sdw"><span class="std std-ref">Synda Worker</span></a>.</p>
-<p>This is the client side post-processing daemon (aka &#8220;worker&#8221;). To start the service, run command below:</p>
+<p>This is the client side post-processing daemon (aka “worker”). To start the service, run command below:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo --script_dir /your/scripts start
 </pre></div>
 </div>
@@ -223,38 +251,38 @@ password=xxxxxx
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s download a file:</p>
+<p>Let’s download a file:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -y sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
 </pre></div>
 </div>
 <p>After a few minutes, the file should have been transferred and the jobs should have been triggered.</p>
-<p>To check the result, let&#8217;s see the logfile:</p>
+<p>To check the result, let’s see the logfile:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>vi <span class="nv">$SP_HOME</span>/log/worker.log
 </pre></div>
 </div>
 <p>If all went well, the logfile should look like this:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>2017/01/10 09:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_A,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;s</span>
-<span class="s1">fcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>foo,start_date<span class="o">=</span>2017-01-10 09:09:56.791281,ppprun_id<span class="o">=</span>1,error_msg<span class="o">=</span>None<span class="o">)</span>
-2017/01/10 09:09:56 AM DEBUG Script <span class="k">return</span> code: 0
-2017/01/10 09:09:56 AM DEBUG Script stdout:
-2017/01/10 09:09:56 AM DEBUG Script stderr:
-2017-01-10 09:09:56 - INF001 - task_A.sh script started
-2017-01-10 09:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
-2017-01-10 09:09:56 - INF003 - task_A.sh script ends.
-2017/01/10 09:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_B,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;sfcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>bar,start_date<span class="o">=</span>2017-01-10 09:09:56.887659,ppprun_id<span class="o">=</span>1,error_msg<span class="o">=</span>None<span class="o">)</span>
-2017/01/10 09:09:56 AM DEBUG Script <span class="k">return</span> code: 0
-2017/01/10 09:09:56 AM DEBUG Script stdout:
-2017/01/10 09:09:56 AM DEBUG Script stderr:
-2017-01-10 09:09:56 - INF001 - task_B.sh script started
-2017-01-10 09:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
-2017-01-10 09:09:56 - INF003 - task_B.sh script ends.
-2017/01/10 09:09:57 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_C,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;sfcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>foobar,start_date<span class="o">=</span>2017-01-10 09:09:56.985872,ppprun_id<span class="o">=</span>1,error_msg<span class="o">=</span>None<span class="o">)</span>
-2017/01/10 09:09:57 AM DEBUG Script <span class="k">return</span> code: 0
-2017/01/10 09:09:57 AM DEBUG Script stdout:
-2017/01/10 09:09:57 AM DEBUG Script stderr:
-2017-01-10 09:09:57 - INF001 - task_C.sh script started
-2017-01-10 09:09:57 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
-2017-01-10 09:09:57 - INF003 - task_C.sh script ends.
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_A,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;s</span>
+<span class="s1">fcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>foo,start_date<span class="o">=</span><span class="m">2017</span>-01-10 <span class="m">09</span>:09:56.791281,ppprun_id<span class="o">=</span><span class="m">1</span>,error_msg<span class="o">=</span>None<span class="o">)</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script <span class="k">return</span> code: <span class="m">0</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script stdout:
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script stderr:
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF001 - task_A.sh script started
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF003 - task_A.sh script ends.
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_B,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;sfcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>bar,start_date<span class="o">=</span><span class="m">2017</span>-01-10 <span class="m">09</span>:09:56.887659,ppprun_id<span class="o">=</span><span class="m">1</span>,error_msg<span class="o">=</span>None<span class="o">)</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script <span class="k">return</span> code: <span class="m">0</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script stdout:
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:56 AM DEBUG Script stderr:
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF001 - task_B.sh script started
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:56 - INF003 - task_B.sh script ends.
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:57 AM INFO Processing job <span class="o">(</span><span class="nv">transition</span><span class="o">=</span>task_C,args<span class="o">={</span>u<span class="s1">&#39;pipeline&#39;</span>: u<span class="s1">&#39;P001&#39;</span>, u<span class="s1">&#39;data_folder&#39;</span>: u<span class="s1">&#39;/home/jerome/sdp/data&#39;</span>, u<span class="s1">&#39;project&#39;</span>: u<span class="s1">&#39;CORDEX&#39;</span>, u<span class="s1">&#39;variable&#39;</span>: u<span class="s1">&#39;sfcWind&#39;</span>, u<span class="s1">&#39;model&#39;</span>: u<span class="s1">&#39;RCA4-SN&#39;</span>, u<span class="s1">&#39;dataset_pattern&#39;</span>: u<span class="s1">&#39;cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123&#39;</span><span class="o">}</span>,job_class<span class="o">=</span>foobar,start_date<span class="o">=</span><span class="m">2017</span>-01-10 <span class="m">09</span>:09:56.985872,ppprun_id<span class="o">=</span><span class="m">1</span>,error_msg<span class="o">=</span>None<span class="o">)</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:57 AM DEBUG Script <span class="k">return</span> code: <span class="m">0</span>
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:57 AM DEBUG Script stdout:
+<span class="m">2017</span>/01/10 <span class="m">09</span>:09:57 AM DEBUG Script stderr:
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:57 - INF001 - task_C.sh script started
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:57 - INF002 - dataset_pattern: cordex/output/ARC-44/SMHI/MPI-M-MPI-ESM-LR/historical/r1i1p1/RCA4-SN/v1/sem/sfcWind/v20140123
+<span class="m">2017</span>-01-10 <span class="m">09</span>:09:57 - INF003 - task_C.sh script ends.
 </pre></div>
 </div>
 </div>
@@ -277,15 +305,18 @@ password=xxxxxx
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="worker_user_guide.html" class="btn btn-neutral float-right" title="Worker User Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="worker_user_guide.html" class="btn btn-neutral float-right" title="Worker User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pipeline_file.html" class="btn btn-neutral" title="Pipeline creation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pipeline_file.html" class="btn btn-neutral" title="Pipeline creation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -319,13 +350,14 @@ password=xxxxxx
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Installation from RPM package" href="rpm_install.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Installation from source</a><ul>
@@ -124,8 +133,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -134,25 +145,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
-      
-    <li>Installation from source</li>
+        
+      <li>Installation from source</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/src_install.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdt/src_install.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -198,7 +226,7 @@ chmod +x ./install.sh
 <h2>Patch<a class="headerlink" href="#patch" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">synda</span></code> 3.6 source package contains a bug which prevent running application.</p>
 <p>To fix it, downgrade the <code class="docutils literal"><span class="pre">pillow</span></code> package from 4.0 to 3.4.2 using command below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install <span class="nv">pillow</span><span class="o">==</span>3.4.2
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install <span class="nv">pillow</span><span class="o">==</span><span class="m">3</span>.4.2
 </pre></div>
 </div>
 </div>
@@ -243,15 +271,18 @@ chmod +x ./install.sh
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sdt.html" class="btn btn-neutral" title="Synda Transfer Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sdt.html" class="btn btn-neutral" title="Synda Transfer Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -285,13 +316,14 @@ chmod +x ./install.sh
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

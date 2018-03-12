@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="index.html"/>
         <link rel="next" title="License and Disclaimer" href="license.html"/>
         <link rel="prev" title="Credits" href="credits.html"/> 
@@ -41,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,7 +87,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
@@ -108,8 +117,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+        
       </nav>
 
 
@@ -118,23 +129,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Changelog</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Changelog</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="sources/log.txt" rel="nofollow"> View page source</a>
+            
+            <a href="sources/log.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -190,7 +218,7 @@
 <li>remove <code class="docutils literal"><span class="pre">~/.syndarc</span></code></li>
 <li>add <code class="docutils literal"><span class="pre">open</span></code> subcommand</li>
 <li>add <code class="docutils literal"><span class="pre">check</span></code> subcommand for selection</li>
-<li>add <code class="docutils literal"><span class="pre">check</span></code> subcommand for file&#8217;s variable</li>
+<li>add <code class="docutils literal"><span class="pre">check</span></code> subcommand for file’s variable</li>
 <li>use myproxyclient latest version</li>
 <li>add <code class="docutils literal"><span class="pre">default_path</span></code> option in sdt.conf</li>
 <li>use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script)</li>
@@ -310,14 +338,14 @@
 <li>several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info</li>
 <li>new synda command (apt-get like front-end)</li>
 <li>support for most search-API parameters</li>
-<li>&#8220;not&#8221; operation support (e.g. all models but one)</li>
+<li>“not” operation support (e.g. all models but one)</li>
 <li>multi-DRS support</li>
 <li>new formatting keyword</li>
 <li>only localpath is mutable</li>
 <li>support for different name for the same model (e.g. GFDL-CM2p1, GFDL-CM2.1 et GFDL-CM2-1)</li>
 <li>default values per project</li>
 <li>new <code class="docutils literal"><span class="pre">searchapi_host</span></code> parameter to specify which index to use</li>
-<li>space are supported (e.g. &#8220;ISI-MIP Fasttrack&#8221;)</li>
+<li>space are supported (e.g. “ISI-MIP Fasttrack”)</li>
 <li>replica support</li>
 <li>wildcard (all/_*) supported in all facets</li>
 <li>local database reorganization</li>
@@ -337,7 +365,7 @@
 <li>fix B0033 bug</li>
 <li>add EUCLIPSE project</li>
 <li>XML parsing module rewriting</li>
-<li>add &#8220;timeout/retry&#8221; mechanism in the discovery process</li>
+<li>add “timeout/retry” mechanism in the discovery process</li>
 <li>models discovery module improvement</li>
 <li>move tuning parameters into configuration file</li>
 <li>increase thredds-catalog timeout from 10 to 100</li>
@@ -352,7 +380,7 @@
 <dt>Version 2.6 - 2013-04-18</dt>
 <dd><ul class="first last simple">
 <li>add <code class="docutils literal"><span class="pre">search-api-nocache</span></code> discovery engine</li>
-<li>add support for &#8220;obs4MIPs&#8221; project</li>
+<li>add support for “obs4MIPs” project</li>
 <li>add wild card support for realm and frequency</li>
 <li>fix B0032 bug</li>
 </ul>
@@ -382,7 +410,7 @@
 <li>add <code class="docutils literal"><span class="pre">-x</span></code> option to run discovery process and print ESGF checksums</li>
 <li>add <code class="docutils literal"><span class="pre">-X</span></code> option to control if local checksum match remote checksum</li>
 <li>fix B0025 bug</li>
-<li>add &#8220;latest&#8221; symlink creation routine (last version identifier)</li>
+<li>add “latest” symlink creation routine (last version identifier)</li>
 <li>add old versions suppression routine</li>
 <li>add search API mode</li>
 <li>add <code class="docutils literal"><span class="pre">-L</span></code> option (set <code class="docutils literal"><span class="pre">latest</span></code> flag)</li>
@@ -411,7 +439,7 @@
 <li>add dataset in transfer queue (eot_queue)</li>
 <li>fix B0018 bug</li>
 <li>fix B0017 bug</li>
-<li>fix &#8220;[Error 98] address already in use&#8221;</li>
+<li>fix “[Error 98] address already in use”</li>
 <li>use wget tries and timeout parameters from conf. file</li>
 <li>fix B0016 bug</li>
 <li>add <code class="docutils literal"><span class="pre">-r</span></code> option (exec proc)</li>
@@ -439,7 +467,7 @@
 <dt>Version 2.0 - 2012-02-14</dt>
 <dd><ul class="first last simple">
 <li>add new synchronisation mode (retrieve dataset last version only)</li>
-<li>fix B0011 bug (remove local files when checksum doesn&#8217;t match)</li>
+<li>fix B0011 bug (remove local files when checksum doesn’t match)</li>
 <li>add list-local-files action</li>
 <li>fix B0007 bug (replace urllib with urllib2 and set timeout to 10)</li>
 <li>fix B0006 bug (add missing env. var. in stop.sh)</li>
@@ -536,7 +564,7 @@
 <li>simple data selection with model, experiment, realm and variable</li>
 <li>multi threaded downloads (8 tasks by default)</li>
 <li>manage datasets version following new drs</li>
-<li>incremental process (download only what&#8217;s new)</li>
+<li>incremental process (download only what’s new)</li>
 <li>download history stored in a database</li>
 </ul>
 </dd>
@@ -582,15 +610,18 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="license.html" class="btn btn-neutral float-right" title="License and Disclaimer" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="license.html" class="btn btn-neutral float-right" title="License and Disclaimer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="credits.html" class="btn btn-neutral" title="Credits" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="credits.html" class="btn btn-neutral" title="Credits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -624,13 +655,14 @@
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="static/jquery.js"></script>
       <script type="text/javascript" src="static/underscore.js"></script>
       <script type="text/javascript" src="static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

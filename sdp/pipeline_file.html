@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="User guide" href="user_guide.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
@@ -120,8 +129,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -130,25 +141,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
-      
-    <li>Pipeline creation</li>
+        
+      <li>Pipeline creation</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/pipeline_file.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdp/pipeline_file.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -158,14 +186,14 @@
 <span id="pipeline-file"></span><h1>Pipeline creation<a class="headerlink" href="#pipeline-creation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="pipeline-definition-file">
 <h2>Pipeline definition file<a class="headerlink" href="#pipeline-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>A &#8220;synda pipeline&#8221; is defined with a Python script that describe each transition to operate by the worker along the pipeline.
-A &#8220;transition&#8221; is a post-process to apply to a dataset and is defined by its name, its source and destination states.</p>
+<p>A “synda pipeline” is defined with a Python script that describe each transition to operate by the worker along the pipeline.
+A “transition” is a post-process to apply to a dataset and is defined by its name, its source and destination states.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The transition name has to be the same as the script you want to apply as post-process.
 For instance, in the case your post-process consist in executing the script <code class="docutils literal"><span class="pre">copy.sh</span></code> to each dataset the corresponding transition name is <code class="docutils literal"><span class="pre">copy</span></code>.</p>
 </div>
-<p>We will define a pipeline called &#8220;my_pipeline&#8221; composed of 3 tasks (task_A, task_B, task_C), which will run sequentially one after the other.</p>
+<p>We will define a pipeline called “my_pipeline” composed of 3 tasks (task_A, task_B, task_C), which will run sequentially one after the other.</p>
 <p>Edit the file <code class="docutils literal"><span class="pre">${SP_HOME}/conf/pipeline/my_pipeline.py</span></code> for source installation or <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/my_pipeline.py</span></code> for package installation. This file content must be:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sppipelineutils</span>
 <span class="kn">import</span> <span class="nn">sppostprocessingutils</span>
@@ -183,8 +211,8 @@ For instance, in the case your post-process consist in executing the script <cod
 </div>
 <div class="section" id="binding-file">
 <h2>Binding file<a class="headerlink" href="#binding-file" title="Permalink to this headline">¶</a></h2>
-<p>Synda post-processing pipelines relies on &#8220;events&#8221; send by <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> module. To configure which event leads to which pipeline, we binds events and pipelines through a Python dictionary.</p>
-<p>The binding file is used to bind events to pipelines. When a dataset, a variable or a file is downloaded by <code class="docutils literal"><span class="pre">sdt</span></code> an &#8220;event&#8221; can be sent to create a new post-processing entry in <code class="docutils literal"><span class="pre">sdp.db</span></code>.</p>
+<p>Synda post-processing pipelines relies on “events” send by <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> module. To configure which event leads to which pipeline, we binds events and pipelines through a Python dictionary.</p>
+<p>The binding file is used to bind events to pipelines. When a dataset, a variable or a file is downloaded by <code class="docutils literal"><span class="pre">sdt</span></code> an “event” can be sent to create a new post-processing entry in <code class="docutils literal"><span class="pre">sdp.db</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <dl class="last docutils">
@@ -238,10 +266,10 @@ It could be useful to separate post-processing that to be apply at different DRS
 <dl class="last docutils">
 <dt>Only the following triggers are supported:</dt>
 <dd><ul class="first last simple">
-<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_NV2D</span></code>: N &#8220;variable pipeline&#8221; trigger &#8220;dataset pipeline&#8221;</li>
-<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_V2V</span></code>: &#8220;variable pipeline&#8221; triggers &#8220;variable pipeline&#8221;</li>
-<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2D</span></code>: &#8220;dataset pipeline&#8221; triggers &#8220;dataset pipeline&#8221;</li>
-<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2NV</span></code>: &#8220;dataset pipeline&#8221; triggers N &#8220;variable pipeline&#8221;</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_NV2D</span></code>: N “variable pipeline” trigger “dataset pipeline”</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_V2V</span></code>: “variable pipeline” triggers “variable pipeline”</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2D</span></code>: “dataset pipeline” triggers “dataset pipeline”</li>
+<li><code class="docutils literal"><span class="pre">TRIGGER_TYPE_D2NV</span></code>: “dataset pipeline” triggers N “variable pipeline”</li>
 </ul>
 </dd>
 </dl>
@@ -251,15 +279,18 @@ It could be useful to separate post-processing that to be apply at different DRS
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -293,13 +324,14 @@ It could be useful to separate post-processing that to be apply at different DRS
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

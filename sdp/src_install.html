@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Installation from RPM package" href="rpm_install.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sdp.html#installation">Installation</a><ul class="current">
@@ -123,8 +132,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -133,25 +144,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
-      
-    <li>Installation from source</li>
+        
+      <li>Installation from source</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/src_install.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdp/src_install.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -202,7 +230,7 @@ chmod +x ./install.sh
 </pre></div>
 </div>
 <ul class="simple">
-<li>Add lines below in your shell configuration file (e.g. &#8216;.bashrc&#8217;)</li>
+<li>Add lines below in your shell configuration file (e.g. ‘.bashrc’)</li>
 </ul>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SP_HOME</span><span class="o">=</span><span class="nv">$HOME</span>/sdp
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$SP_HOME</span>/bin:<span class="nv">$PATH</span>
@@ -224,15 +252,18 @@ chmod +x ./install.sh
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sdp.html" class="btn btn-neutral" title="Synda Post-Processing Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sdp.html" class="btn btn-neutral" title="Synda Post-Processing Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -266,13 +297,14 @@ chmod +x ./install.sh
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

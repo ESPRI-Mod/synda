@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Synda Files and Folders" href="../files.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
@@ -124,8 +133,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -134,25 +145,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
-      
-    <li>ESGF replication</li>
+        
+      <li>ESGF replication</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/replication.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdp/replication.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -187,7 +215,7 @@ All user ID that are <code class="docutils literal"><span class="pre">synda</spa
 <h3><code class="docutils literal"><span class="pre">sdt</span></code> module<a class="headerlink" href="#sdt-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
-<li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdt</span></code> to send the &#8220;SQL event&#8221; to the <code class="docutils literal"><span class="pre">sdp</span></code> database.</li>
+<li>Set <code class="docutils literal"><span class="pre">post_processing</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdt</span></code> to send the “SQL event” to the <code class="docutils literal"><span class="pre">sdp</span></code> database.</li>
 <li>Set <code class="docutils literal"><span class="pre">http_fallback</span></code> parameter to <code class="docutils literal"><span class="pre">true</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allows Synda to slide from GridFTP to HTTP protocol in case of endpoint error (optional if not desired).</li>
 <li>Set <code class="docutils literal"><span class="pre">check_parameter</span></code> parameter to <code class="docutils literal"><span class="pre">0</span></code> in <code class="docutils literal"><span class="pre">sdt.conf</span></code> to allow Synda discovery on another index node than those specified in <code class="docutils literal"><span class="pre">[index]</span></code> section (optional if not desired).</li>
 <li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdt.conf</span></code>. If both modules have been installed on two different machines, this has to be the <code class="docutils literal"><span class="pre">sdp</span></code> host IP address.</li>
@@ -238,7 +266,7 @@ password=xxxxxxx
 <h3><code class="docutils literal"><span class="pre">sdp</span></code> module<a class="headerlink" href="#sdp-module" title="Permalink to this headline">¶</a></h3>
 <p>On <em>synda-host</em>:</p>
 <ul class="simple">
-<li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdp</span></code> to consume the received &#8220;SQL event&#8221; from <code class="docutils literal"><span class="pre">sdt</span></code> and create one pipeline entry per downloaded dataset/variable.</li>
+<li>Set <code class="docutils literal"><span class="pre">eventhread</span></code> parameter to <code class="docutils literal"><span class="pre">1</span></code> in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. This allows <code class="docutils literal"><span class="pre">sdp</span></code> to consume the received “SQL event” from <code class="docutils literal"><span class="pre">sdt</span></code> and create one pipeline entry per downloaded dataset/variable.</li>
 <li>Check the <code class="docutils literal"><span class="pre">host</span></code> parameter is the <em>synda-host</em> IP address in <code class="docutils literal"><span class="pre">sdp.conf</span></code>. If both modules have been installed on two different machines, this has to be the <code class="docutils literal"><span class="pre">sdt</span></code> host IP address.</li>
 </ul>
 <div class="highlight-text"><div class="highlight"><pre><span></span>[daemon]
@@ -267,12 +295,21 @@ password=xxxxxx
 </div>
 <ul class="simple">
 <li>Add the project name you want to replicate to the <code class="docutils literal"><span class="pre">AUTHORIZED_PROJECT</span></code> list in <code class="docutils literal"><span class="pre">/usr/share/python/synda/sdp/bin/spconst.py</span></code>.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">AUTHORIZED_PROJECT</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CORDEX&#39;</span><span class="p">,</span><span class="s1">&#39;CMIP5&#39;</span><span class="p">,</span><span class="s1">&#39;CMIP6&#39;</span><span class="p">,</span><span class="s1">&#39;c3scmip5&#39;</span><span class="p">,</span><span class="s1">&#39;c3scordex&#39;</span><span class="p">,</span> <span class="s1">&#39;input4mips&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
 <li>Depending on its <em>Data Reference Syntax</em>, add the project name you want to replicate to the <code class="docutils literal"><span class="pre">PROJECT_WITH_ONE_VARIABLE_PER_DATASET</span></code> list in <code class="docutils literal"><span class="pre">/usr/share/python/synda/sdp/bin/spconst.py</span></code>.</li>
 </ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>PROJECT_WITH_ONE_VARIABLE_PER_DATASET=[‘CORDEX’,’CMIP6’,’c3scmip5’,’c3scordex’, ‘input4mips’]</p>
 </div>
 <div class="section" id="sdw-module">
 <h3><code class="docutils literal"><span class="pre">sdw</span></code> module<a class="headerlink" href="#sdw-module" title="Permalink to this headline">¶</a></h3>
-<p>This is the client side post-processing module (aka &#8220;worker&#8221;). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>. In such a case you will only need to install the following required Python libraries (see also the file header):</p>
+<p>This is the client side post-processing module (aka “worker”). This single Python script is fully independent from the Synda stack and can be run remotely or not from <em>synda-host</em>. In such a case you will only need to install the following required Python libraries (see also the file header):</p>
 <blockquote>
 <div><ul class="simple">
 <li>pip install python-daemon==1.6.1</li>
@@ -281,7 +318,7 @@ password=xxxxxx
 <li>pip install retrying</li>
 </ul>
 </div></blockquote>
-<p>The worker only needs to find the Bash or Python scripts you want to apply to each downloaded datasets. Each script corresponds to a Synda &#8220;task&#8221; (also called a &#8220;transition&#8221;).
+<p>The worker only needs to find the Bash or Python scripts you want to apply to each downloaded datasets. Each script corresponds to a Synda “task” (also called a “transition”).
 We will call <em>worker-host</em> the remote machine where the worker executes the post-processing scripts.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -301,9 +338,16 @@ A corresponding updated version of the worker is available here: <a class="refer
 <div class="section" id="target-data-to-replicate">
 <h3>Target data to replicate<a class="headerlink" href="#target-data-to-replicate" title="Permalink to this headline">¶</a></h3>
 <p>Edit one or several selection file focusing the data you want to replicate. See <a class="reference internal" href="../sdt/selection_file.html#selection-file"><span class="std std-ref">the selection file section</span></a>.</p>
+<p>Example of selection file for CMIP6 replication:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>mip_era=CMIP6
+activity_id=CMIP
+experiment=historical
+latest=True
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can create many selection files (e.g. one per project). Selection file(s) must be stored in the &#8220;selection&#8221; folder.</p>
+<p class="last">You can create many selection files (e.g. one per project). Selection file(s) must be stored in the “selection” folder.</p>
 </div>
 <p>Copy those selection files on <em>synda-host</em> into the selection folder. This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code> by default or can be defined in <code class="docutils literal"><span class="pre">/etc/synda/sdt/sdt.conf</span></code> with the <code class="docutils literal"><span class="pre">selection_path</span></code> parameter. See <a class="reference internal" href="../sdt/config_param_ref.html#config-param-ref-sdt"><span class="std std-ref">the synda configuration section</span></a></p>
 <div class="admonition warning">
@@ -348,7 +392,7 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 </pre></div>
 </div>
 <ul class="simple">
-<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code>. It maps each Synda &#8220;event&#8221; with the corresponding pipeline and the status of the initial task. This file content must be:</li>
+<li>Edit the file <code class="docutils literal"><span class="pre">/etc/synda/sdp/pipeline/spbindings.py</span></code>. It maps each Synda “event” with the corresponding pipeline and the status of the initial task. This file content must be:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spconst</span>
 
@@ -361,12 +405,12 @@ This folder is <code class="docutils literal"><span class="pre">/etc/synda/sdt/d
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A Synda &#8220;event&#8221; is an SQL entry in a dedicated table that is copied from <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> in order to trigger the post-processing entries in <code class="docutils literal"><span class="pre">sdp.db</span></code>.
+<p class="last">A Synda “event” is an SQL entry in a dedicated table that is copied from <code class="docutils literal"><span class="pre">sdt</span></code> to <code class="docutils literal"><span class="pre">sdp</span></code> in order to trigger the post-processing entries in <code class="docutils literal"><span class="pre">sdp.db</span></code>.
 Each entry corresponds to a dataset life-cycle into the post-processing pipeline.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A pipeline task is also called a Synda &#8220;transition&#8221;.</p>
+<p class="last">A pipeline task is also called a Synda “transition”.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -385,6 +429,10 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 <li>Edit <a class="reference download internal" href="../downloads/mapfile.sh" download=""><code class="xref download docutils literal"><span class="pre">mapfile.sh</span></code></a> that will generate mapfiles using the <code class="docutils literal"><span class="pre">esgprep</span> <span class="pre">mapfile</span></code> command-line. See <a class="reference external" href="http://is-enes-data.github.io/esgf-prepare/">esgf-prepare</a>.</li>
 <li>Edit and configure <a class="reference download internal" href="../downloads/publication.sh" download=""><code class="xref download docutils literal"><span class="pre">publication.sh</span></code></a> that will publish the generated mapfiles as replica.</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Particular publication script is available for ESGF CMIP6 DC publication: <a class="reference download internal" href="../downloads/publication_dc.sh" download=""><code class="xref download docutils literal"><span class="pre">publication.sh</span></code></a></p>
+</div>
 <p>Each script as two main section:</p>
 <blockquote>
 <div><ul class="simple">
@@ -394,7 +442,7 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 </div></blockquote>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The provided templates works with some functions to source with <a class="reference download internal" href="../downloads/functions.sh" download=""><code class="xref download docutils literal"><span class="pre">functions.sh</span></code></a>.</p>
+<p class="last">The provided scripts works with some functions to source with <a class="reference download internal" href="../downloads/functions.sh" download=""><code class="xref download docutils literal"><span class="pre">functions.sh</span></code></a>.</p>
 </div>
 </div>
 </div>
@@ -426,13 +474,13 @@ Due to the RPC server connexion, those scripts can be run outside of <em>synda-h
 </pre></div>
 </div>
 <p>At this point, the downloading is in progress and the previous event are consumed by <code class="docutils literal"><span class="pre">sdp</span></code> to create appropriate pipeline entries into the database.
-The first transition of each complete dataset has a &#8220;waiting&#8221; status.</p>
+The first transition of each complete dataset has a “waiting” status.</p>
 <p>Then, run the worker remotely (i.e., on <em>worker-host</em>) or not (i.e., on <em>synda-host</em>):</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
 </div>
 <p>At this point, the worker communicates with the <code class="docutils literal"><span class="pre">sdp.db</span></code> database to pick up information on a dataset pending for a transition to apply.
-The worker runs the corresponding script and returns the job result to <code class="docutils literal"><span class="pre">sdp.db</span></code>. On success, the transition is set to &#8220;done&#8221; and moved to the next one.</p>
+The worker runs the corresponding script and returns the job result to <code class="docutils literal"><span class="pre">sdp.db</span></code>. On success, the transition is set to “done” and moved to the next one.</p>
 <p>The worker can be run as a daemon using the <code class="docutils literal"><span class="pre">start</span></code>, <code class="docutils literal"><span class="pre">stop</span></code> and <code class="docutils literal"><span class="pre">status</span></code> command:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda_wo start -H &lt;synda-host-IP&gt; -w &lt;rpc-password&gt; --script_dir /your/scripts
 </pre></div>
@@ -467,7 +515,7 @@ The worker runs the corresponding script and returns the job result to <code cla
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">All those examples can be combined safely.
-Keep in mind that the default behavior is to process a pipeline &#8220;transition by transition&#8221; and not &#8220;entry by entry&#8221;.
+Keep in mind that the default behavior is to process a pipeline “transition by transition” and not “entry by entry”.
 This means Synda tries to apply all the pipeline transitions to a dataset/variable before to slide to the next one.
 Synda will consider the next dataset/variable if the previous one falls into error or reaches the pipeline end (i.e., with a <code class="docutils literal"><span class="pre">done</span></code> status).</p>
 </div>
@@ -476,15 +524,18 @@ Synda will consider the next dataset/variable if the previous one falls into err
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../files.html" class="btn btn-neutral float-right" title="Synda Files and Folders" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../files.html" class="btn btn-neutral float-right" title="Synda Files and Folders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="worker_user_guide.html" class="btn btn-neutral" title="Worker User Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="worker_user_guide.html" class="btn btn-neutral" title="Worker User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -518,13 +569,14 @@ Synda will consider the next dataset/variable if the previous one falls into err
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

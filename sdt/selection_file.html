@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="Basic download" href="download.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
@@ -125,8 +134,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -135,25 +146,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
-      
-    <li>Selection file</li>
+        
+      <li>Selection file</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/selection_file.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdt/selection_file.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -170,7 +198,7 @@ Using them, the program explore the ESGF archive and download all the
 corresponding available files. The program may be run regularly to
 download the possible new files. Typically each file is associated with
 an analysis (cfmip, downscaling and so on). Create as many selection
-files as you want in the &#8220;selection&#8221; folder.</p>
+files as you want in the “selection” folder.</p>
 <p>Those selection files are stored in <code class="docutils literal"><span class="pre">$HOME/sdt/selection</span></code> folder (source
 installation) or <code class="docutils literal"><span class="pre">/etc/synda/sdt/selection</span></code> (system package
 installation).</p>
@@ -186,7 +214,7 @@ variable[land][mon]=mrsos nppRoot nep
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Many selection file examples can be found <a class="reference external" href="https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample">here</a>. Selection files are sometimes called &#8220;template&#8221; or &#8220;selection form&#8221;.</p>
+<p class="last">Many selection file examples can be found <a class="reference external" href="https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample">here</a>. Selection files are sometimes called “template” or “selection form”.</p>
 </div>
 <div class="section" id="selection-file-format">
 <h2>Selection file format<a class="headerlink" href="#selection-file-format" title="Permalink to this headline">¶</a></h2>
@@ -256,7 +284,7 @@ variable[land][mon]=mrsos nppRoot nep
 <h2>Selection file management<a class="headerlink" href="#selection-file-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="adding-a-selection-file">
 <h3>Adding a selection file<a class="headerlink" href="#adding-a-selection-file" title="Permalink to this headline">¶</a></h3>
-<p>Create a new selection file in the &#8220;selection&#8221; folder and set the filters.</p>
+<p>Create a new selection file in the “selection” folder and set the filters.</p>
 <p>Then run command below to start the discovery:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
 </pre></div>
@@ -276,22 +304,25 @@ variable[land][mon]=mrsos nppRoot nep
 <div class="highlight-bash"><div class="highlight"><pre><span></span>synda remove -s &lt;selection-file&gt;
 </pre></div>
 </div>
-<p>Then manually remove the selection file from the &#8220;selection&#8221; folder.</p>
+<p>Then manually remove the selection file from the “selection” folder.</p>
 </div>
 </div>
 </div>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="download.html" class="btn btn-neutral float-right" title="Basic download" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="download.html" class="btn btn-neutral float-right" title="Basic download" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="user_guide.html" class="btn btn-neutral" title="User Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="user_guide.html" class="btn btn-neutral" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -325,13 +356,14 @@ variable[land][mon]=mrsos nppRoot nep
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

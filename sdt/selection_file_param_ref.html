@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
         <link rel="next" title="ESGF index selection" href="select_indexes.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
@@ -123,8 +132,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -133,25 +144,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
-      
-    <li>Selection file parameter reference</li>
+        
+      <li>Selection file parameter reference</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdt/selection_file_param_ref.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdt/selection_file_param_ref.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -199,7 +227,7 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 </tr>
 <tr class="row-even"><td>url_replace</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Replace all occurrences of substring in url.</td>
 </tr>
 <tr class="row-odd"><td>priority</td>
@@ -233,13 +261,13 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 <tbody valign="top">
 <tr class="row-even"><td>timeslice</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files inside &lt;timeslice&gt;.</td>
 </tr>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search atmos mon tasmin CMIP5 CNRM-CM5 <span class="nv">timeslice</span><span class="o">=</span>197001-198512 -f
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search atmos mon tasmin CMIP5 CNRM-CM5 <span class="nv">timeslice</span><span class="o">=</span><span class="m">197001</span>-198512 -f
 </pre></div>
 </div>
 </div>
@@ -262,27 +290,27 @@ or random index from &lt;index.indexes&gt; in parallel mode</td>
 <tbody valign="top">
 <tr class="row-even"><td>local_path</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files matching &lt;local_path&gt;.</td>
 </tr>
 <tr class="row-odd"><td>error_msg</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files matching &lt;error_msg&gt;.</td>
 </tr>
 <tr class="row-even"><td>insertion_group_id</td>
 <td><em>int</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files matching &lt;insertion_group_id&gt;.</td>
 </tr>
 <tr class="row-odd"><td>status</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files matching download &lt;status&gt;.</td>
 </tr>
 <tr class="row-even"><td>sdget_status</td>
 <td><em>int</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Select files matching &lt;sdget_status&gt;.</td>
 </tr>
 </tbody>
@@ -317,26 +345,26 @@ synda list <span class="nv">sdget_status</span><span class="o">=</span><span cla
 <td><em>string</em></td>
 <td>treevar</td>
 <td>Set local path format.
-If set to &#8220;treevar&#8221;, the dataset DRS is used to build the local path and a folder is added to group files by variable.
-If set to &#8220;tree&#8221;, the dataset DRS is used to build the local path.
-If set to &#8220;custom&#8221;, the local path is built based on template defined in &lt;local_path_drs_template&gt; variable.
-If set to &#8220;notree&#8221;, all files are stored in the same folder.</td>
+If set to “treevar”, the dataset DRS is used to build the local path and a folder is added to group files by variable.
+If set to “tree”, the dataset DRS is used to build the local path.
+If set to “custom”, the local path is built based on template defined in &lt;local_path_drs_template&gt; variable.
+If set to “notree”, all files are stored in the same folder.</td>
 </tr>
 <tr class="row-odd"><td>local_path_product_format</td>
 <td><em>string</em></td>
 <td>normal</td>
-<td>If set to &#8220;normal&#8221;, product folders (e.g. &#8220;output1&#8221; and &#8220;output2&#8221;) are kept in local path.
-If set to &#8220;remove&#8221;, product folders level are removed from local path and products sub-folders are merged.
-If set to &#8220;merge&#8221;, product folders are merged into one folder called &#8220;output&#8221; and products sub-folders are merged.</td>
+<td>If set to “normal”, product folders (e.g. “output1” and “output2”) are kept in local path.
+If set to “remove”, product folders level are removed from local path and products sub-folders are merged.
+If set to “merge”, product folders are merged into one folder called “output” and products sub-folders are merged.</td>
 </tr>
 <tr class="row-even"><td>local_path_project_format</td>
 <td><em>string</em></td>
 <td>uc</td>
-<td>If set to &#8220;uc&#8221;, local path project folder is converted to uppercase.</td>
+<td>If set to “uc”, local path project folder is converted to uppercase.</td>
 </tr>
 <tr class="row-odd"><td>local_path_drs_template</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Contain the local path custom template.</td>
 </tr>
 </tbody>
@@ -347,22 +375,25 @@ If set to &#8220;merge&#8221;, product folders are merged into one folder called
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">To enable <code class="docutils literal"><span class="pre">local_path_drs_template</span></code>, <code class="docutils literal"><span class="pre">local_path_format</span></code> parameter must be set to &#8220;custom&#8221;. Each variable included in <code class="docutils literal"><span class="pre">local_path_drs_template</span></code> must be present as a standalone attribute in the file metadata. If it is missing, you can use a constant value instead (e.g. &#8220;output&#8221; instead of &#8220;%(product)s&#8221;).</p>
+<p class="last">To enable <code class="docutils literal"><span class="pre">local_path_drs_template</span></code>, <code class="docutils literal"><span class="pre">local_path_format</span></code> parameter must be set to “custom”. Each variable included in <code class="docutils literal"><span class="pre">local_path_drs_template</span></code> must be present as a standalone attribute in the file metadata. If it is missing, you can use a constant value instead (e.g. “output” instead of “%(product)s”).</p>
 </div>
 </div>
 </div>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="select_indexes.html" class="btn btn-neutral float-right" title="ESGF index selection" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="select_indexes.html" class="btn btn-neutral float-right" title="ESGF index selection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="config_param_ref.html" class="btn btn-neutral" title="Configuration parameter reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -396,13 +427,14 @@ If set to &#8220;merge&#8221;, product folders are merged into one folder called
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

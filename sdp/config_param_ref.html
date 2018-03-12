@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
         <link rel="up" title="Synda Post-Processing Module" href="sdp.html"/>
         <link rel="next" title="Pipeline creation" href="pipeline_file.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sdt/sdt.html">Synda Transfer Module</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="sdp.html">Synda Post-Processing Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdp.html#installation">Installation</a></li>
@@ -115,8 +124,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">synda</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
       </nav>
 
 
@@ -125,25 +136,42 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="sdp.html">Synda Post-Processing Module</a> &raquo;</li>
-      
-    <li>Configuration parameter reference</li>
+        
+      <li>Configuration parameter reference</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../sources/sdp/config_param_ref.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../sources/sdp/config_param_ref.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -172,14 +200,14 @@
 <tr class="row-even"><td>[daemon]</td>
 <td>user</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Set daemon user.
 The daemon must be started by root for this parameter to work.</td>
 </tr>
 <tr class="row-odd"><td>[daemon]</td>
 <td>group</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Set daemon group.
 The daemon must be started by root for this parameter to work.</td>
 </tr>
@@ -216,7 +244,7 @@ The daemon must be started by root for this parameter to work.</td>
 <tr class="row-odd"><td>[path]</td>
 <td>data_path</td>
 <td><em>string</em></td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Root directory prepend to each dataset to post-process.</td>
 </tr>
 <tr class="row-even"><td>[path]</td>
@@ -249,8 +277,8 @@ or <code class="docutils literal"><span class="pre">/srv/synda/sdp/pipeline</spa
 <td>default_listing_size</td>
 <td><em>string</em></td>
 <td>small</td>
-<td>This parameter drives how many results are displayed by default for &#8220;search&#8221;, &#8220;list&#8221; and &#8220;dump&#8221; subcommands.
-Possible values are: &#8220;small&#8221;, &#8220;medium&#8221; and &#8220;big&#8221;.</td>
+<td>This parameter drives how many results are displayed by default for “search”, “list” and “dump” subcommands.
+Possible values are: “small”, “medium” and “big”.</td>
 </tr>
 </tbody>
 </table>
@@ -258,15 +286,18 @@ Possible values are: &#8220;small&#8221;, &#8220;medium&#8221; and &#8220;big&#8
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pipeline_file.html" class="btn btn-neutral float-right" title="Pipeline creation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pipeline_file.html" class="btn btn-neutral float-right" title="Pipeline creation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="deb_upgrade.html" class="btn btn-neutral" title="Upgrade from DEB package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="deb_upgrade.html" class="btn btn-neutral" title="Upgrade from DEB package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -300,13 +331,14 @@ Possible values are: &#8220;small&#8221;, &#8220;medium&#8221; and &#8220;big&#8
             VERSION:'3.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../static/jquery.js"></script>
       <script type="text/javascript" src="../static/underscore.js"></script>
       <script type="text/javascript" src="../static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
