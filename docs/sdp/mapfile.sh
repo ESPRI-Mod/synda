@@ -20,9 +20,9 @@ source ${scripts_path}/functions.sh
 # INI files directory
 ESGCET_PATH="/esg/config/esgcet/"
 # Root path
-ROOT_PATH="/prodigfs/prodigfs_test/esgf/mirror/"
+ROOT_PATH="/your/data/path"
 # Mapfile directory
-MAP_PATH="/home/esg-user/rt_mapfiles/"
+MAP_DIR="/your/mapfiles/path"
 
 # --------- main --------- #
 
