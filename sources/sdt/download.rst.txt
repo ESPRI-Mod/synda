@@ -5,7 +5,7 @@ Basic download
 
 A session might go like:
 
-Set ESGF openid and passwd in :ref:`credentials.conf <credentials>`.
+Set ESGF openid and password in `credentials.conf`.
 
 .. code-block:: bash
 
