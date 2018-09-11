@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 # @program        synda
 # @description    climate models data transfer program
-# @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                            All Rights Reserved”
+# @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                            All Rights Reserved"
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
  
@@ -119,6 +120,7 @@ def pre_transfer_check_list(tr):
             sdlog.info("SYNDTASK-188","Local file already exists: transfer aborted (lfae_mode=abort,local_file=%s)"%tr.get_full_local_path())
 
             tr.status=sdconst.TRANSFER_STATUS_ERROR
+            tr.priority -= 1
             tr.error_msg="Local file already exists: transfer aborted (lfae_mode=abort)"
             tr.end_date=sdtime.now()
             sdfiledao.update_file(tr)

@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 # @program        synda
 # @description    climate models data transfer program
-# @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                            All Rights Reserved”
+# @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                            All Rights Reserved"
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
  
@@ -87,6 +88,10 @@ def cleanup_running_transfer():
         t.status=sdconst.TRANSFER_STATUS_WAITING
         sdfiledao.update_file(t)
 
+def clear_failed_url():
+    """Clears the failed_url table."""
+    sdsqlutils.truncate_table("failed_url")
+
 def resilient_terminate(child):
     """This func terminate the child and inhibits NoSuchProcess exception if any."""
 
@@ -150,6 +155,7 @@ def event_loop():
     scheduler_state=2
     start_watchdog()
     cleanup_running_transfer()
+    clear_failed_url()
     scheduler_state=1
 
     if sdconfig.download:

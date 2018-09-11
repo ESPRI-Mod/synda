@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -27,6 +28,7 @@ import sdpostpipelineutils
 import sdlmattrfilter
 import sdpipelineprocessing
 import sdlog
+import pdb
 
 def run(metadata,functional_id_keyname):
 
@@ -53,6 +55,38 @@ def remove(files,functional_id_keyname,seen):
             new_files.append(f)
             seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
     return new_files
+
+def latest_dataset(metadata):
+    # create light list with needed columns only not to overload system memory:
+    light_metadata=sdlmattrfilter.run(metadata,['dataset_path_without_version','dataset_version'])
+
+    sdlog.info("SYNDRMDR-003","Replicate only latest datasets...")
+
+    po=sdpipelineprocessing.ProcessingObject(remove_allbut_latest)
+    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
+
+    return metadata
+
+def remove_allbut_latest(datasets):
+    """The first argument 'datasets' is a list of datasets.  This function will remove
+    any which are not latest version (within the list), and return the result, as a list.
+    """
+    latest = {}
+    for f in datasets:
+        dataset_path=f['dataset_path_without_version']   # dataset_path_without_version
+        version = f['dataset_version']
+        if version[0]=='v':
+            # 'v1234' and '1234' are treated the same. '1234' is wrong but occurs.
+            version = version[1:]
+        version = int(version)
+        # In practice, if a dataset has sequential versions like v2 and date-based versions like
+        # v20131002, then the date-based versions are more recent (they are more standard).
+        if dataset_path not in latest.keys() or version>latest[dataset_path][0]:
+            latest[dataset_path] = (version,f)
+    new_datasets = [lv[1] for lv in latest.values()]
+
+    return new_datasets
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

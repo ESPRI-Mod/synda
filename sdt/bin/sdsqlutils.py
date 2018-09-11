@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -16,6 +17,10 @@ import argparse
 import sdapp
 from sdexception import SDException
 import sddb
+import sdlog
+import sdconst
+import sqlite3
+import pdb
 
 def sql_injection_safe(s):
     regex=r'[^a-zA-Z0-9_]'
@@ -84,6 +89,12 @@ def insert(instance,columns_subset,commit,conn):
                 d[k]=instance.__dict__[k]
 
         return d
+    def do_insert( query, d, conn ):
+        c = conn.cursor()
+        c.execute(query, d) # placeholders resolution take place here
+        id_=c.lastrowid
+        c.close()
+        return id_
 
     # create dict containing key/val list to be inserted
     d=get_dict(instance,columns_subset)
@@ -95,10 +106,21 @@ def insert(instance,columns_subset,commit,conn):
     query='INSERT INTO %s (%s) VALUES (%s)' % (tablename,columns, placeholders)
 
     # EXEC
-    c = conn.cursor()
-    c.execute(query, d) # placeholders resolution take place here
-    id_=c.lastrowid
-    c.close()
+    try:
+        id_ = do_insert( query, d, conn )
+    except sqlite3.IntegrityError as e:
+        # This has happened, due to an error in which, at one data node, one dataset shared its
+        # location with another one.
+        # This log output should provide enough information to debug the problem.
+        sdlog.info("JFPSQLUTI-01",("During database operations, IntegrityError %s from\n   "+
+                   "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
+                   %(e,tablename,columns,placeholders,d))
+        try:
+            d['status'] = sdconst.TRANSFER_STATUS_PATH_ERROR
+            d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])
+            id_ = do_insert( query, d, conn )
+        except sqlite3.IntegrityError:
+            raise
 
     if commit:
         conn.commit()

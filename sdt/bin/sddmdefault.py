@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -49,6 +50,7 @@ class Download():
     @classmethod
     def start_transfer_script(cls,tr):
 
+        sdlog.info("JFPDMDEF-001","Will download url=%s"%(tr.url,))
         if sdconfig.fake_download:
             tr.status=sdconst.TRANSFER_STATUS_DONE
             tr.error_msg=""
@@ -101,6 +103,7 @@ class Download():
 
                     if incorrect_checksum_action=="remove":
                         tr.status=sdconst.TRANSFER_STATUS_ERROR
+                        tr.priority -= 1
                         tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                         # remove file from local repository
@@ -161,37 +164,37 @@ class Download():
                 # must be implemented (directly in synda, or using crontab).
                 #
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
                 tr.error_msg="Download process has been killed"
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             else:
+                pass
 
-                if sdconfig.next_url_on_error:
-
-
-                    # Hack
-                    #
-                    # Notes
-                    #     - Only active for gridftp url to prevent having useless log message (i.e. there is currently no url switching mecanism for http url)
-                    #     - We need a log here so to have a trace of the original failed transfer (i.e. in case the url-switch succeed, the error msg will be reset)
-                    #
-                    transfer_protocol=sdutils.get_transfer_protocol(tr.url)
-                    if transfer_protocol==sdconst.TRANSFER_PROTOCOL_GRIDFTP:
-                        sdlog.info("SDDMDEFA-088","Transfer failed: try to use another url (%s)"%str(tr))
+            if sdconfig.next_url_on_error:
 
 
-                    result=sdnexturl.run(tr)
-                    if result:
-                        tr.status=sdconst.TRANSFER_STATUS_WAITING
-                        tr.error_msg=''
-                    else:
-                        tr.status=sdconst.TRANSFER_STATUS_ERROR
-                        tr.error_msg='Error occurs during download.'
+                # Hack
+                #
+                # Notes
+                #     - We need a log here so to have a trace of the original failed transfer (i.e. in case the url-switch succeed, the error msg will be reset)
+                #
+                sdlog.info("SDDMDEFA-088","Transfer failed: try to use another url (%s)"%str(tr))
 
-
+                result=sdnexturl.run(tr)
+                if result:
+                    tr.status=sdconst.TRANSFER_STATUS_WAITING
+                    tr.error_msg=''
                 else:
                     tr.status=sdconst.TRANSFER_STATUS_ERROR
+                    tr.priority -= 1
                     tr.error_msg='Error occurs during download.'
+
+
+            else:
+                tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
+                tr.error_msg='Error occurs during download.'
 
 def end_of_transfer(tr):
 

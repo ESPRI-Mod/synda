@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -72,6 +73,7 @@ def transfers_end():
 
                         if incorrect_checksum_action=="remove":
                             tr.status=sdconst.TRANSFER_STATUS_ERROR
+                            tr.priority -= 1
                             tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                             # remove file from local repository
@@ -101,6 +103,7 @@ def transfers_end():
 
             elif status == "FAILED":
                 tr.status = sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
                 tr.error_msg = "Error occurs during download."
 
                 sdlog.info("SDDMGLOB-101", "Transfer failed (%s)" % str(tr))

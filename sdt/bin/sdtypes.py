@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -66,6 +67,7 @@ class Buffer():
         return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
 
 class Selection():
+    searchapi_host = None    # a recently user-specified searchapi_host
     def __init__(self,**kw):
         self.childs=[]                                     # sub-selections list (a selection can contain facets groups, but can also contain other selections)
         self.parent=None                                   # parent selection (a selection can be the parent of another selection (e.g. default selection is the parent of project default selection))

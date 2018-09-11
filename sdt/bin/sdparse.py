@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -26,6 +27,7 @@ import sdconst
 import sdprint
 import sdi18n
 import sdearlystreamutils
+import sdlog
 
 def build(buffer,load_default=None):
     """This func builds selection and set default values.
@@ -117,6 +119,16 @@ def build(buffer,load_default=None):
 
     default_selection.childs.append(project_default_selection) # add project_default_selection as child of default_selection
     project_default_selection.parent=default_selection         # set default_selection as parent of project_default_selection
+
+    if selection.filename is not None:
+        sdlog.info('JFPPARSE-001','selection.filename=%s'%selection.filename)
+        sdlog.info('JFPPARSE-002','searchapi_host facet=%s'%selection.facets.get('searchapi_host'))
+        if selection.facets.get('searchapi_host') is not None and\
+                len(selection.facets['searchapi_host'])>0 and\
+                selection.facets['searchapi_host'][0] is not None:
+            sdlog.info('JFPPARSE-003','selection %s has searchapi_host=%s'%
+                       (selection.filename,selection.facets['searchapi_host']))
+            Selection.searchapi_host = selection.facets['searchapi_host'][0]
 
     return selection
 
@@ -235,8 +247,8 @@ def process_parameter(parameter,selection):
 def parse_parameter(parameter):
     m=re.search('^([^=]+)="?([^"=]+)"?$',parameter)
     if(m!=None):
-        param_name=m.group(1)
-        param_value=sdtools.split_values(m.group(2))
+        param_name=m.group(1).strip()   #jfp added strip() to get rid of spaces
+        param_value=sdtools.split_values(m.group(2))  #jfp split_values does strip()
 
         return (param_name,param_value)
     else:

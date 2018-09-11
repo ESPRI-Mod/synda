@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -30,7 +31,7 @@ import sddatasetdao
 import sdutils
 import sdconfig
 import sdtimestamp
-from sdtypes import Dataset,File
+from sdtypes import Dataset,File,Selection
 import sdconst
 import sdsqlutils
 import sdpostpipelineutils
@@ -114,15 +115,20 @@ def keep_recent_datasets(datasets):
 
 
     for d in datasets:
-    
-        interval=sdtime.compute_time_delta(d.last_mod_date,sdtime.now())
-        if interval > ( 24 * 3600 ):
-            # This dataset has not been modified in the last 24 hours, 
-            # so it is not related to the current discovery.
 
+        if d.last_mod_date is None:
+            # imported from the old database - certainly not modified in the last
+            # 24 hours.  But the interval calculation won't work with None. (jfp)
             pass
         else:
-            li.append(d)
+            interval=sdtime.compute_time_delta(d.last_mod_date,sdtime.now())
+            if interval > ( 24 * 3600 ):
+                # This dataset has not been modified in the last 24 hours, 
+                # so it is not related to the current discovery.
+
+                pass
+            else:
+                li.append(d)
 
     return li
 
@@ -135,6 +141,7 @@ def add_file(f):
     sdlog.info("SDENQUEU-003","Create transfer (local_path=%s,url=%s)"%(f.get_full_local_path(),f.url))
 
     f.dataset_id=add_dataset(f)
+    f.searchapi_host = Selection.searchapi_host
     f.status=sdconst.TRANSFER_STATUS_WAITING
     f.crea_date=sdtime.now()
 

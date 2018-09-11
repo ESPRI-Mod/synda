@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -53,6 +54,7 @@ TRANSFER_STATUS_WAITING="waiting"
 TRANSFER_STATUS_RUNNING="running"
 TRANSFER_STATUS_DONE="done"
 TRANSFER_STATUS_ERROR="error"
+TRANSFER_STATUS_PATH_ERROR="error-path"
 TRANSFER_STATUS_DELETE="delete"
 TRANSFER_STATUS_PAUSE="pause"
 #
@@ -140,7 +142,8 @@ METADATA_SERVER_TYPES=['esgf_search_api','thredds_catalog','apache_default_listi
 # It seems to be of bug on the server side.
 #
 # So from now, it's set to 9000
-SEARCH_API_CHUNKSIZE=9000
+#jfp was SEARCH_API_CHUNKSIZE=9000
+SEARCH_API_CHUNKSIZE=100
 
 PROCESSING_CHUNKSIZE=5000 # as list maybe duplicated in memory at some point in the pipeline, we use a lower value here than SEARCH_API_CHUNKSIZE
 PROCESSING_FETCH_MODE_GENERATOR='generator'

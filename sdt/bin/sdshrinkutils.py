@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -15,6 +16,7 @@ import sdpostpipelineutils
 import sdrmduprep
 import sdrmdup
 import sdlog
+import pdb
 
 def uniq(metadata):
 
@@ -44,5 +46,11 @@ def uniq(metadata):
         sdlog.info("SSHRINKU-002","Remove duplicate and replicate..")
 
         metadata=sdrmduprep.run(metadata,functional_id_keyname)
+
+        # Latest-version only, added by jfp
+        # jfp: and for datasets, latest_dataset() could probably replace run().
+        pdb.set_trace()
+        if f['type']=='Dataset':
+            metadata=sdrmduprep.latest_dataset(metadata)
 
     return metadata
