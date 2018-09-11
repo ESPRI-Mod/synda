@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -66,9 +67,15 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
     if stream is None:
 
         if selection is None:
+            sdlog.info("JFPPIPELI001","buffer path=%s"%path)
             buffer=sdbuffer.get_selection_file_buffer(path=path,parameter=parameter)
+            sdlog.info("JFPPIPELI002","buffer lines=%s"%buffer.lines)
             selection=sdparse.build(buffer,load_default=load_default)
+        if index_host is not None:
+            selection.facets['searchapi_host'] = index_host
 
+        sdlog.info("JFPPIPELI004","selection keys=%s"%selection.facets.keys())
+        sdlog.info("JFPPIPELI005","searchapi_host=%s"%selection.facets['searchapi_host'])
         stream=selection.merge_facets()
 
 
@@ -120,6 +127,7 @@ def prepare_param(selection=None,path=None,parameter=None,load_default=None):
         parameter=[]
 
     if selection is None:
+        sdlog.info("JFPPIPELI015","buffer path=%s"%path)
         buffer=sdbuffer.get_selection_file_buffer(path=path,parameter=parameter)
         selection=sdparse.build(buffer,load_default=load_default)
 
@@ -137,6 +145,7 @@ def parse(parameter=None):
     if parameter is None:
         parameter=[]
 
+    sdlog.info("JFPPIPELI025","buffer path not specified (default=None)")
     buffer=sdbuffer.get_selection_file_buffer(parameter=parameter)
     selection=sdparse.build(buffer,load_default=False)
     facets_groups=selection.merge_facets()
