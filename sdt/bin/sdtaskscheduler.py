@@ -31,6 +31,7 @@ import sdlogon
 import sdtask
 import sdprofiler
 import sdfilequery
+import sdsqlutils
 from sdexception import FatalException,SDException,OpenIDNotSetException
 
 def terminate(signal,frame):
