@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -42,6 +43,7 @@ import sdaddap
 from sdprogress import ProgressThread
 import sdtypes
 from sdexception import SDException
+import pdb
 
 def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False):
 
@@ -96,10 +98,12 @@ def process_queries(queries):
 
 def ws_call(query):
     request=sdtypes.Request(url=query['url'],pagination=False)
+    sdlog.debug("SDJFPQSEAR04","url=%s"%request.get_url())
     result=sdnetutils.call_web_service(request.get_url(),timeout=sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
+    sdlog.debug("SDJFPQSEAR05","result.count()=%s"%result.count())
 
     if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
-        raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
+        raise SDException("SDQSEARC-005","Number of returned files reach maximum limit")
 
     result=sdaddap.run(result,query.get('attached_parameters',{}))
 
