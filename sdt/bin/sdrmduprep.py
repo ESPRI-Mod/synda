@@ -16,11 +16,17 @@ Notes
     - This module removes duplicate files in a random way (i.e. all files have the same chance to be removed).
     - This module removes replicates
     - sdrmdup means 'SynDa ReMove DUPlicate and REPlicate'
+jfp: This doesn't explicitly "remove replicates".  run() will remove all copies but the first
+jfp  encountered.  They are replicates iff the first encountered is at the "original" data node.
+jfp  At LLNL, we want to get the fastest data node, replicates or not.  Here, or in whatever builds
+jfp  the files list, is the place to prioritize that sort of thing.
+jfp  I added run_latest(), which also removes everything which is not the latest known version.
 
 See also
     - sdshrink
 """
 
+import string
 import sdapp
 import sdconst
 import sdprint
@@ -56,36 +62,46 @@ def remove(files,functional_id_keyname,seen):
             seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
     return new_files
 
-def latest_dataset(metadata):
-    # create light list with needed columns only not to overload system memory:
-    light_metadata=sdlmattrfilter.run(metadata,['dataset_path_without_version','dataset_version'])
-
+def run_latest(metadata,functional_id_keyname):
     sdlog.info("SYNDRMDR-003","Replicate only latest datasets...")
 
-    po=sdpipelineprocessing.ProcessingObject(remove_allbut_latest)
+    po=sdpipelineprocessing.ProcessingObject(remove_allbut_latest,functional_id_keyname)
     metadata=sdpipelineprocessing.run_pipeline(metadata,po)
 
     return metadata
 
-def remove_allbut_latest(datasets):
-    """The first argument 'datasets' is a list of datasets.  This function will remove
+def remove_allbut_latest(files,functional_id_keyname):
+    """The first argument 'files' is a list of files or datasets.  The second argument is
+    'file_functional_id' or 'dataset_functional_id'.  This function will remove
     any which are not latest version (within the list), and return the result, as a list.
     """
+    #if functional_id_keyname!='dataset_functional_id':
     latest = {}
-    for f in datasets:
-        dataset_path=f['dataset_path_without_version']   # dataset_path_without_version
+    for f in files:
         version = f['dataset_version']
         if version[0]=='v':
             # 'v1234' and '1234' are treated the same. '1234' is wrong but occurs.
             version = version[1:]
-        version = int(version)
+        versionnum = int(version)
+
+        # 'latest' will be indexed by a variant of functional_id with the version removed:
+        functional_id = f[functional_id_keyname]
+        fid_split = string.split(functional_id,'.')
+        if 'filename' in f and fid_split[-3].find(version)>=0:
+            # version the substring right before the filename; the find is to make sure we got it.
+            fid_split[-3] = 'v000000'
+        elif fid_split[-1].find(version)>=0:
+            # version is the last substring; the find is to make sure of that.
+            fid_split[-1] = 'v000000'
+        fid_noversion = string.join(fid_split,'.')
+
         # In practice, if a dataset has sequential versions like v2 and date-based versions like
         # v20131002, then the date-based versions are more recent (they are more standard).
-        if dataset_path not in latest.keys() or version>latest[dataset_path][0]:
-            latest[dataset_path] = (version,f)
-    new_datasets = [lv[1] for lv in latest.values()]
+        if fid_noversion not in latest.keys() or versionnum>latest[fid_noversion][0]:
+            latest[fid_noversion] = (versionnum,f)
+    new_files = [lv[1] for lv in latest.values()]
 
-    return new_datasets
+    return new_files
 
 
 if __name__ == '__main__':

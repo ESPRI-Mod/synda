@@ -45,12 +45,12 @@ def uniq(metadata):
 
         sdlog.info("SSHRINKU-002","Remove duplicate and replicate..")
 
-        metadata=sdrmduprep.run(metadata,functional_id_keyname)
+        #jfp This is right if you want all versions, i.e. latest=false in a selection file.
+        #metadata=sdrmduprep.run(metadata,functional_id_keyname)
 
-        # Latest-version only, added by jfp
-        # jfp: and for datasets, latest_dataset() could probably replace run().
-        pdb.set_trace()
-        if f['type']=='Dataset':
-            metadata=sdrmduprep.latest_dataset(metadata)
+        # jfp This (which I added) is right if you want only the latest version, i.e. latest=true
+        # in a selection file.  Unfortunately, I don't know how to tell which one the user wants.
+        # But at LLNL, it will always be latest=true.
+        metadata=sdrmduprep.run_latest(metadata,functional_id_keyname)
 
     return metadata
