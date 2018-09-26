@@ -109,15 +109,17 @@ def insert(instance,columns_subset,commit,conn):
     try:
         id_ = do_insert( query, d, conn )
     except sqlite3.IntegrityError as e:
-        # This has happened, due to an error in which, at one data node, one dataset shared its
-        # location with another one.
-        # This log output should provide enough information to debug the problem.
+        # This sometimes happens due to errors in which, at the data node, one dataset shared its
+        # location with another one; or in which the same file is published in two locations.
+        # The log output should provide enough information to diagnose the problem.
         sdlog.info("JFPSQLUTI-01",("During database operations, IntegrityError %s from\n   "+
                    "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
                    %(e,tablename,columns,placeholders,d))
         try:
             d['status'] = sdconst.TRANSFER_STATUS_PATH_ERROR
-            d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])
+            d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])+str(d['crea_date'])
+            d['file_functional_id'] = d['file_functional_id']+'_bad_path_'+str(d['checksum'])+\
+                str(d['crea_date'])
             id_ = do_insert( query, d, conn )
         except sqlite3.IntegrityError:
             raise
