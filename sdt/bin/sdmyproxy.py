@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -165,11 +166,13 @@ def renew_certificate (host,port,username,password):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host','-h',default='pcmdi9.llnl.gov')
+    #parser.add_argument('--host','-h',default='pcmdi9.llnl.gov')
+    parser.add_argument('--namehost','-n',default='esgf-node.llnl.gov')
     parser.add_argument('--port','-p',type=int,default=7512)
     parser.add_argument('--force_renew_certificate','-r',action='store_true',help='Force renew certificate even if valid')
     parser.add_argument('--username','-u',required=True)
     parser.add_argument('--force_renew_ca_certificates','-x',action='store_true',help='Force renew CA certificates')
     args = parser.parse_args()
 
-    run(args.hostname,args.port,args.username,force_renew_certificate,force_renew_ca_certificates)
+#    run(args.hostname,args.port,args.username,force_renew_certificate,force_renew_ca_certificates)
+    run(args.namehost,args.port,args.username,args.force_renew_certificate,args.force_renew_ca_certificates)
