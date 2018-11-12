@@ -77,6 +77,8 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
         sdlog.info("JFPPIPELI004","selection keys=%s"%selection.facets.keys())
         if 'searchapi_host' in selection.facets:
             sdlog.info("JFPPIPELI005","searchapi_host=%s"%selection.facets['searchapi_host'])
+        else:
+            sdlog.info("JFPPIPELI005","searchapi_host=None")
         stream=selection.merge_facets()
 
 
