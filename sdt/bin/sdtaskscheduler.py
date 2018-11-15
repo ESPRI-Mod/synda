@@ -93,6 +93,11 @@ def clear_failed_url():
     """Clears the failed_url table."""
     sdsqlutils.truncate_table("failed_url")
 
+def clear_failed_url_file(filename):
+    """Clears the rows of the failed_url table which correspond to one filename."""
+    # SQL line "delete from failed_url where col like %/filename"
+    sdsqlutils.truncate_part_of_table("failed_url", "url", "%%/%s"%filename )
+
 def resilient_terminate(child):
     """This func terminate the child and inhibits NoSuchProcess exception if any."""
 

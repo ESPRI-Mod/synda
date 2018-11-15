@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -23,6 +24,7 @@ import sdmodifyquery
 import sdreplica
 import sdlog
 import sdconst
+import sdsqlutils
 from sdtools import print_stderr
 
 def modify():
@@ -36,6 +38,7 @@ def pause_all():
 
 def retry_all(filter=None):
     sdlog.info("SDMODIFY-343","Moving transfer from error to waiting..")
+    sdsqlutils.truncate_errorfiles_failed_url()
     nbr=sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_ERROR,sdconst.TRANSFER_STATUS_WAITING)
     sdlog.info("SDMODIFY-226","%i transfer marked for retry"%(nbr))
     return nbr

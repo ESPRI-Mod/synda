@@ -54,6 +54,19 @@ def truncate_table(table,conn=sddb.conn):
     conn.execute("delete from %s"%table)
     conn.commit()
 
+def truncate_part_of_table(table,col,pattern,conn=sddb.conn):
+    conn.execute("delete from %s where %s like '%s'"%(table,col,pattern))
+    conn.commit()
+
+def truncate_errorfiles_failed_url(conn=sddb.conn):
+    """This does just one job: delete from the failed_url table where the matching file table
+    has status='error'"""
+    cmd = "DELETE FROM failed_url WHERE url IN (SELECT failed_url.url FROM failed_url INNER JOIN"+\
+          " file ON failed_url.url LIKE '%s'||file.filename AND file.status='%s')" %\
+          ("%",sdconst.TRANSFER_STATUS_ERROR)
+    conn.execute(cmd)
+    conn.commit()
+
 def nextval(col,tbl):
     """Return next value for column given in argument."""
     max_id=None
