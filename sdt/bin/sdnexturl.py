@@ -109,10 +109,20 @@ def get_urls(file_functional_id, searchapi_host):
     #sdlog.info("JFPNEXTUR-15","get_urls will call sdquicksearch on file %s"%(file_functional_id,))
     #sdlog.info("JFPNEXTUR-16","get_urls will use index host %s"%(searchapi_host,))
     result=sdquicksearch.run(
-        parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%file_functional_id],
+        parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
+                   file_functional_id],
         post_pipeline_mode=None,index_host=searchapi_host)
     li=result.get_files()
     sdlog.info("JFPNEXTUR-05","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
+    if li==[]:
+        # No urls found. Try again, but wildcard the file id. (That leads to a string search on all
+        # fields for the wildcarded file id, rather than a match of the instance_id field only.)
+        result=sdquicksearch.run(
+            parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
+                       file_functional_id+'*'],
+            post_pipeline_mode=None,index_host=searchapi_host)
+        li=result.get_files()
+        sdlog.info("JFPNEXTUR-06","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
     # result looks like
     # [ {protocol11:url11, protocol12:url12, attached_parameters:dict, score:number, type:'File',
     #    size:number} }, {[another dict of the same format}, {another dict},... ]
