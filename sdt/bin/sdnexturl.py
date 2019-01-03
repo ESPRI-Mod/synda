@@ -41,15 +41,9 @@ def run(tr):
                   (tr.url, tr.file_functional_id) )
         conn.commit()
     except sqlite3.IntegrityError as e:
-        # url is already in the failed_url table
+        # url,file_id is already in the failed_url table
         sdlog.info("JFPNEXTUR-01","During database operations, IntegrityError %s on %s with new file_id=%s"
                    %(e,url,tr.file_id))
-        # If the file had been deleted from the file table and re-inserted, the file_id may be
-        # wrong now.
-        #c.close()
-        #c = conn.cursor()
-        c.execute("UPDATE failed_url(file_id) SET file_id=(SELECT file_id FROM file WHERE "+
-                  "file_functional_id=?)  WHERE url=?", (tr.file_functional_id,tr.url) )
         conn.commit()
     except Exception as e:
         sdlog.info("JFPNEXTUR-02","During database operations, unknown exception %s"%(e,))
