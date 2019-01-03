@@ -133,19 +133,38 @@ def pre_transfer_check_list(tr):
 def transfers_begin():
     transfers=[]
 
-    new_transfer_count=max_transfer - sdfilequery.transfer_running_count() # compute how many new transfer can be started
+    # how many new transfers can be started:
+    new_transfer_count=max_transfer - sdfilequery.transfer_running_count()
+    # datanode_count[datanode], is number of running transfers for a data node:
+    datanode_count = sdfilequery.transfer_running_count_by_datanode()
     if new_transfer_count>0:
         for i in range(new_transfer_count):
-            try:
-                tr=sddao.get_one_waiting_transfer()
+            for datanode in datanode_count.keys():
+                try:
+                    # Handle per-datanode maximum number of transfers:
+                    try:
+                        new_count = max_datanode_count - datanode_count[datanode]
+                    except KeyError:
+                        sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
+                                   (datanode,datanode_count.keys()) )
+                        new_count = max_datanode_count
+                    if new_count<=0:
+                        continue
 
-                prepare_transfer(tr)
+                    tr=sddao.get_one_waiting_transfer( datanode )
 
-                if pre_transfer_check_list(tr):
-                    sdfiledao.update_file(tr)
-                    transfers.append(tr)
-            except NoTransferWaitingException, e:
-                pass
+                    if datanode in datanode_count:
+                        datanode_count[datanode] += 1
+                    else:
+                        datanode_count[datanode] = 1
+
+                    prepare_transfer(tr)
+
+                    if pre_transfer_check_list(tr):
+                        sdfiledao.update_file(tr)
+                        transfers.append(tr)
+                except NoTransferWaitingException, e:
+                    pass
 
     dmngr.transfers_begin(transfers)
 
@@ -170,6 +189,7 @@ def fatal_exception():
 # init.
 
 max_transfer=sdconfig.config.getint('download','max_parallel_download')
+max_datanode_count = sdconfig.config.getint('download','max_parallel_download_per_datanode')
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
 
 dmngr=get_download_manager()

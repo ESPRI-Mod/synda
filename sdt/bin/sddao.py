@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
+#!/usr/share/python/synda/sdt/bin/python
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -172,8 +171,12 @@ def get_file(file_functional_id=None):
 
     return f
 
-def get_one_waiting_transfer():
-    li=sdfiledao.get_files(limit=1,status=sdconst.TRANSFER_STATUS_WAITING)
+def get_one_waiting_transfer( datanode=None ):
+    if datanode is None:
+        li=sdfiledao.get_files( limit=1, status=sdconst.TRANSFER_STATUS_WAITING )
+    else:
+        li=sdfiledao.get_files( limit=1, status=sdconst.TRANSFER_STATUS_WAITING,\
+                                data_node=datanode )
 
     if len(li)==0:
         raise NoTransferWaitingException()
