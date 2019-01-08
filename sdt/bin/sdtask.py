@@ -1,5 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
-# -*- coding: ISO-8859-1 -*-
+#!/usr/bin/env python
 
 ##################################
 # @program        synda
