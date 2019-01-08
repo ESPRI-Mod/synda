@@ -138,6 +138,7 @@ def transfers_begin():
     # datanode_count[datanode], is number of running transfers for a data node:
     datanode_count = sdfilequery.transfer_running_count_by_datanode()
     if new_transfer_count>0:
+        transfers_needed = new_transfer_count
         for i in range(new_transfer_count):
             for datanode in datanode_count.keys():
                 try:
@@ -153,18 +154,23 @@ def transfers_begin():
 
                     tr=sddao.get_one_waiting_transfer( datanode )
 
-                    if datanode in datanode_count:
-                        datanode_count[datanode] += 1
-                    else:
-                        datanode_count[datanode] = 1
-
                     prepare_transfer(tr)
 
                     if pre_transfer_check_list(tr):
                         sdfiledao.update_file(tr)
                         transfers.append(tr)
+
+                    if datanode in datanode_count:
+                        datanode_count[datanode] += 1
+                    else:
+                        datanode_count[datanode] = 1
+                    transfers_needed -= 1
+                    if transfers_needed <= 0:
+                        break
                 except NoTransferWaitingException, e:
                     pass
+            if transfers_needed <= 0:
+                break
 
     dmngr.transfers_begin(transfers)
 
