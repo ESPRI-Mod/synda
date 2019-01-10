@@ -1,6 +1,4 @@
 #!/usr/share/python/synda/sdt/bin/python
-#jfp was
-# -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
