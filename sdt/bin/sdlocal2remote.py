@@ -19,7 +19,7 @@ Note
 import sys
 import argparse
 import json
-import sdapp
+# import sdapp
 import sdtranslate
 import sdprint
 
@@ -33,11 +33,12 @@ name_rules={
 
 def run(facets_groups):
     facets_groups_new=[]
-
+    # need to add exception when facet project=cmip6
+    # And need to add safeguard for when the project is not mentionned?
+    # Two queries? Wait for result? Prompt ?
     for facets_group in facets_groups:
         facets_group=sdtranslate.translate_name(facets_group,name_rules)
         facets_groups_new.append(facets_group)
-
     return facets_groups_new
 
 if __name__ == '__main__':
