@@ -821,7 +821,7 @@ WGET_CMD="wget --no-check-certificate"
 #
 virtual_env_package_name="virtualenv-14.0.6"
 virtual_env_archive_name=${virtual_env_package_name}.tar.gz
-virtual_env_url="http://pypi.python.org/packages/source/v/virtualenv/${virtual_env_archive_name}#md5=1a475df2219457b6b4febb9fe595d915"
+virtual_env_url="https://pypi.python.org/packages/source/v/virtualenv/${virtual_env_archive_name}#md5=1a475df2219457b6b4febb9fe595d915"
 #
 python_package_name=Python-2.6.6
 python_archive_name=Python-2.6.6.tgz
