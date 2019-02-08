@@ -23,30 +23,38 @@ import json
 import sdtranslate
 import sdprint
 
-name_rules={
-    'frequency' :'time_frequency',
-    'datanode' :'data_node',
-    'filename' :'title',
-    'file_functional_id' :'instance_id',
-    'dataset_functional_id' :'dataset_id'
+name_rules = {
+    'frequency': 'time_frequency',
+    'datanode': 'data_node',
+    'filename': 'title',
+    'file_functional_id': 'instance_id',
+    'dataset_functional_id': 'dataset_id'
 }
 
+
 def run(facets_groups):
-    facets_groups_new=[]
-    # need to add exception when facet project=cmip6
-    # And need to add safeguard for when the project is not mentionned?
-    # Two queries? Wait for result? Prompt ?
+    facets_groups_new = []
+    # Just a fix for CMIP5 specific translations.
+
     for facets_group in facets_groups:
-        facets_group=sdtranslate.translate_name(facets_group,name_rules)
+        # shallow copy of the rules
+        local_name_rules = name_rules
+        if 'project' in facets_group.keys():
+            if facets_group['project'] == ['CMIP6']:
+                del local_name_rules['frequency']
+
+        facets_group = sdtranslate.translate_name(facets_group, local_name_rules)
         facets_groups_new.append(facets_group)
+
     return facets_groups_new
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-1','--print_only_one_item',action='store_true')
-    parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
+    parser.add_argument('-1', '--print_only_one_item', action='store_true')
+    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
     args = parser.parse_args()
 
-    facets_groups=json.load( sys.stdin )
-    facets_groups=run(facets_groups)
-    sdprint.print_format(facets_groups,args.format,args.print_only_one_item)
+    facets_groups = json.load(sys.stdin)
+    facets_groups = run(facets_groups)
+    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)
