@@ -203,7 +203,9 @@ def unprivileged_user_mode():
 os.umask(0002)
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
-context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,)
+log_stdout=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
+log_stderr=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
+context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,stdout=log_stdout,stderr=log_stderr)
 context.signal_map={ signal.SIGTERM: terminate, }
 
 # retrieve unprivileged user from configuration file if any
