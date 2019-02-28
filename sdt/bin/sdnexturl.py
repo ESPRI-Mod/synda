@@ -102,10 +102,15 @@ def get_urls(file_functional_id, searchapi_host):
 
     #sdlog.info("JFPNEXTUR-15","get_urls will call sdquicksearch on file %s"%(file_functional_id,))
     #sdlog.info("JFPNEXTUR-16","get_urls will use index host %s"%(searchapi_host,))
-    result=sdquicksearch.run(
-        parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
-                   file_functional_id],
-        post_pipeline_mode=None,index_host=searchapi_host)
+    try:
+        result=sdquicksearch.run(
+            parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
+                       file_functional_id],
+            post_pipeline_mode=None,index_host=searchapi_host)
+    except Exception as e:
+        sdlog.debug("JFPNEXTUR-17", "exception %s.  instance_id=%s"%(e,file_functional_id))
+        raise e
+
     li=result.get_files()
     sdlog.info("JFPNEXTUR-05","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
     if li==[]:
