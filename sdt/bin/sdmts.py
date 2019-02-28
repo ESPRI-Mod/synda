@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+# was:
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -84,6 +85,11 @@ class MemoryStorage(Storage):
         #
         if hasattr(self,'files'):
             del self.files
+
+    def delete_some( self, delf ):
+        """Delete files for which the supplied function delf has delf(file)==True"""
+        if hasattr(self,'files'):
+            self.files = [ file for file in self.files if delf(file)!=True ]
 
     def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
         cpy=MemoryStorage()

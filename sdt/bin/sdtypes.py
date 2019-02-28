@@ -359,6 +359,10 @@ class CommonIO(object):
     def delete(self):
         self.store.delete()
 
+    def delete_some( self, delf ):
+        """Delete files for which the supplied function delf has delf(file)==True"""
+        self.store.delete_some( delf )
+
     def get_one_file(self):
         return self.store.get_one_file()
 

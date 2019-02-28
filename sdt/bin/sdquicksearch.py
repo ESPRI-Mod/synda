@@ -45,12 +45,15 @@ import sdtypes
 from sdexception import SDException
 import pdb
 
-def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode='file',dry_run=False):
+def run( stream=None, path=None, parameter=None, index_host=None, post_pipeline_mode='file',
+         dry_run=False ):
 
     if parameter is None:
         parameter=[]
 
-    queries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,index_host=index_host,parallel=False,load_default=False)
+    streamclean, negspecs = separate_negatives( stream )
+    queries=sdpipeline.build_queries( stream=streamclean, path=path, parameter=parameter,
+                                      index_host=index_host, parallel=False, load_default=False )
 
     if len(queries)<1:
         raise SDException("SDQSEARC-001","No query to process")
@@ -76,7 +79,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
                 sdtools.print_stderr(sdi18n.m0003(searchapi_host)) # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-            mqr=process_queries(queries)
+            mqr=process_queries( queries, negspecs )
             metadata=mqr.to_metadata()
 
             sdlog.debug("SDQSEARC-002","files-count=%d"%metadata.count())
@@ -88,19 +91,48 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
             if progress:
                 ProgressThread.stop() # spinner stop
 
-def process_queries(queries):
+def separate_negatives( stream ):
+    """Checks stream (a list of dicts based on a selection file) for negative specifications, e.g.
+    stream['institution_id']==['-NOAA-GFDL'].  Returns a stream in which such negatives have
+    been deleted, and dict of lists of those negative specifications.  Presently, this is only
+    implemented for 'institution_id'.  Presently this changes stream."""
+    negs = {'institution_id': []}
+    if stream is not None:
+        for str in stream:
+            insts = str.get('institution_id',[])
+            new_insts = [ inst for inst in insts if inst[0]!='-' ]
+            negs['institution_id'] += [inst[1:] for inst in insts if inst[0]=='-' ]
+            if len(new_insts)>0:
+                str['institution_id'] = new_insts
+            else:
+                str.pop('institution_id',None)
+        negs['institution_id'] = list(set(negs['institution_id']))
+    return stream, negs
+
+def remove_negatives( result, negspecs ):
+    """Removes items in result which match negspecs.  result is output of a search by an
+    ESGF index node invoked in ws_call().
+    example of negspecs:  {'institution_id': ['NOAA-GFDL']}
+    """
+    result.delete_some( (lambda myfile, negspecs=negspecs:
+                         myfile['instance_id'].split('.')[2] in negspecs['institution_id']
+                         if 'instance_id' in myfile else False) )
+    return result
+
+def process_queries( queries, negspecs ):
     mqr=sdtypes.MultiQueryResponse(lowmen=False) # use RAM to improve speed here (this module is only intended to process small amount of data, so it should be ok on lowmem machine). 
 
     for query in queries:
-        mqr.slurp(ws_call(query))
+        mqr.slurp( ws_call( query, negspecs ) )
 
     return mqr
 
-def ws_call(query):
+def ws_call( query, negspecs ):
     request=sdtypes.Request(url=query['url'],pagination=False)
     sdlog.debug("SDJFPQSEAR04","url=%s"%request.get_url())
     result=sdnetutils.call_web_service(request.get_url(),timeout=sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
     sdlog.debug("SDJFPQSEAR05","result.count()=%s"%result.count())
+    result = remove_negatives( result, negspecs )
 
     if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
         raise SDException("SDQSEARC-005","Number of returned files reach maximum limit")
