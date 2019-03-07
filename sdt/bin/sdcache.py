@@ -25,6 +25,7 @@ import sdtools
 import sdproxy_ra
 from sdtypes import Request,Item
 from sdexception import SDException
+from sqlite3 import IntegrityError
 
 def run(host=None,reload=False,project=None):
 
@@ -50,11 +51,14 @@ def run(host=None,reload=False,project=None):
 def _reload_parameters(parameters):
     for pname,pvalues in parameters.iteritems():
         for i,item in enumerate(pvalues):
-
-            if item is None:
-                sddao.add_parameter_value(pname,None,commit=False)
-            else:
-                sddao.add_parameter_value(pname,item.name,commit=False)
+            try:
+                if item is None:
+                    sddao.add_parameter_value(pname,None,commit=False)
+                else:
+                    sddao.add_parameter_value(pname,item.name,commit=False)
+            except IntegrityError:
+                sdlog.warning('SDDCACHE-003',
+                              'Value {} has duplicate in the db. Warn your datanode manager'.format(item.name))
     sddb.conn.commit()
 
 def _update_parameters(parameters):
@@ -91,7 +95,12 @@ def _update_parameters(parameters):
 
             if not sddao.exists_parameter_name(pname):
                 sdtools.print_stderr('Add new parameter: %s'%pname)
-                sddao.add_parameter_value(pname,None) # value is always None in this case
+                try:
+                    sddao.add_parameter_value(pname,None) # value is always None in this case
+                except IntegrityError:
+                    sdlog.warning('SDDCACHE-003',
+                                  'Value has duplicate in the db. Warn your datanode manager')
+
 
         elif len(pvalues)>1:
             # This case means this is a NON-free parameter (i.e. with predefined
@@ -104,7 +113,11 @@ def _update_parameters(parameters):
             for item in pvalues:
                 if not sddao.exists_parameter_value(pname,item.name):
                     sdtools.print_stderr('Add new value for %s parameter: %s'%(pname,item.name))
-                    sddao.add_parameter_value(pname,item.name)
+                    try:
+                        sddao.add_parameter_value(pname,item.name)
+                    except IntegrityError:
+                        sdlog.warning('SDDCACHE-003',
+                                      'Value {} has duplicate in the db. Warn your datanode manager'.format(item.name) )
 
 def add_system_parameters(parameters):
     """
