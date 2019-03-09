@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
+#jfp was
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -39,6 +40,8 @@ import sdcommonarg
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 
+import pdb
+
 def run(stream=None,
         selection=None,
         path=None,
@@ -58,10 +61,14 @@ def run(stream=None,
     if parameter is None:
         parameter=[]
 
-    squeries=sdpipeline.build_queries(stream=stream,path=path,parameter=parameter,selection=selection,parallel=parallel,index_host=index_host,dry_run=dry_run,load_default=load_default)
+    parameterclean, negspecs = separate_negatives( parameter )
+    squeries=sdpipeline.build_queries(
+        stream=stream, path=path, parameter=parameterclean, selection=selection, parallel=parallel,
+        index_host=index_host, dry_run=dry_run, load_default=load_default )
 
     action=sdsqueries.get_scalar(squeries,'action',None)
-    progress=sdsqueries.get_scalar(squeries,'progress',False,type_=bool) # we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
+    progress=sdsqueries.get_scalar(squeries,'progress',False,type_=bool)
+    # ... we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
 
     # Prevent use of 'limit' keyword ('limit' keyword can't be used in this module because it interfere with the pagination system)
     for q in squeries:
@@ -76,19 +83,52 @@ def run(stream=None,
             #sdtools.print_stderr(sdi18n.m0003(ap.get('searchapi_host'))) # waiting message
             ProgressThread.start(sleep=0.1,running_message='',end_message='Search completed.') # spinner start
 
-        metadata=_get_files(squeries,parallel,post_pipeline_mode,action,playback,record)
+        metadata=_get_files(squeries,parallel,post_pipeline_mode,action,playback,record,negspecs)
 
         if progress:
             ProgressThread.stop() # spinner stop
 
         return metadata
 
-def execute_queries(squeries,parallel,post_pipeline_mode,action):
+def separate_negatives( parameter ):
+    """Checks parameter (a list of strings based on a selection file) for negative specifications,
+    e.g.  'institution_id=-NOAA-GFDL'.  Returns a stream in which such negatives have
+    been deleted, and dict of lists of those negative specifications.  Presently, this is only
+    implemented for 'institution_id=...'."""
+    parameterclean = []
+    poss = []
+    negs = {'institution_id': []}
+    if parameter is not None:
+        for str in parameter:
+            key = str.split('=')[0]
+            if key!='institution_id':
+                parameterclean += [str]
+                continue
+            insts = str.split('=')[1].split(',')
+            new_insts = [ inst for inst in insts if inst[0]!='-' ]
+            poss += new_insts
+            negs['institution_id'] += [inst[1:] for inst in insts if inst[0]=='-' ]
+        if len(poss)>0:
+            parameterclean += ['='.join(['institution_id',','.join(poss)])]
+        negs['institution_id'] = list(set(negs['institution_id']))
+    return parameterclean, negs
+
+def remove_negatives( metadata, negspecs ):
+    """Removes items in result which match negspecs.  result is output of a search by an
+    ESGF index node invoked in ws_call().
+    example of negspecs:  {'institution_id': ['NOAA-GFDL']}
+    """
+    for inst in negspecs['institution_id']:
+        metadata.delete_some( 'institution_id', inst )
+    return metadata
+
+def execute_queries(squeries,parallel,post_pipeline_mode,action,negspecs):
     """This func serializes received metadata on-disk to prevent memory overload."""
 
     sdlog.info("SDSEARCH-580","Retrieve metadata from remote service")
     metadata=sdrun.run(squeries,parallel)
     sdlog.info("SDSEARCH-584","Metadata successfully retrieved (%d files)"%metadata.count())
+    metadata = remove_negatives( metadata, negspecs )
 
     sdlog.info("SDSEARCH-590","Metadata processing begin")
     metadata=sdpipeline.post_pipeline(metadata,post_pipeline_mode)
@@ -115,7 +155,7 @@ def execute_queries(squeries,parallel,post_pipeline_mode,action):
 
     return metadata
 
-def _get_files(squeries,parallel,post_pipeline_mode,action,playback,record):
+def _get_files(squeries,parallel,post_pipeline_mode,action,playback,record,negspecs):
     """
     TODO: maybe move this code inside sdmts module (e.g. metadata.dump(path))
     """
@@ -126,7 +166,7 @@ def _get_files(squeries,parallel,post_pipeline_mode,action,playback,record):
 
     else:
 
-        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action)
+        metadata=execute_queries(squeries,parallel,post_pipeline_mode,action,negspecs)
 
         if record is not None:
             with open(record, 'w') as fh:
@@ -178,6 +218,7 @@ if __name__ == '__main__':
     parser.add_argument('-i','--index_host')
     parser.add_argument('-m','--post_pipeline_mode',default='file',choices=sdconst.POST_PIPELINE_MODES)
     parser.add_argument('-y','--dry_run',action='store_true')
+    parser.add_argument('-z','--print_short',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
     sdcommonarg.add_playback_record_options(parser)
@@ -202,4 +243,10 @@ if __name__ == '__main__':
                  record=args.record)
 
     if not args.dry_run:
-        sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item) # warning: load list in memory
+        if args.print_short:
+            from pprint import pprint
+            datasets = list(set([f['dataset_functional_id'] for f in metadata.get_files()]))
+            datasets.sort()
+            pprint(datasets)
+        else:
+            sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item) # warning: load list in memory

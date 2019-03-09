@@ -244,6 +244,16 @@ class DatabaseStorage(Storage):
 
             self.conn.commit()
 
+    def delete_some( self, key, value ):
+        """Delete files described by a JSON object with strings key:[value].
+        Example:  '"institution_id": ["NOAA-GFDL"]'.
+        In this version, this method is over-sensitive to string details such as type of quotes
+        and spacing."""
+        with contextlib.closing(self.conn.cursor()) as c:
+            # example:
+            #c.execute("DELETE FROM data WHERE attrs LIKE '%\"institution_id\": [\"NOAA-GFDL\"],%'")
+            c.execute("DELETE FROM data WHERE attrs LIKE '%\"{}\": [\"{}\"],%'".format(key,value))
+
     def delete(self):
         self.disconnect()
         if os.path.isfile(self.dbfile):
