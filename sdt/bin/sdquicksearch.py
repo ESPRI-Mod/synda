@@ -114,12 +114,7 @@ def remove_negatives( result, negspecs ):
     ESGF index node invoked in ws_call().
     example of negspecs:  {'institution_id': ['NOAA-GFDL']}
     """
-    if False:  # old, all-lambda method; still works, though
-        result.delete_some( (lambda myfile, negspecs=negspecs:
-                             myfile['instance_id'].split('.')[2] in negspecs['institution_id']
-                             if 'instance_id' in myfile else False) )
-    else:
-        result.delete_some( (lambda myfile: myfile.split('.')[2]), negspecs['institution_id'] )
+    result.delete_some( (lambda myfile: myfile.split('.')[2]), negspecs['institution_id'] )
     return result
 
 def process_queries( queries, negspecs ):

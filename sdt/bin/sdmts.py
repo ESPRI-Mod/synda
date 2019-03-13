@@ -86,10 +86,6 @@ class MemoryStorage(Storage):
         if hasattr(self,'files'):
             del self.files
 
-    def delete_some_1arg( self, delf ):
-        """Delete files for which the supplied function delf has delf(file)==True"""
-        if hasattr(self,'files'):
-            self.files = [ file for file in self.files if delf(file)!=True ]
     def delete_some( self, key, values ):
         """Delete files described by a JSON object with strings key:[value1,value2,...].
         Example:  '"institution_id": ["NOAA-GFDL"]'.
