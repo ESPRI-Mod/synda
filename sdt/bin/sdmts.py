@@ -86,10 +86,23 @@ class MemoryStorage(Storage):
         if hasattr(self,'files'):
             del self.files
 
-    def delete_some( self, delf ):
+    def delete_some_1arg( self, delf ):
         """Delete files for which the supplied function delf has delf(file)==True"""
         if hasattr(self,'files'):
             self.files = [ file for file in self.files if delf(file)!=True ]
+    def delete_some( self, key, values ):
+        """Delete files described by a JSON object with strings key:[value1,value2,...].
+        Example:  '"institution_id": ["NOAA-GFDL"]'.
+        The caller has to supply a function key to extract the string corresponding to key,
+        from a longer file id, e.g. if
+        file['instance_id']='CMIP6.CMIP.BCC.BCC-CSM2-MR.piControl.r1i1p1f1.Amon.ps.gn.v20181016.ps_Amon_BCC-CSM2-MR_piControl_r1i1p1f1_gn_185001-244912.nc',
+        then key(file) would return the third part, 'BCC', from file['instance_id']
+        That is, key = (lambda myfile: myfile.split('.')[2]).
+        Note that the key in DatabaseStorage.delete_some() is a string.
+        """
+        if hasattr(self,'files'):
+            for val in values:
+                self.files = [file for file in self.files if key(file['instance_id'])!=val ]
 
     def copy(self): # WARNING: calling this func triggers two lists in memory at the same time !
         cpy=MemoryStorage()
@@ -244,15 +257,18 @@ class DatabaseStorage(Storage):
 
             self.conn.commit()
 
-    def delete_some( self, key, value ):
-        """Delete files described by a JSON object with strings key:[value].
+    def delete_some( self, key, values ):
+        """Delete files described by a JSON object with strings key:[value,...].
         Example:  '"institution_id": ["NOAA-GFDL"]'.
         In this version, this method is over-sensitive to string details such as type of quotes
-        and spacing."""
-        with contextlib.closing(self.conn.cursor()) as c:
-            # example:
-            #c.execute("DELETE FROM data WHERE attrs LIKE '%\"institution_id\": [\"NOAA-GFDL\"],%'")
-            c.execute("DELETE FROM data WHERE attrs LIKE '%\"{}\": [\"{}\"],%'".format(key,value))
+        and spacing.
+        Note that the key in MemoryStorage.delete_some() is a function."""
+        for val in values:
+            with contextlib.closing(self.conn.cursor()) as c:
+                # example:  c.execute(
+                # "DELETE FROM data WHERE attrs LIKE '%\"institution_id\": [\"NOAA-GFDL\"],%'")
+                c.execute("DELETE FROM data WHERE attrs LIKE '%\"{}\": [\"{}\"],%'".
+                          format(key,val))
 
     def delete(self):
         self.disconnect()

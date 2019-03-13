@@ -364,7 +364,7 @@ class CommonIO(object):
         for files which should be deleted.  If two arguments are supplied, the first is a keyword
         and the second is a value, again identifying files which should be deleted."""
         if len(args)==1:
-            self.store.delete_some( args[0] )
+            self.store.delete_some_1arg( args[0] )
         elif len(args)==2:
             self.store.delete_some( args[0], args[1] )
         else:

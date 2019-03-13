@@ -118,8 +118,7 @@ def remove_negatives( metadata, negspecs ):
     ESGF index node invoked in ws_call().
     example of negspecs:  {'institution_id': ['NOAA-GFDL']}
     """
-    for inst in negspecs['institution_id']:
-        metadata.delete_some( 'institution_id', inst )
+    metadata.delete_some( 'institution_id', negspecs['institution_id'] )
     return metadata
 
 def execute_queries(squeries,parallel,post_pipeline_mode,action,negspecs):
