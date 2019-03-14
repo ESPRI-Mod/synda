@@ -39,6 +39,7 @@ import sdtypes
 import sdcommonarg
 from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
+from sdquicksearch import separate_negatives_str
 
 import pdb
 
@@ -60,11 +61,18 @@ def run(stream=None,
 
     if parameter is None:
         parameter=[]
+        parameterclean=[]
+        if stream is not None:
+            # Normally "synda install..." gets you here
+            streamclean, negspecs = separate_negatives_str( stream )
+    else:
+        # Normally you get here from running sdsearch standalone
+        streamclean = stream
+        parameterclean, negspecs = separate_negatives_par( parameter )
 
-    parameterclean, negspecs = separate_negatives( parameter )
     squeries=sdpipeline.build_queries(
-        stream=stream, path=path, parameter=parameterclean, selection=selection, parallel=parallel,
-        index_host=index_host, dry_run=dry_run, load_default=load_default )
+        stream=streamclean, path=path, parameter=parameterclean, selection=selection,
+        parallel=parallel, index_host=index_host, dry_run=dry_run, load_default=load_default )
 
     action=sdsqueries.get_scalar(squeries,'action',None)
     progress=sdsqueries.get_scalar(squeries,'progress',False,type_=bool)
@@ -90,7 +98,7 @@ def run(stream=None,
 
         return metadata
 
-def separate_negatives( parameter ):
+def separate_negatives_par( parameter ):
     """Checks parameter (a list of strings based on a selection file) for negative specifications,
     e.g.  'institution_id=-NOAA-GFDL'.  Returns a stream in which such negatives have
     been deleted, and dict of lists of those negative specifications.  Presently, this is only
