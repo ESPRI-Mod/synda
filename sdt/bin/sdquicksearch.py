@@ -51,7 +51,7 @@ def run( stream=None, path=None, parameter=None, index_host=None, post_pipeline_
     if parameter is None:
         parameter=[]
 
-    streamclean, negspecs = separate_negatives( stream )
+    streamclean, negspecs = separate_negatives_str( stream )
     queries=sdpipeline.build_queries( stream=streamclean, path=path, parameter=parameter,
                                       index_host=index_host, parallel=False, load_default=False )
 
@@ -91,7 +91,7 @@ def run( stream=None, path=None, parameter=None, index_host=None, post_pipeline_
             if progress:
                 ProgressThread.stop() # spinner stop
 
-def separate_negatives( stream ):
+def separate_negatives_str( stream ):
     """Checks stream (a list of dicts based on a selection file) for negative specifications, e.g.
     stream['institution_id']==['-NOAA-GFDL'].  Returns a stream in which such negatives have
     been deleted, and dict of lists of those negative specifications.  Presently, this is only
@@ -152,6 +152,8 @@ if __name__ == '__main__':
     parser.add_argument('-1','--print_only_one_item',action='store_true')
 
     args = parser.parse_args()
+    if args.post_pipeline_mode=='None':
+        args.post_pipeline_mode = None
 
     result=run(parameter=args.parameter,index_host=args.index_host,post_pipeline_mode=args.post_pipeline_mode,dry_run=args.dry_run)
 

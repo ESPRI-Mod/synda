@@ -99,7 +99,7 @@ def post_pipeline(metadata,mode=None):
 
     if mode is None:
         # if mode is None, we return the result as is, without any transformation
-        # (useful for dumping malformed files JSON raw data, to make malformed files debug more easy).
+        # (usefull for dumping malformed files JSON raw data, to make malformed files debug more easy).
 
         return metadata
 
