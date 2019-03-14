@@ -164,5 +164,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     #file_functional_id='cmip5.output1.LASG-CESS.FGOALS-g2.decadal1985.day.atmos.day.r1i1p1.v1.va_day_FGOALS-g2_decadal1985_r1i1p1_19880101-19881231.nc'
-    file_functional_id='cmip5.output1.CMCC.CMCC-CMS.piControl.mon.atmos.Amon.r1i1p1.v20120717.pr_Amon_CMCC-CMS_piControl_r1i1p1_416401-417312.nc'
-    print get_urls(file_functional_id)
+    #file_functional_id='cmip5.output1.CMCC.CMCC-CMS.piControl.mon.atmos.Amon.r1i1p1.v20120717.pr_Amon_CMCC-CMS_piControl_r1i1p1_416401-417312.nc'
+    file_functional_id='cmip5.output1.NOAA-GFDL.GFDL-CM2p1.historical.mon.atmos.Amon.r3i1p1.v20110601.cl_Amon_GFDL-CM2p1_historical_r3i1p1_190601-191012.nc'
+    from pprint import pprint
+    pprint( get_urls(file_functional_id,'esgf-node.llnl.gov') )
