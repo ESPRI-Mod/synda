@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -34,6 +33,7 @@ def load(configuration_file,credential_file):
 # TODO: replace default options DICTIONNARY below with a default options FILE
 # (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
+                 'max_parallel_download_per_datanode':'8',
                  'user':'',
                  'group':'',
                  'hpss':'0',

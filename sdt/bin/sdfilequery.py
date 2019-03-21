@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -21,6 +20,7 @@ import sdapp
 import sddb
 from sdtools import print_stderr
 import sdconst
+import sdlog
 
 def transfer_running_count(conn=sddb.conn):
     return transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING,conn=conn)
@@ -40,6 +40,17 @@ def transfer_status_count(status=None,conn=sddb.conn):
     count=rs[0]
     c.close()
     return count
+
+def transfer_running_count_by_datanode( conn=sddb.conn ):
+    c = conn.cursor()
+    q = "SELECT data_node FROM file WHERE (status='running' OR status='waiting') GROUP BY data_node"
+    c.execute(q)
+    rcs = {r[0]:0 for r in c.fetchall()}
+    q = "SELECT data_node,COUNT(data_node) FROM file WHERE status='running' GROUP BY data_node"
+    c.execute(q)
+    rcs.update( {r[0]:r[1] for r in c.fetchall()} )
+    c.close()
+    return rcs
 
 def get_download_status(project=None):
     li=[]

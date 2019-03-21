@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -79,6 +78,7 @@ def create_configuration_file_sample(path):
 
     config.add_section('download')
     config.set('download', 'max_parallel_download', '8')
+    config.set('download', 'max_parallel_download_per_datanode', '8')
     config.set('download', 'hpss', '1')
     config.set('download', 'http_fallback', 'false')
     config.set('download', 'gridftp_opt', '')
