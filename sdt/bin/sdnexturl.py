@@ -152,11 +152,12 @@ def prioritize_urlps( urlps ):
         return 2
     def priurl(url):
         if url.find('llnl')>0:  return 0
-        if url.find('ipsl')>0:  return 1
-        if url.find('ceda')>0:  return 2
-        if url.find('dkrz')>0:  return 3
-        if url.find('nci')>0:   return 4
-        return 5
+        if url.find('gridftp.ipsl')>0:  return 1
+        if url.find('vesg.ipsl')>0:  return 2
+        if url.find('ceda')>0:  return 3
+        if url.find('dkrz')>0:  return 4
+        if url.find('nci')>0:   return 5
+        return 6
     return sorted( urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))) )
 
 
