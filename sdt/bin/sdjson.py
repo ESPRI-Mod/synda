@@ -67,6 +67,7 @@ def parse_metadata(buffer):
     try:
         xmldoc = json.loads(buffer)
     except Exception, e:
+        sdlog.debug("SYNDJSON-010","exception %s"%e)
         raise
 
 
