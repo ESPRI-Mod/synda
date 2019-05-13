@@ -15,6 +15,7 @@ import os
 import urllib2
 import requests
 import sdtypes
+from retrying import retry # retry decorator
 from sdexception import SDException
 from sdtime import SDTimer
 import sdapp
@@ -120,6 +121,10 @@ def HTTP_GET_2(url,timeout=20,verify=True):
 
     return buf
 
+# The decorator causes a retry after any exception.  It defines exponential backoff, waiting
+# 2^x * 1000 milliseconds between retries, a maximum of 120 seconds (2 minutes), and gives up
+# after 360 seconds (6 minutes)
+@retry(wait_exponential_multiplier=1000, wait_exponential_max=120000, stop_max_delay=360000)
 def HTTP_GET(url,timeout=20):
     """urllib impl."""
 
@@ -134,6 +139,7 @@ def HTTP_GET(url,timeout=20):
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-002"
+        sdlog.debug("SDNETUTI-002",errcode+' '+errmsg)
 
         raise SDException(errcode,errmsg)
 
