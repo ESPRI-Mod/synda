@@ -97,7 +97,7 @@ def is_event_enabled(event,project):
 
 os.umask(0002)
 
-system_pkg_install=False
+system_pkg_install=True
 
 # set synda folders paths (aka install-folders)
 if not system_pkg_install:
@@ -177,7 +177,8 @@ nearest_schedule='post' # pre | post
 
 unknown_value_behaviour='error' # error | warning
 
-mono_host_retry=False
+# normal mono_host_retry=False
+mono_host_retry=True  # jfp
 proxymt_progress_stat=False
 poddlefix=True
 lowmem=True
