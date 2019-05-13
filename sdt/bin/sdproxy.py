@@ -79,7 +79,7 @@ class SearchAPIProxy():
 
             raise
 
-        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(response.count(),response.num_found,request.get_url()))
+        sdlog.info("SYDPROXY-105","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(response.count(),response.num_found,request.get_url()))
 
         return response
 
