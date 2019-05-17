@@ -11,6 +11,7 @@
 
 """This module contains database versioning routines."""
 
+from distutils.version import LooseVersion
 import sdapp
 import sdlog
 import sddbnormalize
@@ -36,18 +37,19 @@ def check_version(conn):
         conn.commit()
         c.close()
     else:
-        if current_db_version < "2.9":
+        if LooseVersion(current_db_version) < LooseVersion("2.9"):
             raise SDException("SDDBVERS-316","Database version too old: cannot upgrade database")
 
         if sdapp.version==current_db_version:
             pass # db version matches binary version, nothing to do
-        elif sdapp.version < current_db_version:
+        elif LooseVersion(sdapp.version) < LooseVersion(current_db_version):
             raise SDException("SDDBVERS-317","Binary cannot be used with this database (binary version too old)")
-        elif sdapp.version > current_db_version:
+        elif LooseVersion(sdapp.version) > LooseVersion(current_db_version):
             upgrade_db(conn,current_db_version,sdapp.version)
 
 def upgrade_db(conn,current_db_version,new_db_version):
-    li=sddbversionutils.version_range(current_db_version,new_db_version)
+    versions = upgrade_procs.keys()
+    li=sddbversionutils.version_range( versions, current_db_version, new_db_version )
 
     # remove the first value (i.e. no upgrade needed there as db is already at this version)
     li=li[1:]
@@ -60,6 +62,16 @@ def upgrade_db(conn,current_db_version,new_db_version):
             sdlog.info("SDDBVERS-319","Database updated to version %s"%(v,))
 
 # -- upgrade procs -- #
+
+def upgrade_310(conn):
+
+    conn.execute("CREATE TABLE failed_url ( url_id INTEGER PRIMARY KEY, url TEXT, file_id INTEGER)")
+    conn.execute("CREATE UNIQUE INDEX idx_failed_url_1 ON failed_url (url)")
+    conn.execute("ALTER TABLE file ADD COLUMN searchapi_host VARCHAR")
+
+    conn.commit()
+
+    sddbversionutils.update_db_version(conn,'3.10')
 
 def upgrade_39(conn):
 
@@ -133,6 +145,7 @@ def upgrade_30(conn):
 # init.
 
 upgrade_procs={
+    '3.10': upgrade_310,
     '3.9': upgrade_39,
     '3.8': upgrade_38,
     '3.7': upgrade_37,
