@@ -116,6 +116,7 @@ def HTTP_GET_2(url,timeout=20,verify=True):
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-004"
+        sdlog.debug("SDNETUTI-004",errcode+' '+errmsg)
 
         raise SDException(errcode,errmsg)
 
