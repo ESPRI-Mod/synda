@@ -57,6 +57,16 @@ def serialize_parameter__ovpp(name,values): # 'ovpp' means one value per paramet
 
     assert isinstance(values,list)
 
+    if name=="instance_id" and values[0][-1]=='*':
+        # Special case, replace instance_id match with a string search because we need wildcards.
+        # (The '*' at the end of the instance_id value signals the need for wildcards.)
+        # That's because when the SOLR index is built, sometimes the name is changed (by suffixing
+        # "_0" or "_1", etc.) to preserve uniqueness.  And only string search supports wildcards.
+        #sdlog.info("JFPRMTQUTS01","name=%s, values=%s"%(name,values))
+        name = "query"
+        values = [ "id:" + v + "*" for v in values ]
+        #sdlog.info("JFPRMTQUTS02","name=%s, values=%s"%(name,values))
+
     for v in values:
         l.append(name+"="+v)
 
