@@ -71,11 +71,15 @@ class SearchAPIProxy():
 
             # if exception occurs in sdnetutils.call_web_service() method, all
             # previous calls to this method inside this paginated call are also
-            # cancelled
+            # cancelled (unless call_web_service__RETRY is the calling method)
 
+            # (original):
             # we reset the offset so the paginated call can be restarted from the begining the next time
             # (maybe overkill as offset is reinitialized when entering 'call_web_service__PAGINATION()' func)
-            request.offset=0
+            # JfP: In fact, if call_web_service__RETRY is being used, then resetting request.offset here will
+            # cause the wrong offset to be used on the next try.  It is better to give the paginator exclusive
+            # rights to change the offset.
+            #request.offset=0
 
             raise
 
