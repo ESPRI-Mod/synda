@@ -1,4 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
+#!/usr/bin/env python
 
 ##################################
 # @program        synda

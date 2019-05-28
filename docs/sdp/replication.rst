@@ -122,7 +122,16 @@ On *synda-host*:
 
 - Add the project name you want to replicate to the ``AUTHORIZED_PROJECT`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
 
+.. code-block:: python
+
+     AUTHORIZED_PROJECT=['CORDEX','CMIP5','CMIP6','c3scmip5','c3scordex', 'input4mips']
+
 - Depending on its *Data Reference Syntax*, add the project name you want to replicate to the ``PROJECT_WITH_ONE_VARIABLE_PER_DATASET`` list in ``/usr/share/python/synda/sdp/bin/spconst.py``.
+
+.. code-block:: python
+
+     PROJECT_WITH_ONE_VARIABLE_PER_DATASET=['CORDEX','CMIP6','c3scmip5','c3scordex', 'input4mips']
+
 
 ``sdw`` module
 --------------
@@ -155,6 +164,15 @@ Target data to replicate
 ------------------------
 
 Edit one or several selection file focusing the data you want to replicate. See :ref:`the selection file section <selection-file>`.
+
+Example of selection file for CMIP6 replication:
+
+.. code-block:: text
+
+     mip_era=CMIP6
+     activity_id=CMIP
+     experiment=historical
+     latest=True
 
 .. note::
 
@@ -243,6 +261,10 @@ Due to the RPC server connexion, those scripts can be run outside of *synda-host
 
 - Edit and configure :download:`publication.sh <publication.sh>` that will publish the generated mapfiles as replica.
 
+.. note::
+
+   Particular publication script is available for ESGF CMIP6 DC publication: :download:`publication.sh <publication_dc.sh>`
+
 Each script as two main section:
 
  - The initialization section deserializes the command-line argument submitted by the worker to the script.
@@ -250,7 +272,7 @@ Each script as two main section:
 
 .. warning::
 
-    The provided templates works with some functions to source with :download:`functions.sh <functions.sh>`.
+    The provided scripts works with some functions to source with :download:`functions.sh <functions.sh>`.
 
 File discovery
 **************
