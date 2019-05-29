@@ -1,5 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
-#jfp was
+#!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -143,7 +142,7 @@ METADATA_SERVER_TYPES=['esgf_search_api','thredds_catalog','apache_default_listi
 #
 # So from now, it's set to 9000
 #jfp was SEARCH_API_CHUNKSIZE=9000
-SEARCH_API_CHUNKSIZE=100
+SEARCH_API_CHUNKSIZE=1000
 
 PROCESSING_CHUNKSIZE=5000 # as list maybe duplicated in memory at some point in the pipeline, we use a lower value here than SEARCH_API_CHUNKSIZE
 PROCESSING_FETCH_MODE_GENERATOR='generator'
