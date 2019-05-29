@@ -1,5 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
-#jfp was
+#!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -28,7 +27,6 @@ def run(tr):
         True: url has been switched to a new one
         False: nothing changed (same url)
     """
-    #sdlog.info("JFPNEXTUR-00","tr.searchapi_host=%s, tr.url=%s"%(tr.searchapi_host,tr.url))
     try:
         url = tr.url
     except:
@@ -42,11 +40,11 @@ def run(tr):
         conn.commit()
     except sqlite3.IntegrityError as e:
         # url,file_id is already in the failed_url table
-        sdlog.info("JFPNEXTUR-01","During database operations, IntegrityError %s on %s with new file_id=%s"
+        sdlog.info("SDNEXTUR-001","During database operations, IntegrityError %s on %s with new file_id=%s"
                    %(e,url,tr.file_id))
         conn.commit()
     except Exception as e:
-        sdlog.info("JFPNEXTUR-02","During database operations, unknown exception %s"%(e,))
+        sdlog.info("SDNEXTUR-002","During database operations, unknown exception %s"%(e,))
         return False
     finally:
         c.close()
@@ -55,28 +53,27 @@ def run(tr):
         next_url(tr,conn)
         return True
     except sdexception.FileNotFoundException as e:
-        sdlog.info("SDNEXTUR-001","Cannot switch url for %s (FileNotFoundException)"%(tr.file_functional_id,))
+        sdlog.info("SDNEXTUR-003","Cannot switch url for %s (FileNotFoundException)"%(tr.file_functional_id,))
         return False
     except sdexception.NextUrlNotFoundException as e:
-        sdlog.info("SDNEXTUR-002","Cannot switch url for %s (NextUrlNotFoundException)"%(tr.file_functional_id,))
+        sdlog.info("SDNEXTUR-004","Cannot switch url for %s (NextUrlNotFoundException)"%(tr.file_functional_id,))
         return False
     except Exception as e:
-        sdlog.info("SDNEXTUR-003","Unknown exception (file_functional_id=%s,exception=%s)"%(tr.file_functional_id,str(e)))
+        sdlog.info("SDNEXTUR-005","Unknown exception (file_functional_id=%s,exception=%s)"%(tr.file_functional_id,str(e)))
         conn.close()
         return False
     finally:
         conn.close()
 
 def next_url(tr,conn):
-    #sdlog.info("JFPNEXTUR-13","entering next_url for file %s"%(tr.file_functional_id,))
     all_urlps=get_urls(tr.file_functional_id,tr.searchapi_host) # [[url1,protocol1],[url2,protocol2],...]
-    sdlog.info("JFPNEXTUR-03","all_urpls= %s"%(all_urlps,))
+    sdlog.info("SDNEXTUR-006","all_urpls= %s"%(all_urlps,))
     c = conn.cursor()
     fus = c.execute("SELECT url FROM failed_url WHERE file_id="+
                   "(SELECT file_id FROM file WHERE file_functional_id=?)",
                     (tr.file_functional_id,))
     failed_urls = [fu[0] for fu in fus.fetchall()]
-    sdlog.info("JFPNEXTUR-04","failed_urls= %s"%(failed_urls,))
+    sdlog.info("SDNEXTUR-007","failed_urls= %s"%(failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
     urls=remove_unsupported_url(urlps)
@@ -100,19 +97,17 @@ def remove_unsupported_url(urlps):
 def get_urls(file_functional_id, searchapi_host):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
 
-    #sdlog.info("JFPNEXTUR-15","get_urls will call sdquicksearch on file %s"%(file_functional_id,))
-    #sdlog.info("JFPNEXTUR-16","get_urls will use index host %s"%(searchapi_host,))
     try:
         result=sdquicksearch.run(
             parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
                        file_functional_id],
             post_pipeline_mode=None,index_host=searchapi_host)
     except Exception as e:
-        sdlog.debug("JFPNEXTUR-17", "exception %s.  instance_id=%s"%(e,file_functional_id))
+        sdlog.debug("SDNEXTUR-10", "exception %s.  instance_id=%s"%(e,file_functional_id))
         raise e
 
     li=result.get_files()
-    sdlog.info("JFPNEXTUR-05","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
+    sdlog.info("SDNEXTUR-011","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
     if li==[]:
         # No urls found. Try again, but wildcard the file id. (That leads to a string search on all
         # fields for the wildcarded file id, rather than a match of the instance_id field only.)
@@ -121,7 +116,7 @@ def get_urls(file_functional_id, searchapi_host):
                        file_functional_id+'*'],
             post_pipeline_mode=None,index_host=searchapi_host)
         li=result.get_files()
-        sdlog.info("JFPNEXTUR-06","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
+        sdlog.info("SDNEXTUR-012","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
     # result looks like
     # [ {protocol11:url11, protocol12:url12, attached_parameters:dict, score:number, type:'File',
     #    size:number} }, {[another dict of the same format}, {another dict},... ]
