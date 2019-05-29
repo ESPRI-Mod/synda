@@ -34,6 +34,7 @@ import signal
 import subprocess
 #import sdapp # do no uncomment this (see note above)
 import sdconfig
+import sdconst
 import sdutils
 import sdtools
 import sdpermission
