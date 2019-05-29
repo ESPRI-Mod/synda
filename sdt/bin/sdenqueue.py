@@ -1,5 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
-#jfp was
+#!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -118,7 +117,7 @@ def keep_recent_datasets(datasets):
 
         if d.last_mod_date is None:
             # imported from the old database - certainly not modified in the last
-            # 24 hours.  But the interval calculation won't work with None. (jfp)
+            # 24 hours.  But the interval calculation won't work with None.
             pass
         else:
             interval=sdtime.compute_time_delta(d.last_mod_date,sdtime.now())
