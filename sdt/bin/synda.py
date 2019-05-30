@@ -1,5 +1,7 @@
-#!/usr/bin/env python -W ignore
+#!/usr/share/python/synda/sdt/bin/python -W ignore
 # -*- coding: ISO-8859-1 -*-
+#jfp This first line doesn't work because it has args:
+#   #!/usr/bin/env python -W ignore
 
 ##################################
 #  @program        synda
