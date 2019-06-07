@@ -92,19 +92,21 @@ def run( stream=None, path=None, parameter=None, index_host=None, post_pipeline_
 def separate_negatives_str( stream ):
     """Checks stream (a list of dicts based on a selection file) for negative specifications, e.g.
     stream['institution_id']==['-NOAA-GFDL'].  Returns a stream in which such negatives have
-    been deleted, and dict of lists of those negative specifications.  Presently, this is only
-    implemented for 'institution_id'.  Presently this changes stream."""
-    negs = {'institution_id': []}
+    been deleted, and dict of lists of those negative specifications.  Presently this changes
+    stream."""
+    negs = {}
     if stream is not None:
         for str in stream:
-            insts = str.get('institution_id',[])
-            new_insts = [ inst for inst in insts if inst[0]!='-' ]
-            negs['institution_id'] += [inst[1:] for inst in insts if inst[0]=='-' ]
-            if len(new_insts)>0:
-                str['institution_id'] = new_insts
-            else:
-                str.pop('institution_id',None)
-        negs['institution_id'] = list(set(negs['institution_id']))
+            for key,insts in str.items():
+                new_insts = [ inst for inst in insts if inst[0]!='-' ]
+                if key not in negs:
+                    negs[key] = []
+                negs[key] += [inst[1:] for inst in insts if inst[0]=='-' ]
+                if len(new_insts)>0:
+                    str[key] = new_insts
+                else:
+                    str.pop(key,None)
+                negs[key] = list(set(negs[key]))
     return stream, negs
 
 def remove_negatives( result, negspecs ):
@@ -112,7 +114,8 @@ def remove_negatives( result, negspecs ):
     ESGF index node invoked in ws_call().
     example of negspecs:  {'institution_id': ['NOAA-GFDL']}
     """
-    result.delete_some( (lambda myfile: myfile.split('.')[2]), negspecs['institution_id'] )
+    for key in negspecs:
+        result.delete_some( (lambda myfile: myfile.split('.')[2]), negspecs[key] )
     return result
 
 def process_queries( queries, negspecs ):

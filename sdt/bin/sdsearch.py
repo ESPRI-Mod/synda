@@ -40,8 +40,6 @@ from sdexception import SDException,MissingDatasetTimestampUrlException
 from sdprogress import ProgressThread
 from sdquicksearch import separate_negatives_str
 
-import pdb
-
 def run(stream=None,
         selection=None,
         path=None,
@@ -98,34 +96,39 @@ def run(stream=None,
         return metadata
 
 def separate_negatives_par( parameter ):
-    """Checks parameter (a list of strings based on a selection file) for negative specifications,
-    e.g.  'institution_id=-NOAA-GFDL'.  Returns a stream in which such negatives have
-    been deleted, and dict of lists of those negative specifications.  Presently, this is only
-    implemented for 'institution_id=...'."""
+    """Checks parameter (a list of strings based on a selection file) for exclusions ("negative
+    specifications", e.g.  'institution_id=-NOAA-GFDL'.
+    Returns a new parameter in which such exclusions have been deleted, and dict of lists of those
+    exclusions."""
     parameterclean = []
-    poss = []
-    negs = {'institution_id': []}
+    poss = {}
+    negs = {}
     if parameter is not None:
         for str in parameter:
             key = str.split('=')[0]
-            if key!='institution_id':
+            if '-' not in str.split('=')[1]:
+                # no exclusions exist
                 parameterclean += [str]
                 continue
             insts = str.split('=')[1].split(',')
-            new_insts = [ inst for inst in insts if inst[0]!='-' ]
-            poss += new_insts
-            negs['institution_id'] += [inst[1:] for inst in insts if inst[0]=='-' ]
+            if key not in poss:
+                poss[key] = []
+            poss[key] += [ inst for inst in insts if inst[0]!='-' ]
+            if key not in negs:
+                negs[key] = []
+            negs[key] += [ inst[1:] for inst in insts if inst[0]=='-' ]
         if len(poss)>0:
-            parameterclean += ['='.join(['institution_id',','.join(poss)])]
-        negs['institution_id'] = list(set(negs['institution_id']))
+            parameterclean += ['='.join([key,','.join(poss[key])])]
+        negs[key] = list(set(negs[key]))
     return parameterclean, negs
 
 def remove_negatives( metadata, negspecs ):
-    """Removes items in result which match negspecs.  result is output of a search by an
-    ESGF index node invoked in ws_call().
-    example of negspecs:  {'institution_id': ['NOAA-GFDL']}
+    """Removes items in result which match negspecs.  negspecs is a description of exclusions.
+    result is output of a search by an ESGF index node invoked in ws_call().
+    example of negspecs:  {'institution_id': ['NOAA-GFDL'], 'activity_id': ['input4MIPs']}
     """
-    metadata.delete_some( 'institution_id', negspecs['institution_id'] )
+    for key in negspecs:
+        metadata.delete_some( key, negspecs[key] )
     return metadata
 
 def execute_queries(squeries,parallel,post_pipeline_mode,action,negspecs):
@@ -254,5 +257,6 @@ if __name__ == '__main__':
             datasets = list(set([f['dataset_functional_id'] for f in metadata.get_files()]))
             datasets.sort()
             pprint(datasets)
+            pprint( metadata.get_files()[0]['url'] )
         else:
             sdprint.print_format(metadata.get_files(),args.format,args.print_only_one_item) # warning: load list in memory
