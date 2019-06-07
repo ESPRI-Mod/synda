@@ -16,15 +16,15 @@ Notes
     - This module removes duplicate files in a random way (i.e. all files have the same chance to be removed).
     - This module removes replicates
     - sdrmdup means 'SynDa ReMove DUPlicate and REPlicate'
-jfp: This doesn't explicitly "remove replicates".  run() will remove all copies but the first
-jfp  encountered.  They are replicates iff the first encountered is at the "original" data node.
-jfp  At LLNL, we want to get the fastest data node, replicates or not.  Here, or in whatever builds
-jfp  the files list, is the place to prioritize that sort of thing.
-jfp  I added run_latest(), which also removes everything which is not the latest known version.
+Clarification added 2019-05-21:
+ This doesn't explicitly "remove replicates".  run() will remove all copies but the first
+ encountered.  They are replicates iff the first encountered is at the "original" data node.
 
 See also
     - sdshrink
 """
+# If we ever want to prioritize data nodes, it can be done here, or in whatever builds
+# the files list.
 
 import string
 import sdapp
@@ -75,7 +75,8 @@ def remove_allbut_latest(files,functional_id_keyname):
     'file_functional_id' or 'dataset_functional_id'.  This function will remove
     any which are not latest version (within the list), and return the result, as a list.
     """
-    #if functional_id_keyname!='dataset_functional_id':
+    # This gets the version by parsing file_functional_id.  Thus this is fragile.  But it works
+    # for CMIP-5 and CMIP-6, and requires a minimum of changes at higher levels.
     latest = {}
     for f in files:
         version = f['dataset_version']
