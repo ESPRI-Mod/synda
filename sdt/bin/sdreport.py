@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/share/python/synda/sdt/bin/python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -62,10 +62,16 @@ def print_running_transfers():
     li=[]
     for tr in sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_RUNNING):
         current_size=os.path.getsize(tr.get_full_local_path()) if os.path.isfile(tr.get_full_local_path()) else 0
-        li.append([humanize.naturalsize(current_size,gnu=False),humanize.naturalsize(tr.size,gnu=False),tr.start_date,tr.filename])
+        li.append(
+            [humanize.naturalsize(current_size,gnu=False),
+             humanize.naturalsize(tr.size,gnu=False),
+             tr.start_date, tr.data_node, tr.filename])
 
     if len(li)>0:
-        print tabulate(li,headers=['Current size','Total size','Download start date','Filename'],tablefmt="plain")
+        print tabulate(
+            li,
+            headers=['Current size','Total size','Download started at','Data Node','Filename'],
+            tablefmt="plain" )
     else:
         print 'No current download'
 
