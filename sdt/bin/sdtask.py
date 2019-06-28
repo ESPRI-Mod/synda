@@ -143,8 +143,11 @@ def transfers_begin():
                     # Handle per-datanode maximum number of transfers:
                     try:
                         new_count = max_datanode_count - datanode_count[datanode]
-                        # JFP kludge to handle CCCma:
+                        # JFP kludge to handle CCCma which can't deal with 4 requests:
                         if datanode.find('ec.gc.ca')>0:
+                            new_count = 3 - datanode_count[datanode]
+                        # JFP the same kludge, for datanodes which fail frequently if many requests
+                        if datanode.find('bcc.cma.cn')>0 or datanode.find('lasg.ac.cn')>0:
                             new_count = 3 - datanode_count[datanode]
                     except KeyError:
                         sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
