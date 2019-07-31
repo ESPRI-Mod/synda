@@ -96,21 +96,25 @@ def is_event_enabled(event,project):
 # Init module.
 
 os.umask(0002)
-
+# TODO Remove package install specific bits
 system_pkg_install=False
 
 # set synda folders paths (aka install-folders)
-if not system_pkg_install:
-    if 'ST_HOME' not in os.environ:
-        raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
+# TODO this should become default behavior
+if 'ST_HOME' not in os.environ:
+    raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
-    install_paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
-else:
-    install_paths=sdconfigutils.PackageSystemPaths()
+install_paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
+
 
 # set user folders
+# TODO investigate what's the reason for this? 
 user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
 
+# print('checking credentials files read permissions')
+# print(install_paths.credential_file)
+# print(install_paths.default_db_folder)
+# print(sdtools.is_file_read_access_OK(install_paths.credential_file))
 
 if sdtools.is_file_read_access_OK(install_paths.credential_file):
     paths=install_paths
@@ -125,15 +129,25 @@ else:
 
         # Non fully working as multi-daemon support not implemented yet. But works for
         # basic command (eg 'synda get')
-
+        print('Daemon mode is inaccessible from this installation. '
+              'Please report to devs in case you think this is an error.')
         user_paths.create_tree()
         paths=user_paths
+    elif not os.path.isfile(os.path.join('ST_HOME', 'sdt.conf')):
+        print('Installation from scratch...')
+        from sdsetuputils import PostInstallCommand
+
+        pic = PostInstallCommand()
+        pic.run()
+        paths=install_paths
     else:
         # being here means synda application can only be used by root or admin (admin means being in the synda group)
-
-        sdtools.print_stderr(sdi18n.m0027)
+        print('here')
+        print(os.path.isfile(os.path.join('ST_HOME','sdt.conf')))
+        sdtools.print_stderr(sdi18n.m0028)
         sys.exit(1)
-
+#hack
+paths=install_paths
 # aliases
 bin_folder=paths.bin_folder
 tmp_folder=paths.tmp_folder
@@ -185,7 +199,7 @@ fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
 
-config=sdcfloader.load(configuration_file,credential_file)
+config=sdcfloader.load(configuration_file, credential_file)
 
 
 # alias
