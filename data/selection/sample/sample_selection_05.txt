@@ -1,0 +1,6 @@
+project=CMIP5
+model=inmcm4 bcc-csm1-1 GFDL-CM3 GFDL-ESM2G IPSL-CM5A-MR HadGEM2-ES MIROC5 MPI-ESM-P NorESM1-M MPI-M
+experiment=amip
+ensemble=r1i1p1
+variable[atmos][mon]=clt ta ua
+cmor_table=Amon

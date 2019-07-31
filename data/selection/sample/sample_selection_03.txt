@@ -1,0 +1,7 @@
+project=CORDEX
+driving_model=ECMWF-ERAINT
+domain=AFR-44
+searchapi_host=esgf-index1.ceda.ac.uk
+experiment=rcp26
+ensemble=all
+#tablename=cfMon

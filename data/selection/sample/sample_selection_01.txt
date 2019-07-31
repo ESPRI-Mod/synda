@@ -1,0 +1,9 @@
+project=CMIP5
+model=CNRM-CM5 CSIRO-Mk3-6-0
+experiment=historical amip
+ensemble=r1i1p1
+variable[atmos][mon]=tasmin tas:day psl
+variable[ocean][fx]=areacello sftof
+variable[land][mon]=mrsos,nppRoot,nep
+variable[seaIce][mon]=sic evap
+variable[ocnBgchem][mon]=dissic fbddtalk

@@ -1,0 +1,5 @@
+project=CORDEX
+driving_model=ECMWF-ERAINT
+domain=AFR-44
+local_path_format=custom
+local_path_drs_template=cordex/%(product)s/%(domain)s/%(institute)s/%(driving_model)s/%(experiment)s/%(ensemble)s/%(institute)s-%(rcm_name)s/%(rcm_version)s/%(time_frequency)s/%(variable)s/%(dataset_version)s
