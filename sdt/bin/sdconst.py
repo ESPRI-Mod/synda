@@ -219,3 +219,6 @@ SECURITY_DIR_TMP='tmp'
 SECURITY_DIR_TMPUID='tmpuid'
 SECURITY_DIR_HOME='home'
 SECURITY_DIR_MIXED='mixed'
+
+#Synda release parameters
+SYNDA_VERSION = '3.10'
