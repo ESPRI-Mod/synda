@@ -34,6 +34,7 @@ import signal
 import subprocess
 #import sdapp # do no uncomment this (see note above)
 import sdconfig
+import sdconst
 import sdutils
 import sdtools
 import sdpermission
@@ -113,8 +114,7 @@ def start():
                 main_loop()
         except Exception, e:
             import sdtrace
-            sdtrace.log_exception()
-
+            sdtrace.log_exception() 
 
 
 
@@ -203,8 +203,8 @@ def unprivileged_user_mode():
 os.umask(0002)
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
-log_stdout=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
-log_stderr=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
+log_stdout=open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
+log_stderr=open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,stdout=log_stdout,stderr=log_stderr)
 context.signal_map={ signal.SIGTERM: terminate, }
 
@@ -220,7 +220,7 @@ if __name__ == "__main__":
     if args.action in ['start','stop']:
         if not sdpermission.is_admin():
             sdtools.print_stderr() # this is to prevent having all on the same line when using "synda service" command e.g. "Shutting down synda daemon (sdt): You need to be root to perform this command."
-            sdtools.print_stderr(sdi18n.m0027)
+            sdtools.print_stderr(sdi18n.m0028)
             sys.exit(1)
 
     if args.action == 'start':
