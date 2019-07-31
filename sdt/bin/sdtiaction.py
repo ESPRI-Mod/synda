@@ -749,6 +749,12 @@ def watch(args):
     else:
         print_stderr('Daemon not running')
 
+def checkenv(args):
+    from sdsetuputils import PostInstallCommand
+    pic = PostInstallCommand()
+    pic.run()
+
+
 # init.
 
 # TODO: rename as subcommands
@@ -778,5 +784,6 @@ actions={
     'update':update,
     'upgrade':upgrade,
     'variable':variable,
-    'watch':watch
+    'watch':watch,
+    'checkenv': checkenv
 }
