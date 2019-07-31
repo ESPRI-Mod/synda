@@ -214,3 +214,5 @@ m0025="""sudo service synda start"""
 m0026="""synda daemon start"""
 
 m0027="You must either be root, or part of the synda group to perform this command."
+m0028="Unable to access credentials file necessary to perform this action, please make sure you have sufficient " \
+      "permissions for the said file then retry the command."
