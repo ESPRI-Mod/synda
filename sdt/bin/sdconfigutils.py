@@ -40,15 +40,15 @@ class PackageSystemPaths(Paths):
 
 class SourceInstallPaths(Paths):
     def __init__(self,root_folder):
-        self.bin_folder="%s/bin"%root_folder
-        self.tmp_folder="%s/tmp"%root_folder
-        self.log_folder="%s/log"%root_folder
-        self.conf_folder="%s/conf"%root_folder
+        self.bin_folder=os.path.join(root_folder, 'bin')
+        self.tmp_folder=os.path.join(root_folder, 'tmp')
+        self.log_folder=os.path.join(root_folder, 'log')
+        self.conf_folder=os.path.join(root_folder, 'conf')
 
-        self.default_selection_folder="%s/selection"%root_folder
-        self.default_db_folder="%s/db"%root_folder
-        self.default_data_folder="%s/data"%root_folder
-        self.default_sandbox_folder="%s/sandbox"%root_folder
+        self.default_selection_folder=os.path.join(root_folder, 'selection')
+        self.default_db_folder=os.path.join(root_folder, 'db')
+        self.default_data_folder=os.path.join(root_folder, 'data')
+        self.default_sandbox_folder=os.path.join(root_folder, 'sandbox')
 
         self.add_common_paths()
 
