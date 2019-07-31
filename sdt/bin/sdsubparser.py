@@ -187,6 +187,8 @@ def run(subparsers):
     subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 
+    subparser=create_subparser(subparsers, 'checkenv', help='Checks install environment.')
+
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
     subparser=create_subparser(subparsers,'install',help='Download dataset (async)',note=sdi18n.m0022,example=sdcliex.install())
