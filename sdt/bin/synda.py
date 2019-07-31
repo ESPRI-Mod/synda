@@ -69,7 +69,8 @@ def set_stream_type(args):
     else:
         raise sdexception.SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
 
-if __name__ == '__main__':
+
+def run():
 
     # create the top-level parser
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -84,6 +85,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+
     # check type mutex
     #
     # There is no way to check mutex as 'dest' argparse feature is used. Maybe
@@ -91,11 +93,14 @@ if __name__ == '__main__':
     # help looks ugly. So better leave it as is until argparse handle this case
     # smoothly.
 
+    if args.subcommand=='setup':
+        print('Setting up environment...')
+
     # -- permission check -- #
 
     if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
         if not sdpermission.is_admin():
-            sdtools.print_stderr(sdi18n.m0027)
+            sdtools.print_stderr(sdi18n.m0028)
             sys.exit(1)
 
     # -- subcommand routing -- #
@@ -184,3 +189,7 @@ if __name__ == '__main__':
     sdtools.print_stderr("Use '--help' option for more info")
     #parser.print_help()
     sys.exit(2)
+
+
+if __name__ == '__main__':
+    run()
