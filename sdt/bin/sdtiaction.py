@@ -749,13 +749,13 @@ def watch(args):
     else:
         print_stderr('Daemon not running')
 
-def checkenv():
+def checkenv(args):
     from sdsetuputils import PostInstallCommand
     pic = PostInstallCommand()
     pic.run()
 
 # init.
-def initenv():
+def initenv(args):
     """
     should find the tar data.tar.bz and untar it
     :param args:
