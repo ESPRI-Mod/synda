@@ -23,14 +23,14 @@ Notes
 
 import sys
 import argparse
-import sdapp
+# import sdapp
 import sdconst
 import sdi18n
 import sdsubparser
 import sdtools
-import sdconfig
 import sdpermission
 import sdexception
+import sdtiaction
 
 def set_stream_type(args):
     import sddeferredbefore
@@ -50,7 +50,7 @@ def set_stream_type(args):
     # modifications.
     #
     # So what we do here is choose which is the search-API type we need
-    # (dataset, file) for the listing type asked by user (i.e.
+    # (dataset, file) for the listing type asked by user (i.e.We
     # variable, dataset, file)
     #
     # But note that in most case, search-API 'type' will be overrided
@@ -71,14 +71,13 @@ def set_stream_type(args):
 
 
 def run():
-
     # create the top-level parser
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
     #parser = sdtools.DefaultHelpParser(formatter_class=argparse.RawDescriptionHelpFormatter,description=sdi18n.m0016)
 
     subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand') # ,help=sdi18n.m0015
 
-    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as subcommand
+    parser.add_argument('-V','--version',action='version',version=sdconst.SYNDA_VERSION) # beware: version exist both as option and as subcommand
 
     # create parser for sub-commands
     sdsubparser.run(subparsers)

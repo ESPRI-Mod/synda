@@ -1,5 +1,4 @@
-#!/usr/share/python/synda/sdt/bin/python
-#jfp was
+#!/usr/bin/env python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
@@ -78,4 +77,7 @@ class OpenIDNotSetException(CertificateRenewalException):
     pass
 #
 class MissingDatasetUrlException(SDException):
+    pass
+
+class EnvironmentNotSet(SDException):
     pass

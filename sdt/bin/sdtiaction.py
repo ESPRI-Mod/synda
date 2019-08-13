@@ -594,7 +594,7 @@ def pexec(args):
 
         if dataset_found_count>0:
             if order_dataset_count==0 and order_variable_count==0:
-                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")   
+                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")
             else:
                 sdhistorydao.add_history_line(sdconst.ACTION_PEXEC,selection_filename)
 
@@ -749,13 +749,22 @@ def watch(args):
     else:
         print_stderr('Daemon not running')
 
-def checkenv(args):
+def checkenv():
     from sdsetuputils import PostInstallCommand
     pic = PostInstallCommand()
     pic.run()
 
-
 # init.
+def initenv():
+    """
+    should find the tar data.tar.bz and untar it
+    :param args:
+    :return:
+    """
+    from sdsetuputils import EnvInit
+    ei = EnvInit()
+    ei.run()
+
 
 # TODO: rename as subcommands
 actions={
@@ -785,5 +794,6 @@ actions={
     'upgrade':upgrade,
     'variable':variable,
     'watch':watch,
-    'checkenv': checkenv
+    'check-env': checkenv,
+    'init-env': initenv
 }

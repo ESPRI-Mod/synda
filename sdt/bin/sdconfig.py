@@ -15,13 +15,17 @@ import os
 import sys
 import uuid
 import argparse
+from distutils.command.install import install
+
 import sdconst
 import sdtools
 import sdcfloader
 import sdconfigutils
 import sdi18n
 import sdcfbuilder
-from sdexception import SDException
+from sdexception import SDException, EnvironmentNotSet
+from sdsetuputils import PostInstallCommand, EnvInit
+# from sdtiaction import checkenv, initenv
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
@@ -92,10 +96,10 @@ def is_event_enabled(event,project):
             return False # CMIP5 use special output12 event
         else:
             return True
-
+# def module_init():
 # Init module.
-
 os.umask(0002)
+
 # TODO Remove package install specific bits
 system_pkg_install=False
 
@@ -108,20 +112,31 @@ install_paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
 
 
 # set user folders
-# TODO investigate what's the reason for this? 
-user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
-
-# print('checking credentials files read permissions')
-# print(install_paths.credential_file)
-# print(install_paths.default_db_folder)
-# print(sdtools.is_file_read_access_OK(install_paths.credential_file))
-
+# TODO investigate what's the reason for this?
+# user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
 if sdtools.is_file_read_access_OK(install_paths.credential_file):
-    paths=install_paths
+    paths = install_paths
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
+    # Running Environment initialization script and warning user.
+    print('Synda has issues reaching your credential file, in ST_HOME.')
+    print('Running synda checking environment tool...')
+    pic = PostInstallCommand()
+    environment_check = pic.run()
+    if not environment_check:
+        initenv = raw_input('Synda environment needs a few key files. '
+                            'Would you like to init the stubs of these files? y/n: ').lower()
+        while initenv == '' or initenv not in ['y' or 'n']:
+            initenv = raw_input('Synda environment needs a few key files. '
+                                'Would you like to init the stubs of these files? y/n: ').lower()
+        if initenv:
+            ei = EnvInit()
+            ei.run()
+        else:
+            raise EnvironmentNotSet('SDTSETUP-001', 'Environment not initialized.')
 
-    if os.environ.get('SDT_USER_ENV','0')=='1':
+    # commented on 08/08 to be replaced
+"""    if os.environ.get('SDT_USER_ENV','0')=='1':
         # Being here means we use machine-wide synda environment as non-admin synda user,
         # and so can only perform RO task (eg synda search, synda get, etc..)
         # Also it means we are not in daemon mode (daemon mode is currently only
@@ -146,8 +161,11 @@ else:
         print(os.path.isfile(os.path.join('ST_HOME','sdt.conf')))
         sdtools.print_stderr(sdi18n.m0028)
         sys.exit(1)
+"""
 #hack
 paths=install_paths
+
+
 # aliases
 bin_folder=paths.bin_folder
 tmp_folder=paths.tmp_folder
@@ -169,7 +187,7 @@ stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-check_path(bin_folder)
+#check_path(bin_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
@@ -236,8 +254,8 @@ cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 default_selection_file="%s/default.txt"%default_folder
 db_file="%s/sdt.db"%db_folder
 
-check_path(selection_folder)
-check_path(data_folder)
+#check_path(selection_folder)
+#check_path(data_folder)
 
 # destination folder for 'synda get'
 #
