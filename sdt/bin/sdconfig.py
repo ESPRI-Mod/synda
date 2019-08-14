@@ -133,7 +133,8 @@ else:
             ei = EnvInit()
             ei.run()
         else:
-            raise EnvironmentNotSet('SDTSETUP-001', 'Environment not initialized.')
+            sys.exit('Warning: Environment not set up for synda to operate properly. Exiting.')
+            # raise EnvironmentNotSet('SDTSETUP-001', 'Environment not initialized.')
 
 
     # commented on 08/08 to be replaced
