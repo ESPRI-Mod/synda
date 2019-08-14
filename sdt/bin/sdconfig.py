@@ -124,16 +124,17 @@ else:
     pic = PostInstallCommand()
     environment_check = pic.run()
     if not environment_check:
-        initenv = raw_input('Synda environment needs a few key files. '
+        initenv = raw_input('Synda environment needs a few key files. \n'
                             'Would you like to init the stubs of these files? y/n: ').lower()
-        while initenv == '' or initenv not in ['y' or 'n']:
-            initenv = raw_input('Synda environment needs a few key files. '
+        while initenv == '' or initenv not in ['y', 'n']:
+            initenv = raw_input('Synda environment needs a few key files. \n'
                                 'Would you like to init the stubs of these files? y/n: ').lower()
-        if initenv:
+        if initenv == 'y':
             ei = EnvInit()
             ei.run()
         else:
             raise EnvironmentNotSet('SDTSETUP-001', 'Environment not initialized.')
+
 
     # commented on 08/08 to be replaced
 """    if os.environ.get('SDT_USER_ENV','0')=='1':

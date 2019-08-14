@@ -33,18 +33,32 @@ class PostInstallCommand():
         """
         Using sdt.conf template, config file is filled with proper paths to key data_package files.
         """
-
-        # TODO needs to fill the proper keyfile locations just in case. mainly sdt.db
         cfg = SafeConfigParser()
         cfg.read(os.path.join(self.synda_home, 'conf/sdt.conf'))
-        # cfg.set('core', 'db_path', str(os.path.join(self.target_root, 'sdt.db')))
         cfg.set('core', 'db_path', str(os.path.join(self.synda_home, 'db')))
         cfg.set('core', 'selection_path', str(os.path.join(self.synda_home, 'selection')))
         cfg.set('core', 'sandbox_path', str(os.path.join(self.synda_home, 'sandbox')))
         cfg.set('core', 'default_path', str(os.path.join(self.synda_home, '')))
         with open(os.path.join(self.synda_home, 'conf/sdt.conf'), "w+") as configfile:
             cfg.write(configfile)
-        # sdlog.debug('SDTSETUP-001','Successfully set the default paths in config file to {}'.format(cfg.get('core', 'default_path')))
+
+        # To ease up credentials setting.
+        answer = ''
+        while answer not in ['y', 'n']:
+            answer = raw_input('Would you like to set your openID credentials? y/n: ').lower()
+            if answer == 'y':
+                openID = raw_input('openID url: ').lower()
+                password = raw_input('password: ')
+                cred = SafeConfigParser()
+                cred.read(os.path.join(self.synda_home, 'conf/credentials.conf'))
+                cred.set('esgf_credential', 'openid', openID)
+                cred.set('esgf_credential', 'password', password)
+                with open(os.path.join(self.synda_home, 'conf/credentials.conf'), 'w+') as credfile:
+                    cred.write(credfile)
+            else:
+                pass
+
+
 
     def run(self):
         # Checking the install environment
@@ -92,32 +106,9 @@ class PostInstallCommand():
                     'initialize a new synda home file system with stubs to fill properly.'.format(self.synda_home))
                 return False
                 # raise EnvironmentNotSet('SDTSETUP-001', 'Environment not initialized.')
-        """
-        for key_file in key_file_list:
-            if not os.path.isfile(os.path.join(self.synda_home, key_file)) :
-                # in this case sys admin did not copy an old file into root dir.
-                print('Key file missing: {}'.format(key_file))
-                copy_file(os.path.join(sys.exec_prefix, key_file), os.path.join(self.synda_home, key_file))
-
-        # key directory stubs to be copied.
-        try:
-            shutil.copytree(os.path.join(sys.exec_prefix, 'tmp'), os.path.join(self.synda_home, 'tmp'))
-            shutil.copytree(os.path.join(sys.exec_prefix, 'log'), os.path.join(self.synda_home, 'log'))
-            shutil.copytree(os.path.join(sys.exec_prefix, 'selection/sample'),
-                            os.path.join(self.synda_home, 'selection/sample'))
-        except OSError, e:
-            if e.errno != os.errno.EEXIST:
-                print('File exists, please verify your synda home directory.')
-                sys.exit(1)
-            pass
-
-        # key directory stubs to be created.
-        for key_dir in key_dir_to_create:
-            if not os.path.isdir(os.path.join(self.synda_home, key_dir)):
-                os.mkdir(os.path.join(self.synda_home, key_dir))
-        """
         # Configuration files were all found, filling up sdt.conf with proper files.
         self.configuration_setup()
+        print('Check complete.')
         return True
 
 def check_environment():
@@ -184,25 +175,5 @@ class EnvInit():
 
     def run(self):
         self.untar_data_package()
-        print('Init new synda environment (db and configuration).')
+        print('(RE)initialized a new synda environment (db and conf files).')
         print('If you think this is a mistake, copy your old data files to {}'.format(os.getenv('ST_HOME')))
-
-
-    #     opener, mode = tarfile.open, 'r:gz'
-    #     file = opener(self.data_tar, mode)
-    #     try: file.extractall()
-    #     finally: file.close()
-
-
-    # # cfg_dir = appdirs.user_config_dir('synda')
-    # shutil.copytree(cfg_dir, os.getenv('ST_HOME'))
-    # def create_conf_files(self):
-    #     pass
-    # def create_db_file(self):
-    #     pass
-    # def create_key_dirs(self):
-    #     pass
-    # def create_log_files(self):
-    #     pass
-    # def create_bin_files(self):
-    #     pass
