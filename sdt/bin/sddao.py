@@ -22,9 +22,11 @@ import sddatasetdao
 # --- parameter table --- #
 
 def add_parameter_value(name,value,commit=True,conn=sddb.conn):
-    conn.execute("insert into param (name,value) values (?,?)",(name,value))
-    if commit:
-        conn.commit()
+    ignore_list = ['pid', 'citation_url']
+    if name not in ignore_list:
+        conn.execute("insert into param (name,value) values (?,?)",(name,value))
+        if commit:
+            conn.commit()
 
 def fetch_parameters(conn=sddb.conn):
     """Retrieve all parameters
