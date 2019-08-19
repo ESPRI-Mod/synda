@@ -70,6 +70,7 @@ def _install(metadata,interactive,timestamp_right_boundary=None):
     #
     import sdsimplefilter, sdconst
     metadata=sdsimplefilter.run(metadata,'status',sdconst.TRANSFER_STATUS_NEW,'keep')
+    metadata=sdsimplefilter.run(metadata,'url',"//None",'remove_substr')
     count_new=metadata.count()
     size_new=metadata.size
 
