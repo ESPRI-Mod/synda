@@ -235,7 +235,7 @@ def process_parameter(parameter,selection):
 def parse_parameter(parameter):
     m=re.search('^([^=]+)="?([^"=]+)"?$',parameter)
     if(m!=None):
-        param_name=m.group(1)
+        param_name=m.group(1).strip()
         param_value=sdtools.split_values(m.group(2))
 
         return (param_name,param_value)
