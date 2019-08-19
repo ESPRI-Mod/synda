@@ -103,6 +103,7 @@ class Download():
 
                     if incorrect_checksum_action=="remove":
                         tr.status=sdconst.TRANSFER_STATUS_ERROR
+                        tr.priority -= 1
                         tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                         # remove file from local repository
@@ -163,6 +164,7 @@ class Download():
                 # must be implemented (directly in synda, or using crontab).
                 #
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
                 tr.error_msg="Download process has been killed"
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
@@ -185,11 +187,13 @@ class Download():
                     tr.error_msg=''
                 else:
                     tr.status=sdconst.TRANSFER_STATUS_ERROR
+                    tr.priority -= 1
                     tr.error_msg='Error occurs during download.'
 
 
             else:
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
                 tr.error_msg='Error occurs during download.'
 
 def end_of_transfer(tr):

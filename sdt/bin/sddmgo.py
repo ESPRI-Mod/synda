@@ -72,6 +72,7 @@ def transfers_end():
 
                         if incorrect_checksum_action=="remove":
                             tr.status=sdconst.TRANSFER_STATUS_ERROR
+                            tr.priority -= 1
                             tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
 
                             # remove file from local repository
@@ -101,6 +102,7 @@ def transfers_end():
 
             elif status == "FAILED":
                 tr.status = sdconst.TRANSFER_STATUS_ERROR
+                tr.priority -= 1
                 tr.error_msg = "Error occurs during download."
 
                 sdlog.info("SDDMGLOB-101", "Transfer failed (%s)" % str(tr))
