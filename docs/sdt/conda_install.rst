@@ -90,11 +90,6 @@ The structure of synda home directory should be as follows:
     │   ├── discovery.log
     │   ├── domain.log
     │   └── transfer.log
-    ├── recipe
-    │   ├── bld.bat
-    │   ├── build.sh
-    │   ├── meta.yaml
-    │   └── post-link.sh
     ├── sandbox
     ├── selection
     │   └── sample
