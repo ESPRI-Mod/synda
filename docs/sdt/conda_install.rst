@@ -16,6 +16,12 @@ Install an Anaconda distribution on your machine, step by step guide per OS avai
 
     https://docs.conda.io/projects/conda/en/latest/user-guide/install/
 
+Create a synda isolated environment if you wish:
+
+.. code-block:: bash
+
+    conda create --name my-synda-envrionment python=2.7
+
 
 Then install ``synda`` package using command below:
 
