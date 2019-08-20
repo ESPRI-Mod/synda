@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation from conda package &mdash; synda 3.0 documentation</title>
+  <title>Upgrade from conda package &mdash; synda 3.0 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation from RPM package" href="rpm_install.html" />
-    <link rel="prev" title="Installation from source" href="src_install.html" /> 
+    <link rel="next" title="Upgrade from RPM package" href="rpm_upgrade.html" />
+    <link rel="prev" title="Upgrade from source" href="src_upgrade.html" /> 
 
   
   <script src="../static/js/modernizr.min.js"></script>
@@ -84,19 +84,17 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="src_install.html">Installation from source</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Installation from conda package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src_upgrade.html">Upgrade from source</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrade from conda package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="rpm_install.html">Installation from RPM package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deb_install.html">Installation from DEB package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpm_upgrade.html">Upgrade from RPM package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deb_upgrade.html">Upgrade from DEB package</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
 </ul>
@@ -157,13 +155,13 @@
         
           <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
         
-      <li>Installation from conda package</li>
+      <li>Upgrade from conda package</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../sources/sdt/conda_install.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../sources/sdt/conda_upgrade.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,42 +174,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation-from-conda-package">
-<span id="deb-install-sdt"></span><h1>Installation from conda package<a class="headerlink" href="#installation-from-conda-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">transfer</span> <span class="pre">module</span></code> is now available on anaconda.</p>
-</div>
+  <div class="section" id="upgrade-from-conda-package">
+<span id="deb-install-sdt"></span><h1>Upgrade from conda package<a class="headerlink" href="#upgrade-from-conda-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Install an Anaconda distribution on your machine, step by step guide per OS available at:
-.. code-block:: bash</p>
-<blockquote>
-<div><a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">https://docs.conda.io/projects/conda/en/latest/user-guide/install/</a></div></blockquote>
 <p>Then install <code class="docutils literal notranslate"><span class="pre">synda</span></code> package using command below:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c IPSL synda
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda update -c IPSL synda
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Specifying -c IPSL is using the IPSL anaconda channel to get the right package. Currently all dependencies are
-hosted on either default anaconda channels or the IPSL channels to ease the installation.</p>
-</div>
-</div>
-<div class="section" id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p>Now the package is installed, you’ll need to properly configure the synda work environment.
-To do so, the first step is the set a synda home environment variable. This will the be the directory
-that will harbor all the configuration, database and other required files for synda to function properly.
-So choose it well. For instance: <code class="docutils literal notranslate"><span class="pre">/home/user/.synda</span></code> would do the trick.</p>
-<p>At this point Synda can perform basic functions. But will still require at least initializing the stubs of the required
-files.
-The structure of synda home directory should be as follows:</p>
-<p>Whether this is an upgrade install or a from scratch install this is how the directory tree should look.
-In case of a from scratch install, synda can init the environment for you at the first run of any synda command.</p>
-<p>In case the user replies positively, a directory will be created under ST_HOME with file stubs that need to be
-filled properly afterwards. Especially the openID credentials. Which can also be used interactively using synda.</p>
-<p>This can also be done manually the old fashion way if the users wish to do so.</p>
 </div>
 </div>
 
@@ -223,10 +193,10 @@ filled properly afterwards. Especially the openID credentials. Which can also be
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rpm_upgrade.html" class="btn btn-neutral float-right" title="Upgrade from RPM package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="src_install.html" class="btn btn-neutral" title="Installation from source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="src_upgrade.html" class="btn btn-neutral" title="Upgrade from source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
