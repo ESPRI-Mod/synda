@@ -12,6 +12,7 @@ Requirements
 
 
 Install an Anaconda distribution on your machine, step by step guide per OS available at:
+
 .. code-block:: bash
 
     https://docs.conda.io/projects/conda/en/latest/user-guide/install/
