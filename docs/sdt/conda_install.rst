@@ -1,26 +1,41 @@
 .. _deb-install-sdt:
 
 Installation from conda package
-=============================
+===============================
+
+``synda transfer module`` is now available on anaconda.
+
+
 
 Requirements
 ************
 
-``synda transfer module`` is now available on anaconda.
-
-Installation
-************
 
 Install an Anaconda distribution on your machine, step by step guide per OS available at:
 .. code-block:: bash
 
     https://docs.conda.io/projects/conda/en/latest/user-guide/install/
 
+
+
+Installation
+************
+
+While undertaking the synda install via conda, please make sure you're using the proper
+role for this. Using sudo might not be the best idea as it is not really required at all and
+can interefere with other installation across the machine.
+
 Create a synda isolated environment if you wish:
 
 .. code-block:: bash
 
     conda create --name my-synda-envrionment python=2.7
+
+Activate the created environment:
+
+.. code-block:: bash
+
+    conda activate my-synda-environment
 
 
 Then install ``synda`` package using command below:
@@ -42,7 +57,7 @@ To do so, the first step is the set a synda home environment variable. This will
 that will harbor all the configuration, database and other required files for synda to function properly.
 So choose it well. For instance: ``/home/user/.synda`` would do the trick.
 
-.. code-block::
+.. code-block:: bash
 
     export ST_HOME=/path/to/synda_home_directory
 
@@ -50,7 +65,7 @@ At this point Synda can perform basic functions. But will still require at least
 files.
 The structure of synda home directory should be as follows:
 
-.. code-block::
+.. code-block:: bash
 
     > tree $ST_HOME
 
@@ -98,7 +113,7 @@ Whether this is an upgrade install or a from scratch install this is how the dir
 In case of a from scratch install, synda can init the environment for you at the first run of any synda command.
 
 
-.. code-block::
+.. code-block:: bash
 
     > synda -h
     Synda has issues reaching your credential file, in ST_HOME.
@@ -112,7 +127,7 @@ In case of a from scratch install, synda can init the environment for you at the
 In case the user replies positively, a directory will be created under ST_HOME with file stubs that need to be
 filled properly afterwards. Especially the openID credentials. Which can also be used interactively using synda.
 
-.. code-block::
+.. code-block:: bash
 
     >synda check-env
     Would you like to set your openID credentials? y/n: y
