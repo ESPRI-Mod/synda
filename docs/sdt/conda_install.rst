@@ -1,6 +1,6 @@
 .. _deb-install-sdt:
 
-Installation from DEB package
+Installation from conda package
 =============================
 
 Requirements
