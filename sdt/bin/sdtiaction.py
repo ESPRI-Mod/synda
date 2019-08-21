@@ -755,15 +755,15 @@ def checkenv(args):
     pic.run()
 
 # init.
-def initenv(args):
-    """
-    should find the tar data.tar.bz and untar it
-    :param args:
-    :return:
-    """
-    from sdsetuputils import EnvInit
-    ei = EnvInit()
-    ei.run()
+# def initenv(args):
+#     """
+#     should find the tar data.tar.bz and untar it
+#     :param args:
+#     :return:
+#     """
+#     from sdsetuputils import EnvInit
+#     ei = EnvInit()
+#     ei.run()
 
 
 # TODO: rename as subcommands
@@ -794,6 +794,6 @@ actions={
     'upgrade':upgrade,
     'variable':variable,
     'watch':watch,
-    'check-env': checkenv,
-    'init-env': initenv
+    'check-env': checkenv
+    # 'init-env': initenv
 }

@@ -110,6 +110,7 @@ def start():
 
     if not is_running():
         try:
+            print('Handing over to daemon process, you can check the daemons logs at {}.'.format(context.stdout.name))
             with context:
                 main_loop()
         except Exception, e:
