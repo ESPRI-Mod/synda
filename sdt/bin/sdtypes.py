@@ -274,7 +274,7 @@ class Request():
             raise SDException('SDATYPES-004','host must be set at this step (url=%s)'%url)
 
         # check
-        if len(url)>3500: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
+        if len(url)>sdconfig.url_max_buffer_size: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
             raise SDException("SDATYPES-003","url is too long (%i)"%len(url))
 
         return url

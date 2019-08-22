@@ -81,6 +81,8 @@ def print_(name):
 
         if name in globals():
             print globals()[name]
+        else:
+            print('No configuration entry found by the name {}'.format(name))
 
 def is_openid_set():
     if openid=='https://esgf-node.ipsl.fr/esgf-idp/openid/foo':
@@ -240,6 +242,7 @@ password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
 download=config.getboolean('module','download')
 metadata_server_type=config.get('core','metadata_server_type')
+url_max_buffer_size=config.get('download', 'url_max_buffer_size')
 
 default_folder=get_path('default_path',default_folder_default_path)
 selection_folder=get_path('selection_path',default_selection_folder)

@@ -129,7 +129,14 @@ def check(args):
 
 def config(args):
     import sdconfig
-    sdconfig.print_(args.name)
+    if args.action is None:
+        sdconfig.print_()
+    else:
+        if args.action=='get':
+            sdconfig.print_(args.name)
+        elif args.action=='set':
+            # TODO see if section can be added to the argparser arguments.
+            print('Feature not implemented yet.')
 
 def contact(args):
     import sdi18n

@@ -8,7 +8,7 @@ source:
   path: ../.
 
 build:
-  number: 7
+  number: 8
   noarch: generic
   entry_points:
     - synda = synda:run
