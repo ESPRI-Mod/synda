@@ -62,9 +62,13 @@ def print_running_transfers():
     li=[]
     for tr in sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_RUNNING):
         current_size=os.path.getsize(tr.get_full_local_path()) if os.path.isfile(tr.get_full_local_path()) else 0
+        if current_size==tr.size:
+            have_data = '='
+        else:
+            have_data = ' <'
         li.append(
             [humanize.naturalsize(current_size,gnu=False),
-             humanize.naturalsize(tr.size,gnu=False),
+             have_data+humanize.naturalsize(tr.size,gnu=False),
              tr.start_date, tr.data_node, tr.filename])
 
     if len(li)>0:
