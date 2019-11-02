@@ -19,6 +19,6 @@ beautifulsoup4
 texttable
 
 # latest pillow version breaks test
-pillow==3.4.2
+pillow==6.2.0
 
 reportlab
