@@ -243,7 +243,8 @@ if [ $debug -eq 1 ]; then
     always_log_wget_output=1
 fi
 
-USE_CERTIFICATE="yes" # yes | no
+# jfp was: USE_CERTIFICATE="yes" # yes | no
+USE_CERTIFICATE="no" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
 #jfp These patches will help nobody but me:
