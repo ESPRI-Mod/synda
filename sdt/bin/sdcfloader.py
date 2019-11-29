@@ -16,12 +16,11 @@ Note
 
 import os
 import argparse
-import ConfigParser
+from configparser import ConfigParser
 import sdtools
 
 def load(configuration_file,credential_file):
-
-    config = ConfigParser.ConfigParser(default_options)
+    config = ConfigParser(default_options)
 
     config.read(configuration_file)
     config.read(credential_file)
@@ -71,7 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('--ini_file','-i',help='Test ConfigParser')
     args = parser.parse_args()
 
-    config = ConfigParser.ConfigParser(default_options)
+    config = ConfigParser(default_options)
     config.read(args.ini_file)
 
-    print config.get('post_processing','username')
+    print(config.get('post_processing', 'username'))

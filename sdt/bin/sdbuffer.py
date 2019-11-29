@@ -39,10 +39,7 @@ def get_selection_file_buffer(path=None,parameter=None):
 
     # mode decision
     if path is not None:
-        if path=="-":
-            mode='stdin'
-        else:
-            mode='file'
+        mode = 'file'
     else:
         if len(parameter)>0:
             if '-' in parameter: # note that we can't restrict this test for when len(parameter)==1 because some system parameter are added to the list (e.g. add_forced_parameter() in 'sdrfile' module)

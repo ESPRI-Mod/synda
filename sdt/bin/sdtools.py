@@ -62,7 +62,8 @@ def is_file_write_access_OK(path):
     except:
         return False
 
-def set_file_permission(path,mode=0664):
+
+def set_file_permission(path, mode=0o664):
     """
     Returns:
         True if file permissions have been changed.
@@ -152,7 +153,7 @@ def print_module_variables(variables):
     li=sorted(li)
 
     for v in li:
-        print v
+        print(v)
 
 def url_contains_limit_keyword(url):
     """Check if limit is set."""
@@ -201,27 +202,27 @@ def grep_light(li,pattern):
         return new_li
 
 def print_stdout(msg):
-    print msg
+    print(msg)
 
 def print_stderr(msg=""):
-    sys.stderr.write("%s\n"%msg)
+    sys.stderr.write("{}\n".format(msg))
 
 def multi_columns_listing(li):
     for a,b,c in zip(li[::3],li[1::3],li[2::3]):
-        print '{0:<30}{1:<30}{2:<}'.format(a,b,c)
+        print('{0:<30}{1:<30}{2:<}'.format(a, b, c))
 
 def union(a, b):
     """Return the union of two lists (and remove duplicate).
 
     Not used.
     """
-    if a==None and b<>None:
+    if a == None and b is not None:
         return list(set(b))
-    if a<>None and b==None:
+    if a is not None and b == None:
         return list(set(a))
     if a==None and b==None:
         return []
-    if a<>None and b<>None:
+    if a is not None and b is not None:
         return list(set(a) | set(b))
 
 def intersect(a, b):
@@ -340,4 +341,4 @@ if __name__ == '__main__':
     parser.add_argument('-f','--file',required=True)
     args = parser.parse_args()
 
-    print is_file_rw_access_OK(args.file)
+    print(is_file_rw_access_OK(args.file))

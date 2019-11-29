@@ -80,7 +80,7 @@ def print_(name):
         # print given configuration parameter
 
         if name in globals():
-            print globals()[name]
+            print(globals()[name])
         else:
             print('No configuration entry found by the name {}'.format(name))
 
@@ -100,7 +100,7 @@ def is_event_enabled(event,project):
             return True
 # def module_init():
 # Init module.
-os.umask(0002)
+os.umask(0o002)
 
 # TODO Remove package install specific bits
 system_pkg_install=False

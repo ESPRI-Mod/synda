@@ -212,6 +212,14 @@ DATASET_VERSION_FIELDS=['master_id','version','timestamp']+REQUIRED_FIELDS
 
 POST_PIPELINE_MODES=['file','dataset','generic',None]
 
+# Synda subcommand list dictionary:
+
+SUBCOMMANDS = {
+    'setup': 'setup',
+    'install': 'install'
+}
+
+
 ADMIN_SUBCOMMANDS=['autoremove','install','open','pexec','remove','reset','retry','update','upgrade']
 
 # security_dir values

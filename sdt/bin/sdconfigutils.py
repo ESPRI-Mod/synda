@@ -89,9 +89,9 @@ class UserPaths(SourceInstallPaths):
         # create USER credential sample file
         if not os.path.exists(self.credential_file):
             sdcfbuilder.create_credential_file_sample(self.credential_file)
-            os.chmod(self.credential_file,0600)
+            os.chmod(self.credential_file, 0o600)
 
         # create USER configuration sample file
         if not os.path.exists(self.configuration_file):
             sdcfbuilder.create_configuration_file_sample(self.configuration_file)
-            os.chmod(self.configuration_file,0644)
+            os.chmod(self.configuration_file, 0o644)

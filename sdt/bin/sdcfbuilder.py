@@ -16,7 +16,7 @@ Note
 
 import os
 import argparse
-import ConfigParser
+import configparser
 
 def create_credential_file_sample(path):
 

@@ -1,6 +1,6 @@
 import site
 import os, sys, shutil, errno
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 from six.moves import input
 import tarfile
 import os.path

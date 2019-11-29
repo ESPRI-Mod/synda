@@ -54,12 +54,12 @@ def certificate(args):
                 sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,force_renew_ca_certificates=args.force_renew_ca_certificates)
                 print_stderr('Certificate successfully renewed.')
                 return 0
-            except Exception,e:
+            except Exception as e:
                 print_stderr('Error occurs while renewing certificate (%s)'%str(e))
                 return 1
         elif args.action=="info":
-            print 'ESGF CA certificates location: {}'.format(sdconfig.esgf_x509_cert_dir)
-            print 'ESGF user certificate location: {}'.format(sdconfig.esgf_x509_proxy)
+            print('ESGF CA certificates location: {}'.format(sdconfig.esgf_x509_cert_dir))
+            print('ESGF user certificate location: {}'.format(sdconfig.esgf_x509_proxy))
             return 0
         elif args.action=="print":
             sdlogon.print_certificate()
@@ -84,7 +84,7 @@ def check(args):
             try:
                 print_stderr("Checking %s.."%selection.filename)
                 sdpipeline.prepare_param(selection=selection)
-            except sdexception.IncorrectParameterException,e:
+            except sdexception.IncorrectParameterException as e:
                 print_stderr("Error occurs while processing %s (%s)"%(selection.filename,str(e)))
 
     elif args.action=="file_variable":
@@ -101,7 +101,7 @@ def check(args):
         files=sddump.dump_ESGF(parameter=subset_filter,fields=sdfields.get_file_variable_fields(),dry_run=args.dry_run,type_='File')
 
         if not args.dry_run:
-            print '%i file(s) retrieved'%len(files)
+            print('{} file(s) retrieved'.format(len(files)))
 
             errors=0
             for file_ in files:
@@ -110,19 +110,19 @@ def check(args):
                 #print file_['variable']
 
                 if len(file_['variable'])>1:
-                    print 'File contains many variables (%s,%s)'%(file_['title'],str(file_['variable']))
+                    print('File contains many variables ({},{})'.format(file_['title'], str(file_['variable'])))
                     errors+=1
 
             if errors==0:
-                print 'No inconsistency detected'
+                print('No inconsistency detected')
             else:
-                print '%d inconsistencies detected'%errors
+                print('%d inconsistencies detected').format(errors)
 
     elif args.action=="dataset_version":
         status=sdcheckdatasetversion.run(args)
 
     else:
-        print_stderr('Invalid check "%s"'%args.action)
+        print_stderr('Invalid check "{}"'.format(args.action))
         status=1
 
     return status
@@ -140,7 +140,7 @@ def config(args):
 
 def contact(args):
     import sdi18n
-    print sdi18n.m0018
+    print(sdi18n.m0018)
 
 def daemon(args):
     import sddaemon,sdconfig
@@ -162,7 +162,7 @@ def daemon(args):
                 try:
                     sddaemon.start()
                     print_stderr("Daemon successfully started")
-                except sdexception.SDException,e:
+                except sdexception.SDException as e:
                     print_stderr('error occured',e.msg)
         elif args.action=="stop":
 
@@ -170,7 +170,7 @@ def daemon(args):
                 try:
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
-                except sdexception.SDException,e:
+                except sdexception.SDException as e:
                     print_stderr('error occured',e.msg)
             else:
                 print_stderr("Daemon already stopped")
@@ -197,7 +197,7 @@ def facet(args):
             # TODO: func for code below
             items=params.get(args.facet_name,[])
             for item in items:
-                print item.name
+                print(item.name)
         elif len(facets_groups)>1:
             print_stderr('Multi-queries not supported')
 
@@ -282,7 +282,7 @@ def get(args):
                 total_size=sum(int(f['size']) for f in files)
                 total_size=humanize.naturalsize(total_size,gnu=False)
 
-                print_stderr('%i file(s) will be downloaded for a total size of %s.'%(len(files),total_size))
+                print_stderr('{} file(s) will be downloaded for a total size of {}'.format(len(files), total_size))
 
                 status=sddirectdownload.run(files,
                                             args.timeout,
@@ -305,7 +305,7 @@ def get(args):
         else:
             for f in files:
                 size=humanize.naturalsize(f['size'],gnu=False)
-                print '%-12s %s'%(size,f['filename'])
+                print('{-12} {}' % (size, f['filename']))
 
     elif len(urls)>0:
         # url(s) found in stream: search-api operator not needed (download url directly)
@@ -351,7 +351,7 @@ def history(args):
     import sdhistorydao
     from tabulate import tabulate
     li=[d.values() for d in sdhistorydao.get_all_history_lines()] # listofdict to listoflist
-    print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
+    print(tabulate(li, headers=['action', 'selection source', 'date', 'insertion_group_id'], tablefmt="orgtbl"))
 
 def install(args):
     import sdinstall
@@ -362,7 +362,7 @@ def install(args):
 
 def intro(args):
     import sdi18n
-    print sdi18n.m0019
+    print(sdi18n.m0019)
 
 def metric(args):
     import sdmetric,sdparam
@@ -370,7 +370,7 @@ def metric(args):
     # check
     if args.groupby=='model':
         if args.project not in sdparam.params['project']:
-            print_stderr("Unknown project (%s)"%args.project)
+            print_stderr("Unknown project ({})".format((args.project)))
             return 1
 
     if args.metric=='size':
@@ -673,7 +673,7 @@ def queue(args):
     li=sdfilequery.get_download_status(args.project)
     ProgressThread.stop() # spinner stop
 
-    print tabulate(li,headers=['status','count','size'],tablefmt="plain")
+    print(tabulate(li, headers=['status', 'count', 'size'], tablefmt="plain"))
     #sddaemon.print_daemon_status()
 
 def update(args):
@@ -722,7 +722,7 @@ def variable(args):
                 # TODO: func for code below
                 items=params.get(facet)
                 for item in items:
-                    print item.name
+                    print(item.name)
 
             except:
                 pass
@@ -739,14 +739,14 @@ def variable(args):
 
             if file_ is None:
 
-                print 'Variable not found.'
+                print('Variable not found.')
 
             else:
 
-                print 'short name:       ',file_['variable'][0]
-                print 'standard name:    ',file_['cf_standard_name'][0]
-                print 'long name:        ',file_['variable_long_name'][0]
-                print 'unit:             ',file_['variable_units'][0]
+                print('short name:       ', file_['variable'][0])
+                print('standard name:    ', file_['cf_standard_name'][0])
+                print('long name:        ', file_['variable_long_name'][0])
+                print('unit:             ', file_['variable_units'][0])
 
 def watch(args):
     import sdreport, sddaemon
