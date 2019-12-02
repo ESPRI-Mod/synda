@@ -36,7 +36,7 @@ def delete_file(tr,commit=True,conn=sddb.conn):
     # note that we don't delete entries (if any) from post_processing tables (this will be done in a batch procedure which will be manually executed from time to time)
 
     # TAGKRE45343J54K5JK
-    if c.rowcount<>1:
+    if c.rowcount != 1:
         raise SDException("SYNCDDAO-908","file not found (file_id=%i,local_path=%s)"%(tr.file_id,tr.local_path,))
 
     c.close()
@@ -87,7 +87,7 @@ def get_file(file_functional_id,conn=sddb.conn):
     c = conn.cursor()
     c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
     rs=c.fetchone()
-    if rs<>None:
+    if rs is not None:
         t=sdsqlutils.get_object_from_resultset(rs,File)
     c.close()
 

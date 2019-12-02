@@ -49,5 +49,6 @@ def update_db_version(conn,version):
 
 if __name__ == '__main__':
     import sddbversion
-    print sddbversion.upgrade_procs.keys()
-    print version_range(sddbversion.upgrade_procs.keys(), '3.0','4.2')
+
+    print(sddbversion.upgrade_procs.keys())
+    print(version_range(sddbversion.upgrade_procs.keys(), '3.0', '4.2'))

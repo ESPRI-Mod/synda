@@ -105,7 +105,7 @@ def set_default_logger(name):
 
 # module init.
 
-os.umask(0002)
+os.umask(0o002)
 
 discovery_logger=create_logger(sdconst.LOGGER_FEEDER,sdconst.LOGFILE_FEEDER)
 transfer_logger=create_logger(sdconst.LOGGER_CONSUMER,sdconst.LOGFILE_CONSUMER)

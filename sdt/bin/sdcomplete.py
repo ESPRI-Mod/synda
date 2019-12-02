@@ -45,7 +45,7 @@ def complete(files):
         if f["type"]==sdconst.SA_TYPE_FILE:
             transfer=sdfiledao.get_file(f['file_functional_id'])
 
-            if transfer<>None:
+            if transfer is not None:
                 f['status']=transfer.status
 
                 if sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). It is usefull here for example when user wants to change priority (YES, a search-API request is needed in this case!).
@@ -63,7 +63,7 @@ def complete(files):
         elif f["type"]==sdconst.SA_TYPE_DATASET:
             dataset=sddatasetdao.get_dataset(dataset_functional_id=f['dataset_functional_id'])
 
-            if dataset<>None:
+            if dataset is not None:
                 f['status']=dataset.status
             else:
                 f['status']=sdconst.DATASET_STATUS_NEW

@@ -185,7 +185,7 @@ def unprivileged_user_mode():
 
 # init.
 
-os.umask(0002)
+os.umask(0o002)
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,)

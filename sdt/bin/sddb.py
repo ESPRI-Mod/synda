@@ -156,6 +156,6 @@ if __name__ == '__main__':
     c.execute("select url from file")
     rs=c.fetchone()
     if rs!=None:
-        print type(rs[0])
-        print rs[0]
+        print(type(rs[0]))
+        print(rs[0])
     c.close()

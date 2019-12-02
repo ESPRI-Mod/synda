@@ -37,7 +37,7 @@ def cleanup():
 
 # Init.
 
-os.umask(0002)
+os.umask(0o002)
 
 name='transfer'
 version='3.10'
@@ -67,4 +67,4 @@ if sdtools.who_am_i()=='ihm':
     sdapputils.signal_init()
 
 if __name__ == '__main__':
-    print "Synda transfer initialization module."
+    print("Synda transfer initialization module.")

@@ -96,7 +96,7 @@ def version(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_version(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        print_stderr('%s operation is not available for variable/aggregation type'%args.action)   
+        print_stderr('{} operation is not available for variable/aggregation type'.format(args.action))
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_version(args)
 
@@ -104,7 +104,7 @@ def dump(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_dump(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
+        print_stderr("'{}' operation is not available for variable/aggregation type".format(args.subcommand))
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_dump(args)
 
@@ -122,7 +122,7 @@ def count(args):
     if args.type_==sdconst.SA_TYPE_FILE:
         file_count(args)
     elif args.type_==sdconst.SA_TYPE_AGGREGATION:
-        print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
+        print_stderr("'{}' operation is not available for variable/aggregation type".format(args.subcommand))
     elif args.type_==sdconst.SA_TYPE_DATASET:
         dataset_count(args)
 
@@ -144,7 +144,7 @@ def dataset_count(args):
     result=sdquickcount.run(stream=args.stream,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_DATASET)
 
     if not args.dry_run:
-        print "%i dataset(s) found"%result.num_found
+        print("{} dataset(s) found").format(result.num_found)
 
 def variable_count(args):
     print_stderr('Not implemented yet.')   
@@ -154,7 +154,7 @@ def file_count(args):
     result=sdquickcount.run(stream=args.stream,index_host=args.index_host,dry_run=args.dry_run,type_=sdconst.SA_TYPE_FILE)
 
     if not args.dry_run:
-        print "%i file(s) found"%result.num_found
+        print("{} file(s) found").format(result.num_found)
 
 # o-------------------------------------------------------o
 
@@ -230,7 +230,7 @@ def variable_search(args):
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
 
     if len(datasets)==0:
-        print "Variable not found"
+        print("Variable not found")
     else:
         sdrvariable.print_list(datasets,args.limit) # TAGJ43JK3J43
 
@@ -376,7 +376,7 @@ def dataset_version(args):
     # TODO: func for code below
     items=params.get('version',[])
     for item in items:
-        print item.name
+        print(item.name)
 
 def variable_version(args):
     # there is no version for variable

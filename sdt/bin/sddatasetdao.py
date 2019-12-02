@@ -132,4 +132,4 @@ if __name__ == '__main__':
     if args.dataset is not None:
         #d=get_dataset(dataset_functional_id=args.dataset)
         d=get_dataset_(local_path=args.dataset)
-        print d
+        print(d)

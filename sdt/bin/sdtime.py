@@ -127,6 +127,6 @@ if __name__ == '__main__':
     parser.add_argument('end_time',help=now())
     args = parser.parse_args()
 
-    print "Start: %s"%args.start_time
-    print "End: %s"%args.end_time
-    print "Interval: %i"%compute_time_delta(args.start_time,args.end_time)
+    print("Start: {}".format(args.start_time))
+    print("End: {}".format(args.end_time))
+    print("Interval: {}".format(compute_time_delta(args.start_time, args.end_time)))

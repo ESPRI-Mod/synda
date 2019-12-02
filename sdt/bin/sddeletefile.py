@@ -88,7 +88,7 @@ def immediate_delete(tr):
             # note: if data cannot be removed (i.e. exception is raised), we don't remove metadata
             sdfiledao.delete_file(tr,commit=False)
 
-        except Exception,e:
+        except Exception as e:
             sdlog.error("SDDELETE-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
             raise
     else:
@@ -106,7 +106,7 @@ def immediate_md_delete(tr):
     sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
     try:
         sdfiledao.delete_file(tr,commit=False)
-    except Exception,e:
+    except Exception as e:
         sdlog.error("SDDELETE-128","Error occurs during file metadata suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 
 def reset():

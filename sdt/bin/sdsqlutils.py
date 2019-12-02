@@ -57,7 +57,7 @@ def nextval(col,tbl):
     c.execute("select max(%s) from %s"%(col,tbl))
     rs=c.fetchone()
 
-    assert rs<>None
+    assert rs is not None
     assert len(rs)==1
 
     if rs[0] is not None:
@@ -157,4 +157,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     #print nextval('insertion_group_id','file')
-    print sql_injection_safe(args.teststring)
+    print(sql_injection_safe(args.teststring))

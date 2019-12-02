@@ -128,12 +128,14 @@ def get_metrics(group_,metric,project_,dry_run=False):
 
     # execute
 
-    q='select %s, %s as metric from file where %s group by %s order by metric desc'%(group_,metric_calculation,where_clause,group_)
+    q = 'select {}, {}} as metric from file where {} group by {} order by metric desc'.format(group_,
+                                                                                              metric_calculation,
+                                                                                              where_clause, group_)
 
 
 
     if dry_run:
-        print_stderr('%s'%q)   
+        print_stderr('{}'.format(q))
         return []
 
 
@@ -180,4 +182,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     li=get_download_status()
-    print li
+    print(li)
