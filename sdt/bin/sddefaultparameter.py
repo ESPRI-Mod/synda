@@ -32,7 +32,7 @@ def process_default_parameters(facets_group):
     default_parameters=get_default_parameters(facets_group)
     non_default_parameters=get_non_default_parameters(facets_group)
 
-    for name,value in default_parameters.iteritems():
+    for name, value in default_parameters.items():
 
         name=remove_prefix(name)
 
@@ -43,7 +43,7 @@ def process_default_parameters(facets_group):
 
 def get_default_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if is_default_parameter(k):
             di[k]=v
 
@@ -51,14 +51,14 @@ def get_default_parameters(facets_group):
 
 def get_non_default_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if not is_default_parameter(k):
             di[k]=v
 
     return di
 
 def remove_prefix(name):
-    name=re.sub('^%s'%parameter_name_prefix,'',name)
+    name = re.sub('^{}'.format(parameter_name_prefix, '', name))
     return name
 
 def is_default_parameter(pname):

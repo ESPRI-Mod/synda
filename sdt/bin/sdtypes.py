@@ -63,7 +63,7 @@ class Buffer():
         self.lines=kw.get('lines',[])
 
     def __str__(self):
-        return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
 
 class Selection():
     def __init__(self,**kw):
@@ -163,25 +163,28 @@ class File(BaseType):
 
         return buf
 
+
 class Dataset(BaseType):
-    def __init__(self,**kw):
+    def __init__(self, **kw):
         self.__dict__.update(kw)
 
     def get_full_local_path_without_version(self):
-        return re.sub('/[^/]+$','',self.get_full_local_path())
+        return re.sub('/[^/]+$', '', self.get_full_local_path())
 
     def __str__(self):
-            return "".join(['%s=%s\n'%(k,v) for (k,v) in self.__dict__.iteritems()])
+        return "".join(['{}={}\n'.format(k, v) for (k, v) in self.__dict__.items()])
+
 
 class SessionParam():
-    def __init__(self,name,type_=str,default_value=None,search_api_facet=True,value=None,removable=True,option=True):
-        self.name=name
-        self.type_=type_
-        self.default_value=default_value
-        self.search_api_facet=search_api_facet
-        self.value=value
-        self.removable=removable # not used for now
-        self.option=option # this flag means 'is Synda specific option ?'
+    def __init__(self, name, type_=str, default_value=None, search_api_facet=True, value=None, removable=True,
+                 option=True):
+        self.name = name
+        self.type_ = type_
+        self.default_value = default_value
+        self.search_api_facet = search_api_facet
+        self.value = value
+        self.removable = removable  # not used for now
+        self.option = option  # this flag means 'is Synda specific option ?'
 
     def value_to_string(self):
         if self.value is None:
@@ -205,16 +208,17 @@ class SessionParam():
             self.value=v
 
     def __str__(self):
-            return "".join(['%s=%s\n'%(k,v) for (k,v) in self.__dict__.iteritems()])
+        return "".join(['{}={}\n'.format(k, v) for (k, v) in self.__dict__.items()])
+
 
 class Parameter():
     """Contain values for one parameter."""
 
-    def __init__(self,values=None,name=None):
-        self.values=values
-        self.name=name
+    def __init__(self, values=None, name=None):
+        self.values = values
+        self.name = name
 
-    def exists(self,value):
+    def exists(self, value):
         """Check if parameter value exists."""
         if value in self.values:
             return True
@@ -222,7 +226,8 @@ class Parameter():
             return False
 
     def __str__(self):
-        return "%s=>%s"%(self.name,str(self.values))
+        return "{}=>{}".format(self.name, str(self.values))
+
 
 class Item():
     """
@@ -231,24 +236,23 @@ class Item():
         it is named 'Item' for better clarity (instead of Value).
     """
 
-    def __init__(self,name=None,count=None):
-        self.name=name # parameter value name (i.e. different from parameter name)
-        self.count=count # do NOT remove this attribute: it is used to count files/datasets for each parameter value
+    def __init__(self, name=None, count=None):
+        self.name = name  # parameter value name (i.e. different from parameter name)
+        self.count = count  # do NOT remove this attribute: it is used to count files/datasets for each parameter value
 
     def __str__(self):
-        return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
 
-class Request():
-    def __init__(self,url=None,pagination=True,limit=sdconst.SEARCH_API_CHUNKSIZE):
-        self._url=url
-        self.pagination=pagination
 
+class Request(object):
+    def __init__(self, url=None, pagination=True, limit=sdconst.SEARCH_API_CHUNKSIZE):
+        self._url = url
+        self.pagination = pagination
         if self.pagination:
             if sdtools.url_contains_limit_keyword(self._url):
-                raise SDException("SDATYPES-008","assert error (url=%s)"%self._url)
-
-        self.offset=0
-        self.limit=limit
+                raise SDException("SDATYPES-008", "assert error (url=%s)".format(self._url))
+        self.offset = 0
+        self.limit = limit
 
     def get_limit_filter(self):
         if self.pagination:
@@ -265,41 +269,42 @@ class Request():
                 return "&limit=%d"%self.limit
 
     def get_offset_filter(self):
-        return "&offset=%d"%self.offset
+        return "&offset={}".format(self.offset)
 
     def get_url(self):
-        url="{0}{1}{2}".format(self._url,self.get_limit_filter(),self.get_offset_filter())
+        url = "{0}{1}{2}".format(self._url, self.get_limit_filter(), self.get_offset_filter())
 
         if sdconst.IDXHOSTMARK in url:
-            raise SDException('SDATYPES-004','host must be set at this step (url=%s)'%url)
+            raise SDException('SDATYPES-004', 'host must be set at this step (url={})'.format(url))
 
-        # check
-        if len(url)>sdconfig.url_max_buffer_size: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
-            raise SDException("SDATYPES-003","url is too long (%i)"%len(url))
-
+        # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
+        if len(url) > int(sdconfig.url_max_buffer_size):
+            raise SDException("SDATYPES-003", "url is too long ({})".format(len(url)))
         return url
 
-    def _serialize(self,paramName,values):
+    @staticmethod
+    def _serialize(self, param_name, values):
         """Serialize one parameter.
 
         Example
           input
-            paramName="variable"
+            param_name="variable"
             values="tasmin,tasmax"
           output
             "&variable=tasmin&variable=tasmax"
         """
-        l=[]
+        l = []
         for v in values:
-            l.append(paramName+"="+v)
+            l.append(param_name + "=" + v)
 
-        if len(l)>0:
+        if len(l) > 0:
             return "&"+"&".join(l)
         else:
             return ""
 
     def __str__(self):
-        return ",".join(['%s=%s'%(k,str(v)) for (k,v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
+
 
 class CommonIO(object):
     """Abstract."""

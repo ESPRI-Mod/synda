@@ -37,11 +37,11 @@ def run(squeries,metadata,parallel):
 
     try:
         datasets_attrs=get_datasets_attrs(squeries,parallel)
-    except MissingDatasetUrlException,e:
+    except MissingDatasetUrlException as e:
         sdlog.error("SDADDDSA-108","Datasets cannot be set as dataset url is missing")
         return metadata
 
-    sdlog.info("SDADDDSA-100","%d datasets retrieved"%len(datasets_attrs))
+    sdlog.info("SDADDDSA-100", "{} datasets retrieved".format(len(datasets_attrs)))
 
     sdlog.info("SDADDDSA-306","Copy dataset attrs..")
     po=sdpipelineprocessing.ProcessingObject(add_dataset_attrs,datasets_attrs)
@@ -101,7 +101,7 @@ def add_dataset_attrs(files,datasets_attrs):
             datasets_not_found.add(dataset_functional_id)
 
     for dataset_functional_id in datasets_not_found:
-        sdlog.info("SDADDDSA-200","dataset not found (%s)"%dataset_functional_id)
+        sdlog.info("SDADDDSA-200", "dataset not found ({})".format(dataset_functional_id))
 
     return files
 

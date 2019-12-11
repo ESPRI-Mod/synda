@@ -69,7 +69,7 @@ def run(pname=None,host=None,facets_group=None,dry_run=False):
     url=sdremotequtils.build_url(facets_group,host)
 
     if dry_run:
-        print url
+        print(url)
         return {}
 
     # retrieve parameters
@@ -99,4 +99,4 @@ if __name__ == '__main__':
     if len(params)>0:
         for name,values in params.iteritems():
             for value in values:
-                print '%s => %s'%(name, value.name)
+                print('{} => {}'.format(name, value.name))

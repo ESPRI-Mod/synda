@@ -22,7 +22,7 @@ from sdtypes import Item
 def parse_parameters(buffer):
     try:
         xmldoc = etree.fromstring(buffer) # in our case, xmldoc is the top level response element/tag
-    except Exception, e:
+    except Exception as e:
         raise
 
     params={}
@@ -49,7 +49,7 @@ def parse_metadata(buffer):
 
     try:
         xmldoc = etree.fromstring(buffer) # in our case, xmldoc is the top level response element/tag
-    except Exception, e:
+    except Exception as e:
         raise
 
 

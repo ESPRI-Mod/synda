@@ -32,7 +32,7 @@ class WorkerThread(threading.Thread):
         try:
             self._service.run(self._instance) # calls Download.run()
             self._queue.put(self._instance) # add item in queue to handle database I/O in the main process
-        except sdexception.CertificateRenewalException, e:
+        except sdexception.CertificateRenewalException as e:
             # error occured during certificate renewal
 
             sdlog.error("SDWUTILS-003","Certificate error: the daemon must be stopped")
@@ -42,7 +42,7 @@ class WorkerThread(threading.Thread):
 
             self._service.exception_occurs=True # we always stop daemon in this case, as download can't succeed without a working certificate. TODO: but sometimes, it's just a temporary failure (e.g. DNS failure during openid resolution), so maybe wait for 5 or 6 transfers to fail in a row before stopping the daemon.
 
-        except Exception, e:
+        except Exception as e:
             sdlog.error("SDWUTILS-002","Thread didn't complete successfully")
             sdtrace.log_exception(stderr=True)
 

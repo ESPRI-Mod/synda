@@ -39,13 +39,13 @@ class SearchAPIProxy():
         request=sdtypes.Request(url=url,pagination=True)
         final_url=request.get_url()
 
-        sdlog.debug("SYDPROXY-490","paginated call started (url=%s)"%final_url)
+        sdlog.debug("SYDPROXY-490", "paginated call started (url={})".format(final_url))
 
         try:
             paginated_response=self.call_web_service__PAGINATION(request)
-        except Exception,e:
-            sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
-            sdlog.error("SYDPROXY-410","%s"%(str(e),))
+        except Exception as e:
+            sdlog.error("SYDPROXY-400", "Error occurs during search-API paginated call (url={})".format(final_url, ))
+            sdlog.error("SYDPROXY-410", "{}".format(str(e), ))
             raise
 
         sdlog.debug("SYDPROXY-001","paginated call completed (call-duration=%i, files-count=%i, url=%s)"%(paginated_response.call_duration, paginated_response.count(), final_url))
@@ -61,9 +61,9 @@ class SearchAPIProxy():
 
         return md
 
-    def call_web_service(self,request):
+    def call_web_service(self, request):
 
-        sdlog.debug("SYDPROXY-100","Search-API call started (%s)."%request.get_url())
+        sdlog.debug("SYDPROXY-100", "Search-API call started ({}).".format(request.get_url()))
 
         try:
             response=sdnetutils.call_web_service(request.get_url(),timeout=sdconst.SEARCH_API_HTTP_TIMEOUT) # returns Response object
@@ -166,4 +166,4 @@ if __name__ == '__main__':
         file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
-        print "%s %s"%(f.timestamp,f.id)
+        print("{} {}".format(f.timestamp, f.id))

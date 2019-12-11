@@ -42,9 +42,9 @@ def run(facets_groups,show_candidate=False,dry_run=False):
                 li=get_datanode_list(facets_group,dry_run=dry_run)
 
                 if show_candidate:
-                    print "Candidate datanodes list:"
+                    print("Candidate datanodes list:")
                     for dn in li:
-                        print dn
+                        print(dn)
 
                 if len(li)>0:
                     data_node=get_nearest_datanode(li)
@@ -82,9 +82,9 @@ def get_nearest_datanode(datanodes):
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, epilog="""examples of use
-  %s -d %s
-%s
-    """%(prog,'esg-datanode.jpl.nasa.gov',sdcliex.search(prog)))
+  {} {} {}
+{}
+    """.format(prog, 'esg-datanode.jpl.nasa.gov', sdcliex.search(prog)))
 
     parser.add_argument('parameter',nargs='*',default=[],help=sdi18n.m0001)
     parser.add_argument('-d', '--datanode',help='e.g. esgnode2.nci.org.au')
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         datanode_place=sdnearestutils.get_datanode_place(args.datanode)
         distance=sdnearestutils.compute_distance(client_place,datanode_place)
 
-        print "The datanode is %i km from your location (%s)"%(distance,sdnearestutils.get_client_country())
+        print("The datanode is {} km from your location ({})".format(distance, sdnearestutils.get_client_country()))
     else:
         # choose the nearest datanode for given parameters
 
@@ -114,9 +114,7 @@ if __name__ == '__main__':
             facets_group=facets_groups[0]
 
             if 'data_node' in facets_group:
-                print
-                print "Nearest datanode: %s"%facets_group['data_node']
+                print("Nearest datanode: {}".format(facets_group['data_node']))
             else:
                 if not args.dry_run:
-                    print
-                    print "No datanode found"
+                    print("No datanode found")

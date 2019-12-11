@@ -32,7 +32,7 @@ def process_forced_parameters(facets_group):
     forced_parameters=get_forced_parameters(facets_group)
     non_forced_parameters=get_non_forced_parameters(facets_group)
 
-    for name,value in forced_parameters.iteritems():
+    for name, value in forced_parameters.items():
 
         name=remove_prefix(name)
 
@@ -42,7 +42,7 @@ def process_forced_parameters(facets_group):
 
 def get_forced_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if is_forced_parameter(k):
             di[k]=v
 
@@ -50,14 +50,15 @@ def get_forced_parameters(facets_group):
 
 def get_non_forced_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if not is_forced_parameter(k):
             di[k]=v
 
     return di
 
+
 def remove_prefix(name):
-    name=re.sub('^%s'%parameter_name_prefix,'',name)
+    name = re.sub('^{}'.format(parameter_name_prefix), '', name)
     return name
 
 def is_forced_parameter(pname):

@@ -127,7 +127,7 @@ def set_timestamp_when_empty__BATCH_MODE_2(project='CMIP5'):
     for dataset_without_timestamp in datasets_without_timestamp:
         try:
             sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
-        except SDException, e:
+        except SDException as e:
             if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
                 sdlog.info("SDREBUIL-694","Timestamp not set for dataset (reason=%s,dataset=%s)"%(e.code,dataset_without_timestamp.dataset_functional_id))
             else:

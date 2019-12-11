@@ -38,7 +38,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
 
     if dry_run:
 
-        print url
+        print(url)
 
         return None
 

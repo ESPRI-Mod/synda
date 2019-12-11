@@ -164,5 +164,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('facet')
     args = parser.parse_args()
-
-    print args.facet
+    print(args.facet)

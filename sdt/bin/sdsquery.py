@@ -21,9 +21,9 @@ import sdutils
 def print_(squery):
     verbose=get_scalar(squery,'verbose',default=False,type_=bool)
     if verbose:
-        print squery
+        print(squery)
     else:
-        print squery['url']
+        print(squery['url'])
 
 def get_scalar(squery,name,default=None,type_=None):
     ap=squery.get('attached_parameters')

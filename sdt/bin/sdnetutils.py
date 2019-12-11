@@ -12,46 +12,54 @@
 """This module contains network functions."""
 
 import os
-import urllib2
 import requests
 import sdtypes
 from sdexception import SDException
 from sdtime import SDTimer
-import sdapp
 import sdlog
 import sdconst
 import sdconfig
-import sdpoodlefix
-import httplib
 import sdtrace
 import ssl
 
-class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
-    """HTTP handler that transmits an X509 certificate as part of the request."""
-    def __init__(self, key, cert):
-            urllib2.HTTPSHandler.__init__(self)
-            self.key = key
-            self.cert = cert
-    def https_open(self, req):
-            return self.do_open(self.getConnection, req)
-    def getConnection(self, host, timeout=300):
-            return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): # default is to load list resulting from HTTP call in memory (should work on lowmem machine as response should not exceed SEARCH_API_CHUNKSIZE)
-    start_time=SDTimer.get_time()
-    buf=HTTP_GET(url,timeout)
-    elapsed_time=SDTimer.get_elapsed_time(start_time)
+# class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
+#     """HTTP handler that transmits an X509 certificate as part of the request."""
+#     def __init__(self, key, cert):
+#             urllib2.HTTPSHandler.__init__(self)
+#             self.key = key
+#             self.cert = cert
+#
+#     def https_open(self, req):
+#             return self.do_open(self.getConnection, req)
+#
+#     def getConnection(self, host, timeout=300):
+#             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
-    buf=fix_encoding(buf)
+
+def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False):
+    """
+    default is to load list resulting from HTTP call in memory. This should work on low memory machines as response
+    should not exceed SEARCH_API_CHUNKSIZE.
+    :param url: request url
+    :param timeout: timeout value
+    :param lowmem: boolean for low memory case.
+    :return: request response
+    """
+    start_time = SDTimer.get_time()
+    buf = HTTP_GET(url, timeout)
+    elapsed_time = SDTimer.get_elapsed_time(start_time)
+    buf = fix_encoding(buf)
 
     try:
-        di=search_api_parser.parse_metadata(buf)
-    except Exception,e:
+        di = search_api_parser.parse_metadata(buf)
+    except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        sdlog.info('SDNETUTI-001','XML parsing error (exception=%s). Most of the time, this error is due to a network error.'%str(e))
+        sdlog.info('SDNETUTI-001', 'XML parsing error (exception={}). Most of the time,'
+                                   ' this error is due to a network error.'.format(str(e)))
 
         # debug
         #
@@ -67,19 +75,22 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
         #
         #raise
 
-        raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        raise SDException('SDNETUTI-008',
+                          'Network error (see log for details)')  # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
-    sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
+    sdlog.debug("SDNETUTI-044", "files-count={}".format(len(di.get('files'))))
 
-    return sdtypes.Response(call_duration=elapsed_time,lowmem=lowmem,**di) # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
+    # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
+    return sdtypes.Response(call_duration=elapsed_time, lowmem=lowmem, **di)
 
-def call_param_web_service(url,timeout):
-    buf=HTTP_GET(url,timeout)
 
-    buf=fix_encoding(buf)
+def call_param_web_service(url, timeout):
+    buf = HTTP_GET(url, timeout)
+
+    buf = fix_encoding(buf)
 
     try:
-        params=search_api_parser.parse_parameters(buf)
+        params = search_api_parser.parse_parameters(buf)
     except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
@@ -103,65 +114,94 @@ def fix_encoding(buf):
 
     return buf
 
-def HTTP_GET_2(url,timeout=20,verify=True):
-    """requests impl."""
 
-    buf=None
+def HTTP_GET(url, timeout=20, verify=True):
+    """
+    simple http get via requests. buffer is cast into ascii string.
+    :param url:
+    :param timeout:
+    :param verify:
+    :return:
+    """
+
+    buf = None
 
     try:
         requests.packages.urllib3.disable_warnings()
-        result=requests.get(url, timeout=timeout, verify=verify)
-        buf=result.text
-    except Exception, e:
-        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
-        errcode="SDNETUTI-004"
-
-        raise SDException(errcode,errmsg)
-
-    return buf
-
-def HTTP_GET(url,timeout=20):
-    """urllib impl."""
-
-    sock=None
-    buf=None
-
-    try:
-        sdpoodlefix.start(url)
-
-        sock=urllib2.urlopen(url, timeout=timeout)
-        buf=sock.read()
-    except Exception, e:
-        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
-        errcode="SDNETUTI-002"
-
-        raise SDException(errcode,errmsg)
-
-    finally:
-        if sock!=None:
-            sock.close()
-
-        sdpoodlefix.stop()
+        result = requests.get(url, timeout=timeout, verify=verify)
+        buf = result.text.encode('ascii', 'ignore')
+    except Exception as e:
+        errmsg = "HTTP query failed (url={},exception={},timeout=)".format(url, str(e), timeout)
+        errcode = "SDNETUTI-004"
+        raise SDException(errcode, errmsg)
 
     return buf
 
-def test_access():
-    urlfile = urllib2.urlopen("http://www.google.com")
 
-    data_list = []
-    chunk = 4096
-    while 1:
-        data = urlfile.read(chunk)
-        if not data:
-            break
-        data_list.append(data)
-        #print "Read %s bytes"%len(data)
+# def HTTP_GET(url,timeout=20):
+#     """urllib impl."""
+#     sock = None
+#     buff = None
+#     try:
+#         sdpoodlefix.start(url)
+#         sock = requests.get(url, timeout=timeout)
+#         buff = sock.text
+#     except Exception as e:
+#         errmsg="HTTP query failed (url={},exception={},timeout={})".format(url,str(e),timeout)
+#         errcode="SDNETUTI-002"
+#
+#         raise SDException(errcode,errmsg)
+#
+#
+#     # sock=None
+#     # buf=None
+#     #
+#     # try:
+#     #     sdpoodlefix.start(url)
+#     #
+#     #     sock=urllib2.urlopen(url, timeout=timeout)
+#     #     buf=sock.read()
+#     # except Exception as e:
+#     #     errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
+#     #     errcode="SDNETUTI-002"
+#     #
+#     #     raise SDException(errcode,errmsg)
+#
+#     finally:
+#         if sock!=None:
+#             sock.close()
+#
+#         sdpoodlefix.stop()
+#
+#     return buff
+
+
+# def test_access():
+#     """
+#     Method designed to test access to internet using python requests package.
+#     """
+#     response = requests.get("http://www.google.com")
+#     data_list = []
+#     while True:
+#         data = response.text.encode('ascii', 'ignore')
+#
+# def test_access():
+#     urlfile = urllib2.urlopen("http://www.google.com")
+#
+#     data_list = []
+#     chunk = 4096
+#     while 1:
+#         data = urlfile.read(chunk)
+#         if not data:
+#             break
+#         data_list.append(data)
+#         #print "Read %s bytes"%len(data)
 
 def get_search_api_parser():
-    if sdconfig.searchapi_output_format==sdconst.SEARCH_API_OUTPUT_FORMAT_XML:
+    if sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_XML:
         import sdxml
         return sdxml
-    elif sdconfig.searchapi_output_format==sdconst.SEARCH_API_OUTPUT_FORMAT_JSON:
+    elif sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_JSON:
         import sdjson
         return sdjson
     else:

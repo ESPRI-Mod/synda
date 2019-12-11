@@ -11,7 +11,7 @@
 
 """This module runs many searches (SearchAPIProxy.run()) in parallel."""
 
-import Queue
+import queue
 import sdapp
 import threading
 import random
@@ -64,7 +64,7 @@ class MetadataThread(threading.Thread):
             metadata=self.service.run(url=url_with_host_set,attached_parameters=ap) # service is an instance of SearchAPIProxy
             metadata.disconnect() # TAGKLK434L3K34K
             self.result_queue.put(metadata)
-        except Exception, e:
+        except Exception as e:
             # note
             #  - it's not fatal to come here, because error queries will be
             #    retried later using a different host (well until "max_retry"
@@ -80,7 +80,7 @@ class MetadataThread(threading.Thread):
             #sdtrace.log_exception()
 
 def run(i__queries):
-    """This method contains the retry mecanism."""
+    """This method contains the retry mechanism."""
 
     # check
     for q in i__queries:
@@ -184,11 +184,15 @@ def run_helper(queries):
     """
     total_query_to_process=len(queries)
 
-    sdlog.debug("SDPROXMT-003","%d search-API queries to process (max_thread_per_host=%d,timeout=%d)"%(total_query_to_process,max_thread_per_host,sdconst.SEARCH_API_HTTP_TIMEOUT))
+    sdlog.debug("SDPROXMT-003",
+                "{} search-API queries to process (max_thread_per_host={},timeout={})".format(total_query_to_process,
+                                                                                              max_thread_per_host,
+                                                                                              sdconst.SEARCH_API_HTTP_TIMEOUT))
 
     while True:
         if sdconfig.proxymt_progress_stat:
-            sdlog.info("SDPROXMT-033","threads per host: %s"%",".join(['%s=%s'%(host,len(searchAPIServices[host]['threadlist'])) for host in searchAPIServices.keys()]))
+            sdlog.info("SDPROXMT-033", "threads per host: {}".format(",".join(
+                ['%s=%s' % (host, len(searchAPIServices[host]['threadlist'])) for host in searchAPIServices.keys()])))
 
         if len(queries)>0:
             distribute_queries(queries)
@@ -209,18 +213,20 @@ def run_helper(queries):
         total_query_already_processed = total_query_to_process - len(queries)
         if total_query_to_process > 0: # display progress only when there are a lot of queries
             if len(queries) > 0: # display progress only when still query to process
-                sdlog.info("SDPROXMT-004","total_queries=%d, running_or_done_queries=%d, waiting_queries=%d"%(total_query_to_process,total_query_already_processed,len(queries)))
+                sdlog.info("SDPROXMT-004", "total_queries={}, running_or_done_queries={}, waiting_queries={}".format(
+                    total_query_to_process, total_query_already_processed, len(queries)))
 
         # if all services are busy, we sleep to limit loop speed
         # (note that all the code around the "sleep" call is to detect system overload)
         sleep_time=10
         warning_threshold=5 # threshold not to emit warning for every small load exceedance
-        befo=time.time()
+        befo = time.time()
         time.sleep(sleep_time)
-        afte=time.time()
-        diff=afte-befo
+        afte = time.time()
+        diff = afte - befo
         if diff>sleep_time+warning_threshold:
-            sdlog.warning("SDPROXMT-005","WARNING: system overload detected (sleep takes %d second to complete)."%diff)
+            sdlog.warning("SDPROXMT-005",
+                          "WARNING: system overload detected (sleep takes {} second to complete).".format(diff))
 
     # retrieve result from output queue
     metadata=sdtypes.Metadata()
@@ -250,15 +256,17 @@ def set_index_hosts(index_hosts):
 
 max_thread_per_host=sdconfig.max_metadata_parallel_download_per_index
 
-__result_queue=Queue.Queue() # thread safe data structure to hold search-API result
-__error_queue=Queue.Queue()  # thread safe data structure to hold unsuccessful request (used by the retry mecanism)
+__result_queue = queue.Queue()  # thread safe data structure to hold search-API result
+__error_queue = queue.Queue()  # thread safe data structure to hold unsuccessful request (used by the retry mechanism)
 
 searchAPIServices=None # list of search-API services (M queries will be sent to one service at once, resulting in MxN parallel streams, with N the number of service)
 
 set_index_hosts(sdindex.index_host_list)
 
 if __name__ == '__main__':
-    url="http://%s/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File"%sdconst.IDXHOSTMARK
+    url = "http://{}/esg-search/search?fields=*&realm=atmos&project=CMIP5&time_frequency=mon&experiment=rcp26&variable" \
+          "=tasmin&model=CNRM-CM5&model=CSIRO-Mk3-6-0&model=BCC-CSM1-1-m&ensemble=r1i1p1&type=File".format(
+        sdconst.IDXHOSTMARK)
     url=sdurlutils.add_solr_output_format(url)
     queries=[{'url':url}]
     metadata=run(queries)
@@ -269,4 +277,4 @@ if __name__ == '__main__':
         file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
-        print "%s %s"%(f.timestamp,f.id)
+        print("{} {}".format(f.timestamp, f.id))

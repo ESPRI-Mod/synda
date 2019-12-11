@@ -115,7 +115,7 @@ def infere_parameter_name(pvalue,type_):
     else:
         try:
             pname=sdparam.get_name_from_value(pvalue)
-        except SDException,e:
+        except SDException as e:
             if sdconfig.config.getint('behaviour','check_parameter')==1:
                 raise
             else:

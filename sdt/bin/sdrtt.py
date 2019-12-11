@@ -44,4 +44,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     rtt=compute_RTT('google.fr')
-    print rtt
+    print(rtt)

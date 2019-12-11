@@ -165,7 +165,7 @@ def transfers_begin():
                     transfers_needed -= 1
                     if transfers_needed <= 0:
                         break
-                except NoTransferWaitingException, e:
+                except NoTransferWaitingException as e:
                     pass
             if transfers_needed <= 0:
                 break

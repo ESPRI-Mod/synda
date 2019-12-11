@@ -55,7 +55,8 @@ def normalize_model_name(model_name):
     #   - str() func is used to prevent this error: 'Reason: character mapping must return integer, None or unicode'
     #     (from details at http://stackoverflow.com/questions/10367302/what-is-producing-typeerror-character-mapping-must-return-integer-in-this-p)
     #
-    mode_name_without_special_character=str(model_name).translate(string.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
+    mode_name_without_special_character = str(model_name).translate(
+        str.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
 
     # remove last hyphen if any
     if mode_name_without_special_character[-1] == "-":

@@ -34,7 +34,7 @@ def serialize_parameters(facets):
     """
     filters=[]
 
-    for k,v in facets.iteritems():
+    for k, v in facets.items():
 
         if k in ['fields']:
             filters.append(serialize_parameter__mvpp(k,v))
@@ -102,8 +102,8 @@ def build_url(facets,searchapi_host):
     fmt=sdurlutils.get_solr_output_format(sdconfig.searchapi_output_format)
 
     url="http://{0}/esg-search/search?{1}&format={2}".format(sdconst.IDXHOSTMARK,serialized_parameters,fmt)
-
-    if len(url)>sdconfig.url_max_buffer_size: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
+    if len(url) > int(
+            sdconfig.url_max_buffer_size):  # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
         raise SDException("SDRQUUTI-001","url is too long (%i)"%len(url))
 
     if searchapi_host is not None:

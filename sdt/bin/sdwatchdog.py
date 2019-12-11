@@ -81,7 +81,7 @@ def scan_processes(previous_processes,new_processes,debug=False):
                                 else:
                                     sdlog.info("SDWATCHD-274","file not found (%s%s)"%(local_path,pid)) # this can occur if wget already started, but didn't create the output file yet
 
-        except Exception, e:
+        except Exception as e:
             if debug:
                 raise
             else:

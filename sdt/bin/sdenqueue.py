@@ -242,7 +242,7 @@ def fix_timestamp():
 
             try:
                 sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
-            except SDException, e:
+            except SDException as e:
                 if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
                     sdlog.info("SDENQUEU-909","Timestamp not set for '%s' dataset (%s)"%(dataset_without_timestamp.dataset_functional_id,str(e)))
                 else:

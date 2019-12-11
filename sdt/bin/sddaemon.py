@@ -48,7 +48,7 @@ def get_daemon_status():
         return "Daemon not running"
 
 def print_daemon_status():
-    print get_daemon_status()
+    print(get_daemon_status())
 
 def is_running():
     if os.path.isfile(sdconfig.daemon_pid_file): # maybe this can be replaced by "pidfile.is_locked()"
@@ -64,7 +64,7 @@ def main_loop():
 
     try:
         sdtaskscheduler.event_loop()
-    except SDException, e:
+    except SDException as e:
         level=sdconfig.config.get('log','verbosity_level')
 
         if level=='debug':
@@ -113,7 +113,7 @@ def start():
             print('Handing over to daemon process, you can check the daemons logs at {}.'.format(context.stdout.name))
             with context:
                 main_loop()
-        except Exception, e:
+        except Exception as e:
             import sdtrace
             sdtrace.log_exception() 
 
@@ -136,8 +136,8 @@ def start():
 
 
     else:
-        print 'Daemon is already running.'
-        print 'PID file location: %s'%sdconfig.daemon_pid_file
+        print('Daemon is already running.')
+        print('PID file location: {}'.format(sdconfig.daemon_pid_file))
 
 def stop():
     if is_running():
@@ -152,7 +152,7 @@ def stop():
             sdlog.error('SDDAEMON-014',"Warning: daemon pidfile exists but daemon process doesn't exist. Most often, this is caused by an unexpected system restart (e.g. kernel panic).")
 
             # remove orphan pidfile
-            sdlog.info('SDDAEMON-016',"Removing orphan daemon pidfile (%s)."%sdconfig.daemon_pid_file)
+            sdlog.info('SDDAEMON-016', "Removing orphan daemon pidfile ({}).".format(sdconfig.daemon_pid_file))
             os.unlink(sdconfig.daemon_pid_file)
  
     else:
@@ -237,8 +237,9 @@ if __name__ == "__main__":
     elif args.action == 'stop':
         stop()
     elif args.action == 'status':
-        print get_daemon_status()
+        print(get_daemon_status())
     elif args.action == 'test':
+        # TODO remove or edit this test, hardcoded crap.
         test_write_access('/var/tmp/synda/sdt/daemon.pid')
     else:
-        print 'Incorrect argument'
+        print('Incorrect argument')

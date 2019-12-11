@@ -33,7 +33,7 @@ from sdtools import print_stderr
 def run(args):
     try:
         metadata = syndautils.file_full_search(args)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr("You must specify at least one facet to perform this action.")
         return 1
 

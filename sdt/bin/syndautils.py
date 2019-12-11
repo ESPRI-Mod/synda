@@ -24,7 +24,7 @@ def check_daemon():
     if sdconfig.prevent_daemon_and_modification:
         import sddaemon
         if sddaemon.is_running():
-            print 'The daemon must be stopped before installing/removing dataset'
+            print('The daemon must be stopped before installing/removing dataset')
             sys.exit(3)
 
 def get_stream(subcommand=None,parameter=None,selection_file=None,no_default=True,raise_exception_if_empty=False):

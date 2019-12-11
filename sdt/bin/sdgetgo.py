@@ -49,7 +49,7 @@ def file_transfer_synchronous_wrapper(source_file,dest_file):
         else:
             return 1
 
-    except Exception, e:
+    except Exception as e:
         return 1
 
 def get_status():

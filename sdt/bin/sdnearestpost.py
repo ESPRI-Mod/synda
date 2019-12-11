@@ -147,7 +147,7 @@ def compute_RTT(remote_host):
 
     try:
         rtt=sdrtt.compute_RTT(remote_host)
-    except SDException,e:
+    except SDException as e:
         if e.code=='SYNDARTT-002':
             # when here, it means no response from host
 

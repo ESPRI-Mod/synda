@@ -95,7 +95,7 @@ def build_selection_list():
             buffer=sdbuffer.get_selection_file_buffer(path=file)
             selection=sdparse.build(buffer)
             selections.append(selection)
-        except Exception, e:
+        except Exception as e:
             sdlog.error("SDSELGPU-001","Exception occured (%s)"%str(e))
 
             raise SDException("SDSELGPU-001","Error occured while loading '%s' selection file. See log for details."%file)

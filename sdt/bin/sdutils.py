@@ -57,11 +57,11 @@ def query_yes_no(question, default="yes"):
     elif default == "no":
         prompt = " [y/N] "
     else:
-        raise ValueError("invalid default answer: '%s'" % default)
+        raise ValueError("invalid default answer: '{}'".format(default))
 
     while True:
         sys.stderr.write(question + prompt)
-        choice = raw_input().lower()
+        choice = input().lower()
         if default is not None and choice == '':
             return valid[default]
         elif choice in valid:
@@ -124,9 +124,10 @@ def get_last_access_date(self,f):
         l__epoch=os.path.getatime(f)
         date_str=datetime.datetime.fromtimestamp(l__epoch).strftime('%Y-%m-%d %H:%M:%S.%f')
         return date_str
-    except OSError, e:
+    except OSError as e:
         if e.errno == errno.ENOENT: # errno.ENOENT = no such file or directory
-            raise FileNotFoundException("%s"%str(e)) # cast (we break stacktrace here because we need to handle this case in a specific way).
+            raise FileNotFoundException(
+                str(e))  # cast (we break stacktrace here because we need to handle this case in a specific way).
         else:
 
             # check if logging is possible here or move this func upstream)

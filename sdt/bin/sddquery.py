@@ -25,9 +25,9 @@ def print_(dquery):
     verbose=get_scalar(dquery,'verbose',default=False,type_=bool) # we cast here as verbose can be str (set from parameter) or bool (set from '-v' option)
 
     if verbose:
-        print dquery
+        print(dquery)
     else:
-        print dquery['url']
+        print(dquery['url'])
 
 def set_scalar(dquery,name,value):
 

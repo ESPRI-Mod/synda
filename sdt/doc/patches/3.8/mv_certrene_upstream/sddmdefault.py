@@ -230,7 +230,7 @@ def transfers_end():
             eot_queue.task_done()
         except Queue.Empty, e:
             pass
-        except sdexception.FatalException, e:
+        except sdexception.FatalException as e:
             raise
         except:
 

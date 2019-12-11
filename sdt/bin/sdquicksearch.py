@@ -61,7 +61,7 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
         for query in queries:
             request=sdtypes.Request(url=query['url'],pagination=False)
 
-            print '%s'%request.get_url()
+            print(request.get_url())
 
             # debug
             #print 'Url: %s'%request.get_url()
@@ -94,14 +94,15 @@ def process_queries(queries):
 
     return mqr
 
+
 def ws_call(query):
-    request=sdtypes.Request(url=query['url'],pagination=False)
-    result=sdnetutils.call_web_service(request.get_url(),timeout=sdconst.SEARCH_API_HTTP_TIMEOUT) # return Response object
+    request = sdtypes.Request(url=query['url'], pagination=False)
+    result = sdnetutils.call_web_service(request.get_url(),
+                                         timeout=sdconst.SEARCH_API_HTTP_TIMEOUT)  # return Response object
 
-    if result.count()>=sdconst.SEARCH_API_CHUNKSIZE:
-        raise SDException("SDQSEARC-002","Number of returned files reach maximum limit")
-
-    result=sdaddap.run(result,query.get('attached_parameters',{}))
+    if result.count() >= sdconst.SEARCH_API_CHUNKSIZE:
+        raise SDException("SDQSEARC-002", "Number of returned files reach maximum limit")
+    result = sdaddap.run(result, query.get('attached_parameters', {}))
 
     return result
 

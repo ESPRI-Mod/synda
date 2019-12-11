@@ -60,7 +60,7 @@ def run_local(args,stream):
         files=[f.__dict__ for f in files]
 
         metadata=sdtypes.Metadata(files=files)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
 
@@ -73,7 +73,7 @@ def run_remote(args,stream):
 
     try:
         metadata=syndautils.file_full_search(args,stream)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
 

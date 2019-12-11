@@ -63,7 +63,7 @@ def main_loop():
 
     try:
         sdtaskscheduler.event_loop()
-    except SDException, e:
+    except SDException as e:
         level=sdconfig.config.get('log','verbosity_level')
 
         if level=='debug':
@@ -111,7 +111,7 @@ def start():
         try:
             with context:
                 main_loop()
-        except Exception, e:
+        except Exception as e:
             import sdtrace
             sdtrace.log_exception()
 

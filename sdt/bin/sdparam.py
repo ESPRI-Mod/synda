@@ -116,7 +116,7 @@ def reverse_params(params):
     """Transform key/value dict to value/key dict."""
     di={}
 
-    for name,values in params.iteritems():
+    for name, values in params.items():
         for v in values:
             if v in di:
                 if name not in di[v]:
@@ -151,10 +151,9 @@ def build_ucvalue_index(reversed_params):
 def print_models_mapping(models,pattern=None):
 
     def print_models_mapping_line(norm_name,non_norm_name):
-        print "%-40s %s"%(norm_name,non_norm_name)
+        print("{}-40s {}".format(norm_name, non_norm_name))
 
-    print "%-40s %s"%('Normalized','Not normalized')
-    print
+    print("{}-40s {}".format('Normalized', 'Not normalized'))
     for m in models:
         if pattern is None:
             print_models_mapping_line(m,models[m])
@@ -165,12 +164,12 @@ def print_models_mapping(models,pattern=None):
 def filter_and_print_name(li,pattern=None):
     li=sdtools.grep_light(li,pattern)
 
-    if len(li)==1:
-        v=li[0]
-        print v
-    elif len(li)>1:
+    if len(li) == 1:
+        v = li[0]
+        print(v)
+    elif len(li) > 1:
         for v in li:
-            print v
+            print(v)
     else:
         sdtools.print_stderr("Parameter name not found")
 
@@ -183,7 +182,7 @@ def filter_and_print_value(li,columns=1,pattern=None):
         if v == None:
             sdtools.print_stderr('Free text parameter')
         else:
-            print v
+            print(v)
 
     elif len(li)>1:
 
@@ -193,7 +192,7 @@ def filter_and_print_value(li,columns=1,pattern=None):
             # mono-column version
 
             for v in li:
-                print v
+                print(v)
     else:
         sdtools.print_stderr("Parameter value not found")
 
@@ -226,7 +225,7 @@ def search_match(value):
     """Search name(s) matching the given value."""
     names=[]
 
-    for name,values in params.iteritems():
+    for name, values in params.items():
         for v in values:
             if v == value: 
                 names.append(name)

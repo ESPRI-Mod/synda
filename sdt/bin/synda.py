@@ -103,7 +103,7 @@ def run():
             if args.topic in subparsers.choices:
                 subparsers.choices[args.topic].print_help()
             else:
-                sdtools.print_stderr('Help topic not found (%s)' % args.topic)
+                sdtools.print_stderr('Help topic not found ({})'.format(args.topic))
 
         sys.exit(0)
 

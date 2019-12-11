@@ -32,6 +32,7 @@ import ssl
 import socket
 import sdconfig
 
+
 class TLS1Connection(httplib.HTTPSConnection):
     def __init__(self, host, **kwargs):
         httplib.HTTPSConnection.__init__(self, host, **kwargs)
@@ -48,6 +49,7 @@ class TLS1Connection(httplib.HTTPSConnection):
         # This is the only difference (default wrap_socket uses SSLv23).
         self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
 
+
 class TLS1Handler(urllib2.HTTPSHandler):
     def __init__(self):
         urllib2.HTTPSHandler.__init__(self)
@@ -55,16 +57,20 @@ class TLS1Handler(urllib2.HTTPSHandler):
     def https_open(self, req):
         return self.do_open(TLS1Connection, req)
 
+
 def _enable():
     urllib2.install_opener(urllib2.build_opener(TLS1Handler())) # Override default handler
 
+
 def _disable():
     urllib2.install_opener(urllib2.build_opener()) # Restore default handler
+
 
 def start(url):
     if sdconfig.poddlefix:
         if 'https' in url:
             _enable()
+
 
 def stop():
     if sdconfig.poddlefix:

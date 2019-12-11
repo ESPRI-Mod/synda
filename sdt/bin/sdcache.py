@@ -49,7 +49,7 @@ def run(host=None,reload=False,project=None):
         _update_parameters(parameters)
 
 def _reload_parameters(parameters):
-    for pname,pvalues in parameters.iteritems():
+    for pname, pvalues in parameters.items():
         for i,item in enumerate(pvalues):
             try:
                 if item is None:

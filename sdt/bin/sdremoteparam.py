@@ -68,4 +68,4 @@ if __name__ == '__main__':
     if len(params)>0:
         for name,values in params.iteritems():
             for value in values:
-                print '%s => %s'%(name, value.name)
+                print('{} => {}'.format(name, value.name))
