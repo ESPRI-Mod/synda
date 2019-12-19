@@ -676,6 +676,20 @@ def queue(args):
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")
     #sddaemon.print_daemon_status()
 
+def token(args):
+    import sdtoken
+    if args.action is None:
+        sdtoken.print_tokens()
+        return 0
+    if args.action == 'renew':
+        sdtoken.renew_tokens()
+        return 0
+    if args.action == 'print':
+        sdtoken.print_tokens()
+        return 0
+    print_stderr("Not implemented")
+    return 1
+
 def update(args):
     print_stderr("Retrieving parameters from ESGF...")
     import sdcache
@@ -797,6 +811,7 @@ actions={
     'retry':retry,
     'selection':selection, 
     'stat':stat, 
+    'token':token,
     'update':update,
     'upgrade':upgrade,
     'variable':variable,

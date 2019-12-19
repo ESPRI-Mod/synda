@@ -235,6 +235,8 @@ security_dir_mode=config.get('core','security_dir_mode')
 esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
 esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
 
+# Set location of Globus tokens
+globus_tokens=os.path.join(get_security_dir(),'globus_tokens.json')
 
 # aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')

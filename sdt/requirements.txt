@@ -1,5 +1,6 @@
 pyOpenSSL
 myproxyclient
+globus-sdk
 psutil
 humanize
 #lxml==3.3.5
