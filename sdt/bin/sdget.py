@@ -65,7 +65,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
         killed=is_killed(transfer_protocol,status)
 
-    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS:
 
         pass
 
