@@ -34,6 +34,8 @@ def get_transfer_protocol(url):
         return sdconst.TRANSFER_PROTOCOL_HTTP
     elif url.startswith('gsiftp://'):
         return sdconst.TRANSFER_PROTOCOL_GRIDFTP
+    elif url.startswith('globus:'):
+        return sdconst.TRANSFER_PROTOCOL_GLOBUS
     else:
         assert False
 
