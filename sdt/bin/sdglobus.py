@@ -417,6 +417,8 @@ def globus_wait(tc, task_id, src_endpoint):
         task = tc.get_task(task_id)
         # Get the last error Globus event
         events = tc.task_event_list(task_id, num_results=1, filter="is_error:1")
+        if not events:
+            continue
         event = events.data[0]
         # Print the error event to stderr and Parsl file log if it was not yet printed
         if event["time"] != last_event_time:
