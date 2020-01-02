@@ -28,7 +28,7 @@ import sdapp
 import sdconfig
 import sdutils
 import sdconst
-import sdget_urllib
+import sdget_requests
 from sdtools import print_stderr
 
 def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,buffered=True,hpss=False):
@@ -41,7 +41,8 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
     if transfer_protocol==sdconst.TRANSFER_PROTOCOL_HTTP:
 
         if http_client==sdconst.HTTP_CLIENT_URLLIB:
-            status=sdget_urllib.download_file(url,full_local_path,timeout)
+            status = sdget_requests.download_file(url, full_local_path, timeout)
+            # status=sdget_urllib.download_file(url,full_local_path,timeout)
         elif http_client==sdconst.HTTP_CLIENT_WGET:
 
             li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbosity,hpss)
