@@ -112,6 +112,7 @@ class LocalEndpointDict(EndpointDict):
 
 
 dst_endpoint = sdconfig.config.get("globustransfer", "destination_endpoint")
+dst_directory = sdconfig.config.get("globustransfer", "destination_directory")
 endpoints_filepath = sdconfig.config.get("globustransfer", "esgf_endpoints")
 if endpoints_filepath:
     globus_endpoints = LocalEndpointDict(endpoints_filepath).endpointDict()
@@ -417,7 +418,7 @@ def globus_wait(tc, task_id, src_endpoint):
         task = tc.get_task(task_id)
         # Get the last error Globus event
         events = tc.task_event_list(task_id, num_results=1, filter="is_error:1")
-        if not events:
+        if not events.data:
             continue
         event = events.data[0]
         # Print the error event to stderr and Parsl file log if it was not yet printed
@@ -483,7 +484,7 @@ def direct(
         if src_endpoint is None:
             non_globus_files.append(file_)
             continue
-        dst_path = os.path.join("/lukasz/esgf/test", file_.get("dataset_path"), file_.get("filename"))
+        dst_path = os.path.join(dst_directory, file_.get("dataset_path"), file_.get("filename"))
         if src_endpoint not in globus_transfers:
             globus_transfers[src_endpoint] = {"task_id": None, "items": []}
         globus_transfers.get(src_endpoint).get("items").append({

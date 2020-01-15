@@ -41,6 +41,12 @@ def load_tokens_from_file(filepath):
 
 def save_tokens_to_file(filepath, tokens):
     """Save a set of tokens for later use."""
+    directory = os.path.dirname(filepath)
+    if not os.path.isdir(directory):
+        try:
+            os.makedirs(directory)
+        except OSError as e:
+            print_stderr("Could not create {} directory for a Globus OAuth2 token.\n{}".format(directory, e))
     with open(filepath, 'w') as f:
         json.dump(tokens, f)
 
