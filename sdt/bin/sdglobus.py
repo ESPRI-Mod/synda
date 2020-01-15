@@ -12,15 +12,17 @@
 """This script contains security related functions."""
 
 import os
+import sys
 import re
 import struct
 import abc
 import json
-import urlparse
 import threading
 import datetime
 from xml.etree.ElementTree import fromstring
 import six
+from six import with_metaclass
+from six.moves.urllib.parse import urlparse
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
@@ -50,9 +52,7 @@ class Endpoint(object):
         self.path_in = path_in
 
 
-class EndpointDict(object):
-
-    __metaclass__ = abc.ABCMeta
+class EndpointDict(with_metaclass(abc.ABCMeta, object)):
 
     @abc.abstractmethod
     def endpointDict(self):
@@ -127,6 +127,13 @@ def load_tokens_from_file(filepath):
 
 def save_tokens_to_file(filepath, tokens):
     """Save a set of tokens for later use."""
+    directory = os.path.dirname(filepath)
+    if not os.path.isdir(directory):
+        try:
+            os.makedirs(directory)
+        except OSError as e:
+            print_stderr("Could not create {} directory for a Globus OAuth2 token.\n{}".format(directory, e))
+            sys.exit(1)
     with open(filepath, 'w') as f:
         json.dump(tokens, f)
 
@@ -140,13 +147,13 @@ def update_tokens_file_on_refresh(token_response):
 
 
 def get_native_app_authorizer(client_id):
-    tokens = None
+    transfer_tokens = None
     try:
         tokens = load_tokens_from_file(sdconfig.globus_tokens)
+        transfer_tokens = tokens["transfer.api.globus.org"]
     except:
-        pass
-
-    transfer_tokens = tokens["transfer.api.globus.org"]
+        print_stderr("Globus tokens not found (use 'renew' command to retrieve new tokens).")
+        sys.exit(1)
 
     auth_client = globus_sdk.NativeAppAuthClient(client_id=client_id)
 
@@ -380,7 +387,7 @@ def validate_key_usage(loaded_cert):
 
 
 def map_to_globus(url):
-    parsed_url = urlparse.urlparse(url)
+    parsed_url = urlparse(url)
 
     # 'globus' scheme
     if parsed_url.scheme == "globus":
@@ -518,7 +525,7 @@ def direct(
         try:
             task = tc.submit_transfer(td)
             task_id = task.get("task_id")
-            print(task_id)
+            print("Submitted Globus transfer: {}".format(task_id))
             globus_transfers.get(src_endpoint)["task_id"] = task_id
         except Exception as e:
             raise Exception("Globus transfer from {} to {} failed due to error: {}".format(
