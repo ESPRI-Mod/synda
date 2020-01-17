@@ -369,6 +369,7 @@ install_ve ()
     cd ${virtual_env_package_name}
     $PYTHON_CMD virtualenv.py --distribute --unzip-setuptools $ve_dest_dir
     source $ve_dest_dir/bin/activate # set PATH to the ve python
+    pip install --upgrade setuptools==44.0
 }
 
 fix_myproxyclient ()
