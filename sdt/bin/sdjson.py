@@ -129,6 +129,8 @@ def parse_metadata(buffer):
                         l__dict['url_http']=url
                     elif protocol.upper()=="GRIDFTP":
                         l__dict['url_gridftp']=url
+                    elif protocol.upper()=="GLOBUS":
+                        l__dict['url_globus']=url
                     elif protocol.upper()=="OPENDAP":
                         l__dict['url_opendap']=url
             else:

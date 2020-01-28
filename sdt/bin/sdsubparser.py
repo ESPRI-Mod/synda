@@ -260,6 +260,10 @@ def run(subparsers):
     add_incremental_mode_argument(subparser,'stat')
     add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
 
+    subparser=create_subparser(subparsers, 'token',common_option=False,help='Get OAuth2 tokens')
+    subparser.add_argument('-p', '--provider',choices=['globus'],default='globus',help='Get Globus OAuth2 tokens')
+    add_action_argument(subparser,choices=['renew', 'print'])
+
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
     subparser.add_argument('-p','--project',help='Retrieve project specific parameters for the specified project')
