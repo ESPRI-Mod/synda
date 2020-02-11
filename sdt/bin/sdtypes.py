@@ -368,14 +368,14 @@ class CommonIO(object):
 
 def compute_total_size(files):
     if len(files)>0:
-        file_=files[0] # assume all items are of the same type
-
-        # FIXME: remove this block
-        if 'size' not in file_:
-            return 0
-        else:
-            return sum(int(f['size']) for f in files)
-
+        total_size=0
+        for f in files:
+            if 'size' not in f:
+                file_size = 0
+            else:
+                file_size = int(f['size'])
+            total_size += file_size
+        return total_size
         # FIXME: use this block instead
         # test with: synda search CMIP5 decadal1995 mon land
         """
