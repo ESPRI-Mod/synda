@@ -20,7 +20,7 @@ import sddump
 import sdtypes
 import sddatasetversion
 import sdtxt2pdf
-import StringIO
+from io import StringIO
 
 OUT_WIDTH = 80
 

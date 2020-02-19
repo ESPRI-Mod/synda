@@ -42,13 +42,7 @@ def get_selection_file_buffer(path=None,parameter=None):
         mode = 'file'
     else:
         if len(parameter)>0:
-            if '-' in parameter: # note that we can't restrict this test for when len(parameter)==1 because some system parameter are added to the list (e.g. add_forced_parameter() in 'sdrfile' module)
-                # deprecated case: remove this case, as we don't use it anymore (i.e. it's the same result for both branch)
-
-                #mode='stdin'
-                mode='parameter' 
-            else:
-                mode='parameter' 
+            mode = 'parameter'
         else:
             import select
             if select.select([sys.stdin,],[],[],0.0)[0]:

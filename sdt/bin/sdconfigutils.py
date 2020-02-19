@@ -12,18 +12,20 @@
 """This module contains sdconfig utils."""
 
 import os
-import sdcfbuilder
-import sdtools
+import sdt.bin.sdcfbuilder
+import sdt.bin.sdtools
+
 
 class Paths(object):
     def add_common_paths(self):
-        self.default_folder_default_path=os.path.join(self.conf_folder,"default")
-        self.configuration_file=os.path.join(self.conf_folder,"sdt.conf")
-        self.credential_file=os.path.join(self.conf_folder,"credentials.conf")
+        self.default_folder_default_path = os.path.join(self.conf_folder, "default")
+        self.configuration_file = os.path.join(self.conf_folder, "sdt.conf")
+        self.credential_file = os.path.join(self.conf_folder, "credentials.conf")
+
 
 class PackageSystemPaths(Paths):
     def __init__(self):
-        self.bin_folder='/usr/share/python/synda/sdt/bin'
+        self.bin_folder = '/usr/share/python/synda/sdt/bin'
         self.tmp_folder='/var/tmp/synda/sdt'
         self.log_folder='/var/log/synda/sdt'
         self.conf_folder='/etc/synda/sdt'
@@ -35,8 +37,6 @@ class PackageSystemPaths(Paths):
 
         self.add_common_paths()
 
-    def create_tree():
-        pass # nothing to do as done when installing from package
 
 class SourceInstallPaths(Paths):
     def __init__(self,root_folder):
@@ -52,8 +52,6 @@ class SourceInstallPaths(Paths):
 
         self.add_common_paths()
 
-    def create_tree():
-        pass # nothing to do as done when installing from source
 
 class UserPaths(SourceInstallPaths):
     """This class contains 'user instance' paths.

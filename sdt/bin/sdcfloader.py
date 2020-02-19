@@ -17,7 +17,7 @@ Note
 import os
 import argparse
 from configparser import ConfigParser
-import sdtools
+import sdt.bin.sdtools
 
 def load(configuration_file,credential_file):
     config = ConfigParser(default_options)

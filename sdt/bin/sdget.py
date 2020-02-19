@@ -47,7 +47,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
             li=prepare_args(url,full_local_path,sdconfig.data_download_script_http,debug,timeout,verbosity,hpss)
 
-            (status,script_stderr)=run_download_script(li,buffered)
+            (status, script_stderr) = (li, buffered)
 
             killed=is_killed(transfer_protocol,status)
 

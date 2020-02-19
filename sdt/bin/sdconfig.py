@@ -17,14 +17,14 @@ import uuid
 import argparse
 from distutils.command.install import install
 
-import sdconst
-import sdtools
-import sdcfloader
-import sdconfigutils
-import sdi18n
-import sdcfbuilder
-from sdexception import SDException, EnvironmentNotSet
-from sdsetuputils import PostInstallCommand, EnvInit
+from sdt.bin.sdconst import *
+import sdt.bin.sdtools
+import sdt.bin.sdcfloader
+import sdt.bin.sdconfigutils
+import sdt.bin.sdi18n
+import sdt.bin.sdcfbuilder
+from sdt.bin.sdexception import SDException, EnvironmentNotSet
+from sdt.bin.sdsetuputils import PostInstallCommand, EnvInit
 
 
 # from sdtiaction import checkenv, initenv
@@ -32,22 +32,22 @@ from sdsetuputils import PostInstallCommand, EnvInit
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
 def get_security_dir():
-    if security_dir_mode == sdconst.SECURITY_DIR_TMP:
+    if security_dir_mode == SECURITY_DIR_TMP:
         security_dir = "{}/.esg".format(tmp_folder)
-    elif security_dir_mode == sdconst.SECURITY_DIR_TMPUID:
+    elif security_dir_mode == SECURITY_DIR_TMPUID:
         security_dir = "{}/{}/.esg".format(tmp_folder, str(os.getuid()))
-    elif security_dir_mode == sdconst.SECURITY_DIR_HOME:
+    elif security_dir_mode == SECURITY_DIR_HOME:
         if 'HOME' not in os.environ:
             raise SDException('SDCONFIG-120', "HOME env. var. must be set when 'security_dir_mode' is set to {}".format(
-                sdconst.SECURITY_DIR_HOME))
+                SECURITY_DIR_HOME))
         security_dir = "{}/.esg".format(os.environ['HOME'])
-    elif security_dir_mode == sdconst.SECURITY_DIR_MIXED:
+    elif security_dir_mode == SECURITY_DIR_MIXED:
         wia = sdtools.who_am_i()
         if wia == 'ihm':
             if 'HOME' not in os.environ:
                 raise SDException('SDCONFIG-121',
                                   "HOME env. var. must be set when 'security_dir_mode' is set to {} "
-                                  "in a IHM context".format(sdconst.SECURITY_DIR_MIXED))
+                                  "in a IHM context".format(SECURITY_DIR_MIXED))
             security_dir = "{}/.esg".format(os.environ['HOME'])
         elif wia == 'daemon':
             security_dir = "{}/.esg".format(tmp_folder)
@@ -60,7 +60,7 @@ def get_security_dir():
 
 
 def get_default_limit(command):
-    return sdconst.DEFAULT_LIMITS[default_limits_mode][command]
+    return DEFAULT_LIMITS[default_limits_mode][command]
 
 
 def get_path(name, default_value):
@@ -103,9 +103,9 @@ def is_openid_set():
 
 
 def is_event_enabled(event, project):
-    if event == sdconst.EVENT_FILE_COMPLETE:
+    if event == EVENT_FILE_COMPLETE:
         return False
-    elif event == sdconst.EVENT_VARIABLE_COMPLETE:
+    elif event == EVENT_VARIABLE_COMPLETE:
         if project == 'CMIP5':
             return False  # CMIP5 use special output12 event
         else:
@@ -124,12 +124,12 @@ system_pkg_install = False
 if 'ST_HOME' not in os.environ:
     raise SDException('SDCONFIG-010', "'ST_HOME' is not set")
 
-install_paths = sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
+install_paths = sdt.bin.sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
 
 # set user folders
 # TODO investigate what's the reason for this?
 # user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
-if sdtools.is_file_read_access_OK(install_paths.credential_file):
+if sdt.bin.sdtools.is_file_read_access_OK(install_paths.credential_file):
     paths = install_paths
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
@@ -195,10 +195,10 @@ default_folder_default_path = paths.default_folder_default_path
 configuration_file = paths.configuration_file
 credential_file = paths.credential_file
 
-stacktrace_log_file = "/tmp/sdt_stacktrace_%s.log" % str(uuid.uuid4())
+stacktrace_log_file = "/tmp/sdt_stacktrace_{}.log".format(str(uuid.uuid4()))
 
-daemon_pid_file = "%s/daemon.pid" % tmp_folder
-ihm_pid_file = "%s/ihm.pid" % tmp_folder
+daemon_pid_file = "{}/daemon.pid".format(tmp_folder)
+ihm_pid_file = "{}/ihm.pid".format(tmp_folder)
 
 # check_path(bin_folder)
 
@@ -235,7 +235,7 @@ stop_download_if_error_occurs = False  # If true, stop download if error occurs 
 # if false, the download continue. Note that in the case of a certificate renewal
 # error, the daemon always stops not matter if this false is true or false.
 
-config = sdcfloader.load(configuration_file, credential_file)
+config = sdt.bin.sdcfloader.load(configuration_file, credential_file)
 
 # alias
 #
@@ -287,11 +287,11 @@ files_dest_folder_for_get_subcommand = None
 default_limits_mode = config.get('interface', 'default_listing_size')
 
 # Set default type (File | Dataset | Variable)
-sdtsaction_type_default = sdconst.SA_TYPE_FILE if metadata_server_type == 'apache_default_listing' else sdconst.SA_TYPE_DATASET
+sdtsaction_type_default = SA_TYPE_FILE if metadata_server_type == 'apache_default_listing' else SA_TYPE_DATASET
 
 # Note
 #     When set to xml, 'lxml' package is required (must be added both in install.sh and in requirements.txt)
-searchapi_output_format = sdconst.SEARCH_API_OUTPUT_FORMAT_JSON
+searchapi_output_format = SEARCH_API_OUTPUT_FORMAT_JSON
 
 # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
 next_url_on_error = config.getboolean('download', 'http_fallback')

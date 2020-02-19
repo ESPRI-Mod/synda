@@ -155,7 +155,7 @@ def run(subparsers):
     sdcommonarg.add_type_grp(subparser)
 
     subparser=create_subparser(subparsers,'daemon',common_option=False,help='Daemon management',note=sdi18n.m0023)
-    add_action_argument(subparser,choices=['start','stop','status'])
+    add_action_argument(subparser, choices=['start', 'stop', 'status', 'test'])
 
     subparser=create_subparser(subparsers,'dump',help='Display raw metadata',example=sdcliex.dump())
     add_parameter_argument(subparser)

@@ -4,7 +4,7 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS.
 #                             All Rights Reserved”
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
@@ -50,8 +50,11 @@ def get_daemon_status():
 def print_daemon_status():
     print(get_daemon_status())
 
+
 def is_running():
-    if os.path.isfile(sdconfig.daemon_pid_file): # maybe this can be replaced by "pidfile.is_locked()"
+    print('STATUS METHOD')
+    print(sdconfig.daemon_pid_file)
+    if os.path.isfile(sdconfig.daemon_pid_file):  # maybe this can be replaced by "pidfile.is_locked()"
         return True
     else:
         return False
@@ -65,27 +68,28 @@ def main_loop():
     try:
         sdtaskscheduler.event_loop()
     except SDException as e:
-        level=sdconfig.config.get('log','verbosity_level')
+        level = sdconfig.config.get('log', 'verbosity_level')
 
-        if level=='debug':
+        if level == 'debug':
             # We log everything in debug mode no matter the exception type
 
-            sdlog.debug('SDDAEMON-008',"Exception occured (%s)"%str(e))
+            sdlog.debug('SDDAEMON-008', "Exception occured (%s)" % str(e))
         else:
             if isinstance(e,SDException):
                 # In this case, we only print the exception code, as the errmsg
-                # is likely to be there already (i.e. low-level func should have 
+                # is likely to be there already (i.e. low-level func should have
                 # log information about this exception).
                 # The primary reason for this is to have a clear log entry
                 # when authentication failed (e.g. ESGF is down or openid is incorrect)
 
-                sdlog.info('SDDAEMON-010',"Exception occured (%s)"%str(e.code))
+                sdlog.info('SDDAEMON-010', "Exception occured ({})".format(str(e.code)))
             else:
                 # This case should not occur, so we log everything to help debugging
 
-                sdlog.info('SDDAEMON-012',"Exception occured (%s)"%str(e))
+                sdlog.info('SDDAEMON-012', "Exception occured ({})".format(str(e)))
 
-    sdlog.info('SDDAEMON-034',"Daemon stopped")
+    sdlog.info('SDDAEMON-034', "Daemon stopped")
+
 
 def test_write_access(file_):
     if os.path.isfile(file_):
@@ -115,12 +119,9 @@ def start():
                 main_loop()
         except Exception as e:
             import sdtrace
-            sdtrace.log_exception() 
+            sdtrace.log_exception()
 
-
-
-
-        # DOESN'T WORK !
+            # DOESN'T WORK !
         #
         # BEWARE: tricky code here !!!
         # The idea is after waiting for a while, if daemon startup failed,
@@ -154,7 +155,7 @@ def stop():
             # remove orphan pidfile
             sdlog.info('SDDAEMON-016', "Removing orphan daemon pidfile ({}).".format(sdconfig.daemon_pid_file))
             os.unlink(sdconfig.daemon_pid_file)
- 
+
     else:
         sdtools.print_stderr('Daemon is already stopped.')
 
@@ -183,10 +184,10 @@ def unprivileged_user_mode():
     # (used for unprivileged mode)
     #
     # Depends on Python 2.7+ and python-daemon 2.1.1+
-    # 
+    #
     # Note that 'python-daemon 2.1.1' is not the version installed by default by
     # the synda installer, so to enable 'supplementary group' support, you need
-    # to run the following command: 
+    # to run the following command:
     #
     # <virtualenv_path>/pip install python-daemon==2.1.1
     #

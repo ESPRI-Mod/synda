@@ -4,26 +4,29 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright �(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
 """This module contains messages available as string."""
 
-m0001="search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted."
+m0001 = "search parameters. Format is name=value1,value2.. ... Most of the time, parameter name can be omitted."
+
 
 def m0003(host):
-    return """Request sent to %s. Please wait.."""%host
-    #return """%s contacted. Waiting for reply.."""%host
+    return """Request sent to %s. Please wait..""" % host
+    # return """%s contacted. Waiting for reply.."""%host
+
 
 def m0004(prog):
     return """  %s
   %s mo
   %s model
-  %s model MR"""%((prog,)*4)
+  %s model MR""" % ((prog,) * 4)
 
-m0005="""
+
+m0005 = """
   If 'localsearch' option is false (default), search in ESGF archive.
 
   If 'localsearch' option is true, search in local repository.
@@ -35,25 +38,27 @@ m0005="""
   For ease of use, limit can be set directly on the command line as a simple number (i.e. the number of row(s) to return)
 """
 
-def m0006(name,description,example=None,note=None):
-    import StringIO                                                                                                                              
-    buf = StringIO.StringIO()                                                                                                                    
-    buf.write("%s\n%s\n"%(name,description))
+
+def m0006(name, description, example=None, note=None):
+    import StringIO
+    buf = StringIO.StringIO()
+    buf.write("%s\n%s\n" % (name, description))
     if example is not None:
-        buf.write("\nExample\n%s\n"%example)
+        buf.write("\nExample\n%s\n" % example)
     if note is not None:
-        buf.write("\nNotes\n%s\n"%note)
+        buf.write("\nNotes\n%s\n" % note)
     return buf.getvalue()
 
-m0007='delete cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
-m0008='add cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
-m0009="<file> format follow Search-API 'instance_id' attribute."
-m0010="""
+
+m0007 = 'delete cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
+m0008 = 'add cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc'
+m0009 = "<file> format follow Search-API 'instance_id' attribute."
+m0010 = """
             retry all
             retry cmip5.output1.MIROC.MIROC4h.rcp45.6hr.atmos.6hrLev.r1i1p1.v20110926.ua_6hrLev_MIROC4h_rcp45_r1i1p1_2029081100-2029082018.nc
 """
 
-m0011="""
+m0011 = """
         set                  Show all session parameters that differ from default values.
         set all              Show all session parameters.
         set option           Show all options
@@ -63,35 +68,35 @@ m0011="""
         set {name}?          Show session parameter value
         """
 
-m0012="""
+m0012 = """
             daemon start
             daemon stop
             daemon status
         """
 
-m0013="""
+m0013 = """
             sample small_dataset
             sample remote
             sample local
         """
 
-m0014="""
+m0014 = """
             selection list [ filter ]
             selection edit <idx>
             selection cat <idx>
             selection print <idx>
         """
 
-m0015="""
+m0015 = """
 Synda subcommands list
 
 """
 
-m0016="synda - a fast and versatile data management tool for Earth Science Grid Federation (ESGF)"
+m0016 = "synda - a fast and versatile data management tool for Earth Science Grid Federation (ESGF)"
 
-m0017="action"
+m0017 = "action"
 
-m0018="""
+m0018 = """
 Mailing list:
 
 esgf-user@lists.llnl.gov
@@ -105,7 +110,7 @@ Website:
 https://github.com/Prodiguer/synda
 """
 
-m0019="""
+m0019 = """
 Introduction to synda command
 
 A session might go like
@@ -186,33 +191,33 @@ $ synda get <file_url>
 (to test file download)
 """
 
-m0020="""
+m0020 = """
 This may be caused by a typo in search parameters, or by the cache containing outdated informations.
 To refresh the cache, run 'synda update' command.
 """
 
-m0021="""
+m0021 = """
 This may be caused by a typo in the search parameters, or by the cache containing outdated informations.
 To refresh the cache, run 'synda update' command.
 You can also disable parameters checking by setting 'check_parameter=0' in configuration file.
 """
 
-m0022="""  'install' command is asynchronous, the transfer is handled by a
+m0022 = """  'install' command is asynchronous, the transfer is handled by a
   background process. To check when the download is complete, use 'synda 
   queue' command.
 """
 
-m0023="""  This command is for source installation only (in system package
+m0023 = """  This command is for source installation only (in system package
   installation, Synda daemon is installed as a service and is managed
   using 'service' command).
 """
 
-m0024="""Set the total number of returned results. By default, returns the first 100 records matching the given constraints. Limit can be also be changed through the keyword parameters limit=. The system imposes a maximum value of limit <= 10,000."""
+m0024 = """Set the total number of returned results. By default, returns the first 100 records matching the given constraints. Limit can be also be changed through the keyword parameters limit=. The system imposes a maximum value of limit <= 10,000."""
 
-m0025="""sudo service synda start"""
+m0025 = """sudo service synda start"""
 
-m0026="""synda daemon start"""
+m0026 = """synda daemon start"""
 
-m0027="You must either be root, or part of the synda group to perform this command."
-m0028="Unable to access credentials file necessary to perform this action, please make sure you have sufficient " \
-      "permissions for the said file then retry the command."
+m0027 = "You must either be root, or part of the synda group to perform this command."
+m0028 = "Unable to access credentials file necessary to perform this action, please make sure you have sufficient " \
+        "permissions for the said file then retry the command."

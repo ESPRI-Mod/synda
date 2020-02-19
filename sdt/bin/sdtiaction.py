@@ -17,6 +17,7 @@ Note
 """
 
 import sys
+import os
 from sdtools import print_stderr
 import sdexception
 
@@ -171,12 +172,14 @@ def daemon(args):
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
                 except sdexception.SDException as e:
-                    print_stderr('error occured',e.msg)
+                    print_stderr('error occured', e.msg)
             else:
                 print_stderr("Daemon already stopped")
-        elif args.action=="status":
-            sddaemon.print_daemon_status()
-
+        elif args.action == "status":
+            print(sddaemon.get_daemon_status())
+        elif args.action == "test":
+            print(sddaemon.test_write_access(os.path.join(os.getenv('ST_HOME'), 'tmp/daemon.pid')))
+        print("DONZO.")
 def facet(args):
     import sdparam,sdremoteparam,syndautils,sdinference,sdignorecase
 

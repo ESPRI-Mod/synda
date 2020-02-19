@@ -184,18 +184,20 @@ def event_loop():
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
             raise
 
-    sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
-
+    sdlog.info("SDTSCHED-902", "Transfer daemon is now up and running", stderr=True)
+    print('before while loop')
     while True:
+        print(
+        assert os.path.isfile(sdconfig.daemon_pid_file))
         assert os.path.isfile(sdconfig.daemon_pid_file)
 
-        if quit==0:
+        if quit == 0:
             run_soft_tasks()
 
         run_hard_tasks()
 
         if sdtask.fatal_exception():
-            sdlog.error("SDTSCHED-002","Fatal exception occured during download",stderr=True)
+            sdlog.error("SDTSCHED-002", "Fatal exception occured during download", stderr=True)
             break
 
         if quit==1:

@@ -5,7 +5,7 @@ from six.moves import input
 import tarfile
 import os.path
 import pkg_resources
-from sdexception import EnvironmentNotSet
+from sdt.bin.sdexception import EnvironmentNotSet
 # import sdlog
 
 

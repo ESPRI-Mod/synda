@@ -25,7 +25,7 @@ def load_selections():
 
 def print_selection_list_with_index(pattern=None):
     for i,s in enumerate(get_selection_list(filename_pattern=pattern)):
-        print "%3d %s"%(i,s.filename)
+        print("%3d %s" % (i, s.filename))
 
 def print_selection_list(pattern=None,project=None):
 
@@ -33,7 +33,7 @@ def print_selection_list(pattern=None,project=None):
         project=[]
 
     for s in get_selection_list(pattern,project=project):
-        print s.filename
+        print(s.filename)
 
 def get_selection_list(filename_pattern=None,project=None):
 

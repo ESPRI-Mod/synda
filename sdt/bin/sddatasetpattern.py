@@ -33,25 +33,27 @@ def replace_all_product_with_wildcard(path):
     return path
 
 def build_dataset(dataset_pattern):
-    d=Dataset()
-    d.dataset_pattern=dataset_pattern
+    d = Dataset()
+    d.dataset_pattern = dataset_pattern
 
     # explode dataset_pattern to o1/o2
-    (local_path_output1,local_path_output2)=sdproduct.get_output12_dataset_paths(dataset_pattern,replace_func=replace_all_product_with_wildcard)
+    (local_path_output1, local_path_output2) = sdproduct.get_output12_dataset_paths(dataset_pattern,
+                                                                                    replace_func=replace_all_product_with_wildcard)
 
     # retrieve dataset from db
-    d1=sddatasetdao.get_dataset_(local_path=local_path_output1)
-    d2=sddatasetdao.get_dataset_(local_path=local_path_output2)
+    d1 = sddatasetdao.get_dataset_by_local_path(local_path=local_path_output1)
+    d2 = sddatasetdao.get_dataset_by_local_path(local_path=local_path_output2)
 
     if d1 and d2:
 
         # do some consistency checks between output1 dataset and output2 dataset
 
         if d1.latest != d2.latest:
-            print_stderr('Inconsistency detected: latest flag differ between %s and %s'%(d1.local_path,d2.local_path))
+            print_stderr(
+                'Inconsistency detected: latest flag differ between %s and %s' % (d1.local_path, d2.local_path))
 
         if d1.timestamp != d2.timestamp:
-            print_stderr('Inconsistency detected: timestamp differ between %s and %s'%(d1.local_path,d2.local_path))
+            print_stderr('Inconsistency detected: timestamp differ between %s and %s' % (d1.local_path, d2.local_path))
 
         d.version=d1.version
         d.timestamp=d1.timestamp
