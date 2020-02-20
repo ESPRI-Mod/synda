@@ -11,9 +11,11 @@
 
 from sdt.bin.commons import sddump
 from sdt.bin.commons import sdcheckdatasetversion
-
-import sdfields
-import sdselectionsgroup, sdpipeline
+from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.search import sdfields
+from sdt.bin.commons.search import sdselectionsgroup
+from sdt.bin.commons.search import sdpipeline
 
 
 def run(args):
@@ -27,14 +29,9 @@ def run(args):
 
     elif args.action == "file_variable":
         # subset filter must be the subset coming from the args.parameters
-        subset_filter = ['model=CNRM-CM5', 'project=specs', 'realm=atmos', 'variable=tas']
-        # subset_filter = args.parameters
-        print(subset_filter)
-        # subset_filter=['model=CNRM-CM5','project=specs','realm=atmos','variable=tas']
-
+        subset_filter = args.parameters
         files = sddump.dump_ESGF(parameter=subset_filter, fields=sdfields.get_file_variable_fields(),
                                  dry_run=args.dry_run, type_='File')
-
         if not args.dry_run:
             print('{} file(s) retrieved'.format(len(files)))
             errors = 0
@@ -48,21 +45,16 @@ def run(args):
             if errors == 0:
                 print('No inconsistency detected')
             else:
-                print('%d inconsistencies detected' % errors)
+                print('{} inconsistencies detected'.format(errors))
 
     elif args.action == "selection":
-
         for selection in sdselectionsgroup.get_selection_list():
             try:
-                print_stderr("Checking %s.." % selection.filename)
+                print_stderr("Checking {}..".format(selection.filename))
                 sdpipeline.prepare_param(selection=selection)
             except sdexception.IncorrectParameterException as e:
-                print_stderr("Error occurs while processing %s (%s)" % (selection.filename, str(e)))
-
-
-
+                print_stderr("Error occurs while processing {} ({})".format(selection.filename, str(e)))
     else:
-        print_stderr('Invalid check "%s"' % args.action)
+        print_stderr('Invalid check "{}"'.format(args.action))
         status = 1
-
     return status

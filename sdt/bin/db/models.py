@@ -265,6 +265,10 @@ class Param(Entity):
     name = Column(Text)
     value = Column(Text)
 
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
     def __repr__(self):
         """
         instance representation

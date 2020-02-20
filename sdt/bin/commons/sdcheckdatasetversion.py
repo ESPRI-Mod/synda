@@ -29,19 +29,19 @@ def versatile_print(s=''):
     output.write(s + '\n')
 
 
-def print_framed(str):
+def print_framed(msg):
     tbl = texttable.Texttable()
     tbl.set_cols_dtype(['t'])
     tbl.set_cols_align(['c'])
-    tbl.add_row([str])
+    tbl.add_row([msg])
     tbl.set_cols_width([OUT_WIDTH - 2 - 2])
     versatile_print(tbl.draw())
 
 
-def print_wrapped(str):
+def print_wrapped(msg):
     tw = textwrap.TextWrapper(width=OUT_WIDTH - 1, initial_indent='  ', subsequent_indent='    ',
                               break_on_hyphens=False)
-    versatile_print('\\\n'.join(tw.wrap(str)))
+    versatile_print('\\\n'.join(tw.wrap(msg)))
 
 
 def run(args):
@@ -50,7 +50,7 @@ def run(args):
     if args.output_format == 'text':
         output = sys.stdout
     elif args.output_format == 'pdf':
-        output = StringIO.StringIO()
+        output = StringIO()
 
     DSV_ERR_FMT = 1
     DSV_ERR_NUM = 2
@@ -149,7 +149,7 @@ def run(args):
         """
 
         # Add "vfn" & "vernum" keys to every dsv_info
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             for dsv_info in ds_info['dsv']:
                 vfn, vernum = sddatasetversion.DatasetVersion(dsv_info['verstr']).analyse()
                 dsv_info['vfn'] = vfn
@@ -157,14 +157,14 @@ def run(args):
 
         # Initialise the per-data-set error counters and per-data-set version
         # error flags
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             ds_info['errors'] = 0
             for dsv_info in ds_info['dsv']:
                 dsv_info['err_flags'] = 0
 
         # Basic check : all version strings must have a valid format and we
         # must be able to extract a version number from them.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             for dsv_info in ds_info['dsv']:
                 if dsv_info['vfn'] is None:
                     dsv_info['err_flags'] |= DSV_ERR_FMT
@@ -175,7 +175,7 @@ def run(args):
 
         # Intermediate check : no two versions of the same data set must have
         # the same versions numbers.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             dsv_verstr = set()
             for dsv_info in ds_info['dsv']:
                 if dsv_info['vernum'] in dsv_verstr:
@@ -186,7 +186,7 @@ def run(args):
         # Monotonicity check : verify that, after sorting the versions by
         # timestamp, the version numbers are strictly increasing. Versions
         # which have no "timestamp" field must be excluded from the check.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             dsv_list = []
             for dsv_info in ds_info['dsv']:
                 if 'timestamp' in dsv_info:
@@ -198,7 +198,7 @@ def run(args):
                     ds_info['errors'] += 1
 
         # datasets_with_errors = the master_id of all the data sets with errors
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             if ds_info['errors'] != 0:
                 datasets_with_errors.add(master_id)
 
@@ -264,7 +264,7 @@ def run(args):
     for e in dsv_err:
         ds_count = 0
         dsv_count = 0
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             c = 0
             for dsv_info in ds_info['dsv']:
                 if dsv_info['err_flags'] & e['v']:

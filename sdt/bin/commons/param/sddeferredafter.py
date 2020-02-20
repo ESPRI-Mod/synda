@@ -21,13 +21,9 @@ Note
     before inference and the other take place after inference.
 """
 
-import sys
-import argparse
-import json
 from sdt.bin.commons.utils import sdconst
-from sdt.bin.commons.utils import sdprint
-from sdt.bin.commons.search import sddefaultparameter
-from sdt.bin.commons.search import sdforcedparameter
+from sdt.bin.commons.param import sddefaultparameter
+from sdt.bin.commons.param import sdforcedparameter
 from sdt.bin.commons.search import sdstream
 
 
@@ -51,13 +47,13 @@ def add_default_parameter(o, name, value):
         # force str
         value = [str(v) for v in value]
 
-        k = "%s%s" % (sdconst.AIDPP, name)
+        k = "{}{}".format(sdconst.AIDPP, name)
         for facets_group in o:
             facets_group[k] = value
     else:
         # assume parameter
 
-        o.append("%s%s=%s" % (sdconst.AIDPP, name, value))
+        o.append("{}{}={}".format(sdconst.AIDPP, name, value))
 
 
 def add_forced_parameter(o, name, value):
@@ -70,23 +66,10 @@ def add_forced_parameter(o, name, value):
         # force str
         value = [str(v) for v in value]
 
-        k = "%s%s" % (sdconst.AIFPP, name)
+        k = "{}{}".format(sdconst.AIFPP, name)
         for facets_group in o:
             facets_group[k] = value
     else:
         # assume parameter
 
-        o.append("%s%s=%s" % (sdconst.AIFPP, name, value))
-
-
-# module init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    args = parser.parse_args()
-
-    facets_groups = json.load(sys.stdin)
-    facets_groups = run(facets_groups)
-    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)
+        o.append("{}{}={}".format(sdconst.AIFPP, name, value))

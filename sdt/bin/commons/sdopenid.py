@@ -18,8 +18,7 @@ Credit
 import re
 import argparse
 from xml.etree import ElementTree
-from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons import sdneutils
+from sdt.bin.commons.utils import sdlog, sdnetutils
 from sdt.bin.commons.utils.sdexception import OpenIDIncorrectFormatException, OpenIDProcessingException
 
 XRI_NS = 'xri://$xrd*($v*2.0)'
@@ -37,7 +36,7 @@ def extract_info_from_openid(openid):
             sdlog.warning("SDOPENID-210", "Invalid openid ({})".format(openid))
 
     try:
-        xrds_buf = sdneutils.HTTP_GET(openid, timeout=10, verify=False)
+        xrds_buf = sdnetutils.HTTP_GET(openid, timeout=10, verify=False)
         (hostname, port) = parse_XRDS(xrds_buf)
         username = parse_openid(openid)
         return hostname, port, username

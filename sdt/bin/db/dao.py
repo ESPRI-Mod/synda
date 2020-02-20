@@ -4,13 +4,16 @@ from sdt.bin.db.models import SelectionFile
 from sdt.bin.db.models import Selection
 from sdt.bin.db.models import FileWithoutSelection
 from sdt.bin.db.models import FileWithoutDataset
+from sdt.bin.db.models import Param
 from sdt.bin.db.session import query
+from sdt.bin.db.session import add
+
 from sdt.bin.db.session import update
 from sdt.bin.db.session import raw_query
 from sdt.bin.db import session
 from sdt.bin.db import utils
 from sdt.bin.sdconst import TRANSFER_STATUS_DELETE, TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING
-from sqlalchemy import func
+from sqlalchemy import text
 
 
 def get_datasets(limit=None, **criterion):
@@ -100,3 +103,49 @@ def files_in_error():
     q = query(File)
     q = q.filter_by(status=TRANSFER_STATUS_ERROR)
     return q.count()
+
+
+def fetch_parameters():
+    """Retrieve all parameters
+    Returns:
+        params (dict)
+    """
+    params = {}
+    q = query(Param.name, Param.value)
+    for name, value in q.all():
+        if name in params:
+            params[name].append(value)
+        else:
+            params[name] = [value]
+    return params
+
+
+def truncate_table(table):
+    text("TRUNCATE TABLE {}".format(table))
+
+
+def add_parameter(name, value=None):
+    ignore_list = ['pid', 'citation_url']
+    if name not in ignore_list:
+        new_param = Param(name, value)
+        add(new_param)
+
+
+def exists_parameter_value(name, value):
+    q = query(Param)
+    q = q.filter_by(name=name, value=value)
+    q = q.all()
+    if len(q) == 1:
+        return True
+    elif len(q) == 0:
+        return False
+
+
+def exists_parameter_name(name):
+    q = query(Param)
+    q = q.filter_by(name=name)
+    q = q.all()
+    if len(q) == 1:
+        return True
+    elif len(q) == 0:
+        return False

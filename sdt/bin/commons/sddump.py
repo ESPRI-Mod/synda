@@ -15,13 +15,8 @@ Example of use
     sddump.py CMIP5 atmos searchapi_host=esgf-data.dkrz.de -f timestamp
 """
 
-import argparse
-
 from sdt.bin.commons.search import sdsearch
-from sdt.bin.commons.search import sdfields
-from sdt.bin.commons.search import sdstreamutils
-from sdt.bin.commons.utils import sdprint
-from sdt.bin.commons.search import sddeferredafter
+from sdt.bin.commons.param import sddeferredafter
 from sdt.bin.commons.search import sdstreamutils
 
 

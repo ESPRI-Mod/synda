@@ -11,7 +11,7 @@
 
 """This module contains stream related routines."""
 
-from sdt.bin.commons.search import sdbuffer
+from sdt.bin.commons.param import sdbuffer
 from sdt.bin.commons.utils import sdparse
 from sdt.bin.commons.utils import sdexception
 

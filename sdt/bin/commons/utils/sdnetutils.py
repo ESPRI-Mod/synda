@@ -4,8 +4,8 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS.
-#                             All Rights Reserved”
+#  @copyright      Copyright �(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -14,7 +14,12 @@
 import requests
 import ssl
 from sdt.bin.models import sdtypes
-from sdt.bin.commons.utils import sdconfig, sdlog, sdconst
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdtime
+from sdt.bin.commons.utils import sdxml
+from sdt.bin.commons.utils import sdjson
 from sdt.bin.commons import sdtrace
 from sdt.bin.commons.utils.sdexception import SDException
 
@@ -28,9 +33,9 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
     :param lowmem: boolean for low memory case.
     :return: request response
     """
-    start_time = SDTimer.get_time()
+    start_time = sdtime.SDTimer.get_time()
     buf = HTTP_GET(url, timeout)
-    elapsed_time = SDTimer.get_elapsed_time(start_time)
+    elapsed_time = sdtime.SDTimer.get_elapsed_time(start_time)
     buf = fix_encoding(buf)
 
     try:
@@ -91,9 +96,7 @@ def fix_encoding(buf):
     # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
     #
     if sdconfig.fix_encoding:
-        import sdencoding
-        buf = sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
-
+        pass
     return buf
 
 
@@ -109,7 +112,6 @@ def HTTP_GET(url, timeout=20, verify=True):
     buf = None
 
     try:
-        requests.packages.urllib3.disable_warnings()
         result = requests.get(url, timeout=timeout, verify=verify)
         buf = result.text.encode('ascii', 'ignore')
     except Exception as e:
@@ -122,10 +124,8 @@ def HTTP_GET(url, timeout=20, verify=True):
 
 def get_search_api_parser():
     if sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_XML:
-        import sdxml
         return sdxml
     elif sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_JSON:
-        import sdjson
         return sdjson
     else:
         assert False

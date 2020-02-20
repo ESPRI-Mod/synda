@@ -15,7 +15,7 @@ Note
     This module doesn't use any other (Synda) module and thus can be used
     everywhere (even in 'sdapp' module) without circular dependency problem.
 """
-
+from sqlalchemy.exc import IntegrityError
 
 class SDException(Exception):
     def __init__(self, code=None, msg=None):
