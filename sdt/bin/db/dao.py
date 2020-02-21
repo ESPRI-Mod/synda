@@ -111,12 +111,13 @@ def fetch_parameters():
         params (dict)
     """
     params = {}
-    q = query(Param.name, Param.value)
-    for name, value in q.all():
-        if name in params:
-            params[name].append(value)
+    q = query(Param)
+    print(q.all())
+    for p in q.all():
+        if p.name in params:
+            params[p.name].append(p.value)
         else:
-            params[name] = [value]
+            params[p.name] = [p.value]
     return params
 
 
