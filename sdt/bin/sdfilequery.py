@@ -21,6 +21,7 @@ import sddb
 from sdtools import print_stderr
 import sdconst
 import sdlog
+import sdfiledao
 
 def transfer_running_count(conn=sddb.conn):
     return transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING,conn=conn)
@@ -43,9 +44,16 @@ def transfer_status_count(status=None,conn=sddb.conn):
 
 def transfer_running_count_by_datanode( conn=sddb.conn ):
     c = conn.cursor()
-    q = "SELECT data_node FROM file WHERE (status='running' OR status='waiting') GROUP BY data_node"
-    c.execute(q)
-    rcs = {r[0]:0 for r in c.fetchall()}
+    if False:
+        # Get a list of 'waiting' data nodes from the database
+        q = "SELECT data_node FROM file WHERE status='waiting' GROUP BY data_node"
+        c.execute(q)
+        rcs = {r[0]:0 for r in c.fetchall()}
+    else:
+        # Get a list of 'waiting' data nodes from the highest-priority cache
+        dns = [dn for dn in sdfiledao.highest_waiting_priority.vals.keys() if
+               sdfiledao.highest_waiting_priority.vals[dn] is not None]
+        rcs = {r:0 for r in dns}
     q = "SELECT data_node,COUNT(data_node) FROM file WHERE status='running' GROUP BY data_node"
     c.execute(q)
     rcs.update( {r[0]:r[1] for r in c.fetchall()} )
@@ -68,7 +76,7 @@ def get_download_status(project=None):
     while rs!=None:
         status=rs[0]
         count=rs[1]
-        size=humanize.naturalsize(rs[2],gnu=False)
+        size=humanize.naturalsize(rs[2],gnu=False,format='%.2f')
 
         li.append([status,count,size])
 
