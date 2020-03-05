@@ -32,6 +32,7 @@ import sdprofiler
 import sdfilequery
 import sdsqlutils
 from sdexception import FatalException,SDException,OpenIDNotSetException
+from sdtime import SDTimer
 
 def terminate(signal,frame):
     global quit
@@ -139,14 +140,20 @@ def run_hard_tasks():
 def run_soft_tasks():
     """Soft tasks are not executed during application shutdown."""
 
+    #tb0 = SDTimer.get_time() #jfp
     if sdconfig.download:
         sdtask.transfers_begin()
+    #tb1 = SDTimer.get_elapsed_time( tb0, show_microseconds=True ) #jfp
+    #sdlog.info("JFPSCHED-050","%s time to call sdtask.transfers_begin"%(tb1))
 
     # disabled for now (deletion occurs in realtime in interactive code)
     #sdtask.delete_transfers()
 
+    #prev0 = SDTimer.get_time() #jfp
     if sdconfig.config.getboolean('module','post_processing'):
         sdtask.process_async_event()
+    #prev1 = SDTimer.get_elapsed_time( prev0, show_microseconds=True ) #jfp
+    #sdlog.info("JFPSCHED-055","%s time to call sdtask.process_async_event"%(prev1))
 
 @sdprofiler.timeit
 def can_leave():
@@ -161,6 +168,7 @@ def event_loop():
     start_watchdog()
     cleanup_running_transfer()
     clear_failed_url()
+    sdfiledao.highest_waiting_priority( True, True ) #initializes cache of max priorities
     scheduler_state=1
 
     if sdconfig.download:
@@ -198,13 +206,21 @@ def event_loop():
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
     while True:
+        evlp0 = SDTimer.get_time() #jfp
         assert os.path.isfile(sdconfig.daemon_pid_file)
 
+        rst0 = SDTimer.get_time() #jfp
         if quit==0:
             run_soft_tasks()
+        rst1 = SDTimer.get_elapsed_time( rst0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-100","%s time to call run_soft_tasks"%(rst1))
 
+        rht0 = SDTimer.get_time() #jfp
         run_hard_tasks()
+        rht1 = SDTimer.get_elapsed_time( rht0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-200","%s time to call run_hard_tasks"%(rht1))
 
+        slp0 = SDTimer.get_time() #jfp
         if sdtask.fatal_exception():
             sdlog.error("SDTSCHED-002","Fatal exception occured during download",stderr=True)
             break
@@ -216,17 +232,24 @@ def event_loop():
                 break
 
         time.sleep(main_loop_sleep)
+        slp1 = SDTimer.get_elapsed_time( slp0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-300","%s time to sleep"%(slp1))
 
-        sdlog.debug("SDTSCHED-400","end of event loop")
+        #sdlog.debug("SDTSCHED-400","end of event loop")
+        evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-400","%s time for once through event loop"%(evlp1))
 
     print
+    evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+    sdlog.info("JFPSCHED-401","%s time for once through event loop"%(evlp1))
     sdlog.info("SDTSCHED-901","Scheduler successfully stopped",stderr=True)
 
 # module init.
 
 quit=0 # 0 => start, 1 => stop
 scheduler_state=0 # 0 => stopped, 1 => running, 2 => starting
-main_loop_sleep=9
+# jfp was main_loop_sleep=9, then 3, then 2.
+main_loop_sleep=1
 sdlog.set_default_logger(sdconst.LOGGER_CONSUMER)
 
 if sdconfig.prevent_daemon_and_ihm:

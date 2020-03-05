@@ -31,6 +31,7 @@ def change_status(old_status,new_status,conn=sddb.conn):
     c=conn.cursor()
     res=c.execute("update file set error_msg=NULL,status=?,sdget_error_msg=NULL,sdget_status=NULL where status=?",(new_status,old_status,))
     nbr=c.rowcount
+    sdfiledao.highest_waiting_priority( True, c )
     conn.commit()
     c.close()
 
