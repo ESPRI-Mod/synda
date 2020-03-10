@@ -10,7 +10,6 @@
 
 """This module contains funcs used in 'sdtaskscheduler' module."""
 
-import sys
 import os
 
 from sdt.bin.commons.utils import sdconfig
@@ -20,10 +19,8 @@ from sdt.bin.commons.utils import sdtime
 from sdt.bin.commons.utils.sdexception import *
 
 from sdt.bin.commons.daemon import sdprofiler
-from sdt.bin.commons import sdtrace
-from sdt.bin.models import sdtypes
 from sdt.bin.db import dao
-
+# TODO sddeletefile needs moving to dao
 import sddeletefile
 
 
