@@ -16,12 +16,12 @@ import sys
 import uuid
 import argparse
 
-import sdt.bin.sdtools
-import sdt.bin.sdcfloader
-import sdt.bin.sdconfigutils
-import sdt.bin.sdcfbuilder
 from sdt.bin.sdconst import *
 from sdt.bin.commons.utils.sdexception import SDException
+from sdt.bin.commons.utils import sdcfbuilder
+from sdt.bin.commons.utils import sdcfloader
+from sdt.bin.commons.utils import sdconfigutils
+from sdt.bin.commons.utils import sdtools
 from sdt.bin.sdsetuputils import PostInstallCommand, EnvInit
 
 
@@ -115,10 +115,10 @@ os.umask(0o002)
 if 'ST_HOME' not in os.environ:
     raise SDException('SDCONFIG-010', "'ST_HOME' is not set")
 
-synda_home_folder = sdt.bin.sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
+synda_home_folder = sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
 
 # set user folders
-if not sdt.bin.sdtools.is_file_read_access_OK(synda_home_folder.credential_file):
+if not sdtools.is_file_read_access_OK(synda_home_folder.credential_file):
     # if we are here, it means we have NO access to the machine-wide credential file.
     # Running Environment initialization script and warning user.
     print('Synda has issues reaching your credential file, in ST_HOME.')
@@ -192,7 +192,7 @@ stop_download_if_error_occurs = False  # If true, stop download if error occurs 
 # if false, the download continue. Note that in the case of a certificate renewal
 # error, the daemon always stops not matter if this false is true or false.
 
-config = sdt.bin.sdcfloader.load(configuration_file, credential_file)
+config = sdcfloader.load(configuration_file, credential_file)
 
 # alias
 #

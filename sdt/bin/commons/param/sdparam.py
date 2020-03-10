@@ -124,8 +124,17 @@ def get_models_mapping(models):
 
 def reverse_params(params):
     """Transform key/value dict to value/key dict."""
-    return {v: k for k, v in params.items()}
+    # return {v: k for k, v in params.items()}
+    di = {}
+    for name, values in params.items():
+        for v in values:
+            if v in di:
+                if name not in di[v]:
+                    di[v].append(name)
+            else:
+                di[v] = [name]
 
+    return di
 
 def build_ucvalue_index(reversed_params):
     di = {}

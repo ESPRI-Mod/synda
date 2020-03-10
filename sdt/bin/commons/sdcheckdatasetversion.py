@@ -59,7 +59,8 @@ def run(args):
     dsv_err = [
         {'name': 'DSV_ERR_FMT',
          'v': DSV_ERR_FMT,
-         'dsc': 'Malformed version string. The "version" field does not match (case-insensitively) any of the following Python regular expressions:\n' + '\n'.join(
+         'dsc': 'Malformed version string. The "version" field does not match (case-insensitively) any of the following'
+                ' Python regular expressions:\n' + '\n'.join(
              sddatasetversion.DatasetVersion._dataset_version_regexp_strings)
          },
         {'name': 'DSV_ERR_NUM',
@@ -68,11 +69,13 @@ def run(args):
          },
         {'name': 'DSV_ERR_DUP',
          'v': DSV_ERR_DUP,
-         'dsc': 'Duplicate version number. The integer extracted from the "version" field has the same value as that of another version of the same dataset.'
+         'dsc': 'Duplicate version number. The integer extracted from the "version" field has the same value as that'
+                ' of another version of the same dataset.'
          },
         {'name': 'DSV_ERR_SEQ',
          'v': DSV_ERR_SEQ,
-         'dsc': 'Sequence error. The integer extracted from the "version" field is not strictly greater than that for the previous version in timestamp order of the same dataset.'
+         'dsc': 'Sequence error. The integer extracted from the "version" field is not strictly greater than that for '
+                'the previous version in timestamp order of the same dataset.'
          },
     ]
     status = 0
@@ -94,7 +97,7 @@ def run(args):
 
     print_framed('Synda report on errors in dataset versions')
     versatile_print()
-    versatile_print('Date: %s' % time.strftime('%Y-%m-%d %H:%M:%S %z'))
+    versatile_print('Date: {}'.format(time.strftime('%Y-%m-%d %H:%M:%S %z')))
     versatile_print('Command line:')
     # FIXME make sure we have the exact command line, including options
     print_wrapped(' '.join(sys.argv))
@@ -108,10 +111,6 @@ def run(args):
 
     if not args.dry_run:
 
-        # group dataset by 'master_id'
-        #
-        # MEMO
-        #     'master_id' is the dataset identifier without 'version' item
         for dsv in all_dsv:
             d = sdtypes.Dataset(**dsv)
             dsv_info = {}
@@ -206,15 +205,15 @@ def run(args):
         for master_id in sorted(datasets_with_errors):
             dsv_list = dsv_grouped_by_master_id[master_id]['dsv']
             nmax = len(dsv_list)
-            versatile_print('\nDataset "%s":' % (master_id))
+            versatile_print('\nDataset "{}":'.format(master_id))
             dataset_errors = 0
             for n, dsv_info in enumerate(dsv_list, 1):
                 if 'timestamp' in dsv_info:
-                    ts = '"%s"' % dsv_info['timestamp']
+                    ts = '"{}"'.format(dsv_info['timestamp'])
                 else:
                     ts = 'none'
                 versatile_print(
-                    '  Version %d/%d: time stamp %s, version string "%s":' % (n, nmax, ts, dsv_info['verstr']))
+                    '  Version {}/{}: timestamp {}, version string "{}":'.format(n, nmax, ts, dsv_info['verstr']))
                 err_flags = dsv_info['err_flags']
                 if err_flags == 0:
                     versatile_print('    No errors')
@@ -224,10 +223,10 @@ def run(args):
                     if err_flags & DSV_ERR_NUM:
                         versatile_print('    Cannot extract version number from version string')
                     if err_flags & DSV_ERR_DUP:
-                        versatile_print(
-                            '    Version string is a duplicate of another version string in the same dataset')
+                        versatile_print('    Version string is a duplicate of another version '
+                                        'string in the same dataset')
                     if err_flags & DSV_ERR_SEQ:
-                        versatile_print('    Version number is not greater than previous version (%s -> %s)' % (
+                        versatile_print('    Version number is not greater than previous version ({} -> {})'.format(
                             dsv_list[n - 2]['vernum'], dsv_info['vernum']))
                     dsv_errors = 0
                     bits = dsv_info['err_flags']
@@ -237,17 +236,17 @@ def run(args):
                         bits >>= 1
                     dataset_errors += dsv_errors
                     dsv_with_errors += 1
-            versatile_print('  Dataset has %d error(s)' % (dataset_errors))
+            versatile_print('  Dataset has {} error(s)'.format(dataset_errors))
             total_errors += dataset_errors
 
     # Write a summary
-    digits = len('%d' % (len(all_dsv)))
-    versatile_print('\nFound %d dataset versions(s), of which' % (len(all_dsv)))
+    digits = len('{}'.format(len(all_dsv)))
+    versatile_print('\nFound {} dataset versions(s), of which'.format(len(all_dsv)))
     versatile_print('  %*d have a timestamp field' % (digits, stats['dsv_with_timestamp']))
     versatile_print('  %*d lack a timestamp field' % (digits, stats['dsv_without_timestamp']))
 
     # digits = len('%d' % (len(dsv_grouped_by_master_id)))
-    versatile_print('\nFound %d dataset(s), of which' % (len(dsv_grouped_by_master_id)))
+    versatile_print('\nFound {} dataset(s), of which'.format(len(dsv_grouped_by_master_id)))
     versatile_print('  %*d have a timestamp field on all  of their versions' % (
         digits, sum(map(lambda x: 1 if x['flags'] == 1 else 0, dsv_grouped_by_master_id.values()))))
     versatile_print('  %*d have a timestamp field on some of their versions' % (
@@ -281,16 +280,12 @@ def run(args):
     tbl.set_cols_width([ds_digits, dsv_digits, dsc_width])
     versatile_print(tbl.draw())
 
-    versatile_print('\nA total of %d error(s) were found' % (total_errors))
+    versatile_print('\nA total of {} error(s) were found'.format(total_errors))
     versatile_print('End of report')
-    if (total_errors != 0):
+    if total_errors != 0:
         status = 1
-
     if args.output_format == 'pdf':
         sdtxt2pdf.run(output, args.outfile, False)
-
     return status
-
-
 # init.
 output = None

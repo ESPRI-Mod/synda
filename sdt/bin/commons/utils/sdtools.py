@@ -364,9 +364,23 @@ def walk_backward_without_sibling(path):
     return paths
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', required=True)
-    args = parser.parse_args()
+def find_selection_file(file):
+    if os.path.isfile(file):
+        # file found
 
-    print(is_file_rw_access_OK(args.file))
+        return file
+    else:
+        if '/' in file:
+            # path
+
+            # if we are here, path is incorrect.
+            # we return the path 'as is'
+            # (it will trigger an error message in the calling func)
+
+            return file
+        else:
+            # filename
+
+            # if we are here, we expect the file to be in the 'selection' folder
+
+            return "{}/{}".format(sdconfig.selection_folder, file)

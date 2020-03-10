@@ -56,8 +56,8 @@ def normalize_model_name(model_name):
     #     (from details at
     #     http://stackoverflow.com/questions/10367302/what-is-producing-typeerror-character-mapping-must-return-integer-in-this-p)
     #
-    model_name_without_special_character = str(model_name). \
-        translate(string.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
+    model_name_without_special_character = str(model_name).translate(
+        str.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
 
     # remove last hyphen if any
     if model_name_without_special_character[-1] == "-":

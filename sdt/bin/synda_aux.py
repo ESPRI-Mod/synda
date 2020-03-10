@@ -21,21 +21,19 @@ Notes
     - remove '-W ignore' once only Python 2.7+. TAG5J43K
 """
 
-import sys
 import argparse
-import sdconst
-import sdi18n
-import sdsubparser
-import sdtools
-import sdpermission
-import sdexception
 import importlib
-import syndautils
+from sdt.bin.commons import sdi18n
+from sdt.bin.commons import syndautils
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdexception
+
+# TODO These imports are probably deprecated.
+from sdt.bin.commons.param import sddeferredbefore
+from sdt.bin.models import sdtypes
 
 
 def set_stream_type(args):
-    import sddeferredbefore
-
     # Set the sdtream type (aka search-API 'type').
     #
     # Note that arg.type_ is NOT the same thing as the stream type (aka
@@ -147,6 +145,12 @@ def run():
 
     check_action_parser = argparse.ArgumentParser(add_help=False)
     check_action_parser.add_argument('action', choices=['selection', 'file_variable', 'dataset_version'])
+    check_action_parser.add_argument('-F', '--output_format', help='Set output format', default='text',
+                                     choices=['text', 'pdf'])
+    check_action_parser.add_argument('-o', '--outfile', default='/tmp/dataset_version_report.pdf')
+
+    daemon_action_parser = argparse.ArgumentParser(add_help=False)
+    daemon_action_parser.add_argument('action', choices=['start', 'status', 'stop'])
 
     group = playback_parser.add_mutually_exclusive_group(required=False)
     group.add_argument('-p', '--playback',
@@ -206,6 +210,11 @@ def run():
 
     # Subparser for the retry subcommand
     retry = subparsers.add_parser('retry', help='Prints configuration')
+
+    # Subparser for the daemon subcommand
+    daemon = subparsers.add_parser('daemon',
+                                   help=sdi18n.m0023,
+                                   parent=[daemon_action_parser])
 
     # creating parser for sub-commands
     # sdsubparser.run(subparsers)
@@ -277,7 +286,6 @@ def run():
 
         # infer type if not set by user
         if args.type_ is None:
-            import sdtype
             args.type_ = sdtype.infer_display_type(stream)
 
         args.stream = stream  # TODO: pass 'stream' object downstream as a standalone argument (not inside args)

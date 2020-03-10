@@ -19,12 +19,15 @@ import sys
 import os
 import re
 
-from sdt.bin.commons.utils import sdconfig, sdconst, sdexception
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.daemon import sddaemon
 
 
 def check_daemon():
     if sdconfig.prevent_daemon_and_modification:
-        import sddaemon
         if sddaemon.is_running():
             print('The daemon must be stopped before installing/removing dataset')
             sys.exit(3)
@@ -76,7 +79,7 @@ def file_full_search(args, stream=None):
         - sdremove
         - sdstat
     """
-    import sdsearch, sdlog, sdhistory, sdstream, sdtime, sdselectionfileutils
+    import sdsearch, sdlog, sdhistory, sdstream, sdtime
 
     if stream is None:
         stream = get_stream(subcommand=args.subcommand, parameter=args.parameter, selection_file=args.selection_file,
@@ -102,7 +105,7 @@ def file_full_search(args, stream=None):
 
             sdlog.info('SYNUTILS-002', 'Starting file discovery (incremental mode enabled)')
 
-            selection_file = sdselectionfileutils.find_selection_file(args.selection_file)
+            selection_file = sdtools.find_selection_file(args.selection_file)
 
             selection_filename = os.path.basename(selection_file)
 

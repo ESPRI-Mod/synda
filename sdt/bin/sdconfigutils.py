@@ -49,7 +49,6 @@ class SourceInstallPaths(Paths):
         self.default_db_folder=os.path.join(root_folder, 'db')
         self.default_data_folder=os.path.join(root_folder, 'data')
         self.default_sandbox_folder=os.path.join(root_folder, 'sandbox')
-
         self.add_common_paths()
 
 

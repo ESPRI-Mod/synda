@@ -8,12 +8,11 @@ from sdt.bin.db.models import Param
 from sdt.bin.db.session import query
 from sdt.bin.db.session import add
 
-from sdt.bin.db.session import update
-from sdt.bin.db.session import raw_query
-from sdt.bin.db import session
 from sdt.bin.db import utils
-from sdt.bin.sdconst import TRANSFER_STATUS_DELETE, TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING
+from sdt.bin.sdconst import TRANSFER_STATUS_DELETE, TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING, \
+    TRANSFER_STATUS_RUNNING
 from sqlalchemy import text
+from sqlalchemy import or_
 
 
 def get_datasets(limit=None, **criterion):
@@ -150,3 +149,75 @@ def exists_parameter_name(name):
         return True
     elif len(q) == 0:
         return False
+
+
+def get_files(limit=None, **search_constraints):
+    """
+    Notes
+      - one search constraint must be given at least
+      - if 'limit' is None, retrieve all records matching the search constraints
+    """
+    q = query(File)
+    q = q.filter_by(**search_constraints).order_by(File.priority.desc(), File.checksum)
+    if limit is None:
+        files = q.all()
+    elif limit > 0:
+        files = q.limit(limit).all()
+    return files
+
+
+def update_file(file, next_url_on_error=False):
+    # 'url' need to be present when 'sdnexturl' feature is enabled
+    if not next_url_on_error:
+        del file.url
+
+    q = query(File)
+    q = q.update(file)
+
+    rowcount = len(q.all())
+    # check
+    if rowcount == 0:
+        raise SDException("SYNCDDAO-121", "file not found (file_id={})".format(i__tr.file_id, ))
+    elif rowcount > 1:
+        raise SDException("SYNCDDAO-120", "duplicate functional primary key (file_id={})".format(i__tr.file_id, ))
+
+
+def get_one_waiting_transfer(datanode=None):
+    if datanode is None:
+        li = get_files(limit=1, status=sdconst.TRANSFER_STATUS_WAITING)
+    else:
+        li = get_files(limit=1, status=sdconst.TRANSFER_STATUS_WAITING, data_node=datanode)
+    if len(li) == 0:
+        raise NoTransferWaitingException()
+    else:
+        t = li[0]
+
+    # retrieve the dataset
+    d = get_datasets(limit=1, dataset_id=t.dataset_id)
+    t.dataset = d
+
+    return t
+
+
+def transfer_status_count(status=None):
+    assert status is not None
+    q = query(File)
+    q = q.filter_by(status=status).all()
+    return len(q)
+
+
+def transfer_running_count():
+    return transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING)
+
+
+def transfer_running_count_by_datanode():
+    # TODO probably second query is broken
+    q = query(File)
+    q = q.filter_by(or_(File.status == sdconst.TRANSFER_STATUS_RUNNING,
+                        File.status == sdconst.TRANSFER_STATUS_WAITING)).group_by(File.data_node)
+    rcs = {r[0]: 0 for r in q.all()}
+    q = query(File)
+    q = q.filter(File.status == sdconst.TRANSFER_STATUS_RUNNING, func.count(file.data_node)).group_by(
+        File.data_node).all()
+    rcs.update({r[0]: r[1] for r in q.all()})
+    return rcs

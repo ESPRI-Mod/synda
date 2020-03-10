@@ -4,8 +4,8 @@
 ##################################
 # @program        synda
 # @description    climate models data transfer program
-# @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                            All Rights Reserved”
+# @copyright      Copyright �(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                            All Rights Reserved
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -18,20 +18,24 @@ Note
 import os
 import sys
 import time
-from sdt.bin.db import dao
+
 from sdt.bin.commons import sdlogon
+from sdt.bin.db import dao
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons.utils.sdexception import FatalException, SDException, OpenIDNotSetException
+from sdt.bin.commons.utils.sdexception import *
 from sdt.bin.commons.daemon import sdwatchdog
-from sdt.bin.commons.daemon import sdtask
-from sdt.bin.commons.daemon import sdprofiler
+
+import sdtask
+import sdprofiler
+import sdfilequery
 
 
 def terminate(signal, frame):
     global quit
-    print()  # this print is just not to display the msg below on the same line as ^C
+    print  # this print is just not to display the msg below on the same line as ^C
 
     sdlog.info("SDTSCHED-004", "Shutdown in progress..", stderr=True)
 
@@ -64,7 +68,7 @@ def cleanup_running_transfer():
     """This handle zombie cases (transfers with 'running' status, but not running).
 
     Check for zombie transfer (move "running" transfer to "waiting")
-    
+
     Notes:
         - remaining "running" transfers exist if the daemon has been killed or if the server rebooted when the daemon was running)
         - if there are still transfers in running state, we switch them to waiting and remove file chunk
@@ -78,7 +82,7 @@ def cleanup_running_transfer():
             os.remove(t.get_full_local_path())
 
         t.status = sdconst.TRANSFER_STATUS_WAITING
-        dao.update_file(t)
+        dao.update_file(t, sdconfig.next_url_on_error)
 
 
 def resilient_terminate(child):
@@ -119,7 +123,7 @@ def run_hard_tasks():
 
     try:
         sdtask.transfers_end()
-    except FatalException as e:
+    except FatalException, e:
         quit = 1
 
 
@@ -130,10 +134,16 @@ def run_soft_tasks():
     if sdconfig.download:
         sdtask.transfers_begin()
 
+    # disabled for now (deletion occurs in realtime in interactive code)
+    # sdtask.delete_transfers()
+
+    if sdconfig.config.getboolean('module', 'post_processing'):
+        sdtask.process_async_event()
+
 
 @sdprofiler.timeit
 def can_leave():
-    return dao.transfer_running_count() == 0 and sdtask.can_leave()
+    return sdfilequery.transfer_running_count() == 0 and sdtask.can_leave()
 
 
 def event_loop():
@@ -154,7 +164,7 @@ def event_loop():
 
                 # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
                 #
-                # Note 
+                # Note
                 #     To be practical, a 'systemd reload sdt' command must be implemented
                 #     (else, openid change in sdt.conf have no impact until the next
                 #     retry, which may be a few hours..). Because currently, synda is not aware
@@ -172,12 +182,12 @@ def event_loop():
                 sdlog.error("SDTSCHED-928", 'OpenID not set in configuration file', stderr=True)
                 raise OpenIDNotSetException("SDTSCHED-264", "OpenID not set in configuration file")
 
-        except SDException as e:
+        except SDException, e:
             sdlog.error("SDTSCHED-920", "Error occured while retrieving ESGF certificate", stderr=True)
             raise
 
     sdlog.info("SDTSCHED-902", "Transfer daemon is now up and running", stderr=True)
-    print('before while loop')
+
     while True:
         assert os.path.isfile(sdconfig.daemon_pid_file)
 

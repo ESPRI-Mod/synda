@@ -69,7 +69,7 @@ def get_selection_file_buffer(path=None, parameter=None):
             buffer = Buffer(path=sdconst.SELECTION_FROM_STDIN, filename=sdconst.SELECTION_FROM_STDIN, lines=lines)
 
     elif mode == 'file':
-        path = sdselectionfileutils.find_selection_file(path)
+        path = sdtools.find_selection_file(path)
         if not os.path.isfile(path):
             raise FileNotFoundException('SDBUFFER-002', 'File not found ({})'.format(path))
         with open(path, 'r') as fh:
