@@ -20,13 +20,14 @@ from sdt.bin.commons.utils.sdexception import *
 
 from sdt.bin.commons.daemon import sdprofiler
 from sdt.bin.db import dao
-# TODO sddeletefile needs moving to dao
-import sddeletefile
+from sdt.bin.db import dao_operations
+import sddmgo
+import sddmdefault
 
 
 @sdprofiler.timeit
 def delete_transfers():
-    sddeletefile.delete_transfers(limit=100)
+    dao_operations.delete_transfers(limit=100)
 
 
 @sdprofiler.timeit
@@ -155,10 +156,8 @@ def get_download_manager():
     download_manager = 'globustransfer_dm' if sdconfig.config.getboolean('module', 'globustransfer') else 'default_dm'
 
     if download_manager == 'globustransfer_dm':
-        import sddmgo
         return sddmgo
     elif download_manager == 'default_dm':
-        import sddmdefault
         return sddmdefault
     else:
         assert False
