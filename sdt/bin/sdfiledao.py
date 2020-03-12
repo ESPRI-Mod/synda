@@ -116,7 +116,7 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
       - one search constraint must be given at least
       - if 'limit' is None, retrieve all records matching the search constraints
     """
-    gfs0 = SDTimer.get_time() #jfp
+    gfs0 = SDTimer.get_time()
 
     data_node = search_constraints.get('data_node',None)
 
@@ -128,8 +128,8 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
         # ...limit==1 isn't essential, but the present coding is for limit==1
         use_cache = True
         if len( get_files.files.get( data_node, [] ) )>0:
-            gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True ) #jfp
-            sdlog.info("JFPFLDAO-200","get_files time is %s, used cache, data_node %s"%\
+            gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True )
+            sdlog.info("SDFILDAO-200","get_files time is %s, used cache, data_node %s"%\
                        (gfs1,data_node))
             return [ get_files.files[data_node].pop(0) ]
         else:
@@ -172,8 +172,8 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
         get_files.files[ data_node ] = files[1:]
         files = files[0:1]
 
-    gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True ) #jfp
-    sdlog.info("JFPFLDAO-200","get_files time is %s, search %s with %s"%(gfs1,q,search_constraints))
+    gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True )
+    sdlog.info("SDFILDAO-200","get_files time is %s, search %s with %s"%(gfs1,q,search_constraints))
     return files
 get_files.files = {}
 
@@ -210,7 +210,7 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
         else:
             data_nodes = [data_node]
         for dn in data_nodes:
-            hwp0 = SDTimer.get_time() #jfp
+            hwp0 = SDTimer.get_time()
             q = "SELECT MAX(priority) FROM file WHERE status='waiting' AND data_node='%s'" % dn
             c.execute(q)
             val = c.fetchone()
@@ -218,11 +218,10 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
                 highest_waiting_priority.vals[dn] = val[0]
             else:
                 highest_waiting_priority.vals.pop(dn,None)
-            hwp1 = SDTimer.get_elapsed_time( hwp0, show_microseconds=True ) #jfp
-          # Keep logging this query until I'm certain that the repeated-query problem has been fixed...
-            sdlog.info("JFPFLDAO-300","time %s to recompute priority=%s for %s" %
-                       (hwp1,val[0],dn) )
-            sdlog.info("JFPFLDAO-301","  query %s" % q )
+            hwp1 = SDTimer.get_elapsed_time( hwp0, show_microseconds=True )
+            #sdlog.info("SDFILDAO-300","time %s to recompute priority=%s for %s" %
+            #           (hwp1,val[0],dn) )
+            #sdlog.info("SDFILDAO-301","  query %s" % q )
         if cursor==True:
             c.close()
         return (highest_waiting_priority.vals).get(data_nodes[0],None)
@@ -258,7 +257,6 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
     return files
 
 def update_file(file,commit=True,conn=sddb.conn):
-#    upf0 = SDTimer.get_time() #jfp
     keys=['status','error_msg','sdget_status','sdget_error_msg','start_date','end_date','duration','rate','priority']
 
     # 'url' needs to be present when 'sdnexturl' feature is enabled
@@ -268,8 +266,6 @@ def update_file(file,commit=True,conn=sddb.conn):
 
     rowcount=sdsqlutils.update(file,keys,commit,conn)
 
-#    upf1 = SDTimer.get_elapsed_time( upf0, show_microseconds=True ) #jfp
-#    sdlog.info("JFPFFDAO-100","update_file time for file %s is %s"%(file.url,upf1))
     # check
     if rowcount==0:
         raise SDException("SYNCDDAO-121","file not found (file_id=%i)"%(i__tr.file_id,))
