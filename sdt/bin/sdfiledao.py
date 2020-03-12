@@ -31,15 +31,19 @@ def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
 def add_file(file,commit=True,conn=sddb.conn):
     keys_to_insert=['status', 'crea_date', 'url', 'local_path', 'filename', 'file_functional_id', 'tracking_id', 'priority', 'checksum', 'checksum_type', 'size', 'variable', 'project', 'model', 'data_node', 'dataset_id', 'insertion_group_id', 'timestamp', 'searchapi_host']
 
-    id_ = sdsqlutils.insert(file,keys_to_insert,commit,conn)
+    if not sdconst.GET_FILES_CACHING:
+        return sdsqlutils.insert(file,keys_to_insert,commit,conn)
+    else:
+        id_ = sdsqlutils.insert(file,keys_to_insert,commit,conn)
 
-    priority = file.__dict__['priority']
-    hipri = highest_waiting_priority( f['data_node'] )
-    if hipri is None or priority>hipri:
-        # Compute cached max(priority) for the data node, ignoring any previous value.
-        highest_waiting_priority( f['data_node'], True )
+        priority = file.__dict__['priority']
+        data_node = file.__dict__['data_node']
+        hipri = highest_waiting_priority( data_node )
+        if hipri is None or priority>hipri:
+            # Compute cached max(priority) for the data node, ignoring any previous value.
+            highest_waiting_priority( data_node, True )
 
-    return id_
+        return id_
 
 def delete_file(tr,commit=True,conn=sddb.conn):
     c = conn.cursor()
@@ -116,11 +120,13 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
 
     data_node = search_constraints.get('data_node',None)
 
-    # Was this function was called by sddao.get_one_waiting_transfer(), with data_node specified?
-    if limit==1 and\
-       set(search_constraints.keys())==set(['status','data_node']) and\
-       search_constraints['status']==sdconst.TRANSFER_STATUS_WAITING:
-        from_gowt = True
+    # Is the cache applicable to this situation?  Then use it, unless it's empty.
+    if set(search_constraints.keys())==set(['status','data_node']) and\
+       search_constraints['status']==sdconst.TRANSFER_STATUS_WAITING and\
+       limit==1 and\
+       sdconst.GET_FILES_CACHING:
+        # ...limit==1 isn't essential, but the present coding is for limit==1
+        use_cache = True
         if len( get_files.files.get( data_node, [] ) )>0:
             gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True ) #jfp
             sdlog.info("JFPFLDAO-200","get_files time is %s, used cache, data_node %s"%\
@@ -128,46 +134,40 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
             return [ get_files.files[data_node].pop(0) ]
         else:
             cachelen = 100
+            limit += cachelen
     else:
-        from_gowt = False
+        use_cache = False
 
     files=[]
     c = conn.cursor()
 
-    #sdlog.info("JFPSDDAO-140","search_constraints=%s"%search_constraints)
-    #sdlog.info("JFPSDDAO-141","limit=%s"%limit)
     search_placeholder=sdsqlutils.build_search_placeholder(search_constraints)
-    #orderby="priority DESC, checksum"
-    if from_gowt:
-        sdlog.info("JFPFLDAO-145","limit=%s,type %s cachelen=%s, type %s"%\
-                   (limit,type(limit),cachelen,type(cachelen) ))
-        limit_clause="limit %i"%(limit+cachelen) if limit is not None else ""
-    else:
-        limit_clause="limit %i"%limit if limit is not None else ""
-    #sdlog.info("JFPSDDAO-146","limit_clause=%s"%limit_clause)
-    getfirst = priority_clause( data_node, from_gowt, c )
-        
-    #sdlog.info("JFPSDDAO-148","getfirst=%s"%getfirst)
+    limit_clause="limit %i"%limit if limit is not None else ""
 
-    # was q="select * from file where %s order by %s %s"%(search_placeholder,orderby,limit_clause)
+    getfirst = priority_clause( data_node, use_cache, c )
+    if getfirst=='':
+        return []
     q="select * from file where %s %s %s"%(search_placeholder,getfirst,limit_clause)
-    #sdlog.info("JFPSDDAO-150","query=%s"%q)
     c.execute(q,search_constraints)
     rs=c.fetchone()
-    if (rs is None or len(rs)==0) and from_gowt:
-        # No files found.  Possibly we could find them if we retry at another priority level.
-        highest_waiting_priority( data_node, c )
-        getfirst = priority_clause( data_node, from_gowt, c )
+
+    #if use_cache and (rs is None or len(rs)==0):
+    if use_cache and (rs is None or len(rs)==0):
+        # No files found.  Possibly we could find one if we retry at another priority level.
+        # Note that it makes no sense to do this if getfirst==''.  That has alread triggered
+        # an early return.
+        highest_waiting_priority( data_node, c )   # compute the priority to retry at
+        getfirst = priority_clause( data_node, use_cache, c )
         q="select * from file where %s %s %s"%(search_placeholder,getfirst,limit_clause)
         c.execute(q,search_constraints)
         rs = c.fetchone()
+
     while rs!=None:
         files.append(sdsqlutils.get_object_from_resultset(rs,File))
         rs=c.fetchone()
     c.close()
-    #sdlog.info("JFPFLDAO-152","files=%s"%files)
 
-    if len(files)>1 and from_gowt:
+    if len(files)>1 and use_cache:
         # We shall return one of the files and cache the rest.
         get_files.files[ data_node ] = files[1:]
         files = files[0:1]
@@ -177,37 +177,25 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
     return files
 get_files.files = {}
 
-def priority_clause( data_node, from_gowt, cursor ):
-    #sdlog.info("JFPFLDAO-260","Entering priority_clause, args=%s,%s,%s,%s"%
-    #           ( data_node, from_gowt, cursor ) )
-    if from_gowt:
-        #sdlog.info("JFPFLDAO-262","will compute pri")
+def priority_clause( data_node, use_cache, cursor ):
+    if use_cache:
         pri = highest_waiting_priority(data_node)
-        #sdlog.info("JFPFLDAO-263","pri=%s"%pri)
-        if pri is None:
-            pri = highest_waiting_priority(data_node, cursor)
         if pri is None:
             getfirst = ''
         else:
             getfirst = "AND priority=%s" % pri
     else:
         getfirst = "ORDER BY priority DESC, checksum"
-    #sdlog.info("JFPFLDAO-270","getfirst=%s"%getfirst)
     return getfirst
 
 def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
-    """This function contains a dictionary of the highest priority among status='waiting' files for
-    each data_node.  It will always return the dictionary value for the specified data node, or
-    one of the specified data nodes if several are provided.
+    """This function contains a dictionary-like cache of the highest priority among status='waiting'
+    files for each data_node.  It will always return the dictionary value for the specified
+    data node, or one of the specified data nodes if several are provided.
     - When called with a data_node and cursor, it will update its value for that data_node.
     - If cursor==True, then this function will create and close its own cursor.
     - If data_node==True, then this function will be applied to all data nodes.
-    (deprecated If cursor is a string with the special value "del", then the data_node will be
-    deleted from this function's records, and the deleted value returned.
     """
-    #sdlog.info("JFPFLDAO-280","highest_waiting_priority data_node=%s, cursor=%s" %
-    #           (data_node,cursor))
-    #sdlog.info("JFPFLDAO-281","highest_waiting_priority.vals=%s" % highest_waiting_priority.vals )
     if cursor is None:
         return (highest_waiting_priority.vals).get(data_node,None)
     else:
@@ -222,8 +210,6 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
         else:
             data_nodes = [data_node]
         for dn in data_nodes:
-            if cursor=="del":  # deprecated
-                return highest_waiting_priority.vals.pop(data_node,None)
             hwp0 = SDTimer.get_time() #jfp
             q = "SELECT MAX(priority) FROM file WHERE status='waiting' AND data_node='%s'" % dn
             c.execute(q)
@@ -233,13 +219,15 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             else:
                 highest_waiting_priority.vals.pop(dn,None)
             hwp1 = SDTimer.get_elapsed_time( hwp0, show_microseconds=True ) #jfp
+          # Keep logging this query until I'm certain that the repeated-query problem has been fixed...
             sdlog.info("JFPFLDAO-300","time %s to recompute priority=%s for %s" %
                        (hwp1,val[0],dn) )
             sdlog.info("JFPFLDAO-301","  query %s" % q )
         if cursor==True:
             c.close()
         return (highest_waiting_priority.vals).get(data_nodes[0],None)
-#jfp cache in memory: highest_waiting_priority.vals = {}
+# The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
+# highest_waiting_priority.vals = {}
 highest_waiting_priority.vals=sdsqlitedict.SqliteStringDict(
     sdconfig.default_db_folder+"/caches.db", 'maxpri', None )
 
