@@ -221,3 +221,6 @@ SECURITY_DIR_TMP='tmp'
 SECURITY_DIR_TMPUID='tmpuid'
 SECURITY_DIR_HOME='home'
 SECURITY_DIR_MIXED='mixed'
+
+# miscellaneous
+GET_FILES_CACHING = True   # change to False to disable caching logic in sdfiledao.get_files.
