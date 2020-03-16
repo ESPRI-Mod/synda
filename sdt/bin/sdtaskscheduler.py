@@ -30,7 +30,9 @@ import sdlogon
 import sdtask
 import sdprofiler
 import sdfilequery
+import sdsqlutils
 from sdexception import FatalException,SDException,OpenIDNotSetException
+from sdtime import SDTimer
 
 def terminate(signal,frame):
     global quit
@@ -86,6 +88,15 @@ def cleanup_running_transfer():
 
         t.status=sdconst.TRANSFER_STATUS_WAITING
         sdfiledao.update_file(t)
+
+def clear_failed_url():
+    """Clears the failed_url table."""
+    sdsqlutils.truncate_table("failed_url")
+
+def clear_failed_url_file(filename):
+    """Clears the rows of the failed_url table which correspond to one filename."""
+    # SQL line "delete from failed_url where col like %/filename"
+    sdsqlutils.truncate_part_of_table("failed_url", "url", "%%/%s"%filename )
 
 def resilient_terminate(child):
     """This func terminate the child and inhibits NoSuchProcess exception if any."""
@@ -150,6 +161,9 @@ def event_loop():
     scheduler_state=2
     start_watchdog()
     cleanup_running_transfer()
+    clear_failed_url()
+    if sdconst.GET_FILES_CACHING:
+        sdfiledao.highest_waiting_priority( True, True ) #initializes cache of max priorities
     scheduler_state=1
 
     if sdconfig.download:
@@ -187,6 +201,7 @@ def event_loop():
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
     while True:
+        evlp0 = SDTimer.get_time()
         assert os.path.isfile(sdconfig.daemon_pid_file)
 
         if quit==0:
@@ -206,16 +221,22 @@ def event_loop():
 
         time.sleep(main_loop_sleep)
 
-        sdlog.debug("SDTSCHED-400","end of event loop")
+        #sdlog.debug("SDTSCHED-400","end of event loop")
+        evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True )
+        sdlog.info("SDTSCHED-400","%s time for once through event loop"%(evlp1))
 
     print
+    evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True )
+    sdlog.info("SDTSCHED-401","%s time for once through event loop"%(evlp1))
     sdlog.info("SDTSCHED-901","Scheduler successfully stopped",stderr=True)
 
 # module init.
 
 quit=0 # 0 => start, 1 => stop
 scheduler_state=0 # 0 => stopped, 1 => running, 2 => starting
-main_loop_sleep=9
+# jfp Previously wwe had main_loop_sleep=9.  1 gives much better throughput if there are many
+# parallel downloads.  0 might cause a lot of spinning in low-volume use...
+main_loop_sleep=1
 sdlog.set_default_logger(sdconst.LOGGER_CONSUMER)
 
 if sdconfig.prevent_daemon_and_ihm:
