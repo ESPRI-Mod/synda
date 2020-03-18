@@ -11,30 +11,16 @@
 
 """This module contains network functions."""
 
-import os
 import requests
-import sdtypes
-from sdexception import SDException
-from sdtime import SDTimer
-import sdlog
-import sdconst
-import sdconfig
-import sdtrace
 import ssl
 
-
-# class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
-#     """HTTP handler that transmits an X509 certificate as part of the request."""
-#     def __init__(self, key, cert):
-#             urllib2.HTTPSHandler.__init__(self)
-#             self.key = key
-#             self.cert = cert
-#
-#     def https_open(self, req):
-#             return self.do_open(self.getConnection, req)
-#
-#     def getConnection(self, host, timeout=300):
-#             return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
+from sdt.bin.commons.utils import sdtypes
+from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdtrace
+from sdt.bin.commons.utils.sdexception import SDException
+from sdt.bin.commons.utils.sdtime import SDTimer
 
 
 def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False):

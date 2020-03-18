@@ -25,19 +25,14 @@ import os
 import sys
 import grp
 import pwd
-import time
-import daemon
 import daemon.pidfile
 import psutil
 import argparse
 import signal
-import subprocess
-from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconst, sdtrace
 from sdt.bin.commons.utils import sdconfig
-from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons import sdtrace
 
 from sdt.bin.commons.utils.sdexception import SDException
 

@@ -11,12 +11,10 @@
 
 """This module contains worker related objects."""
 
-import sys
 import threading
-from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdlog, sdtrace
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdexception
-from sdt.bin.commons import sdtrace
 
 
 class WorkerThread(threading.Thread):

@@ -30,8 +30,7 @@ from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.managers import sdget
 from sdt.bin.commons.daemon import sdworkerutils
 from sdt.bin.db import dao
-
-import sdnexturl
+from sdt.bin.db import dao_operations
 
 
 class Download:
@@ -78,7 +77,7 @@ class Download:
         if tr.sdget_status == 0:
 
             if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
-                sdlog.error("SDDMDEFA-002", "size don't match (remote_size=%i,local_size=%i,local_path=%s)" % (
+                sdlog.error("SDDMDEFA-002", "size don't match (remote_size={},local_size={},local_path={})".format(
                     int(tr.size), os.path.getsize(tr.get_full_local_path()), tr.get_full_local_path()))
 
             # retrieve remote checksum
@@ -107,23 +106,23 @@ class Download:
 
                         # remove file from local repository
                         sdlog.error("SDDMDEFA-155",
-                                    "checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)" % (
-                                        local_checksum, remote_checksum, tr.get_full_local_path()))
+                                    "checksum don't match: remove local file (local_checksum={},remote_checksum={},"
+                                    "local_path={})".format(local_checksum, remote_checksum, tr.get_full_local_path()))
                         try:
                             os.remove(tr.get_full_local_path())
                         except Exception as e:
                             sdlog.error("SDDMDEFA-158",
-                                        "error occurs while removing local file (%s)" % tr.get_full_local_path())
+                                        "error occurs while removing local file ({})".format(tr.get_full_local_path()))
 
                     elif incorrect_checksum_action == "keep":
                         sdlog.info("SDDMDEFA-157",
-                                   "local checksum doesn't match remote checksum (%s)" % tr.get_full_local_path())
+                                   "local checksum doesn't match remote checksum ({})".format(tr.get_full_local_path()))
 
                         tr.status = sdconst.TRANSFER_STATUS_DONE
                         tr.error_msg = ""
                     else:
                         raise sdexception.FatalException("SDDMDEFA-507",
-                                                         "incorrect value (%s)" % incorrect_checksum_action)
+                                                         "incorrect value ({})".format(incorrect_checksum_action))
             else:
                 # remote checksum is missing
                 # NOTE: we DON'T store the local checksum ('file' table contains only the *remote* checksum)
@@ -138,7 +137,7 @@ class Download:
                     os.remove(tr.get_full_local_path())
                 except Exception as e:
                     sdlog.error("SDDMDEFA-528",
-                                "Error occurs during file suppression (%s,%s)" % (tr.get_full_local_path(), str(e)))
+                                "Error occurs during file suppression ({},{})".format(tr.get_full_local_path(), str(e)))
 
             # Set status
             if killed:
@@ -172,8 +171,8 @@ class Download:
                 tr.priority -= 1
                 tr.error_msg = "Download process has been killed"
 
-                sdlog.error("SDDMDEFA-190",
-                            "%s (file_id=%d,url=%s,local_path=%s)" % (tr.error_msg, tr.file_id, tr.url, tr.local_path))
+                sdlog.error("SDDMDEFA-190", "{} (file_id={},url={},local_path={})"
+                            .format(tr.error_msg, tr.file_id, tr.url, tr.local_path))
             else:
                 pass
 
@@ -184,9 +183,9 @@ class Download:
                 # Notes
                 #     - We need a log here so to have a trace of the original failed transfer (i.e. in case the url-switch succeed, the error msg will be reset)
                 #
-                sdlog.info("SDDMDEFA-088", "Transfer failed: try to use another url (%s)" % str(tr))
+                sdlog.info("SDDMDEFA-088", "Transfer failed: try to use another url ({})".format(str(tr)))
 
-                result = sdnexturl.run(tr)
+                result = dao_operations.next_url(tr)
                 if result:
                     tr.status = sdconst.TRANSFER_STATUS_WAITING
                     tr.error_msg = ''
@@ -205,7 +204,7 @@ class Download:
 def end_of_transfer(tr):
     # log
     if tr.status == sdconst.TRANSFER_STATUS_DONE:
-        sdlog.info("SDDMDEFA-101", "Transfer done (%s)" % str(tr))
+        sdlog.info("SDDMDEFA-101", "Transfer done ({})".format(str(tr)))
     elif tr.status == sdconst.TRANSFER_STATUS_WAITING:
         # Transfer have been marked for retry
         #
@@ -214,9 +213,10 @@ def end_of_transfer(tr):
         #  - as a consequence of sdnexturl
 
         sdlog.info("SDDMDEFA-108",
-                   "Transfer marked for retry (error_msg='%s',url=%s,file_id=%d" % (tr.error_msg, tr.url, tr.file_id))
+                   "Transfer marked for retry (error_msg='{}',url=%s,file_id={}".format(tr.error_msg, tr.url,
+                                                                                        tr.file_id))
     else:
-        sdlog.info("SDDMDEFA-102", "Transfer failed (%s)" % str(tr))
+        sdlog.info("SDDMDEFA-102", "Transfer failed ({})".format(str(tr)))
 
     # update file
     dao.update_file(tr)
@@ -260,7 +260,7 @@ def transfers_begin(transfers):
     try:
         sdlogon.renew_certificate(sdconfig.openid, sdconfig.password, force_renew_certificate=False)
     except Exception as e:
-        sdlog.error("SDDMDEFA-502", "Exception occured while retrieving certificate (%s)" % str(e))
+        sdlog.error("SDDMDEFA-502", "Exception occured while retrieving certificate ({})".format(str(e)))
         raise
 
     for tr in transfers:
@@ -279,5 +279,5 @@ def fatal_exception():
 # module init.
 
 hpss = sdconfig.config.getboolean('download', 'hpss')  # hpss & parse_output hack
-eot_queue = Queue.Queue()  # eot means "End Of Task"
+eot_queue = queue.Queue()  # eot means "End Of Task"
 incorrect_checksum_action = sdconfig.config.get('behaviour', 'incorrect_checksum_action')

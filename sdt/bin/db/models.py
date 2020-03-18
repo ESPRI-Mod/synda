@@ -359,6 +359,23 @@ class GenericCache(Entity):
             .format(self.realm, self.name, self.value)
 
 
+class FailedUrl(Entity):
+    """
+    A file object
+    """
+    # SQLAlchemy directives.
+    __tablename__ = 'failed_url'
+    # Core columns
+    file_id = Column(Integer, primary_key=True)
+    url = Column(Text)
+
+    def __repr__(self):
+        """Instance representation.
+
+        """
+        return "<NextUrl(file id={}, url={})>".format(self.file_id, self.url)
+
+
 # Set unique description (case insensitive) index.
 Index('idx_file_1', File.status)
 Index('idx_file_2', File.priority)

@@ -14,13 +14,12 @@
 import requests
 import ssl
 from sdt.bin.models import sdtypes
-from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdconfig, sdtrace
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtime
 from sdt.bin.commons.utils import sdxml
 from sdt.bin.commons.utils import sdjson
-from sdt.bin.commons import sdtrace
 from sdt.bin.commons.utils.sdexception import SDException
 
 

@@ -5,6 +5,7 @@ from sdt.bin.db.models import Selection
 from sdt.bin.db.models import FileWithoutSelection
 from sdt.bin.db.models import FileWithoutDataset
 from sdt.bin.db.models import Param
+from sdt.bin.db.models import FailedUrl
 from sdt.bin.db.session import query
 from sdt.bin.db.session import add
 
@@ -151,7 +152,7 @@ def exists_parameter_name(name):
         return False
 
 
-def get_files(limit=None, **search_constraints):
+def get_files(limit=None, offset=None, **search_constraints):
     """
     Notes
       - one search constraint must be given at least
@@ -159,11 +160,11 @@ def get_files(limit=None, **search_constraints):
     """
     q = query(File)
     q = q.filter_by(**search_constraints).order_by(File.priority.desc(), File.checksum)
-    if limit is None:
-        files = q.all()
-    elif limit > 0:
-        files = q.limit(limit).all()
-    return files
+    if limit is not None:
+        files = q.limit(limit)
+    if offset is not None:
+        files = q.offset(offset)
+    return files.all()
 
 
 def update_file(file, next_url_on_error=False):
@@ -221,3 +222,26 @@ def transfer_running_count_by_datanode():
         File.data_node).all()
     rcs.update({r[0]: r[1] for r in q.all()})
     return rcs
+
+
+def insert_into_failed_url(failed_url):
+    """
+
+    :param failed_url: FailedUrl entity
+    :return:
+    """
+    utils.insert(failed_url)
+
+
+def next_url():
+    """
+    From Jeff Painter's PR #90 on github.
+    :return:
+    """
+    # construct FailedUrl entity
+    failed_url = None
+    # insert into table next failed_url (url, file_id)
+    utils.insert(failed_url)
+    # call next_url method.
+
+    pass

@@ -4,7 +4,7 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright œ(c)2009 Centre National de la Recherche Scientifique CNRS.
+#  @copyright      Copyright €œ(c)2009 Centre National de la Recherche Scientifique CNRS.
 #                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
@@ -20,11 +20,12 @@ import sys
 import re
 import copy
 import json
+
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtools
-from sdt.bin.commons.utils.sdexception import SDException
 from sdt.bin.commons.utils import sdmts
+from sdt.bin.commons.utils.sdexception import SDException
 
 
 def build_full_local_path(local_path, prefix=sdconfig.data_folder):
@@ -66,7 +67,7 @@ class Buffer():
         self.lines = kw.get('lines', [])
 
     def __str__(self):
-        return ",".join(['{}={}'.format((k, str(v))) for (k, v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
 
 
 class Selection():
@@ -178,7 +179,7 @@ class Dataset(BaseType):
         return re.sub('/[^/]+$', '', self.get_full_local_path())
 
     def __str__(self):
-        return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.iteritems()])
+        return "".join(['{}={}\n'.format(k, v) for (k, v) in self.__dict__.items()])
 
 
 class SessionParam():
@@ -214,7 +215,7 @@ class SessionParam():
             self.value = v
 
     def __str__(self):
-        return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.iteritems()])
+        return "".join(['{}={}\n'.format(k, v) for (k, v) in self.__dict__.items()])
 
 
 class Parameter():
@@ -232,7 +233,7 @@ class Parameter():
             return False
 
     def __str__(self):
-        return "%s=>%s" % (self.name, str(self.values))
+        return "{}=>{}".format(self.name, str(self.values))
 
 
 class Item():
@@ -247,18 +248,16 @@ class Item():
         self.count = count  # do NOT remove this attribute: it is used to count files/datasets for each parameter value
 
     def __str__(self):
-        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
 
 
-class Request():
+class Request(object):
     def __init__(self, url=None, pagination=True, limit=sdconst.SEARCH_API_CHUNKSIZE):
         self._url = url
         self.pagination = pagination
-
         if self.pagination:
             if sdtools.url_contains_limit_keyword(self._url):
-                raise SDException("SDATYPES-008", "assert error (url=%s)" % self._url)
-
+                raise SDException("SDATYPES-008", "assert error (url=%s)".format(self._url))
         self.offset = 0
         self.limit = limit
 
@@ -277,34 +276,33 @@ class Request():
                 return "&limit=%d" % self.limit
 
     def get_offset_filter(self):
-        return "&offset=%d" % self.offset
+        return "&offset={}".format(self.offset)
 
     def get_url(self):
         url = "{0}{1}{2}".format(self._url, self.get_limit_filter(), self.get_offset_filter())
 
         if sdconst.IDXHOSTMARK in url:
-            raise SDException('SDATYPES-004', 'host must be set at this step (url=%s)' % url)
+            raise SDException('SDATYPES-004', 'host must be set at this step (url={})'.format(url))
 
-        # check
-        if len(
-                url) > sdconfig.url_max_buffer_size:  # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
-            raise SDException("SDATYPES-003", "url is too long (%i)" % len(url))
-
+        # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
+        if len(url) > int(sdconfig.url_max_buffer_size):
+            raise SDException("SDATYPES-003", "url is too long ({})".format(len(url)))
         return url
 
-    def _serialize(self, paramName, values):
+    @staticmethod
+    def _serialize(self, param_name, values):
         """Serialize one parameter.
 
         Example
           input
-            paramName="variable"
+            param_name="variable"
             values="tasmin,tasmax"
           output
             "&variable=tasmin&variable=tasmax"
         """
         l = []
         for v in values:
-            l.append(paramName + "=" + v)
+            l.append(param_name + "=" + v)
 
         if len(l) > 0:
             return "&" + "&".join(l)
@@ -312,7 +310,7 @@ class Request():
             return ""
 
     def __str__(self):
-        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.iteritems()])
+        return ",".join(['{}={}'.format(k, str(v)) for (k, v) in self.__dict__.items()])
 
 
 class CommonIO(object):
@@ -383,14 +381,14 @@ class CommonIO(object):
 
 def compute_total_size(files):
     if len(files) > 0:
-        total_size = 0
-        for f in files:
-            if 'size' not in f:
-                file_size = 0
-            else:
-                file_size = int(f['size'])
-            total_size += file_size
-        return total_size
+        file_ = files[0]  # assume all items are of the same type
+
+        # FIXME: remove this block
+        if 'size' not in file_:
+            return 0
+        else:
+            return sum(int(f['size']) for f in files)
+
         # FIXME: use this block instead
         # test with: synda search CMIP5 decadal1995 mon land
         """

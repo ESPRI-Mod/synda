@@ -1,8 +1,16 @@
 import os
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdexception
 from sdt.bin.db import session
 from sdt.bin.db import dao
+from sdt.bin.commons.search import sdquicksearch
+
+"""
+This module contains functions that mainly interact with db but are not DAO operations per se. 
+The idea is to remove the clutter from dao.py and keep it sqlalchemy operations only all while keeping these
+operations in the same vicinity.
+"""
 
 
 def delete_transfers(limit=None, remove_all=True):
@@ -77,40 +85,95 @@ def immediate_md_delete(tr):
 
 def next_url(tr):
     """
-        Returns
-            True: url has been switched to a new one
-            False: nothing changed (same url)
-        """
-    try:
+    Returns
+    True: url has been switched to a new one
+    False: nothing changed (same url)
+    """
+    # Fetch all url and protocols
+    urlps = get_urls(tr.file_functional_id)
+    # Fetch all urls that have failed for the file id in question
+    failed_urls = None
+    # Filter urlps from already tried and failed urlps
+    urlps = urlps - failed_urls
+    # Remove unsupported protocols
+    urls = remove_unsupported_urls(urlps)
+    # switch tr url with the first element if the urlps list
+    if len(urls) > 0:
+        old_url = tr.url
+        # (highest priority of non attempted urls with supported protocol)
+        new_url = urls[0]
+        tr.url = new_url
+        sdlog.info('SDNEXTUR-008', 'URL successfully switched (file functional id = {}, old url = {}, new url = {}'.
+                   format(tr.file_function_id, old_url, new_url))
+    else:
+        sdlog.info('SDNEXTUR-009', 'Next URL not found for file function id = {}'.format(tr.file_functional_id))
+        raise sdexception.NextUrlNotFoundException
 
-        conn = sqlite3.connect(sdconfig.db_file, 120)  # 2 minute timeout
-        c = conn.cursor()
-        c.execute("INSERT INTO failed_url(url,file_id) VALUES (?," +
-                  "(SELECT file_id FROM file WHERE file_functional_id=?))",
-                  (tr.url, tr.file_functional_id))
-        conn.commit()
-    except sqlite3.IntegrityError as e:
-        # url is already in the failed_url table
-        sdlog.info("SDNEXTUR-001", "During database operations, IntegrityError %s" % (e,))
-    except Exception as e:
-        sdlog.info("SDNEXTUR-002", "During database operations, unknown exception %s" % (e,))
-        return False
-    finally:
-        c.close()
 
+def remove_unsupported_urls(urlps):
+    """
+    Cleans the list of urls & protocols from unsupported items
+    :param urlps:
+    :return:
+    """
+    return [urlp[0] for urlp in urlps if urlp[1].find('opendap') < 0]
+
+
+def get_urls(file_functional_id):
+    """
+    Uses search api to retrieve a list of urls, prioritized, associated to a given file functional identifier.
+    :param file_functional_id:
+    :return:
+    """
     try:
-        next_url(tr, conn)
-        return True
-    except sdexception.FileNotFoundException as e:
-        sdlog.info("SDNEXTUR-003", "Cannot switch url for %s (FileNotFoundException)" % (tr.file_functional_id,))
-        return False
-    except sdexception.NextUrlNotFoundException as e:
-        sdlog.info("SDNEXTUR-004", "Cannot switch url for %s (NextUrlNotFoundException)" % (tr.file_functional_id,))
-        return False
+        result = sdquicksearch.run(parameter=['limit=4', 'fields={}'.format(url_fields), 'type=File',
+                                              'instance_id={}'.format(file_functional_id)], post_pipeline_mode=None)
     except Exception as e:
-        sdlog.info("SDNEXTUR-005",
-                   "Unknown exception (file_functional_id=%s,exception=%s)" % (tr.file_functional_id, str(e)))
-        conn.close()
-        return False
-    finally:
-        conn.close()
+        sdlog.debug("SDNEXTUR-015", "exception %s.  instance_id=%s" % (e, file_functional_id))
+        raise e
+
+    li = result.get_files()
+    sdlog.info("SDNEXTUR-016", "sdquicksearch returned %s sets of file urls: %s" % (len(li), li))
+    if li == []:
+        # No urls found. Try again, but wildcard the file id. (That leads to a string search on all
+        # fields for the wildcarded file id, rather than a match of the instance_id field only.)
+        result = sdquicksearch.run(parameter=['limit=4', 'fields={}'.format(url_fields), 'type=File',
+                                              'instance_id={}'.format(file_functional_id) + '*'],
+                                   post_pipeline_mode=None)
+        li = result.get_files()
+        sdlog.info("SDNEXTUR-017", "sdquicksearch 2nd call {} sets of file urls: {}".format(len(li), li))
+    # result looks like
+    # [ {protocol11:url11, protocol12:url12, attached_parameters:dict, score:number, type:'File',
+    #    size:number} }, {[another dict of the same format}, {another dict},... ]
+    # with no more than limit=4 items in the list, and no more than three protocols.
+    # We'll return something like urlps = [ [url1,protocol1], [url2,protocol2],... ]
+    # The return value could be an empty list.
+    # Note: These nested lists are ugly; it's just a quick way to code something up.
+    urlps = []
+    for dic in li:
+        urlps += [[dic[key], key] for key in dic.keys() if key.find('url_') >= 0 and dic[key].find('//None') < 0]
+        # ... protocol keys are one of 'url_opendap', 'url_http', 'url_gridftp'
+        # The search for //None bypasses an issue with the SOLR lookup where there is no
+        # url_gridftp possibility.
+    return prioritize_urlps(urlps)
+
+
+def prioritize_urlps(urlps):
+    """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
+    lists of the form [url,protocol].  First, GridFTP urls are preferred over everything else.
+    Then, prefer some data nodes over others."""
+
+    def priprotocol(protocol):
+        if protocol.find('gridftp') > 0:  return 0
+        if protocol.find('http') > 0:     return 1
+        return 2
+
+    def priurl(url):
+        if url.find('llnl') > 0:  return 0
+        if url.find('ceda') > 0:  return 1
+        if url.find('dkrz') > 0:  return 2
+        if url.find('ipsl') > 0:  return 3
+        if url.find('nci') > 0:   return 4
+        return 5
+
+    return sorted(urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))))

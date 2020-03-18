@@ -137,6 +137,10 @@ METADATA_SERVER_TYPES = ['esgf_search_api', 'thredds_catalog', 'apache_default_l
 # <result name="response" numFound="314345" start="8900" maxScore="1.0">
 # It seems to be of bug on the server side.
 #
+# DB pagination chunksize & OFFSET
+DB_DEFAULT_CHUNKSIZE = 2500
+DB_DEFAULT_OFFSET = 0
+
 # So from now, it's set to 9000
 SEARCH_API_CHUNKSIZE = 9000
 

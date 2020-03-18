@@ -18,13 +18,12 @@ import argparse
 import shutil
 import humanize
 import requests
-import sdapp
-import sdconst
-import sdconfig
-import sdtrace
-from sdnetutils import HTTPSClientAuthHandler
-from sdprogress import SDProgressDot
-from sdexception import SDException
+
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdtrace
+from sdt.bin.commons.utils.sdprogress import SDProgressDot
+from sdt.bin.commons.utils.sdexception import SDException
 
 
 def download_file(url, local_path, timeout=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT):
@@ -45,6 +44,7 @@ def download_file_helper(url, local_path, timeout, chunksize=1024):
     progressbar_size = 50
     start_of_download = time.time()
     last_display = False
+    i = 0
     try:
 
         # Send request:
@@ -54,7 +54,7 @@ def download_file_helper(url, local_path, timeout, chunksize=1024):
             with open(local_path, 'wb') as f:
                 for chunk in socket.iter_lines(chunk_size=chunksize, decode_unicode=False, delimiter=False):
                     if chunk:
-                        download_progress += len(chunk)
+                        downloaded_so_far += len(chunk)
                         progressbar_done = int(progressbar_size * downloaded_so_far / total_expected_size)
                         rate = (downloaded_so_far // (time.time() - start_of_download)) // 1024
                         f.write(chunk)

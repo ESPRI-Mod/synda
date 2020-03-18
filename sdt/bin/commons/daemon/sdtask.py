@@ -17,12 +17,12 @@ from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdtime
 from sdt.bin.commons.utils.sdexception import *
+from sdt.bin.commons.managers import sddmdefault
+# from sdt.bin.commons.managers import sddmgo
 
 from sdt.bin.commons.daemon import sdprofiler
 from sdt.bin.db import dao
 from sdt.bin.db import dao_operations
-import sddmgo
-import sddmdefault
 
 
 @sdprofiler.timeit
@@ -156,7 +156,9 @@ def get_download_manager():
     download_manager = 'globustransfer_dm' if sdconfig.config.getboolean('module', 'globustransfer') else 'default_dm'
 
     if download_manager == 'globustransfer_dm':
-        return sddmgo
+        # TODO globus is not 3.7 compliant yet.
+        raise
+        # return sddmgo
     elif download_manager == 'default_dm':
         return sddmdefault
     else:

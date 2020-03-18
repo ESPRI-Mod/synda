@@ -23,14 +23,11 @@ from sdt.bin.commons import sdlogon
 from sdt.bin.db import dao
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
-from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils.sdexception import *
 from sdt.bin.commons.daemon import sdwatchdog
-
-import sdtask
-import sdprofiler
-import sdfilequery
+from sdt.bin.commons.daemon import sdtask
+from sdt.bin.commons.daemon import sdprofiler
 
 
 def terminate(signal, frame):
@@ -123,7 +120,7 @@ def run_hard_tasks():
 
     try:
         sdtask.transfers_end()
-    except FatalException, e:
+    except FatalException as e:
         quit = 1
 
 
@@ -143,7 +140,7 @@ def run_soft_tasks():
 
 @sdprofiler.timeit
 def can_leave():
-    return sdfilequery.transfer_running_count() == 0 and sdtask.can_leave()
+    return dao.transfer_running_count() == 0 and sdtask.can_leave()
 
 
 def event_loop():
@@ -182,7 +179,7 @@ def event_loop():
                 sdlog.error("SDTSCHED-928", 'OpenID not set in configuration file', stderr=True)
                 raise OpenIDNotSetException("SDTSCHED-264", "OpenID not set in configuration file")
 
-        except SDException, e:
+        except SDException as e:
             sdlog.error("SDTSCHED-920", "Error occured while retrieving ESGF certificate", stderr=True)
             raise
 

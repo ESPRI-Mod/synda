@@ -214,7 +214,7 @@ def run():
     # Subparser for the daemon subcommand
     daemon = subparsers.add_parser('daemon',
                                    help=sdi18n.m0023,
-                                   parent=[daemon_action_parser])
+                                   parents=[daemon_action_parser])
 
     # creating parser for sub-commands
     # sdsubparser.run(subparsers)

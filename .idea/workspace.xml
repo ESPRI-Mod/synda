@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="95c0cb97-dd14-4b07-aade-b9c5d58a54bb" name="Default" comment="- Added message before handing reins to daemon context. &#10;- removed init-env sub-command&#10;- build version bump">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/synda.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/synda.iml" afterDir="false" />
+    <list default="true" id="95c0cb97-dd14-4b07-aade-b9c5d58a54bb" name="Default" comment="Synda refactoring part 2 - synda python 3 compliancy effort.">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/root.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/pipeline/sdpipelineprocessing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/search/sdaddap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/search/sdquicksearch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/search/sdsqueries.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdmts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdprogress.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdtypes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdbuffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdbuffer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdcfbuilder.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdcfbuilder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdcfloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdcfloader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdconfig.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdconfigutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdconfigutils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdconst.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdconst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdsetuputils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdsetuputils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdtiaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdtiaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdtools.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdtools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdt/bin/synda.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/synda.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/actions/daemon.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/actions/daemon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/daemon/sddaemon.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/daemon/sddaemon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdtask.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdtask.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdtaskscheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdtaskscheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdworkerutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/daemon/sdworkerutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/managers/sddmdefault.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/managers/sddmdefault.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/sdtrace.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdtrace.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/utils/sdconst.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdconst.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/utils/sdget_requests.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdget_requests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/commons/utils/sdnetutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/commons/utils/sdnetutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/db/dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/db/dao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/db/dao_operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/db/dao_operations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/db/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/models/sdtypes.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/models/sdtypes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdaddap.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdlog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdnetutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdnetutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdprogress.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/synda_aux.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/synda_aux.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -34,30 +55,34 @@
   </component>
   <component name="ProjectId" id="1PNTxyazmUPmSIb8qQOrdQ5UcEs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PycharmProjects/synda" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sdt/bin/commons" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sdt/bin/commons" />
+      <recent name="$PROJECT_DIR$/sdt/bin/actions" />
       <recent name="$PROJECT_DIR$/sdt/bin" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sdt/bin/commons/utils" />
+      <recent name="$PROJECT_DIR$/sdt/bin/commons/search" />
+      <recent name="$PROJECT_DIR$/sdt/bin/commons/daemon" />
+      <recent name="$PROJECT_DIR$/sdt/bin/commons/param" />
+      <recent name="$PROJECT_DIR$/sdt/bin/models" />
+    </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.setup">
+  <component name="RunManager" selected="Python.daemon start">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="synda" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,6 +99,75 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
       <option name="PARAMETERS" value="daemon start" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="autoremove" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="autoremove --remove-all" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="certificate renew" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="certificate renew" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="check " type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="check selection $PROJECT_DIR$/../.synda/selection/sample/sample_selection_01.txt" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -109,16 +203,15 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
         <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
       </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/envs/synda/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
       <option name="PARAMETERS" value="daemon start" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,6 +266,52 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="daemon" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="daemon start" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dao" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/db/dao.py" />
+      <option name="PARAMETERS" value="daemon start" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="dump" type="PythonConfigurationType" factoryName="Python">
       <module name="synda" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -204,14 +343,37 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
       </envs>
-      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
-      <option name="PARAMETERS" value="install -s $PROJECT_DIR$/../.synda/selection/sample/sample_selection_01.txt" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="install -s $PROJECT_DIR$/../.synda/selection/sample/sample_selection_04.txt" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="intro" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="intro" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -265,11 +427,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="retry" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda_aux.py" />
+      <option name="PARAMETERS" value="retry" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="setup" type="PythonConfigurationType" factoryName="Python">
       <module name="synda" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
         <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
       </envs>
       <option name="SDK_HOME" value="" />
@@ -280,6 +466,52 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
       <option name="PARAMETERS" value="setup" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/db/test.py" />
+      <option name="PARAMETERS" value="daemon start" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" folderName="daemon">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ST_HOME" value="$PROJECT_DIR$/../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="daemon test" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -314,14 +546,29 @@
       <item itemvalue="Python.daemon start" />
       <item itemvalue="Python.daemon status" />
       <item itemvalue="Python.daemon stop" />
-      <item itemvalue="Python.install " />
-      <item itemvalue="Python.setup" />
-      <item itemvalue="Python.queue" />
-      <item itemvalue="Python.watch" />
-      <item itemvalue="Python.list" />
-      <item itemvalue="Python.dump" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.autoremove" />
+      <item itemvalue="Python.certificate renew" />
+      <item itemvalue="Python.check " />
       <item itemvalue="Python.config" />
+      <item itemvalue="Python.daemon" />
+      <item itemvalue="Python.dump" />
+      <item itemvalue="Python.install " />
+      <item itemvalue="Python.intro" />
+      <item itemvalue="Python.list" />
+      <item itemvalue="Python.queue" />
+      <item itemvalue="Python.retry" />
+      <item itemvalue="Python.setup" />
+      <item itemvalue="Python.watch" />
+      <item itemvalue="Python.dao" />
+      <item itemvalue="Python.test (1)" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.dao" />
+        <item itemvalue="Python.test (1)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -349,7 +596,10 @@
       <workItem from="1574069268690" duration="9161000" />
       <workItem from="1574933449095" duration="5556000" />
       <workItem from="1575020462970" duration="609000" />
-      <workItem from="1575025068078" duration="7619000" />
+      <workItem from="1575025068078" duration="18026000" />
+      <workItem from="1575373071060" duration="17695000" />
+      <workItem from="1575640892450" duration="19845000" />
+      <workItem from="1577173690540" duration="38138000" />
     </task>
     <task id="LOCAL-00001" summary="- added temporary fix to prevent pid and citation_url injection into param table. (probably list will be external in conf file in future release)">
       <created>1566221990353</created>
@@ -407,7 +657,98 @@
       <option name="project" value="LOCAL" />
       <updated>1566406775769</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- Synda setup subcommand made python 3 compliant">
+      <created>1575040662423</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1575040662423</updated>
+    </task>
+    <task id="LOCAL-00010" summary="- Synda autoremove subcommand made python 3 compliant">
+      <created>1575303245583</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575303245583</updated>
+    </task>
+    <task id="LOCAL-00011" summary="- Synda isntall subcommand made python 3 compliant">
+      <created>1576083211208</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1576083211208</updated>
+    </task>
+    <task id="LOCAL-00012" summary="- http downloads now use requests instead of deprecated urllib2 lib.">
+      <created>1577984397977</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1577984397977</updated>
+    </task>
+    <task id="LOCAL-00013" summary="- Synda setup subcommand made python 3 compliant">
+      <created>1580229915140</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1580229915140</updated>
+    </task>
+    <task id="LOCAL-00014" summary="- Synda major refactoring + python 3 compliancy. Part 1.">
+      <created>1582131285512</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1582131285512</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Synda refactoring part 2 - synda python 3 compliancy effort.">
+      <created>1582218595532</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1582218595532</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added init to esgf subdir">
+      <created>1582218680311</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1582218680311</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Synda refactoring part 2 - synda python 3 compliancy effort.">
+      <created>1582218718546</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1582218718546</updated>
+    </task>
+    <task id="LOCAL-00018" summary="- fixed model name translation issue related to py 3 migration &#10;- fixed dao mapping for table param in getting all parameters from db&#10;synda check is now operational.">
+      <created>1582282549006</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1582282549006</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Synda refactoring part 3 - synda python 3 compliancy effort + Daemon rewriting. &#10;Removing post processing artifact code part of dropping the post processing part of synda.">
+      <created>1583862915609</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1583862915610</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Synda refactoring part 3 - added a few files left behind the push.">
+      <created>1583863501008</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1583863501008</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Synda refactoring part 4 - synda python 3 compliancy effort.&#10;- WGET client is a thing of the past.&#10;- Only requests for HTTP type downloads&#10;- reworked globus and default download managers, but still requires further action especially for nexturl.">
+      <created>1583950334477</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1583950334477</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,6 +768,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
@@ -437,16 +779,174 @@
     <MESSAGE value="fixed indentation" />
     <MESSAGE value="fixed ST_HOME directory tree." />
     <MESSAGE value="- Added message before handing reins to daemon context. &#10;- removed init-env sub-command&#10;- build version bump" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added message before handing reins to daemon context. &#10;- removed init-env sub-command&#10;- build version bump" />
+    <MESSAGE value="- Synda autoremove subcommand made python 3 compliant" />
+    <MESSAGE value="- Synda isntall subcommand made python 3 compliant" />
+    <MESSAGE value="- http downloads now use requests instead of deprecated urllib2 lib." />
+    <MESSAGE value="- Synda setup subcommand made python 3 compliant" />
+    <MESSAGE value="- Synda major refactoring + python 3 compliancy. Part 1." />
+    <MESSAGE value="added init to esgf subdir" />
+    <MESSAGE value="Synda refactoring part 2 - synda python 3 compliancy effort." />
+    <MESSAGE value="- fixed model name translation issue related to py 3 migration &#10;- fixed dao mapping for table param in getting all parameters from db&#10;synda check is now operational." />
+    <MESSAGE value="Synda refactoring part 3 - synda python 3 compliancy effort + Daemon rewriting. &#10;Removing post processing artifact code part of dropping the post processing part of synda." />
+    <MESSAGE value="Synda refactoring part 3 - added a few files left behind the push." />
+    <MESSAGE value="Synda refactoring part 4 - synda python 3 compliancy effort.&#10;- WGET client is a thing of the past.&#10;- Only requests for HTTP type downloads&#10;- reworked globus and default download managers, but still requires further action especially for nexturl." />
+    <option name="LAST_COMMIT_MESSAGE" value="Synda refactoring part 4 - synda python 3 compliancy effort.&#10;- WGET client is a thing of the past.&#10;- Only requests for HTTP type downloads&#10;- reworked globus and default download managers, but still requires further action especially for nexturl." />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="205" width="804" height="681" key="#Notifications" timestamp="1580481830210">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="555" y="205" width="804" height="681" key="#Notifications/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580481830210" />
+    <state x="756" y="226" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583858230461">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="756" y="226" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624426420" />
+    <state x="756" y="226" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1583858230461" />
+    <state x="173" y="326" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582111805903" />
+    <state x="657" y="349" width="600" height="393" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582201523938">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="657" y="349" width="600" height="393" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582201523938" />
+    <state x="743" y="251" width="428" height="588" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1581611443190">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="743" y="251" width="428" height="588" key="#com.intellij.ide.macro.MacrosDialog/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581611443190" />
+    <state x="693" y="274" width="528" height="505" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1584544007179">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="693" y="274" width="528" height="505" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1584544007179" />
+    <state x="693" y="293" width="528" height="505" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582208948745" />
+    <state x="858" y="314" width="921" height="641" key="#xdebugger.evaluate" timestamp="1582561035303">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="858" y="314" key="#xdebugger.evaluate/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582561035303" />
+    <state x="946" y="184" width="921" height="641" key="#xdebugger.evaluate/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582042995547" />
+    <state x="698" y="428" width="517" height="285" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1580479318702">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="698" y="428" width="517" height="285" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580479318702" />
+    <state x="2618" y="413" width="517" height="289" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@1920.0.1920.1080" timestamp="1580125185750" />
+    <state x="312" y="4" width="986" height="946" key="CommitChangelistDialog2" timestamp="1583950334336">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="312" y="4" key="CommitChangelistDialog2/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582282548876" />
+    <state x="312" y="4" key="CommitChangelistDialog2/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1583950334336" />
+    <state x="312" y="4" width="986" height="946" key="CommitChangelistDialog2/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580229915003" />
+    <state x="98" y="101" width="1724" height="885" key="DiffContextDialog" timestamp="1582218692295">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="98" y="101" width="1724" height="885" key="DiffContextDialog/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582218692295" />
+    <state x="98" y="101" width="1724" height="885" key="DiffContextDialog/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580828883224" />
+    <state x="739" y="336" width="428" height="488" key="FileChooserDialogImpl" timestamp="1580988747644">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="739" y="336" width="428" height="488" key="FileChooserDialogImpl/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580988747644" />
+    <state x="2659" y="318" width="428" height="488" key="FileChooserDialogImpl/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@1920.0.1920.1080" timestamp="1580125052759" />
+    <state width="1899" height="322" key="GridCell.Tab.0.bottom" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.0.bottom/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.0.center" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.0.center/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.0.center/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.0.left" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.0.left/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.0.left/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.0.right" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.0.right/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.0.right/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.1.bottom" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.1.bottom/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.1.center" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.1.center/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.1.center/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.1.left" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.1.left/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.1.left/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state width="1899" height="322" key="GridCell.Tab.1.right" timestamp="1582624308116">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="322" key="GridCell.Tab.1.right/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582624308116" />
+    <state width="1526" height="356" key="GridCell.Tab.1.right/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582124802690" />
+    <state x="898" y="42" width="1022" height="734" key="SettingsEditor" timestamp="1583945934240">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="898" y="42" width="1022" height="734" key="SettingsEditor/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1583945934240" />
+    <state x="2129" y="177" width="1022" height="734" key="SettingsEditor/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582045612246" />
+    <state x="2369" y="191" width="1022" height="734" key="SettingsEditor/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@1920.0.1920.1080" timestamp="1580833925202" />
+    <state width="498" height="456" key="SwitcherDM" timestamp="1584554548146">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="498" height="456" key="SwitcherDM/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1584554548146" />
+    <state width="498" height="445" key="SwitcherDM/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582122451759" />
+    <state x="555" y="268" width="804" height="555" key="Vcs.Push.Dialog.v2" timestamp="1583950335827">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="555" y="268" width="804" height="532" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582282550606" />
+    <state x="555" y="268" width="804" height="555" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1583950335827" />
+    <state x="555" y="268" width="804" height="555" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1580229944532" />
+    <state width="962" height="542" key="XDebugger.FullValuePopup" timestamp="1582281418119">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="962" height="542" key="XDebugger.FullValuePopup/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582281418119" />
+    <state width="962" height="542" key="XDebugger.FullValuePopup/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582039776956" />
+    <state x="483" y="251" width="948" height="588" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1" timestamp="1581610268587">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="483" y="251" width="948" height="588" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581610268587" />
+    <state x="626" y="363" key="com.intellij.ide.util.TipDialog" timestamp="1584528080274">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="626" y="363" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1584528080274" />
+    <state x="626" y="363" key="com.intellij.ide.util.TipDialog/0.25.1920.1030@0.25.1920.1030" timestamp="1584443326810" />
+    <state x="626" y="371" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1583853171704" />
+    <state x="626" y="371" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581351044901" />
+    <state x="737" y="463" width="445" height="164" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584025495431">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="737" y="463" width="445" height="164" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582558709400" />
+    <state x="737" y="463" width="445" height="164" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1080/1003.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1584025495431" />
+    <state x="737" y="463" width="445" height="164" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581613740371" />
+    <state x="516" y="282" width="881" height="526" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1582281692400">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="516" y="282" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582281692400" />
+    <state x="516" y="282" width="881" height="526" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582110751332" />
+    <state x="887" y="120" width="686" height="543" key="find.popup" timestamp="1584547232335">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="887" y="120" width="686" height="543" key="find.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1584547232335" />
+    <state x="887" y="142" width="686" height="530" key="find.popup/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581609183034" />
+    <state x="704" y="188" width="505" height="714" key="refactoring.ChangeSignatureDialog" timestamp="1581090230963">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="704" y="188" width="505" height="714" key="refactoring.ChangeSignatureDialog/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1581090230963" />
+    <state x="623" y="221" width="672" height="695" key="search.everywhere.popup" timestamp="1584554452548">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="221" width="672" height="695" key="search.everywhere.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1584554452548" />
+    <state x="623" y="241" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1080/0.25.1920.1055/1003.1080.1920.1080@0.25.1920.1055" timestamp="1582296084559" />
+    <state x="623" y="241" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1080/1119.1080.1920.1080/0.25.1920.1055@0.25.1920.1055" timestamp="1582041661393" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sdt/bin/syndautils.py</url>
-          <line>80</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/sdt/bin/sdtsaction.py</url>
           <line>257</line>
@@ -459,31 +959,105 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/sdt/bin/sdtsaction.py</url>
-          <line>55</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sdt/bin/sdtsaction.py</url>
-          <line>56</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sdt/bin/sdtsaction.py</url>
           <line>168</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdget_wget.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/sdt/bin/sdtiaction.py</url>
-          <line>284</line>
-          <option name="timeStamp" value="18" />
+          <line>180</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdtaskscheduler.py</url>
+          <line>181</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/syndautils.py</url>
+          <line>80</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdopenid.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdmyproxy.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdmyproxy.py</url>
+          <line>145</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdmyproxy.py</url>
+          <line>100</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdmyproxy.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/sdlogon.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/sdlogon.py</url>
+          <line>82</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/sdopenid.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/sdopenid.py</url>
+          <line>38</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sddump.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/param/sdparam.py</url>
+          <line>126</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/search/sdselectionsgrouputils.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/search/sdselectionsgrouputils.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/search/sdselectionsgrouputils.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/commons/search/sdselectionsgrouputils.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/synda$config.coverage" NAME="config Coverage Results" MODIFIED="1566485883327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sdt/bin" />
-    <SUITE FILE_PATH="coverage/synda$list.coverage" NAME="list Coverage Results" MODIFIED="1566480801590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sdt/bin" />
-    <SUITE FILE_PATH="coverage/synda$setup.coverage" NAME="setup Coverage Results" MODIFIED="1575039398604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sdt/bin" />
-    <SUITE FILE_PATH="coverage/synda$daemon_start.coverage" NAME="daemon start Coverage Results" MODIFIED="1566405489764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sdt/bin" />
   </component>
 </project>
