@@ -258,16 +258,6 @@ def parse_metadata(buffer):
     return {'files': l__files, 'num_found': l__num_found, 'num_result': len(l__files)}
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', required=True)
-    args = parser.parse_args()
+import lxml
 
-    # read search-api output sample
-    with open(args.file, 'r') as fh:
-        buffer = fh.read()
-
-    # result=parse_parameters(buffer)
-    result = parse_metadata(buffer)
-
-    print("%s\n" % json.dumps(result, indent=4, separators=(',', ': ')))
+print("successfully imported lxml")

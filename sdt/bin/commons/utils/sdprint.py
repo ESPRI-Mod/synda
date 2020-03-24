@@ -58,10 +58,6 @@ def print_format(files, format, print_only_one_item=False, fh=sys.stdout):
 
 formats = ['raw', 'line', 'indent', 'value']
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-F', '--format', choices=formats, default='indent')
-    args = parser.parse_args()
 
-    files = json.load(sys.stdin)
-    print_format(files, args.format)
+def print_stderr(msg=""):
+    sys.stderr.write("{}\n".format(msg))

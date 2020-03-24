@@ -11,7 +11,7 @@
 
 from sdt.bin.commons import sddump
 from sdt.bin.commons import sdcheckdatasetversion
-from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils.sdprint import print_stderr
 from sdt.bin.commons.utils import sdexception
 from sdt.bin.commons.search import sdfields
 from sdt.bin.commons.search import sdselectionsgroup

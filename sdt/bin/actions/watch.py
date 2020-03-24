@@ -8,17 +8,13 @@
 #                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from sdt.bin.commons import sdmodify
-from sdt.bin.commons.utils.sdprint import print_stderr
+from sdt.bin.commons.daemon import sddaemon
+from sdt.bin.commons.utils import sdreport
+from sdt.bin.commons.utils import sdprint
 
 
 def run(args):
-    """
-    Marks files that went into error for retry
-    """
-
-    nbr = sdmodify.retry_all()
-    if nbr > 0:
-        print_stderr("{} file(s) marked for retry.".format(nbr))
+    if sddaemon.is_running():
+        sdreport.print_running_transfers()
     else:
-        print_stderr("No transfer in error")
+        sdtools.print_stderr('Daemon not running')

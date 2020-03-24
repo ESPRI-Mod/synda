@@ -12,14 +12,18 @@
 """Parse selection buffer (and default files)."""
 
 import os
+import argparse
 import re
-from sdt.bin.models.sdtypes import Selection
-from sdt.bin.commons.utils.sdexception import SDException
+
+from sdt.bin.commons import sdi18n
 from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdprint
+from sdt.bin.commons.param import sdbuffer
 from sdt.bin.commons.search import sdearlystreamutils
+from sdt.bin.commons.utils.sdtypes import Selection
+from sdt.bin.commons.utils.sdexception import SDException
 
 
 def build(buffer, load_default=None):
@@ -149,8 +153,8 @@ def get_projects(selection):
     #   synda search project=GeoMIP
     #
     #
-    pending_projects = sdearlystreamutils.get_facet_values_early([selection.facets], 'project',
-                                                                 extract_item=True)  # project without keyname or project as part of an identifier.
+    # project without keyname or project as part of an identifier.
+    pending_projects = sdearlystreamutils.get_facet_values_early([selection.facets], 'project', extract_item=True)
 
     li = pending_projects + project
 
@@ -178,11 +182,11 @@ def parse_buffer(buffer, selection):
         assert "\n" not in line  # newline should have already been stripped at this step
 
         # pass comment line
-        if re.search('^#.*$', line) != None:
+        if (re.search('^#.*$', line) != None):
             continue
 
         # pass blank line
-        if re.search('^ *$', line) != None:
+        if (re.search('^ *$', line) != None):
             continue
 
         process_parameter(line, selection)
@@ -232,11 +236,11 @@ def process_parameter(parameter, selection):
 
 def parse_parameter(parameter):
     m = re.search('^([^=]+)="?([^"=]+)"?$', parameter)
-    if m != None:
+    if (m != None):
         param_name = m.group(1).strip()
         param_value = sdtools.split_values(m.group(2))
 
-        return param_name, param_value
+        return (param_name, param_value)
     else:
         raise SDException("SDPARSER-001", "incorrect format (%s)" % (parameter,))
 
@@ -267,18 +271,20 @@ def process_rfv_parameter(parameter, selection):  # rfv means 'Realm Frequency n
         time_frequency = m.group(2)
         variables = sdtools.split_values(m.group(3))
 
-        facets = {"realm": [realm], "time_frequency": [time_frequency], "variable": variables}
+        facets = {}
+        facets["realm"] = [realm]
+        facets["time_frequency"] = [time_frequency]
+        facets["variable"] = variables
 
-        # add sub-selection ("rfvsp" means "Realm Frequency Variable Special Parameter")
         selection.childs.append(Selection(facets=facets,
-                                          filename="rfvsp"))
+                                          filename="rfvsp"))  # add sub-selection ("rfvsp" means "Realm Frequency Variable Special Parameter")
 
     else:
         raise SDException("SDPARSER-002", "incorrect parameter format (%s)" % parameter)
 
 
 def is_sfg_parameter(parameter):  # sfg means 'Structured Facet Group'
-    if re.search("^variables?\[", parameter) is not None:
+    if re.search("^variables?\[", parameter) != None:
         return True
     else:
         return False
@@ -296,16 +302,17 @@ def process_ffv_parameter(parameter, selection):  # ffv means 'Free Facets n Var
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search('variables?\[(.+)\]="?([^"=]+)"?$', parameter)
-    if m is not None:
-        # free facet syntax support currently only standalone values
-        # (i.e. key=value syntax is not supported inside the left member of a ffv block)
-
-        free_facets = m.group(1)
+    if (m != None):
+        free_facets = m.group(
+            1)  # free facet syntax support currently only standalone values (i.e. key=value syntax is not supported inside the left member of a ffv block)
         variables = sdtools.split_values(m.group(2))
-        facets = {sdconst.PENDING_PARAMETER: sdtools.split_values(free_facets), "variable": variables}
-        # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
-        selection.childs.append(Selection(facets=facets, filename="ffvsp"))
 
+        facets = {}
+        facets[sdconst.PENDING_PARAMETER] = sdtools.split_values(free_facets)
+        facets["variable"] = variables
+
+        selection.childs.append(Selection(facets=facets,
+                                          filename="ffvsp"))  # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
     else:
         raise SDException("SDPARSER-022", "incorrect parameter format (%s)" % parameter)
 
@@ -315,3 +322,21 @@ def is_ffv_parameter(parameter):  # ffv means 'Free Facets n Variable'
         return True
     else:
         return False
+
+
+# module init.
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('parameter', nargs='*', default=[], help=sdi18n.m0001)
+    parser.add_argument('-1', '--print_only_one_item', action='store_true')
+    parser.add_argument('-f', '--file', default=None)
+    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
+    parser.add_argument('-n', '--no_default', action='store_true', help='This option prevent loading default values')
+    args = parser.parse_args()
+
+    buffer = sdbuffer.get_selection_file_buffer(path=args.file, parameter=args.parameter)
+    selection = build(buffer, load_default=(not args.no_default))
+
+    facets_groups = selection.merge_facets()
+    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)

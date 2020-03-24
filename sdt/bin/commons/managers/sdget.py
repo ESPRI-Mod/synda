@@ -32,11 +32,11 @@ import json
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils import sdconst
-from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils.sdprint import print_stderr
 from sdt.bin.commons.utils import sdget_requests
 
 
-def download(url, full_local_path, debug=False, http_client=sdconfig.http_client,
+def download(url, full_local_path, debug=False,
              timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT, verbosity=0, buffered=True, hpss=False):
     killed = False
     script_stderr = None

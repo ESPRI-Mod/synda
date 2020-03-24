@@ -26,7 +26,9 @@ import importlib
 from sdt.bin.commons import sdi18n
 from sdt.bin.commons import syndautils
 from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.utils import sdcliex
 
 # TODO These imports are probably deprecated.
 from sdt.bin.commons.param import sddeferredbefore
@@ -116,6 +118,12 @@ def run():
                                    default=[],
                                    help=sdi18n.m0001)
 
+    parameter_parser = argparse.ArgumentParser(add_help=False)
+    parameter_parser.add_argument('parameter',
+                                  nargs='*',
+                                  default=[],
+                                  help=sdi18n.m0001)
+
     # Parent parser for other parameters of the subparsers (i.e., facets, etc.).
     time_period_parser = argparse.ArgumentParser(add_help=False)
     time_period_parser.add_argument('-L', '--timestamp_left_boundary',
@@ -151,6 +159,31 @@ def run():
 
     daemon_action_parser = argparse.ArgumentParser(add_help=False)
     daemon_action_parser.add_argument('action', choices=['start', 'status', 'stop'])
+
+    get_action_parser = argparse.ArgumentParser(add_help=False)
+    get_action_parser.add_argument('--verify_checksum', '-c', action='store_true',
+                                   help='Compare remote and local checksum')
+    get_action_parser.add_argument('--dest_folder', '-d', default=sdconfig.files_dest_folder_for_get_subcommand,
+                                   help='Destination folder')
+    get_action_parser.add_argument('--force', '-f', action='store_true', help='Overwrite local file if exists')
+    get_action_parser.add_argument('--network_bandwidth_test', '-n', action='store_true',
+                                   help='Prevent disk I/O to measure network throughput. '
+                                        'When this option is used, local file is set to /dev/null.')
+    get_action_parser.add_argument('--openid', '-o', help='ESGF openid')
+    get_action_parser.add_argument('--password', '-p', help='ESGF password')
+    get_action_parser.add_argument('--quiet', '-q', action='store_true')
+    get_action_parser.add_argument('--timeout', '-t',
+                                   type=int,
+                                   default=sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT,
+                                   help='HTTP timeout')
+    get_action_parser.add_argument('--requests',
+                                   '-req',
+                                   action='store_true',
+                                   help='Use requests instead of wget as HTTP client')
+    get_action_parser.add_argument('--verbosity', '-v', action='count', default=1)
+    get_action_parser.add_argument('--hpss', dest='hpss', action='store_true', help="Enable 'hpss' flag")
+    get_action_parser.add_argument('--no-hpss', dest='hpss', action='store_false', help="Disable 'hpss' flag (Default)")
+    get_action_parser.set_defaults(hpss=False)
 
     group = playback_parser.add_mutually_exclusive_group(required=False)
     group.add_argument('-p', '--playback',
@@ -211,13 +244,31 @@ def run():
     # Subparser for the retry subcommand
     retry = subparsers.add_parser('retry', help='Prints configuration')
 
+    # Subparser for the watch subcommand
+    watch = subparsers.add_parser('watch', help='Shows the daemon ongoing downloads')
+
+    # Subparser for the queue subcommand
+    queue = subparsers.add_parser('queue', help='Shows the queue in its current state')
+    queue.add_argument('project', help='Specific project queue', default=None, nargs='?')
+
     # Subparser for the daemon subcommand
     daemon = subparsers.add_parser('daemon',
                                    help=sdi18n.m0023,
                                    parents=[daemon_action_parser])
 
-    # creating parser for sub-commands
-    # sdsubparser.run(subparsers)
+    # Subparser for the facet subcommand
+    facet = subparsers.add_parser('facet', help='Facet discovery')
+    facet.add_argument('facet_name', help='Facet name')
+
+    # Subparser for the get subcommand
+    get = subparsers.add_parser('get',
+                                help='Download data synchronously',
+                                parents=[get_action_parser,
+                                         parameters_parser,
+                                         parameter_parser,
+                                         selection_parser,
+                                         dry_run_parser])
+
     args = main_parser.parse_args()
 
     # Start processing user subcommands

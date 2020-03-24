@@ -243,7 +243,7 @@ def transfers_end():
             task = eot_queue.get_nowait()  # raises Empty when empty
             end_of_transfer(task)
             eot_queue.task_done()
-        except Queue.Empty as e:
+        except queue.Empty as e:
             pass
         except sdexception.FatalException as e:
             raise

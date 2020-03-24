@@ -21,6 +21,7 @@ import time
 
 from sdt.bin.commons import sdlogon
 from sdt.bin.db import dao
+from sdt.bin.db import session
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdlog
@@ -32,12 +33,9 @@ from sdt.bin.commons.daemon import sdprofiler
 
 def terminate(signal, frame):
     global quit
-    print  # this print is just not to display the msg below on the same line as ^C
-
-    sdlog.info("SDTSCHED-004", "Shutdown in progress..", stderr=True)
-
+    sdlog.info("SDTSCHED-004", "\nShutdown in progress..", stderr=True)
     if scheduler_state != 1:  # we can only stop the scheduler if it is running
-        sdlog.info("SDTSCHED-009", "The daemon is not running (scheduler_state=%s)" % scheduler_state)
+        sdlog.info("SDTSCHED-009", "The daemon is not running (scheduler_state={})".format(scheduler_state))
         return
 
     sdwatchdog.quit = 1
@@ -70,16 +68,17 @@ def cleanup_running_transfer():
         - remaining "running" transfers exist if the daemon has been killed or if the server rebooted when the daemon was running)
         - if there are still transfers in running state, we switch them to waiting and remove file chunk
     """
-    transfer_list = dao.get_files(status=sdconst.TRANSFER_STATUS_RUNNING)
+    with session.create():
+        transfer_list = dao.get_files(status=sdconst.TRANSFER_STATUS_RUNNING)
 
-    for t in transfer_list:
-        sdlog.info("SDTSCHED-023", "fixing transfer status (%s)" % t.get_full_local_path())
+        for t in transfer_list:
+            sdlog.info("SDTSCHED-023", "fixing transfer status ({})".format(t.get_full_local_path()))
 
-        if os.path.isfile(t.get_full_local_path()):
-            os.remove(t.get_full_local_path())
+            if os.path.isfile(t.get_full_local_path()):
+                os.remove(t.get_full_local_path())
 
-        t.status = sdconst.TRANSFER_STATUS_WAITING
-        dao.update_file(t, sdconfig.next_url_on_error)
+            t.status = sdconst.TRANSFER_STATUS_WAITING
+            dao.update_file(t, sdconfig.next_url_on_error)
 
 
 def resilient_terminate(child):
@@ -140,19 +139,20 @@ def run_soft_tasks():
 
 @sdprofiler.timeit
 def can_leave():
-    return dao.transfer_running_count() == 0 and sdtask.can_leave()
+    with session.create():
+        return dao.transfer_running_count() == 0 and sdtask.can_leave()
 
 
 def event_loop():
     global scheduler_state
 
-    sdlog.info("SDTSCHED-533", "Connected to %s" % sdconfig.db_file, stderr=True)
+    sdlog.info("SDTSCHED-533", "Connected to {}".format(sdconfig.db_file), stderr=True)
 
     scheduler_state = 2
     start_watchdog()
     cleanup_running_transfer()
     scheduler_state = 1
-
+    print('here')
     if sdconfig.download:
 
         try:
@@ -173,8 +173,6 @@ def event_loop():
                 # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
                 #
                 sdlogon.renew_certificate(sdconfig.openid, sdconfig.password, force_renew_certificate=True)
-
-
             else:
                 sdlog.error("SDTSCHED-928", 'OpenID not set in configuration file', stderr=True)
                 raise OpenIDNotSetException("SDTSCHED-264", "OpenID not set in configuration file")
@@ -198,7 +196,8 @@ def event_loop():
             break
 
         if quit == 1:
-            if can_leave():  # wait until all threads finish and until everything has been processed on the database I/O queue
+            # wait until all threads finish and until everything has been processed on the database I/O queue
+            if can_leave():
                 sdlog.info("SDTSCHED-001", "eot_queue orders processing completed", stderr=False)
                 sdlog.info("SDTSCHED-003", "Running transfer processing completed", stderr=False)
                 break
@@ -206,8 +205,6 @@ def event_loop():
         time.sleep(main_loop_sleep)
 
         sdlog.debug("SDTSCHED-400", "end of event loop")
-
-    print
     sdlog.info("SDTSCHED-901", "Scheduler successfully stopped", stderr=True)
 
 
@@ -220,7 +217,7 @@ sdlog.set_default_logger(sdconst.LOGGER_CONSUMER)
 
 if sdconfig.prevent_daemon_and_ihm:
     if os.path.isfile(sdconfig.ihm_pid_file):
-        sdlog.info("SDTSCHED-014", "IHM is running, exiting (%s exists)" % sdconfig.ihm_pid_file, stderr=True)
+        sdlog.info("SDTSCHED-014", "IHM is running, exiting ({} exists)".format(sdconfig.ihm_pid_file), stderr=True)
         sys.exit(1)
 
 if __name__ == '__main__':
@@ -233,7 +230,7 @@ if __name__ == '__main__':
     #   In python-daemon mode, signal and daemon pidfile mecanisms are handled by the python-daemon module
 
     if os.path.isfile(sdconfig.daemon_pid_file):
-        sdlog.info("SDTSCHED-012", "%s already exists, exiting" % sdconfig.daemon_pid_file, stderr=True)
+        sdlog.info("SDTSCHED-012", "{} already exists, exiting".format(sdconfig.daemon_pid_file), stderr=True)
         sys.exit(1)
 
     with open(sdconfig.daemon_pid_file, 'w') as fh:

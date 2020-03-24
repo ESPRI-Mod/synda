@@ -10,7 +10,9 @@
 ##################################
 
 from sdt.bin.commons.daemon import sddaemon
-from sdt.bin.commons.utils import sdconfig
+
+from sdt.bin.commons.utils.sdprint import print_stderr
+from sdt.bin.commons.utils.sdexception import SDException
 
 
 def run(args):
@@ -25,7 +27,7 @@ def run(args):
                 try:
                     sddaemon.start()
                     print_stderr("Daemon successfully started")
-                except sdexception.SDException as e:
+                except SDException as e:
                     print_stderr('error occured', e.msg)
         elif args.action == "stop":
 
@@ -33,7 +35,7 @@ def run(args):
                 try:
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
-                except sdexception.SDException as e:
+                except SDException as e:
                     print_stderr('error occured', e.msg)
             else:
                 print_stderr("Daemon already stopped")

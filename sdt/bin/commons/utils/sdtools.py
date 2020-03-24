@@ -151,7 +151,7 @@ class DefaultHelpParser(argparse.ArgumentParser):
     """
 
     def error(self, message):
-        print_stderr('error: %s' % message)
+        print_stderr('error: {}'.format(message))
         self.print_help()
         sys.exit(2)
 

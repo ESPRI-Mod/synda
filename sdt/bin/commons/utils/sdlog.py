@@ -13,11 +13,11 @@
 
 import os
 import logging
-import argparse
-import sdconst
-import sdconfig
-import sdtools
-from sdexception import SDException
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils import sdprint
+from sdt.bin.commons.utils.sdexception import SDException
 
 LEVELS = {'debug': logging.DEBUG,
           'info': logging.INFO,
@@ -37,19 +37,19 @@ def debug(code, message, stdout=False, stderr=False, logfile=True, logger_name=N
 
 
 def info(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    log(code, message, logging.INFO, stdout, stderr, logfile, logger_name)
+    print(code, message, logging.INFO, stdout, stderr, logfile, logger_name)
 
 
 def warning(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    log(code, message, logging.WARNING, stdout, stderr, logfile, logger_name)
+    print(code, message, logging.WARNING, stdout, stderr, logfile, logger_name)
 
 
 def error(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    log(code, message, logging.ERROR, stdout, stderr, logfile, logger_name)
+    print(code, message, logging.ERROR, stdout, stderr, logfile, logger_name)
 
 
 def critical(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    log(code, message, logging.CRITICAL, stdout, stderr, logfile, logger_name)
+    print(code, message, logging.CRITICAL, stdout, stderr, logfile, logger_name)
 
 
 def log(code, message, level, stdout=False, stderr=False, logfile=True, logger_name=None):
@@ -66,7 +66,7 @@ def log(code, message, level, stdout=False, stderr=False, logfile=True, logger_n
             # add msg prefix
             label = get_verbosity_label(level)
             formatted_msg = '{}: {}'.format(label.upper(), message)
-            sdtools.print_stderr(formatted_msg)
+            sdprint.print_stderr(formatted_msg)
 
     if logfile:
         if logger_name is None:
@@ -119,13 +119,4 @@ discovery_logger = create_logger(sdconst.LOGGER_FEEDER, sdconst.LOGFILE_FEEDER)
 transfer_logger = create_logger(sdconst.LOGGER_CONSUMER, sdconst.LOGFILE_CONSUMER)
 domain_logger = create_logger(sdconst.LOGGER_DOMAIN, sdconst.LOGFILE_DOMAIN)
 
-default_logger = discovery_logger
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--name', required=True, choices=[sdconst.LOGGER_FEEDER, sdconst.LOGGER_CONSUMER])
-    args = parser.parse_args()
-
-    set_default_logger(args.name)
-
-    info('SYNDALOG-001', 'test1')
+default_logger = transfer_logger

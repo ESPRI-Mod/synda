@@ -8,12 +8,19 @@ from sdt.bin.db.models import Param
 from sdt.bin.db.models import FailedUrl
 from sdt.bin.db.session import query
 from sdt.bin.db.session import add
+from sdt.bin.db.session import create
+from sdt.bin.db.session import raw_query
 
 from sdt.bin.db import utils
 from sdt.bin.sdconst import TRANSFER_STATUS_DELETE, TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING, \
     TRANSFER_STATUS_RUNNING
 from sqlalchemy import text
 from sqlalchemy import or_
+from sqlalchemy import func
+from sqlalchemy import distinct
+
+# misc dependencies
+import humanize
 
 
 def get_datasets(limit=None, **criterion):
@@ -112,7 +119,6 @@ def fetch_parameters():
     """
     params = {}
     q = query(Param)
-    print(q.all())
     for p in q.all():
         if p.name in params:
             params[p.name].append(p.value)
@@ -161,10 +167,10 @@ def get_files(limit=None, offset=None, **search_constraints):
     q = query(File)
     q = q.filter_by(**search_constraints).order_by(File.priority.desc(), File.checksum)
     if limit is not None:
-        files = q.limit(limit)
+        q = q.limit(limit)
     if offset is not None:
-        files = q.offset(offset)
-    return files.all()
+        q = q.offset(offset)
+    return q.all()
 
 
 def update_file(file, next_url_on_error=False):
@@ -185,9 +191,9 @@ def update_file(file, next_url_on_error=False):
 
 def get_one_waiting_transfer(datanode=None):
     if datanode is None:
-        li = get_files(limit=1, status=sdconst.TRANSFER_STATUS_WAITING)
+        li = get_files(limit=1, status=TRANSFER_STATUS_WAITING)
     else:
-        li = get_files(limit=1, status=sdconst.TRANSFER_STATUS_WAITING, data_node=datanode)
+        li = get_files(limit=1, status=TRANSFER_STATUS_WAITING, data_node=datanode)
     if len(li) == 0:
         raise NoTransferWaitingException()
     else:
@@ -208,19 +214,19 @@ def transfer_status_count(status=None):
 
 
 def transfer_running_count():
-    return transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING)
+    return transfer_status_count(status=TRANSFER_STATUS_RUNNING)
 
 
 def transfer_running_count_by_datanode():
     # TODO probably second query is broken
     q = query(File)
-    q = q.filter_by(or_(File.status == sdconst.TRANSFER_STATUS_RUNNING,
-                        File.status == sdconst.TRANSFER_STATUS_WAITING)).group_by(File.data_node)
-    rcs = {r[0]: 0 for r in q.all()}
-    q = query(File)
-    q = q.filter(File.status == sdconst.TRANSFER_STATUS_RUNNING, func.count(file.data_node)).group_by(
-        File.data_node).all()
-    rcs.update({r[0]: r[1] for r in q.all()})
+    q = q.filter(or_(File.status == TRANSFER_STATUS_RUNNING, File.status == TRANSFER_STATUS_WAITING)).group_by(
+        File.data_node)
+    rcs = {r.data_node: 0 for r in q.all()}
+    qry = raw_query(File.data_node, func.count(File.data_node))
+    qry.having(File.status == TRANSFER_STATUS_RUNNING)
+    qry.group_by(File.data_node)
+    rcs.update({r[0]: r[1] for r in qry.all()})
     return rcs
 
 
@@ -245,3 +251,41 @@ def next_url():
     # call next_url method.
 
     pass
+
+
+def get_download_status(project=None):
+    """
+    returns file download status
+    :param project: optional argument
+    :return:
+    """
+    li = []
+    qry = raw_query(File.status, func.count(File.file_id), func.sum(File.size))
+    qry.group_by(File.status)
+    if project is not None:
+        qry.having(File.project == project)
+    qry.all()
+    for q in qry.all():
+        li.append([q[0], q[1], humanize.naturalsize(q[2], gnu=False)])
+    return li
+
+
+def get_file_size_by_status(dataset_id):
+    qry = raw_query(File.status, func.sum(File.size))
+    qry.group_by(File.status)
+    qry.having(File.dataset_id == dataset_id)
+    return qry.all()
+
+
+def get_file_count_by_status(dataset_id):
+    qry = raw_query(File.status, func.count(File.file_id))
+    qry.group_by(File.status)
+    qry.having(File.dataset_id == dataset_id)
+    return qry.all()
+
+
+def get_file_count_variables(dataset_id):
+    # -- how many variable, regardless of the file status -- #
+    qry = raw_query(func.count(distinct(File.variable)))
+    qry.filter(dataset_id == dataset_id)
+    return qry.all()

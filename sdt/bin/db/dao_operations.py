@@ -1,10 +1,14 @@
 import os
+
+from sdt.bin.db import session
+from sdt.bin.db import dao
+
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
-from sdt.bin.db import session
-from sdt.bin.db import dao
+
 from sdt.bin.commons.search import sdquicksearch
+from sdt.bin.commons.utils.sdtypes import DatasetVersions
 
 """
 This module contains functions that mainly interact with db but are not DAO operations per se. 
@@ -177,3 +181,64 @@ def prioritize_urlps(urlps):
         return 5
 
     return sorted(urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))))
+
+
+def get_dataset_versions(path_without_version, compute_stats):
+    """
+    Returns DatasetVersions object for a specified path_without_version
+    :param path_without_version: string
+    :param compute_stats: boolean
+    """
+    datasetVersions = DatasetVersions()
+    with session.create():
+        datasets = get_datasets(path_without_version=path_without_version)
+    for dataset in datasets:
+        if compute_stats:
+            dataset.statistics = get_dataset_stats(dataset)
+            datasetVersions.add_dataset_version(dataset)
+    return datasetVersions
+
+
+def get_dataset_stats(d):
+    stat = {}
+    stat['size'] = {}
+    stat['count'] = {}
+
+    # init everything to zero
+    for status in sdconst.TRANSFER_STATUSES_ALL:
+        stat['size'][status] = 0
+        stat['count'][status] = 0
+        stat['variable_count'] = 0
+
+    with session.create():
+        # -- size by status -- #
+        sizes_by_status = dao.get_file_size_by_status(d.dataset_id)
+        for sbs in sizes_by_status:
+            stat['size'][sbs[0]] = sbs[1]
+
+        # -- count by status -- #
+        count_by_status = dao.get_file_count_by_status(d.dataset_id)
+        for cbs in count_by_status:
+            stat['count'][cbs[0]] = cbs[1]
+
+        # -- how many variable, regardless of the file status -- #
+        count = dao.get_file_count_variables(d.dataset_id)
+        stat['variable_count'] = count
+        return stat
+
+
+def get_old_versions_datasets():
+    """Return old versions datasets list."""
+    lst = []
+    with session.create():
+        for d in dao.get_datasets():
+            datasetVersions = get_dataset_versions(d.path_without_version, True)
+            if d.latest == False:  # this version is not the latest
+                if datasetVersions.exists_version_with_latest_flag_set_to_true():  # latest exists
+                    if not datasetVersions.is_version_higher_than_latest(d):  # version is not higher than latest
+                        # should never occurs because of the previous tests
+                        if datasetVersions.is_most_recent_version_number(d):
+                            raise SDException("SDSTAT-042", "fatal error (version=%s,path_without_version={})"
+                                              .format(d.version, d.get_name_without_version()))
+                        lst.append(d)
+        return lst

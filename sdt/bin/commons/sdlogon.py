@@ -23,7 +23,7 @@ from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
 from sdt.bin.commons.utils import sdconfig, sdlog
 from sdt.bin.commons import sdopenid
 from sdt.bin.commons import sdmyproxy
-from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils.sdprint import print_stderr
 
 
 def print_certificate():

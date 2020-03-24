@@ -23,9 +23,9 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-import sdconfig
-import sdconst
-from sdexception import SDException, FileNotFoundException
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils.sdexception import SDException, FileNotFoundException
 
 
 def get_transfer_protocol(url):
@@ -148,7 +148,10 @@ def replace_product(path, new_product):
 
 
 def parameter_to_query(parameter):
-    """This func prepare parameter before sending it to the search-api operator (i.e. we replace sdinference with search-api query)."""
+    """
+    This func prepare parameter before sending it to the search-api operator
+    (i.e. we replace sdinference with search-api query).
+    """
 
     assert isinstance(parameter, list)
 
@@ -226,20 +229,3 @@ def cast(value, dest_type_):
         casted_value = dest_type_(value)
 
     return casted_value
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-b', '--blocksize', type=int, default=(1024 * 64))
-    parser.add_argument('-f', '--file', required=True)
-    parser.add_argument('-t', '--checksum_type', default=sdconst.CHECKSUM_TYPE_SHA256)
-    args = parser.parse_args()
-
-    # test
-
-    compute_checksum(args.file, args.checksum_type, args.blocksize)
-
-    """
-    res=query_yes_no('test ?', default="yes")
-    print res
-    """

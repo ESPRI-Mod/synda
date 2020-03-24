@@ -27,13 +27,16 @@ Notes
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdnetutils
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons.utils.sdexception import SDException
 from sdt.bin.commons import sdi18n
 from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.utils import sdtypes
-from sdt.bin.commons.utils.sdprogress import ProgressThread
 from sdt.bin.commons.search import sdsqueries
 from sdt.bin.commons.search import sdaddap
+from sdt.bin.commons.pipeline import sdquerypipeline
+
+from sdt.bin.commons.utils.sdprogress import ProgressThread
+from sdt.bin.commons.utils.sdexception import SDException
 
 
 # TODO simplify quick search call
@@ -61,7 +64,7 @@ def run(stream=None, path=None, parameter=None, index_host=None, post_pipeline_m
     else:
         try:
             if progress:
-                sdtools.print_stderr(
+                sdprint.print_stderr(
                     sdi18n.m0003(searchapi_host))  # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1, running_message='', end_message='Search completed.')  # spinner start
 

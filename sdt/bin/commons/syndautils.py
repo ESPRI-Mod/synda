@@ -23,6 +23,10 @@ from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
 from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.param import sddeferredbefore
+from sdt.bin.commons.param import sdbuffer
+from sdt.bin.commons.param import sdparse
+from sdt.bin.commons.param import sdstream
 from sdt.bin.commons.daemon import sddaemon
 
 
@@ -37,7 +41,6 @@ def get_stream(subcommand=None, parameter=None, selection_file=None, no_default=
     """
     TODO: merge me with sdstreamutils.get_stream
     """
-    import sdbuffer, sdparse, sdstream, sdconfig
 
     if parameter is None:
         parameter = []
@@ -152,8 +155,6 @@ def file_full_search(args, stream=None):
 
 
 def force_type(stream, type_):
-    import sddeferredbefore
-
     # we 'force' (i.e. we do not just set as 'default') the parameter here, so
     # to prevent user to set it
     sddeferredbefore.add_forced_parameter(stream, 'type', type_)

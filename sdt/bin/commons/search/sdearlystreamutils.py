@@ -4,7 +4,7 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright œ(c)2009 Centre National de la Recherche Scientifique CNRS.
+#  @copyright      Copyright €œ(c)2009 Centre National de la Recherche Scientifique CNRS.
 #                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
@@ -16,10 +16,17 @@ Notes
 """
 
 import sys
+import copy
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdexception
-from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils.sdprint import print_stderr
+from sdt.bin.commons.search import sdstream
+from sdt.bin.commons.param import sdignorecase
+from sdt.bin.commons.param import sdinference
+from sdt.bin.commons.param import sddeferredbefore
+from sdt.bin.commons.param import sddeferredafter
+from sdt.bin.commons.esgf import sdextractitem
 
 
 def test_facet_value_early(orig_stream, name, value, extract_item=False):
@@ -78,7 +85,6 @@ def get_facet_values_early(orig_stream, name, extract_item=False):
     TODO
         Maybe find a proper way to do that
     """
-    import sdstream, sdextractitem, sdignorecase, sdinference, copy, sddeferredbefore, sddeferredafter
 
     assert name != 'type'  # type cannot be inferred using this func (use infer_type() func instead)
 

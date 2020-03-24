@@ -16,6 +16,7 @@ import re
 
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.esgf import sdnormalize
 from sdt.bin.db import dao
 from sdt.bin.db import session
@@ -184,7 +185,7 @@ def filter_and_print_name(li, pattern=None):
         for v in li:
             print(v)
     else:
-        sdtools.print_stderr("Parameter name not found")
+        sdprint.print_stderr("Parameter name not found")
 
 
 def filter_and_print_value(li, columns=1, pattern=None):
@@ -194,7 +195,7 @@ def filter_and_print_value(li, columns=1, pattern=None):
         v = li[0]
 
         if v is None:
-            sdtools.print_stderr('Free text parameter')
+            sdprint.print_stderr('Free text parameter')
         else:
             print(v)
 
@@ -208,7 +209,7 @@ def filter_and_print_value(li, columns=1, pattern=None):
             for v in li:
                 print(v)
     else:
-        sdtools.print_stderr("Parameter value not found")
+        sdprint.print_stderr("Parameter value not found")
 
 
 def denormalize_models_list(models_list):
@@ -284,7 +285,7 @@ def get_name_from_value(value):
                 return names[0]
 
         # if still too many match, print a warning and return the first one
-        sdtools.print_stderr("WARNING: '%s' value has been associated with '%s' facet." % (value, names[0]))
+        sdprint.print_stderr("WARNING: '%s' value has been associated with '%s' facet." % (value, names[0]))
         return names[0]
 
         # if still too many match, let's raise exception
@@ -313,7 +314,7 @@ def print_(args):
             if p1 in mapping_keywords:
                 print_models_mapping(models, p2)
             else:
-                sdtools.print_stderr("Parameter not found")
+                sdprint.print_stderr("Parameter not found")
 
 
 # module init
@@ -324,7 +325,7 @@ with session.create():
 
 # if params empty, cache need to be populated
 if len(params) < 1:
-    sdtools.print_stderr('Retrieving parameters from ESGF..')
+    sdprint.print_stderr('Retrieving parameters from ESGF..')
     sdcache.run(reload=True)
     params = dao.fetch_parameters()
 

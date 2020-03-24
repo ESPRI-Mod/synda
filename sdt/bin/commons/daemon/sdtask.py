@@ -21,6 +21,7 @@ from sdt.bin.commons.managers import sddmdefault
 # from sdt.bin.commons.managers import sddmgo
 
 from sdt.bin.commons.daemon import sdprofiler
+from sdt.bin.db import session
 from sdt.bin.db import dao
 from sdt.bin.db import dao_operations
 
@@ -57,7 +58,6 @@ def pre_transfer_check_list(tr):
         True: Check list OK
         False: Check list NOK
     """
-
     if lfae_mode == "keep":
         # usefull mode if
         #  - metadata needs to be regenerated without retransfering the data
@@ -108,48 +108,49 @@ def pre_transfer_check_list(tr):
 
 @sdprofiler.timeit
 def transfers_begin():
-    transfers = []
+    with session.create():
+        transfers = []
 
-    # how many new transfers can be started:
-    new_transfer_count = max_transfer - dao.transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING)
-    # datanode_count[datanode], is number of running transfers for a data node:
-    datanode_count = dao.transfer_running_count_by_datanode()
-    if new_transfer_count > 0:
-        transfers_needed = new_transfer_count
-        for i in range(new_transfer_count):
-            for datanode in datanode_count.keys():
-                try:
-                    # Handle per-datanode maximum number of transfers:
+        # how many new transfers can be started:
+        new_transfer_count = max_transfer - dao.transfer_status_count(status=sdconst.TRANSFER_STATUS_RUNNING)
+        # datanode_count[datanode], is number of running transfers for a data node:
+        datanode_count = dao.transfer_running_count_by_datanode()
+        if new_transfer_count > 0:
+            transfers_needed = new_transfer_count
+            for i in range(new_transfer_count):
+                for datanode in datanode_count.keys():
                     try:
-                        new_count = max_datanode_count - datanode_count[datanode]
-                    except KeyError:
-                        sdlog.info("SYNDTASK-189", "key error on datanode {}, "
-                                                   "legal keys are {}".format(datanode, datanode_count.keys()))
-                        new_count = max_datanode_count
-                    if new_count <= 0:
-                        continue
+                        # Handle per-datanode maximum number of transfers:
+                        try:
+                            new_count = max_datanode_count - datanode_count[datanode]
+                        except KeyError:
+                            sdlog.info("SYNDTASK-189", "key error on datanode {}, "
+                                                       "legal keys are {}".format(datanode, datanode_count.keys()))
+                            new_count = max_datanode_count
+                        if new_count <= 0:
+                            continue
 
-                    tr = dao.get_one_waiting_transfer(datanode)
+                        tr = dao.get_one_waiting_transfer(datanode)
 
-                    prepare_transfer(tr)
+                        prepare_transfer(tr)
 
-                    if pre_transfer_check_list(tr):
-                        dao.update_file(tr)
-                        transfers.append(tr)
+                        if pre_transfer_check_list(tr):
+                            dao.update_file(tr)
+                            transfers.append(tr)
 
-                    if datanode in datanode_count:
-                        datanode_count[datanode] += 1
-                    else:
-                        datanode_count[datanode] = 1
-                    transfers_needed -= 1
-                    if transfers_needed <= 0:
-                        break
-                except NoTransferWaitingException as e:
-                    pass
-            if transfers_needed <= 0:
-                break
+                        if datanode in datanode_count:
+                            datanode_count[datanode] += 1
+                        else:
+                            datanode_count[datanode] = 1
+                        transfers_needed -= 1
+                        if transfers_needed <= 0:
+                            break
+                    except NoTransferWaitingException as e:
+                        pass
+                if transfers_needed <= 0:
+                    break
 
-    dmngr.transfers_begin(transfers)
+        dmngr.transfers_begin(transfers)
 
 
 def get_download_manager():

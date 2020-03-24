@@ -17,9 +17,9 @@ from sdt.bin.commons.esgf import sdproxy_ra
 from sdt.bin.commons.esgf import sdremoteparam_light
 
 from sdt.bin.commons.utils import sdutils
-from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.utils import sdprint
 from sdt.bin.models.sdtypes import Item
 from sdt.bin.commons.esgf import sdindex
 from sdt.bin.db import dao
@@ -93,7 +93,7 @@ def _update_parameters(parameters):
             # We add the parameter name if not exist.
 
             if not dao.exists_parameter_name(pname):
-                sdtools.print_stderr('Add new parameter: %s' % pname)
+                sdprint.print_stderr('Add new parameter: %s' % pname)
                 try:
                     dao.add_parameter(name=pname)
                 except sdexception.IntegrityError:
@@ -108,7 +108,7 @@ def _update_parameters(parameters):
 
             for item in pvalues:
                 if not dao.exists_parameter_value(pname, item.name):
-                    sdtools.print_stderr('Add new value for %s parameter: %s' % (pname, item.name))
+                    sdprint.print_stderr('Add new value for %s parameter: %s' % (pname, item.name))
                     try:
                         dao.add_parameter(pname, item.name)
                     except sdexception.IntegrityError:
@@ -213,10 +213,6 @@ def get_parameters_from_searchapi(host, project, dry_run=False):
         maybe run the third query for every project, so to have the full list
         of parameter.
     """
-    # sdtools.print_stderr("Using '%s' index"%host)
-
-    # sdprogress.SDProgressDot.print_char()
-
     params = {}
 
     # First pass to retrieve most parameters. TAG4353453453
@@ -294,4 +290,4 @@ if __name__ == '__main__':
 
     if answer:
         run(host=args.index_host, reload=args.reload, project=args.project)
-        sdtools.print_stderr("Parameters are up-to-date.")
+        sdprint.print_stderr("Parameters are up-to-date.")

@@ -117,6 +117,7 @@ LOGGER_DOMAIN = 'domain'
 #
 LOGFILE_FEEDER = 'discovery.log'
 LOGFILE_CONSUMER = 'transfer.log'
+LOGFILE_CONSUMER_ERROR = 'transfer_error.log'
 LOGFILE_DOMAIN = 'domain.log'
 
 CHECKSUM_TYPE_MD5 = 'md5'

@@ -12,14 +12,22 @@
 """This module contains 'synda install' related routines."""
 
 import argparse
-from sdt.bin.commons.utils import sdconfig, sdlog, sdexception
+import humanize
+
 from sdt.bin.commons import sdi18n
-from sdt.bin.commons.utils.sdtools import print_stderr
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.utils import sdutils
+from sdt.bin.commons.daemon import sddaemon
+from sdt.bin.commons.utils import sdutils
+from sdt.bin.commons.utils.sdprint import print_stderr
+from sdt.bin.commons.pipeline import sdenqueue
+from sdt.bin.commons.pipeline import sdsimplefilter
 
 
 def run(args, metadata=None):
-    import syndautils
-
     syndautils.check_daemon()
 
     if metadata is None:
@@ -53,8 +61,6 @@ def run(args, metadata=None):
 
 
 def _install(metadata, interactive, timestamp_right_boundary=None):
-    import sddaemon
-
     # Compute total files stat
     count_total = metadata.count()
     size_total = metadata.size
@@ -67,7 +73,7 @@ def _install(metadata, interactive, timestamp_right_boundary=None):
     # method, but safer to keep it there too, and should be no harm in term of
     # perfomance)
     #
-    import sdsimplefilter, sdconst
+
     metadata = sdsimplefilter.run(metadata, 'status', sdconst.TRANSFER_STATUS_NEW, 'keep')
     metadata = sdsimplefilter.run(metadata, 'url', "//None", 'remove_substr')
     count_new = metadata.count()
@@ -90,12 +96,10 @@ def _install(metadata, interactive, timestamp_right_boundary=None):
 
     # ask user for confirmation
     if interactive:
-        import humanize
         print_stderr('{} file(s) will be added to the download queue.'.format(count_new))
         print_stderr('Once downloaded, {} of additional '
                      'disk space will be used.'.format(humanize.naturalsize(size_new, gnu=False)))
 
-        import sdutils
         if sdutils.query_yes_no('Do you want to continue?', default="yes"):
             installation_confirmed = True
         else:
@@ -107,7 +111,6 @@ def _install(metadata, interactive, timestamp_right_boundary=None):
 
     # install
     if installation_confirmed:
-        import sdenqueue
         sdenqueue.run(metadata, timestamp_right_boundary)
 
         if interactive:
@@ -124,9 +127,3 @@ def _install(metadata, interactive, timestamp_right_boundary=None):
     sdlog.info("SYNDINST-025", "Task complete")
 
     return (0, count_new)
-
-
-# init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()

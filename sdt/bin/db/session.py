@@ -10,12 +10,11 @@
 ##################################
 
 import contextlib
-import logging
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-import sdt.bin.sdconfig
+from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdconfig
 
 # SQLAlchemy engine.
 sa_engine = None
@@ -40,7 +39,7 @@ def create(connection=None, commitable=False):
 
     """
     _start(connection)
-    print("db connection [{}] opened".format(id(_sa_session)))
+    sdlog.debug("SYNDADBS-001", "db connection [{}] opened".format(id(_sa_session)))
 
     try:
         yield
@@ -52,7 +51,7 @@ def create(connection=None, commitable=False):
     else:
         if commitable:
             commit()
-        print("db connection [{}] closed".format(id(_sa_session)))
+        sdlog.debug("SYNDADBS-002", "db connection [{}] closed".format(id(_sa_session)))
     finally:
         _end()
 
@@ -70,20 +69,16 @@ def _start(connection=None):
 
     # Set default connection.
     if connection is None:
-        connection = 'sqlite:///' + sdt.bin.sdconfig.db_file
-        print('connection info ' + connection)
+        connection = 'sqlite:///' + sdconfig.db_file
+        sdlog.debug("SYNDADBS-003", 'connection info ' + connection)
     # Set engine.
     if _sa_connection != connection:
         _sa_connection = connection
         sa_engine = create_engine(connection, echo=False)
-        # sa_engine = create_engine(connection,
-        #                           echo=False,
-        #                           connect_args={"options": "-c timezone=utc"})
-        print("db engine instantiated: {}".format(id(sa_engine)))
+        sdlog.debug("SYNDADBS-004", "db engine instantiated: {}".format(id(sa_engine)))
 
     # Set session.
     _sa_session = sessionmaker(bind=sa_engine)()
-    # _sa_session = sessionmaker(bind=sa_engine, expire_on_commit=False)()
 
 
 def _end():

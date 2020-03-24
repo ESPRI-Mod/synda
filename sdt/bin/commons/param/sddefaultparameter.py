@@ -40,7 +40,7 @@ def process_default_parameters(facets_group):
 
 def get_default_parameters(facets_group):
     di = {}
-    for k, v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if is_default_parameter(k):
             di[k] = v
 
@@ -49,7 +49,7 @@ def get_default_parameters(facets_group):
 
 def get_non_default_parameters(facets_group):
     di = {}
-    for k, v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if not is_default_parameter(k):
             di[k] = v
 

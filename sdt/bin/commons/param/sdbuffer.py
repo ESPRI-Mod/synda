@@ -17,7 +17,6 @@ import select
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils.sdexception import SDException, FileNotFoundException
-from sdt.bin.commons.search import sdstreamutils
 from sdt.bin.models.sdtypes import Buffer
 
 

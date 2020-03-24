@@ -29,14 +29,14 @@ import daemon.pidfile
 import psutil
 import argparse
 import signal
-from sdt.bin.commons.utils import sdconst, sdtrace
+from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdtrace
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.utils import sdlog
-
 from sdt.bin.commons.utils.sdexception import SDException
-
-import sdtaskscheduler  # must be here because of double-fork
+from sdt.bin.commons.daemon import sdtaskscheduler
 
 
 # (i.e. we can't move import at the top of this file, because the first import must occur in 'main_loop' func).
@@ -86,7 +86,7 @@ def main_loop():
         if level == 'debug':
             # We log everything in debug mode no matter the exception type
 
-            sdlog.debug('SDDAEMON-008', "Exception occured (%s)" % str(e))
+            sdlog.debug('SDDAEMON-008', "Exception occured ({})".format(str(e)))
         else:
             if isinstance(e, SDException):
                 # In this case, we only print the exception code, as the errmsg
@@ -95,18 +95,18 @@ def main_loop():
                 # The primary reason for this is to have a clear log entry
                 # when authentication failed (e.g. ESGF is down or openid is incorrect)
 
-                sdlog.info('SDDAEMON-010', "Exception occured (%s)" % str(e.code))
+                sdlog.info('SDDAEMON-010', "Exception occured ({})".format(str(e.code)))
             else:
                 # This case should not occur, so we log everything to help debugging
 
-                sdlog.info('SDDAEMON-012', "Exception occured (%s)" % str(e))
+                sdlog.info('SDDAEMON-012', "Exception occured ({})".format(str(e)))
 
     sdlog.info('SDDAEMON-034', "Daemon stopped")
 
 
 def test_write_access(file_):
     if os.path.isfile(file_):
-        sys.stderr.write('Cannot perform write test: file already exists (%s)\n' % file_)
+        sys.stderr.write('Cannot perform write test: file already exists ({})\n'.format(file_))
         sys.exit(1)  # FIXME: move exit() call upstream
     if user and group:
         uid = pwd.getpwnam(user).pw_uid
@@ -116,7 +116,7 @@ def test_write_access(file_):
     with open(file_, 'w') as fh:
         fh.write('write test\n')
         os.unlink(file_)
-    sys.stderr.write('Write test successfully completed (%s)\n' % file_)
+    sys.stderr.write('Write test successfully completed ({})\n'.format(file_))
 
 
 def start():
@@ -131,7 +131,8 @@ def start():
             with context:
                 main_loop()
         except Exception as e:
-            sdtrace.log_exception()
+            print(e)
+            # sdtrace.log_exception()
 
             # DOESN'T WORK !
         #
@@ -150,7 +151,7 @@ def start():
 
     else:
         print('Daemon is already running.')
-        print('PID file location: %s' % sdconfig.daemon_pid_file)
+        print('PID file location: {}'.format(sdconfig.daemon_pid_file))
 
 
 def stop():
@@ -170,7 +171,7 @@ def stop():
             os.unlink(sdconfig.daemon_pid_file)
 
     else:
-        sdtools.print_stderr('Daemon is already stopped.')
+        sdprint.print_stderr('Daemon is already stopped.')
 
 
 def terminate(signum, frame):
@@ -220,8 +221,8 @@ def unprivileged_user_mode():
 os.umask(0o002)
 
 pidfile = daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
-log_stdout = open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
-log_stderr = open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
+log_stdout = open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "w+")
+log_stderr = open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER_ERROR), "w+")
 context = daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile, stdout=log_stdout,
                                stderr=log_stderr)
 context.signal_map = {signal.SIGTERM: terminate, }
@@ -239,8 +240,8 @@ if __name__ == "__main__":
         if not sdpermission.is_admin():
             # this is to prevent having all on the same line when using "synda service" command e.g.
             # "Shutting down synda daemon (sdt): You need to be root to perform this command."
-            sdtools.print_stderr()
-            sdtools.print_stderr(sdi18n.m0028)
+            sdprint.print_stderr()
+            sdprint.print_stderr(sdi18n.m0028)
             sys.exit(1)
 
     if args.action == 'start':

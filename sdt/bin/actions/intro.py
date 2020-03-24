@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-import sdi18n
+from sdt.bin.commons import sdi18n
 
 
 def run(args):

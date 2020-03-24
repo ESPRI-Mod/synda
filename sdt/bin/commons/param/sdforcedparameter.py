@@ -37,7 +37,7 @@ def process_forced_parameters(facets_group):
 
 def get_forced_parameters(facets_group):
     di = {}
-    for k, v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if is_forced_parameter(k):
             di[k] = v
 
@@ -46,7 +46,7 @@ def get_forced_parameters(facets_group):
 
 def get_non_forced_parameters(facets_group):
     di = {}
-    for k, v in facets_group.iteritems():
+    for k, v in facets_group.items():
         if not is_forced_parameter(k):
             di[k] = v
 
