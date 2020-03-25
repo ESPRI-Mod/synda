@@ -11,10 +11,11 @@
 import os
 import humanize
 
-from sdt.bin.commons import syndautils
-from sdt.bin.commons import sdlogon
 from sdt.bin.commons.utils import sdconfig
-from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdlogon
+from sdt.bin.commons.utils import syndautils
+from sdt.bin.commons.utils import sdprint
+
 from sdt.bin.commons.param import sddeferredafter
 from sdt.bin.commons.search import sdearlystreamutils
 from sdt.bin.commons.search import sdrfile
@@ -28,7 +29,7 @@ def run(args):
         args.verbosity = 0
 
     if args.verify_checksum and args.network_bandwidth_test:
-        print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
+        sdprint.print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
         return 1
 
     stream = syndautils.get_stream(subcommand=args.subcommand, parameter=args.parameter,
@@ -46,7 +47,7 @@ def run(args):
             oid = sdconfig.openid
             pwd = sdconfig.password
         else:
-            print_stderr('Error: OpenID not set in configuration file ({}).'.format(sdconfig.credential_file))
+            sdprint.print_stderr('Error: OpenID not set in configuration file ({}).'.format(sdconfig.credential_file))
 
             return 1
     # retrieve certificate
@@ -87,7 +88,8 @@ def run(args):
                 # compute metric
                 total_size = sum(int(f['size']) for f in files)
                 total_size = humanize.naturalsize(total_size, gnu=False)
-                print_stderr('{} file(s) will be downloaded for a total size of {}'.format(len(files), total_size))
+                sdprint.print_stderr(
+                    '{} file(s) will be downloaded for a total size of {}'.format(len(files), total_size))
                 status = sddirectdownload.run(files,
                                               args.timeout,
                                               args.force,
@@ -101,19 +103,20 @@ def run(args):
                 if status != 0:
                     return 1
             else:
-                print_stderr("File not found")
+                sdprint.print_stderr("File not found")
                 return 1
         else:
             for f in files:
                 size = humanize.naturalsize(f['size'], gnu=False)
-                print('%-12s %s' % (size, f['filename']))
+                sdprint.print('%-12s %s' % (size, f['filename']))
 
     elif len(urls) > 0:
         # url(s) found in stream: search-api operator not needed (download url directly)
         # TAGDSFDF432F
         if args.verify_checksum:
-            print_stderr("To perform checksum verification, ESGF file identifier (e.g. title, id, tracking id..) "
-                         "must be used instead of file url.")
+            sdprint.print_stderr(
+                "To perform checksum verification, ESGF file identifier (e.g. title, id, tracking id..) "
+                "must be used instead of file url.")
             return 1
         # TODO: to improve genericity, maybe merge this block into the previous one
         #  (i.e. url CAN be used as a search key in the search-api (but not irods url))

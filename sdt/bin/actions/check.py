@@ -9,13 +9,11 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-from sdt.bin.commons import sddump
-from sdt.bin.commons import sdcheckdatasetversion
 from sdt.bin.commons.utils.sdprint import print_stderr
-from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.utils import sdexception, sdcheckdatasetversion, sddump
 from sdt.bin.commons.search import sdfields
 from sdt.bin.commons.search import sdselectionsgroup
-from sdt.bin.commons.search import sdpipeline
+from sdt.bin.commons.pipeline import sdpipeline
 
 
 def run(args):

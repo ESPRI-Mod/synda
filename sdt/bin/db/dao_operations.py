@@ -8,7 +8,7 @@ from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
 
 from sdt.bin.commons.search import sdquicksearch
-from sdt.bin.commons.utils.sdtypes import DatasetVersions
+from sdt.bin.models.sdtypes import DatasetVersions
 
 """
 This module contains functions that mainly interact with db but are not DAO operations per se. 

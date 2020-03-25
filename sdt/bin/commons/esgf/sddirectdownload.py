@@ -18,9 +18,9 @@ import json
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdutils
-from sdt.bin.commons.utils.sdtypes import File
 from sdt.bin.commons.utils.sdprint import print_stderr
 from sdt.bin.commons.managers import sdget
+from sdt.bin.models.sdtypes import File
 
 
 def run(files,

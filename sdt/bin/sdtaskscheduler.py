@@ -19,8 +19,7 @@ import os
 import sys
 import time
 from sdt.bin.db import dao
-from sdt.bin.commons import sdlogon
-from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdconfig, sdlogon
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils.sdexception import FatalException, SDException, OpenIDNotSetException

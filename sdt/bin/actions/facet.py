@@ -13,7 +13,7 @@ from sdt.bin.commons.param import sdinference
 from sdt.bin.commons.param import sdignorecase
 
 from sdt.bin.commons.esgf import sdremoteparam
-from sdt.bin.commons import syndautils
+from sdt.bin.commons.utils import syndautils
 
 
 def run(args):

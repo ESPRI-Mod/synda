@@ -15,15 +15,14 @@ import os
 import argparse
 import re
 
-from sdt.bin.commons import sdi18n
-from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils import sdtools, sdi18n
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.param import sdbuffer
 from sdt.bin.commons.search import sdearlystreamutils
-from sdt.bin.commons.utils.sdtypes import Selection
 from sdt.bin.commons.utils.sdexception import SDException
+from sdt.bin.models.sdtypes import Selection
 
 
 def build(buffer, load_default=None):

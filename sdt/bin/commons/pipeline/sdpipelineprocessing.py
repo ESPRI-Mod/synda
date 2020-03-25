@@ -11,7 +11,7 @@
 
 """This module contains pipeline execution routines."""
 
-from sdt.bin.commons.utils import sdtypes
+from sdt.bin.models import sdtypes
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 

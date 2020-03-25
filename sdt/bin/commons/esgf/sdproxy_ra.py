@@ -23,8 +23,8 @@ Notes
 from sdt.bin.commons.esgf import sdindex
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdnetutils
-from sdt.bin.models.sdtypes import Request
 from sdt.bin.commons.utils import sdurlutils
+from sdt.bin.models.sdtypes import Request
 
 
 def get_one_file(host=sdindex.get_default_index(), project=None, query=None, dry_run=None):

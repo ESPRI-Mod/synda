@@ -15,26 +15,21 @@ Notes
     - This pipeline run *before* the main search-api call.
     - This pipeline is used by sdquerypipeline
 """
-
-import sys
-import argparse
-import json
-from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.facets import sdvct
+from sdt.bin.commons.facets import sdignorecase
+from sdt.bin.commons.facets import sdvectortoscalar
+from sdt.bin.commons.facets import sdcheckparam
+from sdt.bin.commons.facets import sdvalueinputalias
+from sdt.bin.commons.facets import sdremovefacet
+from sdt.bin.commons.facets import sddecode
 
 from sdt.bin.commons.param import sdinference
 from sdt.bin.commons.param import sddeferredbefore
 from sdt.bin.commons.param import sddeferredafter
 
-import sdvectortoscalar
-import sdvct
-import sdcheckparam
-import sdlocal2remote
-import sdvalueinputalias
-import sddenormodel
-import sdremovefacet
-import sddecode
-import sdignorecase
+from sdt.bin.commons.esgf import sdlocal2remote
+from sdt.bin.commons.esgf import sddenormodel
 
 
 def run(facets_groups):
@@ -66,16 +61,3 @@ def run(facets_groups):
         sdcheckparam.run(facets_groups)
 
     return facets_groups
-
-
-# module init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    args = parser.parse_args()
-
-    facets_groups = json.load(sys.stdin)
-    facets_groups = run(facets_groups)
-    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)

@@ -15,9 +15,9 @@ import humanize
 from tabulate import tabulate
 
 from sdt.bin.commons.utils import sdconst
-from sdt.bin.commons.utils.sdtypes import File
 from sdt.bin.commons.search import sdquicksearch
 from sdt.bin.commons.param import sddeferredbefore
+from sdt.bin.models.sdtypes import File
 
 
 def get_files(stream=None, parameter=None, post_pipeline_mode='file', dry_run=False):

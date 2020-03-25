@@ -14,8 +14,9 @@
 import copy
 
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons.utils import sdtypes
 from sdt.bin.commons.pipeline import sdpipelineprocessing
+from sdt.bin.models.sdtypes import Response
+from sdt.bin.models.sdtypes import Metadata
 
 
 def run(o, attached_parameters):
@@ -30,14 +31,15 @@ def run(o, attached_parameters):
 
     sdlog.debug("SYDADDAP-620", "Add attached_parameters..")
 
-    if isinstance(o, sdtypes.Metadata):
+    if isinstance(o, Metadata):
 
         po = sdpipelineprocessing.ProcessingObject(add_attached_parameters, attached_parameters)
         o = sdpipelineprocessing.run_pipeline(o, po)
 
-    elif isinstance(o, sdtypes.Response):
+    elif isinstance(o, Response):
 
-        # no need to process chunk by chunk here as Response size only contains a small amount of data (< sdconst.SEARCH_API_CHUNKSIZE)
+        # no need to process chunk by chunk here as Response size
+        # only contains a small amount of data (< sdconst.SEARCH_API_CHUNKSIZE)
 
         files = add_attached_parameters(o.get_files(), attached_parameters)
         o.set_files(files)

@@ -108,7 +108,7 @@ def parse_metadata(buffer):
         },
         """
 
-        for attr_name, attr_value in doc_node.iteritems():
+        for attr_name, attr_value in doc_node.items():
 
             # TODO: maybe move transformation below in a downstream
             #       step (e.g. in the generic pipeline) so to keep

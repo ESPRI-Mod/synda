@@ -18,30 +18,26 @@ Notes
 """
 
 # TODO CLEAN DEPENDENCIES HERE.
-import sys
-import argparse
-import json
+
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdconst
-from sdt.bin.commons.utils import sdtypes
 from sdt.bin.commons.utils import sdtime
 from sdt.bin.commons.utils import sdprogress
-from sdt.bin.commons.utils import sdexception
+from sdt.bin.commons.pipeline import sdpostpipelineutils
+from sdt.bin.commons.pipeline import sdpipelineprocessing
+from sdt.bin.commons.pipeline import sdsimplefilter
+
+from sdt.bin.commons.utils.sdexception import SDException
+
+from sdt.bin.models.sdtypes import Dataset, File
 
 import sddb
-import sdsimplefilter
 import sdhistory
 import sdfiledao
 import sddatasetdao
 import sdtimestamp
-from sdtypes import Dataset, File
 import sdsqlutils
-import sdpostpipelineutils
-import sdpipelineprocessing
-from sdexception import SDException
-import sdprogress
 
 
 def run(metadata, timestamp_right_boundary=None):

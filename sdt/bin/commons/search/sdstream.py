@@ -15,7 +15,7 @@ Note
     A stream is a group of dquery
 """
 
-from sdt.bin.commons.search import sddquery
+from sdt.bin.commons.param import sddquery
 
 
 def print_(dqueries):

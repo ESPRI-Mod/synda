@@ -18,7 +18,7 @@ from sdt.bin.commons.utils import sdconfig, sdtrace
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdtime
-# from sdt.bin.commons.utils import sdxml
+from sdt.bin.commons.utils import sdxml
 from sdt.bin.commons.utils import sdjson
 from sdt.bin.commons.utils.sdexception import SDException
 
@@ -36,7 +36,6 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
     buf = HTTP_GET(url, timeout)
     elapsed_time = sdtime.SDTimer.get_elapsed_time(start_time)
     buf = fix_encoding(buf)
-
     try:
         di = search_api_parser.parse_metadata(buf)
     except Exception as e:
@@ -60,10 +59,10 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
         # to see the stacktrace.
         #
         # raise
+        # we raise a new exception 'network error' here, because most of the time,
+        # 'xml parsing error' is due to an 'network error'.
 
-        raise SDException('SDNETUTI-008',
-                          'Network error (see log for details)')  # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
-
+        raise SDException('SDNETUTI-008', 'Network error (see log for details)')
     sdlog.debug("SDNETUTI-044", "files-count={}".format(len(di.get('files'))))
 
     # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
@@ -72,9 +71,7 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
 
 def call_param_web_service(url, timeout):
     buf = HTTP_GET(url, timeout)
-
     buf = fix_encoding(buf)
-
     try:
         params = search_api_parser.parse_parameters(buf)
     except Exception as e:
@@ -92,10 +89,11 @@ def fix_encoding(buf):
     #
     # This is to prevent fatal error when document contain mixed encodings
     #
-    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
+    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=
+    # sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
     #
     if sdconfig.fix_encoding:
-        pass
+        buf = buf.decode('utf-8', 'ignore').encode('utf-8')
     return buf
 
 
@@ -107,17 +105,15 @@ def HTTP_GET(url, timeout=20, verify=True):
     :param verify:
     :return:
     """
-
     buf = None
-
     try:
         result = requests.get(url, timeout=timeout, verify=verify)
         buf = result.text.encode('ascii', 'ignore')
     except Exception as e:
-        errmsg = "HTTP query failed (url={},exception={},timeout=)".format(url, str(e), timeout)
+        errmsg = "HTTP query failed (url={}, exception={}, timeout={}, HTTP CODE={})".format(url, str(e), timeout,
+                                                                                             result.status_code)
         errcode = "SDNETUTI-004"
         raise SDException(errcode, errmsg)
-
     return buf
 
 

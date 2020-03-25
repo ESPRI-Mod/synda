@@ -23,16 +23,12 @@ Notes
 
 import argparse
 import importlib
-from sdt.bin.commons import sdi18n
-from sdt.bin.commons import syndautils
-from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconst, sdi18n, syndautils
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdexception
-from sdt.bin.commons.utils import sdcliex
 
 # TODO These imports are probably deprecated.
 from sdt.bin.commons.param import sddeferredbefore
-from sdt.bin.models import sdtypes
 
 
 def set_stream_type(args):

@@ -11,15 +11,12 @@
 
 """This module contains 'synda install' related routines."""
 
-import argparse
 import humanize
 
-from sdt.bin.commons import sdi18n
-from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdconfig, sdi18n
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
-from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.daemon import sddaemon
 from sdt.bin.commons.utils import sdutils
 from sdt.bin.commons.utils.sdprint import print_stderr

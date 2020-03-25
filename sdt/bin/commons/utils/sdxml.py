@@ -256,8 +256,3 @@ def parse_metadata(buffer):
     sdlog.debug("SYNDAXML-014", "files-count=%d" % len(l__files))
 
     return {'files': l__files, 'num_found': l__num_found, 'num_result': len(l__files)}
-
-
-import lxml
-
-print("successfully imported lxml")

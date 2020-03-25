@@ -24,19 +24,18 @@ Notes
       for sdsearch, as sdproxy_mt threads are now configured as 'daemon')
 """
 
-from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconst, sdi18n
 from sdt.bin.commons.utils import sdnetutils
 from sdt.bin.commons.utils import sdlog
-from sdt.bin.commons import sdi18n
-from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdprint
-from sdt.bin.commons.utils import sdtypes
 from sdt.bin.commons.search import sdsqueries
 from sdt.bin.commons.search import sdaddap
 from sdt.bin.commons.pipeline import sdquerypipeline
+from sdt.bin.commons.pipeline import sdpipeline
 
 from sdt.bin.commons.utils.sdprogress import ProgressThread
 from sdt.bin.commons.utils.sdexception import SDException
+from sdt.bin.models import sdtypes
 
 
 # TODO simplify quick search call
@@ -67,10 +66,8 @@ def run(stream=None, path=None, parameter=None, index_host=None, post_pipeline_m
                 sdprint.print_stderr(
                     sdi18n.m0003(searchapi_host))  # waiting message => TODO: move into ProgressThread class
                 ProgressThread.start(sleep=0.1, running_message='', end_message='Search completed.')  # spinner start
-
             mqr = process_queries(queries)
             metadata = mqr.to_metadata()
-
             sdlog.debug("SDQSEARC-002", "files-count={}".format(metadata.count()))
             metadata = sdpipeline.post_pipeline(metadata, post_pipeline_mode)
             sdlog.debug("SDQSEARC-004", "files-count={}".format(metadata.count()))

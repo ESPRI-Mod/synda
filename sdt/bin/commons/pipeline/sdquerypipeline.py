@@ -28,26 +28,26 @@ from sdt.bin.commons.utils.sdexception import SDException
 from sdt.bin.commons.param import sdbuffer
 from sdt.bin.commons.search import sdparampipeline
 from sdt.bin.commons.search import sdexplode
-from sdt.bin.commons.search import sdremoteqbuilder
 
-import sdlocalqbuilder
-import sdcompletedatasetid
-import sdindexhost
-import sdremote2local
-import sdlocalvalue2remotevalue
-import sdnearestpre
-import sdtps
+# TODO needs rewriting to suit sqlalchemy style query.
+# Could be left as a raw_query
+from sdt.bin.commons.search import sdremoteqbuilder
+from sdt.bin.commons.search import sdtps
+from sdt.bin.commons.esgf import sdcompletedatasetid
+from sdt.bin.commons.esgf import sdindexhost
+from sdt.bin.commons.esgf import sdremote2local
+from sdt.bin.commons.esgf import sdlocalvalue2remotevalue
+from sdt.bin.commons.esgf import sdnearestpre
 
 
 def run(facets_groups, parallel=True, index_host=None, dry_run=False, query_type='remote'):
     facets_groups = sdparampipeline.run(facets_groups)
-
     if query_type == 'remote':
-
-        # both filters below transform attributes to fit search-api special syntax (e.g. suffix added to id and url, using '|' as delimiter)
-
+        # both filters below transform attributes to fit search-api special syntax
+        # (e.g. suffix added to id and url, using '|' as delimiter)
         if sdconfig.dataset_filter_mecanism_in_file_context == 'dataset_id':
-            facets_groups = sdcompletedatasetid.run(facets_groups)  # beware: this trigger a search-api call
+            # beware: this triggers a search-api call
+            facets_groups = sdcompletedatasetid.run(facets_groups)
 
         facets_groups = sdlocalvalue2remotevalue.run(facets_groups)
 
@@ -73,34 +73,6 @@ def run(facets_groups, parallel=True, index_host=None, dry_run=False, query_type
         facets_groups = sdremote2local.run(facets_groups)
         queries = sdlocalqbuilder.run(facets_groups)
     else:
-        raise SDException("SDQUERYP-001", "Unknow query type (%s)" % query_type)
+        raise SDException("SDQUERYP-001", "Unknow query type ({})".format(query_type))
 
     return queries
-
-
-if __name__ == '__main__':
-    prog = os.path.basename(__file__)
-
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     epilog="""examples of use
-  cat file | %s
-  %s file
-""" % (prog, prog))
-
-    parser.add_argument('file', nargs='?', default='-')
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    parser.add_argument('-i', '--index_host')
-
-    parser.add_argument('--parallel', dest='parallel', action='store_true')
-    parser.add_argument('--no-parallel', dest='parallel', action='store_false')
-    parser.set_defaults(parallel=True)
-
-    args = parser.parse_args()
-
-    buffer = sdbuffer.get_selection_file_buffer(path=args.file)
-    selection = sdparse.build(buffer)
-    facets_groups = selection.merge_facets()
-    queries = run(facets_groups, parallel=args.parallel, index_host=args.index_host)
-
-    sdprint.print_format(queries, args.format, args.print_only_one_item)

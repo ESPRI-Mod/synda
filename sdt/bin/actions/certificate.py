@@ -8,8 +8,7 @@
 #                             All Rights Reservedù
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from sdt.bin.commons.utils import sdconfig
-from sdt.bin.commons import sdlogon
+from sdt.bin.commons.utils import sdconfig, sdlogon
 
 
 def run(args):

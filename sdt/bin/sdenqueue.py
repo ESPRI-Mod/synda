@@ -255,18 +255,3 @@ def fix_timestamp():
         # dataset (so there is no dataset timestamp to update).
 
         pass
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--priority',required=False,type=int,default=None)
-    args = parser.parse_args()
-
-    files=json.load( sys.stdin )
-
-    if args.priority is not None:
-
-        # overide default priority
-        for f in files:
-            f['priority']=args.priority
-
-    run(files)

@@ -14,14 +14,13 @@
 import argparse
 import re
 
-from sdt.bin.commons.utils import sdconst
+from sdt.bin.commons.utils import sdconst, sdi18n
 from sdt.bin.commons.utils import sdtools
 from sdt.bin.commons.utils import sdprint
 from sdt.bin.commons.esgf import sdnormalize
 from sdt.bin.db import dao
 from sdt.bin.db import session
 from sdt.bin.db import sdcache
-from sdt.bin.commons import sdi18n
 from sdt.bin.commons.utils.sdexception import SDException
 
 

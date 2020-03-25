@@ -15,7 +15,6 @@ Example
      'CESM1(CAM5.1,FV2)' become 'CESM1-CAM5-1-FV2'
 """
 
-import string
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
 
@@ -79,3 +78,9 @@ def normalize_checksum_type(checksum_type):
         return None
     else:
         raise sdexception.UnknownChecksumType("SDNORMAL-001", "Unknown checksum type (%s)" % (checksum_type,))
+
+def normalize_files(files):
+    for f in files:
+        if 'checksum_type' in f:
+            f['checksum_type'] = normalize_checksum_type(f['checksum_type'])
+    return files

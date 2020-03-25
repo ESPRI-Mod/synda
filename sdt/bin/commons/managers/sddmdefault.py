@@ -19,8 +19,7 @@ Note
 import os
 import time
 import queue
-from sdt.bin.commons import sdlogon
-from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdlog, sdlogon
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdexception
 from sdt.bin.commons.utils import sdconfig

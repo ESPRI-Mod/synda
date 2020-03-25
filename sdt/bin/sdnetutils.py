@@ -5,7 +5,7 @@
 #  @program        synda
 #  @description    climate models data transfer program
 #  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -13,12 +13,14 @@
 
 import requests
 import ssl
-
-from sdt.bin.commons.utils import sdtypes
+from sdt.bin.models import sdtypes
 from sdt.bin.commons.utils import sdlog
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.commons.utils import sdtrace
+from sdt.bin.commons.utils import sdxml
+from sdt.bin.commons.utils import sdjson
+
 from sdt.bin.commons.utils.sdexception import SDException
 from sdt.bin.commons.utils.sdtime import SDTimer
 
@@ -59,10 +61,9 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
         # problem), raise the original exception below and set the debug mode
         # to see the stacktrace.
         #
-        #raise
-
-        raise SDException('SDNETUTI-008',
-                          'Network error (see log for details)')  # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        # raise
+        # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        raise SDException('SDNETUTI-008', 'Network error (see log for details)')
 
     sdlog.debug("SDNETUTI-044", "files-count={}".format(len(di.get('files'))))
 
@@ -82,22 +83,21 @@ def call_param_web_service(url, timeout):
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        raise SDException('SDNETUTI-003','Network error (%s)'%str(e))
+        raise SDException('SDNETUTI-003', 'Network error ({})'.format(str(e)))
 
     return params
 
-def fix_encoding(buf):
 
+def fix_encoding(buf):
     # HACK
     #
     # This is to prevent fatal error when document contain mixed encodings
     #
-    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
+    # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_
+    # IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
     #
     if sdconfig.fix_encoding:
-        import sdencoding
-        buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
-
+        buf = buf.decode('utf-8', 'ignore').encode('utf-8')
     return buf
 
 
@@ -124,74 +124,14 @@ def HTTP_GET(url, timeout=20, verify=True):
     return buf
 
 
-# def HTTP_GET(url,timeout=20):
-#     """urllib impl."""
-#     sock = None
-#     buff = None
-#     try:
-#         sdpoodlefix.start(url)
-#         sock = requests.get(url, timeout=timeout)
-#         buff = sock.text
-#     except Exception as e:
-#         errmsg="HTTP query failed (url={},exception={},timeout={})".format(url,str(e),timeout)
-#         errcode="SDNETUTI-002"
-#
-#         raise SDException(errcode,errmsg)
-#
-#
-#     # sock=None
-#     # buf=None
-#     #
-#     # try:
-#     #     sdpoodlefix.start(url)
-#     #
-#     #     sock=urllib2.urlopen(url, timeout=timeout)
-#     #     buf=sock.read()
-#     # except Exception as e:
-#     #     errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
-#     #     errcode="SDNETUTI-002"
-#     #
-#     #     raise SDException(errcode,errmsg)
-#
-#     finally:
-#         if sock!=None:
-#             sock.close()
-#
-#         sdpoodlefix.stop()
-#
-#     return buff
-
-
-# def test_access():
-#     """
-#     Method designed to test access to internet using python requests package.
-#     """
-#     response = requests.get("http://www.google.com")
-#     data_list = []
-#     while True:
-#         data = response.text.encode('ascii', 'ignore')
-#
-# def test_access():
-#     urlfile = urllib2.urlopen("http://www.google.com")
-#
-#     data_list = []
-#     chunk = 4096
-#     while 1:
-#         data = urlfile.read(chunk)
-#         if not data:
-#             break
-#         data_list.append(data)
-#         #print "Read %s bytes"%len(data)
-
 def get_search_api_parser():
     if sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_XML:
-        import sdxml
         return sdxml
     elif sdconfig.searchapi_output_format == sdconst.SEARCH_API_OUTPUT_FORMAT_JSON:
-        import sdjson
         return sdjson
     else:
         assert False
+
 
 def allow_self_signed_certificate():
     """Handle target environment that doesn't support HTTPS verification.
@@ -210,6 +150,7 @@ def allow_self_signed_certificate():
 
         pass
 
+
 # init.
 
-search_api_parser=get_search_api_parser()
+search_api_parser = get_search_api_parser()

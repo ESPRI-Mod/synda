@@ -8,7 +8,7 @@
 #                             All Rights Reservedù
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from sdt.bin.commons import sdmodify
+from sdt.bin.commons.utils import sdmodify
 from sdt.bin.commons.utils.sdprint import print_stderr
 
 

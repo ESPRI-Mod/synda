@@ -18,7 +18,7 @@ Note
 from sdt.bin.commons.utils.sdexception import SDException
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdproduct
-from sdt.bin.commons.search import sddquery
+from sdt.bin.commons.param import sddquery
 from sdt.bin.db import session
 from sdt.bin.db import dao
 
@@ -66,7 +66,8 @@ def build_file_query(facets):
     # build where clause
     if 'local_path' in facets:
         # 'local_path' based search
-
+        # q = query(File)
+        # q.filter()
         q = "select * from file where %s" % " OR ".join(
             ["local_path like '%%%s%%'" % sdproduct.replace_product_with_sql_wildcard(lp) for lp in
              facets['local_path']])
@@ -124,8 +125,8 @@ def build_dataset_query(facets):
 
     # SQL query samples
     # q=select * from file where project='CMIP5' and variable='psl' and model not in ('IPSL-CM5A-LR') and (
-    # +file_functional_id like '%rcp45%' or +file_functional_id like '%rcp85%' OR +file_functional_id like '%.historical.%')
-    # and status='done' ;
+    # +file_functional_id like '%rcp45%' or +file_functional_id like '%rcp85%' OR +file_functional_id like
+    # '%.historical.%') and status='done' ;
     # q="SELECT * FROM file WHERE project={1} AND variable={2} AND model={3} ".format(serialized_parameters)
 
 
