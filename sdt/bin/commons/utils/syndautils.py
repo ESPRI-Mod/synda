@@ -68,9 +68,8 @@ def get_stream(subcommand=None, parameter=None, selection_file=None, no_default=
     if sdconfig.config.getboolean('interface', 'progress'):
         sdstream.set_scalar(stream, 'progress', True)
 
-    sdstream.set_scalar(stream, 'action',
-                        subcommand)  # from the synda engine perspective, 'action' is more meaningful than 'subcommand'
-
+    # from the synda engine perspective, 'action' is more meaningful than 'subcommand'
+    sdstream.set_scalar(stream, 'action', subcommand)
     return stream  # aka facets_groups
 
 

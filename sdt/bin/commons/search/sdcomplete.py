@@ -44,8 +44,8 @@ def complete(files):
         # to process different metadata type (File and Dataset).
         with session.create():
             if f["type"] == sdconst.SA_TYPE_FILE:
-                transfer = dao.get_file(f['file_functional_id'])
-                if transfer is not None:
+                transfer = dao.get_files(file_functional_id=f['file_functional_id'], limit=1)
+                if transfer is not None and transfer != []:
                     f['status'] = transfer.status
                     # this is to allow setting priority using selection parameter (i.e. default priority can be
                     # overriden using selection parameter). It is usefull here for example when user wants to change

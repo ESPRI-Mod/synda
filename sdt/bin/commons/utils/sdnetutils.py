@@ -39,30 +39,10 @@ def call_web_service(url, timeout=sdconst.SEARCH_API_HTTP_TIMEOUT, lowmem=False)
     try:
         di = search_api_parser.parse_metadata(buf)
     except Exception as e:
-
-        # If we are here, it's likely that they is a problem with the internet connection
-        # (e.g. we are behind an HTTP proxy and have no authorization to use it)
-
         sdlog.info('SDNETUTI-001', 'XML parsing error (exception={}). Most of the time,'
                                    ' this error is due to a network error.'.format(str(e)))
-
-        # debug
-        #
-        # TODO: maybe always enable this
-        #
         sdtrace.log_exception()
-
-        # debug
-        #
-        # (if the error is not due to a network error (e.g. internet connection
-        # problem), raise the original exception below and set the debug mode
-        # to see the stacktrace.
-        #
-        # raise
-        # we raise a new exception 'network error' here, because most of the time,
-        # 'xml parsing error' is due to an 'network error'.
-
-        raise SDException('SDNETUTI-008', 'Network error (see log for details)')
+        raise SDException('SDNETUTI-008', 'Response parsing error (see log for details)')
     sdlog.debug("SDNETUTI-044", "files-count={}".format(len(di.get('files'))))
 
     # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
@@ -79,7 +59,7 @@ def call_param_web_service(url, timeout):
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        raise SDException('SDNETUTI-003', 'Network error (%s)' % str(e))
+        raise SDException('SDNETUTI-003', 'Network error ({})'.format(str(e)))
 
     return params
 

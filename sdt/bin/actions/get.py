@@ -88,8 +88,8 @@ def run(args):
                 # compute metric
                 total_size = sum(int(f['size']) for f in files)
                 total_size = humanize.naturalsize(total_size, gnu=False)
-                sdprint.print_stderr(
-                    '{} file(s) will be downloaded for a total size of {}'.format(len(files), total_size))
+                sdprint.print_stderr('{} file(s) will be downloaded for a total size of {}'.format(len(files),
+                                                                                                   total_size))
                 status = sddirectdownload.run(files,
                                               args.timeout,
                                               args.force,

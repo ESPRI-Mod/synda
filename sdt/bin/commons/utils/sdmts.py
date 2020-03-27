@@ -111,6 +111,22 @@ class DatabaseStorage(Storage):
 
             self.dbfile = dbfile
             self.connect()
+    # TODO rewrite this bit with sqlalchemy:
+    def create_table_alchemy(self, name='data'):
+        from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo = True)
+        meta = MetaData()
+
+        data = Table(
+           'data', meta,
+           Column('attrs', TEXT, primary_key = True)
+        )
+        meta.create_all(engine)
+
+    def drop_table_alchemy(self):
+        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo=True)
+        meta = MetaData()
+        meta.drop_all(engine)
 
     def create_table(self, name='data'):
         with contextlib.closing(self.conn.cursor()) as c:
@@ -285,7 +301,7 @@ class DatabaseStorage(Storage):
 
 
 def get_uniq_fullpath_db_filename():
-    dbfilename = 'sdt_transient_storage_%s_%s.db' % (str(os.getpid()), str(uuid.uuid4()))
+    dbfilename = 'sdt_transient_storage_{}_{}.db'.format(str(os.getpid()), str(uuid.uuid4()))
     dbfile = os.path.join(sdconfig.db_folder, dbfilename)
     return dbfile
 

@@ -4,7 +4,7 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright €œ(c)2009 Centre National de la Recherche Scientifique CNRS.
+#  @copyright      Copyright (c)2009 Centre National de la Recherche Scientifique CNRS.
 #                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
@@ -86,7 +86,7 @@ class Selection():
         self.status = kw.get("status")
 
     def __str__(self):
-        return "filename=%s\nfacets=%s" % (self.filename, self.facets)
+        return "filename={}\nfacets={}".format(self.filename, self.facets)
 
     def get_root(self):
         """
@@ -161,12 +161,12 @@ class File(BaseType):
 
     def __str__(self):
         if self.status == sdconst.TRANSFER_STATUS_ERROR:
-            buf = "sdget_status=%s,sdget_error_msg=%s,error_msg='%s',file_id=%d,status=%s,local_path=%s,url=%s" % (
+            buf = "sdget_status={},sdget_error_msg={},error_msg='{}',file_id={},status={},local_path={},url={}".format(
             self.sdget_status, self.sdget_error_msg, self.error_msg, self.file_id, self.status,
             self.get_full_local_path(), self.url)
         else:
-            buf = "file_id=%d,status=%s,local_path=%s,url=%s" % (
-            self.file_id, self.status, self.get_full_local_path(), self.url)
+            buf = "file_id={},status={},local_path={},url={}".format(self.file_id, self.status,
+                                                                     self.get_full_local_path(), self.url)
 
         return buf
 
@@ -257,7 +257,7 @@ class Request(object):
         self.pagination = pagination
         if self.pagination:
             if sdtools.url_contains_limit_keyword(self._url):
-                raise SDException("SDATYPES-008", "assert error (url=%s)".format(self._url))
+                raise SDException("SDATYPES-008", "assert error (url={})".format(self._url))
         self.offset = 0
         self.limit = limit
 
@@ -265,7 +265,7 @@ class Request(object):
         if self.pagination:
             # pagination enabled
 
-            return "&limit=%d" % self.limit
+            return "&limit={}".format(self.limit)
         else:
             # pagination disabled
             # (in this mode, limit can be set to reduce the number of returned result)
@@ -273,7 +273,7 @@ class Request(object):
             if sdtools.url_contains_limit_keyword(self._url):
                 return ""  # return void here as already set in the url
             else:
-                return "&limit=%d" % self.limit
+                return "&limit={}".format(self.limit)
 
     def get_offset_filter(self):
         return "&offset={}".format(self.offset)
@@ -527,12 +527,13 @@ class DatasetVersion():
             match = re.match(self.version)
             if match:
                 vernum = long(match.group(0)) + 0
-                vernum_str = '%s' % vernum
-                if (vernum_str != match.group(0)):  # Not supposed to happen
+                vernum_str = '{}'.format(vernum)
+                if vernum_str != match.group(0):  # Not supposed to happen
                     raise SDException("SDDATVER-006",
-                                      'Unexpected error while extracting version number from version string "%s" with regexp "%s": capture "%s" converts to "%s"' % (
-                                          self.version, self._dataset_version_regexp_strings[n], match.group(0),
-                                          vernum_str))
+                                      'Unexpected error while extracting version number from version string "{}" with '
+                                      'regexp "{}": capture "{}" converts to "{}"'
+                                      .format(self.version, self._dataset_version_regexp_strings[n], match.group(0),
+                                                vernum_str))
                 return n, vernum
 
         return None, None
@@ -657,12 +658,8 @@ class DatasetVersions:
                 elif len(d_a.version) == 2 and len(d_b.version) == 9:
                     return False
                 else:
-                    raise SDException("SDDATVER-002", "Incorrect version number (%s,%s)" % (d_a.version, d_b.version))
-
-                # To raise exception instead, uncomment line below
-                # raise SDException("SDDATVER-003","Incorrect timestamp (%s,%s,%s,%s)"%(d_a.dataset_functional_id,d_b.dataset_functional_id,d_a.timestamp,d_b.timestamp))
-
-
+                    raise SDException("SDDATVER-002", "Incorrect version number ({},{})"
+                                      .format(d_a.version, d_b.version))
         else:
             return d_a.version > d_b.version
 

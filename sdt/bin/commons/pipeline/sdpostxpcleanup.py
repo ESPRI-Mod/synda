@@ -38,9 +38,7 @@ def run(files):
 def filter(files):
     keep = []
     reject = []
-
     if len(files) > 0:
-
         # retrieve type
         file_ = files[0]  # 'type' is the same for all files
         type_ = file_['type']  # 'type' itself IS scalar
@@ -56,7 +54,6 @@ def filter(files):
                     keep.append(f)
                 else:
                     reject.append(f)
-
                     if sdconfig.log_domain_inconsistency:
                         sdlog.error("SDPOSXPC-002", "'variable' attribute contains too much values "
                                                     "(id='{}',variable={}).".format(f['id'], variable),

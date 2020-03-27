@@ -260,7 +260,6 @@ def run():
     get = subparsers.add_parser('get',
                                 help='Download data synchronously',
                                 parents=[get_action_parser,
-                                         parameters_parser,
                                          parameter_parser,
                                          selection_parser,
                                          dry_run_parser])

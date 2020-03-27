@@ -102,7 +102,7 @@ def build_url(facets, searchapi_host):
     # as parameters can contain special char, we need to encode them
     serialized_parameters = serialized_parameters.replace(" ", "%20")
     fmt = sdurlutils.get_solr_output_format(sdconfig.searchapi_output_format)
-    url = "http://{0}/esg-search/search?{1}&format={2}".format(sdconst.IDXHOSTMARK, serialized_parameters, fmt)
+    url = "https://{0}/esg-search/search?{1}&format={2}".format(sdconst.IDXHOSTMARK, serialized_parameters, fmt)
     # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
     if len(url) > int(sdconfig.url_max_buffer_size):
         raise SDException("SDRQUUTI-001", "url is too long ({})".format(len(url)))

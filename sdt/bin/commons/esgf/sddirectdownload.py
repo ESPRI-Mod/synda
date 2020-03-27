@@ -55,51 +55,37 @@ def run(files,
                 missing_remote_checksum_attrs = True
 
         # cast
-
         f = File(**file_)
 
         # prepare attributes
-
-        # local_path='/tmp/test.nc'
-        # local_path='%s/test.nc'%sdconfig.tmp_folder
         local_path = f.get_full_local_path(prefix=local_path_prefix)
 
         # check
-
         if not network_bandwidth_test:
 
             if os.path.isfile(local_path):
-
                 if force:
                     os.remove(local_path)
                 else:
-                    print_stderr('Warning: download cancelled as local file already exists (%s)' % local_path)
-
+                    print_stderr('Warning: download cancelled as local file already exists ({})'.format(local_path))
                     failed_count += 1
-
                     continue
 
         # special case
-
         if network_bandwidth_test:
             local_path = '/dev/null'
 
         # transfer
-
-        (status, killed, script_stderr) = sdget.download(f.url, local_path, debug, timeout, verbosity,
-                                                         buffered, hpss)
+        (status, killed, script_stderr) = sdget.download(f.url, local_path, debug, timeout, verbosity, buffered, hpss)
 
         # post-transfer
 
         if status != 0:
             failed_count += 1
-
-            print_stderr('Download failed ({})'.format(f.url))
-
-            if buffered:  # in non-buffered mode, stderr is already display (because child stderr is binded to parent stderr)
-
-                # currently, we don't come here but we may need in the futur so we keep this block
-
+            print_stderr('\nDownload failed ({})'.format(f.url))
+            # in non-buffered mode, stderr is already display (because child stderr is binded to parent stderr)
+            if buffered:
+                # currently, we don't come here but we may need in the future so we keep this block
                 if script_stderr is not None:
                     print_stderr(script_stderr)
         else:
@@ -111,7 +97,7 @@ def run(files,
                 if missing_remote_checksum_attrs:
                     failed_count += 1
 
-                    print_stderr('Warning: missing remote checksum attributes prevented'
+                    print_stderr('\nWarning: missing remote checksum attributes prevented'
                                  ' checksum verification ({})'.format(local_path))
                 else:
 
@@ -119,13 +105,13 @@ def run(files,
                     local_checksum = sdutils.compute_checksum(local_path, f.checksum_type)
 
                     if local_checksum == remote_checksum:
-                        print_stderr('File successfully downloaded, checksum OK ({})'.format(local_path))
+                        print_stderr('\nFile successfully downloaded, checksum OK ({})'.format(local_path))
                     else:
                         failed_count += 1
 
-                        print_stderr("Error: local checksum don't match remote checksum ({})".format(local_path))
+                        print_stderr("\nError: local checksum don't match remote checksum ({})".format(local_path))
             else:
-                print_stderr('File successfully downloaded, no checksum verification (%s)'.format(local_path))
+                print_stderr('\nFile successfully downloaded, no checksum verification ({})'.format(local_path))
 
     if failed_count > 0:
         return 1
@@ -138,12 +124,3 @@ def checksum_attrs_ok(file_):
         return True
     else:
         return False
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
-
-    files = json.load(sys.stdin)
-    status = run(files)
-    sys.exit(status)

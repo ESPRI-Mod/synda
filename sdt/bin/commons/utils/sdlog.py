@@ -37,19 +37,19 @@ def debug(code, message, stdout=False, stderr=False, logfile=True, logger_name=N
 
 
 def info(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    print(code, message, logging.INFO, stdout, stderr, logfile, logger_name)
+    log(code, message, logging.INFO, stdout, stderr, logfile, logger_name)
 
 
 def warning(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    print(code, message, logging.WARNING, stdout, stderr, logfile, logger_name)
+    log(code, message, logging.WARNING, stdout, stderr, logfile, logger_name)
 
 
 def error(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    print(code, message, logging.ERROR, stdout, stderr, logfile, logger_name)
+    log(code, message, logging.ERROR, stdout, stderr, logfile, logger_name)
 
 
 def critical(code, message, stdout=False, stderr=False, logfile=True, logger_name=None):
-    print(code, message, logging.CRITICAL, stdout, stderr, logfile, logger_name)
+    log(code, message, logging.CRITICAL, stdout, stderr, logfile, logger_name)
 
 
 def log(code, message, level, stdout=False, stderr=False, logfile=True, logger_name=None):

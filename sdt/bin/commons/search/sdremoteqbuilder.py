@@ -69,16 +69,14 @@ def build_query(facets_group):
     if action is not None:
         if action == 'install':
             ds_timstap_facets = transform_facets_for_dataset_timestamp_retrieval(facets)
-            query['dataset_timestamp_url'] = sdremotequtils.build_url(ds_timstap_facets,
-                                                                      searchapi_host)  # TAG3JKWW93K4J4JKDZS
+            query['dataset_timestamp_url'] = sdremotequtils.build_url(ds_timstap_facets, searchapi_host)
 
     # hack to retrieve datasets attrs in one row
     if sdconfig.copy_ds_attrs:
         if action is not None:
             if action == 'install':
                 ds_attrs_facets = transform_facets_for_dataset_attrs_retrieval(facets)
-                query['dataset_attrs_url'] = sdremotequtils.build_url(ds_attrs_facets,
-                                                                      searchapi_host)  # TAG3JKWW93K4J4JKDZS
+                query['dataset_attrs_url'] = sdremotequtils.build_url(ds_attrs_facets, searchapi_host)
 
     return query
 

@@ -78,14 +78,3 @@ def download_file_helper(url, local_path, timeout, chunksize=1024):
             f.close()
         if socket is not None:
             socket.close()
-        if opener is not None:
-            opener.close()
-
-
-# init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
-
-    sys.exit(0)

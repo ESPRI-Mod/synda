@@ -41,7 +41,7 @@ def run(files, mode='file'):
 
 def add_dataset_local_path(files, key):
     for f in files:
-        f[key] = sdlocalpathutils.build_dataset_local_path(f)
+        f[key] = build_dataset_local_path(f)
 
     files = transform_local_path_product(files, key)
     files = transform_local_path_project(files, key)
@@ -51,7 +51,7 @@ def add_dataset_local_path(files, key):
 
 def add_file_local_path(files):
     for f in files:
-        f["local_path"] = sdlocalpathutils.build_file_local_path(f)
+        f["local_path"] = build_file_local_path(f)
 
     return files
 

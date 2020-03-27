@@ -63,8 +63,8 @@ def run(stream=None, path=None, parameter=None, index_host=None, post_pipeline_m
     else:
         try:
             if progress:
-                sdprint.print_stderr(
-                    sdi18n.m0003(searchapi_host))  # waiting message => TODO: move into ProgressThread class
+                # waiting message => TODO: move into ProgressThread class
+                sdprint.print_stderr(sdi18n.m0003(searchapi_host))
                 ProgressThread.start(sleep=0.1, running_message='', end_message='Search completed.')  # spinner start
             mqr = process_queries(queries)
             metadata = mqr.to_metadata()

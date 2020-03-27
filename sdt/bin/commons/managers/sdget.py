@@ -39,6 +39,7 @@ from sdt.bin.commons.utils import sdget_requests
 def download(url, full_local_path, debug=False,
              timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT, verbosity=0, buffered=True, hpss=False):
     killed = False
+    # script error message container. This is reserved for globus script.
     script_stderr = None
     transfer_protocol = sdutils.get_transfer_protocol(url)
     if transfer_protocol == sdconst.TRANSFER_PROTOCOL_HTTP:
@@ -53,9 +54,7 @@ def download(url, full_local_path, debug=False,
     elif transfer_protocol == sdconst.TRANSFER_PROTOCOL_GLOBUS:
         pass
     else:
-
         assert False
-
     return status, killed, script_stderr
 
 

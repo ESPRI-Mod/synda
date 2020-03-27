@@ -48,7 +48,8 @@ def run(facets_groups):
 
             for pvalue in pending_parameters:
 
-                # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct 'variable[*]=sic evap' in selection file
+                # HACK: this is to prevent 'SYDPARAM-002' exception when using the following construct
+                # 'variable[*]=sic evap' in selection file
                 # (TODO: find a better way to handle this hack)
                 if pvalue == '*':
                     continue
@@ -63,6 +64,7 @@ def run(facets_groups):
     return facets_groups
 
 
+# TODO experiment with pyessv ws in this speculation.
 def infere_parameter_name(pvalue, type_):
     if pvalue.isdigit():
         pname = 'limit'  # deprecated: do no use this anymore
@@ -104,12 +106,12 @@ def infere_parameter_name(pvalue, type_):
 
             else:
                 raise SDException('SDINFERE-040',
-                                  'Unknown value (%s)' % sdconfig.dataset_filter_mecanism_in_file_context)
+                                  'Unknown value ({})'.format(sdconfig.dataset_filter_mecanism_in_file_context))
 
         elif type_ == sdconst.SA_TYPE_DATASET:
             pname = 'instance_id'
         else:
-            raise SDException('SDINFERE-001', 'Unknown type (%s)' % type_)
+            raise SDException('SDINFERE-001', 'Unknown type ({})'.format(type_))
     elif sdidtest.is_dataset_local_path(pvalue):
         pname = 'local_path'
     elif sdidtest.is_file_local_path(pvalue):
@@ -124,16 +126,3 @@ def infere_parameter_name(pvalue, type_):
                 pname = 'query'  # fallback to free pattern
 
     return pname
-
-
-# module init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    args = parser.parse_args()
-
-    facets_groups = json.load(sys.stdin)
-    facets_groups = run(facets_groups)
-    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)

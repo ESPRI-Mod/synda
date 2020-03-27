@@ -256,8 +256,8 @@ def get_name_from_value(value):
     names = search_match_fast(value)
 
     if len(names) == 0:
-        raise SDException("SYDPARAM-002", "Parameter name cannot be infered from '%s' value (value not found). %s" % (
-            value, sdi18n.m0020))
+        raise SDException("SYDPARAM-002",
+                          "Parameter name cannot be infered from '{}' value (value not found). {}".format(value, sdi18n.m0020))
     elif len(names) == 1:
         return names[0]
     elif len(names) > 1:
@@ -284,7 +284,7 @@ def get_name_from_value(value):
                 return names[0]
 
         # if still too many match, print a warning and return the first one
-        sdprint.print_stderr("WARNING: '%s' value has been associated with '%s' facet." % (value, names[0]))
+        sdprint.print_stderr("WARNING: '{}' value has been associated with '{}' facet.".format(value, names[0]))
         return names[0]
 
         # if still too many match, let's raise exception

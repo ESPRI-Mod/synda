@@ -27,8 +27,8 @@ def run(facets_groups):
 def transform_parameters_type(facets_group):
     """Fix parameters type.
 
-    First, all selection parameters are set with 'list' type, even for scalar parameters.
-    This function fix this issue.
+    In the beginning of the process, all selection parameters are set with 'list' type, even for scalar parameters.
+    This function fixes this issue.
     """
 
     for k in sdconst.SDSSSP:

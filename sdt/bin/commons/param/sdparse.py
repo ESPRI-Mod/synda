@@ -57,8 +57,8 @@ def build(buffer, load_default=None):
     parse_buffer(buffer.lines, selection)
 
     # merge some outer attributes with inner attributes (else they are not returned by merge_facets() method)
-    process_parameter("selection_filename=%s" % selection.filename, selection)
-    process_parameter("selection_file=%s" % selection.path, selection)
+    process_parameter("selection_filename={}".format(selection.filename), selection)
+    process_parameter("selection_file={}".format(selection.path), selection)
 
     # load default (file containing default parameters for all projects)
     default_selection = load_default_file(sdconfig.default_selection_file, load_default)
@@ -108,10 +108,10 @@ def build(buffer, load_default=None):
 
     project_default_selection.childs.append(selection)  # add selection as child of project_default_selection
     selection.parent = project_default_selection  # set project_default_selection as parent of selection
-
-    default_selection.childs.append(
-        project_default_selection)  # add project_default_selection as child of default_selection
-    project_default_selection.parent = default_selection  # set default_selection as parent of project_default_selection
+    # add project_default_selection as child of default_selection
+    default_selection.childs.append(project_default_selection)
+    # set default_selection as parent of project_default_selection
+    project_default_selection.parent = default_selection
 
     return selection
 
@@ -181,11 +181,11 @@ def parse_buffer(buffer, selection):
         assert "\n" not in line  # newline should have already been stripped at this step
 
         # pass comment line
-        if (re.search('^#.*$', line) != None):
+        if re.search('^#.*$', line) != None:
             continue
 
         # pass blank line
-        if (re.search('^ *$', line) != None):
+        if re.search('^ *$', line) != None:
             continue
 
         process_parameter(line, selection)
@@ -235,13 +235,13 @@ def process_parameter(parameter, selection):
 
 def parse_parameter(parameter):
     m = re.search('^([^=]+)="?([^"=]+)"?$', parameter)
-    if (m != None):
+    if m is not None:
         param_name = m.group(1).strip()
         param_value = sdtools.split_values(m.group(2))
 
-        return (param_name, param_value)
+        return param_name, param_value
     else:
-        raise SDException("SDPARSER-001", "incorrect format (%s)" % (parameter,))
+        raise SDException("SDPARSER-001", "incorrect format ({})".format(parameter))
 
 
 def add_parameter(param_name, param_value, selection):
@@ -265,25 +265,23 @@ def process_rfv_parameter(parameter, selection):  # rfv means 'Realm Frequency n
     #  variable[atmos][*]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search('variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$', parameter)
-    if (m != None):
+    if m is not None:
         realm = m.group(1)
         time_frequency = m.group(2)
         variables = sdtools.split_values(m.group(3))
-
         facets = {}
         facets["realm"] = [realm]
         facets["time_frequency"] = [time_frequency]
         facets["variable"] = variables
-
-        selection.childs.append(Selection(facets=facets,
-                                          filename="rfvsp"))  # add sub-selection ("rfvsp" means "Realm Frequency Variable Special Parameter")
+        # add sub-selection ("rfvsp" stands for "Realm Frequency Variable Special Parameter")
+        selection.childs.append(Selection(facets=facets, filename="rfvsp"))
 
     else:
-        raise SDException("SDPARSER-002", "incorrect parameter format (%s)" % parameter)
+        raise SDException("SDPARSER-002", "incorrect parameter format ({})".format(parameter))
 
 
 def is_sfg_parameter(parameter):  # sfg means 'Structured Facet Group'
-    if re.search("^variables?\[", parameter) != None:
+    if re.search("^variables?\[", parameter) is not None:
         return True
     else:
         return False
@@ -301,19 +299,18 @@ def process_ffv_parameter(parameter, selection):  # ffv means 'Free Facets n Var
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search('variables?\[(.+)\]="?([^"=]+)"?$', parameter)
-    if (m != None):
-        free_facets = m.group(
-            1)  # free facet syntax support currently only standalone values (i.e. key=value syntax is not supported inside the left member of a ffv block)
+    if m is not None:
+        # free facet syntax support currently only standalone values
+        # (i.e. key=value syntax is not supported inside the left member of a ffv block)
+        free_facets = m.group(1)
         variables = sdtools.split_values(m.group(2))
-
         facets = {}
         facets[sdconst.PENDING_PARAMETER] = sdtools.split_values(free_facets)
         facets["variable"] = variables
-
-        selection.childs.append(Selection(facets=facets,
-                                          filename="ffvsp"))  # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
+        # add sub-selection ("ffvsp" means "Free Facets n Variable Special Parameter")
+        selection.childs.append(Selection(facets=facets, filename="ffvsp"))
     else:
-        raise SDException("SDPARSER-022", "incorrect parameter format (%s)" % parameter)
+        raise SDException("SDPARSER-022", "incorrect parameter format ({})".format(parameter))
 
 
 def is_ffv_parameter(parameter):  # ffv means 'Free Facets n Variable'
@@ -321,21 +318,3 @@ def is_ffv_parameter(parameter):  # ffv means 'Free Facets n Variable'
         return True
     else:
         return False
-
-
-# module init.
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('parameter', nargs='*', default=[], help=sdi18n.m0001)
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-    parser.add_argument('-f', '--file', default=None)
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    parser.add_argument('-n', '--no_default', action='store_true', help='This option prevent loading default values')
-    args = parser.parse_args()
-
-    buffer = sdbuffer.get_selection_file_buffer(path=args.file, parameter=args.parameter)
-    selection = build(buffer, load_default=(not args.no_default))
-
-    facets_groups = selection.merge_facets()
-    sdprint.print_format(facets_groups, args.format, args.print_only_one_item)
