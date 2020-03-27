@@ -25,6 +25,11 @@ import shutil
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.db import dao
+from sqlalchemy import TEXT
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
 
 
 # abstract class
@@ -100,45 +105,36 @@ class MemoryStorage(Storage):
 class DatabaseStorage(Storage):
 
     def __init__(self, dbfile=None):
+        # TODO see if relevant
+        self.db_type = 'sqlite'
         if dbfile is None:
             self.dbfile = get_uniq_fullpath_db_filename()
             assert not os.path.isfile(self.dbfile)  # dbfile shouldn't exist at this time
 
-            self.connect()
             self.create_table()
         else:
             # this case is only to duplicate the object (see copy method)
 
             self.dbfile = dbfile
             self.connect()
-    # TODO rewrite this bit with sqlalchemy:
-    def create_table_alchemy(self, name='data'):
-        from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
-        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo = True)
-        meta = MetaData()
 
+    def create_table(self, name='data'):
+        engine = self.connect()
+        meta = MetaData()
         data = Table(
-           'data', meta,
-           Column('attrs', TEXT, primary_key = True)
+            'data', meta,
+            Column('attrs', TEXT)
         )
         meta.create_all(engine)
 
-    def drop_table_alchemy(self):
-        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo=True)
+    def drop_table(self):
+        engine = self.connect()
         meta = MetaData()
         meta.drop_all(engine)
 
-    def create_table(self, name='data'):
-        with contextlib.closing(self.conn.cursor()) as c:
-            c.execute("CREATE TABLE %s (%s)" % (name, columns_definition))
-            self.conn.commit()
-
-    def drop_table(self):
-        with contextlib.closing(self.conn.cursor()) as c:
-            c.execute("DROP TABLE data")
-            self.conn.commit()
-
+    # TODO change this query and the rest of the queries into sqlalchemy queries.
     def count(self):
+        # engine = self.connect()
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT COUNT(1) from data")
             res = int(c.fetchone()[0])
@@ -160,17 +156,7 @@ class DatabaseStorage(Storage):
             c.execute("SELECT %s from data" % columns)
             rs = c.fetchone()
             while rs is not None:
-                # multicol table
-                #
-                # =rs[0]
-                # =rs[1]
-                # =rs[2]
-                # attrs=json.loads(rs[3])
-                #
-                # tu=(rs[0],rs[1],rs[2],attrs)
-                # li.append(tu)
 
-                # monocol table
                 attrs = json.loads(rs[0])
                 li.append(attrs)
 
@@ -256,7 +242,8 @@ class DatabaseStorage(Storage):
             os.unlink(self.dbfile)
 
     def connect(self):
-        self.conn = sqlite3.connect(self.dbfile, isolation_level='DEFERRED')
+        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo=True)
+        return engine.connect()
 
     def disconnect(self):
         if self.conn is not None:
