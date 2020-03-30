@@ -307,6 +307,12 @@ class History(Entity):
     selection_file_checksum = Column(Text)
     selection_file = Column(Text)
 
+    def to_list(self):
+        """
+        represents a history instance in a list. Handy for tabulate print.
+        """
+        return [self.action, self.selection_filename, self.crea_date, self.insertion_group_id]
+
     def __repr__(self):
         """
         instance representation

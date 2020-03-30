@@ -1,4 +1,4 @@
-from sdt.bin.db.models import Dataset
+from sdt.bin.db.models import Dataset, History
 from sdt.bin.db.models import File
 from sdt.bin.db.models import SelectionFile
 from sdt.bin.db.models import Selection
@@ -10,10 +10,11 @@ from sdt.bin.db.session import query
 from sdt.bin.db.session import add
 from sdt.bin.db.session import create
 from sdt.bin.db.session import raw_query
-
+from sdt.bin.sdconst import TRANSFER_STATUS_DELETE
+from sdt.bin.sdconst import TRANSFER_STATUS_ERROR
+from sdt.bin.sdconst import TRANSFER_STATUS_WAITING
+from sdt.bin.sdconst import TRANSFER_STATUS_RUNNING
 from sdt.bin.db import utils
-from sdt.bin.sdconst import TRANSFER_STATUS_DELETE, TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING, \
-    TRANSFER_STATUS_RUNNING
 from sqlalchemy import text
 from sqlalchemy import or_
 from sqlalchemy import func
@@ -21,7 +22,7 @@ from sqlalchemy import distinct
 
 # misc dependencies
 import humanize
-
+import datetime
 
 def get_datasets(limit=None, **criterion):
     """
@@ -218,7 +219,6 @@ def transfer_running_count():
 
 
 def transfer_running_count_by_datanode():
-    # TODO probably second query is broken
     q = query(File)
     q = q.filter(or_(File.status == TRANSFER_STATUS_RUNNING, File.status == TRANSFER_STATUS_WAITING)).group_by(
         File.data_node)
@@ -289,3 +289,54 @@ def get_file_count_variables(dataset_id):
     qry = raw_query(func.count(distinct(File.variable)))
     qry.filter(dataset_id == dataset_id)
     return qry.all()
+
+
+# History table operations
+
+def get_all_history_lines():
+    """
+    Retrieves all history lines in db
+    :return:
+    """
+    li = []
+    q = query(History)
+    return q.all()
+
+# def add_history_line(action,selection_filename=None,insertion_group_id=None,crea_date=None,selection_file_checksum=None):
+#     """
+#     Inserts a new line in History tale
+#     :return:
+#     """
+#     crea_date=datetime.datetime.now().isoformat(" ") if crea_date is None else crea_date
+#     h = History(action, selection_filename, crea_date, insertion_group_id, selection_file_checksum)
+#     q = insert(h)
+#
+#
+# def get_history_lines(selection_filename,action,conn=sddb.conn):
+#     li=[]
+#     c = conn.cursor()
+#
+#     query="select %s from history where selection_filename = ? and action = ?"%_HISTORY_COLUMNS
+#     c.execute(query,(selection_filename,action))
+#
+#     rs=c.fetchone()
+#     while rs!=None:
+#         li.append(sdsqlutils.resultset_to_dict(rs))
+#         rs=c.fetchone()
+#     c.close()
+#
+#     return li
+#
+# def get_latest_history_line(selection_filename,action,conn=sddb.conn):
+#     c = conn.cursor()
+#
+#     query="select %s from history where selection_filename = ? and action = ? order by crea_date DESC LIMIT 1"%_HISTORY_COLUMNS
+#     c.execute(query,(selection_filename,action))
+#     rs=c.fetchone()
+#
+#     assert rs is not None # existency test must be done before calling this func
+#
+#     di=sdsqlutils.resultset_to_dict(rs)
+#     c.close()
+#
+#     return di

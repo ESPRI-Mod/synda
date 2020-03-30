@@ -19,17 +19,22 @@ import os
 import json
 import copy
 import uuid
-import sqlite3
 import contextlib
 import shutil
+import sqlite3
 from sdt.bin.commons.utils import sdconst
 from sdt.bin.commons.utils import sdconfig
 from sdt.bin.db import dao
+from sdt.bin.db import session
+from sqlalchemy import event
 from sqlalchemy import TEXT
 from sqlalchemy import create_engine
 from sqlalchemy import MetaData
 from sqlalchemy import Table
 from sqlalchemy import Column
+
+# INIT
+columns = 'attrs'
 
 
 # abstract class
@@ -75,7 +80,7 @@ class MemoryStorage(Storage):
     def get_chunks(self, io_mode):  # io_mode is not used (but need to be present to respect Storage contract)
         chunksize = sdconst.PROCESSING_CHUNKSIZE
 
-        for i in xrange(0, self.count(), chunksize):
+        for i in range(0, self.count(), chunksize):
             yield self.files[i:i + chunksize]
 
     def merge(self, store):
@@ -102,15 +107,195 @@ class MemoryStorage(Storage):
         return self.files[0]
 
 
+# class DatabaseStorage(Storage):
+#
+#     def __init__(self, dbfile=None):
+#         # TODO see if relevant
+#         self.dbtype = 'sqlite:///'
+#         if dbfile is None:
+#             self.dbfile = get_uniq_fullpath_db_filename()
+#             assert not os.path.isfile(self.dbfile)  # dbfile shouldn't exist at this time
+#             self.dbengine = self.dbtype + self.dbfile
+#             self.create_table()
+#         else:
+#             # this case is only to duplicate the object (see copy method)
+#
+#             self.dbfile = dbfile
+#             self.dbengine = self.dbtype + dbfile
+#             self.connect()
+#         self.dbengine = self.dbtype + self.dbfile
+#
+#     def create_table(self, name='data'):
+#         engine = self.connect()
+#         meta = MetaData()
+#         data = Table(
+#             'data', meta,
+#             Column('attrs', TEXT)
+#         )
+#         meta.create_all(engine)
+#
+#     def drop_table(self):
+#         engine = self.connect()
+#         meta = MetaData()
+#         meta.drop_all(engine)
+#
+#     def count(self):
+#         with contextlib.closing(self.conn.cursor()) as c:
+#             c.execute("SELECT COUNT(1) from data")
+#             res = int(c.fetchone()[0])
+#         return res
+#     # TODO revert to sqlalchemy
+#     # def count(self):
+#     #     with session.create(connection=self.dbengine) as sa:
+#     #         q = sa.raw_query("COUNT(1) FROM data")
+#     #     return int(q.first()[0])
+#
+#     def set_files(self, files):
+#         # TODO Go back here before commit
+#         # WARNING: slow perf here.
+#         # Maybe remove the dbfile.
+#         self.drop_table()
+#         self.create_table()
+#
+#         self.append_files(files)
+#
+#     def get_files(self):
+#         """WARNING: this func loads all the data in memory."""
+#
+#         li = []
+#         with session.create(connection=self.dbengine) as sa:
+#             q = sa.raw_query('SELECT {} FROM data'.format(columns))
+#             rs = q.all()
+#             for r in rs:
+#                 li.append(json.loads(r[0]))
+#
+#             while rs is not None:
+#                 attrs = json.loads(rs[0])
+#                 li.append(attrs)
+#         return li
+#
+#     def get_chunks(self, io_mode):
+#         if io_mode == 'generator':
+#             return self.get_chunks_GENERATOR()
+#         elif io_mode == 'pagination':
+#             return self.get_chunks_PAGINATION()
+#         else:
+#             assert False
+#
+#     def get_chunks_GENERATOR(self):
+#         """This method is used to loop over all files using yield without consuming too much memory
+#         ('yield' based impl.)
+#
+#         Note
+#             It is not possible to write anywhere in the db file between two yields !
+#         """
+#         offset = 0
+#         with session.create(connection=self.dbengine) as sa:
+#             while True:
+#                 q = sa.raw_query('{} FROM data LIMIT {} OFFSET {}'.format(columns,
+#                                                                                sdconst.PROCESSING_CHUNKSIZE,
+#                                                                                offset))
+#                 results = q.all()
+#                 if results is None:
+#                     break
+#                 li = []
+#                 for rs in results:
+#                     li.append(json.loads(rs[0]))
+#                 yield li
+#                 offset += sdconst.PROCESSING_CHUNKSIZE
+#
+#     def get_chunks_PAGINATION(self):
+#         # Instead a simple call to get_files_paged from dao.
+#         offset_counter = sdconst.DB_DEFAULT_OFFSET
+#         files = dao.get_files(limit=sdconst.DB_DEFAULT_CHUNKSIZE, offset=offset_counter)
+#         while len(files) > 0:
+#             # TODO needs investigating, no idea what this bit of code does.
+#             # for t in files:
+#             #     # <= PERFORM TASK HERE
+#             #     # update_db(l__date, t.file_id)
+#             offset_counter += sdconst.DB_DEFAULT_CHUNKSIZE
+#             files = dao.get_files(limit=sdconst.DB_DEFAULT_CHUNKSIZE, offset=offset_counter)
+#
+#     def merge(self,store):
+#         store.disconnect() # not sure if needed (more info => https://www.sqlite.org/lang_detach.html)
+#
+#         self.conn.execute("ATTACH DATABASE '%s' AS incoming"%store.dbfile)
+#         self.conn.execute("insert into data select %s from incoming.data"%columns)
+#         self.conn.commit() # commit all attached databases (TBC)
+#         self.conn.execute("DETACH DATABASE incoming")
+#
+#         store.connect() # not sure if needed
+#
+#     # TODO REVIEW THIS IMPLEMENTATION HAS THREADDING ISSUES.
+#     # def merge(self, store):
+#     #     engine = create_engine(self.dbfile)
+#     #     @event.listens_for(engine, "connect")
+#     #     def connect(dbapi_conn, rec):
+#     #         dbapi_conn.execute('ATTACH DATABASE "{}" AS incoming'.format(store.dbfile))
+#     #         dbapi_conn.execute('INSERT INTO data SELECT {} FROM incoming.data'.format(columns))
+#     #         dbapi_conn.commit()
+#     #         store.connect()
+#
+#     def append_files(self, files):
+#         with session.create(connection=self.dbengine):
+#             for f in files:
+#                 tu = json.dumps(f)
+#                 print(session)
+#                 session.raw_query('INSERT INTO data {} VALUES(?)'.format(columns), tu)
+#
+#     def delete(self):
+#         self.disconnect()
+#         if os.path.isfile(self.dbfile):
+#             os.unlink(self.dbfile)
+#
+#     def connect(self):
+#         engine = create_engine(self.dbengine, echo=True)
+#         return engine.connect()
+#
+#
+#     def copy(self):
+#
+#         # create new db file for the copy
+#         dbfile_cpy = get_uniq_fullpath_db_filename()
+#         assert not os.path.isfile(dbfile_cpy)  # dbfile shouldn't exist at this time
+#
+#         # copy dbfile
+#         shutil.copy(self.dbfile, dbfile_cpy)
+#
+#         # create new instance
+#         cpy = DatabaseStorage(dbfile=dbfile_cpy)
+#
+#         # re-open ori connection
+#         self.connect()
+#
+#         return cpy
+#
+#     def get_one_file(self):
+#         assert self.count() > 0
+#         with session.create(connection=self.dbengine) as sa:
+#             q = sa.raw_query('SELECT {} FROM DATA LIMIT 1'.format(columns))
+#         return json.loads(q.first()[0])
+#
+#
+# def get_uniq_fullpath_db_filename():
+#     dbfilename = 'sdt_transient_storage_{}_{}.db'.format(str(os.getpid()), str(uuid.uuid4()))
+#     dbfile = os.path.join(sdconfig.db_folder, dbfilename)
+#     return dbfile
+#
+#
+# def get_new_store(lowmem=False):
+#     if lowmem:
+#         return DatabaseStorage()
+#     else:
+#         return MemoryStorage()
 class DatabaseStorage(Storage):
 
     def __init__(self, dbfile=None):
-        # TODO see if relevant
-        self.db_type = 'sqlite'
         if dbfile is None:
             self.dbfile = get_uniq_fullpath_db_filename()
             assert not os.path.isfile(self.dbfile)  # dbfile shouldn't exist at this time
 
+            self.connect()
             self.create_table()
         else:
             # this case is only to duplicate the object (see copy method)
@@ -119,22 +304,16 @@ class DatabaseStorage(Storage):
             self.connect()
 
     def create_table(self, name='data'):
-        engine = self.connect()
-        meta = MetaData()
-        data = Table(
-            'data', meta,
-            Column('attrs', TEXT)
-        )
-        meta.create_all(engine)
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("CREATE TABLE %s (%s)" % (name, columns_definition))
+            self.conn.commit()
 
     def drop_table(self):
-        engine = self.connect()
-        meta = MetaData()
-        meta.drop_all(engine)
+        with contextlib.closing(self.conn.cursor()) as c:
+            c.execute("DROP TABLE data")
+            self.conn.commit()
 
-    # TODO change this query and the rest of the queries into sqlalchemy queries.
     def count(self):
-        # engine = self.connect()
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("SELECT COUNT(1) from data")
             res = int(c.fetchone()[0])
@@ -156,7 +335,17 @@ class DatabaseStorage(Storage):
             c.execute("SELECT %s from data" % columns)
             rs = c.fetchone()
             while rs is not None:
+                # multicol table
+                #
+                # =rs[0]
+                # =rs[1]
+                # =rs[2]
+                # attrs=json.loads(rs[3])
+                #
+                # tu=(rs[0],rs[1],rs[2],attrs)
+                # li.append(tu)
 
+                # monocol table
                 attrs = json.loads(rs[0])
                 li.append(attrs)
 
@@ -198,18 +387,19 @@ class DatabaseStorage(Storage):
                 yield li
 
     def get_chunks_PAGINATION(self):
-        # TODO remove the dependency to sddbpagination.
-        # Instead a simple call to get_files_paged from dao.
-        offset_counter = sdconst.DB_DEFAULT_OFFSET
-        files = dao.get_files(limit=sdconst.DB_DEFAULT_CHUNKSIZE, offset=offset_counter)
+        dbpagination = sddbpagination.DBPagination('bla', 'foo', self.conn)
+        dbpagination.reset()
+
+        files = dbpagination.get_files()
         while len(files) > 0:
-            # TODO needs investigating, no idea what this bit of code does.
             for t in files:
                 # <= PERFORM TASK HERE
+
                 update_db(l__date, t.file_id)
 
-            offset_counter += sdconst.DB_DEFAULT_CHUNKSIZE
-            files = dao.get_files(limit=sdconst.DB_DEFAULT_CHUNKSIZE, offset=offset_counter)
+            sddb._conn.commit()  # commit block
+
+            files = dbpagination.get_files()
 
     def merge(self, store):
         store.disconnect()  # not sure if needed (more info => https://www.sqlite.org/lang_detach.html)
@@ -242,8 +432,7 @@ class DatabaseStorage(Storage):
             os.unlink(self.dbfile)
 
     def connect(self):
-        engine = create_engine('sqlite:///{}'.format(self.dbfile), echo=True)
-        return engine.connect()
+        self.conn = sqlite3.connect(self.dbfile, isolation_level='DEFERRED')
 
     def disconnect(self):
         if self.conn is not None:
@@ -288,7 +477,7 @@ class DatabaseStorage(Storage):
 
 
 def get_uniq_fullpath_db_filename():
-    dbfilename = 'sdt_transient_storage_{}_{}.db'.format(str(os.getpid()), str(uuid.uuid4()))
+    dbfilename = 'sdt_transient_storage_%s_%s.db' % (str(os.getpid()), str(uuid.uuid4()))
     dbfile = os.path.join(sdconfig.db_folder, dbfilename)
     return dbfile
 

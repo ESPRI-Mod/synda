@@ -263,6 +263,17 @@ def run():
                                          parameter_parser,
                                          selection_parser,
                                          dry_run_parser])
+    # Subparser for the history subcommand
+    subparser = subparsers.add_parser('history', help='Shows history')
+
+    # Subparser for the metric subcommand
+    subparser = create_subparser('metric', selection=False, no_default=False,
+                                 help='Display performance and disk usage metrics')
+    subparser.add_argument('--groupby', '-g', choices=['data_node', 'project', 'model'], default='data_node',
+                           help='Group-by clause')
+    subparser.add_argument('--metric', '-m', choices=['rate', 'size'], default='rate', help='Metric name')
+    subparser.add_argument('--project', '-p', default='CMIP5',
+                           help="Project name (must be used with '--groupby=model' else ignored)")
 
     args = main_parser.parse_args()
 
