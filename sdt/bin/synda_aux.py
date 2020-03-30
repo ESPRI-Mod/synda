@@ -81,6 +81,7 @@ def run():
                              version='Synda {}'.format(sdconst.SYNDA_VERSION),
                              help='Current software version.')
 
+    # LIST OF PARENT SUBPARSERS TO BE ADDED WHEN NEEDED TO COMMAND SUBPARSERS.
     # Parent parser for subparsers that need selection.
     selection_parser = argparse.ArgumentParser(add_help=False)
     selection_parser.add_argument('-s', '--selection_file',
@@ -188,6 +189,14 @@ def run():
     group.add_argument('-r', '--record',
                        help='Write metadata to file',
                        metavar='FILE')
+    metric_action_parser = argparse.ArgumentParser(add_help=False)
+    metric_action_parser.add_argument('--groupby', '-g', choices=['data_node', 'project', 'model'],
+                                      default='data_node',
+                                      help='Group-by clause')
+    metric_action_parser.add_argument('--metric', '-m', choices=['rate', 'size'], default='rate', help='Metric name')
+    metric_action_parser.add_argument('--project', '-p',
+                                      default='CMIP5',
+                                      help="Project name (must be used with '--groupby=model' else ignored)")
 
     # Instanciate subparsers.
     subparsers = main_parser.add_subparsers(dest='subcommand',
@@ -267,13 +276,10 @@ def run():
     subparser = subparsers.add_parser('history', help='Shows history')
 
     # Subparser for the metric subcommand
-    subparser = create_subparser('metric', selection=False, no_default=False,
-                                 help='Display performance and disk usage metrics')
-    subparser.add_argument('--groupby', '-g', choices=['data_node', 'project', 'model'], default='data_node',
-                           help='Group-by clause')
-    subparser.add_argument('--metric', '-m', choices=['rate', 'size'], default='rate', help='Metric name')
-    subparser.add_argument('--project', '-p', default='CMIP5',
-                           help="Project name (must be used with '--groupby=model' else ignored)")
+    subparser = subparsers.add_parser('metric',
+                                      help='Display performance and disk usage metrics',
+                                      parents=[metric_action_parser,
+                                               dry_run_parser])
 
     args = main_parser.parse_args()
 

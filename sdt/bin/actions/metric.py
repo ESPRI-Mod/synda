@@ -8,14 +8,16 @@
 #                             All Rights Reservedù
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-import sdmetric, sdparam
+from sdt.bin.commons.param import sdparam
+from sdt.bin.commons.utils.sdprint import print_stderr
+from sdt.bin.commons.utils import sdmetric
 
 
 def run(args):
     # check
     if args.groupby == 'model':
         if args.project not in sdparam.params['project']:
-            print_stderr("Unknown project ({})".format((args.project)))
+            print_stderr("Unknown project ({})".format(args.project))
             return 1
 
     if args.metric == 'size':

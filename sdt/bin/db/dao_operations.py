@@ -238,7 +238,44 @@ def get_old_versions_datasets():
                     if not datasetVersions.is_version_higher_than_latest(d):  # version is not higher than latest
                         # should never occurs because of the previous tests
                         if datasetVersions.is_most_recent_version_number(d):
-                            raise SDException("SDSTAT-042", "fatal error (version=%s,path_without_version={})"
+                            raise SDException("SDSTAT-042", "fatal error (version={},path_without_version={})"
                                               .format(d.version, d.get_name_without_version()))
                         lst.append(d)
         return lst
+
+
+def get_metrics(group_, metric, project_, dry_run=False):
+    li = []
+    # check
+    assert group_ in ['data_node', 'project', 'model']
+    assert metric in ('rate', 'size')
+    # WARNING: we don't check project_ for sql injection here.
+    # This MUST be done in the calling func. TODO: check for sql injection here
+    # prepare metric calculation
+    if metric == 'rate':
+        metric_calculation = 'avg(rate)'
+    elif metric == 'size':
+        metric_calculation = 'sum(size)'
+    # prepare where clause
+
+    where_clause = "status='done' and rate is not NULL and size is not NULL"
+    if group_ == 'model':
+        where_clause += " and project='{}'".format(project_)
+
+    # build query
+    q = '{}, {} as metric from file where {} group by {} order by metric desc'.format(group_,
+                                                                                      metric_calculation,
+                                                                                      where_clause, group_)
+    if dry_run:
+        print_stderr('{}'.format(q))
+        return []
+    with session.create():
+        # TODO fix this query
+        qry = session.raw_query(q)
+        qry = qry.all()
+    for rs in qry:
+        group_column_value = rs[0]
+        metric_column_value = rs[1]
+        li.append((group_column_value, metric_column_value))
+        rs = qry.fetchone()
+    return li
