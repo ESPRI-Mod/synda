@@ -198,6 +198,11 @@ def run():
                                       default='CMIP5',
                                       help="Project name (must be used with '--groupby=model' else ignored)")
 
+    param_action_parser = argparse.ArgumentParser(add_help=False)
+    param_action_parser.add_argument('pattern1', nargs='?', default=None, help='Parameter name')
+    param_action_parser.add_argument('pattern2', nargs='?', default=None, help='Filter')
+    param_action_parser.add_argument('-c', '--columns', type=int, default=1)
+
     # Instanciate subparsers.
     subparsers = main_parser.add_subparsers(dest='subcommand',
                                             metavar='subcommand',
@@ -280,6 +285,8 @@ def run():
                                       help='Display performance and disk usage metrics',
                                       parents=[metric_action_parser,
                                                dry_run_parser])
+    # Subparser to the param subcommand
+    subparser = subparsers.add_parser('param', help='Print ESGF facets', parents=[param_action_parser])
 
     args = main_parser.parse_args()
 

@@ -78,7 +78,8 @@ def get_parameter_type(name):
         else:
 
             # obsolete
-            # raise SDException("SYDPARAM-001","Incorrect predefined value for '%s' parameter (value must be 'None' when parameter have only one value)"%name)
+            # raise SDException("SYDPARAM-001","Incorrect predefined value for '%s' parameter
+            # (value must be 'None' when parameter have only one value)"%name)
 
             # When parameter have only one value, that value CAN be NON-None !
             # e.g. if an index have only one project and the 'project'
@@ -288,7 +289,8 @@ def get_name_from_value(value):
         return names[0]
 
         # if still too many match, let's raise exception
-        # raise SDException("SYDPARAM-003","Parameter name cannot be infered from '%s' value (too many matches). To solve the problem, use 'name=value' syntax."%value)
+        # raise SDException("SYDPARAM-003","Parameter name cannot be infered from '%s' value (too many matches).
+        # To solve the problem, use 'name=value' syntax."%value)
 
 
 def print_(args):

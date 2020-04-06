@@ -452,7 +452,7 @@ def retry(args):
     import sdmodify
     nbr=sdmodify.retry_all()
     if nbr>0:
-        print_stderr("%i file(s) marked for retry."%nbr)
+        print_stderr("{} file(s) marked for retry.".format(nbr))
     else:
         print_stderr("No transfer in error")
 
