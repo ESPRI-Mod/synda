@@ -307,6 +307,16 @@ class History(Entity):
     selection_file_checksum = Column(Text)
     selection_file = Column(Text)
 
+    def __init__(self, history_id, action, selection_filename, selection_file,
+                 selection_file_checksum, crea_date, insertion_group_id):
+        self.history_id = history_id
+        self.action = action
+        self.selection_filename = selection_filename
+        self.selection_file = selection_file
+        self.selection_filename = selection_file_checksum
+        self.crea_date = crea_date
+        self.insertion_group_id = insertion_group_id
+
     def to_list(self):
         """
         represents a history instance in a list. Handy for tabulate print.
@@ -336,6 +346,17 @@ class Event(Entity):
     filename_pattern = Column(Text)
     crea_date = Column(Text)
     priority = Column(Integer)
+
+    def __init__(self, name, status, project, model, dataset_pattern, variable, filename_pattern, crea_date, priority):
+        self.name = name
+        self.status = status
+        self.project = project
+        self.model = model
+        self.dataset_pattern = dataset_pattern
+        self.variable = variable
+        self.filename_pattern = filename_pattern
+        self.crea_date = crea_date
+        self.priority = priority
 
     def __repr__(self):
         """

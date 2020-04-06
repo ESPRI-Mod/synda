@@ -203,6 +203,9 @@ def run():
     param_action_parser.add_argument('pattern2', nargs='?', default=None, help='Filter')
     param_action_parser.add_argument('-c', '--columns', type=int, default=1)
 
+    pexec_action_parser = argparse.ArgumentParser(add_help=False)
+    pexec_action_parser.add_argument('order_name', choices=['cdf', 'cds'], help='Order name')
+
     # Instanciate subparsers.
     subparsers = main_parser.add_subparsers(dest='subcommand',
                                             metavar='subcommand',
@@ -287,6 +290,11 @@ def run():
                                                dry_run_parser])
     # Subparser to the param subcommand
     subparser = subparsers.add_parser('param', help='Print ESGF facets', parents=[param_action_parser])
+
+    # Subparser to pexec subcommand
+    subparser = subparsers.add_parser('pexec', help='Execute post-processing task', parents=[pexec_action_parser,
+                                                                                             selection_parser,
+                                                                                             no_default_parser])
 
     args = main_parser.parse_args()
 

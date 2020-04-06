@@ -302,15 +302,15 @@ def get_all_history_lines():
     q = query(History)
     return q.all()
 
-# def add_history_line(action,selection_filename=None,insertion_group_id=None,crea_date=None,selection_file_checksum=None):
-#     """
-#     Inserts a new line in History tale
-#     :return:
-#     """
-#     crea_date=datetime.datetime.now().isoformat(" ") if crea_date is None else crea_date
-#     h = History(action, selection_filename, crea_date, insertion_group_id, selection_file_checksum)
-#     q = insert(h)
-#
+
+def add_history_line(action, selection_filename=None, insertion_group_id=None,
+                     crea_date=None, selection_file_checksum=None):
+    crea_date = datetime.datetime.now().isoformat(" ") if crea_date is None else crea_date
+    h = History(action=action, selection_filename=selection_filename, insertion_group_id=insertion_group_id,
+                crea_date=crea_date, selection_file_checksum=selection_file_checksum)
+    q = insert(h)
+
+
 #
 # def get_history_lines(selection_filename,action,conn=sddb.conn):
 #     li=[]
@@ -340,3 +340,7 @@ def get_all_history_lines():
 #     c.close()
 #
 #     return di
+
+
+def add_event(event):
+    q = insert(event)

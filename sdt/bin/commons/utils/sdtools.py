@@ -19,7 +19,7 @@ import stat
 import re
 import glob
 import argparse
-
+from sdt.bin.commons.utils import sdconfig
 
 def is_27_or_higher():
     """
@@ -384,3 +384,10 @@ def find_selection_file(file):
             # if we are here, we expect the file to be in the 'selection' folder
 
             return "{}/{}".format(sdconfig.selection_folder, file)
+
+
+def is_one_var_per_ds(project):
+    if project in sdconst.PROJECT_WITH_ONE_VARIABLE_PER_DATASET:
+        return True
+    else:
+        return False

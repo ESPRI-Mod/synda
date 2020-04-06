@@ -19,26 +19,20 @@ Notes
  - processes only one selection file (aka template) at a time
 """
 
-import os
-import argparse
 import json
-import sdapp
-import sdlog
-import sdconfig
-import sdpipeline
-import sdrun
-import sdi18n
-import sdcliex
-import sdprint
-import sdconst
-import sdtools
-import sdsqueries
-import sdbatchtimestamp
-import sdadddsattr
-import sdtypes
-import sdcommonarg
-from sdexception import SDException, MissingDatasetTimestampUrlException
-from sdprogress import ProgressThread
+
+from sdt.bin.commons.utils import sdlog
+from sdt.bin.commons.utils import sdconfig
+from sdt.bin.commons.utils import sdtools
+from sdt.bin.commons.utils.sdprogress import ProgressThread
+from sdt.bin.commons.utils.sdexception import SDException
+
+from sdt.bin.commons.pipeline import sdpipeline
+from sdt.bin.commons.search import sdrun
+from sdt.bin.commons.search import sdsqueries
+from sdt.bin.commons.search import sdadddsattr
+from sdt.bin.commons.search import sdbatchtimestamp
+from sdt.bin.models import sdtypes
 
 
 def run(stream=None,
@@ -65,10 +59,11 @@ def run(stream=None,
                                         load_default=load_default)
 
     action = sdsqueries.get_scalar(squeries, 'action', None)
-    progress = sdsqueries.get_scalar(squeries, 'progress', False,
-                                     type_=bool)  # we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
 
-    # Prevent use of 'limit' keyword ('limit' keyword can't be used in this module because it interfere with the pagination system)
+    # we cast here as progress can be str (set from parameter) or bool (set programmaticaly)
+    progress = sdsqueries.get_scalar(squeries, 'progress', False, type_=bool)
+    # Prevent use of 'limit' keyword ('limit' keyword can't be used in this module because it interfere
+    # with the pagination system)
     for q in squeries:
         if sdtools.url_contains_limit_keyword(q['url']):
             raise SDException('SDSEARCH-001',
@@ -166,47 +161,3 @@ def copy_dataset_attrs(squeries, metadata, parallel, action):
             metadata = sdadddsattr.run(squeries, metadata, parallel)
 
     return metadata
-
-
-if __name__ == '__main__':
-    prog = os.path.basename(__file__)
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     epilog="""examples of use
-  %s -f file
-  cat file | %s
-%s
-""" % (prog, prog, sdcliex.search(prog)))
-
-    parser.add_argument('parameter', nargs='*', default=[], help=sdi18n.m0001)
-
-    parser.add_argument('-f', '--file', default=None)
-    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
-    parser.add_argument('-i', '--index_host')
-    parser.add_argument('-m', '--post_pipeline_mode', default='file', choices=sdconst.POST_PIPELINE_MODES)
-    parser.add_argument('-y', '--dry_run', action='store_true')
-    parser.add_argument('-1', '--print_only_one_item', action='store_true')
-
-    sdcommonarg.add_playback_record_options(parser)
-
-    parser.add_argument('--load-default', dest='load_default', action='store_true')
-    parser.add_argument('--no-load-default', dest='load_default', action='store_false')
-    parser.set_defaults(load_default=None)
-
-    parser.add_argument('--parallel', dest='parallel', action='store_true')
-    parser.add_argument('--no-parallel', dest='parallel', action='store_false')
-    parser.set_defaults(parallel=True)
-
-    args = parser.parse_args()
-
-    metadata = run(path=args.file,
-                   parameter=args.parameter,
-                   post_pipeline_mode=args.post_pipeline_mode,
-                   dry_run=args.dry_run,
-                   load_default=args.load_default,
-                   parallel=args.parallel,
-                   playback=args.playback,
-                   record=args.record)
-
-    if not args.dry_run:
-        sdprint.print_format(metadata.get_files(), args.format,
-                             args.print_only_one_item)  # warning: load list in memory
