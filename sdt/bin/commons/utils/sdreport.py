@@ -57,7 +57,7 @@ def PROC0005():
      - smart algo using get_old_versions_datasets() method
      - also see PROC0001
     """
-    for d in sddatasetutils.get_old_versions_datasets():
+    for d in dao_operations.get_old_versions_datasets():
         print(d.get_full_local_path(
             'output{,1,2}'))  # note: for non CMIP5-DRS-based-project, product argument is not used
 

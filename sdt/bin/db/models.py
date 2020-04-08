@@ -59,6 +59,10 @@ class Dataset(Entity):
     template = Column(Text)
     timestamp = Column(Text)
 
+
+    def __init__(self, dataset_functional_id):
+        self.dataset_functional_id=dataset_functional_id
+
     def __repr__(self):
         """Instance representation.
 

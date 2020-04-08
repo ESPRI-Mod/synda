@@ -246,7 +246,7 @@ def get_old_versions_datasets():
                                                           "fatal error (version={},path_without_version={})"
                                                           .format(d.version, d.get_name_without_version()))
                         lst.append(d)
-        return lst
+    return lst
 
 
 def get_metrics(group_string_id, metric, project_, dry_run=False):

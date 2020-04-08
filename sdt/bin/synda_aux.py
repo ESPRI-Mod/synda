@@ -4,8 +4,8 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS.
-#                             All Rights Reserved”
+#  @copyright      Copyright (c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -301,71 +301,16 @@ def run():
     # Start processing user subcommands
     if args.subcommand == sdconst.SUBCOMMANDS['setup']:
         print('Setting up environment...')
-
-        # -- permission check -- #
-        # TODO: check is it still necessary?
-        #   if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
-        #       if not sdpermission.is_admin():
-        #           sdtools.print_stderr(sdi18n.m0028)
-        #           sys.exit(1)
-
-        # -- subcommand routing -- #
-        # TODO shift this code to the help in the main parser
-        # if args.subcommand == 'help':
-        #
-        #     if args.topic is None:
-        #         parser.print_help()
-        #     else:
-        #         if args.topic in subparsers.choices:
-        #             subparsers.choices[args.topic].print_help()
-        #         else:
-        #             sdtools.print_stderr('Help topic not found ({})'.format(args.topic))
-        #
-        #     sys.exit(0)
-
-        # TODO Check parameter.expolde treatment
-        # hack to explode id in individual facets (experimental)
-        # if args.subcommand == 'search':
-        #     if args.explode:
-        #         if len(args.parameter) > 0:
-        #             id_ = args.parameter[0]
-        #             id_ = id_.split('=')[
-        #                 1] if '=' in id_ else id_  # if id_ is in the form 'k=v', we strip 'k='. We assume here that '=' character doesn't appear in key nor value.
-        #             delim = '/' if '/' in id_ else '.'
-        #             li = id_.split(delim) + args.parameter[
-        #                                     1:]  # this allow to add other parameter after id e.g. 'synda search <master_id> <version>'
-        #             args.parameter = li
-
-        # TODO: check to instanciate stream when necessary only
         stream = syndautils.get_stream(subcommand=args.subcommand,
                                        parameter=args.parameters,
                                        selection_file=args.selection_file,
                                        no_default=args.no_default)
 
-        # hack for 'show' and 'version' subcommands.
-        #
-        # description
-        #     this hack normalize 'show' and 'version' subcommands 'type_'
-        #     attribute with other type_ sensitive subcommands. Without this
-        #     hack, the next statement (i.e. "if args.type_ is None:") fails with
-        #     "AttributeError: 'Namespace' object has no attribute 'type_'".
-        #
-        # notes
-        #     - show and version subcommands type_ attribute is already strictly
-        #       defined by the parameter argument (e.g. dataset identifier, file
-        #       identifier, etc..), so we dont want the user to also be able to
-        #       set type_ attribute using options. This is why type_ group is not
-        #       present for show and version subcommands (see subparser module
-        #       for details).
-        #     - another way to normalize is to use "parser.set_defaults(type_=None)"
-        #
         if args.subcommand in ('show', 'version'):
             args.type_ = None
-
         # infer type if not set by user
         if args.type_ is None:
             args.type_ = sdtype.infer_display_type(stream)
-
         args.stream = stream  # TODO: pass 'stream' object downstream as a standalone argument (not inside args)
 
         set_stream_type(args)

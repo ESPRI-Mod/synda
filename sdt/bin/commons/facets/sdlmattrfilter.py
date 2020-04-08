@@ -12,7 +12,7 @@
 """This module filter attributes (low memory compatible).
 
 Note
-    sdlmattrfilter means 'SynDa Low Mem ATTRibute FILTER'.
+    sdlmattrfilter stands for 'SynDa Low Mem ATTRibute FILTER'.
 """
 
 from sdt.bin.commons.pipeline import sdpipelineprocessing

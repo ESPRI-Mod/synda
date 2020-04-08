@@ -19,10 +19,12 @@ from sqlalchemy import text
 from sqlalchemy import or_
 from sqlalchemy import func
 from sqlalchemy import distinct
+from sqlalchemy import not_
 
 # misc dependencies
 import humanize
 import datetime
+
 
 def get_datasets(limit=None, **criterion):
     """
@@ -344,3 +346,38 @@ def add_history_line(action, selection_filename=None, insertion_group_id=None,
 
 def add_event(event):
     q = insert(event)
+
+
+def delete_dataset_transfers(d):
+    """
+    Marks all transfers for remove
+    Files will be later removed from the local repository by the consumer daemon,
+    and the status will pass to deleted
+    """
+    q = query(File).filter_by(File.dataset_id == d.dataset_id)
+    q.update({File.status: TRANSFER_STATUS_DELETE})
+
+
+def purge_error_and_waiting_transfer():
+    """
+    Deletes transfers in "error" and "waiting" status
+
+    :returns: deleted transfer count
+    """
+    q1 = query(File.file_id)
+    q1 = q1.filter(File.status.in_([TRANSFER_STATUS_ERROR, TRANSFER_STATUS_WAITING]))
+    q2 = query(SelectionFile)
+    q2 = q2.filter(SelectionFile.file_id.in_([x.file_id for x in q1.all()])).delete()
+    nbr = q1.delete()
+    return nbr
+
+
+def purge_orphan_datasets():
+    """
+    Removes orphan datasets
+    """
+    subquery = query(File.dataset_id).subquery()
+    mainquery = query(Dataset)
+    mainquerycount = mainquery.filter(not_(Dataset.dataset_id.in_(subquery))).delete()
+    return mainquerycount
+
