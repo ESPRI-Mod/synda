@@ -168,7 +168,8 @@ def event_loop():
     start_watchdog()
     cleanup_running_transfer()
     clear_failed_url()
-    sdfiledao.highest_waiting_priority( True, True ) #initializes cache of max priorities
+    if sdconst.GET_FILES_CACHING:
+        sdfiledao.highest_waiting_priority( True, True ) #initializes cache of max priorities
     scheduler_state=1
 
     if sdconfig.download:
@@ -199,9 +200,13 @@ def event_loop():
                 sdlog.error("SDTSCHED-928",'OpenID not set in configuration file',stderr=True)
                 raise OpenIDNotSetException("SDTSCHED-264","OpenID not set in configuration file")
 
-        except SDException,e:
+        #except SDException,e:
+        except Exception as e:
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
-            raise
+            sdlog.error("SDTSCHED-921","Exception=%s"%str(e))
+            sdlog.error("SDTSCHED-922","  will continue anyway")
+            pass #jfp try to keep on going; for most data nodes we don't need an OpenID.
+            #raise
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
