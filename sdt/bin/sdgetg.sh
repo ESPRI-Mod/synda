@@ -209,7 +209,10 @@ umask u=rw,g=rw,o=r
 
 # start transfer
 
-CMD="$GRIDFTP_CMD $GRIDFTP_OPT $GRIDFTP_DEBUG_OPT $url $local_file"
+# CMD="$GRIDFTP_CMD $GRIDFTP_OPT $GRIDFTP_DEBUG_OPT $url $local_file"
+# jfp added a 1-day timeout.  See my notes 2019.02.12, it's a crude solution:
+# jfp Note that a timeout will result in status=124.
+CMD="timeout 1.0d $GRIDFTP_CMD $GRIDFTP_OPT $GRIDFTP_DEBUG_OPT $url $local_file"
 
 if [[ $verbosity > 0 ]]; then
     echo $CMD
