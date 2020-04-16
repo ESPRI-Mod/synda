@@ -142,12 +142,26 @@ METADATA_SERVER_TYPES=['esgf_search_api','thredds_catalog','apache_default_listi
 #
 # So from now, it's set to 9000
 #jfp was SEARCH_API_CHUNKSIZE=9000
-SEARCH_API_CHUNKSIZE=1000
+# Often I have used this: SEARCH_API_CHUNKSIZE=1000
+# But on 2017-10-20 Luca recommended 100:
+SEARCH_API_CHUNKSIZE=100
 
 PROCESSING_CHUNKSIZE=5000 # as list maybe duplicated in memory at some point in the pipeline, we use a lower value here than SEARCH_API_CHUNKSIZE
 PROCESSING_FETCH_MODE_GENERATOR='generator'
 
-SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)
+# jfp: Unfortunately, a few data nodes won't accept the standard certificate-based authentication.
+# We can however log in with username&password to create a cookie for authentication.
+# This is a list of such data nodes, actual and suspected, as of December 2019.
+# ideally this would be set from sdt.conf, but I'm not there yet.
+GET_WITH_COOKIES = ["esg.camscma.cn", "esg-cccr.tropmet.res.in", "esg-dn1.tropmet.res.in"]
+
+# jfp: added to get (experimental) non-crashing paginated search.
+# For normal behavior use False:
+NEVER_RAISE_EXCEPTION=True
+
+# normal SEARCH_API_HTTP_TIMEOUT=300 # Search-API HTTP timeout (time to wait for HTTP response)
+# jfp: raised timeout to 15 minutes, then 45 minutes due to problems with the LLNL index node:
+SEARCH_API_HTTP_TIMEOUT=2700 # Search-API HTTP timeout (time to wait for HTTP response)
 DIRECT_DOWNLOAD_HTTP_TIMEOUT=30 # Direct download HTTP timeout (time to wait for HTTP response)
 ASYNC_DOWNLOAD_HTTP_TIMEOUT=360 # Async download HTTP timeout (time to wait for HTTP response)
 #
