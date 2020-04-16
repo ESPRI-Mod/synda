@@ -34,6 +34,7 @@ import sdget
 import sdtrace
 import sdnexturl
 import sdworkerutils
+from sdtime import SDTimer
 
 class Download():
     exception_occurs=False # this flag is used to stop the event loop if exception occurs in thread
@@ -50,7 +51,12 @@ class Download():
     @classmethod
     def start_transfer_script(cls,tr):
 
+        if hasattr( tr, 'delay' ):
+            time.sleep( tr.delay )
+        else:
+            sdlog.warning("SDDMDEFA-001","delay attribute not set for transfer %s"%(tr,))
         sdlog.info("JFPDMDEF-001","Will download url=%s"%(tr.url,))
+#        sts0 = SDTimer.get_time()
         if sdconfig.fake_download:
             tr.status=sdconst.TRANSFER_STATUS_DONE
             tr.error_msg=""
@@ -58,6 +64,7 @@ class Download():
             return
 
         # main
+        sdget0 = SDTimer.get_time()
         (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
                                                                    tr.get_full_local_path(),
                                                                    debug=False,
@@ -66,6 +73,9 @@ class Download():
                                                                    verbosity=0,
                                                                    buffered=True,
                                                                    hpss=hpss)
+        sdget1 = SDTimer.get_elapsed_time(sdget0, show_microseconds=True)
+        sdlog.info("JFPDMDEF-010","%s sdget_download time for %s, status %s"%
+                   (sdget1,tr.url,tr.sdget_status))
 
 
         # check
@@ -90,7 +100,10 @@ class Download():
 
                 # compute local checksum
                 checksum_type=tr.checksum_type if tr.checksum_type is not None else sdconst.CHECKSUM_TYPE_MD5 # fallback to 'md5' (arbitrary)
+#                sum0 = SDTimer.get_time()
                 local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
+#                sum1 = SDTimer.get_elapsed_time(sum0, show_microseconds=True)
+#                sdlog.info("JFPDMDEF-020","%s compute_checksum time for %s"%(sum1,tr.url))
 
                 # compare local and remote checksum
                 if remote_checksum==local_checksum:
@@ -196,8 +209,12 @@ class Download():
                 tr.priority -= 1
                 tr.error_msg='Error occurs during download.'
 
+#        sts1 = SDTimer.get_elapsed_time(sts0, show_microseconds=True)
+#        sdlog.info("JFPDMDEF-030","%s    Total elapsed time for %s"%(sts1,tr.url))
+
 def end_of_transfer(tr):
 
+#    eotr0 = SDTimer.get_time() #jfp
     # log
     if tr.status==sdconst.TRANSFER_STATUS_DONE:
         sdlog.info("SDDMDEFA-101","Transfer done (%s)"%str(tr))
@@ -220,6 +237,8 @@ def end_of_transfer(tr):
     if tr.status==sdconst.TRANSFER_STATUS_DONE:
         sdevent.file_complete_event(tr) # trigger 'file complete' event
 
+#    eotr1 = SDTimer.get_elapsed_time( eotr0, show_microseconds=True ) #jfp
+#    sdlog.info("JFPDMDEF-100","%s    end_of_transfer time for transfer %s"%(eotr1,tr.url))
     # TODO: maybe do some rollback here in case fatal exception occurs in 'file_complete_event'
     #       (else, we have a file marked as 'done' with the corresponding event un-triggered)
 
@@ -231,37 +250,64 @@ def end_of_transfer(tr):
 def start_transfer_thread(tr):
     th=sdworkerutils.WorkerThread(tr,eot_queue,Download)
     th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
-    th.start()
+    try:
+        th.start()
+    except Exception as e:
+        sdlog.info("JFPDMDEF-105","th.start raised exception %s for transfer %s"%(e,tr))
+        raise
 
 def transfers_end():
-    for i in range(8): # arbitrary
+#    trend0 = SDTimer.get_time()
+    nq = eot_queue.qsize()   #jfp
+    for i in range(nq):
         try:
             task=eot_queue.get_nowait() # raises Empty when empty
             end_of_transfer(task)
             eot_queue.task_done()
         except Queue.Empty, e:
-            pass
+            break
         except sdexception.FatalException, e:
             raise
         except:
-
             # debug
             #sdtrace.log_exception(stderr=True)
-
             raise
+#    trend1 = SDTimer.get_elapsed_time( trend0, show_microseconds=True )
+#    sdlog.info("JFPDMDEF-110","%s    transfers_end time for %s tasks"%(trend1,nq))
+    return
 
 def transfers_begin(transfers):
 
+#    tb0 = SDTimer.get_time()
     # renew certificate if needed
     try:
         sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
     except Exception,e:
         sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
-        raise
+        pass  # Try to keep on going, probably a certificate isn't needed.
+#    tbrc1 = SDTimer.get_elapsed_time( tb0, show_microseconds=True )
+#    sdlog.info("JFPDMDEF-200","%s    transfers_begin call of renew_certificate time"%(tbrc1,))
 
+    # An item in datanode_delays will be datanode:delay, e.g. 'esg-dn1.nsc.liu.se':3.
+    # The delay, in seconds, will precede the attempt to connect to the data node.
+    # This feature will replace the 1-second 'sleep' which previously separated every call of
+    # start_transfer_thread.  The reason given for it was "not to be too agressive with datanodes".
+    datanode_delays = {}
+
+#    tbstt0 = SDTimer.get_time()
     for tr in transfers:
+        if tr.data_node not in datanode_delays:
+            datanode_delays[tr.data_node] = 0
+        else:
+            datanode_delays[tr.data_node] += 1
+        tr.delay = datanode_delays[tr.data_node]
         start_transfer_thread(tr)
-        time.sleep(1) # this sleep is not to be too agressive with datanodes
+
+#    tbstt1 = SDTimer.get_elapsed_time( tbstt0, show_microseconds=True )
+#    sdlog.info("JFPDMDEF-300","%s    time for transfers_begin to do %s calls of start_transfer_thread"%(tbstt1,len(transfers)))
+
+#    tb1 = SDTimer.get_elapsed_time( tb0, show_microseconds=True )
+#    sdlog.info("JFPDMDEF-400","%s    transfers_begin time"%(tb1,))
 
 def can_leave():
     return eot_queue.empty()
