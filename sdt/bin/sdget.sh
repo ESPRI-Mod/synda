@@ -64,6 +64,7 @@ usage ()
     echo ""
     echo "Options:"
     echo "  -a      always log wget output"
+    echo "  -C      Use a cookie for authentication (rarely needed)"
     echo "  -h      help - display help message"
     echo "  -p      parse_output"
     echo "  -s      show progress - show wget progress"
@@ -182,10 +183,11 @@ verbosity=0
 always_log_wget_output=0
 parse_output=1
 wget_timeout=360
+use_cookies=1
 certdirprefix=
 tmpdir=/tmp
 logdir=/tmp
-while getopts 'ac:dhl:p:st:T:v' OPTION
+while getopts 'ac:dhl:p:st:C:T:v' OPTION
 do
   case $OPTION in
   a)    always_log_wget_output=1
@@ -205,6 +207,8 @@ do
         ;;
   t)    wget_timeout=$OPTARG
         ;;
+  C)    use_cookies=$OPTARG
+	;;
   T)    tmpdir=$OPTARG
         ;;
   v)    (( verbosity=verbosity+1 ))
@@ -243,13 +247,16 @@ if [ $debug -eq 1 ]; then
     always_log_wget_output=1
 fi
 
-# jfp was: USE_CERTIFICATE="yes" # yes | no
-USE_CERTIFICATE="no" # yes | no
+USE_CERTIFICATE="yes" # yes | no
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
-#jfp These patches will help nobody but me:
-export ESGF_CREDENTIAL=/tmp/x509up_u1682
-#export ESGF_CERT_DIR=/home/painter/.esg/certificates
+# For a handful of data nodes which require OpenID+password, or cookie equivalent:
+if [ $use_cookies -eq 0 ]; then
+    export ESGF_COOKIE_FILE=/home/painter/.esg/wget_cookies/wcookies.txt
+    export COOKIE_OPTIONS="--cookies=on --keep-session-cookies --save-cookies $ESGF_COOKIE_FILE --load-cookies $ESGF_COOKIE_FILE"
+else
+    export COOKIE_OPTIONS=""
+fi
 
 wgetoutputparser="${0%/*}/sdparsewgetoutput.sh"
 debug_file=$logdir/debug.log
@@ -258,6 +265,7 @@ debug_file=$logdir/debug.log
 # wget configuration
 
 WGETOPT="-D $local_file" # hack: (this is to help CFrozenDownloadCheckerThread class to do its work (this class need to know the local file associated with the process, but because of the FIFO, this dest file do not show in "ps fax" output, so we put the dest file in unused " -D domain-list" option (this option is used only in recursive mode, which we do not use))
+WGETOPT="$WGETOPT $COOKIE_OPTIONS"
 WGETOPT="$WGETOPT -O $local_file --timeout=$wget_timeout"
 
 if [ $parse_output -eq 1 ]; then
@@ -312,7 +320,7 @@ fi
 # Don't check the server certificate against the available certificate authorities.  Also don't require the URL host name to match the common name presented by the certificate.
 NO_CHECK_SERVER_CERTIFICATE=" --no-check-certificate "
 #NO_CHECK_SERVER_CERTIFICATE=" "
-#jfp wasTLS_ONLY=" --secure-protocol=TLSv1 "
+#jfp Synda standard TLS_ONLY=" --secure-protocol=TLSv1 "
 TLS_ONLY=" "
 g__lifetime=168
 
@@ -362,7 +370,7 @@ else
         $TLS_ONLY \
         $url"
 fi
-echo $WGET_CMD  #jfp
+echo WGET_CMD $WGET_CMD  #jfp
 
 wget_stderr2stdout ()
 {
@@ -370,6 +378,7 @@ wget_stderr2stdout ()
 
     # we send stderr on stdout and forget about stdout (stdout is empty anyway)
     $WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
+    (exit $?) # jfp maybe this will make status check always work?
 }
 
 # this filter removes non-fatal error messages (i.e. the file gets downloaded successfully no matter those errors)
@@ -452,8 +461,15 @@ else
         wget_errmsg=$(wget_stderr2stdout)
         wget_status=$?
     else
-        wget_errmsg=$( wget_stderr2stdout | strip_dot_progress )
-        wget_status=$?
+	echo "jfp timing 1"; date
+	#jfp: Note that wget_errmsg is referenced in $wgetoutputparser==sdparsewgetoutput.sh
+	wget_errmsg=$(wget_stderr2stdout)
+	wget_status=$?
+	#jfp: With the current settings, there aren't any progress dots to strip out.
+	#jfp: I don't even know how to make progress dots appear, but  --no-verbose (-nv),
+	#jfp: now commented-out, can make them disappear.
+        #original: wget_errmsg=$( wget_stderr2stdout | strip_dot_progress )
+        #original: wget_status=$?
     fi
 fi
 
@@ -464,6 +480,8 @@ fi
 
 if [ $parse_output -eq 1 ]; then
     source "$wgetoutputparser" # we parse wget output to keep only HTTP response code from wget messages
+elif [ $wget_status -ne 0 ]; then
+    log "DEB015" "$wget_errmsg"
 fi
 
 
