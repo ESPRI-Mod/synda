@@ -30,6 +30,7 @@ import sdutils
 import sdconst
 import sdget_urllib
 from sdtools import print_stderr
+import sdlog
 
 def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,buffered=True,hpss=False):
     killed=False
@@ -197,10 +198,18 @@ def prepare_args(url,full_local_path,script,debug,timeout,verbosity,hpss):
     if verbosity_option is not None:
         li.insert(1,verbosity_option)
 
+    if script==sdconfig.data_download_script_http:
+        for dn in sdconst.GET_WITH_COOKIES:
+            if url.find(dn)>0:
+                # We have one of the data nodes which needs a cookie
+                li.insert(1,'-C')
+                li.insert(2,'0')
+
     if hpss:
         li.insert(1,'-p')
         li.insert(2,'0')
 
+    sdlog.debug('JFPSDGET-010',"sdget command %s"%li)
     return li
 
 # init.
