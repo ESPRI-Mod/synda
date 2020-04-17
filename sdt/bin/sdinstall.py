@@ -36,14 +36,33 @@ def run(args,metadata=None):
             sdlog.info("SYNDINST-006","Process '%s'"%args.selection_file)
 
         try:
+            sdlog.debug("JFPINST-0000","begin file_full_search")
             metadata=syndautils.file_full_search(args)
+            sdlog.debug("JFPINST-0001","metadata examples:")
+            ngsiftp = 0
+            nhttp = 0
+            for file in metadata.get_files():
+                # This whole loop is just about logging.
+                if 'url' not in file:
+                    continue
+                if ngsiftp==0 and file['url'][:6]=='gsiftp':
+                    sdlog.debug("  JFPINST-01", "gsiftp %s"%file['filename'])
+                    ngsiftp += 1
+                elif nhttp==0 and file['url'][:4]=='http':
+                    sdlog.debug("  JFPINST-01", "http %s"%file['filename'])
+                    nhttp += 1
+                if nhttp>=1 and ngsiftp>=1:
+                    break
         except sdexception.EmptySelectionException, e:
             print_stderr('No dataset will be installed, upgraded, or removed.')
             return (0,0)
         except sdexception.SDException, e:
-            sdlog.info("SYNDINST-006","Exception occured during installation ('%s')"%str(e))
+            sdlog.info("SYNDINST-007","Exception occured during installation ('%s')"%str(e))
             raise
 
+    if 'status' in metadata.store.__dict__ and metadata.store.status=='incomplete':
+        print_stderr("WARNING: The file search failed part way through.  Proceeding with what was found.")
+        sdlog.warning("SYNDINST-008","Installing from incomplete search results.")
     # in dry-run mode, we stop here
     if args.dry_run:
         return (0,0)
