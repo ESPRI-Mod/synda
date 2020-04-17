@@ -98,7 +98,8 @@ class SearchAPIProxy():
               probability for a failure inside one pagination call is big (because one
               pagination call is composed of many sub calls (i.e. not just 2 or 3)).
         """
-        max_retry=3
+        # original max_retry=3
+        max_retry=6
 
         i=0
         while True:
@@ -140,7 +141,19 @@ class SearchAPIProxy():
 
             # call
             if sdconfig.mono_host_retry:
-                response=self.call_web_service__RETRY(request)
+                try:
+                    response=self.call_web_service__RETRY(request)
+                except:
+                    if 'NEVER_RAISE_EXCEPTION' in dir(sdconst) and sdconst.NEVER_RAISE_EXCEPTION:
+                        # Despite retrying, we couldn't get a response from the index node.
+                        # Return the partial response that we already have, but mark it with an
+                        # "incomplete" flag.
+                        sdlog.debug('SYDPROXY-120', 'Network error, giving up with what we have' )
+                        paginated_response.store.status = 'incomplete'
+                        return paginated_response
+                    else:
+                        raise
+
             else:
                 response=self.call_web_service(request)
 
