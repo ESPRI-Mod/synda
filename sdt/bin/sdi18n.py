@@ -112,7 +112,7 @@ A session might go like
 
 Set ESGF openid and passwd in credentials file:
 
-vi $HOME/sdt/conf/credentials.conf
+vi /etc/synda/sdt/credentials.conf
 
 Search a dataset:
 
@@ -138,7 +138,7 @@ new  8.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20
 
 Mark the file for download:
 
-$ synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+$ sudo synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
 1 file(s) will be added to the download queue.
 Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
@@ -146,7 +146,7 @@ Do you want to continue? [Y/n]
 
 Start the daemon
 
-$ synda daemon start
+$ sudo service synda start
 
 Check download progress:
 
@@ -162,13 +162,13 @@ $ synda queue
 status      count  size
 done            1  8.9 MB
 
-The file should be available in $HOME/sdt/data
+The file should be available in /srv/synda/sdt/data
 
-$ find $HOME/sdt/data -type f
-/home/foo/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+$ find /srv/synda/sdt/data -type f
+/srv/synda/sdt/data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
 
-In case something goes wrong, you can check the logfiles in $HOME/sdt/log for
+In case something goes wrong, you can check the logfiles in /var/log/synda/sdt for
 information about the error.
 
 
