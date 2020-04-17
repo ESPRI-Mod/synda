@@ -103,13 +103,13 @@ def separate_negatives_par( parameter ):
     parameterclean = []
     poss = {}
     negs = {}
-    if parameter is not None:
+    if parameter is not None and len(parameter)>0:
         for str in parameter:
-            key = str.split('=')[0]
-            if '-' not in str.split('=')[1]:
+            if str.find('=')<0 or '-' not in str.split('=')[1]:
                 # no exclusions exist
                 parameterclean += [str]
                 continue
+            key = str.split('=')[0]
             insts = str.split('=')[1].split(',')
             if key not in poss:
                 poss[key] = []
@@ -117,9 +117,9 @@ def separate_negatives_par( parameter ):
             if key not in negs:
                 negs[key] = []
             negs[key] += [ inst[1:] for inst in insts if inst[0]=='-' ]
-        if len(poss)>0:
-            parameterclean += ['='.join([key,','.join(poss[key])])]
-        negs[key] = list(set(negs[key]))
+            if len(poss)>0:
+                parameterclean += ['='.join([key,','.join(poss[key])])]
+            negs[key] = list(set(negs[key]))
     return parameterclean, negs
 
 def remove_negatives( metadata, negspecs ):
@@ -225,7 +225,8 @@ if __name__ == '__main__':
     parser.add_argument('-f','--file',default=None)
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     parser.add_argument('-i','--index_host')
-    parser.add_argument('-m','--post_pipeline_mode',default='file',choices=sdconst.POST_PIPELINE_MODES)
+    parser.add_argument('-m','--post_pipeline_mode',default='file',choices=
+                        sdconst.POST_PIPELINE_MODES.append('None') )
     parser.add_argument('-y','--dry_run',action='store_true')
     parser.add_argument('-z','--print_short',action='store_true')
     parser.add_argument('-1','--print_only_one_item',action='store_true')
@@ -241,6 +242,8 @@ if __name__ == '__main__':
     parser.set_defaults(parallel=True)
 
     args = parser.parse_args()
+    if args.post_pipeline_mode=='None':
+        args.post_pipeline_mode=None
 
     metadata=run(path=args.file,
                  parameter=args.parameter,
