@@ -68,7 +68,9 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
         #
         #raise
 
-        raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        # we raise a new exception 'network error' here, because most of the time,
+        # 'xml parsing error' is due to an 'network error'.
+        raise SDException('SDNETUTI-008','Network error (see log for details)')
 
     sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
 
