@@ -117,6 +117,7 @@ class DatabaseStorage(Storage):
 
             self.connect()
             self.create_table()
+            self.status = 'ok'
         else:
             # this case is only to duplicate the object (see copy method)
 
@@ -291,6 +292,8 @@ class DatabaseStorage(Storage):
 
         # create new instance
         cpy=DatabaseStorage(dbfile=dbfile_cpy)
+        if 'status' in self.__dict__:
+            cpy.status = self.status
 
         # re-open ori connection
         self.connect()
