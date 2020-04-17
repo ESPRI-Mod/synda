@@ -77,7 +77,7 @@ def run(metadata,timestamp_right_boundary=None):
         sdlog.info("SDENQUEU-104","Fill timestamp..")
 
         fix_timestamp()
-
+   
         sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
 
         if sdconfig.progress:
@@ -132,21 +132,25 @@ def keep_recent_datasets(datasets):
     return li
 
 def add_files(files):
-    for f in files:
-        add_file(File(**f))
+    for count,f in enumerate(files):
+        if count%1000==0 and count>0:
+            commit=True
+        else:
+            commit=False
+        add_file(File(**f),commit)
     return [] # nothing to return (end of processing)
 
-def add_file(f):
+def add_file(f,commit):
     sdlog.info("SDENQUEU-003","Create transfer (local_path=%s,url=%s)"%(f.get_full_local_path(),f.url))
 
-    f.dataset_id=add_dataset(f)
+    f.dataset_id=add_dataset(f,commit)
     f.searchapi_host = Selection.searchapi_host
     f.status=sdconst.TRANSFER_STATUS_WAITING
     f.crea_date=sdtime.now()
 
-    sdfiledao.add_file(f,commit=False)
+    sdfiledao.add_file(f,commit)
 
-def add_dataset(f):
+def add_dataset(f,commit):
     """
     Returns:
         dataset_id
@@ -189,7 +193,7 @@ def add_dataset(f):
         d.last_mod_date=sdtime.now()
 
 
-        sddatasetdao.update_dataset(d,commit=False)
+        sddatasetdao.update_dataset(d,commit)
 
         return d.dataset_id
 
@@ -214,7 +218,7 @@ def add_dataset(f):
         d.timestamp=f.dataset_timestamp if hasattr(f,'dataset_timestamp') else None
         d.model=f.model if hasattr(f,'model') else None
 
-        return sddatasetdao.add_dataset(d,commit=False)
+        return sddatasetdao.add_dataset(d,commit)
 
 def fix_timestamp():
 
