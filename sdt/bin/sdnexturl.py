@@ -32,7 +32,8 @@ def run(tr):
     except:
         url = None
     try:
-        conn = sqlite3.connect(sdconfig.db_file,120)  # 2 minute timeout
+        conn = sqlite3.connect(sdconfig.db_file,600)  # 10 minute timeout
+        #... any longer timeout would be unreasonable
         c = conn.cursor()
         c.execute("INSERT INTO failed_url(url,file_id) VALUES (?,"+
                   "(SELECT file_id FROM file WHERE file_functional_id=?))",
