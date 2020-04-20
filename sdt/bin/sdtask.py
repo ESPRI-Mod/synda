@@ -146,9 +146,11 @@ def transfers_begin():
                         # JFP kludge to handle CCCma which can't deal with 4 requests:
                         if datanode.find('ec.gc.ca')>0:
                             new_count = 3 - datanode_count[datanode]
-                        # JFP the same kludge, for datanodes which fail frequently if many requests
-                        if datanode.find('bcc.cma.cn')>0 or datanode.find('lasg.ac.cn')>0:
+                        ## JFP the same kludge, for datanodes which don't work but may work in the future
+                        if datanode.find('lasg')>0:
                             new_count = 3 - datanode_count[datanode]
+                        if datanode.find('tropmet.res.in')>0:
+                            new_count = 1 - datanode_count[datanode]
                     except KeyError:
                         sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
                                    (datanode,datanode_count.keys()) )
@@ -156,6 +158,11 @@ def transfers_begin():
                         # JFP kludge to handle CCCma:
                         if datanode.find('ec.gc.ca')>0:
                             new_count = 3
+                        ## JFP the same kludge, for datanodes which don't work but may work in the future
+                        if datanode.find('lasg')>0:
+                            new_count = 3
+                        if datanode.find('tropmet.res.in')>0:
+                            new_count = 1
                     if new_count<=0:
                         continue
 
