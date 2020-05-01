@@ -65,7 +65,8 @@ default_options={'max_parallel_download':'8',
                  'nearest_mode':'geolocation',
                  'openid':'https://esgf-node.ipsl.fr/esgf-idp/openid/foo',
                  'password':'foobar',
-                 'incorrect_checksum_action':'remove'}
+                 'incorrect_checksum_action':'remove',
+                 'incremental_mode_for_datasets':'false'}
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
