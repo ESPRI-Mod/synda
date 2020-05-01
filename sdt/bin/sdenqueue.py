@@ -157,6 +157,7 @@ def add_dataset(f,commit):
     """
     d=sddatasetdao.get_dataset(dataset_functional_id=f.dataset_functional_id)
     if d is not None:
+        sdlog.info("SDENQUEU-020","dataset exists (dataset_path=%s)"%(d.local_path))
 
         # check dataset local path format
         #
