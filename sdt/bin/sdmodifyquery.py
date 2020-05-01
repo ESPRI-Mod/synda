@@ -27,12 +27,30 @@ def change_replica(file_functional_id,new_replica,conn=sddb.conn):
     conn.commit()
     c.close()
 
-def change_status(old_status,new_status,conn=sddb.conn):
+def get_where_clause( where='' ):
+    assert( where.find("'")<0 )  # protect against a nasty user error
+    assert( where.find('"') )<0  # protect against a nasty user error
+    if where=='' or where is None:
+        where_clause = ''
+    elif where.find(' ')>0:
+        # arbitrary SQL expression
+        where_clause = " AND ("+where+")"
+    elif where.find('.')>0:
+        # data_node specified
+        where_clause = " AND data_node='%s'" % where
+    else:
+        # data_node substring specified
+        where_clause = " AND data_node LIKE %s%s%s" % ("'%",where,"%'")
+    return where_clause
+
+def change_status(old_status,new_status,conn=sddb.conn,where=''):
     nbr=0
 
+    where_clause = get_where_clause( where )
     c=conn.cursor()
     res=c.execute(
-        "update file set error_msg=NULL,status=?,sdget_error_msg=NULL,sdget_status=NULL where status=?",
+        "update file set error_msg=NULL,status=?,sdget_error_msg=NULL,sdget_status=NULL WHERE "+\
+        "status=?"+where_clause,
         (new_status,old_status,))
     nbr=c.rowcount
     conn.commit()
