@@ -16,6 +16,8 @@ import string
 import sdapp
 import sddb
 import sdlog
+import sdconst
+import sdfiledao
 
 def change_replica(file_functional_id,new_replica,conn=sddb.conn):
     (url,data_node)=new_replica
@@ -52,6 +54,8 @@ def change_status(old_status,new_status,conn=sddb.conn,where=''):
         (new_status,old_status,))
     nbr=c.rowcount
     conn.commit()
+    if new_status==sdconst.TRANSFER_STATUS_WAITING and sdconst.GET_FILES_CACHING:
+        sdfiledao.highest_waiting_priority( True, c )
     c.close()
 
     return nbr
