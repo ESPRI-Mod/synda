@@ -129,14 +129,7 @@ def check(args):
 
 def config(args):
     import sdconfig
-    if args.action is None:
-        sdconfig.print_()
-    else:
-        if args.action=='get':
-            sdconfig.print_(args.name)
-        elif args.action=='set':
-            # TODO see if section can be added to the argparser arguments.
-            print('Feature not implemented yet.')
+    sdconfig.print_(args.name)
 
 def contact(args):
     import sdi18n
@@ -447,7 +440,7 @@ def replica(args):
 
 def retry(args):
     import sdmodify
-    nbr=sdmodify.retry_all()
+    nbr=sdmodify.retry_all( filter=args.where )
     if nbr>0:
         print_stderr("%i file(s) marked for retry."%nbr)
     else:
@@ -601,7 +594,7 @@ def pexec(args):
 
         if dataset_found_count>0:
             if order_dataset_count==0 and order_variable_count==0:
-                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")
+                print_stderr("Data not ready (data must be already downloaded before performing pexec task): operation cancelled")   
             else:
                 sdhistorydao.add_history_line(sdconst.ACTION_PEXEC,selection_filename)
 
@@ -675,20 +668,6 @@ def queue(args):
 
     print tabulate(li,headers=['status','count','size'],tablefmt="plain")
     #sddaemon.print_daemon_status()
-
-def token(args):
-    import sdtoken
-    if args.action is None:
-        sdtoken.print_tokens()
-        return 0
-    if args.action == 'renew':
-        sdtoken.renew_tokens()
-        return 0
-    if args.action == 'print':
-        sdtoken.print_tokens()
-        return 0
-    print_stderr("Not implemented")
-    return 1
 
 def update(args):
     print_stderr("Retrieving parameters from ESGF...")
@@ -770,22 +749,7 @@ def watch(args):
     else:
         print_stderr('Daemon not running')
 
-def checkenv(args):
-    from sdsetuputils import PostInstallCommand
-    pic = PostInstallCommand()
-    pic.run()
-
 # init.
-# def initenv(args):
-#     """
-#     should find the tar data.tar.bz and untar it
-#     :param args:
-#     :return:
-#     """
-#     from sdsetuputils import EnvInit
-#     ei = EnvInit()
-#     ei.run()
-
 
 # TODO: rename as subcommands
 actions={
@@ -811,11 +775,8 @@ actions={
     'retry':retry,
     'selection':selection, 
     'stat':stat, 
-    'token':token,
     'update':update,
     'upgrade':upgrade,
     'variable':variable,
-    'watch':watch,
-    'check-env': checkenv
-    # 'init-env': initenv
+    'watch':watch
 }

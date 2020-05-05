@@ -187,9 +187,6 @@ def run(subparsers):
     subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 
-    subparser=create_subparser(subparsers, 'check-env', help='Checks install environment.')
-    subparser=create_subparser(subparsers, 'init-env', help='Initilizes install environment.')
-
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
     subparser=create_subparser(subparsers,'install',help='Download dataset (async)',note=sdi18n.m0022,example=sdcliex.install())
@@ -238,6 +235,9 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch status from error to waiting)')
+    subparser.add_argument('-w','--where',default=None,help="Restrict the retry to one data_node, e.g. 'esgf3.dkrz.de' or 'dkrz'.  Spaces are not allowed.")
+    #...fairly arbitrary SQL expressions are also allowed, but not documented here because
+    # they are prone to user error
 
     subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdcliex.search('synda search'))
     add_parameter_argument(subparser)
@@ -259,10 +259,6 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'stat')
     add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
-
-    subparser=create_subparser(subparsers, 'token',common_option=False,help='Get OAuth2 tokens')
-    subparser.add_argument('-p', '--provider',choices=['globus'],default='globus',help='Get Globus OAuth2 tokens')
-    add_action_argument(subparser,choices=['renew', 'print'])
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')
