@@ -257,7 +257,10 @@ def transfers_begin(transfers):
         sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
     except Exception,e:
         sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
-        raise
+        if sdconfig.config.get_boolean('download','continue_on_cert_errors'):
+            pass  # Try to keep on going, probably a certificate isn't needed.
+        else:
+            raise
 
     for tr in transfers:
         start_transfer_thread(tr)

@@ -34,6 +34,7 @@ def load(configuration_file,credential_file):
 # (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
                  'max_parallel_download_per_datanode':'8',
+                 'get_only_latest_version':'true',
                  'user':'',
                  'group':'',
                  'hpss':'0',
@@ -64,7 +65,9 @@ default_options={'max_parallel_download':'8',
                  'nearest_mode':'geolocation',
                  'openid':'https://esgf-node.ipsl.fr/esgf-idp/openid/foo',
                  'password':'foobar',
-                 'incorrect_checksum_action':'remove'}
+                 'incorrect_checksum_action':'remove',
+                 'incremental_mode_for_datasets':'false',
+                 'continue_on_cert_errors':'false'}
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
