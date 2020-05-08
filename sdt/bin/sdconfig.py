@@ -22,6 +22,7 @@ import sdconfigutils
 import sdi18n
 import sdcfbuilder
 from sdexception import SDException
+from sdsetuputils import PostInstallCommand, EnvInit
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
@@ -77,6 +78,8 @@ def print_(name):
 
         if name in globals():
             print globals()[name]
+        else:
+            print('No configuration entry found by the name {}'.format(name))
 
 def is_openid_set():
     if openid=='https://esgf-node.ipsl.fr/esgf-idp/openid/foo':
@@ -94,12 +97,13 @@ def is_event_enabled(event,project):
             return True
 
 # Init module.
-
 os.umask(0002)
 
+# TODO Remove package install specific bits
 system_pkg_install=True
 
 # set synda folders paths (aka install-folders)
+# TODO this should become default behavior
 if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
@@ -109,15 +113,32 @@ else:
     install_paths=sdconfigutils.PackageSystemPaths()
 
 # set user folders
-user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
-
-
+# TODO investigate what's the reason for this?
+# user_paths=sdconfigutils.UserPaths(os.path.expanduser("~/.sdt"))
 if sdtools.is_file_read_access_OK(install_paths.credential_file):
-    paths=install_paths
+    paths = install_paths
 else:
     # if we are here, it means we have NO access to the machine-wide credential file.
+    # Running Environment initialization script and warning user.
+    print('Synda has issues reaching your credential file, in ST_HOME.')
+    print('Running synda checking environment tool...')
+    pic = PostInstallCommand()
+    environment_check = pic.run()
+    if not environment_check:
+        initenv = raw_input('Synda environment needs a few key files. \n'
+                            'Would you like to init the stubs of these files? y/n: ').lower()
+        while initenv == '' or initenv not in ['y', 'n']:
+            initenv = raw_input('Synda environment needs a few key files. \n'
+                                'Would you like to init the stubs of these files? y/n: ').lower()
+        if initenv == 'y':
+            ei = EnvInit()
+            ei.run()
+        else:
+            sys.exit('Warning: Environment not set up for synda to operate properly. Exiting.')
 
-    if os.environ.get('SDT_USER_ENV','0')=='1':
+
+    # commented on 08/08 to be replaced
+"""    if os.environ.get('SDT_USER_ENV','0')=='1':
         # Being here means we use machine-wide synda environment as non-admin synda user,
         # and so can only perform RO task (eg synda search, synda get, etc..)
         # Also it means we are not in daemon mode (daemon mode is currently only
@@ -125,14 +146,27 @@ else:
 
         # Non fully working as multi-daemon support not implemented yet. But works for
         # basic command (eg 'synda get')
-
+        print('Daemon mode is inaccessible from this installation. '
+              'Please report to devs in case you think this is an error.')
         user_paths.create_tree()
         paths=user_paths
+    elif not os.path.isfile(os.path.join('ST_HOME', 'sdt.conf')):
+        print('Installation from scratch...')
+        from sdsetuputils import PostInstallCommand
+
+        pic = PostInstallCommand()
+        pic.run()
+        paths=install_paths
     else:
         # being here means synda application can only be used by root or admin (admin means being in the synda group)
-
-        sdtools.print_stderr(sdi18n.m0027)
+        print('here')
+        print(os.path.isfile(os.path.join('ST_HOME','sdt.conf')))
+        sdtools.print_stderr(sdi18n.m0028)
         sys.exit(1)
+"""
+#hack
+paths=install_paths
+
 
 # aliases
 bin_folder=paths.bin_folder
@@ -155,7 +189,7 @@ stacktrace_log_file="/tmp/sdt_stacktrace_%s.log"%str(uuid.uuid4())
 daemon_pid_file="%s/daemon.pid"%tmp_folder
 ihm_pid_file="%s/ihm.pid"%tmp_folder
 
-check_path(bin_folder)
+#check_path(bin_folder)
 
 prevent_daemon_and_modification=False # prevent modification while daemon is running
 prevent_daemon_and_ihm=False # prevent daemon/IHM concurrent accesses
@@ -186,7 +220,7 @@ fix_encoding=False
 twophasesearch=False # Beware before enabling this: must be well tested/reviewed as it seems to currently introduce regression.
 stop_download_if_error_occurs=False # If true, stop download if error occurs during download, if false, the download continue. Note that in the case of a certificate renewal error, the daemon always stops not matter if this false is true or false.
 
-config=sdcfloader.load(configuration_file,credential_file)
+config=sdcfloader.load(configuration_file, credential_file)
 
 
 # alias
@@ -201,6 +235,8 @@ security_dir_mode=config.get('core','security_dir_mode')
 esgf_x509_proxy=os.path.join(get_security_dir(),'credentials.pem')
 esgf_x509_cert_dir=os.path.join(get_security_dir(),'certificates')
 
+# Set location of Globus tokens
+globus_tokens=os.path.join(get_security_dir(),'globus_tokens.json')
 
 # aliases (indirection to ease configuration parameter access)
 openid=config.get('esgf_credential','openid')
@@ -208,6 +244,7 @@ password=config.get('esgf_credential','password')
 progress=config.getboolean('interface','progress')
 download=config.getboolean('module','download')
 metadata_server_type=config.get('core','metadata_server_type')
+url_max_buffer_size=config.get('download', 'url_max_buffer_size')
 
 default_folder=get_path('default_path',default_folder_default_path)
 selection_folder=get_path('selection_path',default_selection_folder)
@@ -223,8 +260,8 @@ cleanup_tree_script="%s/sdcleanup_tree.sh"%bin_folder
 default_selection_file="%s/default.txt"%default_folder
 db_file="%s/sdt.db"%db_folder
 
-check_path(selection_folder)
-check_path(data_folder)
+#check_path(selection_folder)
+#check_path(data_folder)
 
 # destination folder for 'synda get'
 #

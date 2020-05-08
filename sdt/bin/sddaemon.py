@@ -1,5 +1,6 @@
 #!/usr/share/python/synda/sdt/bin/python
 # -*- coding: ISO-8859-1 -*-
+#can't "import daemon" if you do this: #!/usr/bin/env python
 
 ##################################
 #  @program        synda
@@ -110,6 +111,7 @@ def start():
 
     if not is_running():
         try:
+            print('Handing over to daemon process, you can check the daemons logs at {}.'.format(context.stdout.name))
             with context:
                 main_loop()
         except Exception, e:
@@ -204,8 +206,8 @@ def unprivileged_user_mode():
 os.umask(0002)
 
 pidfile=daemon.pidfile.PIDLockFile(sdconfig.daemon_pid_file)
-log_stdout=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
-log_stderr=open("{}/{}".format(sdconfig.log_folder,sdconst.LOGFILE_CONSUMER), "a+")
+log_stdout=open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
+log_stderr=open("{}/{}".format(sdconfig.log_folder, sdconst.LOGFILE_CONSUMER), "a+")
 context=daemon.DaemonContext(working_directory=sdconfig.tmp_folder, pidfile=pidfile,stdout=log_stdout,stderr=log_stderr)
 context.signal_map={ signal.SIGTERM: terminate, }
 
@@ -221,7 +223,7 @@ if __name__ == "__main__":
     if args.action in ['start','stop']:
         if not sdpermission.is_admin():
             sdtools.print_stderr() # this is to prevent having all on the same line when using "synda service" command e.g. "Shutting down synda daemon (sdt): You need to be root to perform this command."
-            sdtools.print_stderr(sdi18n.m0027)
+            sdtools.print_stderr(sdi18n.m0028)
             sys.exit(1)
 
     if args.action == 'start':

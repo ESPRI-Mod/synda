@@ -25,12 +25,11 @@ Notes
 
 import sys
 import argparse
-import sdapp
+# import sdapp
 import sdconst
 import sdi18n
 import sdsubparser
 import sdtools
-import sdconfig
 import sdpermission
 import sdexception
 
@@ -71,20 +70,21 @@ def set_stream_type(args):
     else:
         raise sdexception.SDException('SDASYNDA-001','Unknown type (%s)'%args.type_)
 
-if __name__ == '__main__':
 
+def run():
     # create the top-level parser
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
     #parser = sdtools.DefaultHelpParser(formatter_class=argparse.RawDescriptionHelpFormatter,description=sdi18n.m0016)
 
     subparsers = parser.add_subparsers(dest='subcommand',metavar='subcommand') # ,help=sdi18n.m0015
 
-    parser.add_argument('-V','--version',action='version',version=sdapp.version) # beware: version exist both as option and as subcommand
+    parser.add_argument('-V','--version',action='version',version=sdconst.SYNDA_VERSION) # beware: version exist both as option and as subcommand
 
     # create parser for sub-commands
     sdsubparser.run(subparsers)
 
     args = parser.parse_args()
+
 
     # check type mutex
     #
@@ -93,11 +93,14 @@ if __name__ == '__main__':
     # help looks ugly. So better leave it as is until argparse handle this case
     # smoothly.
 
+    if args.subcommand=='setup':
+        print('Setting up environment...')
+
     # -- permission check -- #
 
     if args.subcommand in (sdconst.ADMIN_SUBCOMMANDS):
         if not sdpermission.is_admin():
-            sdtools.print_stderr(sdi18n.m0027)
+            sdtools.print_stderr(sdi18n.m0028)
             sys.exit(1)
 
     # -- subcommand routing -- #
@@ -186,3 +189,7 @@ if __name__ == '__main__':
     sdtools.print_stderr("Use '--help' option for more info")
     #parser.print_help()
     sys.exit(2)
+
+
+if __name__ == '__main__':
+    run()
