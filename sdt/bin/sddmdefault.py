@@ -284,7 +284,10 @@ def transfers_begin(transfers):
         sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
     except Exception,e:
         sdlog.error("SDDMDEFA-502","Exception occured while retrieving certificate (%s)"%str(e))
-        pass  # Try to keep on going, probably a certificate isn't needed.
+        if sdconfig.config.get_boolean('download','continue_on_cert_errors'):
+            pass  # Try to keep on going, probably a certificate isn't needed.
+        else:
+            raise
 #    tbrc1 = SDTimer.get_elapsed_time( tb0, show_microseconds=True )
 #    sdlog.info("JFPDMDEF-200","%s    transfers_begin call of renew_certificate time"%(tbrc1,))
 

@@ -204,9 +204,11 @@ def event_loop():
         except Exception as e:
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
             sdlog.error("SDTSCHED-921","Exception=%s"%str(e))
-            sdlog.error("SDTSCHED-922","  will continue anyway")
-            pass #jfp try to keep on going; for most data nodes we don't need an OpenID.
-            #raise
+            if sdconfig.config.get_boolean('download','continue_on_cert_errors'):
+                sdlog.error("SDTSCHED-922","  will continue anyway")
+                pass #jfp try to keep on going; for most data nodes we don't need an OpenID.
+            else:
+                raise
 
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 

@@ -79,3 +79,5 @@ class OpenIDNotSetException(CertificateRenewalException):
 #
 class MissingDatasetUrlException(SDException):
     pass
+class EnvironmentNotSet(SDException):
+    pass

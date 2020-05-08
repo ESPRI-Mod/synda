@@ -84,6 +84,7 @@ def create_configuration_file_sample(path):
     config.set('download', 'http_fallback', 'false')
     config.set('download', 'gridftp_opt', '')
     config.set('download', 'incremental_mode_for_datasets', 'false')
+    config.set('download', 'continue_on_cert_errors', 'false')
 
     config.add_section('post_processing')
     config.set('post_processing', 'host', 'localhost')

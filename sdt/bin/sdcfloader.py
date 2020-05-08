@@ -66,7 +66,8 @@ default_options={'max_parallel_download':'8',
                  'openid':'https://esgf-node.ipsl.fr/esgf-idp/openid/foo',
                  'password':'foobar',
                  'incorrect_checksum_action':'remove',
-                 'incremental_mode_for_datasets':'false'}
+                 'incremental_mode_for_datasets':'false',
+                 'continue_on_cert_errors':'false'}
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
