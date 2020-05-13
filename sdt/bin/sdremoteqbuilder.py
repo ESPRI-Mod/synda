@@ -115,11 +115,16 @@ def transform_facets_for_dataset_timestamp_retrieval(facets):
     #      https://esgf-data.dkrz.de/esg-search/search?cmor_table=Amon&product=output1&realm=atmos&institute=MOHC&fields=dataset_id,id,timestamp&project=CMIP5&to=2015-11-01T01:00:00Z&time_frequency=mon&experiment=rcp85&distrib=true&model=HadGEM2-ES&type=File&ensemble=r1i1p1&format=application%2Fsolr%2Bjson&limit=9000&offset=0
     #      https://esgf-data.dkrz.de/esg-search/search?project=CMIP5&product=output1&realm=atmos&institute=MOHC&fields=instance_id,timestamp,_timestamp,type,size&cmor_table=Amon&time_frequency=mon&experiment=rcp85&distrib=true&model=HadGEM2-ES&type=Dataset&ensemble=r1i1p1&format=application%2Fsolr%2Bjson&limit=9000&offset=0&replica=false
     #
+    #jfp But when the 'from' facet comes from use of the incremental mode (not from a
+    # --timestamp_left_boundary argument), we know that all older dates have already been covered.
+    # So it's ok to leave in the 'from' facet if the user is ok with it.  Sometimes leaving in
+    # the 'from' facet can save *days* of runtime and thus prevent database locks from killing
+    # other Synda jobs.
     if 'to' in facets_cpy:
         del facets_cpy['to']
-    if 'from' in facets_cpy:
-        del facets_cpy['from']
-
+    if not sdconfig.config.getboolean('download','incremental_mode_for_datasets'):
+        if 'from' in facets_cpy:
+            del facets_cpy['from']
 
     # we also add '_timestamp' as some project use this naming
     # (e.g.ahttp://esgf-index1.ceda.ac.uk/esg-search/search?fields=timestamp,_timestamp&instance_id=cordex.output.EUR-11.DHMZ.ECMWF-ERAINT.evaluation.r1i1p1.RegCM4-2.v1.day.ps.v20150527).
