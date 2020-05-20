@@ -147,8 +147,8 @@ def transfers_begin():
                         if datanode.find('ec.gc.ca')>0:
                             new_count = 3 - datanode_count[datanode]
                         ## JFP the same kludge, for datanodes which don't work but may work in the future
-                        if datanode.find('lasg')>0:
-                            new_count = 3 - datanode_count[datanode]
+                        #if datanode.find('lasg')>0:
+                        #    new_count = 3 - datanode_count[datanode]
                         if datanode.find('tropmet.res.in')>0:
                             new_count = 1 - datanode_count[datanode]
                     except KeyError:
