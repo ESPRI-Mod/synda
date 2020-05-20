@@ -28,19 +28,20 @@ def change_replica(file_functional_id,new_replica,conn=sddb.conn):
     c.close()
 
 def get_where_clause( where='' ):
-    assert( where.find("'")<0 )  # protect against a nasty user error
-    assert( where.find('"') )<0  # protect against a nasty user error
     if where=='' or where is None:
         where_clause = ''
-    elif where.find(' ')>0:
-        # arbitrary SQL expression
-        where_clause = " AND ("+where+")"
-    elif where.find('.')>0:
-        # data_node specified
-        where_clause = " AND data_node='%s'" % where
     else:
-        # data_node substring specified
-        where_clause = " AND data_node LIKE %s%s%s" % ("'%",where,"%'")
+      assert( where.find("'")<0 )  # protect against a nasty user error
+      assert( where.find('"') )<0  # protect against a nasty user error
+      if where.find(' ')>0:
+          # arbitrary SQL expression
+          where_clause = " AND ("+where+")"
+      elif where.find('.')>0:
+          # data_node specified
+          where_clause = " AND data_node='%s'" % where
+      else:
+          # data_node substring specified
+          where_clause = " AND data_node LIKE %s%s%s" % ("'%",where,"%'")
     return where_clause
 
 def change_status(old_status,new_status,conn=sddb.conn,where=''):
