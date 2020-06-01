@@ -62,14 +62,6 @@ def remove(files,functional_id_keyname,seen):
             seen[uniq_id]=True # mark as seen so other duplicate will be excluded (first item in the loop win)
     return new_files
 
-def run_latest(metadata,functional_id_keyname):
-    sdlog.info("SYNDRMDR-003","Replicate only latest datasets...")
-
-    po=sdpipelineprocessing.ProcessingObject(remove_allbut_latest,functional_id_keyname)
-    metadata=sdpipelineprocessing.run_pipeline(metadata,po)
-
-    return metadata
-
 def remove_allbut_latest(files,functional_id_keyname):
     """The first argument 'files' is a list of files or datasets.  The second argument is
     'file_functional_id' or 'dataset_functional_id'.  This function will remove
