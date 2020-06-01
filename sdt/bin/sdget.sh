@@ -370,7 +370,7 @@ else
         $TLS_ONLY \
         $url"
 fi
-echo WGET_CMD $WGET_CMD  #jfp
+echo WGET_CMD $WGET_CMD
 
 wget_stderr2stdout ()
 {

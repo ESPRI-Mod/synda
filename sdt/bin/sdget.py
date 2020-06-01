@@ -66,7 +66,7 @@ def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,ti
 
         killed=is_killed(transfer_protocol,status)
 
-    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUSTRANSFER:
+    elif transfer_protocol==sdconst.TRANSFER_PROTOCOL_GLOBUS:
 
         pass
 
@@ -209,7 +209,7 @@ def prepare_args(url,full_local_path,script,debug,timeout,verbosity,hpss):
         li.insert(1,'-p')
         li.insert(2,'0')
 
-    sdlog.debug('JFPSDGET-010',"sdget command %s"%li)
+    sdlog.debug('SDGET000-010',"sdget command %s"%li)
     return li
 
 # init.
