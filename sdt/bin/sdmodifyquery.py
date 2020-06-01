@@ -31,7 +31,7 @@ def get_where_clause( where='' ):
     if where=='' or where is None:
         where_clause = ''
     else:
-      assert( where.find("'")<0 )  # protect against a nasty user error
+      assert( where.count("'")%2==0 )  # protect against a nasty user error
       assert( where.find('"') )<0  # protect against a nasty user error
       if where.find(' ')>0:
           # arbitrary SQL expression
