@@ -45,7 +45,6 @@ def uniq(metadata):
 
         sdlog.info("SSHRINKU-002","Remove duplicate and replicate..")
 
-        get_only_latest = sdconfig.config.getboolean('download','get_only_latest_version')
         metadata=sdrmduprep.run(metadata,functional_id_keyname)
 
     return metadata
