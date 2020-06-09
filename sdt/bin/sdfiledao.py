@@ -257,7 +257,8 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
     return files
 
 def update_file(file,commit=True,conn=sddb.conn):
-    keys=['status','error_msg','sdget_status','sdget_error_msg','start_date','end_date','duration','rate','priority']
+    keys = ['status', 'error_msg', 'error_history', 'sdget_status','sdget_error_msg','start_date',
+            'end_date','duration','rate','priority']
 
     # 'url' needs to be present when 'sdnexturl' feature is enabled
     if sdconfig.next_url_on_error:

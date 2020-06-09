@@ -139,7 +139,7 @@ class Download():
 
                 tr.status=sdconst.TRANSFER_STATUS_DONE
                 tr.error_msg=""
-        else:
+        else:   # tr.sdget_status != 0:
 
             # Remove file if exists
             if os.path.isfile(tr.get_full_local_path()):
@@ -181,6 +181,15 @@ class Download():
                 tr.error_msg="Download process has been killed"
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
+            elif tr.sdget_error_msg.find('ERROR 404')>0:
+                # wget reported 'ERROR 404', i.e. the url was not found.
+                if tr.error_history is None:
+                    tr.error_history = str([])
+                error_history = eval(tr.error_history)
+                error_history.append( ( sdtime.now(), 'ERROR 404' ) )
+                tr.error_history = str(error_history)
+                sdlog.info( "SDDMDEFA-080","error history for %s is %s" %
+                            (tr.filename,tr.error_history) )
             else:
                 pass
 

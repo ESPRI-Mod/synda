@@ -488,6 +488,7 @@ fi
 # post-processing
 
 if [ $wget_status -ne 0 ]; then
+    err "wget says: $wget_errmsg  sdget says:"
 
     if [ $wget_status -eq 143 ]; then # 143 means 'wget' gets killed
         status=29
