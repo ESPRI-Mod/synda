@@ -113,6 +113,7 @@ class Download():
                     tr.error_msg=""
                 else:
                     # checksum is not ok
+                    update_error_history( tr, "bad checksum" )
 
                     if incorrect_checksum_action=="remove":
                         tr.status=sdconst.TRANSFER_STATUS_ERROR
@@ -183,13 +184,7 @@ class Download():
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
             elif tr.sdget_error_msg.find('ERROR 404')>0:
                 # wget reported 'ERROR 404', i.e. the url was not found.
-                if tr.error_history is None:
-                    tr.error_history = str([])
-                error_history = eval(tr.error_history)
-                error_history.append( ( sdtime.now(), 'ERROR 404' ) )
-                tr.error_history = str(error_history)
-                sdlog.info( "SDDMDEFA-080","error history for %s is %s" %
-                            (tr.filename,tr.error_history) )
+                update_error_history( tr, 'ERROR 404' )
             else:
                 pass
 
@@ -220,6 +215,17 @@ class Download():
 
 #        sts1 = SDTimer.get_elapsed_time(sts0, show_microseconds=True)
 #        sdlog.info("JFPDMDEF-030","%s    Total elapsed time for %s"%(sts1,tr.url))
+
+def update_error_history( tr, error ):
+    """update the error_history field of a transfer, to add the specified error, a string
+     The error should be short, e.g. 'ERROR 404'.  And it should be specific to the file
+     represented by tr. Thus an error 503 or "Connection refused" should not be provided."""
+    if tr.error_history is None:
+        tr.error_history = str([])
+    error_history = eval(tr.error_history)
+    error_history.append( ( sdtime.now(), error ) )
+    tr.error_history = str(error_history)
+    sdlog.info( "SDDMDEFA-080","error history for %s is %s" % (tr.filename,tr.error_history) )
 
 def end_of_transfer(tr):
 
