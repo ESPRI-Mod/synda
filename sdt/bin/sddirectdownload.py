@@ -41,13 +41,14 @@ def run(files,
         1 if one or more transfer(s) didn't complete successfully
     """
 
-    """
-    If protocol is set to 'globus' in attached_parameters, download all files
-    with url scheme globus:, or gridftp: provided that there is a gridftp to
-    globus mapping defined in /esg/config/esgf_endpoints.xml. Remaining files
-    will be downloaded usingglobus-url-copy or wget.
-    """
-    files = sdglobus.direct(files, force, local_path_prefix, verify_checksum, network_bandwidth_test, debug, verbosity)
+    if sdconfig.config.getboolean('module','globustransfer'):
+        """
+        If protocol is set to 'globus' in attached_parameters, download all files
+        with url scheme globus:, or gridftp: provided that there is a gridftp to
+        globus mapping defined in /esg/config/esgf_endpoints.xml. Remaining files
+        will be downloaded usingglobus-url-copy or wget.
+        """
+        files = sdglobus.direct(files, force, local_path_prefix, verify_checksum, network_bandwidth_test, debug, verbosity)
 
     failed_count=0
 
