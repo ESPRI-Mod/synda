@@ -123,11 +123,11 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
     # Is the cache applicable to this situation?  Then use it, unless it's empty.
     if set(search_constraints.keys())==set(['status','data_node']) and\
        search_constraints['status']==sdconst.TRANSFER_STATUS_WAITING and\
-       limit==1 and\
-       sdconst.GET_FILES_CACHING:
+       limit==1 and sdconst.GET_FILES_CACHING:
         # ...limit==1 isn't essential, but the present coding is for limit==1
         use_cache = True
-        if len( get_files.files.get( data_node, [] ) )>0:
+        need_highest_waiting_priority = ( highest_waiting_priority(data_node)<=0 )
+        if len( get_files.files.get( data_node, [] ) )>0 and not need_highest_waiting_priority:
             gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True )
             sdlog.info("SDFILDAO-200","get_files time is %s, used cache, data_node %s"%\
                        (gfs1,data_node))
@@ -137,9 +137,12 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
             limit += cachelen
     else:
         use_cache = False
+        need_highest_waiting_priority = False
 
     files=[]
     c = conn.cursor()
+    if use_cache and need_highest_waiting_priority:
+        highest_waiting_priority( data_node, c )   # compute the highest waiting priority
 
     search_placeholder=sdsqlutils.build_search_placeholder(search_constraints)
     limit_clause="limit %i"%limit if limit is not None else ""
@@ -151,11 +154,12 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
     c.execute(q,search_constraints)
     rs=c.fetchone()
 
-    #if use_cache and (rs is None or len(rs)==0):
-    if use_cache and (rs is None or len(rs)==0):
+    if use_cache and (not need_highest_waiting_priority) and (rs is None or len(rs)==0):
         # No files found.  Possibly we could find one if we retry at another priority level.
         # Note that it makes no sense to do this if getfirst==''.  That has alread triggered
         # an early return.
+        # And it makes no sense to do this if need_highest_waiting_priority is True.  Then we
+        # have already recomputed the highest_waiting_priority.
         highest_waiting_priority( data_node, c )   # compute the priority to retry at
         getfirst = priority_clause( data_node, use_cache, c )
         q="select * from file where %s %s %s"%(search_placeholder,getfirst,limit_clause)
@@ -190,8 +194,11 @@ def priority_clause( data_node, use_cache, cursor ):
 
 def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
     """This function contains a dictionary-like cache of the highest priority among status='waiting'
-    files for each data_node.  It will always return the dictionary value for the specified
-    data node, or one of the specified data nodes if several are provided.
+    files for each data_node.  With one exception (*), it will always return the dictionary value
+    for the specified data node, or one of the specified data nodes if several are provided.
+    - When called with a data_node and no cursor, it will return the dictionary's value of the
+    highest priority for that node.  (*) Or it may return 0 to signal that the dictionary does
+    not have a correct value, and should be recomputed.
     - When called with a data_node and cursor, it will update its value for that data_node.
     - If cursor==True, then this function will create and close its own cursor.
     - If data_node==True, then this function will be applied to all data nodes.
@@ -226,7 +233,8 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             c.close()
         return (highest_waiting_priority.vals).get(data_nodes[0],None)
 # The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
-# highest_waiting_priority.vals = {}
+# highest_waiting_priority.vals = {}.
+# Using the database lets other processes update vals if they make changes affecting it.
 highest_waiting_priority.vals=sdsqlitedict.SqliteStringDict(
     sdconfig.default_db_folder+"/caches.db", 'maxpri', None )
 
