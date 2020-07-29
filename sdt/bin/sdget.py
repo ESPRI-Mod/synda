@@ -32,7 +32,9 @@ import sdget_urllib
 from sdtools import print_stderr
 import sdlog
 
-def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,buffered=True,hpss=False):
+def download( url, full_local_path, debug=False, http_client=sdconfig.http_client,
+              timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT, verbosity=0,
+              buffered=True, hpss=False ):
     killed=False
     script_stderr=None
 
