@@ -77,7 +77,7 @@ def renew_certificate(openid,password,force_renew_certificate=False,force_renew_
     try:
         sdmyproxy.run(hostname,port,username,force_renew_certificate,force_renew_ca_certificates,password)
     except Exception,e:
-        sdlog.error("SYDLOGON-012","Error occured while retrieving certificate from myproxy server (%s)"%str(e))
+        sdlog.error("SYDLOGON-012","Error %s while retrieving certificate from myproxy server %s"%(str(e),hostname) )
         raise
 
 # init.
