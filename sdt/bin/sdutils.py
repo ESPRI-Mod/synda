@@ -23,9 +23,10 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-import sdconfig
+# not used: import sdconfig
 import sdconst
 from sdexception import SDException,FileNotFoundException
+
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):
@@ -108,6 +109,7 @@ def get_status_output(args, **kwargs):
     kwargs['stdout']=subprocess.PIPE
     kwargs['stderr']=subprocess.PIPE
     kwargs['universal_newlines']=False
+    kwargs['close_fds']=True
 
     p = subprocess.Popen(args, **kwargs)
 
