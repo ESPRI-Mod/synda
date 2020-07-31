@@ -65,14 +65,15 @@ class Download():
 
         # main
         sdget0 = SDTimer.get_time()
-        (tr.sdget_status,killed,tr.sdget_error_msg)=sdget.download(tr.url,
-                                                                   tr.get_full_local_path(),
-                                                                   debug=False,
-                                                                   http_client=sdconst.HTTP_CLIENT_WGET,
-                                                                   timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,
-                                                                   verbosity=0,
-                                                                   buffered=True,
-                                                                   hpss=hpss)
+        (tr.sdget_status,killed,tr.sdget_error_msg)\
+            = sdget.download( tr.url,
+                              tr.get_full_local_path(),
+                              debug=False,
+                              http_client=sdconst.HTTP_CLIENT_WGET,
+                              timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,
+                              verbosity=0,
+                              buffered=True,
+                              hpss=hpss )
         sdget1 = SDTimer.get_elapsed_time(sdget0, show_microseconds=True)
         sdlog.info("JFPDMDEF-010","%s sdget_download time for %s, status %s"%
                    (sdget1,tr.url,tr.sdget_status))
@@ -182,11 +183,12 @@ class Download():
                 tr.error_msg="Download process has been killed"
 
                 sdlog.error("SDDMDEFA-190","%s (file_id=%d,url=%s,local_path=%s)"%(tr.error_msg,tr.file_id,tr.url,tr.local_path))
+                update_error_history( tr, 'killed' )
             elif tr.sdget_error_msg.find('ERROR 404')>0:
                 # wget reported 'ERROR 404', i.e. the url was not found.
                 update_error_history( tr, 'ERROR 404' )
             else:
-                pass
+                update_error_history( tr, 'other' )
 
             if sdconfig.next_url_on_error:
 
@@ -208,7 +210,7 @@ class Download():
                     tr.error_msg='Error occurs during download.'
 
 
-            else:
+            else:  # i.e., if not sdconfig.next_url_on_error
                 tr.status=sdconst.TRANSFER_STATUS_ERROR
                 tr.priority -= 1
                 tr.error_msg='Error occurs during download.'
