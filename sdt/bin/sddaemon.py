@@ -116,8 +116,7 @@ def start():
                 main_loop()
         except Exception, e:
             import sdtrace
-            sdtrace.log_exception()
-
+            sdtrace.log_exception() 
 
 
 

@@ -362,12 +362,10 @@ if [ $USE_CERTIFICATE = "yes" ]; then
     WGET_CMD="wget $WGETOPT \
         --certificate=$ESGF_CREDENTIAL --private-key=$ESGF_CREDENTIAL --ca-directory=$ESGF_CERT_DIR --ca-certificate=$ESGF_CREDENTIAL \
         $NO_CHECK_SERVER_CERTIFICATE \
-        $TLS_ONLY \
         $url"
 else
     WGET_CMD="wget $WGETOPT \
         $NO_CHECK_SERVER_CERTIFICATE \
-        $TLS_ONLY \
         $url"
 fi
 echo WGET_CMD $WGET_CMD

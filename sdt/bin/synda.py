@@ -32,6 +32,7 @@ import sdsubparser
 import sdtools
 import sdpermission
 import sdexception
+import sdtiaction
 
 def set_stream_type(args):
     import sddeferredbefore
@@ -51,7 +52,7 @@ def set_stream_type(args):
     # modifications.
     #
     # So what we do here is choose which is the search-API type we need
-    # (dataset, file) for the listing type asked by user (i.e.
+    # (dataset, file) for the listing type asked by user (i.e.We
     # variable, dataset, file)
     #
     # But note that in most case, search-API 'type' will be overrided

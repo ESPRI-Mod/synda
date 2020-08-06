@@ -15,6 +15,8 @@ import os
 import sys
 import uuid
 import argparse
+from distutils.command.install import install
+
 import sdconst
 import sdtools
 import sdcfloader
@@ -23,6 +25,7 @@ import sdi18n
 import sdcfbuilder
 from sdexception import SDException
 from sdsetuputils import PostInstallCommand, EnvInit
+# from sdtiaction import checkenv, initenv
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
 
@@ -95,15 +98,13 @@ def is_event_enabled(event,project):
             return False # CMIP5 use special output12 event
         else:
             return True
-
+# def module_init():
 # Init module.
 os.umask(0002)
 
-# TODO Remove package install specific bits
-system_pkg_install=True
-
 # set synda folders paths (aka install-folders)
-# TODO this should become default behavior
+system_pkg_install=True  # make False to use non-system folders
+
 if not system_pkg_install:
     if 'ST_HOME' not in os.environ:
         raise SDException('SDCONFIG-010',"'ST_HOME' is not set")

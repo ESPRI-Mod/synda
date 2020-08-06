@@ -63,10 +63,10 @@ def serialize_parameter__ovpp(name,values): # 'ovpp' means one value per paramet
         # (The '*' at the end of the instance_id value signals the need for wildcards.)
         # That's because when the SOLR index is built, sometimes the name is changed (by suffixing
         # "_0" or "_1", etc.) to preserve uniqueness.  And only string search supports wildcards.
-        sdlog.info("SDRMTQUTS_01","name=%s, values=%s"%(name,values))
+        #sdlog.info("SDRMTQUTS_01","name=%s, values=%s"%(name,values))
         name = "query"
         values = [ "id:" + v + "*" for v in values ]
-        sdlog.info("SDRMTQUTS_02","name=%s, values=%s"%(name,values))
+        #sdlog.info("SDRMTQUTS_02","name=%s, values=%s"%(name,values))
 
     for v in values:
         l.append(name+"="+v)
@@ -104,7 +104,7 @@ def build_url(facets,searchapi_host):
 
     url="http://{0}/esg-search/search?{1}&format={2}".format(sdconst.IDXHOSTMARK,serialized_parameters,fmt)
 
-    if len(url)>3500: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
+    if len(url)>sdconfig.url_max_buffer_size: # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
         raise SDException("SDRQUUTI-001","url is too long (%i)"%len(url))
 
     if searchapi_host is not None:

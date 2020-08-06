@@ -90,7 +90,6 @@ def remove_matching_files_substr(files,filter_name,filter_value):
     return files
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-1','--print_only_one_item',action='store_true')
