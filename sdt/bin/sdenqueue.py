@@ -148,7 +148,13 @@ def add_file(f,commit):
     f.status=sdconst.TRANSFER_STATUS_WAITING
     f.crea_date=sdtime.now()
 
-    sdfiledao.add_file(f,commit)
+    try:
+        sdfiledao.add_file(f,commit=False)
+    except Exception as e:
+        sdlog.error("SDENQUEU-005","Failed to create transfer (local_path=%s,url=%s)"%(f.get_full_local_path(),f.url))
+        sdlog.error("SDENQUEU-006","Exception was %s"%e)
+        sdlog.error("SDENQUEU-007","This file was found from the search url %s"
+                    % getattr(f, 'search_url', '(unknown)') )
 
 def add_dataset(f,commit):
     """
