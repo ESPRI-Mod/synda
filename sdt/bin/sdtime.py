@@ -111,7 +111,7 @@ class SDTimer():
         return datetime.datetime.now()
 
     @classmethod
-    def get_elapsed_time(cls,start_time):
+    def get_elapsed_time(cls,start_time,show_microseconds=False):
         """
         Returns:
             duration (in seconds)
@@ -119,7 +119,10 @@ class SDTimer():
         stop_time=datetime.datetime.now()
         delt=stop_time-start_time
 
-        return (delt.microseconds + (delt.seconds + delt.days * 24 * 3600) * 10**6) / 10**6 # microsecond is present here, but disappear after the last division. duration unit is second.
+        if show_microseconds:
+            return (delt.microseconds*1.0 + (delt.seconds + delt.days * 24 * 3600) * 10**6) / 10**6
+        else:
+            return (delt.microseconds + (delt.seconds + delt.days * 24 * 3600) * 10**6) / 10**6 # microsecond is present here, but disappear after the last division. duration unit is second.
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
