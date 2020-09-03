@@ -1,4 +1,4 @@
-{% set version = "3.10" %}
+{% set version = "3.11" %}
 
 package:
   name: synda
@@ -8,7 +8,7 @@ source:
   path: ../.
 
 build:
-  number: 9
+  number: 10
   noarch: generic
   entry_points:
     - synda = synda:run
