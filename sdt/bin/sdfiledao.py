@@ -25,7 +25,9 @@ def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
     c.close()
 
 def add_file(file,commit=True,conn=sddb.conn):
-    keys_to_insert=['status', 'crea_date', 'url', 'local_path', 'filename', 'file_functional_id', 'tracking_id', 'priority', 'checksum', 'checksum_type', 'size', 'variable', 'project', 'model', 'data_node', 'dataset_id', 'insertion_group_id', 'timestamp']
+    keys_to_insert=['status', 'crea_date', 'url', 'local_path', 'filename', 'file_functional_id', 'tracking_id',
+                    'priority', 'checksum', 'checksum_type', 'size', 'variable', 'project', 'model', 'data_node',
+                    'dataset_id', 'insertion_group_id', 'timestamp']
     return sdsqlutils.insert(file,keys_to_insert,commit,conn)
 
 def delete_file(tr,commit=True,conn=sddb.conn):

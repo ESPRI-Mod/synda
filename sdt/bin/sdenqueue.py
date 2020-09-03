@@ -114,16 +114,17 @@ def keep_recent_datasets(datasets):
 
 
     for d in datasets:
-    
-        interval=sdtime.compute_time_delta(d.last_mod_date,sdtime.now())
-        if interval > ( 24 * 3600 ):
-            # This dataset has not been modified in the last 24 hours, 
-            # so it is not related to the current discovery.
+        print(d)
+        if 'last_mode_date' in d.__dict__.keys():
+            interval=sdtime.compute_time_delta(d.last_mod_date,sdtime.now())
+            if interval > ( 24 * 3600 ):
+                # This dataset has not been modified in the last 24 hours,
+                # so it is not related to the current discovery.
 
-            pass
-        else:
-            li.append(d)
-
+                pass
+            else:
+                li.append(d)
+    print(li)
     return li
 
 def add_files(files):

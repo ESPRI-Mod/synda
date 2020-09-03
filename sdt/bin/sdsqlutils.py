@@ -81,8 +81,14 @@ def insert(instance,columns_subset,commit,conn):
             d=instance.__dict__
         else:
             for k in keys:
-                d[k]=instance.__dict__[k]
-
+                if k in instance.__dict__.keys():
+                    d[k]=instance.__dict__[k]
+                else:
+                    try:
+                        print('here')
+                        d['timestamp'] = instance.__dict__['_timestamp']
+                    except AttributeError as ae:
+                        print('FAILED')
         return d
 
     # create dict containing key/val list to be inserted

@@ -1,0 +1,12 @@
+mip_era=CMIP6
+activity_id=DAMIP
+institution_id=NASA-GISS
+source_id=GISS-E2-1-G
+experiment_id=hist-stratO3
+variable=siconca
+#table_id=
+#variable_id=
+replica=true
+latest=true
+#data_node=
+protocol=gridftp
