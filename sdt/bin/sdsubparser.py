@@ -238,6 +238,9 @@ def run(subparsers):
 
     subparser=create_subparser(subparsers,'reset',common_option=False,help="Remove all 'waiting' and 'error' transfers")
     subparser=create_subparser(subparsers,'retry',common_option=False,help='Retry transfer (switch status from error to waiting)')
+    subparser.add_argument('-w','--where',default=None,help="Restrict the retry to one data_node, e.g. 'esgf3.dkrz.de' or 'dkrz'.  Spaces are not allowed.")
+    #...fairly arbitrary SQL expressions are also allowed, but not documented here because
+    # they are prone to user error
 
     subparser=create_subparser(subparsers,'search',help='Search dataset',example=sdcliex.search('synda search'))
     add_parameter_argument(subparser)

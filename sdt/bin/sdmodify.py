@@ -34,9 +34,10 @@ def pause_all():
     nbr=sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_WAITING,sdconst.TRANSFER_STATUS_PAUSE)
     sdlog.info("SDMODIFY-830","%i transfer marked for retry"%(nbr))
 
-def retry_all(filter=None):
+def retry_all( filter=None ):
     sdlog.info("SDMODIFY-343","Moving transfer from error to waiting..")
-    nbr=sdmodifyquery.change_status(sdconst.TRANSFER_STATUS_ERROR,sdconst.TRANSFER_STATUS_WAITING)
+    nbr=sdmodifyquery.change_status( sdconst.TRANSFER_STATUS_ERROR,sdconst.TRANSFER_STATUS_WAITING,
+                                     where=filter )
     sdlog.info("SDMODIFY-226","%i transfer marked for retry"%(nbr))
     return nbr
 

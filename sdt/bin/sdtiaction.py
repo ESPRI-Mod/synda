@@ -447,7 +447,7 @@ def replica(args):
 
 def retry(args):
     import sdmodify
-    nbr=sdmodify.retry_all()
+    nbr=sdmodify.retry_all( filter=args.where )
     if nbr>0:
         print_stderr("%i file(s) marked for retry."%nbr)
     else:
