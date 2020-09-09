@@ -17,222 +17,164 @@ Note
 
 import os
 import time
-import re
-import abc
-import urlparse
-from datetime import datetime, timedelta
-from xml.etree.ElementTree import fromstring
+import Queue
 import sdapp
 import sdlog
 import sdconst
-from sdexception import SDException,FatalException
+import sdexception
+import sdlogon
 import sdconfig
 import sdtime
 import sdfiledao
 import sdevent
 import sdutils
-from globusonline.transfer import api_client
-from globusonline.transfer.api_client import x509_proxy
+import sdtools
+import sdget
+import sdtrace
+import sdnexturl
+import sdworkerutils
+import sdglobus
+
+
+class Download():
+    exception_occurs=False
+
+    @classmethod
+    def run(cls, transfer):
+        tc = transfer.get("tc")
+        task_id = transfer.get("task_id")
+        src_endpoint = transfer.get("src_endpoint")
+        transfer_status = sddglobus.globus_wait(tc, task_id, src_endpoint)
+        for item in transfer.get("items"):
+            tr = item.get("tr")
+            if transfer_status:
+                tr.sdget_status = 0
+                tr.status = sdconst.TRANSFER_STATUS_DONE
+                tr.error_msg = ""
+            else:
+                tr.status = sdconst.TRANSFER_STATUS_ERROR
+
+
+def end_of_transfers(task):
+
+    # log
+    for item in task.get("items"):
+        tr = item.get("tr")
+        if tr.status==sdconst.TRANSFER_STATUS_DONE:
+            sdlog.info("SDDMGLOB-101","Transfer done (%s)"%str(tr))
+        elif tr.status==sdconst.TRANSFER_STATUS_WAITING:
+            sdlog.info("SDDMGLOB-108","Transfer marked for retry (error_msg='%s',url=%s,file_id=%d"%(tr.error_msg,tr.url,tr.file_id))
+        else:
+            sdlog.info("SDDMGLOB-102","Transfer failed (%s)"%str(tr))
+
+        # update file
+        sdfiledao.update_file(tr)
+
+        # IMPORTANT: code below must run AFTER the file status has been saved in DB
+
+        if tr.status==sdconst.TRANSFER_STATUS_DONE:
+            sdevent.file_complete_event(tr) # trigger 'file complete' event
+
+
+def start_transfer_thread(tr):
+    th=sdworkerutils.WorkerThread(tr,eot_queue,Download)
+    th.setDaemon(True) # if main thread quits, we kill running threads (note though that forked child processes are NOT killed and continue running after that !)
+    th.start()
+
 
 def transfers_end():
+    for i in range(8): # arbitrary
+        try:
+            task=eot_queue.get_nowait() # raises Empty when empty
+            end_of_transfer(task)
+            eot_queue.task_done()
+        except Queue.Empty, e:
+            pass
+        except sdexception.FatalException, e:
+            raise
+        except:
 
-    _, _, access_token = api_client.goauth.get_access_token(username=globus_username, password=globus_password)
-    api = api_client.TransferAPIClient(username=globus_username, goauth=access_token)
+            # debug
+            #sdtrace.log_exception(stderr=True)
 
-    for task_id in globus_tasks:
+            raise
 
-        code, reason, data = api.task(task_id, fields="status")
-        status = data['status']
-
-        sdlog.debug("SDDMGLOB-016", "Checking the status of Globus transfer tasks, id: %s, status: %s" % (task_id, status))
-        for item in globus_tasks[task_id]['items']:
-            tr = item['tr']
-            if status == "SUCCEEDED":
-
-                assert tr.size is not None
-
-                if int(tr.size) != os.path.getsize(tr.get_full_local_path()):
-                    sdlog.error("SDDMGLOB-002","size don't match (remote_size=%i,local_size=%i,local_path=%s)"%(int(tr.size),os.path.getsize(tr.get_full_local_path()),tr.get_full_local_path()))
-
-                # retrieve local and remote checksum
-                checksum_type=tr.checksum_type if tr.checksum_type is not None else sdconst.CHECKSUM_TYPE_MD5
-                local_checksum=sdutils.compute_checksum(tr.get_full_local_path(),checksum_type)
-                remote_checksum=tr.checksum # retrieve remote checksum
-
-                if remote_checksum!=None:
-                    # remote checksum exists
-
-                    # compare local and remote checksum
-                    if remote_checksum==local_checksum:
-                        # checksum is ok
-
-                        tr.status = sdconst.TRANSFER_STATUS_DONE
-                    else:
-                        # checksum is not ok
-
-                        if incorrect_checksum_action=="remove":
-                            tr.status=sdconst.TRANSFER_STATUS_ERROR
-                            tr.priority -= 1
-                            tr.error_msg="File corruption detected: local checksum doesn't match remote checksum"
-
-                            # remove file from local repository
-                            sdlog.error("SDDMGLOB-155","checksum don't match: remove local file (local_checksum=%s,remote_checksum=%s,local_path=%s)"%(local_checksum,remote_checksum,tr.get_full_local_path()))
-                            try:
-                                os.remove(tr.get_full_local_path())
-                            except Exception,e:
-                                sdlog.error("SDDMGLOB-158","error occurs while removing local file (%s)"%tr.get_full_local_path())
-
-                        elif incorrect_checksum_action=="keep":
-                            sdlog.info("SDDMGLOB-157","local checksum doesn't match remote checksum (%s)"%tr.get_full_local_path())
-                            
-                            tr.status=sdconst.TRANSFER_STATUS_DONE
-
-                        else:
-                            raise FatalException("SDDMGLOB-507","incorrect value (%s)"%incorrect_checksum_action)
-                else:
-                    # remote checksum is missing
-                    # NOTE: we DON'T store the local checksum ('file' table contains only the REMOTE checksum)
-
-                    tr.status = sdconst.TRANSFER_STATUS_DONE
-
-                if tr.status == sdconst.TRANSFER_STATUS_DONE:
-                    tr.end_date=sdtime.now() # WARNING: this is not the real end of transfer date but the date when we ask the globus scheduler if the transfer is done.
-                    tr.error_msg=""
-                    sdlog.info("SDDMGLOB-101", "Transfer done (%s)" % str(tr))
-
-            elif status == "FAILED":
-                tr.status = sdconst.TRANSFER_STATUS_ERROR
-                tr.priority -= 1
-                tr.error_msg = "Error occurs during download."
-
-                sdlog.info("SDDMGLOB-101", "Transfer failed (%s)" % str(tr))
-
-                # Remove local file if exists
-                if os.path.isfile(tr.get_full_local_path()):
-                    try:
-                        os.remove(tr.get_full_local_path())
-                    except Exception,e:
-                        sdlog.error("SDDMGLOB-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
-
-            elif status == "INACTIVE":
-                # Reactivate both source and destination endpoints
-                activate_endpoint(api, globus_tasks[task_id]['src_endpoint'])
-                activate_endpoint(api)
-            elif status == "ACTIVE":
-                pass
-
-
-            # update file
-            sdfiledao.update_file(tr)
-
-
-            if tr.status == sdconst.TRANSFER_STATUS_DONE:
-
-                # TODO: maybe add a try/except and do some rollback here in
-                # case fatal exception occurs in 'file_complete_event' (else,
-                # we have a file marked as 'done' with the corresponding event
-                # un-triggered)
-
-                # NOTE: code below must run AFTER the file status has been
-                # saved in DB (because it makes DB queries which expect the
-                # file status to exist)
-
-                sdevent.file_complete_event(tr) # trigger 'file complete' event
-
-
-        # Remove the tasks from the lists of active tasks
-        if status == "SUCCEEDED" or status == "FAILED":
-            globus_tasks.pop(task_id, None)
 
 def transfers_begin(transfers):
 
-    # Activate the destination endpoint
-
-    _, _, access_token = api_client.goauth.get_access_token(username=globus_username, password=globus_password)
-    api = api_client.TransferAPIClient(username=globus_username, goauth=access_token)
-    activate_endpoint(api)
-
-    # Divide all files that are to be transferred into groups based on the source globus endpoint
+    # renew certificate if needed
+    try:
+        sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=False)
+    except Exception,e:
+        sdlog.error("SDDMGLOB-502","Exception occured while retrieving certificate (%s)"%str(e))
+        raise
 
     globus_transfers = {}
+    """
+    globus_transfers = {
+        <src_endpoint>: {
+            "items": [
+                {
+                    "src_path": <src_path>,
+                    "dst_path": <dst_path>
+                    "tr": sdtypes.File
+                }...
+            ],
+            "task_id": <task_id>
+        }
+    }
+    """
 
-    for tr in transfers:
-        src_endpoint, src_path, path = map_to_globus(tr.url)
-        local_path = tr.get_full_local_path()
-        if not src_endpoint in globus_transfers:
-            globus_transfers[src_endpoint] = {
-                    'src_endpoint': src_endpoint,
-                    'items': []
-            }
-        globus_transfers[src_endpoint]['items'].append({
-                'src_path': src_path,
-                'dst_path': local_path,
-                'tr': tr
+    for file_ in transfers:
+        src_endpoint, src_path, path = sdglobus.map_to_globus(file_.get("url"))
+        if src_endpoint is None:
+            sdlog.error("SDDMGLOB-105", "Non-globus file: %s" % str(file_))
+            continue
+        dst_path = os.path.join(dst_directory, file_.get("local_path"))
+        if src_endpoint not in globus_transfers:
+            globus_transfers[src_endpoint] = {"task_id": None, "items": []}
+        globus_transfers.get(src_endpoint).get("items").append({
+                "src_path": src_path,
+                "dst_path": dst_path,
+                "tr": file_
         })
-        sdlog.info("SDDMGLOB-001", "src_endpoint: %s, src_path: %s, local_path: %s" % (src_endpoint, src_path, local_path))
+        sdlog.info("SDDMGLOB-001", "src_endpoint: %s, src_path: %s, dst_path: %s" % (src_endpoint, src_path, dst_path))
 
-    # Submit transfers
+    # create a TransferClient object
+    authorizer = sddglobus.get_native_app_authorizer(client_id=client_id)
+    tc = globus_sdk.TransferClient(authorizer=authorizer)
 
     for src_endpoint in globus_transfers:
 
-        # Activate the source endpoint
-        activate_endpoint(api, src_endpoint)
+        # activate the ESGF endpoint
+        resp = tc.endpoint_autoactivate(src_endpoint, if_expires_in=36000)
+        if resp["code"] == "AutoActivationFailed":
+            requirements_data = sddglobus.fill_delegate_proxy_activation_requirements(
+                    resp.data, sdconfig.esgf_x509_proxy)
+            r = tc.endpoint_activate(src_endpoint, requirements_data)
+            if r["code"] != "Activated.ClientProxyCredential":
+                sdlog.error("SDGLOBUS-028", "Error: Cannot activate the source endpoint: (%s)" % src_endpoint)
+                raise FatalException()
 
-        # Create a transfer and add files to the transfer
+        # submit a transfer job
+        td = globus_sdk.TransferData(tc, src_endpoint, dst_endpoint)
 
-        code, message, data = api.transfer_submission_id()
-        if code != 200:
-            raise FatalException()
-        submission_id = data['value']
-        t = api_client.Transfer(submission_id, src_endpoint, dst_endpoint)
-        sdlog.info("SDDMGLOB-004", "Globus transfer, source endpoint: %s, destination endpoint: %s" % (src_endpoint, dst_endpoint))
-        for item in globus_transfers[src_endpoint]['items']:
-            t.add_item(item['src_path'], item['dst_path'])
-            sdlog.info("SDDMGLOB-005", "Globus transfer item, source path: %s, destination path: %s" % (item['src_path'], item['dst_path']))
+        for item in globus_transfers.get(src_endpoint).get("items"):
+            td.add_item(item.get("src_path"), item.get("dst_path"))
 
-        # Submit the transfer
+        try:
+            task = tc.submit_transfer(td)
+            task_id = task.get("task_id")
+            print("Submitted Globus transfer: {}".format(task_id))
+            globus_transfers.get(src_endpoint)["task_id"] = task_id
+            globus_transfers.get(src_endpoint)["src_endpoint"] = src_endpoint
+            globus_transfers.get(src_endpoint)["tc"] = tc
+        except Exception as e:
+            raise Exception("Globus transfer from {} to {} failed due to error: {}".format(
+                src_endpoint, dst_endpoint, e))
 
-        code, message, data = api.transfer(t)
-        if code != 202:
-            sdlog.error("SDDMGLOB-006","Error: Cannot add a transfer: (%s, %s)"% (code, message))
-            raise FatalException()
-        task_id = data['task_id']
-        sdlog.info("SDDMGLOB-007", "Submitted Globus task, id: %s" % task_id)
-        globus_tasks[task_id] = globus_transfers[src_endpoint]
-
-
-def map_to_globus(url):
-    parsed_url = urlparse.urlparse(url)
-    hostname = parsed_url.netloc
-    src_endpoint = None
-    src_path = re.sub('/+', '/', parsed_url.path)
-    path = src_path
-    if hostname in globus_endpoints:
-        src_endpoint = globus_endpoints[hostname].name
-        path_out = globus_endpoints[hostname].path_out
-        path_in = globus_endpoints[hostname].path_in
-        if path_out:
-            src_path.replace(path_out, '', 1)
-        if path_in:
-            src_path = path_out + src_path
-    sdlog.debug("SDDMGLOB-024", "Mapped url %s to %s%s" % (url, src_endpoint, src_path))
-    return src_endpoint, src_path, path
-
-
-def activate_endpoint(api, ep=None):
-    if ep is None:
-        ep = dst_endpoint
-
-    code, reason, reqs = api.endpoint_activation_requirements(ep, type='delegate_proxy')
-    public_key = reqs.get_requirement_value("delegate_proxy", "public_key")
-    proxy = x509_proxy.create_proxy_from_file(sdconfig.esgf_x509_proxy, public_key, lifetime_hours=72)
-    reqs.set_requirement_value("delegate_proxy", "proxy_chain", proxy)
-    try:
-        code, reason, result = api.endpoint_activate(ep, reqs)
-    except api_client.APIError as e:
-        sdlog.error("SDDMGLOB-028","Error: Cannot activate the source endpoint: (%s)"% str(e))
-        raise FatalException()
-
+    for src_endpoint in globus_transfers:
+        start_transfer_thread(globus_transfers.get(src_endpoint))
 
 def can_leave():
     return True
@@ -240,97 +182,15 @@ def can_leave():
 def fatal_exception():
     return False
 
-
-NS = "http://www.esgf.org/whitelist"
-
-
-def file_modification_datetime(filepath):
-    t = os.path.getmtime(filepath)
-    return datetime.fromtimestamp(t)
-
-
-class Endpoint(object):
-    '''Utility class that stores the fields for processing a Globus endpoint.'''
-
-    def __init__(self, name, path_out=None, path_in=None):
-        self.name = name
-        self.path_out = path_out
-        self.path_in = path_in
-
-
-class EndpointDict(object):
-
-    __metaclass__ = abc.ABCMeta
-
-    @abc.abstractmethod
-    def endpointDict(self):
-        '''Returns a dictionary of (GridFTP hostname:port, Globus Endpoint object) pairs.''' 
-        pass
-
-
-class LocalEndpointDict(EndpointDict):
-    '''Implementation of EndpointDict based on a local XML configuration file.'''
-
-    def __init__(self, filepath):
-        self.filepath = None
-        self.endpoints = {}
-        self.init = False
-
-        try:
-            if os.path.exists(filepath):
-                self.filepath = filepath
-                self.modtime = file_modification_datetime(self.filepath)
-                self._reload(force=True)
-                self.init = True
-
-        except IOError:
-            pass
-
-    def _reload(self, force=False):
-        '''Internal method to reload the dictionary of endpoints if the file has changed since it was last read'''
-
-        if self.filepath: # only if endpoints file exists
-            modtime = file_modification_datetime(self.filepath)
-            if force or modtime > self.modtime:
-                sdlog.debug("SDDMGLOB-014", "Loading endpoints from: %s, last modified: %s" % (self.filepath, modtime))
-                self.modtime = modtime
-                endpoints = {}
-
-                # read XML file
-                with open (self.filepath, "r") as myfile:
-                    xml=myfile.read().replace('\n', '')
-
-                # <endpoints xmlns="http://www.esgf.org/whitelist">
-                root = fromstring(xml)
-                # <endpoint name="esg#jpl" gridftp="esg-datanode.jpl.nasa.gov:2811" />
-                for endpoint in root.findall("{%s}endpoint" % NS):
-                    gridftp = endpoint.attrib['gridftp']
-                    name = endpoint.attrib['name']                   # mandatory attribute
-                    path_out = endpoint.attrib.get('path_out', None) # optional attribute
-                    path_in = endpoint.attrib.get('path_in', None)   # optional attribute
-                    endpoints[ gridftp ] = Endpoint(name, path_out=path_out, path_in=path_in)
-                    sdlog.debug("SDDMGLOB-018", "Using Globus endpoint %s : %s (%s --> %s)"  % (gridftp, name, path_out, path_in))
-
-                # switch the dictionary of endpoints after reading
-                self.endpoints = endpoints
-
-    def endpointDict(self):
-        self._reload() # reload dictionary from file ?
-        return self.endpoints
-
 #
 # module init.
 #
 
-# sdt/conf/credentails.conf
-globus_username = sdconfig.config.get('globustransfer', 'username')
-globus_password = sdconfig.config.get('globustransfer', 'password')
-
-# sdt/conf/sdt.conf
-dst_endpoint = sdconfig.config.get('globustransfer', 'destination_endpoint')
-endpoints_filepath = sdconfig.config.get('globustransfer', 'esgf_endpoints')
+dst_endpoint = sdconfig.config.get("globustransfer", "destination_endpoint")
+dst_directory = sdconfig.config.get("globustransfer", "destination_directory")
+endpoints_filepath = sdconfig.config.get("globustransfer", "esgf_endpoints")
 if endpoints_filepath:
-    globus_endpoints = LocalEndpointDict(endpoints_filepath).endpointDict()
+    globus_endpoints = sdglobus.LocalEndpointDict(endpoints_filepath).endpointDict()
 
 incorrect_checksum_action=sdconfig.config.get('behaviour','incorrect_checksum_action')
 
@@ -353,4 +213,4 @@ globus_tasks = {
 The status of the tasks is checked by transfers_end(). If a Globus task is completed, the task is removed from the list.
 '''
 
-globus_tasks = {}
+eot_queue=Queue.Queue()
