@@ -86,9 +86,9 @@ def next_url(tr,conn):
         old_url=tr.url
         new_url=urls[0]
         tr.url=new_url
-        sdlog.info("SDNEXTUR-004","Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,old_url,new_url))
+        sdlog.info("SDNEXTUR-008","Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,old_url,new_url))
     else:
-        sdlog.info("SDNEXTUR-006","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
+        sdlog.info("SDNEXTUR-009","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.NextUrlNotFoundException()
 
 def remove_unsupported_url(urlps):
