@@ -92,8 +92,8 @@ def next_url(tr,conn):
         raise sdexception.NextUrlNotFoundException()
 
 def remove_unsupported_url(urlps):
-    # remove opendap url (opendap is not used in synda for now)
-    return [ urlp[0] for urlp in urlps if urlp[1].find('opendap')<0 ]
+    # remove opendap and globus urls (opendap and globus are not used in synda for now)
+    return [ urlp[0] for urlp in urlps if (urlp[1].find('opendap')<0 and urlp[1].find('globus')<0)]
 
 def get_urls(file_functional_id, searchapi_host):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
