@@ -70,6 +70,8 @@ def call_web_service(url,timeout=sdconst.SEARCH_API_HTTP_TIMEOUT,lowmem=False): 
         raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
     sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
+    for difile in di['files']:
+        difile['search_url'] = url
 
     return sdtypes.Response(call_duration=elapsed_time,lowmem=lowmem,**di) # RAM storage is ok here as one response is limited by SEARCH_API_CHUNKSIZE
 

@@ -25,7 +25,7 @@ def parse_parameters(buffer):
         raise
 
     params={}
-    footer_node=xmldoc["facet_counts"]
+    footer_node=xmldoc.get("facet_counts",{"facet_fields":{}})
     fields_node=footer_node["facet_fields"]
     for facet_name,li in fields_node.iteritems():
         items=[]
@@ -74,10 +74,10 @@ def parse_metadata(buffer):
 
     # retrieve header & footer (those nodes always exist)
     header_node=xmldoc["responseHeader"]
-    footer_node=xmldoc["facet_counts"]
+    # not used: footer_node=xmldoc["facet_counts"]
 
     # parse footer
-    fields_node=footer_node["facet_fields"]
+    # not used: fields_node=footer_node["facet_fields"]
 
     # --- parse body node --- #
 
