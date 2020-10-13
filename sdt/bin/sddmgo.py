@@ -18,6 +18,7 @@ Note
 import os
 import time
 import Queue
+import globus_sdk
 import sdapp
 import sdlog
 import sdconst
@@ -44,7 +45,7 @@ class Download():
         tc = transfer.get("tc")
         task_id = transfer.get("task_id")
         src_endpoint = transfer.get("src_endpoint")
-        transfer_status = sddglobus.globus_wait(tc, task_id, src_endpoint)
+        transfer_status = sdglobus.globus_wait(tc, task_id, src_endpoint)
         for item in transfer.get("items"):
             tr = item.get("tr")
             if transfer_status:
@@ -55,7 +56,7 @@ class Download():
                 tr.status = sdconst.TRANSFER_STATUS_ERROR
 
 
-def end_of_transfers(task):
+def end_of_transfer(task):
 
     # log
     for item in task.get("items"):
@@ -92,7 +93,7 @@ def transfers_end():
             pass
         except sdexception.FatalException, e:
             raise
-        except:
+        except Exception as e:
 
             # debug
             #sdtrace.log_exception(stderr=True)
@@ -126,11 +127,11 @@ def transfers_begin(transfers):
     """
 
     for file_ in transfers:
-        src_endpoint, src_path, path = sdglobus.map_to_globus(file_.get("url"))
+        src_endpoint, src_path, path = sdglobus.map_to_globus(file_.url)
         if src_endpoint is None:
             sdlog.error("SDDMGLOB-105", "Non-globus file: %s" % str(file_))
             continue
-        dst_path = os.path.join(dst_directory, file_.get("local_path"))
+        dst_path = os.path.join(dst_directory, file_.local_path)
         if src_endpoint not in globus_transfers:
             globus_transfers[src_endpoint] = {"task_id": None, "items": []}
         globus_transfers.get(src_endpoint).get("items").append({
@@ -141,15 +142,18 @@ def transfers_begin(transfers):
         sdlog.info("SDDMGLOB-001", "src_endpoint: %s, src_path: %s, dst_path: %s" % (src_endpoint, src_path, dst_path))
 
     # create a TransferClient object
-    authorizer = sddglobus.get_native_app_authorizer(client_id=client_id)
-    tc = globus_sdk.TransferClient(authorizer=authorizer)
+    authorizer = sdglobus.get_native_app_authorizer(client_id=sdglobus.client_id)
+    try:
+        tc = globus_sdk.TransferClient(authorizer=authorizer)
+    except Exception as e:
+        sdlog.error("SDDMGLOB-106", "Exception occured when authorizing to Globus Transfer: %s" % str(e))
 
     for src_endpoint in globus_transfers:
 
         # activate the ESGF endpoint
         resp = tc.endpoint_autoactivate(src_endpoint, if_expires_in=36000)
         if resp["code"] == "AutoActivationFailed":
-            requirements_data = sddglobus.fill_delegate_proxy_activation_requirements(
+            requirements_data = sdglobus.fill_delegate_proxy_activation_requirements(
                     resp.data, sdconfig.esgf_x509_proxy)
             r = tc.endpoint_activate(src_endpoint, requirements_data)
             if r["code"] != "Activated.ClientProxyCredential":
@@ -165,7 +169,7 @@ def transfers_begin(transfers):
         try:
             task = tc.submit_transfer(td)
             task_id = task.get("task_id")
-            print("Submitted Globus transfer: {}".format(task_id))
+            sdlog.info("SDDMGLOB-107", "Submitted Globus transfer: {}".format(task_id))
             globus_transfers.get(src_endpoint)["task_id"] = task_id
             globus_transfers.get(src_endpoint)["src_endpoint"] = src_endpoint
             globus_transfers.get(src_endpoint)["tc"] = tc

@@ -444,12 +444,14 @@ def globus_wait(tc, task_id, src_endpoint):
     if task["status"] == "SUCCEEDED":
         print_stderr("Globus transfer {} from {} succeeded".format(
             task_id, src_endpoint))
+        return True
     else:
         print_stderr("Globus Transfer task: {}".format(task_id))
         events = tc.task_event_list(task_id, num_results=1, filter="is_error:1")
         event = next(events)
         print_stderr("Globus transfer {} from {} failed due to error: {}".format(
             task_id, src_endpoint, event["details"]))
+    return False
 
 
 def direct(
