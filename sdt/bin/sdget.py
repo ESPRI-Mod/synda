@@ -30,6 +30,7 @@ import sdutils
 import sdconst
 import sdget_urllib
 from sdtools import print_stderr
+import sdlog
 
 def download(url,full_local_path,debug=False,http_client=sdconfig.http_client,timeout=sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT,verbosity=0,buffered=True,hpss=False):
     killed=False
@@ -201,6 +202,7 @@ def prepare_args(url,full_local_path,script,debug,timeout,verbosity,hpss):
         li.insert(1,'-p')
         li.insert(2,'0')
 
+    sdlog.debug('SDGET000-010',"sdget command %s"%li)
     return li
 
 # init.

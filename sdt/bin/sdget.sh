@@ -354,6 +354,7 @@ else
         $NO_CHECK_SERVER_CERTIFICATE \
         $url"
 fi
+echo WGET_CMD $WGET_CMD
 
 wget_stderr2stdout ()
 {
@@ -455,6 +456,8 @@ fi
 
 if [ $parse_output -eq 1 ]; then
     source "$wgetoutputparser" # we parse wget output to keep only HTTP response code from wget messages
+elif [ $wget_status -ne 0 ]; then
+    log "DEB015" "$wget_errmsg"
 fi
 
 
