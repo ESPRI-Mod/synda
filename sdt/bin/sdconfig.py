@@ -137,34 +137,6 @@ else:
         else:
             sys.exit('Warning: Environment not set up for synda to operate properly. Exiting.')
 
-
-    # commented on 08/08 to be replaced
-"""    if os.environ.get('SDT_USER_ENV','0')=='1':
-        # Being here means we use machine-wide synda environment as non-admin synda user,
-        # and so can only perform RO task (eg synda search, synda get, etc..)
-        # Also it means we are not in daemon mode (daemon mode is currently only
-        # available for admin-user. see TAG43J2K253J43 for more infos.)
-
-        # Non fully working as multi-daemon support not implemented yet. But works for
-        # basic command (eg 'synda get')
-        print('Daemon mode is inaccessible from this installation. '
-              'Please report to devs in case you think this is an error.')
-        user_paths.create_tree()
-        paths=user_paths
-    elif not os.path.isfile(os.path.join('ST_HOME', 'sdt.conf')):
-        print('Installation from scratch...')
-        from sdsetuputils import PostInstallCommand
-
-        pic = PostInstallCommand()
-        pic.run()
-        paths=install_paths
-    else:
-        # being here means synda application can only be used by root or admin (admin means being in the synda group)
-        print('here')
-        print(os.path.isfile(os.path.join('ST_HOME','sdt.conf')))
-        sdtools.print_stderr(sdi18n.m0028)
-        sys.exit(1)
-"""
 #hack
 paths=install_paths
 

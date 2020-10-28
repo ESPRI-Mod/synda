@@ -85,7 +85,6 @@ def insert(instance,columns_subset,commit,conn):
                     d[k]=instance.__dict__[k]
                 else:
                     try:
-                        print('here')
                         d['timestamp'] = instance.__dict__['_timestamp']
                     except AttributeError as ae:
                         print('FAILED')
