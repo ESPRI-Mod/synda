@@ -1,0 +1,5 @@
+project=CMIP5
+model=CNRM-CM5
+experiment=rcp26
+variable[atmos][mon]=tasmin
+timeslice=205601-210012

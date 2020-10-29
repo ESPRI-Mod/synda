@@ -1,0 +1,3 @@
+filename=ua_6hrPlev_MIROC5_historical_r1i1p1_1853010100-1853123118.nc
+filename=pr_day_MPI-ESM-LR_abrupt4xCO2_r1i1p1_18500101-18591231.nc
+url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|

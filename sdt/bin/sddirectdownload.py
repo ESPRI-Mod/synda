@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 
 ##################################
 #  @program        synda
@@ -20,7 +20,7 @@ import sdconst
 import sdconfig
 import sdutils
 import sdget
-import sdglobus
+# import sdglobus
 from sdtypes import File
 from sdtools import print_stderr
 
@@ -47,7 +47,7 @@ def run(files,
     globus mapping defined in /esg/config/esgf_endpoints.xml. Remaining files
     will be downloaded usingglobus-url-copy or wget.
     """
-    files = sdglobus.direct(files, force, local_path_prefix, verify_checksum, network_bandwidth_test, debug, verbosity)
+    # files = sdglobus.direct(files, force, local_path_prefix, verify_checksum, network_bandwidth_test, debug, verbosity)
 
     failed_count=0
 

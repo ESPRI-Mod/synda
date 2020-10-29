@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import site
 import os, sys, shutil, errno
 from ConfigParser import SafeConfigParser

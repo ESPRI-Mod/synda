@@ -1,0 +1,8 @@
+project=CMIP5
+model=inmcm4 bcc-csm1-1 GISS-E2-H
+experiment=amip piControl historical 1pctCO2 decadal2000
+ensemble=r1i1p1
+variable[land][mon]=mrsos nppRoot nep
+variable[seaIce][mon]=sic evap nshrice
+variable[ocnBgchem][mon]=dissic fbddtalk
+variable[*][*]=ta hur clcalipso parasolRefl

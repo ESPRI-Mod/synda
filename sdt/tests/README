@@ -1,0 +1,22 @@
+###############
+# REQUIREMENTS
+###############
+
+'tests' Package dependancies are listed into requirements.txt file
+
+pip install pytest
+conda install --channel "conda-forge" pandas
+
+###############
+# TARGETS
+###############
+
+2 set of tests :
+
+- 1 / a set for test environment : ESGF_TEST ?
+- 2 / a set for all environments
+
+To launch them, use the following commands:
+
+- 1 / pytest -m on_testenv
+- 2 / pytest -m on_all_envs
