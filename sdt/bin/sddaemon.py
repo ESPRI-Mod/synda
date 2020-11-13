@@ -74,7 +74,7 @@ def main_loop():
         else:
             if isinstance(e,SDException):
                 # In this case, we only print the exception code, as the errmsg
-                # is likely to be there already (i.e. low-level func should have 
+                # is likely to be there already (i.e. low-level func should have
                 # log information about this exception).
                 # The primary reason for this is to have a clear log entry
                 # when authentication failed (e.g. ESGF is down or openid is incorrect)

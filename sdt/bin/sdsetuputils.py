@@ -9,6 +9,7 @@ import os.path
 import pkg_resources
 from sdexception import EnvironmentNotSet
 # import sdlog
+from constants import get_home_folder
 
 
 class PostInstallCommand():
@@ -65,7 +66,7 @@ class PostInstallCommand():
     def run(self):
         # Checking the install environment
         if check_environment():
-            self.synda_home = os.getenv('ST_HOME')
+            self.synda_home = get_home_folder()
         else:
             print("Please set the environment variable ST_HOME")
             sys.exit(1)
@@ -118,7 +119,7 @@ def check_environment():
     used to make sure ST_HOME is set
     :return:
     """
-    if os.getenv('ST_HOME') is None:
+    if get_home_folder() is None:
         return False
     else:
         return True
@@ -161,10 +162,9 @@ def copy_tree(src_root, dst_root):
             copy_tree(os.path.join(src_root, item), os.path.join(dst_root, item))
 
 
-
 class EnvInit():
     def __init__(self):
-        self.st_home = os.getenv('ST_HOME')
+        self.st_home = get_home_folder()
         self.data_tar = str(pkg_resources.resource_filename(__name__, "data.tar.gz"))
 
     def untar_data_package(self):
@@ -178,4 +178,8 @@ class EnvInit():
     def run(self):
         self.untar_data_package()
         print('(RE)initialized a new synda environment (db and conf files).')
-        print('If you think this is a mistake, copy your old data files to {}'.format(os.getenv('ST_HOME')))
+        print(
+            'If you think this is a mistake, copy your old data files to {}'.format(
+                get_home_folder(),
+            ),
+        )

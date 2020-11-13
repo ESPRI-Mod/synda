@@ -1,4 +1,4 @@
-{% set version = "3.14" %}
+{% set version = "3.15" %}
 
 package:
   name: synda

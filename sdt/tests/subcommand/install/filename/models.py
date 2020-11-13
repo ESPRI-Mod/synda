@@ -12,9 +12,10 @@ from sdt.tests.exceptions import MethodNotImplemented
 
 class SubCommand(Base):
 
-    def __init__(self, context):
+    def __init__(self, context, exceptions_codes=None):
         super(SubCommand, self).__init__(
             context,
+            exceptions_codes=exceptions_codes,
             description="Download with install subcommand, configuration is given by file",
         )
         self.configure(

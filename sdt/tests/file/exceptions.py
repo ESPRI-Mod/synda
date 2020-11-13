@@ -27,6 +27,7 @@ class FormatError(Exception):
             ),
         )
 
+
 class IndexError(Exception):
     def __init__(self, index, full_filename):
         error_msg = "REQUESTED index '{}' is NOT in FILE : '{}'"

@@ -12,9 +12,10 @@ from sdt.tests.exceptions import MethodNotImplemented
 
 class DestFolderGetSubCommand(Base):
 
-    def __init__(self, context):
+    def __init__(self, context, exceptions_codes=None):
         super(DestFolderGetSubCommand, self).__init__(
             context,
+            exceptions_codes=exceptions_codes,
             description="Download configuration is given by command line",
         )
 
@@ -26,7 +27,7 @@ class DestFolderGetSubCommand(Base):
     def configure(self, dest_folder, filename):
 
         self.set_argv(
-            ['', self.name, "--dest_folder", dest_folder, filename],
+            ['', self.name, "--verify_checksum", "--dest_folder", dest_folder, filename],
         )
 
 

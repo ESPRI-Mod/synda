@@ -9,20 +9,22 @@
 from sdt.tests.subcommand.get.models import SubCommand as Base
 
 
-class ConfigFileSubCommand(Base):
+class DestFolderSubCommand(Base):
 
-    def __init__(self, context):
-        super(ConfigFileSubCommand, self).__init__(
+    def __init__(self, context, exceptions_codes=None):
+        super(DestFolderSubCommand, self).__init__(
             context,
-            description="Download configuration is given by file",
+            exceptions_codes=exceptions_codes,
+            description="Download configuration is given by command line",
         )
 
         self.configure(
+            context.get_folder(),
             context.get_dataset(),
         )
 
-    def configure(self, dataset):
+    def configure(self, dest_folder, dataset):
 
         self.set_argv(
-            ['synda', self.name, "--verify_checksum", dataset],
+            ['synda', self.name, "--verify_checksum", "--dest_folder", dest_folder, dataset],
         )

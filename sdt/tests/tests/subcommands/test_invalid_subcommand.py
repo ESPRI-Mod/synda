@@ -15,9 +15,13 @@
 import sys
 import pytest
 
+from sdt.tests.manager import Manager
+Manager().set_tests_mode()
+
 from sdt.bin import synda
 
 
+@pytest.mark.on_all_envs
 def test_invalid_subcommand():
 
     sys.argv = ['synda', "x"]

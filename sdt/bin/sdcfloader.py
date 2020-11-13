@@ -20,12 +20,13 @@ import argparse
 import ConfigParser
 import sdtools
 
-def load(configuration_file,credential_file):
+def load(configuration_file,credential_file=""):
 
     config = ConfigParser.ConfigParser(default_options)
 
     config.read(configuration_file)
-    config.read(credential_file)
+    if credential_file:
+        config.read(credential_file)
 
     return config
 

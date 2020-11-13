@@ -9,33 +9,11 @@
 """
 """
 import os
-import csv
-from pandas import read_csv
+
+from sdt.source.readers import read_data, read_csv, read_header
 
 from sdt.tests.file.exceptions import NotFound as FileNotFound
 from sdt.tests.file.exceptions import FormatError as FileFormatError
-
-
-def read_data(file_name, sep, header=None, names=None, index_col=None):
-    data = \
-        read_csv(
-            file_name,
-            encoding='utf8',
-            engine='python',
-            sep=sep,
-            header=header,
-            names=names,
-            index_col=index_col,
-        )
-    return data
-
-
-def read_header(full_filename, delimiter=';'):
-    with open(full_filename) as f:
-        reader = csv.reader(f, delimiter=delimiter)
-        header = next(reader)
-        f.close()
-    return header
 
 
 class Reader(object):

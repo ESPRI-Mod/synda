@@ -64,6 +64,8 @@ def create_tables(conn):
 
     conn.execute("create table if not exists generic_cache (realm TEXT, name TEXT, value TEXT)")
 
+    conn.execute("CREATE TABLE if not exists failed_url ( url_id INTEGER PRIMARY KEY, url TEXT, file_id INTEGER)")
+
     conn.commit()
 
 def create_indexes(conn):
@@ -94,3 +96,4 @@ def create_indexes(conn):
     conn.execute("create        index if not exists idx_event_2 on event (status)")
     conn.execute("create        index if not exists idx_event_3 on event (crea_date)")
     conn.execute("create        index if not exists idx_file_13 on file (data_node)")
+    conn.execute("create unique index if not exists idx_failed_url_1 on failed_url (url)")

@@ -25,6 +25,7 @@ import sdi18n
 import sdcfbuilder
 from sdexception import SDException, EnvironmentNotSet
 from sdsetuputils import PostInstallCommand, EnvInit
+from constants import get_home_folder
 # from sdtiaction import checkenv, initenv
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
@@ -110,7 +111,7 @@ system_pkg_install=False
 if 'ST_HOME' not in os.environ:
     raise SDException('SDCONFIG-010',"'ST_HOME' is not set")
 
-install_paths=sdconfigutils.SourceInstallPaths(os.environ['ST_HOME'])
+install_paths=sdconfigutils.SourceInstallPaths(get_home_folder())
 
 
 # set user folders
