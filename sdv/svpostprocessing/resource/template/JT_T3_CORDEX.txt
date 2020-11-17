@@ -1,7 +1,0 @@
-project=CORDEX
-domain=EUR-11
-institute=IPSL-INERIS
-ensemble=r1i1p1
-experiment=rcp45
-variable[mon]=hfls
-

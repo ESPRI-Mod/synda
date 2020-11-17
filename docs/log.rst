@@ -5,7 +5,19 @@ Changelog
 
 Transfer Module
 ***************
-
+Version 3.15 - 2020-11-17
+    - cleaning & packages reorganization
+    - issue #158 - bug correction - daemon stopping without reporting errors
+Version 3.14 - 2020-10-29
+    - new files encoding : ISO-8859-1 => utf8
+Version 3.13 - 2020-10-28
+    - entry point moved to setup.py instead of meta.yaml file
+Version 3.9 - 2017-02-19
+	- add gridftp_opt option in sdt.conf.
+	- dataset attributes can be used in 'local_path_drs_template'.
+	- use decimal prefix instead of binary prefix in 'synda metrics' command.
+	- do not include checksum computation time in download time metric.
+	- enable supplementary groups support if available.
 Version 3.8 - 2017-02-19
 	- add ``info`` action to ``synda certificate`` command
 	- add security_dir_mode option

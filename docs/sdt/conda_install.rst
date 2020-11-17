@@ -30,7 +30,7 @@ Create a synda isolated environment if you wish:
 
 .. code-block:: bash
 
-    conda create --name my-synda-envrionment python=2.7
+    conda create --name my-synda-environment python=2.7
 
 Activate the created environment:
 
