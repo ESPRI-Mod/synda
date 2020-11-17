@@ -20,7 +20,7 @@ beautifulsoup4
 texttable
 
 # latest pillow version breaks test
-pillow==3.4.2
+pillow==7.1.0
 
 reportlab
 pytest==4.6.11
