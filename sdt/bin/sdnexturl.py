@@ -140,8 +140,12 @@ url_fields=','.join(sdconst.URL_FIELDS)  # used for the sdquicksearch call above
 
 def prioritize_urlps( urlps ):
     """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
-    lists of the form [url,protocol].  First, GridFTP urls are preferred over everything else.
-    Then, prefer some data nodes over others."""
+    lists of the form [url,protocol].
+    Some data nodes are preferred over others.  Then, GridFTP is preferred over http."""
+    # Formerly, I prioritized the other way; but experience shows that many data nodes which
+    # officially support GridFTP, don't usually have it working.
+    # Note also that within this function a "high priority" url has a low priority number.
+    # That's just for programming convenience.
     def priprotocol(protocol):
         if protocol.find('gridftp')>0:  return 0
         if protocol.find('http')>0:     return 1
@@ -153,8 +157,10 @@ def prioritize_urlps( urlps ):
         if url.find('ceda')>0:  return 3
         if url.find('dkrz')>0:  return 4
         if url.find('nci')>0:   return 5
+        if url.find('lasg')>0:  return 99  # Never fall back to this very slow data node.
         return 6
-    return sorted( urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))) )
+    urlps_cleaned = [ url for url in urlps if priurl(url)<99 ]
+    return sorted( urlps_cleaned, key=(lambda urlp: ( priurl(urlp[0]), priprotocol(urlp[1]))) )
 
 
 if __name__ == '__main__':
