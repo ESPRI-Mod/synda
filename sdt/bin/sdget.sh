@@ -320,8 +320,6 @@ fi
 # Don't check the server certificate against the available certificate authorities.  Also don't require the URL host name to match the common name presented by the certificate.
 NO_CHECK_SERVER_CERTIFICATE=" --no-check-certificate "
 #NO_CHECK_SERVER_CERTIFICATE=" "
-#jfp Synda standard TLS_ONLY=" --secure-protocol=TLSv1 "
-TLS_ONLY=" "
 g__lifetime=168
 
 # prevent download if local file path not starting with '/'
