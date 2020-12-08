@@ -320,8 +320,6 @@ fi
 # Don't check the server certificate against the available certificate authorities.  Also don't require the URL host name to match the common name presented by the certificate.
 NO_CHECK_SERVER_CERTIFICATE=" --no-check-certificate "
 #NO_CHECK_SERVER_CERTIFICATE=" "
-#jfp Synda standard TLS_ONLY=" --secure-protocol=TLSv1 "
-TLS_ONLY=" "
 g__lifetime=168
 
 # prevent download if local file path not starting with '/'
@@ -362,12 +360,10 @@ if [ $USE_CERTIFICATE = "yes" ]; then
     WGET_CMD="wget $WGETOPT \
         --certificate=$ESGF_CREDENTIAL --private-key=$ESGF_CREDENTIAL --ca-directory=$ESGF_CERT_DIR --ca-certificate=$ESGF_CREDENTIAL \
         $NO_CHECK_SERVER_CERTIFICATE \
-        $TLS_ONLY \
         $url"
 else
     WGET_CMD="wget $WGETOPT \
         $NO_CHECK_SERVER_CERTIFICATE \
-        $TLS_ONLY \
         $url"
 fi
 echo WGET_CMD $WGET_CMD
