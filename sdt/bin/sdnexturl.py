@@ -146,6 +146,7 @@ def prioritize_urlps( urlps, old_url ):
     # officially support GridFTP, don't usually have it working.
     # Note also that within this function a "high priority" url has a low priority number.
     # That's just for programming convenience.
+
     def priprotocol(protocol):
         if protocol.find('gridftp')>0:  return 0
         if protocol.find('http')>0:     return 1
