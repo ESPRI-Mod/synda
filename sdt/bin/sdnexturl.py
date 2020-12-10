@@ -67,7 +67,7 @@ def run(tr):
         conn.close()
 
 def next_url(tr,conn):
-    all_urlps=get_urls(tr.file_functional_id,tr.searchapi_host) # [[url1,protocol1],[url2,protocol2],...]
+    all_urlps=get_urls(tr.file_functional_id,tr.searchapi_host,tr.url) # [[url1,protocol1],[url2,protocol2],...]
     sdlog.info("SDNEXTUR-006","all_urpls= %s"%(all_urlps,))
     c = conn.cursor()
     fus = c.execute("SELECT url FROM failed_url WHERE file_id="+
@@ -95,7 +95,7 @@ def remove_unsupported_url(urlps):
     # remove opendap and globus urls (opendap and globus are not used in synda for now)
     return [ urlp[0] for urlp in urlps if (urlp[1].find('opendap')<0 and urlp[1].find('globus')<0)]
 
-def get_urls(file_functional_id, searchapi_host):
+def get_urls(file_functional_id, searchapi_host, old_url):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
 
     try:
@@ -134,11 +134,11 @@ def get_urls(file_functional_id, searchapi_host):
         # The search for //None bypasses an issue with the SOLR lookup where there is no
         # url_gridftp possibility.
 
-    return prioritize_urlps( urlps )
+    return prioritize_urlps( urlps, old_url )
 
 url_fields=','.join(sdconst.URL_FIELDS)  # used for the sdquicksearch call above
 
-def prioritize_urlps( urlps ):
+def prioritize_urlps( urlps, old_url ):
     """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
     lists of the form [url,protocol].
     Some data nodes are preferred over others.  Then, GridFTP is preferred over http."""
@@ -157,7 +157,8 @@ def prioritize_urlps( urlps ):
         if url.find('ceda')>0:  return 3
         if url.find('dkrz')>0:  return 4
         if url.find('nci')>0:   return 5
-        if url.find('lasg')>0:  return 99  # Never fall back to this very slow data node.
+        if old_url.find('lasg')<0 and url.find('lasg')>0:
+            return 99  # Never fall back to this very slow data node; but changing protocol is ok.
         return 6
     urlps_cleaned = [ url for url in urlps if priurl(url)<99 ]
     return sorted( urlps_cleaned, key=(lambda urlp: ( priurl(urlp[0]), priprotocol(urlp[1]))) )
