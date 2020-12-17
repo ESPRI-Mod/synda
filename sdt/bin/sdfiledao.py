@@ -231,7 +231,7 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             #sdlog.info("SDFILDAO-301","  query %s" % q )
         if cursor==True:
             c.close()
-        return (highest_waiting_priority.vals).get(data_nodes[0],None)
+        return (highest_waiting_priority.vals).get( (data_nodes[0] if data_nodes else None), None)
 # The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
 # highest_waiting_priority.vals = {}.
 # Using the database lets other processes update vals if they make changes affecting it.
