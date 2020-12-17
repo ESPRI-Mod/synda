@@ -63,6 +63,14 @@ def upgrade_db(conn,current_db_version,new_db_version):
 
 # -- upgrade procs -- #
 
+def upgrade_311(conn):
+
+    conn.execute("alter table file add column error_history")
+
+    conn.commit()
+
+    sddbversionutils.update_db_version(conn,'3.11')
+
 def upgrade_310(conn):
 
     conn.execute("CREATE TABLE failed_url ( url_id INTEGER PRIMARY KEY, url TEXT, file_id INTEGER)")
@@ -145,6 +153,7 @@ def upgrade_30(conn):
 # init.
 
 upgrade_procs={
+    '3.11': upgrade_311,
     '3.10': upgrade_310,
     '3.9': upgrade_39,
     '3.8': upgrade_38,
@@ -155,5 +164,5 @@ upgrade_procs={
     '3.3': upgrade_33,
     '3.2': upgrade_32,
     '3.1': upgrade_31,
-    '3.0': upgrade_30
+    '3.0': upgrade_30,
 }
