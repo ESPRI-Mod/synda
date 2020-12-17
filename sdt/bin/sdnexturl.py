@@ -14,6 +14,7 @@
 
 import argparse
 import sdlog
+import logging
 import sdutils
 import sdconst
 import sdquicksearch
@@ -61,6 +62,7 @@ def run(tr):
         return False
     except Exception as e:
         sdlog.info("SDNEXTUR-005","Unknown exception (file_functional_id=%s,exception=%s)"%(tr.file_functional_id,str(e)))
+        logging.exception("SDNEXTU-EX05")
         conn.close()
         return False
     finally:
@@ -105,6 +107,7 @@ def get_urls(file_functional_id, searchapi_host, old_url):
             post_pipeline_mode=None,index_host=searchapi_host)
     except Exception as e:
         sdlog.debug("SDNEXTUR-10", "exception %s.  instance_id=%s"%(e,file_functional_id))
+        logging.exception("SDNEXTU-EX10")
         raise e
 
     li=result.get_files()
