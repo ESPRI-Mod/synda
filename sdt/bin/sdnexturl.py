@@ -161,7 +161,7 @@ def prioritize_urlps( urlps, old_url ):
         if old_url.find('lasg')<0 and url.find('lasg')>0:
             return 99  # Never fall back to this very slow data node; but changing protocol is ok.
         return 6
-    urlps_cleaned = [ url for url in urlps if priurl(url)<99 ]
+    urlps_cleaned = [ urlp for urlp in urlps if priurl(urlp[0])<99 ]
     return sorted( urlps_cleaned, key=(lambda urlp: ( priurl(urlp[0]), priprotocol(urlp[1]))) )
 
 
