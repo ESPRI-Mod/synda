@@ -204,7 +204,7 @@ def event_loop():
         except Exception as e:
             sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
             sdlog.error("SDTSCHED-921","Exception=%s"%str(e))
-            if sdconfig.config.get_boolean('download','continue_on_cert_errors'):
+            if sdconfig.config.getboolean('download','continue_on_cert_errors'):
                 sdlog.error("SDTSCHED-922","  will continue anyway")
                 pass #jfp try to keep on going; for most data nodes we don't need an OpenID.
             else:
@@ -213,7 +213,7 @@ def event_loop():
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
     while True:
-        evlp0 = SDTimer.get_time()
+        evlp0 = SDTimer.get_time() #jfp
         assert os.path.isfile(sdconfig.daemon_pid_file)
 
         rst0 = SDTimer.get_time() #jfp
@@ -243,20 +243,19 @@ def event_loop():
         sdlog.info("JFPSCHED-300","%s time to sleep"%(slp1))
 
         #sdlog.debug("SDTSCHED-400","end of event loop")
-        evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True )
-        sdlog.info("SDTSCHED-400","%s time for once through event loop"%(evlp1))
+        evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-400","%s time for once through event loop"%(evlp1))
 
     print
-    evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True )
-    sdlog.info("SDTSCHED-401","%s time for once through event loop"%(evlp1))
+    evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+    sdlog.info("JFPSCHED-401","%s time for once through event loop"%(evlp1))
     sdlog.info("SDTSCHED-901","Scheduler successfully stopped",stderr=True)
 
 # module init.
 
 quit=0 # 0 => start, 1 => stop
 scheduler_state=0 # 0 => stopped, 1 => running, 2 => starting
-# jfp Previously we had main_loop_sleep=9.  1 gives much better throughput if there are many
-# parallel downloads.  0 might cause a lot of spinning in low-volume use...
+# jfp was main_loop_sleep=9, then 3, then 2.
 main_loop_sleep=1
 sdlog.set_default_logger(sdconst.LOGGER_CONSUMER)
 
