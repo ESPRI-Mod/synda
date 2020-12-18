@@ -151,8 +151,6 @@ def transfers_begin():
                         #    new_count = 3 - datanode_count[datanode]
                         if datanode.find('tropmet.res.in')>0:
                             new_count = 1 - datanode_count[datanode]
-                        if datanode.find('nasa')>0:
-                            new_count = 3 - datanode_count[datanode]
                     except KeyError:
                         sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
                                    (datanode,datanode_count.keys()) )
@@ -165,8 +163,6 @@ def transfers_begin():
                             new_count = 3
                         if datanode.find('tropmet.res.in')>0:
                             new_count = 1
-                        if datanode.find('nasa')>0:
-                            new_count = 3
                     if new_count<=0:
                         continue
 
