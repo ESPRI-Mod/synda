@@ -79,7 +79,6 @@ def create_configuration_file_sample(path):
     config.add_section('download')
     config.set('download', 'max_parallel_download', '8')
     config.set('download', 'max_parallel_download_per_datanode', '8')
-    config.set('download', 'get_only_latest_version', 'true')
     config.set('download', 'hpss', '1')
     config.set('download', 'http_fallback', 'false')
     config.set('download', 'gridftp_opt', '')
