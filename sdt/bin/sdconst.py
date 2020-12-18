@@ -237,7 +237,7 @@ SECURITY_DIR_HOME='home'
 SECURITY_DIR_MIXED='mixed'
 
 #Synda release parameters
-SYNDA_VERSION = '3.10'
+SYNDA_VERSION = '3.11'
 
 # miscellaneous
 GET_FILES_CACHING = True   # change to False to disable caching logic in sdfiledao.get_files.

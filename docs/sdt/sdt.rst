@@ -16,6 +16,7 @@ Installation
    :maxdepth: 1
 
    src_install
+   conda_install
    rpm_install
    deb_install
 
@@ -26,6 +27,7 @@ Upgrade
    :maxdepth: 1
 
    src_upgrade
+   conda_upgrade
    rpm_upgrade
    deb_upgrade
 

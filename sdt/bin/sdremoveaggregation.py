@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/root/anaconda3/envs/synda-from-scratch/bin/python
 # -*- coding: ISO-8859-1 -*-
 
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved”
+#  @copyright      Copyright ?(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved?
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -21,7 +21,7 @@ from sdexception import SDException
 
 def run(files):
     files=remove_aggregation(files)
-    return files 
+    return files
 
 def remove_aggregation(files):
     files_without_aggregation=[]
@@ -44,13 +44,14 @@ def is_aggregation(f):
 
         # sample aggregation dataset
         #  obs4MIPs.LOA_IPSL.PARASOL.day.parasolRefl.1.aggregation.8
-
-        result=('.aggregation.' in f.get("instance_id"))
+        if 'instance_id' not in f:
+            pass
+        else:
+            return ('.aggregation.' in f.get("instance_id"))
 
     else:
         raise SDException('SDRMAGGR-001','Incorrect type (%s)'%f["type"])
 
-    return result
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

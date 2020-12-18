@@ -187,6 +187,9 @@ def run(subparsers):
     subparser=subparsers.add_parser('help',help='Show help')
     subparser.add_argument('topic',nargs='?')
 
+    subparser=create_subparser(subparsers, 'check-env', help='Checks install environment.')
+    subparser=create_subparser(subparsers, 'init-env', help='Initilizes install environment.')
+
     subparser=create_subparser(subparsers,'history',common_option=False,help='Show history')
 
     subparser=create_subparser(subparsers,'install',help='Download dataset (async)',note=sdi18n.m0022,example=sdcliex.install())
@@ -259,6 +262,10 @@ def run(subparsers):
     add_parameter_argument(subparser)
     add_incremental_mode_argument(subparser,'stat')
     add_timestamp_boundaries(subparser,hidden=True) # hidden option mainly used for test and debug
+
+    subparser=create_subparser(subparsers, 'token',common_option=False,help='Get OAuth2 tokens')
+    subparser.add_argument('-p', '--provider',choices=['globus'],default='globus',help='Get Globus OAuth2 tokens')
+    add_action_argument(subparser,choices=['renew', 'print'])
 
     subparser=create_subparser(subparsers,'update',common_option=False,help='Update ESGF parameter local cache')
     subparser.add_argument('-i','--index_host',help='Retrieve parameters from the specified index')

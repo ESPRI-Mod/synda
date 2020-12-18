@@ -93,3 +93,4 @@ def create_indexes(conn):
     conn.execute("create        index if not exists idx_event_1 on event (name)")
     conn.execute("create        index if not exists idx_event_2 on event (status)")
     conn.execute("create        index if not exists idx_event_3 on event (crea_date)")
+    conn.execute("create        index if not exists idx_file_13 on file (data_node)")
