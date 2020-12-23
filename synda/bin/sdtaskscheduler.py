@@ -1,0 +1,296 @@
+#!/usr/bin/env python
+# -*- coding: ISO-8859-1 -*-
+
+##################################
+# @program        synda
+# @description    climate models data transfer program
+# @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                            All Rights Reserved"
+# @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
+##################################
+ 
+"""This module manages automated tasks.
+
+Note
+    This module is intended to run in background.
+"""
+
+import os
+import sys
+import time
+import sdapp
+import sdconfig
+import sdwatchdog
+import sddao
+import sdfiledao
+import sdconst
+import sdutils
+import sdlog
+import sdlogon
+import sdtask
+import sdprofiler
+import sdfilequery
+import sdsqlutils
+from sdexception import FatalException,SDException,OpenIDNotSetException
+from sdtime import SDTimer
+
+def terminate(signal,frame):
+    global quit
+
+    import sdlog
+
+    print # this print is just not to display the msg below on the same line as ^C
+
+    sdlog.info("SDTSCHED-004","Shutdown in progress..",stderr=True)
+
+    if scheduler_state!=1: # we can only stop the scheduler if it is running
+        sdlog.info("SDTSCHED-009","The daemon is not running (scheduler_state=%s)"%scheduler_state)
+        return
+
+    sdwatchdog.quit=1
+    quit=1
+
+
+    # kill all childs (i.e. abort running transfer(s) if any)
+
+    sdlog.info("SDTSCHED-005","Cleanup child processes")
+
+    import psutil
+    parent = psutil.Process(os.getpid())
+
+    # see TAG54353543DFDSFD for info regarding this block.
+    if hasattr(parent, 'get_children'):
+        for child in parent.get_children(True):
+            resilient_terminate(child)
+    else:
+        for child in parent.children(True):
+            resilient_terminate(child)
+
+
+    sdlog.info("SDTSCHED-006","Waiting for the daemon to stop..")
+
+def cleanup_running_transfer():
+    """This handle zombie cases (transfers with 'running' status, but not running).
+
+    Check for zombie transfer (move "running" transfer to "waiting")
+    
+    Notes:
+        - remaining "running" transfers exist if the daemon has been killed or if the server rebooted when the daemon was running)
+        - if there are still transfers in running state, we switch them to waiting and remove file chunk
+    """
+    transfer_list=sdfiledao.get_files(status=sdconst.TRANSFER_STATUS_RUNNING)
+
+    for t in transfer_list:
+        sdlog.info("SDTSCHED-023","fixing transfer status (%s)"%t.get_full_local_path())
+
+        if os.path.isfile(t.get_full_local_path()):
+            os.remove(t.get_full_local_path())
+
+        t.status=sdconst.TRANSFER_STATUS_WAITING
+        sdfiledao.update_file(t)
+
+def clear_failed_url():
+    """Clears the failed_url table."""
+    sdsqlutils.truncate_table("failed_url")
+
+def clear_failed_url_file(filename):
+    """Clears the rows of the failed_url table which correspond to one filename."""
+    # SQL line "delete from failed_url where col like %/filename"
+    sdsqlutils.truncate_part_of_table("failed_url", "url", "%%/%s"%filename )
+
+def resilient_terminate(child):
+    """This func terminate the child and inhibits NoSuchProcess exception if any."""
+
+    import psutil
+
+    if child.is_running():
+        try:
+            child.terminate()
+        except psutil.NoSuchProcess as e:
+            # this may occurs because of race condition. See TAGGFJDGKDF for more info.
+
+            pass
+
+def start_watchdog():
+    """Starting download processes watchdog."""
+
+    sdlog.info("SDTSCHED-993","Starting watchdog..")
+
+    frozenCheckerThread=sdwatchdog.FrozenDownloadCheckerThread()
+    frozenCheckerThread.setDaemon(True)
+    frozenCheckerThread.start()
+
+def cleanup():
+    # this func is only used in 'nohup' execution mode
+
+    if os.path.isfile(sdconfig.daemon_pid_file):
+        os.unlink(sdconfig.daemon_pid_file)
+
+@sdprofiler.timeit
+def run_hard_tasks():
+    """Hard tasks are executed during application shutdown."""
+    global quit
+
+    try:
+        sdtask.transfers_end()
+    except FatalException,e:
+        quit=1
+
+@sdprofiler.timeit
+def run_soft_tasks():
+    """Soft tasks are not executed during application shutdown."""
+
+    #tb0 = SDTimer.get_time() #jfp
+    if sdconfig.download:
+        sdtask.transfers_begin()
+    #tb1 = SDTimer.get_elapsed_time( tb0, show_microseconds=True ) #jfp
+    #sdlog.info("JFPSCHED-050","%s time to call sdtask.transfers_begin"%(tb1))
+
+    # disabled for now (deletion occurs in realtime in interactive code)
+    #sdtask.delete_transfers()
+
+    #prev0 = SDTimer.get_time() #jfp
+    if sdconfig.config.getboolean('module','post_processing'):
+        sdtask.process_async_event()
+    #prev1 = SDTimer.get_elapsed_time( prev0, show_microseconds=True ) #jfp
+    #sdlog.info("JFPSCHED-055","%s time to call sdtask.process_async_event"%(prev1))
+
+@sdprofiler.timeit
+def can_leave():
+    return sdfilequery.transfer_running_count()==0 and sdtask.can_leave()
+
+def event_loop():
+    global scheduler_state
+
+    sdlog.info("SDTSCHED-533","Connected to %s"%sdconfig.db_file,stderr=True)
+
+    scheduler_state=2
+    start_watchdog()
+    cleanup_running_transfer()
+    clear_failed_url()
+    if sdconst.GET_FILES_CACHING:
+        sdfiledao.highest_waiting_priority( True, True ) #initializes cache of max priorities
+    scheduler_state=1
+
+    if sdconfig.download:
+
+        try:
+
+            if sdconfig.is_openid_set():
+
+
+                # In this mode, we keep retrying if ESGF IDP is not accessible (e.g. if ESGF is down)
+                #
+                # Note 
+                #     To be practical, a 'systemd reload sdt' command must be implemented
+                #     (else, openid change in sdt.conf have no impact until the next
+                #     retry, which may be a few hours..). Because currently, synda is not aware
+                #     of sdt.conf changes while running.
+                #
+                #sdlogon.renew_certificate_with_retry(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
+                #sdlogon.renew_certificate_with_retry_highfreq(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
+
+
+                # In this mode, we stop the daemon if ESGF IDP is not accessible (e.g. if ESGF is down)
+                #
+                sdlogon.renew_certificate(sdconfig.openid,sdconfig.password,force_renew_certificate=True)
+
+
+            else:
+                sdlog.error("SDTSCHED-928",'OpenID not set in configuration file',stderr=True)
+                raise OpenIDNotSetException("SDTSCHED-264","OpenID not set in configuration file")
+
+        #except SDException,e:
+        except Exception as e:
+            sdlog.error("SDTSCHED-920","Error occured while retrieving ESGF certificate",stderr=True)
+            sdlog.error("SDTSCHED-921","Exception=%s"%str(e))
+            if sdconfig.config.getboolean('download','continue_on_cert_errors'):
+                sdlog.error("SDTSCHED-922","  will continue anyway")
+                pass #jfp try to keep on going; for most data nodes we don't need an OpenID.
+            else:
+                raise
+
+    sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
+
+    while True:
+        evlp0 = SDTimer.get_time() #jfp
+        assert os.path.isfile(sdconfig.daemon_pid_file)
+
+        rst0 = SDTimer.get_time() #jfp
+        if quit==0:
+            run_soft_tasks()
+        rst1 = SDTimer.get_elapsed_time( rst0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-100","%s time to call run_soft_tasks"%(rst1))
+
+        rht0 = SDTimer.get_time() #jfp
+        run_hard_tasks()
+        rht1 = SDTimer.get_elapsed_time( rht0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-200","%s time to call run_hard_tasks"%(rht1))
+
+        slp0 = SDTimer.get_time() #jfp
+        if sdtask.fatal_exception():
+            sdlog.error("SDTSCHED-002","Fatal exception occured during download",stderr=True)
+            break
+
+        if quit==1:
+            if can_leave(): # wait until all threads finish and until everything has been processed on the database I/O queue 
+                sdlog.info("SDTSCHED-001","eot_queue orders processing completed",stderr=False)
+                sdlog.info("SDTSCHED-003","Running transfer processing completed",stderr=False)
+                break
+
+        time.sleep(main_loop_sleep)
+        slp1 = SDTimer.get_elapsed_time( slp0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-300","%s time to sleep"%(slp1))
+
+        #sdlog.debug("SDTSCHED-400","end of event loop")
+        evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+        sdlog.info("JFPSCHED-400","%s time for once through event loop"%(evlp1))
+
+    print
+    evlp1 = SDTimer.get_elapsed_time( evlp0, show_microseconds=True ) #jfp
+    sdlog.info("JFPSCHED-401","%s time for once through event loop"%(evlp1))
+    sdlog.info("SDTSCHED-901","Scheduler successfully stopped",stderr=True)
+
+# module init.
+
+quit=0 # 0 => start, 1 => stop
+scheduler_state=0 # 0 => stopped, 1 => running, 2 => starting
+# jfp was main_loop_sleep=9, then 3, then 2.
+main_loop_sleep=1
+sdlog.set_default_logger(sdconst.LOGGER_CONSUMER)
+
+if sdconfig.prevent_daemon_and_ihm:
+    if os.path.isfile(sdconfig.ihm_pid_file):
+        sdlog.info("SDTSCHED-014","IHM is running, exiting (%s exists)"%sdconfig.ihm_pid_file,stderr=True)
+        sys.exit(1)
+
+if __name__ == '__main__':
+
+
+    # OLD WAY DAEMON START
+    #
+    # Code below is for when run in standalone mode (i.e. using nohup instead of python-daemon))
+    #
+    # Note
+    #   In python-daemon mode, signal and daemon pidfile mecanisms are handled by the python-daemon module
+
+    if os.path.isfile(sdconfig.daemon_pid_file):
+        sdlog.info("SDTSCHED-012","%s already exists, exiting"%sdconfig.daemon_pid_file,stderr=True)
+        sys.exit(1)
+
+    with open(sdconfig.daemon_pid_file, 'w') as fh:
+        fh.write(str(os.getpid()))
+
+    import signal
+    signal.signal(signal.SIGINT, terminate)   
+    signal.signal(signal.SIGTERM, terminate)   
+
+    import atexit
+    atexit.register(cleanup) # unexpected exit AND normal exit (during normal exit, cleanup is called twice, that's normal)
+
+    # OLD WAY DAEMON END
+
+
+    event_loop()
+
+    cleanup() # we also need cleanup here, because when signal occur, atexit is NOT triggered !!!
