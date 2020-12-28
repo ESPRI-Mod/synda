@@ -1,5 +1,5 @@
 #!/usr/share/python/synda/synda/bin/python
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 #can't "import daemon" if you do this: #!/usr/bin/env python
 
 ##################################

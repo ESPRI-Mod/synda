@@ -1,5 +1,5 @@
 #!/usr/bin/python -u
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 
 ##################################
 #  @program        synda

@@ -1,5 +1,5 @@
 #!/root/anaconda3/envs/synda-from-scratch/bin/python
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 
 ##################################
 #  @program        synda
