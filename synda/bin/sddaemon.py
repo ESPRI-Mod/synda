@@ -1,6 +1,5 @@
-#!/usr/share/python/synda/synda/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#can't "import daemon" if you do this: #!/usr/bin/env python
 
 ##################################
 #  @program        synda
@@ -219,8 +218,10 @@ if __name__ == "__main__":
     parser.add_argument('action')
     args = parser.parse_args()
 
-    # workaround, should be in PYTHONPATH before sddaemon is invoked:
-#    sys.path.append("/usr/share/python/synda/synda/lib/python2.7/site-packages/")
+    # There should be a better way to get this path; the python in synda/synda/bin should know it...
+    sys.path.append( os.path.normpath( os.path.join( os.path.dirname(os.path.abspath(__file__)),
+                                                     '../lib/python2.7/site-packages' )))
+
     if args.action in ['start','stop']:
         if not sdpermission.is_admin():
             sdtools.print_stderr() # this is to prevent having all on the same line when using "synda service" command e.g. "Shutting down synda daemon (sdt): You need to be root to perform this command."
