@@ -82,7 +82,7 @@ find $data_path -type f -empty -delete
 #
 ( set +e ; find -L $data_path -type d -empty | sort -r | xargs -r rmdir --ignore-fail-on-non-empty -p ; exit 0 )
 
-# as the previous command may also remove 'data_package' folder (when all data_package have been removed), we re-create 'data_package' if missing
+# as the previous command may also remove 'data_package' folder (when all data_package have been removed), we re-untar 'data_package' if missing
 if [ ! -d $data_path ]; then
     mkdir -p $data_path
 fi

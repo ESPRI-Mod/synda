@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document describes how to create an ESGF archives partial mirror on a
+This document describes how to untar an ESGF archives partial mirror on a
 local cluster and keep it up to date.
 
 ## Synda installation
@@ -15,7 +15,7 @@ See [Selection file](selection_file.md)
 
 Notes: 
 
-* You can create many selection files (e.g. one per project)
+* You can untar many selection files (e.g. one per project)
 * Selection file(s) must be stored in the 'selection' folder
 
 ## File discovery

@@ -6,10 +6,7 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-import os
-
-from synda.tests.constants import DB_HOME_TESTS
-from synda.source.db.connection.models import Connection
+from synda.source.db.connection.cursor.models import Cursor
 from synda.tests.context.download.filename.models import Context as Base
 
 
@@ -24,18 +21,14 @@ class Context(Base):
         )
 
     def validation_after_subcommand_execution(self):
-        full_filename = os.path.join(
-            DB_HOME_TESTS,
-            "sdt.db",
-        )
-        conn = Connection(full_filename)
+        cursor = Cursor()
         sql_request = "SELECT status FROM file WHERE file_functional_id = '{}';".format(
             self.get_file().get_filename(),
         )
 
-        conn.execute(sql_request)
-        data = conn.get_cursor().get_data()
-        conn.close()
+        cursor.execute(sql_request)
+        data = cursor.get_data()
+        cursor.close()
 
         assert len(data) == 1
 

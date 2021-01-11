@@ -6,14 +6,10 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-import os
-import time
-
 from synda.tests.manager import Manager
 Manager().set_tests_mode()
 
-from synda.tests.stderr import FILE_NOT_FOUND
-from synda.tests.context.external_storage.models import Context as Base
+from synda.tests.context.models import Context as Base
 
 
 class Context(Base):

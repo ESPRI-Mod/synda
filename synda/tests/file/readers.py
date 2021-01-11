@@ -10,7 +10,7 @@
 """
 import os
 
-from synda.source.readers import read_data, read_csv, read_header
+from synda.source.readers import read_data, read_header
 
 from synda.tests.file.exceptions import NotFound as FileNotFound
 from synda.tests.file.exceptions import FormatError as FileFormatError
@@ -28,7 +28,6 @@ class Reader(object):
         self.init()
 
     def _validate(self):
-        res = False
         if os.path.exists(self.full_filename):
             res = True
         else:

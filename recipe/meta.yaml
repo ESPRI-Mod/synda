@@ -1,4 +1,4 @@
-{% set version = "3.15" %}
+{% set version = "3.2" %}
 
 package:
   name: synda
@@ -29,10 +29,10 @@ requirements:
     - requests
     - 'MyProxyClient[channel=ipsl]'
     - 'pycountry[channel=ipsl]'
-    - 'globusonline-transfer-api-client[channel=ipsl]'
     - 'texttable[channel=ipsl]'
     - 'python-jsonrpc[channel=ipsl]'
     - pytest
+    - pandas
 about:
     home: https://github.com/Prodiguer/synda
     license: Public

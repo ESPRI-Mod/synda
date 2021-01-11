@@ -10,47 +10,11 @@ import os
 
 from synda import tests
 
+# RESOURCES ARE REQUIRED FOR BUILDING the contents of the tests/data directory
 
-TESTS_DIR = os.path.join(
+RESOURCES_DIR = os.path.join(
     os.path.dirname(tests.__file__),
-    'tests',
-)
-
-
-# INPUT DATA REQUIRED FOR TESTS
-
-DATADIR = os.path.join(
-    TESTS_DIR,
-    'data',
-)
-
-SUBCOMMANDS_DIR = os.path.join(
-    TESTS_DIR,
-    "subcommands",
-)
-
-SYNCHRONOUS_SUBCOMMANDS_DIR = os.path.join(
-    SUBCOMMANDS_DIR,
-    "synchronous",
-)
-
-ASYNCHRONOUS_SUBCOMMANDS_DIR = os.path.join(
-    SUBCOMMANDS_DIR,
-    "asynchronous",
-)
-
-# OUTPUT DATA LOCATION
-
-ST_HOME_TESTS = os.path.join(
-    os.environ["ST_HOME"],
-    ".tests",
-)
-
-# TESTS DB LOCATION
-
-DB_HOME_TESTS = os.path.join(
-    ST_HOME_TESTS,
-    "db",
+    'resources',
 )
 
 
@@ -63,10 +27,10 @@ def is_test_mode_activated():
 
 # SQLITE DATABASE CONFIG
 
+
 # 2 minute timeout
 DB_CONNECTION_TIMEOUT = 120
 
 # DAEMON
 
-WAIT_DURATION_AFTER_DAEMON_START = 20
 WAIT_DURATION_AFTER_DAEMON_STOP = 10

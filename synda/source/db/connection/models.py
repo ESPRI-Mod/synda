@@ -6,54 +6,46 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
+import os
 import sqlite3
 
-from synda.tests.constants import DB_CONNECTION_TIMEOUT
+from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.db.connection.exceptions import DatabaseNotFound, DataIntegrityError, DataUnexpectedError
-from synda.source.db.cursor.models import Cursor
-from synda.source.db.cursor.exceptions import CursorNotAvailable
+from synda.source.config.file.db.models import Config as DBFile
 
 
 class Connection(object):
 
-    def __init__(self, full_filename):
+    def __init__(self, full_filename="", timeout=Preferences().download_direct_db_timeout):
+
+        # init
 
         self.full_filename = ""
+        self.timeout = 0
         self.db_connection = None
-        self.cursor = None
 
-        self.full_filename = full_filename
+        # settings
 
-    def set_cursor(self):
-        if self.db_connection:
-            try:
-                self.cursor = Cursor(
-                    self.db_connection.cursor()
-                )
+        self.set_fullfilename(full_filename)
+        self.timeout = timeout
+        self.connect()
 
-                pass
-            except Exception as error:
-                raise CursorNotAvailable(
-                    "sqlite",
-                    error.__str__(),
-                )
+    def set_fullfilename(self, full_filename):
 
-    def get_cursor(self):
-        return self.cursor
+        if full_filename:
+            # on demand, the connection is made on a speficic database
+            # useful to build the synda environment
 
-    def get_database_cursor(self):
-        if not self.db_connection:
-            self.connect()
-        if not self.cursor:
-            self.set_cursor()
-        return self.cursor.get_database_cursor()
+            if os.path.isdir(os.path.dirname(full_filename)):
+                self.full_filename = full_filename
+        else:
+            # by default, the connection is made on the operational database
+            if DBFile().exists():
+                self.full_filename = DBFile().get()
 
     def close(self):
-        self.get_database_cursor().close()
         self.db_connection.close()
-
         self.db_connection = None
-        self.cursor = None
 
     def get_database_connection(self):
         return self.db_connection
@@ -64,17 +56,29 @@ class Connection(object):
     def connect(self):
 
         try:
-            self.db_connection = sqlite3.connect(self.full_filename, DB_CONNECTION_TIMEOUT)
+            self.db_connection = sqlite3.connect(self.full_filename, self.timeout)
+            # this is for "by name" colums indexing
+            self.db_connection.row_factory = sqlite3.Row
 
         except (Exception, sqlite3.DatabaseError) as error:
             raise DatabaseNotFound(
                 error.__str__(),
             )
 
-    def execute(self, sql_request):
-        cursor = self.get_database_cursor()
+    def is_valid(self):
+        return isinstance(self.db_connection, sqlite3.Connection)
+
+    def commit(self):
+        self.db_connection.commit()
+
+    def execute(self, sql_requests):
+
+        if isinstance(sql_requests, str):
+            sql_requests = [sql_requests]
         try:
-            cursor.execute(sql_request)
+            with self.db_connection:
+                for sql_request in sql_requests:
+                    self.db_connection.execute(sql_request)
         except sqlite3.IntegrityError as error:
             self.close()
             raise DataIntegrityError(
@@ -86,31 +90,9 @@ class Connection(object):
                 error.__str__(),
             )
 
-        return cursor
-
 
 if __name__ == '__main__':
-    import os
-    # from sdt.tests.constants import DB_HOME_TESTS
-    # full_filename = os.path.join(
-    #     DB_HOME_TESTS,
-    #     "sdt.db",
-    # )
 
-    from synda.bin.constants import ST_HOME
-
-    full_filename = os.path.join(
-        os.path.join(
-            ST_HOME,
-            "db",
-        ),
-        "sdt.db",
-    )
-    conn = Connection(full_filename)
-    sql_request = "SELECT * FROM file;"
-    # sql_request = "SELECT * FROM selection__file;"
-    # sql_request = "SELECT * FROM sqlite_master WHERE type='table'"
-    conn.execute(sql_request)
-    data = conn.get_cursor().get_data()
+    conn = Connection()
     conn.close()
     pass

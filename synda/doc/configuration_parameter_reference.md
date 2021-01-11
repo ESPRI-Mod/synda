@@ -4,25 +4,13 @@ This document describes each parameter used in "std.conf" file to configure Synd
 
 ### daemon.user
 
-Set daemon user.
-
-Type: string
-
-Default: ""
-
-Note: the daemon must be started by root for this parameter to work.
+Deprecated
 
 --------------------------------------------------------
 
 ### daemon.group
 
-Set daemon group.
-
-Type: string
-
-Default: ""
-
-Note: the daemon must be started by root for this parameter to work.
+Deprecated
 
 --------------------------------------------------------
 
@@ -57,6 +45,52 @@ Default: false
 
 --------------------------------------------------------
 
+### download.direct_http_timeout (NEW)
+
+Direct download HTTP timeout, in seconds (time to wait for HTTP response).
+
+Type: int
+
+Default: 30
+
+(sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT is predicated)
+
+--------------------------------------------------------
+
+### download.async_http_timeout (NEW)
+
+Asynchronous download HTTP timeout, in seconds (time to wait for HTTP response).
+
+Type: int
+
+Default: 120
+
+(sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT is predicated)
+
+--------------------------------------------------------
+
+### download.direct_db_timeout (NEW)
+
+Used only for direct downloads
+This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.
+
+Type: int
+
+Default: 120
+
+--------------------------------------------------------
+
+### download.async_db_timeout (NEW)
+
+Used only for asynchronous downloads
+This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.
+
+Type: int
+
+Default: 12000
+
+--------------------------------------------------------
+
 ### module.download
 
 If true, download files from ESGF. To use Synda in discovery or post-processing
@@ -70,41 +104,25 @@ Default: true
 
 ### module.post_processing
 
-If true, send download completion events to the post-processing module.
-
-Type: boolean
-
-Default: 0
+Deprecated
 
 --------------------------------------------------------
 
 ### module.globustransfer
 
-If true, use Globus Transfer platform to download files.
-
-Type: boolean
-
-Default: 0
+Deprecated
 
 --------------------------------------------------------
 
 ### post_processing.host
 
-Post-processing daemon host
-
-Type: string
-
-Default: localhost
+Deprecated
 
 --------------------------------------------------------
 
 ### post_processing.port
 
-Post-processing daemon port
-
-Type: int
-
-Default: 8090
+Deprecated
 
 --------------------------------------------------------
 
@@ -155,7 +173,7 @@ Default: 'tmpuid'
 
 Type of metadata server
 
-Possible values are: "esgf_search_api", "thredds_catalog" and "apache_default_listing".
+Only one possible value at the moment.
 
 Type: string
 
@@ -169,7 +187,7 @@ Override 'selection file default value' directory default path
 
 Type: string
 
-Default: '$HOME/sdt/conf/default' for source installation and '/etc/synda/sdt/default' for system package installation.
+Default: '$ST_HOME/conf/default'
 
 --------------------------------------------------------
 
@@ -179,7 +197,7 @@ Override selection directory default path
 
 Type: string
 
-Default: '$HOME/sdt/selection' for source installation and '/etc/synda/sdt/selection' for system package installation.
+Default: '$ST_HOME/selection'
 
 --------------------------------------------------------
 
@@ -189,7 +207,7 @@ Override data directory default path
 
 Type: string
 
-Default: '$HOME/sdt/data' for source installation and '/srv/synda/sdt/data' for system package installation.
+Default: '$ST_HOME/data'
 
 --------------------------------------------------------
 
@@ -199,7 +217,7 @@ Override database default path
 
 Type: string
 
-Default: '$HOME/sdt/db' for source installation and '/var/lib/synda/sdt' for system package installation.
+Default: '$ST_HOME/sdt/db'
 
 --------------------------------------------------------
 
@@ -209,7 +227,7 @@ Override sandbox directory default path
 
 Type: string
 
-Default: '$HOME/sdt/sandbox' for source installation and '/srv/synda/sdt/sandbox' for system package installation.
+Default: '$ST_HOME/sandbox'
 
 --------------------------------------------------------
 
@@ -243,6 +261,112 @@ Possible values are: "small", "medium" and "big".
 Type: string
 
 Default: small
+
+--------------------------------------------------------
+
+### interface.dump_listing_limit_for_small_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'small'.
+
+Type: int
+
+Default: 50
+
+--------------------------------------------------------
+
+### interface.dump_listing_limit_for_medium_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'medium'.
+
+Type: int
+
+Default: 100
+
+--------------------------------------------------------
+
+### interface.dump_listing_limit_for_big_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'big'.
+
+Type: int
+
+Default: 6000
+
+--------------------------------------------------------
+
+### interface.list_listing_limit_for_small_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'small'.
+
+Type: int
+
+Default: 20
+
+--------------------------------------------------------
+
+### interface.list_listing_limit_for_medium_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'medium'.
+
+Type: int
+
+Default: 200
+
+--------------------------------------------------------
+
+### interface.list_listing_limit_for_big_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'big'.
+
+Type: int
+
+Default: 20000
+
+--------------------------------------------------------
+
+### interface.search_listing_limit_for_small_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'small'.
+
+Type: int
+
+Default: 100
+
+--------------------------------------------------------
+
+### interface.search_listing_limit_for_medium_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'medium'.
+
+Type: int
+
+Default: 1000
+
+--------------------------------------------------------
+
+### interface.search_listing_limit_for_big_mode (NEW)
+
+Set the total number of returned results when default_listing_size is set to 'big'.
+
+Type: int
+
+Default: 6000
+
+--------------------------------------------------------
+
+### interface.show_advanced_options (NEW)
+
+Available for the following subcommands : count, install, search, stat, upgrade
+
+When True allows to access the two following arguments : --timestamp_left_boundary and --timestamp_right_boundary
+
+Example
+
+    $ synda count -s selection.txt --timestamp_left_boundary 2012-01-01T01:00:00Z --timestamp_right_boundary 2015-01-01T01:00:00Z
+
+Type: boolean
+
+Default: false
 
 --------------------------------------------------------
 
@@ -381,18 +505,31 @@ Note: used to compute nearest replicat when "geolocation" mode is used
 
 ### globus.esgf_endpoints
 
-Set globus endpoints
-
-Type: string
-
-Default: /esg/config/esgf_endpoints.xml
+Deprecated
 
 --------------------------------------------------------
 
 ### globus.destination_endpoint
 
-Set destination endpoint
+Deprecated
 
-Type: string
 
-Default: destination#endpoint
+--------------------------------------------------------
+
+### api.esgf_search_chunksize (NEW)
+
+Maximum files number returned by one api call.
+
+Type: int
+
+Default: 9000
+
+--------------------------------------------------------
+
+### api.esgf_search_http_timeout (NEW)
+
+HTTP timeout in seconds (time to wait for HTTP esgf_search api response)
+
+Type: int
+
+Default: 300

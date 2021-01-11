@@ -149,10 +149,10 @@ local_folder=`dirname $local_file`
 # set group writable
 umask "u=rwx,g=rwx,o=rx"
 
-# create folder if not exists
+# untar folder if not exists
 mkdir -p ${local_folder}
 
-# check if we have right to create local file
+# check if we have right to untar local file
 if touch "$local_file" >/dev/null 2>&1; then # note that touch error msg is removed here to prevent having the same message twice
     rm "$local_file"
 else

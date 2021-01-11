@@ -9,7 +9,7 @@
 import threading
 
 
-class SubCommandExecute(threading.Thread):
+class Execute(threading.Thread):
     def __init__(self, sub_command):
         threading.Thread.__init__(self)
         self.sub_command = sub_command

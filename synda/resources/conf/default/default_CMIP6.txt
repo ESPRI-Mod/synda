@@ -1,0 +1,5 @@
+replica=false
+activity_id!=input4MIPs obs4MIPs
+institution_id!=IPSL
+experiment_id=lgm abrupt-2xCO2 hist-noLu piControl abrupt-4xCO2 1pctCO2 historical esm-hist hist-nat hist-GHG hist-aer hist-stratO3 ssp245 amip lig127k midHolocene past1000 midPliocene-eoi400 ssp119 ssp126 ssp370 ssp585 piClim-control piClim-4xCO2 piClim-aer piClim-anthro piClim-lu piClim-ghg piClim-histall piClim-histnat piClim-histghg piClim-histaerO3
+data_node=cmip.fio.org.cn esg-cccr.tropmet.res.in esgf-data1.llnl.gov esgf.nccs.nasa.gov esgf-data.ucar.edu esg-dn1.nsc.liu.se esg.camscma.cn esgf3.dkrz.de noresg.nird.sigma2.no esgf-nimscmip6.apcc21.org esgf-data3.ceda.ac.uk esgf.bsc.es esgf.nci.org.au esgf.rcec.sinica.edu.tw

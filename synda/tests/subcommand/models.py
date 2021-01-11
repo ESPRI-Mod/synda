@@ -9,7 +9,28 @@
 import sys
 import pytest
 
-from synda.bin import main as synda
+from synda.sdt import main as synda
+
+
+def get_list(options):
+    """
+
+    :param options: list of dictionaries to be reformatted as list [key1, value1, key2, value2...]
+    examples
+        {"realm" : "atmos"}
+        {"atmos": None}
+    :return:
+    """
+    result = []
+    for option in options:
+        if isinstance(option, dict):
+            for key, value in option.items():
+                result.append(key)
+                if value is not None:
+                    result.append(str(value))
+        elif isinstance(option, str):
+            result.append(option)
+    return result
 
 
 class SubCommand(object):
@@ -41,7 +62,17 @@ class SubCommand(object):
         self.argv = value
 
     def get_argv(self):
-        return self.argv
+        if self.argv:
+            argv = self.argv
+        else:
+            argv = ['synda', self.name]
+            argv.extend(
+                get_list(self.context.get_arguments()["positional"]),
+            )
+            argv.extend(
+                get_list(self.context.get_arguments()["optional"]),
+            )
+        return argv
 
     def init(self, name, context, description, exceptions_codes):
         self.name = name
@@ -54,6 +85,8 @@ class SubCommand(object):
         self.context.controls_before_subcommand_execution()
 
         sys.argv = self.get_argv()
+
+        # synda.run()
 
         with pytest.raises(BaseException) as exception:
             synda.run()

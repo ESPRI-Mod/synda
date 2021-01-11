@@ -6,13 +6,13 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from time import sleep
+import datetime
 
 from synda.tests.manager import Manager
 Manager().set_tests_mode()
 
-from synda.tests.constants import WAIT_DURATION_AFTER_DAEMON_STOP
-from synda.tests.context.external_storage.models import Context as Base
+from synda.tests.context.daemon.stop.constants import TIMEOUT
+from synda.tests.context.models import Context as Base
 
 
 class Context(Base):
@@ -21,7 +21,10 @@ class Context(Base):
         print "Control that the status of the daemon is : 'stopped'..."
         from synda.tests.manager import Manager
         Manager().set_tests_mode()
-        from synda.bin import sddaemon
+        from synda.sdt import sddaemon
 
-        sleep(WAIT_DURATION_AFTER_DAEMON_STOP)
+        end = datetime.datetime.now() + datetime.timedelta(seconds=TIMEOUT)
+        while sddaemon.is_running() and end > datetime.datetime.now():
+            continue
+
         assert not sddaemon.is_running()

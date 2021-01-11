@@ -10,12 +10,29 @@
 
 class Context(object):
 
-    def __init__(self, capsys=None):
+    def __init__(self, arguments=None, capsys=None):
 
+        # initialization
+        self.arguments = dict(
+            positional=[],
+            optional=[],
+        )
         # During test execution any output sent to stdout and stderr is captured
         self.capsys = None
 
+        # settings
+
         self.capsys = capsys
+        self.arguments = arguments
+
+    def get_arguments(self):
+        return self.arguments
+
+    def get_optional_arguments(self):
+        return self.arguments["optional"]
+
+    def get_positional_arguments(self):
+        return self.arguments["positional"]
 
     def get_capsys(self):
         return self.capsys

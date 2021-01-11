@@ -67,7 +67,7 @@ Configuration
 
 .. note::
 
-    To download file from ESGF, you need to create an openID account on one ESGF identity provider website (e.g. PCMDI, BADC, DKRZ.) and subscribe to the project licence/role you want to download.
+    To download file from ESGF, you need to untar an openID account on one ESGF identity provider website (e.g. PCMDI, BADC, DKRZ.) and subscribe to the project licence/role you want to download.
 
 - A quickstart guide is available with
 

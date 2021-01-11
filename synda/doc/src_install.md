@@ -54,7 +54,7 @@ export PATH=$ST_HOME/bin:$PATH
 vi $ST_HOME/conf/credentials.conf
 ```
 
-Note: to download file from ESGF, you need to create an openID account on one
+Note: to download file from ESGF, you need to untar an openID account on one
 ESGF identity provider website (e.g. PCMDI, BADC or DKRZ) and subscribe to
 CMIP5-RESEARCH role.
 

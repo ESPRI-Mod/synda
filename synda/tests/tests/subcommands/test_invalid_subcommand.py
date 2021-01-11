@@ -18,7 +18,7 @@ import pytest
 from synda.tests.manager import Manager
 Manager().set_tests_mode()
 
-from synda.bin import main as synda
+from synda.sdt import main as synda
 
 
 @pytest.mark.on_all_envs

@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+##################################
+#  @program        synda
+#  @description    climate models data transfer program
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
+##################################
+
+"""This module selects which protocol to use depending on configuration."""
+
+import sys
+import argparse
+import json
+import sdapp
+import sdprint
+import sdtools
+import sdlog
+from sdexception import SDException
+import sdpostpipelineutils
+
+from synda.source.config.process.download.constants import get_transfer_protocols
+
+
+def run(files):
+
+    for _file in files:
+        protocol = \
+            sdpostpipelineutils.get_attached_parameter(
+                _file,
+                'protocol',
+                get_transfer_protocols()['http'],
+            )
+
+        if protocol not in get_transfer_protocols():
+            raise SDException(
+                "SYNPROTO-004",
+                "Incorrect protocol (%s)" % protocol,
+            )
+
+        if protocol == get_transfer_protocols()['gridftp']:
+            if 'url_gridftp' in _file:
+                _file['url'] = _file['url_gridftp']
+            elif 'url_http' in _file:
+                sdlog.debug(
+                    'SYNPROTO-002',
+                    'Fallback to http as gridftp url is missing (%s)' % _file["title"],
+                )
+                _file['url'] = _file['url_http']
+
+        elif protocol == get_transfer_protocols()['http']:
+            if 'url_http' in _file:
+                _file['url'] = _file['url_http']
+            elif 'url_gridftp' in _file:
+                sdlog.warning(
+                    'SYNPROTO-001',
+                    'Fallback to gridftp as http url is missing',
+                )
+                _file['url'] = _file['url_gridftp']
+
+        else:
+            raise SDException(
+                "SYNPROTO-003",
+                "Incorrect protocol (%s)" % protocol,
+            )
+
+        sdtools.remove_dict_items(
+            _file,
+            ['url_gridftp', 'url_http'],
+        )
+
+    return files
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-1', '--print_only_one_item', action='store_true')
+    parser.add_argument('-F', '--format', choices=sdprint.formats, default='raw')
+    args = parser.parse_args()
+
+    files_ = json.load(sys.stdin)
+    files_ = run(files_)
+    sdprint.print_format(
+        files_,
+        args.format,
+        args.print_only_one_item,
+    )

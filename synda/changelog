@@ -1,3 +1,20 @@
+- Version 3.2 - 2021-01-11
+    - config parameters externalisation
+      - 'sdt.conf' file has new customizable parameters
+      - New 'internal.conf' file, for advanced parameters (not customizable, located into the /conf directory)
+    - enhancements
+      - init-env subcommand is enabled to build user environment
+      - synda raises on the command line the problems encountered by esgf_search api service
+      - In sdparam.get_name_from_value method, if more than one match, the print message has now a 'info' level
+      - store stacktrace log files in /log directory.
+    - bugs correction :
+      - help subcommand can be used even if user has not built yet any environment
+    - deprecated fixtures
+      - 'pexec' subcommand
+      - 'thredds_catalog' & 'apache_default_listing' APIS (synda operates only the 'esgf_search' API)
+      - synda ihm
+      - packages : sdevent, sdeventdao, sddatasetpattern, sdoperation
+
 - Version 3.15 - 2020-11-17
     - cleaning & packages reorganization
     - issue #158 - bug correction - daemon stopping without reporting errors
@@ -106,7 +123,7 @@
 	- move common method from Dataset and File class to BaseType class.
 	- set 'prevent_daemon_and_modification' to false for source installation.
 	- move 'max_parallel_download' from 'daemon' to 'download' section.
-	- create ihm_pid_file only if mutually exclusive lock is enabled.
+	- untar ihm_pid_file only if mutually exclusive lock is enabled.
 	- increase daemon sqlite timeout from 120s to 12000s.
 	- do not parse wget output by default and increase wget '--tries' to prevent hpss failure.
 	- default indexes set to dkrz.

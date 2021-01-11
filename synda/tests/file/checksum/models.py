@@ -7,16 +7,15 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import hashlib
-import os
+
+from synda.source.config.file.constants import CHECKSUM
 
 
 def get_hash_obj(checksum_type):
 
-    if checksum_type == "sha1":
+    if checksum_type == CHECKSUM['type']["sha256"]:
         hash_obj = hashlib.sha256()
-    elif checksum_type == "sha256":
-        hash_obj = hashlib.sha256()
-    elif checksum_type == "md5":
+    elif checksum_type == CHECKSUM['type']["md5"]:
         hash_obj = hashlib.md5
     else:
         hash_obj = None
@@ -26,7 +25,7 @@ def get_hash_obj(checksum_type):
 
 class Checksum(object):
 
-    def __init__(self, checksum_type="sha256", checksum_value=""):
+    def __init__(self, checksum_type=CHECKSUM['type']["sha256"], checksum_value=""):
         super(Checksum, self).__init__()
         self.type = ""
         self.value = ""
