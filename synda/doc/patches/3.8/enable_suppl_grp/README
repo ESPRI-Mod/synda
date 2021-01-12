@@ -1,0 +1,22 @@
+Description
+    This patch enables support for supplementary group in 3.8
+
+Depends
+    Python 2.7+
+    python-daemon 2.1.2+
+
+Usage
+    <stop daemon>
+
+    sudo /usr/share/python/synda/sdt/bin/pip install python-daemon==2.1.2
+
+    sudo cp /usr/share/python/synda/sdt/bin/sddaemon.py /usr/share/python/synda/sdt/bin/sddaemon_bkp.py
+
+    sudo wget --no-check-certificate 
+    https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/patches/3.8/enable_suppl_grp/sddaemon.py
+    -O /usr/share/python/synda/sdt/bin/sddaemon.py
+
+    <start daemon>
+
+Note
+    This patch has been included in 3.9
