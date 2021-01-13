@@ -1,0 +1,5 @@
+project=CMIP5
+ensemble=r1i1p1
+variable[rcp26 atmos mon]=tasmin
+variable[atmos day rcp85]=tas:Amon
+variable[atmos][day]=tasmin

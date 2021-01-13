@@ -1,0 +1,17 @@
+{% set version = "0.0.1" %}
+
+package:
+  name: sdt_data
+  version: {{ version }}
+
+source:
+  path: ../.
+  folder: ~/sdt_data
+
+build:
+  number: 6
+
+about:
+    home: https://github.com/Prodiguer/synda
+    license: Public
+    summary: 'Synda data_package transfer module data_package package'

@@ -1,0 +1,11 @@
+# This file contains default values for all projects.
+#project=CMIP5
+#latest=true
+#replica=false
+distrib=true
+#shards=pcmdi9.llnl.gov:8983/solr,esgf-index1.ceda.ac.uk:8983/solr
+#local_path_project_format=normal
+#local_path_product_format=normal
+local_path_format=tree
+#institute!=IPSL IPSL-INERIS LOA_IPSL
+protocol=http

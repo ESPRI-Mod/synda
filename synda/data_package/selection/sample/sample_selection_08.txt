@@ -1,0 +1,3 @@
+variable[*][*]=ta hur clcalipso parasolRefl
+selection_group=standalone
+cmor_table=cfMon
