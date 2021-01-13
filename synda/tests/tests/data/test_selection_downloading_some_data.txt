@@ -1,0 +1,6 @@
+project=CMIP5
+model=CNRM-CM5
+#experiment=historical
+experiment=amip
+ensemble=r1i1p1
+variable[atmos][mon]=psl
