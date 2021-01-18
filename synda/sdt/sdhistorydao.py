@@ -23,7 +23,7 @@ def add_history_line(action,selection_filename=None,insertion_group_id=None,crea
     crea_date=sdtime.now() if crea_date is None else crea_date
 
     c = conn.cursor()
-    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id, selection_file_checksum) values (?,?,?,?,?)",(action, selection_filename, crea_date, insertion_group_id,selection_file_checksum))
+    c.execute("insert into history (action, selection_filename, crea_date, insertion_group_id, selection_file_checksum) values (?,?,?,?,?)", (action, selection_filename, crea_date, insertion_group_id, selection_file_checksum))
     c.close()
     conn.commit()
 
@@ -44,7 +44,7 @@ def get_history_lines(selection_filename,action,conn=sddb.conn):
     c = conn.cursor()
 
     query="select %s from history where selection_filename = ? and action = ?"%_HISTORY_COLUMNS
-    c.execute(query,(selection_filename,action))
+    c.execute(query, (selection_filename, action))
 
     rs=c.fetchone()
     while rs!=None:
@@ -58,7 +58,7 @@ def get_latest_history_line(selection_filename,action,conn=sddb.conn):
     c = conn.cursor()
 
     query="select %s from history where selection_filename = ? and action = ? order by crea_date DESC LIMIT 1"%_HISTORY_COLUMNS
-    c.execute(query,(selection_filename,action))
+    c.execute(query, (selection_filename, action))
     rs=c.fetchone()
 
     assert rs is not None # existency test must be done before calling this func

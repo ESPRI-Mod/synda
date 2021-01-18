@@ -28,7 +28,7 @@ from synda.source.config.file.internal.models import Config as Internal
 def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
     # no commit here (will be committed in updatelastaccessdate())
     c = conn.cursor()
-    c.execute("update file set last_access_date=? where file_id = ?",(i__date,i__transfer_id))
+    c.execute("update file set last_access_date=? where file_id = ?", (i__date, i__transfer_id))
     c.close()
 
 def add_file(file,commit=True,conn=sddb.conn):
@@ -52,8 +52,8 @@ def add_file(file,commit=True,conn=sddb.conn):
 def delete_file(tr,commit=True,conn=sddb.conn):
     c = conn.cursor()
 
-    c.execute("delete from selection__file where file_id=?",(tr.file_id,)) # also delete entries from junction table
-    c.execute("delete from file where file_id=?",(tr.file_id,))
+    c.execute("delete from selection__file where file_id=?", (tr.file_id,)) # also delete entries from junction table
+    c.execute("delete from file where file_id=?", (tr.file_id,))
     # note that we don't delete entries (if any) from post_processing tables (this will be done in a batch procedure which will be manually executed from time to time)
 
     # TAGKRE45343J54K5JK

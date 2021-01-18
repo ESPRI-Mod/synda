@@ -13,8 +13,8 @@ from synda.source.containers import Container
 
 class Manager(Container):
 
-    def __init__(self):
-        super(Manager, self).__init__()
+    def __init__(self, identifier=""):
+        super(Manager, self).__init__(identifier=identifier)
         self.data_identifiers = []
 
     def get_data_identifiers(self):
@@ -24,6 +24,10 @@ class Manager(Container):
         self.data.append(item)
         self.data_identifiers.append(item.get_identifier())
         return self.get_last_item()
+
+    def set_data(self, data):
+        for item in data:
+            self.add(item)
 
     def get_item(self, identifier):
         try:

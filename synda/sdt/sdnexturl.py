@@ -72,7 +72,7 @@ def next_url(tr,conn):
     all_urlps=get_urls(tr.file_functional_id) # [[url1,protocol1],[url2,protocol2],...]
     sdlog.info("SDNEXTUR-006","all_urpls= %s"%(all_urlps,))
     c = conn.cursor()
-    fus = c.execute("SELECT url FROM failed_url WHERE file_id="+
+    fus = c.execute("SELECT url FROM failed_url WHERE file_id=" +
                   "(SELECT file_id FROM file WHERE file_functional_id=?)",
                     (tr.file_functional_id,))
     failed_urls = [fu[0] for fu in fus.fetchall()]

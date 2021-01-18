@@ -17,7 +17,7 @@ from sdexception import SDException
 def get_selection_files_list(self,us):
     li=[]
     c = self._conn.cursor()
-    c.execute("select t.local_path local_path from selection__transfer ust,transfer t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.get_selection_id(),))
+    c.execute("select t.local_path local_path from selection__transfer ust,transfer t where ust.transfer_id=t.transfer_id and ust.selection_id=?", (us.get_selection_id(),))
     rs=c.fetchone()
     while rs!=None:
         li.append(rs["local_path"])
@@ -38,7 +38,7 @@ def get_selection_total_size(us):
     """
     size=0
     c = sddb.conn.cursor()
-    c.execute("select sum(t.size) size from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and ust.selection_id=?",(us.get_selection_id(),))
+    c.execute("select sum(t.size) size from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and ust.selection_id=?", (us.get_selection_id(),))
     rs=c.fetchone()
     if rs is not None:
         size=rs[0]
@@ -52,7 +52,7 @@ def get_selections_filescount():
     selections=get_selections_files_count_helper()
 
     for selection_id in selections.keys():
-        c.execute("select filename from selection where selection_id=?",(selection_id,))
+        c.execute("select filename from selection where selection_id=?", (selection_id,))
         rs=c.fetchone()
 
         if rs is None:
@@ -98,7 +98,7 @@ def get_selection_stats(us,status):
     count=0
     c = sddb.conn.cursor()
 
-    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?",(status,us.get_selection_id(),))
+    c.execute("select size, count(1) from selection__transfer ust,file t where ust.transfer_id=t.transfer_id and t.status=? and ust.selection_id=?", (status, us.get_selection_id(),))
 
     #self.log("SDSTAT-INF110",""%(,))
 
@@ -115,7 +115,7 @@ def get_selections_stats(status):
     size=0
     count=0
     c = sddb.conn.cursor()
-    c.execute("select size, count(1) from file where status=?",(status,))
+    c.execute("select size, count(1) from file where status=?", (status,))
     rs=c.fetchone()
     size=rs[0] if (rs[0] is not None) else 0 # this is because count(1) return 0 when not found, but sum(stuff) returns None
     count=rs[1]

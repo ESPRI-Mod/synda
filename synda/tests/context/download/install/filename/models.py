@@ -6,7 +6,7 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.source.db.connection.cursor.models import Cursor
+from synda.source.db.task.file.models import get_rows_filtered_on_file_functional_id
 from synda.tests.context.download.filename.models import Context as Base
 
 
@@ -21,14 +21,9 @@ class Context(Base):
         )
 
     def validation_after_subcommand_execution(self):
-        cursor = Cursor()
-        sql_request = "SELECT status FROM file WHERE file_functional_id = '{}';".format(
+        data = get_rows_filtered_on_file_functional_id(
             self.get_file().get_filename(),
         )
-
-        cursor.execute(sql_request)
-        data = cursor.get_data()
-        cursor.close()
 
         assert len(data) == 1
 

@@ -43,7 +43,7 @@ def get_variables(project='CMIP5'):
 
     c = sddb.conn.cursor()
 
-    c.execute("select file.project, file.model, file.dataset_id, dataset.path, file.variable from file, dataset where dataset.project=? and file.dataset_id=dataset.dataset_id group by file.project,file.model,file.dataset_id,file.variable",(project,))
+    c.execute("select file.project, file.model, file.dataset_id, dataset.path, file.variable from file, dataset where dataset.project=? and file.dataset_id=dataset.dataset_id group by file.project,file.model,file.dataset_id,file.variable", (project,))
 
     rs=c.fetchone()
     while rs is not None:
@@ -69,9 +69,9 @@ def get_variables_files_count_by_status(dataset_id,variable=None):
     c = sddb.conn.cursor()
 
     if variable is None:
-        c.execute("select variable,status,count(*) from file where dataset_id=? group by variable,status",(dataset_id,))
+        c.execute("select variable,status,count(*) from file where dataset_id=? group by variable,status", (dataset_id,))
     else:
-        c.execute("select variable,status,count(*) from file where dataset_id=? and variable=? group by variable,status",(dataset_id,variable))
+        c.execute("select variable,status,count(*) from file where dataset_id=? and variable=? group by variable,status", (dataset_id, variable))
 
     """
     The query returns something like:
@@ -113,7 +113,7 @@ def get_variables_files_count(d):
 
 
     c = sddb.conn.cursor()
-    c.execute("select variable,count(*) from file where dataset_id=? group by variable",(d.dataset_id,))
+    c.execute("select variable,count(*) from file where dataset_id=? group by variable", (d.dataset_id,))
 
 
     """

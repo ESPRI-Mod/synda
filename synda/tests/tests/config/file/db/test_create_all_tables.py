@@ -12,61 +12,77 @@
  object : Table creation & cursor
 
 """
+import os
 import pytest
-
 from synda.tests.manager import Manager
-Manager().set_tests_mode()
 
+manager = Manager()
+manager.set_tests_mode()
+from synda.source.constants import get_env_folder
 from synda.source.db.connection.models import Connection
-from synda.source.db.connection.cursor.models import Cursor
-from synda.source.db.connection.dao.create.request import Request
+from synda.source.db.connection.request.tables.dao.create.manager import Manager as CreateManager
 
 
 @pytest.mark.on_all_envs
 def test_create_all_tables():
 
+    full_filename = os.path.join(
+        os.path.join(
+            get_env_folder(),
+            "db",
+        ),
+        "sdt_empty.db",
+    )
+    conn = Connection(full_filename=full_filename, timeout=30)
+
     # tables creation
 
-    request = Request()
-    request.process()
-    tbl_names = request.get_tbl_names()
-    # creation control
+    tables_manager = CreateManager()
+    tables_manager.process_tables(conn)
 
-    cursor = Cursor()
+    # table existence test
 
-    sql_request = "SELECT * FROM sqlite_master WHERE type='table'"
-    cursor.execute(sql_request)
-    data = cursor.get_data()
-    cursor.close()
+    expected_table_names = tables_manager.get_table_names()
+    read_tables_manager = conn.get_item("tables crud").get_item("read")
+    read_tables_manager.set_db_connection(conn)
+    table_names = read_tables_manager.get_table_names()
+    assert sorted(table_names) == sorted(expected_table_names)
 
-    assert len(data) == len(tbl_names)
-    assert request.tables_already_exist()
+    index_names = read_tables_manager.get_index_names()
+    expected_index_names = tables_manager.get_index_names()
+    assert sorted(index_names) == sorted(expected_index_names)
+
+    conn.close()
 
 
 @pytest.mark.on_all_envs
 def test_create_all_tables_error():
 
+    full_filename = os.path.join(
+        os.path.join(
+            get_env_folder(),
+            "db",
+        ),
+        "sdt_empty.db",
+    )
+    conn = Connection(full_filename=full_filename, timeout=30)
+
     # tables creation
 
-    request = Request()
-    request.process()
-    tbl_names = request.get_tbl_names()
+    create_manager = CreateManager()
+    create_manager.process_tables(conn)
 
     # table drop
 
-    connection = Connection()
-    sql_drop_request = "DROP TABLE version"
-    connection.execute(sql_drop_request)
-    connection.close()
+    delete_tables_manager = conn.get_item("tables crud").get_item("delete")
+    delete_tables_manager.set_db_connection(conn)
+    delete_tables_manager.process_tables(["version"])
 
-    # creation control
+    # table existence test
 
-    cursor = Cursor()
-
-    sql_request = "SELECT * FROM sqlite_master WHERE type='table'"
-    cursor.execute(sql_request)
-    data = cursor.get_data()
-    cursor.close()
-
-    assert len(data) == len(tbl_names) - 1
-    assert not request.tables_already_exist()
+    expected_table_names = create_manager.get_table_names()
+    read_tables_manager = conn.get_item("tables crud").get_item("read")
+    read_tables_manager.set_db_connection(conn)
+    table_names = read_tables_manager.get_table_names()
+    assert len(table_names) + 1 == len(expected_table_names)
+    assert 'version' not in table_names

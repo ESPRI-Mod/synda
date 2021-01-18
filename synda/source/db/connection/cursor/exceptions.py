@@ -8,9 +8,9 @@
 ##################################
 
 
-class CursorNotAvailable(Exception):
+class CursorNotValid(Exception):
     def __init__(self, identifier, error):
-        error_msg = "NO CURSOR AVAILABLE / DATABASE IDENTIFIER : '{}' / ERROR : '{}'"
+        error_msg = "INVALID CURSOR / DATABASE IDENTIFIER : '{}' / ERROR : '{}'"
         Exception.__init__(
             self,
             error_msg.format(

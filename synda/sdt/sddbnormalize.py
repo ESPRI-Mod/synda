@@ -20,6 +20,7 @@ def normalize_checksum_type(conn):
     conn.create_function("NORMALIZE_CHECKSUM_TYPE", 1, sdnormalize.normalize_checksum_type)
     conn.execute("UPDATE file set checksum_type=NORMALIZE_CHECKSUM_TYPE(checksum_type);")
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 

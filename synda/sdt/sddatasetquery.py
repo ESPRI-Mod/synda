@@ -38,21 +38,21 @@ def get_dataset_stats(d):
     c = sddb.conn.cursor()
 
     # -- size by status -- #
-    c.execute("select status,sum(size) as size from file where dataset_id=? group by status",(d.dataset_id,))
+    c.execute("select status,sum(size) as size from file where dataset_id=? group by status", (d.dataset_id,))
     rs=c.fetchone()
     while rs is not None:
         stat['size'][rs['status']]=rs['size']
         rs=c.fetchone()
 
     # -- count by status -- #
-    c.execute("select status,count(1) as count from file where dataset_id=? group by status",(d.dataset_id,))
+    c.execute("select status,count(1) as count from file where dataset_id=? group by status", (d.dataset_id,))
     rs=c.fetchone()
     while rs is not None:
         stat['count'][rs['status']]=rs['count']
         rs=c.fetchone()
 
     # -- how many variable, regardless of the file status -- #
-    c.execute("select count(distinct variable) from file where dataset_id=?",(d.dataset_id,))
+    c.execute("select count(distinct variable) from file where dataset_id=?", (d.dataset_id,))
     rs=c.fetchone()
     count=rs[0]
     stat['variable_count']=count
@@ -64,7 +64,7 @@ def get_dataset_versions(i__d,i__compute_stats):
     datasetVersions=DatasetVersions()
 
     c = sddb.conn.cursor()
-    c.execute("select * from dataset where path_without_version=?",(i__d.path_without_version,))
+    c.execute("select * from dataset where path_without_version=?", (i__d.path_without_version,))
     rs=c.fetchone()
     while rs!=None:
 

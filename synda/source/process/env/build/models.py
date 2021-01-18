@@ -23,7 +23,7 @@ from synda.source.identifier import Identifier
 from synda.source.config.env.build.constants import DIRECTORY as BUILD_DIRECTORY
 
 from synda.source.config.file.db.constants import FILENAME as DEFAULT_DB_FILENAME
-from synda.source.db.connection.dao.create.request import Request as CreateDBRequest
+from synda.source.db.connection.request.tables.dao.create.process import Process as CreateDBProcess
 
 from synda.source.config.file.env.constants import SUB_DIRECTORIES as ENV_SUB_DIRECTORIES
 
@@ -127,8 +127,8 @@ class Process(Identifier):
             ),
             DEFAULT_DB_FILENAME,
         )
-        request = CreateDBRequest(full_filename)
-        request.process()
+        process = CreateDBProcess(full_filename)
+        process.execute()
 
     def create_env_file(self):
 

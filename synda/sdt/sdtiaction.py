@@ -176,7 +176,6 @@ def daemon(args):
         elif args.action == "stop":
 
             if sddaemon.is_running():
-                sddaemon.stop()
                 try:
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
@@ -685,6 +684,7 @@ def variable(args):
                 print 'long name:        ',file_['variable_long_name'][0]
                 print 'unit:             ',file_['variable_units'][0]
 
+
 def watch(args):
     import sdreport, sddaemon
 
@@ -697,6 +697,7 @@ def watch(args):
 def checkenv(args):
     env_manager = Manager()
     env_manager.check(interactive_mode=True)
+
 
 # init.
 def initenv(args):

@@ -6,11 +6,13 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
+from synda.source.identifier import Identifier
 
 
-class Container(object):
+class Container(Identifier):
 
-    def __init__(self,):
+    def __init__(self, identifier=""):
+        Identifier.__init__(self, identifier)
         self.data = []
 
     def get_data(self):

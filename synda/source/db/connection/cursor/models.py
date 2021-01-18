@@ -9,50 +9,57 @@
 import sqlite3
 import itertools
 
-from synda.source.db.connection.models import Connection
 from synda.source.db.connection.exceptions import DataIntegrityError, DataUnexpectedError
-from synda.source.db.connection.cursor.exceptions import CursorNotAvailable
+from synda.source.db.connection.cursor.exceptions import CursorNotValid
 
 
-class Cursor(Connection):
+class Cursor(object):
 
-    def __init__(self, full_filename=""):
-        super(Cursor, self).__init__(full_filename=full_filename)
+    def __init__(self, db_cursor, db_identifier=""):
+        # init
         self.db_cursor = None
-        self.set_db_cursor()
+        self.db_identifier = ""
 
-    def set_db_cursor(self):
-        if self.get_database_connection():
-            try:
-                self.db_cursor = self.get_database_connection().cursor()
-            except Exception as error:
-                raise CursorNotAvailable(
-                    "sqlite",
-                    error.__str__(),
-                )
+        # settings
+        self.set_db_cursor(db_cursor)
+        self.db_identifier = db_identifier
+
+    def set_db_cursor(self, db_cursor):
+        self.db_cursor = db_cursor
 
     def get_db_cursor(self):
         return self.db_cursor
 
-    def execute(self, sql):
-        try:
-            self.db_cursor.execute(sql)
-        except sqlite3.IntegrityError as error:
-            self.close()
-            raise DataIntegrityError(
-                error.__str__(),
-            )
-        except Exception as error:
-            self.close()
-            raise DataUnexpectedError(
-                error.__str__(),
+    def execute(self, sql, args=None):
+        success = False
+        if self.db_cursor:
+            try:
+                if args:
+                    self.db_cursor.execute(sql, args)
+                else:
+                    self.db_cursor.execute(sql)
+                success = True
+
+            except sqlite3.IntegrityError as error:
+                self.close()
+                raise DataIntegrityError(
+                    error.__str__(),
+                )
+            except Exception as error:
+                self.close()
+                raise DataUnexpectedError(
+                    error.__str__(),
+                )
+        else:
+            raise CursorNotValid(
+                self.db_identifier,
+                "is None",
             )
 
-        return self.db_cursor
+        return success
 
     def close(self):
         self.db_cursor.close()
-        super(Cursor, self).close()
 
     def get_data(self):
         desc = self.db_cursor.description

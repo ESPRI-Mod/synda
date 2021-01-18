@@ -75,7 +75,7 @@ def get_download_status(project=None):
         c.execute(q)
     else:
         q="select status,count(*),sum(size) from file where project=? group by status"
-        c.execute(q,(project,))
+        c.execute(q, (project,))
 
     rs=c.fetchone()
     while rs!=None:
@@ -95,9 +95,9 @@ def count_dataset_files(d,file_status,conn=sddb.conn):
     c = conn.cursor()
 
     if file_status is None:
-        c.execute("select count(1) from file where dataset_id=?",(d.dataset_id,))
+        c.execute("select count(1) from file where dataset_id=?", (d.dataset_id,))
     else:
-        c.execute("select count(1) from file where dataset_id=? and status=?",(d.dataset_id,file_status,))
+        c.execute("select count(1) from file where dataset_id=? and status=?", (d.dataset_id, file_status,))
 
     rs=c.fetchone()
     nbr=rs[0]

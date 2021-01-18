@@ -72,7 +72,7 @@ def get_dataset(path=None,dataset_id=None,dataset_functional_id=None,conn=sddb.c
 def remove_dataset(i__d,commit=True,conn=sddb.conn):
     c = conn.cursor()
 
-    c.execute("delete from dataset where dataset_id=?",(i__d.dataset_id,))
+    c.execute("delete from dataset where dataset_id=?", (i__d.dataset_id,))
 
     # check
     if c.rowcount==0:
@@ -110,7 +110,7 @@ def get_datasets(limit=None,conn=sddb.conn,**search_constraints): # don't change
 
     if len(search_constraints)>0:
         q="select * from dataset where %s order by path asc %s"%(sdsqlutils.build_search_placeholder(search_constraints),limit_clause)
-        c.execute(q,search_constraints)
+        c.execute(q, search_constraints)
     else:
         q="select * from dataset order by path asc %s"%limit_clause
         c.execute(q)

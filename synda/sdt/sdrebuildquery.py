@@ -26,7 +26,7 @@ def update_model_names(conn=sddb.conn):
     for non_normalized_model_name in CESGFParametersRetriever.getESGFParams_SEARCHAPI(param_name="model"):
         normalized_model_name=CDRS.normalizeModelName(non_normalized_model_name)
 
-        c.execute("update model set non_normalized_name = ? where name = ?",(non_normalized_model_name,normalized_model_name))
+        c.execute("update model set non_normalized_name = ? where name = ?", (non_normalized_model_name, normalized_model_name))
 
         conn.commit()
 
@@ -51,7 +51,7 @@ def get_transfers__variable_null(conn=sddb.conn):
 def update_dataset(d,conn=sddb.conn):
     c = conn.cursor()
 
-    c.execute("update dataset set model=? where dataset_id=?",(d.getModel(),d.dataset_id,))
+    c.execute("update dataset set model=? where dataset_id=?", (d.getModel(), d.dataset_id,))
 
     # check
     if c.rowcount==0:

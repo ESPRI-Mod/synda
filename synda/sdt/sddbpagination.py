@@ -89,7 +89,7 @@ if __name__ == '__main__': # test only
 
             # PAYLOAD
             checksum_type=sdnormalize.normalize_checksum_type(f.checksum_type)
-            sddb.conn.execute("update file set checksum_type=? where file_id=?",(checksum_type,f.file_id))
+            sddb.conn.execute("update file set checksum_type=? where file_id=?", (checksum_type, f.file_id))
 
         conn.commit() # commit block
         files=dbpagination.get_files() # next block
