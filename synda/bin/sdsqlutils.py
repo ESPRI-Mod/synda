@@ -18,6 +18,7 @@ from sdexception import SDException
 import sddb
 import sdlog
 import sdconst
+import sdmodifyquery
 import sqlite3
 import pdb
 
@@ -57,12 +58,21 @@ def truncate_part_of_table(table,col,pattern,conn=sddb.conn):
     conn.execute("delete from %s where %s like '%s'"%(table,col,pattern))
     conn.commit()
 
-def truncate_errorfiles_failed_url(conn=sddb.conn):
+def truncate_errorfiles_failed_url( conn=sddb.conn, filter=None ):
     """This does just one job: delete from the failed_url table where the matching file table
     has status='error'"""
-    cmd = "DELETE FROM failed_url WHERE url IN (SELECT failed_url.url FROM failed_url INNER JOIN"+\
-          " file ON failed_url.url LIKE '%s'||file.filename AND file.status='%s')" %\
-          ("%",sdconst.TRANSFER_STATUS_ERROR)
+    if True:   #new
+        if filter is None:
+            where_clause = ""
+        elif filter.find(' ')>0:
+            where_clause = "WHERE "+filter  # arbitrary SQL expression
+        else:
+            where_clause = "WHERE url LIKE %s%s%s" % ("'%",filter,"%'")  # data_node or part of one
+        cmd = "DELETE FROM failed_url "+where_clause
+    if False:  #old code: too slow, doesn't buy much
+        cmd = "DELETE FROM failed_url WHERE url IN (SELECT failed_url.url FROM failed_url INNER JOIN"+\
+              " file ON failed_url.url LIKE '%s'||file.filename AND file.status='%s')" %\
+              ("%",sdconst.TRANSFER_STATUS_ERROR)
     conn.execute(cmd)
     conn.commit()
 
