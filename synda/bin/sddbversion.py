@@ -164,5 +164,5 @@ upgrade_procs={
     '3.3': upgrade_33,
     '3.2': upgrade_32,
     '3.1': upgrade_31,
-    '3.0': upgrade_30,
+    '3.0': upgrade_30
 }
