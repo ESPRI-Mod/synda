@@ -2,130 +2,335 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95c0cb97-dd14-4b07-aade-b9c5d58a54bb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/sdt/bin/sdtiaction.py" afterPath="$PROJECT_DIR$/sdt/bin/sdtiaction.py" />
+      <change afterPath="$PROJECT_DIR$/CITATION.cff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/conf/default/default_CMIP6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/selection/sample/cmip6_core_3hr.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sdt/selection/sample/temp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/synda.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/synda.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdcfbuilder.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdcfbuilder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdcheckdatasetversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdcheckdatasetversion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sddirectdownload.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sddirectdownload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdencoding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdenqueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdenqueue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdfiledao.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdfiledao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdfilequery.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdfilequery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdget.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdglobus.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdglobus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdi18n.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdi18n.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdlog.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdlog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdquicksearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdquicksearch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdsqlutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdsqlutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/bin/sdtoken.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/bin/sdtoken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/conf/default/default.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/conf/default/default.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/recipe/meta.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/recipe/meta.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdt/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sdt/setup.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="replication.rst" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs/sdp/replication.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="781">
-              <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="publication_dc.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/sdp/publication_dc.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="36" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>sdtiaction</find>
-    </findStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$/sdt</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/sdt/bin/sdtiaction.py" />
-        <option value="$PROJECT_DIR$/sdt/bin/sdsubparser.py" />
-        <option value="$PROJECT_DIR$/sdt/bin/sdconst.py" />
-        <option value="$PROJECT_DIR$/sdp/bin/spconst.py" />
-        <option value="$PROJECT_DIR$/sdt/bin/sdstat.py" />
-        <option value="$PROJECT_DIR$/docs/sdp/publication_dc.sh" />
-        <option value="$PROJECT_DIR$/docs/sdp/mapfile.sh" />
-        <option value="$PROJECT_DIR$/docs/sdp/mapfile_dc.sh" />
-        <option value="$PROJECT_DIR$/docs/sdp/replication.rst" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1080" />
-    <option name="height" value="1894" />
-  </component>
+  <component name="ProjectId" id="1X25YaNN4X9iw5IsIi73uWYACA4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="synda" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synda" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synda" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synda" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synda" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synda" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="sdp" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.queue">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python2.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="install -s $PROJECT_DIR$/../../.synda/selection/sample/sample_selection_01.txt" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="certificate info" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="certificate info" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="certificate renew" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="certificate renew" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="daemon" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="daemon status" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="get" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="get mmroa_AERmon_NorESM2-LM_pdSST-pdSIC_r46i1p1f1_gn_200006-200105.nc" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="install" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="install -s $PROJECT_DIR$/sdt/selection/sample/sample_selection_01.txt" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="metric" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="metric -g model -m rate -p CMIP5" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pexec" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="pexec -s cdf_test.txt cdf" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="queue" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="queue" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sdfilequery" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python2.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/sdfilequery.py" />
+      <option name="PARAMETERS" value="install -s $PROJECT_DIR$/../../.synda/selection/sample/sample_selection_01.txt" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="search" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="search NorESM2-LM" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="watch" type="PythonConfigurationType" factoryName="Python">
+      <module name="synda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1  ST_HOME=$PROJECT_DIR$/../../.synda" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda2/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sdt/bin/synda.py" />
+      <option name="PARAMETERS" value="watch" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sdget.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/sdt/bin/sdget.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/sdt/bin" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.certificate info" />
+      <item itemvalue="Python.certificate renew" />
+      <item itemvalue="Python.daemon" />
+      <item itemvalue="Python.get" />
+      <item itemvalue="Python.install" />
+      <item itemvalue="Python.metric" />
+      <item itemvalue="Python.pexec" />
+      <item itemvalue="Python.search" />
+      <item itemvalue="Python.watch" />
+      <item itemvalue="Python.queue" />
+      <item itemvalue="Python.sdfilequery" />
+    </list>
+    <recent_temporary>
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <item itemvalue="Python.sdfilequery" />
       </list>
-    </option>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -138,193 +343,158 @@
       <option name="presentableId" value="Default" />
       <updated>1507801097570</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added quick fixes to remove issue with bad publication obs4MIPS data, needs further review in future releases.">
+      <created>1581443872512</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581443872512</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1080" height="1894" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29961464" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29961464" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="Added quick fixes to remove issue with bad publication obs4MIPS data, needs further review in future releases." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added quick fixes to remove issue with bad publication obs4MIPS data, needs further review in future releases." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="418" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599138216742">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="418" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599138216742" />
+    <state x="675" y="347" width="564" height="397" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599063505449">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="675" y="347" width="564" height="397" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599063505449" />
+    <state x="1095" y="165" key="#xdebugger.evaluate" timestamp="1599065297823">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="1095" y="165" key="#xdebugger.evaluate/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599065297823" />
+    <state x="98" y="101" width="1724" height="885" key="DiffContextDialog" timestamp="1599062650477">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="98" y="101" width="1724" height="885" key="DiffContextDialog/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599062650477" />
+    <state x="743" y="301" width="428" height="488" key="FileChooserDialogImpl" timestamp="1598535616311">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="743" y="301" width="428" height="488" key="FileChooserDialogImpl/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1598535616311" />
+    <state width="1899" height="423" key="GridCell.Tab.0.bottom" timestamp="1599138217895">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="423" key="GridCell.Tab.0.bottom/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599138217895" />
+    <state width="1899" height="423" key="GridCell.Tab.0.center" timestamp="1599138217895">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="423" key="GridCell.Tab.0.center/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599138217895" />
+    <state width="1899" height="423" key="GridCell.Tab.0.left" timestamp="1599138217895">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="423" key="GridCell.Tab.0.left/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599138217895" />
+    <state width="1899" height="423" key="GridCell.Tab.0.right" timestamp="1599138217895">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="423" key="GridCell.Tab.0.right/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599138217895" />
+    <state width="1899" height="411" key="GridCell.Tab.1.bottom" timestamp="1599128702935">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="411" key="GridCell.Tab.1.bottom/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599128702935" />
+    <state width="1899" height="411" key="GridCell.Tab.1.center" timestamp="1599128702934">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="411" key="GridCell.Tab.1.center/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599128702934" />
+    <state width="1899" height="411" key="GridCell.Tab.1.left" timestamp="1599128702934">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="411" key="GridCell.Tab.1.left/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599128702934" />
+    <state width="1899" height="411" key="GridCell.Tab.1.right" timestamp="1599128702935">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1899" height="411" key="GridCell.Tab.1.right/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599128702935" />
+    <state width="962" height="542" key="XDebugger.FullValuePopup" timestamp="1599063023611">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="962" height="542" key="XDebugger.FullValuePopup/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599063023611" />
+    <state x="740" y="459" width="440" height="172" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599128327209">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="740" y="459" width="440" height="172" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599128327209" />
+    <state x="509" y="266" width="895" height="559" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1599066000483">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="509" y="266" width="895" height="559" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.25.1920.1055/0.1080.1920.1080@0.25.1920.1055" timestamp="1599066000483" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdtiaction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9750">
-          <caret line="652" column="0" lean-forward="true" selection-start-line="603" selection-start-column="0" selection-end-line="652" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdconst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="26" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdp/bin/spconst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="1" lean-forward="true" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdp/bin/spsubparser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdstat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="42" lean-forward="false" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdsubparser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1046">
-          <caret line="194" column="17" lean-forward="false" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/synda.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="38" lean-forward="false" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdtiaction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="575" column="0" lean-forward="true" selection-start-line="575" selection-start-column="0" selection-end-line="575" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdt/bin/sdconst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="26" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdp/bin/spconst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdp/bin/spsubparser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/publication.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="41" lean-forward="true" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/synda_wo">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/publication_dc.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="36" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/mapfile_dc.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/mapfile.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="24" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sdp/replication.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="781">
-          <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdfilequery.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdtiaction.py</url>
+          <line>216</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdtiaction.py</url>
+          <line>269</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdtiaction.py</url>
+          <line>275</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/syndautils.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdparse.py</url>
+          <line>115</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdfilequery.py</url>
+          <line>133</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdinstall.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdenqueue.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdenqueue.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sdt/bin/sdenqueue.py</url>
+          <line>118</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
