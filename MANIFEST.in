@@ -1,0 +1,19 @@
+include synda/requirements.txt
+recursive-include synda/selection *
+recursive-include conf *
+include synda/conf/*
+include synda/bin/*
+include synda/db/*
+include synda/log/*
+include synda/tmp/*
+include synda/doc/*
+include synda/doc/LICENSE
+global-exclude .*swp
+include synda/data_package/data.tar.gz
+
+recursive-include synda/tests/tests/data *
+
+include synda/tests/pytest.ini
+
+include synda/changelog
+include synda/README.md
