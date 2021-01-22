@@ -23,8 +23,9 @@ import sdcfloader
 import sdconfigutils
 import sdi18n
 import sdcfbuilder
-from sdexception import SDException
+from sdexception import SDException, EnvironmentNotSet
 from sdsetuputils import PostInstallCommand, EnvInit
+from constants import get_home_folder
 # from sdtiaction import checkenv, initenv
 # this module do not import 'sdapp' to prevent circular reference
 # this module do not import 'sdlog' as used by sddaemon module (i.e. double fork pb)
@@ -103,6 +104,7 @@ def is_event_enabled(event,project):
 os.umask(0002)
 
 # set synda folders paths (aka install-folders)
+# TODO Remove package install specific bits
 system_pkg_install=True  # make False to use non-system folders
 
 if not system_pkg_install:
