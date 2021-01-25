@@ -4,8 +4,8 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved"
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -77,7 +77,7 @@ def run(metadata,timestamp_right_boundary=None):
         sdlog.info("SDENQUEU-104","Fill timestamp..")
 
         fix_timestamp()
-   
+
         sddb.conn.commit() # final commit (we do all insertion/update in one transaction).
 
         if sdconfig.progress:
@@ -115,7 +115,7 @@ def keep_recent_datasets(datasets):
 
     for d in datasets:
 
-        if d.last_mod_date is None:
+        if d.get('last_mod_date',None) is None:
             # imported from the old database - certainly not modified in the last
             # 24 hours.  But the interval calculation won't work with None.
             pass
