@@ -248,6 +248,9 @@ if [ $debug -eq 1 ]; then
 fi
 
 USE_CERTIFICATE="yes" # yes | no
+if grep -q "https://" <<< "$url"; then
+  USE_CERTIFICATE="no"
+fi
 export ESGF_CREDENTIAL=$certdirprefix/credentials.pem
 export ESGF_CERT_DIR=$certdirprefix/certificates
 # For a handful of data nodes which require OpenID+password, or cookie equivalent:
