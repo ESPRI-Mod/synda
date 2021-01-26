@@ -4,8 +4,8 @@
 ##################################
 #  @program        synda
 #  @description    climate models data transfer program
-#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                             All Rights Reserved"
+#  @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                             All Rights Reserved”
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
@@ -108,8 +108,13 @@ def insert(instance,columns_subset,commit,conn):
             d=instance.__dict__
         else:
             for k in keys:
-                d[k]=instance.__dict__[k]
-
+                if k in instance.__dict__.keys():
+                    d[k]=instance.__dict__[k]
+                else:
+                    try:
+                        d['timestamp'] = instance.__dict__['_timestamp']
+                    except AttributeError as ae:
+                        print('FAILED')
         return d
     def do_insert( query, d, conn ):
         c = conn.cursor()
