@@ -4,8 +4,8 @@
 ##################################
 # @program        synda
 # @description    climate models data transfer program
-# @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS. 
-#                            All Rights Reserved"
+# @copyright      Copyright “(c)2009 Centre National de la Recherche Scientifique CNRS. 
+#                            All Rights Reserved”
 # @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
  
@@ -213,7 +213,7 @@ def event_loop():
     sdlog.info("SDTSCHED-902","Transfer daemon is now up and running",stderr=True)
 
     while True:
-        evlp0 = SDTimer.get_time() #jfp
+        evlp0 = SDTimer.get_time()
         assert os.path.isfile(sdconfig.daemon_pid_file)
 
         rst0 = SDTimer.get_time() #jfp

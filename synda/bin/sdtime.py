@@ -1,4 +1,4 @@
-#!/usr/share/python/synda/synda/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ##################################

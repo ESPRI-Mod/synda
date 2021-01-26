@@ -23,10 +23,8 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-# not used: import sdconfig
 import sdconst
 from sdexception import SDException,FileNotFoundException
-
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):
