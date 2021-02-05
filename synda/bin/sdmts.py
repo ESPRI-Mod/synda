@@ -22,9 +22,9 @@ import uuid
 import sqlite3
 import contextlib
 import shutil
-import sddbpagination
 import sdconst
 import sdconfig
+# sddbpagination is imported in DatabaseStorage.get_chunks_PAGINATION, to prevent circular imports.
 
 # abstract class
 class Storage():
@@ -212,6 +212,7 @@ class DatabaseStorage(Storage):
                 yield li
 
     def get_chunks_PAGINATION(self):
+        import sddbpagination
         dbpagination=sddbpagination.DBPagination('bla','foo',self.conn)
         dbpagination.reset()
 
