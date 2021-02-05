@@ -135,58 +135,47 @@ def transfers_begin():
     # how many new transfers can be started:
     new_transfer_count=max_transfer - sdfilequery.transfer_running_count()
     # datanode_count[datanode], is number of running transfers for a data node:
-    datanode_count = sdfilequery.transfer_running_count_by_datanode()
+    running_datanode_counts = sdfilequery.transfer_running_count_by_datanode()
+    waiting_datanodes = running_datanode_counts.keys()
     if new_transfer_count>0:
         transfers_needed = new_transfer_count
+        
         for i in range(new_transfer_count):
-            for datanode in datanode_count.keys():
-                try:
+            try:
+                for datanode in waiting_datanodes:
                     # Handle per-datanode maximum number of transfers:
                     try:
-                        new_count = max_datanode_count - datanode_count[datanode]
+                        new_count = max_datanode_count - running_datanode_counts[datanode]
                         # JFP kludge to handle CCCma which can't deal with 4 requests:
                         if datanode.find('ec.gc.ca')>0:
-                            new_count = 3 - datanode_count[datanode]
-                        ## JFP the same kludge, for datanodes which don't work but may work in the future
-                        #if datanode.find('lasg')>0:
-                        #    new_count = 3 - datanode_count[datanode]
-                        if datanode.find('tropmet.res.in')>0:
-                            new_count = 1 - datanode_count[datanode]
-                    except KeyError:
+                            new_count = 3 - running_datanode_counts[datanode]
+                        if datanode.find('tropmet.res.in')>0:  # a troublesome node too
+                            new_count = 1 - running_datanode_counts[datanode]
+                    except KeyError:  # probably not possible any more
                         sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
-                                   (datanode,datanode_count.keys()) )
+                                   (datanode,waiting_datanodes) )
                         new_count = max_datanode_count
-                        # JFP kludge to handle CCCma:
-                        if datanode.find('ec.gc.ca')>0:
-                            new_count = 3
-                        ## JFP the same kludge, for datanodes which don't work but may work in the future
-                        if datanode.find('lasg')>0:
-                            new_count = 3
-                        if datanode.find('tropmet.res.in')>0:
-                            new_count = 1
                     if new_count<=0:
                         continue
 
                     tr=sddao.get_one_waiting_transfer( datanode )
-
                     prepare_transfer(tr)
-
                     if pre_transfer_check_list(tr):
                         sdfiledao.update_file(tr)
                         transfers.append(tr)
 
-                    if datanode in datanode_count:
-                        datanode_count[datanode] += 1
-                    else:
-                        datanode_count[datanode] = 1
+                    running_datanode_counts[datanode] += 1
                     transfers_needed -= 1
                     if transfers_needed <= 0:
                         break
-                except NoTransferWaitingException, e:
-                    pass
+                
+            except NoTransferWaitingException, e:
+                break
             if transfers_needed <= 0:
                 break
 
+    sdlog.info("SYNDTASK-190","ready to call transfers_begin on %s transfers"%
+               len(transfers) )
     dmngr.transfers_begin(transfers)
 
 def get_download_manager():
