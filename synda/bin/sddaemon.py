@@ -21,18 +21,9 @@ Note
     code doesn't get executed twice. TAGJL54JJJ3JK22LLL.
 """
 
+import sdenvironment
 import os
 import sys
-# really really ugly, but the next path append is essential for sdconst import
-# because it references const which references test/constant.
-sys.path.append( os.path.normpath( os.path.join( os.path.dirname(os.path.abspath(__file__)),
-                                                 '../..' )))
-sys.path.append( os.path.normpath( os.path.join( os.path.dirname(os.path.abspath(__file__)),
-                                                 '../lib/python2.7/site-packages' )))
-# still really really ugly, but this also seems necessary for one of the imports.
-# Note that the daemon doesn't start in your personal environment...
-if 'ST_HOME' not in os.environ:
-    os.environ['ST_HOME'] = '/etc/synda/sdt'
 import grp
 import pwd
 import time
