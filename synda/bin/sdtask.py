@@ -145,12 +145,14 @@ def transfers_begin():
                 for datanode in waiting_datanodes:
                     # Handle per-datanode maximum number of transfers:
                     try:
-                        new_count = max_datanode_count - running_datanode_counts[datanode]
-                        # JFP kludge to handle CCCma which can't deal with 4 requests:
-                        if datanode.find('ec.gc.ca')>0:
-                            new_count = 3 - running_datanode_counts[datanode]
-                        if datanode.find('tropmet.res.in')>0:  # a troublesome node too
-                            new_count = 1 - running_datanode_counts[datanode]
+                        # First check for a special max specific to this datanode, e.g. 3 if
+                        # mpdsdd={ "ec.gc.ca":3 } and datanode='crd-esgf-drc.ec.gc.ca'
+                        # We expect mpdsdd to be very short; otherwise performance will be poor.
+                        special_maxes = [ value for key,value in mpdsdd.items() if key in datanode ]
+                        if len(special_maxes)==0:
+                            new_count = max_datanode_count - running_datanode_counts[datanode]
+                        else:
+                            new_count = special_maxes[0] - running_datanode_counts[datanode]
                     except KeyError:  # probably not possible any more
                         sdlog.info("SYNDTASK-189","key error on datanode %s, legal keys are %s"%
                                    (datanode,waiting_datanodes) )
@@ -200,6 +202,20 @@ def fatal_exception():
 
 max_transfer=sdconfig.config.getint('download','max_parallel_download')
 max_datanode_count = sdconfig.config.getint('download','max_parallel_download_per_datanode')
+mpdsd = sdconfig.config.get('download','max_parallel_download_special_datanodes')
+#...e.g. "crd-esgf-drc:3, tropmet:1"
+if mpdsd=='':
+    mpdsdd = {}
+else:
+    try:
+        mpdsdd = eval('{"'+mpdsd.replace(' ','').replace(':','":').replace(',',',"')+'}')
+        #...e.g. {"crd-esgf-drc":3, "tropmet":1}
+    except:
+        mpdsdd = {}
+        sdlog.warning("SYNDTASK-250","trouble parsing max_parallel_download_special_datanodes=%s"
+                   % mpdsd )
+        
+#...e.g. {"crd-esgf-drc}:3, "tropmet":1}
 lfae_mode=sdconfig.config.get('behaviour','lfae_mode')
 
 dmngr=get_download_manager()

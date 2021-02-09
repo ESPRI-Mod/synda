@@ -36,6 +36,7 @@ def load(configuration_file,credential_file=""):
 # (pb with options below is that they are available in all sections)
 default_options={'max_parallel_download':'8',
                  'max_parallel_download_per_datanode':'8',
+                 'max_parallel_download_special_datanodes':'',
                  'user':'',
                  'group':'',
                  'hpss':'0',
