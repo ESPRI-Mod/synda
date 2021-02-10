@@ -166,6 +166,10 @@ class Config(Base):
         return self.get_data().getint('download', 'max_parallel_download_per_datanode')
 
     @property
+    def download_max_parallel_download_special_datanodes(self):
+        return self.get_data().get('download', 'max_parallel_download_special_datanodes')
+
+    @property
     def download_url_max_buffer_size(self):
         return self.get_data().getint('download', 'url_max_buffer_size')
 

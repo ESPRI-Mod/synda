@@ -47,9 +47,14 @@ def transfer_status_count(status=None,conn=sddb.conn):
     c.close()
     return count
 
-def transfer_running_count_by_datanode( conn=sddb.conn ):
+def transfer_running_count_by_datanode( cached_only=False, conn=sddb.conn ):
+    """Returns a dict of elements dn:count where dn is a data_node and count is the number of
+    status='running' files from that data_node.  If cached_only==True, the dict will be limited
+    to those described in the max-priority cache.  This is far faster than a database query will
+    provide, but will miss any data_nodes which have had no 'waiting' files until recently.
+    """
     c = conn.cursor()
-    if Internal().is_processes_get_files_caching:
+    if cached_only and Internal().is_processes_get_files_caching:
         # Get a list of 'waiting' data nodes from the highest-priority cache
         dns = [dn for dn in sdfiledao.highest_waiting_priority.vals.keys() if
                sdfiledao.highest_waiting_priority.vals[dn] is not None]
@@ -81,7 +86,7 @@ def get_download_status(project=None):
     while rs!=None:
         status=rs[0]
         count=rs[1]
-        size=humanize.naturalsize(rs[2],gnu=False)
+        size=humanize.naturalsize(rs[2],gnu=False,format='%.2f')
 
         li.append([status,count,size])
 

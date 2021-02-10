@@ -105,6 +105,7 @@ class Create(object):
         config.add_section('download')
         config.set('download', 'max_parallel_download', '8')
         # config.set('download', 'max_parallel_download_per_datanode', '8')
+        # config.set('download', 'max_parallel_download_special_datanodes', '')
         # config.set('download', 'get_only_latest_version', 'true')
         config.set('download', 'hpss', '1')
         config.set('download', 'http_fallback', 'false')
