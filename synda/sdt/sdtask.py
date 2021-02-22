@@ -147,15 +147,12 @@ def transfers_begin():
                             new_count = max_datanode_count - running_datanode_counts[datanode]
                         else:
                             new_count = special_maxes[0] - running_datanode_counts[datanode]
-
-
-                        new_count = max_datanode_count - datanode_count[datanode]
                     except KeyError:  # probably not possible any more
                         sdlog.info(
                             "SYNDTASK-189",
                             "key error on datanode {}, legal keys are {}".format(
                                 datanode,
-                                datanode_count.keys(),
+                                running_datanode_counts.keys(),
                             ),
                         )
                         new_count = max_datanode_count
@@ -204,7 +201,7 @@ max_transfer = preferences.download_max_parallel_download
 
 max_datanode_count = preferences.download_max_parallel_download_per_datanode
 
-mpdsd = preferences.download.max_parallel_download_special_datanodes
+mpdsd = preferences.download_max_parallel_download_special_datanodes
 #...e.g. "crd-esgf-drc:3, tropmet:1"
 if mpdsd=='':
     mpdsdd = {}
