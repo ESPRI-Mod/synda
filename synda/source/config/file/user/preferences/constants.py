@@ -20,6 +20,7 @@ DEFAULT_FULL_FILENAME = os.path.join(*[RESOURCES_DIR, DIRECTORY, FILENAME])
 DEFAULT_OPTIONS = dict(
     max_parallel_download="8",
     max_parallel_download_per_datanode="8",
+    max_parallel_download_special_datanodes="",
     get_only_latest_version='true',
     user='',
     group='',

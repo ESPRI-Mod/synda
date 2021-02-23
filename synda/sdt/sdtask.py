@@ -128,22 +128,31 @@ def transfers_begin():
 
     # how many new transfers can be started:
     new_transfer_count = max_transfer - sdfilequery.transfer_running_count()
-    # datanode_count[datanode], is number of running transfers for a data node:
-    datanode_count = sdfilequery.transfer_running_count_by_datanode()
+    # running_datanode_counts[datanode], is number of running transfers for a data node:
+    running_datanode_counts = sdfilequery.transfer_running_count_by_datanode()
+    waiting_datanodes = running_datanode_counts.keys()
     if new_transfer_count > 0:
         transfers_needed = new_transfer_count
+
         for i in range(new_transfer_count):
-            for datanode in datanode_count.keys():
-                try:
+            try:
+                for datanode in waiting_datanodes:
                     # Handle per-datanode maximum number of transfers:
                     try:
-                        new_count = max_datanode_count - datanode_count[datanode]
-                    except KeyError:
+                        # First check for a special max specific to this datanode, e.g. 3 if
+                        # mpdsdd={ "ec.gc.ca":3 } and datanode='crd-esgf-drc.ec.gc.ca'
+                        # We expect mpdsdd to be very short; otherwise performance will be poor.
+                        special_maxes = [ value for key,value in mpdsdd.items() if key in datanode ]
+                        if len(special_maxes)==0:
+                            new_count = max_datanode_count - running_datanode_counts[datanode]
+                        else:
+                            new_count = special_maxes[0] - running_datanode_counts[datanode]
+                    except KeyError:  # probably not possible any more
                         sdlog.info(
                             "SYNDTASK-189",
                             "key error on datanode {}, legal keys are {}".format(
                                 datanode,
-                                datanode_count.keys(),
+                                running_datanode_counts.keys(),
                             ),
                         )
                         new_count = max_datanode_count
@@ -151,25 +160,24 @@ def transfers_begin():
                         continue
 
                     tr = sddao.get_one_waiting_transfer(datanode)
-
                     prepare_transfer(tr)
-
                     if pre_transfer_check_list(tr):
                         sdfiledao.update_file(tr)
                         transfers.append(tr)
 
-                    if datanode in datanode_count:
-                        datanode_count[datanode] += 1
-                    else:
-                        datanode_count[datanode] = 1
+
+                    running_datanode_counts[datanode] += 1
                     transfers_needed -= 1
                     if transfers_needed <= 0:
                         break
-                except NoTransferWaitingException, e:
-                    pass
+
+            except NoTransferWaitingException, e:
+                break
             if transfers_needed <= 0:
                 break
 
+    sdlog.info("SYNDTASK-190","ready to call transfers_begin on %s transfers"%
+               len(transfers) )
     dmngr.transfers_begin(transfers)
 
 
@@ -192,6 +200,22 @@ def fatal_exception():
 max_transfer = preferences.download_max_parallel_download
 
 max_datanode_count = preferences.download_max_parallel_download_per_datanode
+
+mpdsd = preferences.download_max_parallel_download_special_datanodes
+#...e.g. "crd-esgf-drc:3, tropmet:1"
+if mpdsd=='':
+    mpdsdd = {}
+else:
+    try:
+        mpdsdd = eval('{"'+mpdsd.replace(' ','').replace(':','":').replace(',',',"')+'}')
+        #...e.g. {"crd-esgf-drc":3, "tropmet":1}
+    except:
+        mpdsdd = {}
+        sdlog.warning("SYNDTASK-250","trouble parsing max_parallel_download_special_datanodes=%s"
+                   % mpdsd )
+#...e.g. {"crd-esgf-drc}:3, "tropmet":1}
+
+
 lfae_mode = preferences.behaviour_lfae_mode
 
 dmngr = get_download_manager()
