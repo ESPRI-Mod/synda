@@ -170,7 +170,7 @@ class Config(Base):
         return self.get_data().getint('download', 'url_max_buffer_size')
 
     @property
-    def continue_on_cert_errors(self):
+    def is_download_continue_on_cert_errors(self):
         return self.get_data().getboolean('download', 'continue_on_cert_errors')
 
     @property
