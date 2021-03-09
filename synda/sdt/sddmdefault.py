@@ -60,6 +60,10 @@ class Download():
     @classmethod
     def start_transfer_script(cls,tr):
 
+        if hasattr( tr, 'delay' ):
+            time.sleep( tr.delay )
+        else:
+            sdlog.warning("SDDMDEFA-001","delay attribute not set for transfer %s"%(tr,))
         sdlog.info("JFPDMDEF-001", "Will download url={}".format(tr.url,))
         if sdconfig.fake_download:
             tr.status = TRANSFER["status"]['done']
@@ -346,10 +350,20 @@ def transfers_begin(transfers):
 
         raise
 
+    datanode_delays = {}
+    # An item in datanode_delays will be datanode:delay, e.g. 'esg-dn1.nsc.liu.se':3.
+    # The delay, in seconds, will precede the attempt to connect to the data node.
+    # This feature will replace the 1-second 'sleep' which previously separated every call of
+    # start_transfer_thread.  The reason given for it was "not to be too agressive with datanodes".
+
     for tr in transfers:
+        if tr.data_node not in datanode_delays:
+            datanode_delays[tr.data_node] = 0
+        else:
+            datanode_delays[tr.data_node] += 1
+        tr.delay = datanode_delays[tr.data_node]
+
         start_transfer_thread(tr)
-        # this sleep is not to be too agressive with datanodes
-        time.sleep(1)
 
 
 def can_leave():
