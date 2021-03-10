@@ -21,23 +21,23 @@ Notes
 import os
 import argparse
 import json
-import sdapp
-import sdlog
-import sdconfig
-import sdpipeline
-import sdrun
-import sdi18n
-import sdcliex
-import sdprint
-import sdconst
-import sdtools
-import sdsqueries
-import sdbatchtimestamp
-import sdadddsattr
-import sdtypes
-import sdcommonarg
-from sdexception import SDException,MissingDatasetTimestampUrlException
-from sdprogress import ProgressThread
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sdconfig
+from synda.sdt import sdpipeline
+from synda.sdt import sdrun
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdprint
+from synda.sdt import sdconst
+from synda.sdt import sdtools
+from synda.sdt import sdsqueries
+from synda.sdt import sdbatchtimestamp
+from synda.sdt import sdadddsattr
+from synda.sdt import sdtypes
+from synda.sdt import sdcommonarg
+from synda.sdt.sdexception import SDException,MissingDatasetTimestampUrlException
+from synda.sdt.sdprogress import ProgressThread
 
 from synda.source.config.subcommand.download.search.constants import POST_PIPELINE_MODES
 

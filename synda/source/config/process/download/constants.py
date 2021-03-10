@@ -39,7 +39,7 @@ def validate_http_clients(choices):
 
         if "urllib" in choices:
             http_clients["urllib"] = "urllib"
-            if "default" not in http_clients.keys():
+            if "default" not in list(http_clients.keys()):
                 http_clients["default"] = "urllib"
     else:
         http_clients["wget"] = "wget"
@@ -84,7 +84,7 @@ def validate_transfer_protocols(choices):
 
         if "gridftp" in choices:
             transfer_protocols["gridftp"] = "gridftp"
-            if "default" not in transfer_protocols.keys():
+            if "default" not in list(transfer_protocols.keys()):
                 transfer_protocols["default"] = "gridftp"
     else:
         transfer_protocols["http"] = "http"

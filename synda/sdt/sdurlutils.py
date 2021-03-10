@@ -11,7 +11,7 @@
 
 """Contains url related routines."""
 
-import sdconfig
+from synda.sdt import sdconfig
 
 
 def get_solr_output_format(output_format):

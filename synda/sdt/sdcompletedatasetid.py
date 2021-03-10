@@ -42,9 +42,9 @@ import sys
 import argparse
 import json
 import random
-import sdapp
-import sdprint
-import sdquicksearch
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdquicksearch
 
 def run(facets_groups):
     for facets_group in facets_groups:
@@ -125,7 +125,7 @@ def get_data_nodes(instance_id,replica):
         parameter.append('replica=%s'%replica)
 
     # debug
-    #print parameter
+    #print(parameter)
 
     result=sdquicksearch.run(parameter=parameter,post_pipeline_mode=None,dry_run=False)
     if result.count()>0:

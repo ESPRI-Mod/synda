@@ -42,13 +42,13 @@ class Authority(AbstractAuthority):
         try:
             sdlogon.renew_certificate(openid, password, force_renew_certificate=True)
             strerror = ""
-        except MyProxyClientGetError, e:
+        except MyProxyClientGetError as e:
             # invalid password
             strerror = str(e)
         except OpenIDProcessingException:
             # invalid openid
             strerror = "invalid openid"
-        except Exception, e:
+        except Exception as e:
             strerror = str(e)
         return strerror
 

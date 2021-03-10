@@ -19,8 +19,8 @@ Also see
 """
 
 import argparse
-import sdapp
-import sdfilequery
+from synda.sdt import sdapp
+from synda.sdt import sdfilequery
 import humanize
 from tabulate import tabulate
 
@@ -43,7 +43,7 @@ def print_rate(groupby,project_,dry_run=False):
     li=[(t[0],format_size(t[1])) for t in li]  # prepare body
 
     # print
-    print tabulate(li,headers=headers,tablefmt="plain",numalign="decimal")
+    print(tabulate(li,headers=headers,tablefmt="plain",numalign="decimal"))
 
 def print_size(groupby,project_,dry_run=False):
 
@@ -58,7 +58,7 @@ def print_size(groupby,project_,dry_run=False):
     li=[(t[0],humanize.naturalsize(t[1],gnu=False)) for t in li]        # prepare body
 
     # print
-    print tabulate(li,headers=headers,tablefmt="plain",numalign="decimal")
+    print(tabulate(li,headers=headers,tablefmt="plain",numalign="decimal"))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

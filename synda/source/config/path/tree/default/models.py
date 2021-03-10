@@ -14,8 +14,7 @@ from synda.source.containers import Container
 from synda.source.identifier import Identifier
 from synda.source.constants import get_env_folder
 
-from synda.source.config.path.tree.default.constants import IDENTIFIER
-from synda.source.config.path.tree.constants import STRUCTURE
+from synda.source.config.path.tree.constants import STRUCTURE, IDENTIFIER
 
 
 class Config(Container, Identifier):
@@ -35,11 +34,11 @@ class Config(Container, Identifier):
         self.set_data(paths)
 
     def provides(self, directory):
-        return True if directory in self.get_data().keys() else False
+        return True if directory in list(self.get_data().keys()) else False
 
     @property
     def structure(self):
-        return self.get_data().keys()
+        return list(self.get_data().keys())
 
     def get(self, directory):
         return self.get_data()[directory]

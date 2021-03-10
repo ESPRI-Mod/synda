@@ -15,8 +15,8 @@ import os
 import sys
 import json
 import argparse
-import sdapp
-import sdutils
+from synda.sdt import sdapp
+from synda.sdt import sdutils
 
 def download_file(url,local_path,checksum_type):
     status=file_transfer_synchronous_wrapper(url,local_path)
@@ -49,7 +49,7 @@ def file_transfer_synchronous_wrapper(source_file,dest_file):
         else:
             return 1
 
-    except Exception, e:
+    except Exception as e:
         return 1
 
 def get_status():

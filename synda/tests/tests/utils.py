@@ -14,19 +14,11 @@ import pytest
 
 
 def get_pytest_source_fullfilename():
-    candidate = pytest.__file__
-    regex = ".py$"
-    match = re.search(regex, candidate)
-    if match:
-        fullfilename = candidate
-    else:
-        regex = ".pyc$"
-        match = re.search(regex, candidate)
-        if match:
-            fullfilename= candidate.replace(".pyc", ".py")
-        else:
-            fullfilename = ""
 
+    fullfilename = os.path.join(
+        os.path.dirname(pytest.__file__),
+        "__main__.py",
+    )
     return fullfilename
 
 
@@ -52,7 +44,9 @@ def search_requested_fullfilenames(dirname):
 
 def run_simple_tests(fullfilenames, coverage_activated=False):
     for f in fullfilenames:
-        print "Testing : {}".format(f)
+        print(
+            "Testing : {}".format(f),
+        )
         try:
             if coverage_activated:
                 args = ["-v", "-m", "on_all_envs", "--cov=sdt", "-x", "--capture=no", f]
@@ -64,7 +58,9 @@ def run_simple_tests(fullfilenames, coverage_activated=False):
 
 
 def run_test_under_subprocess(fullfilename, coverage_activated=False):
-    print "Testing : {}".format(fullfilename)
+    print(
+        "Testing : {}".format(fullfilename),
+    )
     if coverage_activated:
         args = ["python", get_pytest_source_fullfilename(), "-v", "-m", "on_all_envs", "--cov=sdt", "-x", fullfilename]
     else:

@@ -15,7 +15,7 @@ Note
     A stream is a group of dquery
 """
 
-import sddquery
+from synda.sdt import sddquery
 
 def print_(dqueries):
     for dquery in dqueries:

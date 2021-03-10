@@ -1,3 +1,9 @@
+- Version 3.3 - 2021-01-13
+    - enhancement
+      - code migration : synda is now written in python 3.9
+    - deprecated fixtures
+      - 'open' subcommand
+      - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
 - Version 3.2 - 2021-01-11
     - config parameters externalisation
       - 'sdt.conf' file has new customizable parameters

@@ -9,17 +9,17 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This module contains file transfer functions for HTTP protocol (urllib2 impl.)."""
+"""This module contains file transfer functions for HTTP protocol (urllib impl.)."""
 
 import os
 import sys
 import time
 import argparse
-import urllib2
+import urllib.request
 import shutil
 import humanize
-from sdnetutils import HTTPSClientAuthHandler
-from sdprogress import SDProgressDot
+from synda.sdt.sdnetutils import HTTPSClientAuthHandler
+from synda.sdt.sdprogress import SDProgressDot
 from synda.source.config.file.certificate.x509.models import Config as SecurityFile
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -66,7 +66,7 @@ def socket2disk_progressbar(socket, f):
         f.write(data)
 
         SDProgressDot.print_char()
-        # print "Read %s bytes"%len(data)
+        # print("Read %s bytes"%len(data))
 
 
 def data_parts(socket, chunksize=1024):
@@ -135,7 +135,7 @@ def socket2disk_progressbar_and_rate(socket, f):
 
             i += 1
 
-        print ''
+        print('')
 
 
 def socket2disk_percent(socket, f):
@@ -186,7 +186,7 @@ def socket2disk_percent(socket, f):
 
             i += 1
 
-        print ''
+        print('')
 
 
 def download_file_helper(url, local_path, timeout):
@@ -201,7 +201,7 @@ def download_file_helper(url, local_path, timeout):
 
         # setup HTTP handler
 
-        opener = urllib2.build_opener(
+        opener = urllib.request.build_opener(
             HTTPSClientAuthHandler(
                 esgf_x509_proxy,
                 esgf_x509_proxy,
@@ -209,7 +209,7 @@ def download_file_helper(url, local_path, timeout):
         )
 
         opener.add_handler(
-            urllib2.HTTPCookieProcessor(),
+            urllib.request.HTTPCookieProcessor(),
         )
 
         # open local file
@@ -220,7 +220,6 @@ def download_file_helper(url, local_path, timeout):
 
         # 'socket' name is arbitrary (maybe 'web_file' is better,
         # as opener.open return a file-like object
-        # (from https://docs.python.org/2/library/urllib2.html#module-urllib2).
         # Other candidate are  'response','urlfile','o','object')
 
         socket = opener.open(url, timeout=timeout)
@@ -235,7 +234,7 @@ def download_file_helper(url, local_path, timeout):
 
         return 0
 
-    except Exception, e:
+    except Exception as e:
 
         # remove the local file if something goes wrong
         if os.path.exists(local_path):

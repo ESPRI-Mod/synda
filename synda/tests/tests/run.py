@@ -15,7 +15,7 @@ from synda.tests.tests.env.run import main as run_envs_tests
 
 
 def is_test_filename(filename):
-    regex = "^test_.*.py$"
+    regex = r"^test_.*.py$"
     match = re.search(regex, filename)
     return True if match else False
 

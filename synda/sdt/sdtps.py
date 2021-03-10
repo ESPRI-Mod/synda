@@ -25,12 +25,12 @@ import sys
 import argparse
 import json
 import copy
-import sdapp
-import sdremoteqbuilder
-import sdrun
-import sdexplode
-import sdprint
-import sdpipeline
+from synda.sdt import sdapp
+from synda.sdt import sdremoteqbuilder
+from synda.sdt import sdrun
+from synda.sdt import sdexplode
+from synda.sdt import sdprint
+from synda.sdt import sdpipeline
 
 def run(facets_groups):
 

@@ -15,9 +15,9 @@ import sys
 import argparse
 import json
 import re
-import sdapp
-import sdconst
-import sdutils
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdutils
 
 def run(facets_groups):
     new_facets_groups=[]
@@ -32,7 +32,7 @@ def process_forced_parameters(facets_group):
     forced_parameters=get_forced_parameters(facets_group)
     non_forced_parameters=get_non_forced_parameters(facets_group)
 
-    for name,value in forced_parameters.iteritems():
+    for name,value in forced_parameters.items():
 
         name=remove_prefix(name)
 
@@ -42,7 +42,7 @@ def process_forced_parameters(facets_group):
 
 def get_forced_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k,v in facets_group.items():
         if is_forced_parameter(k):
             di[k]=v
 
@@ -50,7 +50,7 @@ def get_forced_parameters(facets_group):
 
 def get_non_forced_parameters(facets_group):
     di={}
-    for k,v in facets_group.iteritems():
+    for k,v in facets_group.items():
         if not is_forced_parameter(k):
             di[k]=v
 

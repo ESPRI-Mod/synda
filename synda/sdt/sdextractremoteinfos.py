@@ -13,10 +13,10 @@
 
 import argparse
 import humanize
-import sdapp
-import sdquicksearch
-import sdsample
-import sdtools
+from synda.sdt import sdapp
+from synda.sdt import sdquicksearch
+from synda.sdt import sdsample
+from synda.sdt import sdtools
 
 def print_small_dataset(project,sample_size=2000):
     """This func retrieves a bunch of datasets and returns the smallest (not the smallest of the project, just of the subset)."""
@@ -29,8 +29,8 @@ def print_small_dataset(project,sample_size=2000):
         # str to int
         for d in files:
             if 'size' not in d:
-                print "'size' attribute missing for '%s' project"%project
-                print
+                print("'size' attribute missing for '%s' project"%project)
+                print()
 
                 return # stops processing this project
             else:
@@ -43,10 +43,10 @@ def print_small_dataset(project,sample_size=2000):
             if d['size']<smallest_size:
                smallest=d
 
-        print "%s" % project
-        print "%s" % smallest['dataset_functional_id']
-        print "%s" % humanize.naturalsize(smallest['size'],gnu=False)
-        print
+        print("%s" % project)
+        print("%s" % smallest['dataset_functional_id'])
+        print("%s" % humanize.naturalsize(smallest['size'],gnu=False))
+        print()
 
 def get_sorted_files(project,sample_size,sort_key='size'):
     result=sdsample.get_sample_files(project,sample_size)
@@ -57,8 +57,8 @@ def get_sorted_files(project,sample_size,sort_key='size'):
         # cast str to int
         for f in files:
             if sort_key not in f:
-                print "'%s' attribute missing for '%s' project"%(sort_key,project)
-                print
+                print("'%s' attribute missing for '%s' project"%(sort_key,project))
+                print()
 
                 return # stops processing this project
             else:
@@ -73,10 +73,10 @@ def get_sorted_files(project,sample_size,sort_key='size'):
         return []
 
 def print_files(file_):
-    print "%s" % file_['project']
-    print "%s" % file_['file_functional_id']
-    print "%s" % humanize.naturalsize(file_['size'],gnu=False)
-    print
+    print("%s" % file_['project'])
+    print("%s" % file_['file_functional_id'])
+    print("%s" % humanize.naturalsize(file_['size'],gnu=False))
+    print()
 
 def print_small_files(project,sample_size=2000):
     """This func retrieves a bunch of files and returns the smallest (not the

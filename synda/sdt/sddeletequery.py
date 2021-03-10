@@ -11,9 +11,9 @@
  
 """This module contains queries used by sddeletefile module."""
 
-import sdapp
-import sddb
-import sdconst
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sdconst
 
 from synda.source.config.process.download.constants import TRANSFER
 

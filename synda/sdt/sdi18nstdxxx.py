@@ -17,16 +17,16 @@ Note
     module (in a simple way, without grabbing stdout from the command)).
 """
 
-import sdparam
+from synda.sdt import sdparam
 
 def m1001():
-    print
-    print "You need to specify a project when using 'search' action"
-    print
-    print "Project list:"
-    print
+    print()
+    print("You need to specify a project when using 'search' action")
+    print()
+    print("Project list:")
+    print()
     sdparam.main(['project','--columns=3'])
-    print
-    print 'Example:'
-    print '    synda search obs4MIPs'
-    print
+    print()
+    print('Example:')
+    print('    synda search obs4MIPs')
+    print()

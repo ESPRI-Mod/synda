@@ -13,8 +13,8 @@
 
 import os
 import argparse
-import sdconfig
-import sdtools
+from synda.sdt import sdconfig
+from synda.sdt import sdtools
 
 from synda.source.config.file.db.models import Config as Db
 from synda.source.config.file.daemon.models import Config as DaemonFile

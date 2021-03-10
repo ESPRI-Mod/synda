@@ -19,19 +19,19 @@ Notes
 import sys
 import argparse
 import json
-import sdvectortoscalar
-import sdvct
-import sdcheckparam
-import sdlocal2remote
-import sdvalueinputalias
-import sddenormodel
-import sdremovefacet
-import sddecode
-import sdignorecase
-import sdinference
-import sddeferredbefore
-import sddeferredafter
-import sdprint
+from synda.sdt import sdvectortoscalar
+from synda.sdt import sdvct
+from synda.sdt import sdcheckparam
+from synda.sdt import sdlocal2remote
+from synda.sdt import sdvalueinputalias
+from synda.sdt import sddenormodel
+from synda.sdt import sdremovefacet
+from synda.sdt import sddecode
+from synda.sdt import sdignorecase
+from synda.sdt import sdinference
+from synda.sdt import sddeferredbefore
+from synda.sdt import sddeferredafter
+from synda.sdt import sdprint
 
 from synda.source.config.file.user.preferences.models import Config
 

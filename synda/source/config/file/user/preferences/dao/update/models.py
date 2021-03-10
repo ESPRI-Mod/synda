@@ -9,7 +9,7 @@
 """
 """
 import os
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 
 from synda.source.constants import get_env_folder
 from synda.source.config.file.user.preferences.constants import FILENAME
@@ -25,7 +25,7 @@ def update_paths():
         FILENAME,
     )
 
-    cfg = SafeConfigParser()
+    cfg = ConfigParser()
     cfg.read(full_filename)
     cfg.set('core', 'db_path', os.path.join(root, 'db'))
     cfg.set('core', 'selection_path', os.path.join(root, 'selection'))

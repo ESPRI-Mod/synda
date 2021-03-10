@@ -11,7 +11,7 @@
 
 """This module is a generic cache."""
 
-import sddao
+from synda.sdt import sddao
 
 RTT_cache={}
 GEO_cache={}

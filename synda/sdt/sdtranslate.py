@@ -13,13 +13,13 @@
 
 def translate_name(facets_group,rules):
     facets_group_new={}
-    for k,v in facets_group.iteritems():
+    for k,v in facets_group.items():
         new_k=rules[k] if k in rules else k
         facets_group_new[new_k]=v
     return facets_group_new
 
 def translate_value(facets_group,rules):
-    keys=facets_group.keys()
+    keys=list(facets_group.keys())
     for k in keys:
         d=rules.get(k,{})
         facets_group[k]=translate(facets_group[k],d)

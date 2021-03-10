@@ -19,7 +19,7 @@ Note
 import sys
 import argparse
 import json
-import sdprint
+from synda.sdt import sdprint
 
 def run(lines):
     files=[]

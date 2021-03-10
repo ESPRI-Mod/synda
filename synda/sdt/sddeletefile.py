@@ -14,15 +14,15 @@
 import sys
 import os
 import json
-import sdapp
-import sddao
-import sdfiledao
+from synda.sdt import sdapp
+from synda.sdt import sddao
+from synda.sdt import sdfiledao
 import argparse
-import sdconst
-import sdlog
-import sddeletequery
-import sddb
-import sdfilequery
+from synda.sdt import sdconst
+from synda.sdt import sdlog
+from synda.sdt import sddeletequery
+from synda.sdt import sddb
+from synda.sdt import sdfilequery
 
 from synda.source.config.process.download.constants import TRANSFER
 
@@ -91,7 +91,7 @@ def immediate_delete(tr):
             # note: if data cannot be removed (i.e. exception is raised), we don't remove metadata
             sdfiledao.delete_file(tr,commit=False)
 
-        except Exception,e:
+        except Exception as e:
             sdlog.error("SDDELETE-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
             raise
     else:
@@ -109,11 +109,11 @@ def immediate_md_delete(tr):
     sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
     try:
         sdfiledao.delete_file(tr,commit=False)
-    except Exception,e:
+    except Exception as e:
         sdlog.error("SDDELETE-128","Error occurs during file metadata suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 
 def reset():
-    import sddeletedataset
+    from synda.sdt import sddeletedataset
 
     nbr=sddeletequery.purge_error_and_waiting_transfer()
     sddeletedataset.purge_orphan_datasets()

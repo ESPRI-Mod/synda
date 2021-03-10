@@ -23,11 +23,11 @@ Notes
 
 import sys
 import argparse
-import sdi18n
-import sdsubparser
-import sdtools
-import sdpermission
-import sdexception
+from synda.sdt import sdi18n
+from synda.sdt import sdsubparser
+from synda.sdt import sdtools
+from synda.sdt import sdpermission
+from synda.sdt import sdexception
 
 from synda.version import CURRENT as CURRENT_VERSION
 
@@ -37,7 +37,7 @@ from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_AP
 
 
 def set_stream_type(args):
-    import sddeferredbefore
+    from synda.sdt import sddeferredbefore
 
     # Set the sdtream type (aka search-API 'type').
     #
@@ -94,7 +94,7 @@ def run():
 
     args = parser.parse_args()
 
-    args.config_manager = manager.get_config_manager()
+    args.config_manager = manager.get_config_manager(checked=True)
     args.authority = manager.get_authority()
 
     # check type mutex
@@ -128,9 +128,9 @@ def run():
 
         sys.exit(0)
 
-    import sdtsaction
-    if args.subcommand in sdtsaction.actions.keys():
-        import syndautils
+    from synda.sdt import sdtsaction
+    if args.subcommand in list(sdtsaction.actions.keys()):
+        from . import syndautils
 
         # hack to explode id in individual facets (experimental)
         if args.subcommand == 'search':
@@ -174,7 +174,7 @@ def run():
 
         # infer type if not set by user
         if args.type_ is None:
-            import sdtype
+            from synda.sdt import sdtype
             args.type_ = sdtype.infer_display_type(stream)
 
         # TODO: pass 'stream' object downstream as a standalone argument (not inside args)
@@ -191,8 +191,8 @@ def run():
 
         sys.exit(status)
 
-    import sdtiaction
-    if args.subcommand in sdtiaction.actions.keys():
+    from synda.sdt import sdtiaction
+    if args.subcommand in list(sdtiaction.actions.keys()):
         status = sdtiaction.actions[args.subcommand](args)
 
         # hack

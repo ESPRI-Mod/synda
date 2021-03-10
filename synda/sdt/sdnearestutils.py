@@ -14,8 +14,8 @@
 import json
 import pycountry
 
-import sdnetutils
-from sdexception import SDException
+from synda.sdt import sdnetutils
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -42,7 +42,7 @@ def haversine(lon1, lat1, lon2, lat2):
     from math import radians, cos, sin, asin, sqrt
 
     # convert decimal degrees to radians 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    lon1, lat1, lon2, lat2 = list(map(radians, [lon1, lat1, lon2, lat2]))
 
     # haversine formula 
     dlon = lon2 - lon1 
@@ -90,7 +90,7 @@ def country_name_to_country_place(country_name):
     API doc => https://developers.google.com/maps/documentation/geocoding
     """
     url="http://maps.googleapis.com/maps/api/geocode/json?address=%s"%country_name.replace(" ","%20") # as parameters can contain spaces, we need to encode them 
-    buf=sdnetutils.HTTP_GET(url,60)
+    buf=sdnetutils.http_get(url, 60)
     geodata=json.loads(buf)
 
     if len(geodata['results'])<1:

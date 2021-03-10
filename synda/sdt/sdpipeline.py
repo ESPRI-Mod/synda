@@ -18,22 +18,22 @@ Note:
 """
 
 import json
-import sdapp
-import sdquerypipeline
-import sdshrink
-import sdparse
-import sdbuffer
-import sdparampipeline
-import sdignorecase
-import sdinference
-import sdgenericpipeline
-import sdfilepipeline
-import sddatasetpipeline
-import sddeferredafter
-import sdlog
-import sdconst
-import sdpipelineprocessing
-import sdexception
+from synda.sdt import sdapp
+from synda.sdt import sdquerypipeline
+from synda.sdt import sdshrink
+from synda.sdt import sdparse
+from synda.sdt import sdbuffer
+from synda.sdt import sdparampipeline
+from synda.sdt import sdignorecase
+from synda.sdt import sdinference
+from synda.sdt import sdgenericpipeline
+from synda.sdt import sdfilepipeline
+from synda.sdt import sddatasetpipeline
+from synda.sdt import sddeferredafter
+from synda.sdt import sdlog
+from synda.sdt import sdconst
+from synda.sdt import sdpipelineprocessing
+from synda.sdt import sdexception
 
 def main_pipeline(files,mode=None):
 

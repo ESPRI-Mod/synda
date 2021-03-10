@@ -13,9 +13,9 @@
 
 import re
 import argparse
-import sdapp
-from sdexception import SDException
-import sddb
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
+from synda.sdt import sddb
 
 def sql_injection_safe(s):
     regex=r'[^a-zA-Z0-9_]'
@@ -41,7 +41,7 @@ def resultset_to_dict(rs):
     # TODO: is this method needed ?
 
     kw={}
-    for column in rs.keys():
+    for column in list(rs.keys()):
         kw[column]=rs[column]
     return kw
 
@@ -57,7 +57,7 @@ def nextval(col,tbl):
     c.execute("select max(%s) from %s"%(col,tbl))
     rs=c.fetchone()
 
-    assert rs<>None
+    assert rs is not None
     assert len(rs)==1
 
     if rs[0] is not None:
@@ -81,7 +81,7 @@ def insert(instance,columns_subset,commit,conn):
             d=instance.__dict__
         else:
             for k in keys:
-                if k in instance.__dict__.keys():
+                if k in list(instance.__dict__.keys()):
                     d[k]=instance.__dict__[k]
                 else:
                     try:
@@ -95,8 +95,8 @@ def insert(instance,columns_subset,commit,conn):
 
     # generate SQL
     tablename=get_tablename(instance)
-    columns=', '.join(d.keys())
-    placeholders=':'+', :'.join(d.keys())
+    columns=', '.join(list(d.keys()))
+    placeholders=':'+', :'.join(list(d.keys()))
     query='INSERT INTO %s (%s) VALUES (%s)' % (tablename,columns, placeholders)
 
     # EXEC
@@ -137,12 +137,12 @@ def update(instance,columns_subset_without_pk,commit,conn):
 
     # generate SQL
     pk_placeholders='%s=:%s'%(pk,pk)
-    payload_placeholders=', '.join(['%s=:%s'%(k,k) for k in d_without_pk.keys()])
+    payload_placeholders=', '.join(['%s=:%s'%(k,k) for k in list(d_without_pk.keys())])
     query='UPDATE %s SET %s WHERE %s' % (tablename, payload_placeholders,pk_placeholders)
 
     # debug
-    #print query
-    #print d_with_pk
+    #print(query)
+    #print(d_with_pk)
     #return
 
     # EXEC
@@ -161,5 +161,5 @@ if __name__ == '__main__':
     parser.add_argument('teststring')
     args = parser.parse_args()
 
-    #print nextval('insertion_group_id','file')
-    print sql_injection_safe(args.teststring)
+    #print(nextval('insertion_group_id','file'))
+    print(sql_injection_safe(args.teststring))

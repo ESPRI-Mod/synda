@@ -18,7 +18,7 @@ from synda.tests.context.models import Context as Base
 class Context(Base):
 
     def validation_after_subcommand_execution(self):
-        print "Control that the status of the daemon is : 'stopped'..."
+        print("Control that the status of the daemon is : 'stopped'...")
         from synda.tests.manager import Manager
         Manager().set_tests_mode()
         from synda.sdt import sddaemon

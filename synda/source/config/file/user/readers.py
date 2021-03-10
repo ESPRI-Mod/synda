@@ -9,11 +9,11 @@
 """
 """
 import os
-import ConfigParser
+import configparser
 
 
 def get_parser(fullfilename, default_options):
-    parser = ConfigParser.ConfigParser(default_options)
+    parser = configparser.ConfigParser(default_options)
     if os.path.isfile(fullfilename):
         parser.read(fullfilename)
     return parser

@@ -36,8 +36,8 @@ m0005="""
 """
 
 def m0006(name,description,example=None,note=None):
-    import StringIO                                                                                                                              
-    buf = StringIO.StringIO()                                                                                                                    
+    import io                                                                                                                              
+    buf = io.StringIO()                                                                                                                    
     buf.write("%s\n%s\n"%(name,description))
     if example is not None:
         buf.write("\nExample\n%s\n"%example)

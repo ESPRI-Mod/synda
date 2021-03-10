@@ -9,8 +9,10 @@
 """
 """
 from synda.source.config.file.models import Config as Base
+from synda.source.config.file.env.constants import ENV_NOT_FOUND
 from synda.source.config.file.internal.constants import IDENTIFIER
 from synda.source.config.file.internal.constants import DEFAULT_OPTIONS
+from synda.source.config.file.internal.constants import FULL_FILENAME_USED_IF_INIT_ENV_NOT_FOUND
 from synda.source.config.file.internal.constants import DEFAULT_FULL_FILENAME
 from synda.source.config.file.internal.constants import FILENAME, DIRECTORY
 from synda.source.config.file.internal.exceptions import NotFound
@@ -24,7 +26,9 @@ class Config(Base):
         Base.__init__(self, IDENTIFIER, full_filename)
 
         if not self.exists():
-            raise NotFound(FILENAME, DIRECTORY)
+            # print(ENV_NOT_FOUND)
+            # Use of the 'sdt.conf' located into the synda resource directory
+            full_filename = FULL_FILENAME_USED_IF_INIT_ENV_NOT_FOUND
 
         self.set_data(get_parser(full_filename, DEFAULT_OPTIONS))
 

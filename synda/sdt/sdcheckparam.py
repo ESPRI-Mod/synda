@@ -19,14 +19,14 @@ Note
 import sys
 import json
 import argparse
-import sdlog
-import sdparam
-import sdconfig
-import sdprint
-import sddquery
-import sdi18n
-from sdtools import print_stderr
-import sdexception
+from synda.sdt import sdlog
+from synda.sdt import sdparam
+from synda.sdt import sdconfig
+from synda.sdt import sdprint
+from synda.sdt import sddquery
+from synda.sdt import sdi18n
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdexception
 
 from synda.source.config.api.esgf_search.constants import SASP
 
@@ -74,7 +74,7 @@ def check_search_api_scalar_parameter(facets_groups):
 
 def check_parameters(facets_groups):
     for facets_group in facets_groups:
-        for name,values in sddquery.search_api_parameters(facets_group).iteritems():
+        for name,values in sddquery.search_api_parameters(facets_group).items():
             if not sdparam.exists_parameter_name(name):
 
                 # obsolete

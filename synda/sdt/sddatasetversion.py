@@ -13,10 +13,10 @@
 
 import argparse
 import re
-import sdtypes
-import sdapp
-import sdmath
-from sdexception import SDException,MixedVersionFormatException,IncorrectVTCException,IncorrectVersionFormatException
+from synda.sdt import sdtypes
+from synda.sdt import sdapp
+from synda.sdt import sdmath
+from synda.sdt.sdexception import SDException,MixedVersionFormatException,IncorrectVTCException,IncorrectVersionFormatException
 
 _VERSION_FORMAT_SHORT='short' # e.g. 'v1'
 _VERSION_FORMAT_LONG='long' # e.g. '20120101'
@@ -43,7 +43,7 @@ class DatasetVersion():
         r'^(\d+)$',
     ]
 
-    _dataset_version_regexps = map(lambda s: re.compile(s, re.IGNORECASE), _dataset_version_regexp_strings);
+    _dataset_version_regexps = [re.compile(s, re.IGNORECASE) for s in _dataset_version_regexp_strings];
 
     def __init__(self, version):
         self.version = version
@@ -59,10 +59,10 @@ class DatasetVersion():
            version number or (None, None) if it matches none.
         """
         for n, re in enumerate(self._dataset_version_regexps):
-            #print 'n = %d, re = "%s", self.version = "%s"' % (n, re, self.version)
+            #print('n = %d, re = "%s", self.version = "%s"' % (n, re, self.version))
             match = re.match(self.version)
             if match:
-                vernum = long(match.group(0)) + 0
+                vernum = int(match.group(0)) + 0
                 vernum_str = '%s' % vernum
                 if (vernum_str != match.group(0)):  # Not supposed to happen
                     raise SDException("SDDATVER-006", 'Unexpected error while extracting version number from version string "%s" with regexp "%s": capture "%s" converts to "%s"' % (self.version, self._dataset_version_regexp_strings[n], match.group(0), vernum_str))

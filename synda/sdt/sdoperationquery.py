@@ -11,11 +11,11 @@
 
 """This module contains sql queries used by operational routines."""
 
-import sdapp
-import sddao
-import sddatasetdao
-import sddbpagination
-from sdprogress import SDProgressDot
+from synda.sdt import sdapp
+from synda.sdt import sddao
+from synda.sdt import sddatasetdao
+from synda.sdt import sddbpagination
+from synda.sdt.sdprogress import SDProgressDot
 
 def populate_selection_transfer_junction():
     """
@@ -48,7 +48,7 @@ def populate_selection_transfer_junction():
             for us in get_Selections():
 
                 # debug
-                #print "%s<=>%s"%(t.get_transfer_id(),us.get_selection_id())
+                #print("%s<=>%s"%(t.get_transfer_id(),us.get_selection_id()))
 
                 if us.contains(t):
 

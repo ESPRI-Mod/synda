@@ -20,39 +20,39 @@ Note
 TODO
     - In the future, move/merge this module to/with sdreducerow module.
 """
-import sdconfig
-import sdlog
+from synda.sdt import sdconfig
+from synda.sdt import sdlog
 
 from synda.source.config.file.internal.models import Config as Internal
 
 
 def run(files):
-    (keep,reject)=filter(files)
+    keep, reject = _filter(files)
 
-    if len(reject)>0:
-        sdlog.info("SDPOSXPC-001","%i anomalies found"%len(reject))
+    if len(reject) > 0:
+        sdlog.info("SDPOSXPC-001", "%i anomalies found" % len(reject))
 
     return keep
 
 
-def filter(files):
-    keep=[]
-    reject=[]
+def _filter(files):
+    keep = []
+    reject = []
 
-    if len(files)>0:
+    if len(files) > 0:
 
         # retrieve type
-        file_=files[0]      # 'type' is the same for all files
-        type_=file_['type'] # 'type' itself IS scalar
+        file_ = files[0]      # 'type' is the same for all files
+        type_ = file_['type']  # 'type' itself IS scalar
 
-        if type_=='File':
+        if type_ == 'File':
 
             for f in files:
 
-                variable=f.get('variable',[])
-                assert isinstance(variable,list)
+                variable = f.get('variable', [])
+                assert isinstance(variable, list)
 
-                if len(variable)==1:
+                if len(variable) == 1:
                     keep.append(f)
                 else:
                     reject.append(f)
@@ -68,10 +68,10 @@ def filter(files):
                             logger_name=Internal().logger_domain,
                         )
 
-        elif type_=='Dataset':
+        elif type_ == 'Dataset':
             # currently, there is no reject rules for Dataset type, so we keep all of them
 
             for f in files:
                 keep.append(f)
 
-    return (keep,reject)
+    return keep, reject

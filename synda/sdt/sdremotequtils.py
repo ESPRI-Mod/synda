@@ -18,9 +18,9 @@ Notes
       'AND' operator is used between different facets
 """
 
-from sdexception import SDException
-import sdconfig
-import sdurlutils
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdconfig
+from synda.sdt import sdurlutils
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.internal.models import Config as Internal
 
@@ -36,7 +36,7 @@ def serialize_parameters(facets):
     """
     filters = []
 
-    for k, v in facets.iteritems():
+    for k, v in facets.items():
 
         if k in ['fields']:
             filters.append(serialize_parameter__mvpp(k, v))

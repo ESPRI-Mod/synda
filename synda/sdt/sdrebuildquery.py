@@ -11,9 +11,9 @@
 
 """This module contains rebuild queries."""
 
-import sdapp
-import sddb
-from sdexception import SDException
+from synda.sdt import sdlog
+from synda.sdt import sddb
+from synda.sdt.sdexception import SDException
 
 def update_model_names(conn=sddb.conn):
     """

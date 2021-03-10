@@ -12,11 +12,11 @@
 """This module contains actions specific parsers used by 'synda' script."""
 
 import argparse
-import sdi18n
-import sdcliex
-import sdprint
-import sdcommonarg
-import sddescription
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdprint
+from synda.sdt import sdcommonarg
+from synda.sdt import sddescription
 
 from synda.source.config.subcommand.argument.constants import DEFAULT_DEST_FOLDER_PARSER_ARGUMENT
 from synda.source.config.subcommand.argument.constants import HELP_DEPRECATED_SUBCOMMAND
@@ -399,7 +399,7 @@ def run(subparsers, config):
     )
 
     subparser.add_argument(
-        '--urllib2', '-u', action='store_true', help='Use urllib2 instead of wget as HTTP client',
+        '--urllib', '-u', action='store_true', help='Use urllib instead of wget as HTTP client',
     )
 
     #  TAG43534FSFS.

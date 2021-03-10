@@ -12,11 +12,11 @@
 """This module contains local path transformation routines."""
 
 import re
-import sdapp
-import sdconst
-import sdpostpipelineutils
-import sdproduct
-import sdexception
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdproduct
+from synda.sdt import sdexception
 
 def transform_local_path_project(files,key):
 

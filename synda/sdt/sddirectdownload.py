@@ -15,11 +15,11 @@ import argparse
 import os
 import sys
 import json
-import sdapp
-import sdutils
-import sdget
-from sdtypes import File
-from sdtools import print_stderr
+from synda.sdt import sdapp
+from synda.sdt import sdutils
+from synda.sdt import sdget
+from synda.sdt.sdtypes import File
+from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.process.download.constants import get_http_clients
 

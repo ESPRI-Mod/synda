@@ -12,18 +12,18 @@
 """This module contains 'synda install' related routines."""
 
 import argparse
-import sdconfig
-import sdi18n
-import sdexception
-import sdlog
-from sdtools import print_stderr
+from synda.sdt import sdconfig
+from synda.sdt import sdi18n
+from synda.sdt import sdexception
+from synda.sdt import sdlog
+from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.process.download.constants import TRANSFER
 
 
 def run(args, metadata=None):
 
-    import syndautils
+    from . import syndautils
 
     syndautils.check_daemon()
 
@@ -44,10 +44,10 @@ def run(args, metadata=None):
 
         try:
             metadata = syndautils.file_full_search(args)
-        except sdexception.EmptySelectionException, e:
+        except sdexception.EmptySelectionException as e:
             print_stderr('No dataset will be installed, upgraded, or removed.')
             return 0, 0
-        except sdexception.SDException, e:
+        except sdexception.SDException as e:
             sdlog.info("SYNDINST-006", "Exception occured during installation ('{}')".format(e))
             raise
 
@@ -62,7 +62,7 @@ def run(args, metadata=None):
 
 def _install(metadata, interactive, config_manager, timestamp_right_boundary=None):
 
-    import sddaemon
+    from synda.sdt import sddaemon
 
     # Compute total files stat
     count_total = metadata.count()
@@ -75,8 +75,8 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
     # method, but safer to keep it there too, and should be no harm in term of
     # perfomance)
     #
-    import sdsimplefilter
-    import sdconst
+    from synda.sdt import sdsimplefilter
+    from synda.sdt import sdconst
 
     metadata = sdsimplefilter.run(metadata, 'status', TRANSFER["status"]['new'], 'keep')
     metadata = sdsimplefilter.run(metadata, 'url', "//None", 'remove_substr')
@@ -118,7 +118,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
             ),
         )
 
-        import sdutils
+        from synda.sdt import sdutils
         if sdutils.query_yes_no('Do you want to continue?', default="yes"):
             installation_confirmed = True
         else:
@@ -131,7 +131,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
     # install
     if installation_confirmed:
 
-        import sdenqueue
+        from synda.sdt import sdenqueue
         sdenqueue.run(metadata, config_manager, timestamp_right_boundary)
 
         if interactive:

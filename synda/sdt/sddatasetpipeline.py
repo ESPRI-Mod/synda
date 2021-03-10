@@ -14,15 +14,15 @@
 import sys
 import argparse
 import json
-import sdapp
-import sdselectionfileutils
-import sdprepare_dataset_attr
-import sdlocalpath
-import sdremoveaggregation
-import sdcomplete
-import sdprint
-import sdstatusfilter
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdselectionfileutils
+from synda.sdt import sdprepare_dataset_attr
+from synda.sdt import sdlocalpath
+from synda.sdt import sdremoveaggregation
+from synda.sdt import sdcomplete
+from synda.sdt import sdprint
+from synda.sdt import sdstatusfilter
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 

@@ -20,12 +20,12 @@ import sys
 import os
 import argparse
 import json
-import sdapp
-import sdpipeline
-import sdindex
-import sdrun
-import sdprint
-import sdproxy_mt
+from synda.sdt import sdapp
+from synda.sdt import sdpipeline
+from synda.sdt import sdindex
+from synda.sdt import sdrun
+from synda.sdt import sdprint
+from synda.sdt import sdproxy_mt
 
 output_dir='/tmp/sdcmpindexes'
 

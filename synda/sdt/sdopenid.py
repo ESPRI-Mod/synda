@@ -18,11 +18,11 @@ Credit
 from xml.etree import ElementTree
 import re
 import argparse
-import sdlog
-import sdtools
-import sdutils
-from sdexception import OpenIDIncorrectFormatException,OpenIDProcessingException
-import sdnetutils
+from synda.sdt import sdlog
+from synda.sdt import sdtools
+from synda.sdt import sdutils
+from synda.sdt.sdexception import OpenIDIncorrectFormatException,OpenIDProcessingException
+from synda.sdt import sdnetutils
 
 XRI_NS = 'xri://$xrd*($v*2.0)'
 MYPROXY_URN = 'urn:esg:security:myproxy-service'
@@ -38,10 +38,10 @@ def extract_info_from_openid(openid):
         if openid_host in openid:
             sdlog.warning("SDOPENID-210","Invalid openid (%s)"%openid)
     try:
-        xrds_buf=sdnetutils.HTTP_GET_2(openid,timeout=10,verify=False)
+        xrds_buf=sdnetutils.http_get_2(openid, timeout=10, verify=False)
         (hostname,port)=parse_XRDS(xrds_buf)
         success = True
-    except Exception,e:
+    except Exception as e:
         success = False
         sdtools.print_stdout("FOLLOWING ERROR captured from ESGF openid Service...\n")
         sdtools.print_stdout(xrds_buf)
@@ -49,7 +49,7 @@ def extract_info_from_openid(openid):
         try:
             username=parse_openid(openid)
             return success, hostname,port,username
-        except Exception,e:
+        except Exception as e:
             sdlog.error("SDOPENID-200","Error occured while processing OpenID (%s)"%str(e))
             raise OpenIDProcessingException('SDOPENID-002','Error occured while processing OpenID')
     else:
@@ -101,6 +101,6 @@ if __name__ == '__main__':
 
     (hostname,port,username)=extract_info_from_openid(args.openid)
 
-    print "Username: %s"%username
-    print "Myproxy hostname: %s"%hostname
-    print "Myproxy port: %s"%port
+    print("Username: %s"%username)
+    print("Myproxy hostname: %s"%hostname)
+    print("Myproxy port: %s"%port)

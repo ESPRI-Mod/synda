@@ -10,7 +10,7 @@
 ##################################
 
 import random
-import sdtools
+from synda.sdt import sdtools
 from synda.source.config.file.user.preferences.models import Config
 
 """This module contains index related routines."""

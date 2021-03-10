@@ -24,7 +24,7 @@ def get_list(options):
     result = []
     for option in options:
         if isinstance(option, dict):
-            for key, value in option.items():
+            for key, value in list(option.items()):
                 result.append(key)
                 if value is not None:
                     result.append(str(value))

@@ -16,11 +16,11 @@ Also see
 """
 
 import argparse
-import sdapp
-import sddb
-import sdsqlutils
-from sdtypes import Dataset
-from sddatasetversion import DatasetVersions
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
+from synda.sdt.sdtypes import Dataset
+from synda.sdt.sddatasetversion import DatasetVersions
 from synda.source.config.process.download.constants import TRANSFER
 
 

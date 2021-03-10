@@ -20,7 +20,7 @@ TODO
     group this module and sdinference together (add an option to have two
     behaviour: with and without type).
 """
-import sddquery
+from synda.sdt import sddquery
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
@@ -44,7 +44,7 @@ def _infer_from_unnamed_facet(pvalue):
 
 
 def _infer_from_unnamed_identifier(pvalue):
-    import sdidtest
+    from synda.sdt import sdidtest
 
     if sdidtest.is_filename(pvalue):
         type_=SEARCH_API_STRUCTURE['type']['file']
@@ -88,7 +88,7 @@ def _named_to_unnamed(dquery):
 
     transformed_parameters = []
 
-    for k,v in dquery.iteritems():
+    for k,v in dquery.items():
         if k != PENDING_PARAMETER:
             if len(v) == 0:
                 pass

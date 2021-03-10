@@ -13,7 +13,7 @@
 
 import os
 import argparse
-import sdapp
+from synda.sdt import sdapp
 from synda.source.config.path.tree.models import Config as TreePath
 
 

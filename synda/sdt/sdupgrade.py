@@ -12,11 +12,11 @@
 """This module contains 'upgrade' routines."""
 
 import os
-import sdsearch
-import sdinstall
-import sdexception
-import sdlog
-from sdtools import print_stderr
+from synda.sdt import sdsearch
+from synda.sdt import sdinstall
+from synda.sdt import sdexception
+from synda.sdt import sdlog
+from synda.sdt.sdtools import print_stderr
 
 def run(selections,args):
 
@@ -44,9 +44,9 @@ def run(selections,args):
         try:
             sdlog.info("SDUPGRAD-003","Process %s.."%selection.filename,stdout=True)
             install(args,selection)
-        except sdexception.IncorrectParameterException,e:
+        except sdexception.IncorrectParameterException as e:
             sdlog.error("SDUPGRAD-004","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
-        except sdexception.SDException,e:
+        except sdexception.SDException as e:
             sdlog.error("SDUPGRAD-008","Error occurs while processing %s (%s)"%(selection.filename,str(e)),stderr=True)
 
     sdlog.info("SDUPGRAD-020","Upgrade completed successfully")

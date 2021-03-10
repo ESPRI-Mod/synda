@@ -14,10 +14,10 @@
 import sys
 import argparse
 import json
-import sdapp
-import sdprint
-import sdlocalpathtransform
-import sdlocalpathutils
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdlocalpathtransform
+from synda.sdt import sdlocalpathutils
 
 def run(files,mode='file'):
 

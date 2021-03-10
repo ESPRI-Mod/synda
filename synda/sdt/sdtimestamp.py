@@ -12,13 +12,13 @@
 """This module contains timestamp related func."""
 
 import argparse
-import sdapp
-import sdconst
-import sddatasetdao
-import sdquicksearch
-import sdlog
-import sdprint
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sddatasetdao
+from synda.sdt import sdquicksearch
+from synda.sdt import sdlog
+from synda.sdt import sdprint
+from synda.sdt.sdexception import SDException
 from synda.source.config.api.constants import TIMESTAMP_FIELDS
 
 

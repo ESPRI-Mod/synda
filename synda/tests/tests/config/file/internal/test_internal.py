@@ -51,7 +51,7 @@ def test_http_clients_empty():
     assert config.processes_http_clients == [""]
     assert get_http_clients(requested=config.processes_http_clients)["default"] == "wget"
     assert len(
-        get_http_clients(requested=config.processes_http_clients).keys(),
+        list(get_http_clients(requested=config.processes_http_clients).keys()),
     ) == 3
 
 
@@ -62,7 +62,7 @@ def test_http_clients_urllib():
     assert get_http_clients(requested=config.processes_http_clients)["default"] == "urllib"
     assert get_http_clients(requested=config.processes_http_clients)["urllib"] == "urllib"
     assert len(
-        get_http_clients(requested=config.processes_http_clients).keys(),
+        list(get_http_clients(requested=config.processes_http_clients).keys()),
     ) == 3
 
 
@@ -74,7 +74,7 @@ def test_http_clients_urllib4():
     assert get_http_clients(requested=config.processes_http_clients)["default"] == "wget"
     assert get_http_clients(requested=config.processes_http_clients)["wget"] == "wget"
     assert len(
-        get_http_clients(requested=config.processes_http_clients).keys(),
+        list(get_http_clients(requested=config.processes_http_clients).keys()),
     ) == 3
 
 
@@ -86,9 +86,9 @@ def test_transfer_protocols_empty():
         requested=config.processes_transfer_protocols,
     )["default"] == "http"
     assert len(
-        get_transfer_protocols(
+        list(get_transfer_protocols(
             requested=config.processes_transfer_protocols,
-        ).keys(),
+        ).keys()),
     ) == 3
 
 
@@ -103,9 +103,9 @@ def test_transfer_protocols_gridftp():
         requested=config.processes_transfer_protocols,
     )["gridftp"] == "gridftp"
     assert len(
-        get_transfer_protocols(
+        list(get_transfer_protocols(
             requested=config.processes_transfer_protocols,
-        ).keys(),
+        ).keys()),
     ) == 3
 
 
@@ -121,9 +121,9 @@ def test_transfer_protocols_gridftp4():
         requested=config.processes_transfer_protocols,
     )["http"] == "http"
     assert len(
-        get_transfer_protocols(
+        list(get_transfer_protocols(
             requested=config.processes_transfer_protocols,
-        ).keys(),
+        ).keys()),
     ) == 3
 
 

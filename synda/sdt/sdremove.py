@@ -14,17 +14,17 @@
 import os
 import sys
 import argparse
-from sdtools import print_stderr,print_stdout
-import sdexception
-import sdmdcommon
-import sddelete
-import sddeletefile
-import sddeletedataset
-import sdcleanup
-import sdtypes
-import syndautils
-import sdearlystreamutils
-import sdlog
+from synda.sdt.sdtools import print_stderr,print_stdout
+from synda.sdt import sdexception
+from synda.sdt import sdmdcommon
+from synda.sdt import sddelete
+from synda.sdt import sddeletefile
+from synda.sdt import sddeletedataset
+from synda.sdt import sdcleanup
+from synda.sdt import sdtypes
+from . import syndautils
+from synda.sdt import sdearlystreamutils
+from synda.sdt import sdlog
 
 from synda.source.config.process.download.constants import TRANSFER
 
@@ -44,7 +44,7 @@ def is_local(stream):
         return False
 
 def run_local(args,stream):
-    import sdlfile
+    from synda.sdt import sdlfile
 
     syndautils.check_daemon()
 
@@ -63,7 +63,7 @@ def run_local(args,stream):
         files=[f.__dict__ for f in files]
 
         metadata=sdtypes.Metadata(files=files)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
 
@@ -76,7 +76,7 @@ def run_remote(args,stream):
 
     try:
         metadata=syndautils.file_full_search(args,stream)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr('No packages will be installed, upgraded, or removed.')
         return 0
 

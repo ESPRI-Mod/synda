@@ -17,8 +17,8 @@ Notes
 
 """
 
-import sdapp
-import sdlmattrfilter
+from synda.sdt import sdapp
+from synda.sdt import sdlmattrfilter
 
 def get_attributes(metadata,attr_name):
     li=[]

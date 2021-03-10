@@ -20,24 +20,24 @@ Usage
 import sys
 import argparse
 import json
-import sdapp
-import sdselectionfileutils
-import sdreducecol
-import sdreducerow
-import sdtimefilter
-import sdtransform
-import sdprepare_dataset_attr
-import sdprepare_file_attr
-import sdlocalpath
-import sdcheck_dataset_template
-import sdremoveaggregation
-import sdcomplete
-import sdprint
-import sdlog
-import sdstatusfilter
-import sdnormalizefattr
-import sdprotocol
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdselectionfileutils
+from synda.sdt import sdreducecol
+from synda.sdt import sdreducerow
+from synda.sdt import sdtimefilter
+from synda.sdt import sdtransform
+from synda.sdt import sdprepare_dataset_attr
+from synda.sdt import sdprepare_file_attr
+from synda.sdt import sdlocalpath
+from synda.sdt import sdcheck_dataset_template
+from synda.sdt import sdremoveaggregation
+from synda.sdt import sdcomplete
+from synda.sdt import sdprint
+from synda.sdt import sdlog
+from synda.sdt import sdstatusfilter
+from synda.sdt import sdnormalizefattr
+from synda.sdt import sdprotocol
+from synda.sdt.sdexception import SDException
 
 def run(**kw):
     files=kw.get('files')

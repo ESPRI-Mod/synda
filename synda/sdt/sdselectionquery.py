@@ -11,8 +11,8 @@
 
 """This module contains selection queries."""
 
-import sdapp
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
 
 def get_selection_files_list(self,us):
     li=[]
@@ -51,7 +51,7 @@ def get_selections_filescount():
 
     selections=get_selections_files_count_helper()
 
-    for selection_id in selections.keys():
+    for selection_id in list(selections.keys()):
         c.execute("select filename from selection where selection_id=?",(selection_id,))
         rs=c.fetchone()
 

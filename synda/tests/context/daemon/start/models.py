@@ -18,7 +18,7 @@ class Context(Base):
         pass
 
         # from sdt.bin import sdconfig
-        # print "EXPECTED PID FILE LOCATION = {}".format(sdconfig.daemon_pid_file)
+        # print("EXPECTED PID FILE LOCATION = {}".format(sdconfig.daemon_pid_file))
         # assert os.path.isfile(sdconfig.daemon_pid_file)
         #
         # i = 0

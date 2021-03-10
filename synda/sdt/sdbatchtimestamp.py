@@ -12,12 +12,12 @@
 """This module retrieves timestamp in batch mode."""
 
 import copy
-import sdapp
-import sdrun
-import sdlog
-import sdconst
-import sdpipelineprocessing
-from sdexception import MissingDatasetTimestampUrlException,MissingTimestampException
+from synda.sdt import sdapp
+from synda.sdt import sdrun
+from synda.sdt import sdlog
+from synda.sdt import sdconst
+from synda.sdt import sdpipelineprocessing
+from synda.sdt.sdexception import MissingDatasetTimestampUrlException,MissingTimestampException
 
 def run(squeries,metadata,parallel):
     datasets_timestamps=None
@@ -25,7 +25,7 @@ def run(squeries,metadata,parallel):
 
     try:
         datasets_timestamps=get_datasets_timestamps(squeries,parallel)
-    except MissingDatasetTimestampUrlException,e:
+    except MissingDatasetTimestampUrlException as e:
         sdlog.error("SYNDABTI-600","Datasets timestamps cannot be set as dataset_timestamp_url is missing")
         return metadata
 
@@ -84,7 +84,7 @@ def get_datasets_timestamps(squeries,parallel):
         try:
             timestamp=get_timestamp(instance_id,d)
             di[instance_id]=timestamp
-        except MissingTimestampException, e:
+        except MissingTimestampException as e:
             sdlog.info("SYNDABTI-500","dataset found but dataset timestamp is missing (%s)"%instance_id)
 
     # restore url

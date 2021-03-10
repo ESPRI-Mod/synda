@@ -15,13 +15,13 @@ import os
 import argparse
 import humanize
 from tabulate import tabulate
-import sdapp
-import sdquicksearch
-from sdtypes import File
-import sdi18n
-import sdcliex
-import sdconst
-import sddeferredbefore
+from synda.sdt import sdapp
+from synda.sdt import sdquicksearch
+from synda.sdt.sdtypes import File
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdconst
+from synda.sdt import sddeferredbefore
 
 from synda.source.config.process.download.constants import TRANSFER
 
@@ -58,40 +58,40 @@ def print_list(files):
 
     # WAY 1
     li=[[f['status'],humanize.naturalsize(f['size'],gnu=False), f['file_functional_id']] for f in files]
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
     # WAY 2
     #for f in files:
-    #    print "%-9s %-8s %s"%(f.status,humanize.naturalsize(f.size,gnu=False),f.file_functional_id)
+    #    print("%-9s %-8s %s"%(f.status,humanize.naturalsize(f.size,gnu=False),f.file_functional_id))
 
     # WAY 3
     """
     pretty_label={'done':'installed'} # this is have a listing like dpkg/apt-get
     for file in files:
         f=File(**file)
-        print "%-12s %s"%(pretty_label.get(f.status,f.status),f.filename)
+        print("%-12s %s"%(pretty_label.get(f.status,f.status),f.filename))
     """
 
 def print_replica_list(files):
     li=[[f['file_functional_id'],f['data_node']] for f in files]
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_details(f):
     f=File(**f)
 
-    print "file: %s"%f.file_functional_id
-    print "status: %s"%f.status
-    print "size: %s (%s)"%(f.size,humanize.naturalsize(f.size,gnu=False))
-    print "checksum: %s"%f.checksum
-    print "url: %s"%f.url
+    print("file: %s"%f.file_functional_id)
+    print("status: %s"%f.status)
+    print("size: %s (%s)"%(f.size,humanize.naturalsize(f.size,gnu=False)))
+    print("checksum: %s"%f.checksum)
+    print("url: %s"%f.url)
 
     local_path_label = \
         'local path' if f.status in (TRANSFER["status"]['delete'], TRANSFER["status"]['done']) else 'local path (once downloaded)'
 
-    print "%s: %s"%(local_path_label,f.get_full_local_path())
+    print("%s: %s"%(local_path_label,f.get_full_local_path()))
 
-    print "replica: %s"%f.replica
-    print "data_node: %s"%f.data_node
+    print("replica: %s"%f.replica)
+    print("data_node: %s"%f.data_node)
 
 # init.
 

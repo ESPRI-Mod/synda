@@ -22,8 +22,8 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-import sdconfig
-from sdexception import SDException,FileNotFoundException
+from synda.sdt import sdconfig
+from synda.sdt.sdexception import SDException,FileNotFoundException
 from synda.source.config.process.download.constants import get_transfer_protocols
 from synda.source.config.file.constants import CHECKSUM
 
@@ -62,7 +62,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stderr.write(question + prompt)
-        choice = raw_input().lower()
+        choice = input().lower()
         if default is not None and choice == '':
             return valid[default]
         elif choice in valid:
@@ -125,7 +125,7 @@ def get_last_access_date(self,f):
         l__epoch=os.path.getatime(f)
         date_str=datetime.datetime.fromtimestamp(l__epoch).strftime('%Y-%m-%d %H:%M:%S.%f')
         return date_str
-    except OSError, e:
+    except OSError as e:
         if e.errno == errno.ENOENT: # errno.ENOENT = no such file or directory
             raise FileNotFoundException("%s"%str(e)) # cast (we break stacktrace here because we need to handle this case in a specific way).
         else:
@@ -232,5 +232,5 @@ if __name__ == '__main__':
 
     """
     res=query_yes_no('test ?', default="yes")
-    print res
+    print(res
     """

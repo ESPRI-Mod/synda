@@ -10,14 +10,14 @@
 ##################################
 
 """This module contains search-api proxy."""
-import sdtypes
-import sdnetutils
+from synda.sdt import sdtypes
+from synda.sdt import sdnetutils
 
-import sdlog
-import sdtools
-import sdconfig
-import sdaddap
-import sdurlutils
+from synda.sdt import sdlog
+from synda.sdt import sdtools
+from synda.sdt import sdconfig
+from synda.sdt import sdaddap
+from synda.sdt import sdurlutils
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -40,7 +40,7 @@ class SearchAPIProxy():
 
         try:
             paginated_response=self.call_web_service__PAGINATION(request)
-        except Exception,e:
+        except Exception as e:
             sdlog.error("SYDPROXY-400","Error occurs during search-API paginated call (url=%s)"%(final_url,))
             sdlog.error("SYDPROXY-410","%s"%(str(e),))
             raise
@@ -163,4 +163,4 @@ if __name__ == '__main__':
         file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
-        print "%s %s"%(f.timestamp,f.id)
+        print("%s %s"%(f.timestamp,f.id))

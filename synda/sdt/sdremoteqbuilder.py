@@ -24,11 +24,11 @@ Reference
 
 import argparse
 import copy
-import sddquery
-import sdpipelineutils
-import sdremotequtils
-import sdconfig
-import sdprint
+from synda.sdt import sddquery
+from synda.sdt import sdpipelineutils
+from synda.sdt import sdremotequtils
+from synda.sdt import sdconfig
+from synda.sdt import sdprint
 from synda.source.config.file.user.preferences.models import Config
 from synda.source.config.api.constants import TIMESTAMP_FIELDS
 

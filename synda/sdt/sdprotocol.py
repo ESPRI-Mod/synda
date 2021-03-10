@@ -14,12 +14,12 @@
 import sys
 import argparse
 import json
-import sdapp
-import sdprint
-import sdtools
-import sdlog
-from sdexception import SDException
-import sdpostpipelineutils
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdtools
+from synda.sdt import sdlog
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdpostpipelineutils
 
 from synda.source.config.process.download.constants import get_transfer_protocols
 

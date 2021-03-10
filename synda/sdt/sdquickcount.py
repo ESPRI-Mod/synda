@@ -21,15 +21,15 @@ Notes
 
 import os
 import argparse
-import sdpipeline
-import sdnetutils
-import sdi18n
-import sdcliex
-import sdtypes
-import sdaddap
-import sddeferredbefore
-import sdcommonarg
-from sdexception import SDException
+from synda.sdt import sdpipeline
+from synda.sdt import sdnetutils
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdtypes
+from synda.sdt import sdaddap
+from synda.sdt import sddeferredbefore
+from synda.sdt import sdcommonarg
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
@@ -69,11 +69,11 @@ def run(
     if dry_run:
         request=sdtypes.Request(url=query['url'],pagination=False)
 
-        print '%s'%request.get_url()
+        print('%s'%request.get_url())
 
         # debug
-        #print 'Url: %s'%request.get_url()
-        #print 'Attached parameters: %s'%query.get('attached_parameters')
+        #print('Url: %s'%request.get_url())
+        #print('Attached parameters: %s'%query.get('attached_parameters'))
 
         return sdtypes.Response()
     else:
@@ -107,8 +107,8 @@ if __name__ == '__main__':
 
     if not args.dry_run:
         if args.type_==SEARCH_API_STRUCTURE['type']['dataset']:
-            print "%i dataset(s) found"%result.num_found
+            print("%i dataset(s) found"%result.num_found)
         elif args.type_==SEARCH_API_STRUCTURE['type']['file']:
-            print "%i file(s) found"%result.num_found
+            print("%i file(s) found"%result.num_found)
         else:
-            print 'Not implemented yet'
+            print('Not implemented yet')

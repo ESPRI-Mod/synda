@@ -22,22 +22,22 @@ import re
 import os
 import sys
 import argparse
-import sdapp
-import sdparse
-import sdexplode
-import sdremoteqbuilder
-import sdlocalqbuilder
-import sdbuffer
-import sdcompletedatasetid
-import sdindexhost
-import sdremote2local
-import sdlocalvalue2remotevalue
-from sdexception import SDException
-import sdnearestpre
-import sdparampipeline
-import sdtps
-import sdconfig
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdparse
+from synda.sdt import sdexplode
+from synda.sdt import sdremoteqbuilder
+from synda.sdt import sdlocalqbuilder
+from synda.sdt import sdbuffer
+from synda.sdt import sdcompletedatasetid
+from synda.sdt import sdindexhost
+from synda.sdt import sdremote2local
+from synda.sdt import sdlocalvalue2remotevalue
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdnearestpre
+from synda.sdt import sdparampipeline
+from synda.sdt import sdtps
+from synda.sdt import sdconfig
+from synda.sdt import sdprint
 
 def run(facets_groups,parallel=True,index_host=None,dry_run=False,query_type='remote'):
     facets_groups=sdparampipeline.run(facets_groups)

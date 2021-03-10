@@ -21,11 +21,11 @@ Notes
 import os
 import shutil
 import argparse
-import sdlog
-import sdutils
+from synda.sdt import sdlog
+from synda.sdt import sdutils
 
 from myproxy.client import MyProxyClient
-import sdexception
+from synda.sdt import sdexception
 
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
 from synda.source.config.file.certificate.x509.models import Config as SecurityFile
@@ -174,7 +174,7 @@ def renew_certificate(host, port, username, password):
 
     # store cert on disk
 
-    fout = open(esgf_x509_proxy, 'w')
+    fout = open(esgf_x509_proxy, 'wb')
     for cred in creds:
         fout.write(cred)
     fout.close()

@@ -16,13 +16,13 @@ import os
 import sys
 import argparse
 import json
-import sdapp
-import sdindex
-import sdlog
-import sdprint
-import sdstream
-import sdtools
-import sdpipelineutils
+from synda.sdt import sdapp
+from synda.sdt import sdindex
+from synda.sdt import sdlog
+from synda.sdt import sdprint
+from synda.sdt import sdstream
+from synda.sdt import sdtools
+from synda.sdt import sdpipelineutils
 
 def run(facets_groups,parallel=True,index_host=None,dry_run=False):
     """Set 'searchapi_host' parameter.

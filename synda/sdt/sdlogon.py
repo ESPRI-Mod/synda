@@ -13,18 +13,18 @@
 
 import argparse
 from retrying import retry
-import sdopenid
-import sdlog
-import sdmyproxy
-from sdtools import print_stderr
-import sdexception
+from synda.sdt import sdopenid
+from synda.sdt import sdlog
+from synda.sdt import sdmyproxy
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdexception
 
 from synda.source.config.file.certificate.x509.models import Config as SecurityFile
 
 
 def print_certificate():
     import os
-    import sdutils
+    from synda.sdt import sdutils
 
     credentials = SecurityFile().get_credentials()
 
@@ -34,7 +34,7 @@ def print_certificate():
             shell=False,
         )
 
-        print stdout
+        print(stdout)
     else:
         print_stderr("Certificate not found (use 'renew' command to retrieve a new certificate).")
 
@@ -103,7 +103,7 @@ def renew_certificate(openid, password, force_renew_certificate=False, force_ren
                 password,
             )
 
-        except Exception, e:
+        except Exception as e:
             sdlog.error(
                 "SYDLOGON-012",
                 "Error occured while retrieving certificate from myproxy server (%s)" % str(e),

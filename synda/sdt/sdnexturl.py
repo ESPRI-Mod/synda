@@ -14,9 +14,9 @@
 # multiple changes by JfP to make fallback more flexible.
 
 import argparse
-import sdlog
-import sdquicksearch
-import sdexception
+from synda.sdt import sdlog
+from synda.sdt import sdquicksearch
+from synda.sdt import sdexception
 import sqlite3
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
@@ -127,7 +127,7 @@ def get_urls(file_functional_id):
 
     urlps = []
     for dic in li:
-        urlps += [ [dic[key],key] for key in dic.keys() if key.find('url_')>=0 and
+        urlps += [ [dic[key],key] for key in list(dic.keys()) if key.find('url_')>=0 and
                    dic[key].find('//None')<0 ]
         # ... protocol keys are one of 'url_http', 'url_gridftp'
         # The search for //None bypasses an issue with the SOLR lookup where there is no

@@ -12,11 +12,10 @@
 """This module contains variable related SQL queries"""
 
 import argparse
-import sdapp
-import sddb
-import sdconst
-from sdtypes import Variable
-
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt.sdtypes import Variable
+from synda.sdt.sdexception import SDException
 from synda.source.config.process.download.constants import TRANSFER
 
 
@@ -98,7 +97,7 @@ def get_variables_files_count_by_status(dataset_id,variable=None):
     c.close()
 
     # complete with missing statuses (set to 0)
-    for v in variables.keys():
+    for v in list(variables.keys()):
         for s in TRANSFER["statuses"]['all']:
             if s not in variables[v]:
                 variables[v][s]=0
@@ -140,4 +139,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for v in get_variables():
-        print v.dataset_id,v.name
+        print(v.dataset_id,v.name)

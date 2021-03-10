@@ -19,14 +19,14 @@ Also see
 """
 
 import argparse
-import sdapp
-import sdprogress
+from synda.sdt import sdapp
+from synda.sdt import sdprogress
 
 # make a light version of this module without the four imports below for sddb / sddbversion use
-import sddb
-import sdtypes
-import sdsqlutils
-import sdnormalize
+from synda.sdt import sddb
+from synda.sdt import sdtypes
+from synda.sdt import sdsqlutils
+from synda.sdt import sdnormalize
 
 class DBPagination():
     DEFAULT_CHUNKSIZE=2500

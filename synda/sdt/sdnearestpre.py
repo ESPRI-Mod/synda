@@ -19,13 +19,13 @@ Notes
 import os
 import argparse
 import json
-import sdconfig
-import sdremoteparam
-from sdexception import SDException
-import sdi18n
-import sdcliex
-import sdpipeline
-import sdnearestutils
+from synda.sdt import sdconfig
+from synda.sdt import sdremoteparam
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdpipeline
+from synda.sdt import sdnearestutils
 
 def run(facets_groups,show_candidate=False,dry_run=False):
     for facets_group in facets_groups:
@@ -42,9 +42,9 @@ def run(facets_groups,show_candidate=False,dry_run=False):
                 li=get_datanode_list(facets_group,dry_run=dry_run)
 
                 if show_candidate:
-                    print "Candidate datanodes list:"
+                    print("Candidate datanodes list:")
                     for dn in li:
-                        print dn
+                        print(dn)
 
                 if len(li)>0:
                     data_node=get_nearest_datanode(li)
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         datanode_place=sdnearestutils.get_datanode_place(args.datanode)
         distance=sdnearestutils.compute_distance(client_place,datanode_place)
 
-        print "The datanode is %i km from your location (%s)"%(distance,sdnearestutils.get_client_country())
+        print("The datanode is %i km from your location (%s)"%(distance,sdnearestutils.get_client_country()))
     else:
         # choose the nearest datanode for given parameters
 
@@ -114,9 +114,9 @@ if __name__ == '__main__':
             facets_group=facets_groups[0]
 
             if 'data_node' in facets_group:
-                print
-                print "Nearest datanode: %s"%facets_group['data_node']
+                print()
+                print("Nearest datanode: %s"%facets_group['data_node'])
             else:
                 if not args.dry_run:
-                    print
-                    print "No datanode found"
+                    print()
+                    print("No datanode found")

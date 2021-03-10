@@ -14,9 +14,9 @@
 import sys
 import argparse
 import json
-import sdapp
+from synda.sdt import sdapp
 import humanize
-from sdtypes import File
+from synda.sdt.sdtypes import File
 
 def run(files):
     
@@ -25,13 +25,13 @@ def run(files):
     for file_ in files:
 
         if 'status' in file_:
-            # this case is to print file after the file pipeline 
+            # this case is to print file after the file pipeline
 
             f=File(**file_)
 
             size=humanize.naturalsize(f.size,gnu=False)
 
-            print "%-12s %-8s %s"%(pretty_label.get(f.status,f.status),size,f.filename)
+            print("%-12s %-8s %s"%(pretty_label.get(f.status,f.status),size,f.filename))
         else:
             # this case is to print file in a early step (before 'status' has
             # been retrieved from local db and before filename has been added)
@@ -40,7 +40,7 @@ def run(files):
 
             size=humanize.naturalsize(f.size,gnu=False)
 
-            print "%-8s %s"%(size,f.title)
+            print("%-8s %s"%(size,f.title))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

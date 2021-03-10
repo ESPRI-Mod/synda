@@ -14,7 +14,7 @@
 import os
 import re
 import sys
-import sdapp
+from synda.sdt import sdapp
 
 def MIGR0001():
     """
@@ -30,7 +30,7 @@ def execProc(proc_name):
 
     try:
         getattr(proc_name.upper())()
-    except Exception,e:
+    except Exception as e:
         raise
 
     sdlog.info("SYNDMIGR-232","routine '%s' completes successfully"%proc_name)

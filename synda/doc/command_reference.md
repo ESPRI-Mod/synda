@@ -327,7 +327,7 @@ usage: synda get [-h] [-s SELECTION_FILE] [-z] [--verify_checksum]
                  [--dest_folder DEST_FOLDER] [--force]
                  [--network_bandwidth_test] [--openid OPENID]
                  [--password PASSWORD] [--quiet] [--timeout TIMEOUT]
-                 [--urllib2] [--verbosity] [--hpss] [--no-hpss]
+                 [--urllib] [--verbosity] [--hpss] [--no-hpss]
                  [parameter [parameter ...]]
 
 positional arguments:
@@ -353,7 +353,7 @@ optional arguments:
   --quiet, -q
   --timeout TIMEOUT, -t TIMEOUT
                         HTTP timeout
-  --urllib2, -u         Use urllib2 instead of wget as HTTP client
+  --urllib, -u         Use urllib instead of wget as HTTP client
   --verbosity, -v
   --hpss                Enable 'hpss' flag
   --no-hpss             Disable 'hpss' flag (Default)

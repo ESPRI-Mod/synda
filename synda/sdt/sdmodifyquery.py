@@ -13,10 +13,10 @@
 
 import argparse
 import string
-import sdapp
-import sddb
-import sdlog
-import sdfiledao
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sdlog
+from synda.sdt import sdfiledao
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
@@ -49,7 +49,6 @@ def get_where_clause( where='' ):
 
 
 def change_status(old_status, new_status, conn=sddb.conn, where=''):
-    nbr = 0
 
     where_clause = get_where_clause(where)
     c = conn.cursor()

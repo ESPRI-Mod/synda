@@ -24,10 +24,10 @@ Note
 import sys
 import argparse
 import json
-import sddefaultparameter
-import sdforcedparameter
-import sdstream
-import sdprint
+from synda.sdt import sddefaultparameter
+from synda.sdt import sdforcedparameter
+from synda.sdt import sdstream
+from synda.sdt import sdprint
 
 from synda.source.config.file.selection.constants import AIDPP
 from synda.source.config.file.selection.constants import AIFPP

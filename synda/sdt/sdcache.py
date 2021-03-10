@@ -12,19 +12,19 @@
 """This module caches ESGF parameters in local database."""
 
 import argparse
-import sdapp
-import sdutils
-import sdprogress
-import sddao
-import sdlog
-import sdindex
-import sdsqlutils
-import sddb
-import sdremoteparam_light
-import sdtools
-import sdproxy_ra
-from sdtypes import Request,Item
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdutils
+from synda.sdt import sdprogress
+from synda.sdt import sddao
+from synda.sdt import sdlog
+from synda.sdt import sdindex
+from synda.sdt import sdsqlutils
+from synda.sdt import sddb
+from synda.sdt import sdremoteparam_light
+from synda.sdt import sdtools
+from synda.sdt import sdproxy_ra
+from synda.sdt.sdtypes import Request,Item
+from synda.sdt.sdexception import SDException
 from sqlite3 import IntegrityError
 
 def run(host=None,reload=False,project=None):
@@ -52,17 +52,17 @@ def _reload_parameters(parameters):
     # pnames1 = []
     # pnames2 = []
     # inames2 = []
-    for pname,pvalues in parameters.iteritems():
+    for pname,pvalues in parameters.items():
         for i,item in enumerate(pvalues):
             try:
                 if item is None:
                     # if pname in pnames1:
-                    #     print "ko"
+                    #     print("ko")
                     # pnames1.append(pname)
                     sddao.add_parameter_value(pname,None,commit=False)
                 else:
                     # if pname in pnames2 and item.name in inames2:
-                    #     print "ko"
+                    #     print("ko")
                     # pnames2.append(pname)
                     # inames2.append(item.name)
                     sddao.add_parameter_value(pname,item.name,commit=False)
@@ -72,7 +72,7 @@ def _reload_parameters(parameters):
     sddb.conn.commit()
 
 def _update_parameters(parameters):
-    for pname,pvalues in parameters.iteritems():
+    for pname,pvalues in parameters.items():
         if len(pvalues)==0:
             # This case means this is a parameter without any associated value.
 

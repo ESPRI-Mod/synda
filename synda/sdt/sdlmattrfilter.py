@@ -15,9 +15,9 @@ Note
     sdlmattrfilter means 'SynDa Low Mem ATTRibute FILTER'.
 """
 
-import sdapp
-import sdconst
-import sdpipelineprocessing
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdpipelineprocessing
 
 def run(metadata,attrs_to_keep):
     metadata_cpy=metadata.copy() # prevent modify original data

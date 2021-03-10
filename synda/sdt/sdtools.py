@@ -12,7 +12,7 @@
 """This module is like 'sdutils' module, except that it doesn't use any other
 (synda) module and thus can be used everywhere (even in 'sdtypes' module).
 """
-
+from __future__ import unicode_literals
 import sys
 import os
 import stat
@@ -51,7 +51,7 @@ def is_file_write_access_OK(path):
     except:
         return False
 
-def set_file_permission(path,mode=0664):
+def set_file_permission(path,mode=0o0664):
     """
     Returns:
         True if file permissions have been changed.
@@ -133,15 +133,15 @@ class DefaultHelpParser(argparse.ArgumentParser):
 def print_module_variables(variables):
     """Func used when using a python module to store configuration parameters."""
     li=[]
-    for k,v in variables.items():
+    for k,v in list(variables.items()):
         if '__' not in k: # prevent display of python system variables
             if k!='li':   # prevent display of this list
-                if isinstance(v, (str,int,basestring,float,bool,list, tuple)):
+                if isinstance(v, (str,int,float,bool,list, tuple)):
                     li.append("%s=%s"%(k,v))
     li=sorted(li)
 
     for v in li:
-        print v
+        print(v)
 
 def url_contains_limit_keyword(url):
     """Check if limit is set."""
@@ -156,7 +156,7 @@ def grep(li,pattern):
         return li
     else:
         expr = re.compile(pattern)
-        return filter(expr.search,li)
+        return list(filter(expr.search,li))
 
 def scalar(val):
     if isinstance(val,list):
@@ -190,27 +190,27 @@ def grep_light(li,pattern):
         return new_li
 
 def print_stdout(msg):
-    print msg
+    print(msg)
 
 def print_stderr(msg=""):
     sys.stderr.write("%s\n"%msg)
 
 def multi_columns_listing(li):
     for a,b,c in zip(li[::3],li[1::3],li[2::3]):
-        print '{0:<30}{1:<30}{2:<}'.format(a,b,c)
+        print('{0:<30}{1:<30}{2:<}'.format(a,b,c))
 
 def union(a, b):
     """Return the union of two lists (and remove duplicate).
 
     Not used.
     """
-    if a==None and b<>None:
+    if a is None and b is not None:
         return list(set(b))
-    if a<>None and b==None:
+    if a is not None and b is None:
         return list(set(a))
-    if a==None and b==None:
+    if a is None and b is None:
         return []
-    if a<>None and b<>None:
+    if a is not None and b is not None:
         return list(set(a) | set(b))
 
 def intersect(a, b):
@@ -248,11 +248,11 @@ def split_values(values):
     if ',' in values:
         # delimiter is ','
 
-        r = re.compile('\s*,\s*')
+        r = re.compile(r'\s*,\s*')
     else:
         # delimiter is ' '
 
-        r = re.compile('\s+')
+        r = re.compile(r'\s+')
 
 
     # split
@@ -329,4 +329,4 @@ if __name__ == '__main__':
     parser.add_argument('-f','--file',required=True)
     args = parser.parse_args()
 
-    print is_file_rw_access_OK(args.file)
+    print(is_file_rw_access_OK(args.file))

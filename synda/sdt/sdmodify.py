@@ -16,47 +16,56 @@ Notes
     - This module is intended to be plugged to sdfilepipeline output
       (i.e. stream must be duplicate free and each file must contain status attribute).
 """
-
-import argparse
-import sdapp
-import sdmodifyquery
-import sdreplica
-import sdlog
-import sdconst
-from sdtools import print_stderr
+from synda.sdt import sdmodifyquery
+from synda.sdt import sdreplica
+from synda.sdt import sdlog
+from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.process.download.constants import TRANSFER
 
 
-def modify():
-    """Change priority value for already existing transfer."""
-    sdmodifyquery.change_priority(priority)
-
 def pause_all():
-    sdlog.info("SDMODIFY-431","Moving transfer from waiting to pause..")
-    nbr=sdmodifyquery.change_status(TRANSFER["status"]['waiting'], TRANSFER["status"]['pause'])
-    sdlog.info("SDMODIFY-830","%i transfer marked for retry"%(nbr))
+    sdlog.info("SDMODIFY-431", "Moving transfer from waiting to pause..")
+    nbr = sdmodifyquery.change_status(TRANSFER["status"]['waiting'], TRANSFER["status"]['pause'])
+    sdlog.info("SDMODIFY-830", "%i transfer marked for retry" % nbr)
 
-def retry_all( filter=None ):
-    sdlog.info("SDMODIFY-343","Moving transfer from error to waiting..")
-    nbr=sdmodifyquery.change_status(TRANSFER["status"]['error'], TRANSFER["status"]['waiting'],
-                                     where=filter )
-    sdlog.info("SDMODIFY-226","%i transfer marked for retry"%(nbr))
+
+def retry_all(query_filter=None):
+
+    sdlog.info(
+        "SDMODIFY-343",
+        "Moving transfer from error to waiting..",
+    )
+    nbr = sdmodifyquery.change_status(
+        TRANSFER["status"]['error'],
+        TRANSFER["status"]['waiting'],
+        where=query_filter,
+    )
+    sdlog.info(
+        "SDMODIFY-226",
+        "%i transfer marked for retry" % nbr,
+    )
     return nbr
 
-def replica_next(file_,replicas):
-    if file_.status in [TRANSFER["status"]['error'], TRANSFER["status"]['waiting']]: # replica can only be changed for those file statuses
 
-        new_replica=sdreplica.replica_next(file_.url,replicas) # TODO: maybe use replica object instead of tuple here
+def replica_next(file_, replicas):
+    # replica can only be changed for those file statuses
+    if file_.status in [TRANSFER["status"]['error'], TRANSFER["status"]['waiting']]:
+
+        # TODO: maybe use replica object instead of tuple here
+        new_replica = sdreplica.replica_next(file_.url, replicas)
         if new_replica is None:
-            print_stderr("No other replica found (file_functional_id=%s)"%file_.file_functional_id)
+            print_stderr("No other replica found (file_functional_id=%s)" % file_.file_functional_id)
         else:
-            sdmodifyquery.change_replica(file_.file_functional_id,new_replica)
+            sdmodifyquery.change_replica(file_.file_functional_id, new_replica)
 
-            sdlog.info("SDMODIFY-100","File replica set to %s (previous_replica=%s,file_functional_id=%s)"%(new_replica[1],file_.url,file_.file_functional_id))
+            sdlog.info(
+                "SDMODIFY-100",
+                "File replica set to {} (previous_replica={},file_functional_id={})".format(
+                    new_replica[1],
+                    file_.url,
+                    file_.file_functional_id,
+                ),
+            )
     else:
-        print_stderr("Replica cannot be changed (local file incorrect status).")   
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+        print_stderr("Replica cannot be changed (local file incorrect status).")

@@ -31,10 +31,10 @@ Notes
   - This module can be used to process different metadata types (File and Dataset).
 """
 
-import sdnearestpost
-import sdshrinktest
-import sdshrinkutils
-import sdlog
+from synda.sdt import sdnearestpost
+from synda.sdt import sdshrinktest
+from synda.sdt import sdshrinkutils
+from synda.sdt import sdlog
 
 def run(metadata):
 

@@ -11,10 +11,10 @@
 
 """This module filters a list of files."""
 
-import sdapp
-from sdexception import SDException
-import sdprint
-import sdpipelineprocessing
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdprint
+from synda.sdt import sdpipelineprocessing
 
 def run(metadata,filter_name,filter_value,mode):
     if mode=='keep':

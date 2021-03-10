@@ -19,9 +19,9 @@ Description
 import sys
 import argparse
 import json
-import sdapp
-import sdlog
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sdprint
 
 def run(files):
     files=remove_incomplete_files(files)
@@ -59,7 +59,7 @@ def remove_incomplete_files(files):
 def is_file_malformed(file):
     variable=file.get("variable")
 
-    print type(variable)
+    print(type(variable))
 
     return False
 

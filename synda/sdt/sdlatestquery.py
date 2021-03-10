@@ -11,9 +11,9 @@
 
 """This module contains sql queries related to 'latest' flag."""
 
-import sdapp
-import sddb
-from sdtypes import Dataset
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt.sdtypes import Dataset
 
 def get_latest_datasets(full,conn=sddb.conn):
     """Returns datasets with latest flag set to true."""

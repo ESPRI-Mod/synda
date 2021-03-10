@@ -16,10 +16,10 @@ Note
 """
 
 import os
-import sdapputils
+from synda.sdt import sdapputils
 
 
-os.umask(0002)
+os.umask(0o0002)
 
 name = 'transfer'
 version = '3.10'

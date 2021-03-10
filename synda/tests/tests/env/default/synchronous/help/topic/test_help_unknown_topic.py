@@ -21,6 +21,7 @@ Manager().set_tests_mode()
 
 from synda.sdt import main as synda
 
+
 @pytest.mark.on_all_envs
 def test_help_unknown_topic(capsys):
 

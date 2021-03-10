@@ -18,9 +18,9 @@ Note
 import sys
 import json
 import argparse
-import sdapp
-import sdnormalize
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdnormalize
+from synda.sdt import sdprint
 
 def run(files):
     for f in files:

@@ -13,6 +13,7 @@ import os
 from synda.source.constants import get_env_folder
 
 from synda.source.config.file.models import Config as Base
+from synda.source.config.file.env.constants import ENV_NOT_FOUND
 from synda.source.config.file.user.preferences.constants import DEFAULT_FULL_FILENAME
 from synda.source.config.file.user.preferences.constants import IDENTIFIER
 from synda.source.config.file.user.preferences.constants import DEFAULT_OPTIONS
@@ -47,6 +48,7 @@ class Config(Base):
 
         if not self.exists():
             # Use of the 'sdt.conf' located into the synda resource directory
+            # print(ENV_NOT_FOUND)
             full_filename = DEFAULT_FULL_FILENAME
 
         self.set_data(get_parser(full_filename, DEFAULT_OPTIONS))

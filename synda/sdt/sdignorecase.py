@@ -18,9 +18,9 @@ Example
 import sys
 import argparse
 import json
-import sdparam
-import sdidtest
-import sdprint
+from synda.sdt import sdparam
+from synda.sdt import sdidtest
+from synda.sdt import sdprint
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.selection.constants import PENDING_PARAMETER

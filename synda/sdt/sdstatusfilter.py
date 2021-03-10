@@ -21,9 +21,9 @@ Note
 import sys
 import argparse
 import json
-import sdapp
-import sdpostpipelineutils
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdprint
 
 def run(files):
     new_files=[]

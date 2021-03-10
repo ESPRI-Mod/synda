@@ -11,17 +11,17 @@
 
 """This module runs many searches (SearchAPIProxy.run()) in parallel."""
 
-import Queue
+import queue
 import threading
 import random
 import time
-import sdlog
-import sdproxy
-import sdtypes
-import sdindex
-import sdconfig
-import sdurlutils
-import sdexception
+from synda.sdt import sdlog
+from synda.sdt import sdproxy
+from synda.sdt import sdtypes
+from synda.sdt import sdindex
+from synda.sdt import sdconfig
+from synda.sdt import sdurlutils
+from synda.sdt import sdexception
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.internal.models import Config as Internal
@@ -66,7 +66,7 @@ class MetadataThread(threading.Thread):
             metadata=self.service.run(url=url_with_host_set,attached_parameters=ap) # service is an instance of SearchAPIProxy
             metadata.disconnect() # TAGKLK434L3K34K
             self.result_queue.put(metadata)
-        except Exception, e:
+        except Exception as e:
             # note
             #  - it's not fatal to come here, because error queries will be
             #    retried later using a different host (well until "max_retry"
@@ -139,7 +139,7 @@ def all_threads_completed():
       True   => all threads completed
       False  => threads still running
     """
-    for host in searchAPIServices.keys():
+    for host in list(searchAPIServices.keys()):
         for t in searchAPIServices[host]['threadlist']:
             if t.is_alive():
                 return False
@@ -163,7 +163,7 @@ def process_query(host,query):
 
 def distribute_queries(queries):
 
-    hosts=searchAPIServices.keys()
+    hosts=list(searchAPIServices.keys())
 
     random.shuffle(hosts) # this is to prevent always starting with the same server
 
@@ -200,7 +200,7 @@ def run_helper(queries):
 
     while True:
         if sdconfig.proxymt_progress_stat:
-            sdlog.info("SDPROXMT-033","threads per host: %s"%",".join(['%s=%s'%(host,len(searchAPIServices[host]['threadlist'])) for host in searchAPIServices.keys()]))
+            sdlog.info("SDPROXMT-033","threads per host: %s"%",".join(['%s=%s'%(host,len(searchAPIServices[host]['threadlist'])) for host in list(searchAPIServices.keys())]))
 
         if len(queries)>0:
             distribute_queries(queries)
@@ -210,7 +210,7 @@ def run_helper(queries):
                 break
 
         # remove completed threads from list
-        for host in searchAPIServices.keys():
+        for host in list(searchAPIServices.keys()):
             li=[]
             for t in searchAPIServices[host]['threadlist']:
                 if t.is_alive():
@@ -262,8 +262,8 @@ def set_index_hosts(index_hosts):
 
 max_thread_per_host=sdconfig.max_metadata_parallel_download_per_index
 
-__result_queue=Queue.Queue() # thread safe data structure to hold search-API result
-__error_queue=Queue.Queue()  # thread safe data structure to hold unsuccessful request (used by the retry mecanism)
+__result_queue=queue.Queue() # thread safe data structure to hold search-API result
+__error_queue=queue.Queue()  # thread safe data structure to hold unsuccessful request (used by the retry mecanism)
 
 searchAPIServices=None # list of search-API services (M queries will be sent to one service at once, resulting in MxN parallel streams, with N the number of service)
 
@@ -281,4 +281,4 @@ if __name__ == '__main__':
         file_list.append(sdtypes.File(**file_))
 
     for f in file_list:
-        print "%s %s"%(f.timestamp,f.id)
+        print("%s %s"%(f.timestamp,f.id))

@@ -25,7 +25,7 @@ def run(ifile,opathname,draw_frame):
     t2p.finish()
 
 def err(str):
-    print >>sys.stderr, "txt2pdf: ", str, "\n";
+    print("txt2pdf: {}\n".format(str), file=sys.stderr)
 
 def mm2pt (mm):
     return mm / 25.4 * 72;

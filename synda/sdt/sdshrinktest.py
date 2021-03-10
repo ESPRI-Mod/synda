@@ -11,10 +11,10 @@
 
 """This module contains shrink test routines."""
 
-import sdconfig
-import sdlmattrfilter
-import sdpostpipelineutils
-import sdlog
+from synda.sdt import sdconfig
+from synda.sdt import sdlmattrfilter
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdlog
 
 def is_nearestpost_enabled(metadata):
     result=False

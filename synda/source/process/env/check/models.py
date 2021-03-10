@@ -65,11 +65,13 @@ class Config(Identifier):
                     preferences_update_paths()
                     if interactive_mode:
                         self.update_credentials_file()
-                        print CHECK_COMPLETE
+                        print(CHECK_COMPLETE)
         else:
-            print "{} {}".format(
-                ERROR_ENVIRONMENT_VARIABLE_PREFIX,
-                "ST_HOME",
+            print(
+                "{} {}".format(
+                    ERROR_ENVIRONMENT_VARIABLE_PREFIX,
+                    "ST_HOME",
+                ),
             )
         return checked
 
@@ -77,10 +79,10 @@ class Config(Identifier):
         # To ease up credentials setting.
         answer = ''
         while answer not in ['y', 'n']:
-            answer = raw_input('Would you like to set your openID credentials? y/n: ').lower()
+            answer = input('Would you like to set your openID credentials? y/n: ').lower()
             if answer == 'y':
-                openid = raw_input('openID url: ').lower()
-                password = raw_input('password: ')
+                openid = input('openID url: ').lower()
+                password = input('password: ')
                 update_credentials(openid, password)
 
     def get_required_files(self, index):

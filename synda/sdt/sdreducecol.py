@@ -14,9 +14,9 @@
 import sys
 import argparse
 import json
-import sdapp
-import sdprint
-import sdtools
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdtools
 
 def run(files):
     files=remove_unused_fields(files)

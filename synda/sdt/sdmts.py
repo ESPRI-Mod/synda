@@ -22,8 +22,8 @@ import uuid
 import sqlite3
 import contextlib
 import shutil
-import sddbpagination
-import sdconfig
+from synda.sdt import sddbpagination
+from synda.sdt import sdconfig
 
 from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.internal.models import Config as Internal
@@ -71,7 +71,7 @@ class MemoryStorage(Storage):
     def get_chunks(self, io_mode): # io_mode is not used (but need to be present to respect Storage contract)
         chunksize = Internal().processes_chunksize
 
-        for i in xrange(0, self.count(), chunksize):
+        for i in range(0, self.count(), chunksize):
             yield self.files[i:i+chunksize]
 
     def merge(self,store):

@@ -7,6 +7,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import signal
+from daemon import DaemonContext
 import daemon.pidfile
 
 from synda.source.config.path.tree.default.models import Config as TreePath
@@ -34,7 +35,7 @@ log_stderr = open(
     ),
     "a+",
 )
-daemon_context = daemon.DaemonContext(
+daemon_context = DaemonContext(
     working_directory=log_folder,
     pidfile=pidfile,
     stdout=log_stdout,

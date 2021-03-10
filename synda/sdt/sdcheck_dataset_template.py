@@ -16,10 +16,10 @@ import sys
 import re
 import argparse
 import json
-import sdapp
-from sdexception import SDException
-import sdlog
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdlog
+from synda.sdt import sdprint
 
 def run(files):
     check_DRS_consistency(files)
@@ -32,7 +32,7 @@ def check_DRS_consistency(files):
         BEWARE: we expect in this func that the last field of the "dataset_functional_id" is
                 the dataset version, no matter what the project is.
         """
-        return re.sub('\.[^.]+$','',dataset_functional_id) # remove last field (version)
+        return re.sub(r'\.[^.]+$','',dataset_functional_id) # remove last field (version)
 
     for f in files:
         if "dataset_template" in f: # For some project, template is missing. In this case, we don"t do the check.

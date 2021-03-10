@@ -33,7 +33,7 @@ class Manager(Base):
         validated = self.validate(argv)
 
     def is_validated_sub_command(self):
-        return self.sub_command is not ""
+        return self.sub_command != ""
 
     def validate_subcommand(self, argv):
         strerror = ""
@@ -80,8 +80,8 @@ class Manager(Base):
                 process_instance,
             )
 
-    def get_config_manager(self):
-        return self.config_manager
+    def get_config_manager(self, checked=False):
+        return ConfigManager(checked=checked)
 
     def get_user_preferences(self):
         return self.config_manager.get_user_preferences()

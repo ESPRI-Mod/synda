@@ -20,12 +20,12 @@ See also
     - sdshrink
 """
 
-import sdapp
-import sdconst
-import sdprint
-import sdpostpipelineutils
-import sdlmattrfilter
-import sdpipelineprocessing
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdprint
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdlmattrfilter
+from synda.sdt import sdpipelineprocessing
 
 def run(metadata,functional_id_keyname):
     light_metadata=sdlmattrfilter.run(metadata,[functional_id_keyname,'data_node']) # create light list with needed columns only not to overload system memory

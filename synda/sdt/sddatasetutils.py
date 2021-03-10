@@ -11,10 +11,10 @@
 
 """Contains local dataset utils."""
 
-import sdapp
-import sddatasetdao
-import sddatasetquery
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sddatasetdao
+from synda.sdt import sddatasetquery
+from synda.sdt.sdexception import SDException
 
 def get_old_versions_datasets():
     """Return old versions datasets list."""

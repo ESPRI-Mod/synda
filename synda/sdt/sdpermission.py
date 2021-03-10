@@ -11,7 +11,7 @@
 
 """This module contains permission related routines."""
 
-import sdtools
+from synda.sdt import sdtools
 from synda.source.config.file.user.credentials.models import Config as CredentialsFile
 
 

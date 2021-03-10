@@ -13,8 +13,8 @@
 
 import argparse
 import re
-from sdtypes import Variable
-import sdvariablequery
+from synda.sdt.sdtypes import Variable
+from synda.sdt import sdvariablequery
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.process.download.dataset.selection.variable.constants import STRUCTURE as VARIABLE_STRUCTURE
 
@@ -35,7 +35,7 @@ def build_variable_functional_id(dataset_functional_id, v):
     #  - cmip5.output1.BCC.bcc-csm1-1-m.rcp26.day.atmos.day.r1i1p1.clt.20120910
     #  - cmip5.output1.BCC.bcc-csm1-1-m.rcp26.day.atmos.day.r1i1p1.clt.20120910.aggregation
     #
-    variable_functional_id = re.sub('^(.*)\.([^.]+)$', "\\1.%s.\\2.aggregation" % v, dataset_functional_id)
+    variable_functional_id = re.sub(r'^(.*)\.([^.]+)$', "\\1.%s.\\2.aggregation" % v, dataset_functional_id)
 
     return variable_functional_id
 
@@ -47,7 +47,7 @@ def exists_one_complete_variable(d):
     vars_files_count_by_status = sdvariablequery.get_variables_files_count_by_status(d.dataset_id)
 
     # k => varname
-    for k in vars_files_count_by_status.keys():
+    for k in list(vars_files_count_by_status.keys()):
 
         done_count = vars_files_count_by_status[k][TRANSFER["status"]['done']]
 
@@ -67,7 +67,7 @@ def is_variable_complete(dataset_id, variable):
 
     if variable in di:
 
-        total = sum(count for count in di[variable].values())
+        total = sum(count for count in list(di[variable].values()))
 
         if total == di[variable][TRANSFER["status"]['done']]:
             # all done (total nbr of files same as nbr of done files)
@@ -94,7 +94,7 @@ def get_variables_progress(d):
         sdvariablequery.get_variables_files_count_by_status(d.dataset_id)
 
     # k => varname, v => count
-    for k, v in vars_files_count.items():
+    for k, v in list(vars_files_count.items()):
         if k in vars_files_count_by_status:
             # is the number of done files same as the number of all files, for this variable ?
             # (if true, means that all variable files are done)
@@ -137,7 +137,9 @@ if __name__ == '__main__':
     parser.add_argument('-v', '--variable', required=True)
     args = parser.parse_args()
 
-    print is_variable_complete(
-        args.dataset_id,
-        args.variable,
+    print(
+        is_variable_complete(
+            args.dataset_id,
+            args.variable,
+        ),
     )

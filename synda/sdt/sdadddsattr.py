@@ -25,19 +25,19 @@ TODO
 """
 
 import argparse
-import sdapp
-import sdrun
+from synda.sdt import sdapp
+from synda.sdt import sdrun
 import copy
-import sdlog
-import sdpipelineprocessing
-from sdexception import MissingDatasetUrlException
+from synda.sdt import sdlog
+from synda.sdt import sdpipelineprocessing
+from synda.sdt.sdexception import MissingDatasetUrlException
 
 def run(squeries,metadata,parallel):
     datasets_attrs=None
 
     try:
         datasets_attrs=get_datasets_attrs(squeries,parallel)
-    except MissingDatasetUrlException,e:
+    except MissingDatasetUrlException as e:
         sdlog.error("SDADDDSA-108","Datasets cannot be set as dataset url is missing")
         return metadata
 
@@ -91,7 +91,7 @@ def add_dataset_attrs(files,datasets_attrs):
         if dataset_functional_id in datasets_attrs:
 
             # TAGJ43JK55J8K78
-            for k,v in datasets_attrs[dataset_functional_id].iteritems():
+            for k,v in datasets_attrs[dataset_functional_id].items():
                 if k not in f:
                     f[k]=copy.deepcopy(v)
                 else:

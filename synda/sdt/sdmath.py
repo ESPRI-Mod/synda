@@ -11,16 +11,16 @@
 
 """This module contains math routines."""
 
-import sdapp
+from synda.sdt import sdapp
 import itertools
 import operator
 
 def monotone_increasing(lst):
-    pairs = zip(lst, lst[1:])
+    pairs = list(zip(lst, lst[1:]))
     return all(itertools.starmap(operator.le, pairs))
 
 def monotone_decreasing(lst):
-    pairs = zip(lst, lst[1:])
+    pairs = list(zip(lst, lst[1:]))
     return all(itertools.starmap(operator.ge, pairs))
 
 def monotone(lst):

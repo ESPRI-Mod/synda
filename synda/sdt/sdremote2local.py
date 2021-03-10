@@ -19,9 +19,9 @@ Note
 import sys
 import argparse
 import json
-import sdapp
-import sdtranslate
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdtranslate
+from synda.sdt import sdprint
 
 name_rules={
     'title':'filename',

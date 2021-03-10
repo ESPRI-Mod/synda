@@ -17,8 +17,8 @@ Note
 
 import re
 import argparse
-import sdutils
-from sdexception import SDException
+from synda.sdt import sdutils
+from synda.sdt.sdexception import SDException
 
 def compute_RTT(remote_host,count=1):
     """
@@ -44,4 +44,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     rtt=compute_RTT('google.fr')
-    print rtt
+    print(rtt)

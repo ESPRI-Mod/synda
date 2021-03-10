@@ -21,12 +21,13 @@ from synda.source.config.env.init.constants import INFORMATION_HEADER
 from synda.source.config.env.init.constants import INFORMATION_CONTENT_TEMPLATE
 
 from synda.source.process.env.init.constants import IDENTIFIER
+from synda.source.process.env.check.models import Config as CheckEnv
 
 
 def confirm():
     answer = ""
     while answer == '' or answer not in ['y', 'n']:
-        answer = raw_input(
+        answer = input(
             'Synda environment needs a few key files. \n'
             'Would you like to init the stubs of these files? y/n: ',
         ).lower()
@@ -66,14 +67,15 @@ class Config(Identifier):
 
     def process(self, destination, source="", interactive_mode=False):
         if interactive_mode:
+            print(INFORMATION_HEADER)
             confirmed = confirm()
             if confirmed:
                 self.create(destination, source=source)
-                print(INFORMATION_HEADER)
                 print(
                     INFORMATION_CONTENT_TEMPLATE.format(
                         get_env_folder(),
                     ),
                 )
+                CheckEnv(get_env_folder()).process(interactive_mode=True)
         else:
             self.create(destination, source=source)

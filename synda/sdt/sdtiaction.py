@@ -16,8 +16,8 @@ Note
     so to improve startup time.
 """
 
-from sdtools import print_stderr
-import sdexception
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdexception
 
 from synda.source.config.file.certificate.x509.models import Config as SecurityFile
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
@@ -30,12 +30,12 @@ from synda.source.process.env.manager import Manager
 
 
 def autoremove(args):
-    import sddeletedataset,sddeletefile
+    from synda.sdt import sddeletedataset,sddeletefile
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
     sddeletefile.delete_transfers_lowmem()
 
 def certificate(args):
-    import sdlogon
+    from synda.sdt import sdlogon
     if args.action is None:
         sdlogon.print_certificate()
         return 0
@@ -64,15 +64,15 @@ def certificate(args):
                 sdlogon.renew_certificate(oid,pwd,force_renew_certificate=True,force_renew_ca_certificates=args.force_renew_ca_certificates)
                 print_stderr('Certificate successfully renewed.')
                 return 0
-            except Exception,e:
+            except Exception as e:
                 print_stderr('Error occurs while renewing certificate (%s)'%str(e))
                 return 1
         elif args.action=="info":
             esgf_x509_cert_dir = SecurityPath().get_certificates()
-            print 'ESGF CA certificates location: {}'.format(esgf_x509_cert_dir)
+            print('ESGF CA certificates location: {}'.format(esgf_x509_cert_dir))
 
             esgf_x509_proxy = SecurityFile().get_credentials()
-            print 'ESGF user certificate location: {}'.format(esgf_x509_proxy)
+            print('ESGF user certificate location: {}'.format(esgf_x509_proxy))
             return 0
         elif args.action=="print":
             sdlogon.print_certificate()
@@ -82,7 +82,7 @@ def certificate(args):
             return 1
 
 def check(args):
-    import sddump,sdcheckdatasetversion,sdfields
+    from synda.sdt import sddump,sdcheckdatasetversion,sdfields
 
     status=0
 
@@ -91,13 +91,13 @@ def check(args):
         status=1
 
     elif args.action=="selection":
-        import sdselectionsgroup,sdpipeline
+        from synda.sdt import sdselectionsgroup,sdpipeline
 
         for selection in sdselectionsgroup.get_selection_list():
             try:
                 print_stderr("Checking %s.."%selection.filename)
                 sdpipeline.prepare_param(selection=selection)
-            except sdexception.IncorrectParameterException,e:
+            except sdexception.IncorrectParameterException as e:
                 print_stderr("Error occurs while processing %s (%s)"%(selection.filename,str(e)))
 
     elif args.action=="file_variable":
@@ -114,22 +114,22 @@ def check(args):
         files=sddump.dump_ESGF(parameter=subset_filter,fields=sdfields.get_file_variable_fields(),dry_run=args.dry_run,type_='File')
 
         if not args.dry_run:
-            print '%i file(s) retrieved'%len(files)
+            print('%i file(s) retrieved'%len(files))
 
             errors=0
             for file_ in files:
 
                 # debug
-                #print file_['variable']
+                #print(file_['variable'])
 
                 if len(file_['variable'])>1:
-                    print 'File contains many variables (%s,%s)'%(file_['title'],str(file_['variable']))
+                    print('File contains many variables (%s,%s)'%(file_['title'],str(file_['variable'])))
                     errors+=1
 
             if errors==0:
-                print 'No inconsistency detected'
+                print('No inconsistency detected')
             else:
-                print '%d inconsistencies detected'%errors
+                print('%d inconsistencies detected'%errors)
 
     elif args.action=="dataset_version":
         status=sdcheckdatasetversion.run(args)
@@ -141,7 +141,7 @@ def check(args):
     return status
 
 def config(args):
-    import sdconfig
+    from synda.sdt import sdconfig
     if args.action is None:
         sdconfig.print_()
     else:
@@ -153,12 +153,12 @@ def config(args):
 
 
 def contact(args):
-    import sdi18n
-    print sdi18n.m0018
+    from synda.sdt import sdi18n
+    print(sdi18n.m0018)
 
 
 def daemon(args):
-    import sddaemon
+    from synda.sdt import sddaemon
 
     if args.action is None:
         sddaemon.print_daemon_status()
@@ -171,16 +171,15 @@ def daemon(args):
                 try:
                     sddaemon.start(args.config_manager)
                     print_stderr("Daemon successfully started")
-                except sdexception.SDException, e:
+                except sdexception.SDException as e:
                     print_stderr('error occured', e.msg)
         elif args.action == "stop":
 
             if sddaemon.is_running():
-                sddaemon.stop()
                 try:
                     sddaemon.stop()
                     print_stderr("Daemon successfully stopped")
-                except sdexception.SDException, e:
+                except sdexception.SDException as e:
                     print_stderr('error occured', e.msg)
             else:
                 print_stderr("Daemon already stopped")
@@ -189,7 +188,7 @@ def daemon(args):
 
 
 def facet(args):
-    import sdparam,sdremoteparam,syndautils,sdinference,sdignorecase
+    from synda.sdt import sdparam,sdremoteparam,syndautils,sdinference,sdignorecase
 
     facets_groups=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=True)
     facets_groups=sdignorecase.run(facets_groups)
@@ -208,7 +207,7 @@ def facet(args):
             # TODO: func for code below
             items=params.get(args.facet_name,[])
             for item in items:
-                print item.name
+                print(item.name)
         elif len(facets_groups)>1:
             print_stderr('Multi-queries not supported')
 
@@ -223,14 +222,14 @@ def facet(args):
 
 def get(args):
 
-    import sdlogon
-    import sdrfile
-    import sddeferredafter
-    import sddirectdownload
-    import syndautils
+    from synda.sdt import sdlogon
+    from synda.sdt import sdrfile
+    from synda.sdt import sddeferredafter
+    from synda.sdt import sddirectdownload
+    from . import syndautils
     import humanize
     import os
-    import sdearlystreamutils
+    from synda.sdt import sdearlystreamutils
 
     # hack
     # see TAG43534FSFS
@@ -275,7 +274,7 @@ def get(args):
         force_renew_certificate=False,
     )
 
-    http_client = get_http_clients()["urllib"] if args.urllib2 else get_http_clients()["wget"]
+    http_client = get_http_clients()["urllib"] if args.urllib else get_http_clients()["wget"]
 
     # local_path
     #
@@ -352,9 +351,11 @@ def get(args):
         else:
             for f in files:
                 size = humanize.naturalsize(f['size'], gnu=False)
-                print '%-12s %s'.format(
-                    size,
-                    f['filename'],
+                print(
+                    '%-12s %s'.format(
+                        size,
+                        f['filename'],
+                    ),
                 )
 
     elif len(urls) > 0:
@@ -409,24 +410,24 @@ def get(args):
 
 
 def history(args):
-    import sdhistorydao
+    from synda.sdt import sdhistorydao
     from tabulate import tabulate
-    li=[d.values() for d in sdhistorydao.get_all_history_lines()] # listofdict to listoflist
-    print tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl")
+    li = [list(d.values()) for d in sdhistorydao.get_all_history_lines()]  # listofdict to listoflist
+    print(tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl"))
 
 def install(args):
-    import sdinstall
+    from synda.sdt import sdinstall
 
-    (status,newly_installed_files_count)=sdinstall.run(args)
+    status, newly_installed_files_count = sdinstall.run(args)
 
     return status
 
 def intro(args):
-    import sdi18n
-    print sdi18n.m0019
+    from synda.sdt import sdi18n
+    print(sdi18n.m0019)
 
 def metric(args):
-    import sdmetric,sdparam
+    from synda.sdt import sdmetric,sdparam
 
     # check
     if args.groupby=='model':
@@ -440,17 +441,17 @@ def metric(args):
         sdmetric.print_rate(args.groupby,args.project,dry_run=args.dry_run)
 
 def remove(args):
-    import sdremove,syndautils
+    from synda.sdt import sdremove,syndautils
 
     stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
     return sdremove.run(args,stream)
 
 def reset(args):
-    import sddeletefile
+    from synda.sdt import sddeletefile
     sddeletefile.reset()
 
 def stat(args):
-    import sdstat
+    from synda.sdt import sdstat
     return sdstat.run(args)
 
 def selection(args): # don't remove 'args' argument event if not used
@@ -458,7 +459,7 @@ def selection(args): # don't remove 'args' argument event if not used
     Note
         inter-selection func
     """
-    import sdselectionsgroup
+    from synda.sdt import sdselectionsgroup
     sdselectionsgroup.print_selection_list()
 
 def upgrade(args):
@@ -466,14 +467,14 @@ def upgrade(args):
     Note
         inter-selection func
     """
-    import sdselectionsgroup, sdparameter, sdupgrade
+    from synda.sdt import sdselectionsgroup, sdparameter, sdupgrade
 
     project=sdparameter.extract_values_from_parameter(args.parameter,'project') # retrieve project(s) from parameter
     selections=sdselectionsgroup.get_selection_list(project=project)
     sdupgrade.run(selections,args)
 
 def replica_next(file_functional_id,args):
-    import sdrfile, sdmodify, sdfiledao, sdutils
+    from synda.sdt import sdrfile, sdmodify, sdfiledao, sdutils
 
     parameter=['keep_replica=true','nearest=false','file_functional_id=%s'%file_functional_id]
     files=sdrfile.get_files(parameter=parameter,dry_run=args.dry_run)
@@ -497,7 +498,7 @@ def replica_next(file_functional_id,args):
 def replica(args):
     if args.action=="next":
         if args.file_id is None:
-            import sdfiledao,sdconst
+            from synda.sdt import sdfiledao,sdconst
             files=sdfiledao.get_files(status=TRANSFER["status"]['error'])
             for file_ in files:
                 replica_next(file_.file_functional_id,args)
@@ -506,121 +507,42 @@ def replica(args):
     else:
         print_stderr('Incorrect argument')   
 
+
 def retry(args):
-    import sdmodify
-    nbr=sdmodify.retry_all( filter=args.where )
-    if nbr>0:
-        print_stderr("%i file(s) marked for retry."%nbr)
+    from synda.sdt import sdmodify
+    nbr = sdmodify.retry_all(query_filter=args.where)
+    if nbr > 0:
+        print_stderr("%i file(s) marked for retry." % nbr)
     else:
         print_stderr("No transfer in error")
 
-def open_(args):
-    import sdview,syndautils,sdsandbox,sdtypes,sdearlystreamutils
-
-
-    stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file)
-
-
-    # check
-
-    li=sdearlystreamutils.get_facet_values_early(stream,'instance_id') # check if 'instance_id' exists
-    if len(li)==0:
-        # 'instance_id' is not found on cli
-
-        li=sdearlystreamutils.get_facet_values_early(stream,'title') # check if 'title' exists
-        if len(li)==0:
-            # 'title' is not found on cli
-
-            # no identifier found, we stop the processing
-            print_stderr('Please specify a file identifier (id or filename).')
-            return 1
-
-        elif len(li)>1:
-            print_stderr('Too many arguments.')
-            return 1
-    elif len(li)>1:
-        print_stderr('Too many arguments.')
-        return 1
-
-
-    # discovery
-
-    import sdlfile
-    file_=sdlfile.get_file(stream=stream)
-
-    if file_ is None:
-
-        import sdrfile
-        file_=sdrfile.get_file(stream=stream)
-
-        if file_ is None:
-            print_stderr("File not found")
-
-            return 2
-
-
-    # cast
-
-    f=sdtypes.File(**file_)
-
-
-    # check if file exists locally
-
-    if f.status==TRANSFER["status"]['done']:
-        file_local_path=f.get_full_local_path()
-    elif sdsandbox.file_exists(f.filename):
-        file_local_path=sdsandbox.get_file_path(f.filename)
-    else:
-        file_local_path=None
-
-
-    # download (if not done already)
-    import sddirectdownload
-
-    if file_local_path is None:
-        status=sddirectdownload.run(
-            [file_],
-            args.config_manager,
-            verbosity=1,
-        )
-
-        if status!=0:
-            return 1
-
-
-    # open file in external viewer
-
-    sdview.open_(file_local_path,f.variable,args.geometry)
-
-
-    return 0
 
 def param(args):
-    import sdparam
+    from synda.sdt import sdparam
     sdparam.print_(args)
 
 
 def queue(args):
-    import sdfilequery
+    from synda.sdt import sdfilequery
     from tabulate import tabulate
-    from sdprogress import ProgressThread
+    from synda.sdt.sdprogress import ProgressThread
 
     ProgressThread.start(sleep=0.1,running_message='Collecting status information.. ',end_message='') # spinner start
     li=sdfilequery.get_download_status(args.project)
     ProgressThread.stop() # spinner stop
 
-    print tabulate(li,headers=['status','count','size'],tablefmt="plain")
+    print(tabulate(li,headers=['status','count','size'],tablefmt="plain"))
     #sddaemon.print_daemon_status()
 
 
 def update(args):
     print_stderr("Retrieving parameters from ESGF...")
-    import sdcache
+    from synda.sdt import sdcache
     sdcache.run(reload=True,host=args.index_host,project=args.project)
     print_stderr("Parameters are up-to-date.")
 
 def variable(args):
-    import sdremoteparam,sdutils,sdproxy_ra
+    from synda.sdt import sdremoteparam,sdutils,sdproxy_ra
 
     # currently, mode (list or show) is determined by
     # parameter existency. This may change in the future
@@ -659,7 +581,7 @@ def variable(args):
                 # TODO: func for code below
                 items=params.get(facet)
                 for item in items:
-                    print item.name
+                    print(item.name)
 
             except:
                 pass
@@ -676,17 +598,17 @@ def variable(args):
 
             if file_ is None:
 
-                print 'Variable not found.'
+                print('Variable not found.')
 
             else:
 
-                print 'short name:       ',file_['variable'][0]
-                print 'standard name:    ',file_['cf_standard_name'][0]
-                print 'long name:        ',file_['variable_long_name'][0]
-                print 'unit:             ',file_['variable_units'][0]
+                print('short name:       ',file_['variable'][0])
+                print('standard name:    ',file_['cf_standard_name'][0])
+                print('long name:        ',file_['variable_long_name'][0])
+                print('unit:             ',file_['variable_units'][0])
 
 def watch(args):
-    import sdreport, sddaemon
+    from synda.sdt import sdreport, sddaemon
 
     if sddaemon.is_running():
         sdreport.print_running_transfers()
@@ -721,8 +643,7 @@ actions={
     'history':history, 
     'install':install, 
     'intro':intro, 
-    'metric':metric, 
-    'open':open_,
+    'metric':metric,
     'param':param,
     'queue':queue,
     'remove':remove, 

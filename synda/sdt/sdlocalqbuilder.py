@@ -16,11 +16,11 @@ Note
 """
 
 import argparse
-import sdpipelineutils
-import sdproduct
-import sddquery
-import sdprint
-from sdexception import SDException
+from synda.sdt import sdpipelineutils
+from synda.sdt import sdproduct
+from synda.sdt import sddquery
+from synda.sdt import sdprint
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 
@@ -125,7 +125,7 @@ def build_dataset_query(facets):
 
 def serialize_parameters(facets):
     filters=[]
-    for k,v in facets.iteritems():
+    for k,v in facets.items():
         filters.append(serialize_parameter(k,v))
 
     return " AND ".join(filters)

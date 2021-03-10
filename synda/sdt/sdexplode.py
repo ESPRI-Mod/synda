@@ -25,9 +25,9 @@ import sys
 import argparse
 import json
 import copy
-import sdapp
-from sdtypes import File
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt.sdtypes import File
+from synda.sdt import sdprint
 
 def run(facets_groups,facet_to_explode='model'):
     new_facets_groups=[]

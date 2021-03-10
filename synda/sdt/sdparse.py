@@ -14,13 +14,13 @@ import os
 import argparse
 import re
 
-from sdtypes import Selection
-from sdexception import SDException
-import sdtools
-import sdbuffer
-import sdprint
-import sdi18n
-import sdearlystreamutils
+from synda.sdt.sdtypes import Selection
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt import sdbuffer
+from synda.sdt import sdprint
+from synda.sdt import sdi18n
+from synda.sdt import sdearlystreamutils
 
 from synda.source.config.file.selection.models import Config as SelectionConfig
 from synda.source.config.file.selection.constants import PENDING_PARAMETER

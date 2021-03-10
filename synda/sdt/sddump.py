@@ -16,12 +16,12 @@ Example of use
 """
 
 import argparse
-import sdapp
-import sdprint
-import sdsearch
-import sdfields
-import sdstreamutils
-import sddeferredafter
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdsearch
+from synda.sdt import sdfields
+from synda.sdt import sdstreamutils
+from synda.sdt import sddeferredafter
 
 def run():
     pass
