@@ -27,7 +27,6 @@ Available subcommands are:
     intro        Print introduction to synda command
     list         List installed dataset
     metric       Display performance and disk usage metrics
-    open         Open netcdf file
     param        Print ESGF facets
     pexec        Execute post-processing task
     queue        Display download queue status
@@ -490,30 +489,6 @@ optional arguments:
 examples
   synda metric -g data_node -m rate -p CMIP5
   synda metric -g project -m size
-```
-
-### open
-
-Open netcdf file
-
-```
-usage: synda open [-h] [-s SELECTION_FILE] [-z] [--geometry GEOMETRY]
-                  [parameter [parameter ...]]
-
-positional arguments:
-  parameter             search parameters. Format is name=value1,value2.. ...
-                        Most of the time, parameter name can be omitted.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -s SELECTION_FILE, --selection_file SELECTION_FILE
-  -z, --dry_run
-  --geometry GEOMETRY, -g GEOMETRY
-                        Window geometry
-
-examples
-  synda open cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
-  synda open -g 1000x600+70+0 orog_fx_CanESM2_historicalGHG_r0i0p0.nc
 ```
 
 ### param
