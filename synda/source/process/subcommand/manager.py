@@ -39,6 +39,10 @@ class Manager(Base):
         strerror = ""
         if len(argv) >= 2:
             sub_command_candidate = argv[1]
+            if sub_command_candidate == '-h':
+                sub_command_candidate = 'help'
+            if sub_command_candidate == '-V':
+                sub_command_candidate = 'synda_version'
             if sub_command_candidate in SUB_COMMAND_NAMES:
                 self.sub_command = sub_command_candidate
             else:
@@ -75,10 +79,11 @@ class Manager(Base):
 
         for name in SUB_COMMAND_NAMES:
             process_class = get_process_class(name)
-            process_instance = process_class()
-            self.add(
-                process_instance,
-            )
+            if process_class:
+                process_instance = process_class()
+                self.add(
+                    process_instance,
+                )
 
     def get_config_manager(self, checked=False):
         return ConfigManager(checked=checked)

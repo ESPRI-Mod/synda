@@ -28,7 +28,6 @@ NAMES = {
     'intro',
     'list',
     'metric',
-    'open',
     'param',
     'queue',
     'remove',
@@ -43,6 +42,7 @@ NAMES = {
     'upgrade',
     'variable',
     'version',
+    'synda_version',
     'watch',
 }
 

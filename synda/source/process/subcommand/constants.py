@@ -32,7 +32,6 @@ from synda.source.process.subcommand.install.models import Process as Install
 from synda.source.process.subcommand.intro.models import Process as Intro
 from synda.source.process.subcommand.list.models import Process as List
 from synda.source.process.subcommand.metric.models import Process as Metric
-from synda.source.process.subcommand.open.models import Process as Open
 from synda.source.process.subcommand.param.models import Process as Param
 from synda.source.process.subcommand.queue.models import Process as Queue
 from synda.source.process.subcommand.remove.models import Process as Remove
@@ -48,6 +47,7 @@ from synda.source.process.subcommand.upgrade.models import Process as Upgrade
 from synda.source.process.subcommand.variable.models import Process as Variable
 from synda.source.process.subcommand.version.models import Process as Version
 from synda.source.process.subcommand.watch.models import Process as Watch
+from synda.source.process.subcommand.synda_version.models import Process as SyndaVersion
 
 
 def get_default_limit(name):
@@ -98,8 +98,6 @@ def get_process_class(name):
             process = Metric
         elif name == "help":
             process = Help
-        elif name == "open":
-            process = Open
         elif name == "param":
             process = Param
         elif name == "queue":
@@ -128,6 +126,8 @@ def get_process_class(name):
             process = Variable
         elif name == "version":
             process = Version
+        elif name == "synda_version":
+            process = SyndaVersion
         elif name == "watch":
             process = Watch
         else:
