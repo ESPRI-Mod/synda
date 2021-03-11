@@ -1,6 +1,8 @@
 - Version 3.3 - 2021-01-13
     - enhancement
       - code migration : synda is now written in python 3.9
+    - bugs correction :
+      - synda -h and synda -V sub-commands are now operational
     - deprecated fixtures
       - 'open' subcommand
       - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
