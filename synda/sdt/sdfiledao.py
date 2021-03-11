@@ -237,7 +237,13 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
     - If data_node==True, then this function will be applied to all data nodes.
     """
     if cursor is None:
-        return (highest_waiting_priority.vals).get(data_node,None)
+        priority = highest_waiting_priority.vals.get(data_node, None)
+        if isinstance(priority, str):
+            try:
+                priority = int(priority)
+            except ValueError:
+                priority = None
+        return priority
     else:
         if cursor==True:
             c = connection.cursor()
@@ -264,7 +270,13 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             #sdlog.info("SDFILDAO-301","  query %s" % q )
         if cursor==True:
             c.close()
-        return (highest_waiting_priority.vals).get(data_nodes[0],None) if data_nodes else None
+        priority = (highest_waiting_priority.vals).get(data_nodes[0],None) if data_nodes else None
+        if isinstance(priority, str):
+            try:
+                priority = int(priority)
+            except ValueError:
+                priority = None
+        return priority
 # The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
 # highest_waiting_priority.vals = {}
 

@@ -176,7 +176,7 @@ def run_download_script_BUFSTDXXX(li):
     #     stderr=unicode(stderr, encoding='latin1')
     #
     #
-    stderr = str(stderr, errors='ignore').encode('latin1')
+    # stderr = str(stderr, errors='ignore').encode('latin1')
 
     # debug (unexpected errors may be hidden in stdxxx)
     """

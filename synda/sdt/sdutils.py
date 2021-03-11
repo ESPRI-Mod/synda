@@ -82,8 +82,10 @@ def get_status(args, **kwargs):
         - subprocess stdxxx are displayed in realtime on terminal
     """
 
-    kwargs['universal_newlines']=False
+    # kwargs['universal_newlines']=False
+    kwargs['text']=True
 
+    print("get_status")
     p = subprocess.Popen(args, **kwargs)
 
     p.wait()
@@ -106,7 +108,8 @@ def get_status_output(args, **kwargs):
 
     kwargs['stdout']=subprocess.PIPE
     kwargs['stderr']=subprocess.PIPE
-    kwargs['universal_newlines']=False
+    # kwargs['universal_newlines']=False
+    kwargs['text']=True
 
     p = subprocess.Popen(args, **kwargs)
 
