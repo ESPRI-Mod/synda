@@ -22,7 +22,7 @@ from synda.sdt import sddeletefile
 from synda.sdt import sddeletedataset
 from synda.sdt import sdcleanup
 from synda.sdt import sdtypes
-from . import syndautils
+from synda.sdt import syndautils
 from synda.sdt import sdearlystreamutils
 from synda.sdt import sdlog
 

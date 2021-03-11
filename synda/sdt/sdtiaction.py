@@ -226,7 +226,7 @@ def get(args):
     from synda.sdt import sdrfile
     from synda.sdt import sddeferredafter
     from synda.sdt import sddirectdownload
-    from . import syndautils
+    from synda.sdt import syndautils
     import humanize
     import os
     from synda.sdt import sdearlystreamutils

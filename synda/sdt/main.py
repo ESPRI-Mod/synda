@@ -130,7 +130,7 @@ def run():
 
     from synda.sdt import sdtsaction
     if args.subcommand in list(sdtsaction.actions.keys()):
-        from . import syndautils
+        from synda.sdt import syndautils
 
         # hack to explode id in individual facets (experimental)
         if args.subcommand == 'search':

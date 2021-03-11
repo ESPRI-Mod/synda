@@ -23,7 +23,7 @@ from synda.source.config.process.download.constants import TRANSFER
 
 def run(args, metadata=None):
 
-    from . import syndautils
+    from synda.sdt import syndautils
 
     syndautils.check_daemon()
 
