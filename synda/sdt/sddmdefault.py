@@ -120,6 +120,7 @@ class Download():
                     tr.error_msg = ""
                 else:
                     # checksum is not ok
+                    update_error_history( tr, "bad checksum" )
 
                     if incorrect_checksum_action == "remove":
                         tr.status = TRANSFER["status"]['error']
@@ -225,9 +226,12 @@ class Download():
                         tr.local_path,
                     ),
                 )
-
+                update_error_history( tr, 'killed' )
+            elif tr.sdget_error_msg.find('ERROR 404')>0:
+                # wget reported 'ERROR 404', i.e. the url was not found.
+                update_error_history( tr, 'ERROR 404' )
             else:
-                pass
+                update_error_history( tr, 'other' )
 
             next_url_on_error = preferences.is_download_http_fallback
 
@@ -259,6 +263,16 @@ class Download():
                 tr.priority -= 1
                 tr.error_msg = 'Error occurs during download.'
 
+def update_error_history( tr, error ):
+    """Update the error_history field of a transfer, to add the specified error, a string.
+     The error should be short, e.g. 'ERROR 404'.  And it should be specific to the file
+     represented by tr. Thus an error 503 or "Connection refused" should not be provided."""
+    if tr.error_history is None:
+        tr.error_history = str([])
+    error_history = eval(tr.error_history)
+    error_history.append( ( sdtime.now(), error ) )
+    tr.error_history = str(error_history)
+    sdlog.info( "SDDMDEFA-080","error history for %s is %s" % (tr.filename,tr.error_history) )
 
 def end_of_transfer(tr):
 
