@@ -23,6 +23,7 @@ import sdmodifyquery
 import sdreplica
 import sdlog
 import sdconst
+import sdsqlutils
 from sdtools import print_stderr
 
 from synda.source.config.process.download.constants import TRANSFER
@@ -39,6 +40,7 @@ def pause_all():
 
 def retry_all( filter=None ):
     sdlog.info("SDMODIFY-343","Moving transfer from error to waiting..")
+    sdsqlutils.truncate_errorfiles_failed_url( filter=filter )
     nbr=sdmodifyquery.change_status(TRANSFER["status"]['error'], TRANSFER["status"]['waiting'],
                                      where=filter )
     sdlog.info("SDMODIFY-226","%i transfer marked for retry"%(nbr))
