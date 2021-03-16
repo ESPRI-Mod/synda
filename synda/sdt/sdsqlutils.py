@@ -133,7 +133,7 @@ def insert(instance,columns_subset,commit,conn):
         # This sometimes happens due to errors in which, at the data node, one dataset shared its
         # location with another one; or in which the same file is published in two locations.
         # The log output should provide enough information to diagnose the problem.
-        sdlog.info("SDSQLUTI-001",("During database operations, IntegrityError %s from\n   "+
+        sdlog.error("SDSQLUTI-001",("During database operations, IntegrityError %s from\n   "+
                    "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
                    %(e,tablename,columns,placeholders,d))
         try:
