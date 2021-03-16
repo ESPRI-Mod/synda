@@ -19,6 +19,8 @@ import sdlog
 import sqlite3
 import sddb
 
+from synda.source.config.process.download.constants import TRANSFER
+
 def sql_injection_safe(s):
     regex=r'[^a-zA-Z0-9_]'
     match=re.search(regex,s)
@@ -137,7 +139,7 @@ def insert(instance,columns_subset,commit,conn):
                    "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
                    %(e,tablename,columns,placeholders,d))
         try:
-            d['status'] = sdconst.TRANSFER_STATUS_PATH_ERROR
+            d['status'] = TRANSFER["status"]['error']
             d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])+str(d['crea_date'])
             d['file_functional_id'] = d['file_functional_id']+'_bad_path_'+str(d['checksum'])+\
                 str(d['crea_date'])
