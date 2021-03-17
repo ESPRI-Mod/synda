@@ -135,28 +135,37 @@ def get_urls(file_functional_id, searchapi_host, old_url):
         # The search for //None bypasses an issue with the SOLR lookup where there is no
         # url_gridftp possibility.
 
-    return prioritize_urlps( urlps )
+    return prioritize_urlps( urlps, old_url )
 
 
 url_fields = ','.join(URL_FIELDS)  # used for the sdquicksearch call above
 
 
-def prioritize_urlps( urlps ):
+def prioritize_urlps( urlps, old_url ):
     """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
-    lists of the form [url,protocol].  First, GridFTP urls are preferred over everything else.
-    Then, prefer some data nodes over others."""
+    lists of the form [url,protocol].
+    Some data nodes are preferred over others.  Then, GridFTP is preferred over http."""
+    # Formerly, I prioritized the other way; but experience shows that many data nodes which
+    # officially support GridFTP, don't usually have it working.
+    # Note also that within this function a "high priority" url has a low priority number.
+    # That's just for programming convenience.
+
     def priprotocol(protocol):
         if protocol.find('gridftp')>0:  return 0
         if protocol.find('http')>0:     return 1
         return 2
     def priurl(url):
         if url.find('llnl')>0:  return 0
-        if url.find('ceda')>0:  return 1
-        if url.find('dkrz')>0:  return 2
-        if url.find('ipsl')>0:  return 3
-        if url.find('nci')>0:   return 4
-        return 5
-    return sorted( urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))) )
+        if url.find('gridftp.ipsl')>0:  return 1
+        if url.find('vesg.ipsl')>0:  return 2
+        if url.find('ceda')>0:  return 3
+        if url.find('dkrz')>0:  return 4
+        if url.find('nci')>0:   return 5
+        if old_url.find('lasg')<0 and url.find('lasg')>0:
+            return 99  # Never fall back to this very slow data node; but changing protocol is ok.
+        return 6
+    urlps_cleaned = [ urlp for urlp in urlps if priurl(urlp[0])<99 ]
+    return sorted( urlps_cleaned, key=(lambda urlp: ( priurl(urlp[0]), priprotocol(urlp[1]))) )
 
 
 if __name__ == '__main__':
