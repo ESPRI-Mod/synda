@@ -15,7 +15,11 @@ import re
 import argparse
 import sdapp
 from sdexception import SDException
+import sdlog
+import sqlite3
 import sddb
+
+from synda.source.config.process.download.constants import TRANSFER
 
 def sql_injection_safe(s):
     regex=r'[^a-zA-Z0-9_]'
@@ -47,6 +51,24 @@ def resultset_to_dict(rs):
 
 def truncate_table(table,conn=sddb.conn):
     conn.execute("delete from %s"%table)
+    conn.commit()
+
+def truncate_part_of_table(table,col,pattern,conn=sddb.conn):
+    conn.execute("delete from %s where %s like '%s'"%(table,col,pattern))
+    conn.commit()
+
+def truncate_errorfiles_failed_url( conn=sddb.conn, filter=None ):
+    """This does just one job: delete from the failed_url table where the matching file table
+    has status='error'"""
+    if True:   #new
+        if filter is None:
+            where_clause = ""
+        elif filter.find(' ')>0:
+            where_clause = "WHERE "+filter  # arbitrary SQL expression
+        else:
+            where_clause = "WHERE url LIKE %s%s%s" % ("'%",filter,"%'")  # data_node or part of one
+        cmd = "DELETE FROM failed_url "+where_clause
+    conn.execute(cmd)
     conn.commit()
 
 def nextval(col,tbl):
@@ -90,6 +112,13 @@ def insert(instance,columns_subset,commit,conn):
                         print('FAILED')
         return d
 
+    def do_insert( query, d, conn ):
+        c = conn.cursor()
+        c.execute(query, d) # placeholders resolution take place here
+        id_=c.lastrowid
+        c.close()
+        return id_
+
     # create dict containing key/val list to be inserted
     d=get_dict(instance,columns_subset)
 
@@ -100,10 +129,23 @@ def insert(instance,columns_subset,commit,conn):
     query='INSERT INTO %s (%s) VALUES (%s)' % (tablename,columns, placeholders)
 
     # EXEC
-    c = conn.cursor()
-    c.execute(query, d) # placeholders resolution take place here
-    id_=c.lastrowid
-    c.close()
+    try:
+        id_ = do_insert( query, d, conn )
+    except sqlite3.IntegrityError as e:
+        # This sometimes happens due to errors in which, at the data node, one dataset shared its
+        # location with another one; or in which the same file is published in two locations.
+        # The log output should provide enough information to diagnose the problem.
+        sdlog.error("SDSQLUTI-001",("During database operations, IntegrityError %s from\n   "+
+                   "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
+                   %(e,tablename,columns,placeholders,d))
+        try:
+            d['status'] = TRANSFER["status"]['error_path']
+            d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])+str(d['crea_date'])
+            d['file_functional_id'] = d['file_functional_id']+'_bad_path_'+str(d['checksum'])+\
+                str(d['crea_date'])
+            id_ = do_insert( query, d, conn )
+        except sqlite3.IntegrityError:
+            raise
 
     if commit:
         conn.commit()
