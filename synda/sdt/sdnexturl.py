@@ -70,6 +70,8 @@ def run(tr):
 
 def next_url(tr,conn):
     all_urlps=get_urls(tr.file_functional_id) # [[url1,protocol1],[url2,protocol2],...]
+    all_urlps=get_urls(tr.file_functional_id,tr.searchapi_host,tr.url)
+    # ... looks like [[url1,protocol1],[url2,protocol2],...]
     sdlog.info("SDNEXTUR-006","all_urpls= %s"%(all_urlps,))
     c = conn.cursor()
     fus = c.execute("SELECT url FROM failed_url WHERE file_id="+
@@ -94,14 +96,14 @@ def next_url(tr,conn):
         raise sdexception.NextUrlNotFoundException()
 
 
-def get_urls(file_functional_id):
+def get_urls(file_functional_id, searchapi_host, old_url):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
 
     try:
         result=sdquicksearch.run(
             parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
                        file_functional_id],
-            post_pipeline_mode=None )
+            post_pipeline_mode=None, index_host=searchapi_host )
     except Exception as e:
         sdlog.debug("SDNEXTUR-015", "exception %s.  instance_id=%s"%(e,file_functional_id))
         raise e
@@ -114,7 +116,7 @@ def get_urls(file_functional_id):
         result=sdquicksearch.run(
             parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
                        file_functional_id+'*'],
-            post_pipeline_mode=None )
+            post_pipeline_mode=None, index_host=searchapi_host )
         li=result.get_files()
         sdlog.info("SDNEXTUR-017","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
     # result looks like
@@ -133,28 +135,37 @@ def get_urls(file_functional_id):
         # The search for //None bypasses an issue with the SOLR lookup where there is no
         # url_gridftp possibility.
 
-    return prioritize_urlps( urlps )
+    return prioritize_urlps( urlps, old_url )
 
 
 url_fields = ','.join(URL_FIELDS)  # used for the sdquicksearch call above
 
 
-def prioritize_urlps( urlps ):
+def prioritize_urlps( urlps, old_url ):
     """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
-    lists of the form [url,protocol].  First, GridFTP urls are preferred over everything else.
-    Then, prefer some data nodes over others."""
+    lists of the form [url,protocol].
+    Some data nodes are preferred over others.  Then, GridFTP is preferred over http."""
+    # Formerly, I prioritized the other way; but experience shows that many data nodes which
+    # officially support GridFTP, don't usually have it working.
+    # Note also that within this function a "high priority" url has a low priority number.
+    # That's just for programming convenience.
+
     def priprotocol(protocol):
         if protocol.find('gridftp')>0:  return 0
         if protocol.find('http')>0:     return 1
         return 2
     def priurl(url):
         if url.find('llnl')>0:  return 0
-        if url.find('ceda')>0:  return 1
-        if url.find('dkrz')>0:  return 2
-        if url.find('ipsl')>0:  return 3
-        if url.find('nci')>0:   return 4
-        return 5
-    return sorted( urlps, key=(lambda urlp: (priprotocol(urlp[1]), priurl(urlp[0]))) )
+        if url.find('gridftp.ipsl')>0:  return 1
+        if url.find('vesg.ipsl')>0:  return 2
+        if url.find('ceda')>0:  return 3
+        if url.find('dkrz')>0:  return 4
+        if url.find('nci')>0:   return 5
+        if old_url.find('lasg')<0 and url.find('lasg')>0:
+            return 99  # Never fall back to this very slow data node; but changing protocol is ok.
+        return 6
+    urlps_cleaned = [ urlp for urlp in urlps if priurl(urlp[0])<99 ]
+    return sorted( urlps_cleaned, key=(lambda urlp: ( priurl(urlp[0]), priprotocol(urlp[1]))) )
 
 
 if __name__ == '__main__':
