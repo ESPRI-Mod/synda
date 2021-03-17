@@ -139,7 +139,7 @@ def insert(instance,columns_subset,commit,conn):
                    "tablename=%s,\n   columns=%s,\n   placeholders=%s\n   with dict %s")
                    %(e,tablename,columns,placeholders,d))
         try:
-            d['status'] = TRANSFER["status"]['error']
+            d['status'] = TRANSFER["status"]['error_path']
             d['local_path'] = d['local_path']+'_bad_path_'+str(d['checksum'])+str(d['crea_date'])
             d['file_functional_id'] = d['file_functional_id']+'_bad_path_'+str(d['checksum'])+\
                 str(d['crea_date'])
