@@ -13,6 +13,7 @@
 import urllib2
 import requests
 import sdtypes
+from retrying import retry # retry decorator
 from sdexception import SDException
 from sdtime import SDTimer
 import sdlog
@@ -71,7 +72,9 @@ def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowm
         #
         #raise
 
-        raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        # we raise a new exception 'network error' here, because most of the time,
+        # 'xml parsing error' is due to an 'network error'.
+        raise SDException('SDNETUTI-008','Network error (see log for details)')
 
     sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
     for difile in di['files']:
@@ -123,11 +126,16 @@ def HTTP_GET_2(url,timeout=20,verify=True):
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-004"
+        sdlog.error("SDNETUTI-004",errcode+' '+errmsg)
 
         raise SDException(errcode,errmsg)
 
     return buf
 
+# The decorator causes a retry after any exception.  It defines exponential backoff, waiting
+# 2^x * 1000 milliseconds between retries, a maximum of 120 seconds (2 minutes), and gives up
+# after 360 seconds (6 minutes)
+@retry(wait_exponential_multiplier=1000, wait_exponential_max=120000, stop_max_delay=360000)
 def HTTP_GET(url,timeout=20):
     """urllib impl."""
 
@@ -142,6 +150,7 @@ def HTTP_GET(url,timeout=20):
     except Exception, e:
         errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
         errcode="SDNETUTI-002"
+        sdlog.error("SDNETUTI-002",errcode+' '+errmsg)
 
         raise SDException(errcode,errmsg)
 
