@@ -21,6 +21,7 @@ import sdbuffer
 import sdprint
 import sdi18n
 import sdearlystreamutils
+import sdlog
 
 from synda.source.config.file.selection.models import Config as SelectionConfig
 from synda.source.config.file.selection.constants import PENDING_PARAMETER
@@ -129,6 +130,16 @@ def build(buffer, load_default=None):
     default_selection.childs.append(project_default_selection)
     # set default_selection as parent of project_default_selection
     project_default_selection.parent = default_selection
+
+    if selection.filename is not None:
+        #sdlog.info('SDPARSE-0001','selection.filename=%s'%selection.filename)
+        #sdlog.info('SDPARSE-0002','searchapi_host facet=%s'%selection.facets.get('searchapi_host'))
+        if selection.facets.get('searchapi_host') is not None and\
+                len(selection.facets['searchapi_host'])>0 and\
+                selection.facets['searchapi_host'][0] is not None:
+            #sdlog.info('SDPARSE-0003','selection %s has searchapi_host=%s'%
+            #           (selection.filename,selection.facets['searchapi_host']))
+            Selection.searchapi_host = selection.facets['searchapi_host'][0]
 
     return selection
 

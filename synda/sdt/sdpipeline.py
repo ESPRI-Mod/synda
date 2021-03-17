@@ -68,6 +68,8 @@ def build_queries(stream=None,selection=None,path=None,parameter=None,index_host
         if selection is None:
             buffer=sdbuffer.get_selection_file_buffer(path=path,parameter=parameter)
             selection=sdparse.build(buffer,load_default=load_default)
+        if index_host is not None:
+            selection.facets['searchapi_host'] = index_host
 
         stream=selection.merge_facets()
 

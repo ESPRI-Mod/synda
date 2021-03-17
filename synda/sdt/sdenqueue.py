@@ -29,7 +29,7 @@ import sdfiledao
 import sddatasetdao
 import sdutils
 import sdtimestamp
-from sdtypes import Dataset,File
+from sdtypes import Dataset,File,Selection
 import sdsqlutils
 import sdpostpipelineutils
 import sdtime
@@ -181,6 +181,7 @@ def add_file(f):
     )
 
     f.dataset_id = add_dataset(f)
+    f.searchapi_host = Selection.searchapi_host
     f.status = TRANSFER["status"]['waiting']
     f.crea_date = sdtime.now()
 

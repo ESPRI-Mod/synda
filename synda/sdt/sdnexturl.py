@@ -70,6 +70,8 @@ def run(tr):
 
 def next_url(tr,conn):
     all_urlps=get_urls(tr.file_functional_id) # [[url1,protocol1],[url2,protocol2],...]
+    all_urlps=get_urls(tr.file_functional_id,tr.searchapi_host,tr.url)
+    # ... looks like [[url1,protocol1],[url2,protocol2],...]
     sdlog.info("SDNEXTUR-006","all_urpls= %s"%(all_urlps,))
     c = conn.cursor()
     fus = c.execute("SELECT url FROM failed_url WHERE file_id="+
@@ -94,14 +96,14 @@ def next_url(tr,conn):
         raise sdexception.NextUrlNotFoundException()
 
 
-def get_urls(file_functional_id):
+def get_urls(file_functional_id, searchapi_host, old_url):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
 
     try:
         result=sdquicksearch.run(
             parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
                        file_functional_id],
-            post_pipeline_mode=None )
+            post_pipeline_mode=None, index_host=searchapi_host )
     except Exception as e:
         sdlog.debug("SDNEXTUR-015", "exception %s.  instance_id=%s"%(e,file_functional_id))
         raise e
@@ -114,7 +116,7 @@ def get_urls(file_functional_id):
         result=sdquicksearch.run(
             parameter=['limit=4','fields=%s'%url_fields,'type=File','instance_id=%s'%
                        file_functional_id+'*'],
-            post_pipeline_mode=None )
+            post_pipeline_mode=None, index_host=searchapi_host )
         li=result.get_files()
         sdlog.info("SDNEXTUR-017","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
     # result looks like
