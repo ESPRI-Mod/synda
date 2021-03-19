@@ -377,7 +377,7 @@ wget_stderr2stdout ()
 
     # we send stderr on stdout and forget about stdout (stdout is empty anyway)
     $WGET_CMD 2>&1 >/dev/null # note that bash redirection order if important (i.e. '>/dev/null 2>&1' wouldn't work)
-    (exit $?) # jfp maybe this will make status check always work?
+    (exit $?)
 }
 
 # this filter removes non-fatal error messages (i.e. the file gets downloaded successfully no matter those errors)
@@ -461,14 +461,10 @@ else
         wget_status=$?
     else
 	echo "jfp timing 1"; date
-	#jfp: Note that wget_errmsg is referenced in $wgetoutputparser==sdparsewgetoutput.sh
-	wget_errmsg=$(wget_stderr2stdout)
-	wget_status=$?
-	#jfp: With the current settings, there aren't any progress dots to strip out.
-	#jfp: I don't even know how to make progress dots appear, but  --no-verbose (-nv),
-	#jfp: now commented-out, can make them disappear.
-        #original: wget_errmsg=$( wget_stderr2stdout | strip_dot_progress )
-        #original: wget_status=$?
+	# Note that wget_errmsg is referenced in $wgetoutputparser==sdparsewgetoutput.sh
+        set -o pipefail
+        wget_errmsg=$( wget_stderr2stdout | strip_dot_progress )
+        wget_status=$?
     fi
 fi
 
