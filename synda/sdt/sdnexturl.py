@@ -43,8 +43,10 @@ def run(tr):
                   (tr.url, tr.file_functional_id) )
         conn.commit()
     except sqlite3.IntegrityError as e:
-        # url is already in the failed_url table
-        sdlog.info("SDNEXTUR-001","During database operations, IntegrityError %s"%(e,))
+        # url,file_id is already in the failed_url table
+        sdlog.info("SDNEXTUR-001","During database operations, IntegrityError %s on %s with new file_id=%s"
+                   %(e,url,tr.file_id))
+        conn.commit()
     except Exception as e:
         sdlog.info("SDNEXTUR-002","During database operations, unknown exception %s"%(e,))
         return False
@@ -79,7 +81,7 @@ def next_url(tr,conn):
     sdlog.info("SDNEXTUR-007","failed_urls= %s"%(failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
-
+    urls=remove_unsupported_url(urlps)
     # At this point urls is just a list of urls.  We no longer have to keep track of the
     # protocol because only http and gsiftp are possible (OpenDAP is a different protocol
     # but it also uses a http url).
@@ -93,6 +95,9 @@ def next_url(tr,conn):
         sdlog.info("SDNEXTUR-009","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.NextUrlNotFoundException()
 
+def remove_unsupported_url(urlps):
+    # remove opendap and globus urls (opendap and globus are not used in synda for now)
+    return [ urlp[0] for urlp in urlps if (urlp[1].find('opendap')<0 and urlp[1].find('globus')<0)]
 
 def get_urls(file_functional_id):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
@@ -103,11 +108,11 @@ def get_urls(file_functional_id):
                        file_functional_id],
             post_pipeline_mode=None )
     except Exception as e:
-        sdlog.debug("SDNEXTUR-015", "exception %s.  instance_id=%s"%(e,file_functional_id))
+        sdlog.debug("SDNEXTUR-010", "exception %s.  instance_id=%s"%(e,file_functional_id))
         raise e
 
     li=result.get_files()
-    sdlog.info("SDNEXTUR-016","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
+    sdlog.info("SDNEXTUR-011","sdquicksearch returned %s sets of file urls: %s"%(len(li),li))
     if li==[]:
         # No urls found. Try again, but wildcard the file id. (That leads to a string search on all
         # fields for the wildcarded file id, rather than a match of the instance_id field only.)
@@ -116,7 +121,7 @@ def get_urls(file_functional_id):
                        file_functional_id+'*'],
             post_pipeline_mode=None )
         li=result.get_files()
-        sdlog.info("SDNEXTUR-017","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
+        sdlog.info("SDNEXTUR-012","sdquicksearch 2nd call %s sets of file urls: %s"%(len(li),li))
     # result looks like
     # [ {protocol11:url11, protocol12:url12, attached_parameters:dict, score:number, type:'File',
     #    size:number} }, {[another dict of the same format}, {another dict},... ]
@@ -160,6 +165,8 @@ def prioritize_urlps( urlps ):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    file_functional_id='cmip5.output1.LASG-CESS.FGOALS-g2.decadal1985.day.atmos.day.r1i1p1.v1.va_day_FGOALS-g2_decadal1985_r1i1p1_19880101-19881231.nc'
+    #file_functional_id='cmip5.output1.LASG-CESS.FGOALS-g2.decadal1985.day.atmos.day.r1i1p1.v1.va_day_FGOALS-g2_decadal1985_r1i1p1_19880101-19881231.nc'
+    #file_functional_id='cmip5.output1.CMCC.CMCC-CMS.piControl.mon.atmos.Amon.r1i1p1.v20120717.pr_Amon_CMCC-CMS_piControl_r1i1p1_416401-417312.nc'
+    file_functional_id='cmip5.output1.NOAA-GFDL.GFDL-CM2p1.historical.mon.atmos.Amon.r3i1p1.v20110601.cl_Amon_GFDL-CM2p1_historical_r3i1p1_190601-191012.nc'
     from pprint import pprint
-    pprint( get_urls(file_functional_id) )
+    pprint( get_urls(file_functional_id,'esgf-node.llnl.gov') )
