@@ -107,7 +107,7 @@ def get_urls(file_functional_id, searchapi_host, old_url):
                        file_functional_id],
             post_pipeline_mode=None,index_host=searchapi_host)
     except Exception as e:
-        sdlog.debug("SDNEXTUR-10", "exception %s.  instance_id=%s"%(e,file_functional_id))
+        sdlog.debug("SDNEXTUR-010", "exception %s.  instance_id=%s"%(e,file_functional_id))
         logging.exception("SDNEXTU-EX10")
         raise e
 
