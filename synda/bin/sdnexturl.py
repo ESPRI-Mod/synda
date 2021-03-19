@@ -21,6 +21,7 @@ import sdquicksearch
 import sdexception
 import sdconfig
 import sqlite3
+import logging
 
 def run(tr):
     """
