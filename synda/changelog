@@ -1,4 +1,4 @@
-- Version 3.3 - 2021-01-13
+- Version 3.30 - 2021-03-12
     - enhancement
       - code migration : synda is now written in python 3.9
     - bugs correction :

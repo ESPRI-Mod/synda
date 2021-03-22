@@ -197,4 +197,4 @@ def force_type(stream, type_):
 
 def strip_dataset_version(dataset_functional_id):
     import re
-    return re.sub('\.[^.]+$', '', dataset_functional_id)
+    return re.sub(r'\.[^.]+$', '', dataset_functional_id)

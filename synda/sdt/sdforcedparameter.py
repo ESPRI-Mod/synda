@@ -57,7 +57,7 @@ def get_non_forced_parameters(facets_group):
     return di
 
 def remove_prefix(name):
-    name=re.sub('^%s'%parameter_name_prefix,'',name)
+    name=re.sub(r'^%s'%parameter_name_prefix,'',name)
     return name
 
 def is_forced_parameter(pname):

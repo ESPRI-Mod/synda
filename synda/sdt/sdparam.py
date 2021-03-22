@@ -28,7 +28,7 @@ def handle_negated_value(name):
 
     For more infos on negated value, see: https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
     """
-    return re.sub('!$','',name)
+    return re.sub(r'!$','',name)
 
 def is_case_incorrect(value):
     if value in reversed_params:

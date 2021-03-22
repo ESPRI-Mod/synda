@@ -306,7 +306,7 @@ def process_rfv_parameter(parameter, selection):
     #  variable[atmos][*]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search(
-        'variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$',
+        r'variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$',
         parameter,
     )
 
@@ -332,7 +332,7 @@ def process_rfv_parameter(parameter, selection):
 # sfg means 'Structured Facet Group'
 def is_sfg_parameter(parameter):
 
-    if re.search("^variables?\[", parameter):
+    if re.search(r"^variables?\[", parameter):
         return True
     else:
         return False
@@ -352,7 +352,7 @@ def process_ffv_parameter(parameter, selection):
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search(
-        'variables?\[(.+)\]="?([^"=]+)"?$',
+        r'variables?\[(.+)\]="?([^"=]+)"?$',
         parameter,
     )
 

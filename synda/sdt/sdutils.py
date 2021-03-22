@@ -85,7 +85,6 @@ def get_status(args, **kwargs):
     # kwargs['universal_newlines']=False
     kwargs['text']=True
 
-    print("get_status")
     p = subprocess.Popen(args, **kwargs)
 
     p.wait()

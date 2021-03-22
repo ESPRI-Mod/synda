@@ -37,7 +37,7 @@ def transform_local_path_project(files,key):
 
             project=extract_project(path)
 
-            f[key]=re.sub('^'+project,project.upper(),path)
+            f[key]=re.sub(r'^'+project,project.upper(),path)
 
     return files
 

@@ -210,7 +210,7 @@ class Dataset(BaseType):
         self.__dict__.update(kw)
 
     def get_full_local_path_without_version(self):
-        return re.sub('/[^/]+$', '', self.get_full_local_path())
+        return re.sub(r'/[^/]+$', '', self.get_full_local_path())
 
     def __str__(self):
             return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.items()])
