@@ -5,6 +5,17 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.31 - 2021-03-22
+    - bug correction :
+      - issue # 168 (Master branch update broke sdnexturl.py)
+Version 3.30 - 2021-03-22
+    - enhancement
+      - code migration : synda is now written in python 3.8
+    - bugs correction :
+      - synda -h and synda -V sub-commands are now operational
+    - deprecated fixtures
+      - 'open' subcommand
+      - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
 Version 3.2 - 2021-01-11
     - config parameters externalisation
 

@@ -1,6 +1,9 @@
-- Version 3.30 - 2021-03-12
+- Version 3.31 - 2021-03-22
+    - bug correction :
+      - issue # 168 (Master branch update broke sdnexturl.py)
+- Version 3.30 - 2021-03-22
     - enhancement
-      - code migration : synda is now written in python 3.9
+      - code migration : synda is now written in python 3.8
     - bugs correction :
       - synda -h and synda -V sub-commands are now operational
     - deprecated fixtures

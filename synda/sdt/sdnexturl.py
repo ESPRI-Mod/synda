@@ -79,16 +79,16 @@ def next_url(tr,conn):
     sdlog.info("SDNEXTUR-007","failed_urls= %s"%(failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
-
-    # At this point urls is just a list of urls.  We no longer have to keep track of the
-    # protocol because only http and gsiftp are possible (OpenDAP is a different protocol
-    # but it also uses a http url).
+    urls = [urlp[0] for urlp in urlps]
+    # At this point urls is just a list of urls.
     
-    if len(urlps)>0:
-        old_url=tr.url
-        new_url=urlps[0]
-        tr.url=new_url
-        sdlog.info("SDNEXTUR-008","Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,old_url,new_url))
+    if len(urls) > 0:
+        old_url = tr.url
+        new_url = urls[0]
+        tr.url = new_url
+        sdlog.info(
+            "SDNEXTUR-008",
+            "Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)" % (tr.file_functional_id, old_url, new_url))
     else:
         sdlog.info("SDNEXTUR-009","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.NextUrlNotFoundException()
