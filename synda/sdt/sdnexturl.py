@@ -86,9 +86,9 @@ def next_url(tr,conn):
     # protocol because only http and gsiftp are possible (OpenDAP is a different protocol
     # but it also uses a http url).
     
-    if len(urlps)>0:
+    if len(urls)>0:
         old_url=tr.url
-        new_url=urlps[0]
+        new_url=urls[0]
         tr.url=new_url
         sdlog.info("SDNEXTUR-008","Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)"%(tr.file_functional_id,old_url,new_url))
     else:
