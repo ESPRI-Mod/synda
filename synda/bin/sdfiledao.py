@@ -101,9 +101,14 @@ def get_file(file_functional_id,conn=sddb.conn):
     """
     t=None
 
-    c = conn.cursor()
-    c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
-    rs=c.fetchone()
+    try:
+        c = conn.cursor()
+        c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
+        rs=c.fetchone()
+    except Exception as e:
+        sdlog.info("SDFILDAO-100","get_file exception %s, file_functional_id %s" %
+                   (e, file_functional_id) )
+        raise e
     if rs<>None:
         t=sdsqlutils.get_object_from_resultset(rs,File)
     c.close()
@@ -126,7 +131,7 @@ def get_files(limit=None,conn=sddb.conn,**search_constraints): # don't change ar
        limit==1 and sdconst.GET_FILES_CACHING:
         # ...limit==1 isn't essential, but the present coding is for limit==1
         use_cache = True
-        need_highest_waiting_priority = ( highest_waiting_priority(data_node)<=0 )
+        need_highest_waiting_priority = ( highest_waiting_priority(data_node)<=0 ) #note None<0
         if len( get_files.files.get( data_node, [] ) )>0 and not need_highest_waiting_priority:
             gfs1 = SDTimer.get_elapsed_time( gfs0, show_microseconds=True )
             sdlog.info("SDFILDAO-200","get_files time is %s, used cache, data_node %s"%\
