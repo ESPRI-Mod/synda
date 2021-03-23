@@ -114,8 +114,7 @@ def keep_recent_datasets(datasets):
 
 
     for d in datasets:
-
-        if d.get('last_mod_date',None) is None:
+        if not hasattr(d,'last_mod_date') or d.last_mod_date is None:
             # imported from the old database - certainly not modified in the last
             # 24 hours.  But the interval calculation won't work with None.
             pass
