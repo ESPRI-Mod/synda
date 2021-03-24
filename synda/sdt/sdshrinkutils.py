@@ -11,10 +11,10 @@
 
 """This module contains shrink preprocessing routines."""
 
-import sdpostpipelineutils
-import sdrmduprep
-import sdrmdup
-import sdlog
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdrmduprep
+from synda.sdt import sdrmdup
+from synda.sdt import sdlog
 
 def uniq(metadata):
 

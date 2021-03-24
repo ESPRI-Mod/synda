@@ -20,22 +20,22 @@ Notes
 import sys
 import argparse
 import json
-import sdapp
-import sdlog
-import sddb
-import sdsimplefilter
-import sdhistory
-import sdfiledao
-import sddatasetdao
-import sdutils
-import sdtimestamp
-from sdtypes import Dataset,File
-import sdsqlutils
-import sdpostpipelineutils
-import sdtime
-import sdpipelineprocessing
-from sdexception import SDException
-import sdprogress
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sddb
+from synda.sdt import sdsimplefilter
+from synda.sdt import sdhistory
+from synda.sdt import sdfiledao
+from synda.sdt import sddatasetdao
+from synda.sdt import sdutils
+from synda.sdt import sdtimestamp
+from synda.sdt.sdtypes import Dataset,File
+from synda.sdt import sdsqlutils
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdtime
+from synda.sdt import sdpipelineprocessing
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdprogress
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.process.download.dataset.constants import STRUCTURE as DATASET_STRUCTURE
@@ -145,8 +145,8 @@ def keep_recent_datasets(datasets):
     # 20 000 search-API request each time we install a new file !
 
     for d in datasets:
-        print(d)
-        if 'last_mode_date' in d.__dict__.keys():
+
+        if 'last_mode_date' in list(d.__dict__.keys()):
             interval = sdtime.compute_time_delta(
                 d.last_mod_date,
                 sdtime.now(),
@@ -159,7 +159,7 @@ def keep_recent_datasets(datasets):
                 pass
             else:
                 li.append(d)
-    print(li)
+
     return li
 
 
@@ -320,7 +320,7 @@ def fix_timestamp():
 
             try:
                 sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
-            except SDException, e:
+            except SDException as e:
                 if e.code in ['SDTIMEST-011', 'SDTIMEST-008', 'SDTIMEST-800']:
                     sdlog.info(
                         "SDENQUEU-909",

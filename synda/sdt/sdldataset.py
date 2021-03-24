@@ -13,18 +13,18 @@
 
 import os
 import argparse
-import sdapp
-import sddeferredbefore
-import sddao
-import sdfiledao
-import sddatasetdao
-import sddatasetquery
-import sddatasetflag
-import sdlsearch
-import sddatasetutils
-import sdi18n
-import sdcliex
-import sdvariable
+from synda.sdt import sdapp
+from synda.sdt import sddeferredbefore
+from synda.sdt import sddao
+from synda.sdt import sdfiledao
+from synda.sdt import sddatasetdao
+from synda.sdt import sddatasetquery
+from synda.sdt import sddatasetflag
+from synda.sdt import sdlsearch
+from synda.sdt import sddatasetutils
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdvariable
 from tabulate import tabulate
 
 def get_datasets(stream=None,parameter=None,dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
@@ -69,39 +69,39 @@ def _get_dataset_details(dataset_functional_id):
 
 def print_list(datasets):
     li=[[d.status, d.dataset_functional_id] for d in datasets] # do not add data_node here ! (there is no data_node at dataset level in local database)
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_title(title,before_space=True):
 
     if before_space:
-        print
+        print()
 
-    print title
-    print "-"*len(title)
+    print(title)
+    print("-"*len(title))
 
 def print_details(d):
     print_title('Main',before_space=False)
-    print "dataset: %s"%d.dataset_functional_id
-    print "local path: %s"%d.get_full_local_path()
-    print "status: %s"%(d.status,)
-    print "latest: %s"%(str(bool(d.latest)).lower(),)
-    print "number of versions: %i"%(d.dataset_versions.count(),)
-    # print fresh dataset status (computed on-the-fly)
-    #print "computed status: %s"%(sddatasetflag.compute_dataset_status(d),)
-    #print "computed latest: %s"%(sddatasetflag.compute_latest_flag(d.dataset_versions,d),)
+    print("dataset: %s"%d.dataset_functional_id)
+    print("local path: %s"%d.get_full_local_path())
+    print("status: %s"%(d.status,))
+    print("latest: %s"%(str(bool(d.latest)).lower(),))
+    print("number of versions: %i"%(d.dataset_versions.count(),))
+    # print(fresh dataset status (computed on-the-fly)
+    #print("computed status: %s"%(sddatasetflag.compute_dataset_status(d),)
+    #print("computed latest: %s"%(sddatasetflag.compute_latest_flag(d.dataset_versions,d),)
     print_title('Files status')
-    print "done: %i"%(d.stats['count']['done'],)
-    print "waiting: %i"%(d.stats['count']['waiting'],)
-    print "error: %i"%(d.stats['count']['error'],)
+    print("done: %i"%(d.stats['count']['done'],))
+    print("waiting: %i"%(d.stats['count']['waiting'],))
+    print("error: %i"%(d.stats['count']['error'],))
     print_title('Dataset versions list')
     for d__v in d.dataset_versions.get_datasets():
-        print "%-10s (latest=%s)"%(d__v.version,bool(d__v.latest))
+        print("%-10s (latest=%s)"%(d__v.version,bool(d__v.latest)))
     print_title('Variable status')
     for l__v in d.variables:
-        print "%-15s %s"%(l__v.name,l__v.status,)
+        print("%-15s %s"%(l__v.name,l__v.status,))
     print_title('Dataset files list')
     for t in d.files:
-        print "%-100s %s"%(t.filename,t.status,)
+        print("%-100s %s"%(t.filename,t.status,))
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)

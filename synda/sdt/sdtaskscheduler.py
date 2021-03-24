@@ -18,15 +18,15 @@ Note
 import os
 import sys
 import time
-import sdwatchdog
-import sdfiledao
-import sdlog
-import sdlogon
-import sdtask
-import sdfilequery
-import sdsqlutils
-from sdexception import FatalException,SDException,OpenIDNotSetException
-from sdtime import SDTimer
+from synda.sdt import sdwatchdog
+from synda.sdt import sdfiledao
+from synda.sdt import sdlog
+from synda.sdt import sdlogon
+from synda.sdt import sdtask
+from synda.sdt import sdfilequery
+from synda.sdt import sdsqlutils
+from synda.sdt.sdexception import FatalException,SDException,OpenIDNotSetException
+from synda.sdt.sdtime import SDTimer
 from synda.source.config.file.daemon.models import Config as DaemonFile
 
 from synda.source.config.process.download.constants import TRANSFER
@@ -45,9 +45,9 @@ DAEMON_FULLFILENAME = DaemonFile().default
 def terminate(signal,frame):
     global quit
 
-    import sdlog
+    from synda.sdt import sdlog
 
-    print # this print is just not to display the msg below on the same line as ^C
+    print()  # this print is just not to display the msg below on the same line as ^C
 
     sdlog.info("SDTSCHED-004","Shutdown in progress..",stderr=True)
 
@@ -142,7 +142,7 @@ def run_hard_tasks():
 
     try:
         sdtask.transfers_end()
-    except FatalException,e:
+    except FatalException as e:
         quit=1
 
 
@@ -235,7 +235,7 @@ def event_loop(config_manager):
                 sdlog.error("SDTSCHED-928", 'OpenID not set in configuration file', stderr=True)
                 raise OpenIDNotSetException("SDTSCHED-264", "OpenID not set in configuration file")
 
-        except SDException, e:
+        except SDException as e:
             sdlog.error("SDTSCHED-920", "Error occured while retrieving ESGF certificate", stderr=True)
             raise
 
@@ -269,7 +269,7 @@ def event_loop(config_manager):
             evlp1 = SDTimer.get_elapsed_time(evlp0, show_microseconds=True)
             sdlog.info("SDTSCHED-400", "{} time for once through event loop".format(evlp1))
 
-        print
+        print()
         evlp1 = SDTimer.get_elapsed_time(evlp0, show_microseconds=True)
         sdlog.info("SDTSCHED-401", "{} time for once through event loop".format(evlp1))
         sdlog.info("SDTSCHED-901", "Scheduler successfully stopped", stderr=True)

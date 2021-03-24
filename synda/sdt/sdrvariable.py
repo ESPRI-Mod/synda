@@ -13,28 +13,28 @@
 
 import os
 import argparse
-import sdapp
-import sdvariable
+from synda.sdt import sdapp
+from synda.sdt import sdvariable
 from tabulate import tabulate
 
 def print_list(datasets,limit=None):
     li=get_variable_list(datasets,limit)
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_details(d):
-    TODO
-    print "Dataset: %s"%d['id']
-    print "Dataset total size=%i"%int(d['size'])
+    # TODO
+    print("Dataset: %s"%d['id'])
+    print("Dataset total size=%i"%int(d['size']))
 
     """
     # Disable as it seems to be more ergonomic not to group datasets and files listing
     # (when user wants datasets listing, he ask for it, when he wants files listing he ask for it with a new request)
 
-    print
-    print "Dataset files list:"
+    print()
+    print("Dataset files list:")
     for f in d.files:
-        print "%-15s  %s"%(f['size'],f['filename'])
-    print "%i files found."%(len(d.files),)
+        print("%-15s  %s"%(f['size'],f['filename']))
+    print("%i files found."%(len(d.files),))
     """
 
 def get_variable_list(datasets,limit=None):

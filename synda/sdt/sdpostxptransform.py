@@ -18,7 +18,7 @@ Note
     sdpostxptransform means 'SynDa post Xml Parsing transform'
 """
 
-from sdexception import SDException
+from synda.sdt.sdexception import SDException
 
 def run(files):
     force_scalar(files) # warning: this changes 'files_after_xml_parsing' object

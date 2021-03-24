@@ -18,10 +18,10 @@ Note
 import sys
 import argparse
 import json
-import sdapp
-import sdconst
-import sddquery
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sddquery
+from synda.sdt import sdprint
 
 def run(facets_groups):
     facets_groups_new=[]
@@ -33,7 +33,7 @@ def run(facets_groups):
     return facets_groups_new
 
 def decode_special_chars(facets_group):
-    for k in sddquery.search_api_parameters(facets_group).keys():
+    for k in list(sddquery.search_api_parameters(facets_group).keys()):
         facets_group[k]=decode_values(facets_group[k])
 
     return facets_group

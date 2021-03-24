@@ -10,6 +10,10 @@ import os
 
 from synda.source.constants import RESOURCES_DIR
 
+ENV_NOT_FOUND = "WARNING if you are not building your synda local environment " \
+                "(else do not take into account the following message) : " \
+                "Your synda local environment has not been found (use init-env sub command to built it)"
+
 IDENTIFIER = "file that contains environment"
 
 FILENAME = "tree.tar.gz"

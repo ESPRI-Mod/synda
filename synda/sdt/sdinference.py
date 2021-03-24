@@ -29,12 +29,12 @@ Notes
 import sys
 import argparse
 import json
-from sdexception import SDException
-import sdparam
-import sddquery
-import sdidtest
-import sdconfig
-import sdprint
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdparam
+from synda.sdt import sddquery
+from synda.sdt import sdidtest
+from synda.sdt import sdconfig
+from synda.sdt import sdprint
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
@@ -119,7 +119,7 @@ def infere_parameter_name(pvalue,type_, show_info_message=False):
     else:
         try:
             pname=sdparam.get_name_from_value(pvalue, show_info_message=show_info_message)
-        except SDException,e:
+        except SDException as e:
             if Preferences().behaviour_check_parameter == 1:
                 raise
             else:

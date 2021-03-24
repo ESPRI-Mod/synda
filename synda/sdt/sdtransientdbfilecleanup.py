@@ -14,8 +14,8 @@
 import os
 import re
 import time
-import sdtools
-import sdexception
+from synda.sdt import sdtools
+from synda.sdt import sdexception
 
 from synda.source.config.path.tree.models import Config as TreePath
 

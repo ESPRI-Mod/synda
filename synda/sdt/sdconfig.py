@@ -13,8 +13,8 @@
 
 import os
 
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import OUTPUT_FORMAT as SEARCH_API_OUTPUT_FORMAT
 from synda.source.config.process.download.constants import get_http_clients
@@ -38,7 +38,7 @@ def print_(name):
         # print given configuration parameter
 
         if name in globals():
-            print globals()[name]
+            print(globals()[name])
         else:
             print('No configuration entry found by the name {}'.format(name))
 
@@ -90,7 +90,7 @@ unknown_value_behaviour = 'error'
 
 mono_host_retry = False
 proxymt_progress_stat = False
-poddlefix = True
+
 lowmem = True
 fix_encoding = False
 
@@ -102,8 +102,6 @@ twophasesearch = False
 # the daemon always stops not matter if this false is true or false.
 stop_download_if_error_occurs = False
 
-# Note
-#     When set to xml, 'lxml' package is required (must be added both in install.sh and in requirements.txt)
 searchapi_output_format = SEARCH_API_OUTPUT_FORMAT
 
 # when true, allow fast cycle for test (used for UAT)

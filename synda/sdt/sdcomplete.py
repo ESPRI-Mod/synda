@@ -24,12 +24,12 @@ Notes
     final values and B attributes are input values coming from end-user.
 """
 
-import sdfiledao
-import sddatasetdao
-import sdconst
-import sdprint
-import sdpostpipelineutils
-from sdexception import SDException
+from synda.sdt import sdfiledao
+from synda.sdt import sddatasetdao
+from synda.sdt import sdconst
+from synda.sdt import sdprint
+from synda.sdt import sdpostpipelineutils
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.process.download.dataset.constants import STRUCTURE as DATASET_STRUCTURE
@@ -48,7 +48,7 @@ def complete(files):
         if f["type"]==SEARCH_API_STRUCTURE['type']['file']:
             transfer=sdfiledao.get_file(f['file_functional_id'])
 
-            if transfer<>None:
+            if transfer is not None:
                 f['status']=transfer.status
 
                 if sdpostpipelineutils.exists_attached_parameter(f,'priority'): # this is to allow setting priority using selection parameter (i.e. default priority can be overrided using selection parameter). It is usefull here for example when user wants to change priority (YES, a search-API request is needed in this case!).
@@ -66,7 +66,7 @@ def complete(files):
         elif f["type"]==SEARCH_API_STRUCTURE['type']['dataset']:
             dataset=sddatasetdao.get_dataset(dataset_functional_id=f['dataset_functional_id'])
 
-            if dataset<>None:
+            if dataset is not None:
                 f['status']=dataset.status
             else:
                 f['status']=DATASET_STRUCTURE["status"]["new"]

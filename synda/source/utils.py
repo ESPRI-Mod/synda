@@ -23,6 +23,6 @@ def create_dir(directory):
 
 def has_environment_variable(var_name):
     checked = False
-    if var_name in os.environ.keys():
+    if var_name in list(os.environ.keys()):
         checked = True
     return checked

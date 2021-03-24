@@ -18,9 +18,9 @@ Example
 import sys
 import argparse
 import json
-import sdapp
-import sdparam
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdparam
+from synda.sdt import sdprint
 
 def run(facets_groups):
     facets_groups_new=[]

@@ -12,18 +12,18 @@
 """This module contains metadata transformation routines."""
 import re
 import argparse
-import sdapp
-import sddb
-import sdrebuildquery
-import sddatasetdao
-import sdfiledao
-import sdtimestamp
-import sdfields
-import sdlog
-import sddump
-import sdutils
-from sdprogress import SDProgressDot,SDProgressBar
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sdrebuildquery
+from synda.sdt import sddatasetdao
+from synda.sdt import sdfiledao
+from synda.sdt import sdtimestamp
+from synda.sdt import sdfields
+from synda.sdt import sdlog
+from synda.sdt import sddump
+from synda.sdt import sdutils
+from synda.sdt.sdprogress import SDProgressDot,SDProgressBar
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.constants import CHECKSUM
 
@@ -52,7 +52,7 @@ def set_checksum_when_empty(file):
 
 def set_variable_when_empty():
     transfers=[]
-    rege=re.compile("^(.+)/([^/]+)/([^/]+)/[^/]+$")
+    rege=re.compile(r"^(.+)/([^/]+)/([^/]+)/[^/]+$")
 
     i=0
     transfers=sdrebuildquery.get_transfers__variable_null()
@@ -79,12 +79,8 @@ def set_variable_when_empty():
 
         SDProgressDot.print_char("|")
 
-    print ""
-    print "%i record updated"%i 
-
-def PROC0011():
-    """Fix B0032 (set non_normalized_model_name)."""
-    sdrebuildquery.update_model_names()
+    print("")
+    print("%i record updated"%i)
 
 def set_model_when_empty():
     """Fix B0025 bug."""
@@ -135,7 +131,7 @@ def set_timestamp_when_empty__BATCH_MODE_2(project='CMIP5'):
     for dataset_without_timestamp in datasets_without_timestamp:
         try:
             sdtimestamp.fill_missing_dataset_timestamp(dataset_without_timestamp)
-        except SDException, e:
+        except SDException as e:
             if e.code in ['SDTIMEST-011','SDTIMEST-008','SDTIMEST-800']:
                 sdlog.info("SDREBUIL-694","Timestamp not set for dataset (reason=%s,dataset=%s)"%(e.code,dataset_without_timestamp.dataset_functional_id))
             else:

@@ -11,7 +11,7 @@
  
 """This module contains post pipeline generic functions. """
 
-from sdexception import SDException
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 

@@ -18,8 +18,8 @@ import os
 import re
 import sys
 import argparse
-import sdapp
-import sdlog
+from synda.sdt import sdapp
+from synda.sdt import sdlog
 import sqlite3
 
 def run(dbfile):

@@ -14,10 +14,10 @@
 import os
 import sys
 import signal
-import sdtools
+from synda.sdt import sdtools
 
 def is_synda_exception(value):
-    from sdexception import SDException # note: this import must be done here (i.e. it doesn't work if done top of the file)
+    from synda.sdt.sdexception import SDException # note: this import must be done here (i.e. it doesn't work if done top of the file)
 
     #return (value.__class__.__name__=="SDException") # obsolete as works only for SDException (not for child of SDException)
 
@@ -72,7 +72,7 @@ def create_IHM_pid_file(file_):
         fh.write(str(os.getpid()))
 
 def from_signal_to_atexit(signum, stackframe):
-    raise SystemExit # To make sure atexit registered funcs are called also in the signal case.
+    raise SystemExit("")  # To make sure atexit registered funcs are called also in the signal case.
 
 def signal_init():
     """

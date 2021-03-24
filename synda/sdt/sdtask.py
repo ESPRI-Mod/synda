@@ -11,13 +11,13 @@
  
 """This module contains funcs used in 'sdtaskscheduler' module."""
 import os
-import sdfiledao
-import sddao
-import sdfilequery
-import sdtime
-import sdlog
-import sddeletefile
-from sdexception import NoTransferWaitingException
+from synda.sdt import sdfiledao
+from synda.sdt import sddao
+from synda.sdt import sdfilequery
+from synda.sdt import sdtime
+from synda.sdt import sdlog
+from synda.sdt import sddeletefile
+from synda.sdt.sdexception import NoTransferWaitingException
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.process.download.constants import TRANSFER
@@ -133,7 +133,7 @@ def transfers_begin():
     if new_transfer_count > 0:
         transfers_needed = new_transfer_count
         for i in range(new_transfer_count):
-            for datanode in datanode_count.keys():
+            for datanode in list(datanode_count.keys()):
                 try:
                     # Handle per-datanode maximum number of transfers:
                     try:
@@ -143,7 +143,7 @@ def transfers_begin():
                             "SYNDTASK-189",
                             "key error on datanode {}, legal keys are {}".format(
                                 datanode,
-                                datanode_count.keys(),
+                                list(datanode_count.keys()),
                             ),
                         )
                         new_count = max_datanode_count
@@ -165,7 +165,7 @@ def transfers_begin():
                     transfers_needed -= 1
                     if transfers_needed <= 0:
                         break
-                except NoTransferWaitingException, e:
+                except NoTransferWaitingException as e:
                     pass
             if transfers_needed <= 0:
                 break
@@ -175,7 +175,7 @@ def transfers_begin():
 
 def get_download_manager():
 
-    import sddmdefault
+    from synda.sdt import sddmdefault
     return sddmdefault
 
 

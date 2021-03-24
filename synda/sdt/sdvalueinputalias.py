@@ -17,10 +17,10 @@ import os
 import sys
 import argparse
 import json
-import sdapp
-from sdtypes import Selection
-import sdprint
-import sdtranslate
+from synda.sdt import sdapp
+from synda.sdt.sdtypes import Selection
+from synda.sdt import sdprint
+from synda.sdt import sdtranslate
 
 def run(facets_groups):
     for facets_group in facets_groups:

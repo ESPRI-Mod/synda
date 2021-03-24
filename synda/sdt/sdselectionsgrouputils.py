@@ -13,12 +13,12 @@
 import os
 import glob
 import argparse
-import sdapp
-from sdexception import SDException
-import sdparse
-import sdbuffer
-import sdstream
-import sdlog
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdparse
+from synda.sdt import sdbuffer
+from synda.sdt import sdstream
+from synda.sdt import sdlog
 
 from synda.source.config.path.tree.models import Config as TreePath
 
@@ -95,7 +95,7 @@ def build_selection_list():
             buffer=sdbuffer.get_selection_file_buffer(path=file)
             selection=sdparse.build(buffer)
             selections.append(selection)
-        except Exception, e:
+        except Exception as e:
             sdlog.error("SDSELGPU-001","Exception occured (%s)"%str(e))
 
             raise SDException("SDSELGPU-001","Error occured while loading '%s' selection file. See log for details."%file)

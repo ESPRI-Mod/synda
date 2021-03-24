@@ -8,7 +8,7 @@
 ##################################
 """
 """
-import ConfigParser
+import configparser
 
 
 class Create(object):
@@ -36,7 +36,7 @@ class Create(object):
             ),
         ]
 
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         config.add_section('esgf_credential')
         config.set('esgf_credential', 'openid', 'https://esgf-node.ipsl.fr/esgf-idp/openid/foo')

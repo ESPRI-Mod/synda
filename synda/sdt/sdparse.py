@@ -14,13 +14,13 @@ import os
 import argparse
 import re
 
-from sdtypes import Selection
-from sdexception import SDException
-import sdtools
-import sdbuffer
-import sdprint
-import sdi18n
-import sdearlystreamutils
+from synda.sdt.sdtypes import Selection
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt import sdbuffer
+from synda.sdt import sdprint
+from synda.sdt import sdi18n
+from synda.sdt import sdearlystreamutils
 
 from synda.source.config.file.selection.models import Config as SelectionConfig
 from synda.source.config.file.selection.constants import PENDING_PARAMETER
@@ -306,7 +306,7 @@ def process_rfv_parameter(parameter, selection):
     #  variable[atmos][*]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search(
-        'variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$',
+        r'variables?\[(.+)\]\[(.+)\]="?([^"=]+)"?$',
         parameter,
     )
 
@@ -332,7 +332,7 @@ def process_rfv_parameter(parameter, selection):
 # sfg means 'Structured Facet Group'
 def is_sfg_parameter(parameter):
 
-    if re.search("^variables?\[", parameter):
+    if re.search(r"^variables?\[", parameter):
         return True
     else:
         return False
@@ -352,7 +352,7 @@ def process_ffv_parameter(parameter, selection):
     #  variable[atmos rcp85 day]=cl ta hus hur wap ua va zg clcalipso
 
     m = re.search(
-        'variables?\[(.+)\]="?([^"=]+)"?$',
+        r'variables?\[(.+)\]="?([^"=]+)"?$',
         parameter,
     )
 

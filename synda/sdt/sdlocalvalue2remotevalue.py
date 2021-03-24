@@ -19,9 +19,9 @@ Notes
 import sys
 import argparse
 import json
-import sdapp
-import sdprint
-import sdutils
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdutils
 
 from synda.source.config.process.download.constants import get_transfer_protocols
 

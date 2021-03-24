@@ -76,4 +76,4 @@ if __name__ == '__main__':
 
     replica=replica_next(current_url,replicas)
 
-    print replica
+    print(replica)

@@ -12,11 +12,11 @@
 """This module contains database versioning routines."""
 
 from distutils.version import LooseVersion
-import sdapp
-import sdlog
-import sddbnormalize
-import sddbversionutils
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sddbnormalize
+from synda.sdt import sddbversionutils
+from synda.sdt.sdexception import SDException
 
 def check_version(conn):
     """Upgrade the database schema if database version does not match binary version.
@@ -48,7 +48,7 @@ def check_version(conn):
             upgrade_db(conn,current_db_version,sdapp.version)
 
 def upgrade_db(conn,current_db_version,new_db_version):
-    versions = upgrade_procs.keys()
+    versions = list(upgrade_procs.keys())
     li=sddbversionutils.version_range( versions, current_db_version, new_db_version )
 
     # remove the first value (i.e. no upgrade needed there as db is already at this version)

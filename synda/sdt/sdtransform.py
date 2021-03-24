@@ -15,10 +15,10 @@ import sys
 import argparse
 import json
 import re
-import sdapp
-import sdprint
-import sdpostpipelineutils
-import sdexception
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdexception
 
 def run(files):
     files=transform_url(files)
@@ -36,7 +36,7 @@ def transform_url(files):
     return files
 
 def parse_rule(name,body):
-    match=re.search('^s\|([^|]+)\|([^|]*)\|$',body)
+    match=re.search(r'^s\|([^|]+)\|([^|]*)\|$',body)
     if match!=None:
         from_string=match.group(1)
         to_string=match.group(2)

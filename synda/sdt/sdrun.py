@@ -22,13 +22,13 @@ Notes
 import sys
 import argparse
 import json
-import sdapp
-import sdprint
-import sdlog
-import sdpipelineutils
-import sdproxy_mt
-import sdtypes
-import sdproxy
+from synda.sdt import sdapp
+from synda.sdt import sdprint
+from synda.sdt import sdlog
+from synda.sdt import sdpipelineutils
+from synda.sdt import sdproxy_mt
+from synda.sdt import sdtypes
+from synda.sdt import sdproxy
 
 def run(queries,parallel=True):
 

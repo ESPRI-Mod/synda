@@ -21,9 +21,9 @@ Note
 import sys
 import argparse
 import json
-import sdconfig
-import sdprint
-import sdlog
+from synda.sdt import sdconfig
+from synda.sdt import sdprint
+from synda.sdt import sdlog
 
 from synda.source.config.file.internal.models import Config as Internal
 

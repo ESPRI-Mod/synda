@@ -13,12 +13,12 @@
 
 import argparse
 import re
-import sddao
-import sdnormalize
-import sdcache
-import sdtools
-import sdi18n
-from sdexception import SDException
+from synda.sdt import sddao
+from synda.sdt import sdnormalize
+from synda.sdt import sdcache
+from synda.sdt import sdtools
+from synda.sdt import sdi18n
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.selection.constants import STRUCTURE as SELECTION_STRUCTURE
 
@@ -28,7 +28,7 @@ def handle_negated_value(name):
 
     For more infos on negated value, see: https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API
     """
-    return re.sub('!$','',name)
+    return re.sub(r'!$','',name)
 
 def is_case_incorrect(value):
     if value in reversed_params:
@@ -69,7 +69,7 @@ def get_parameter_type(name):
     if values_count == 1:
 
         if values[0] is None:
-            return SELECTION_STRUCTURE["param"["type"]]["free"]
+            return SELECTION_STRUCTURE["param"]["type"]["free"]
         else:
 
             # obsolete
@@ -85,16 +85,16 @@ def get_parameter_type(name):
 
             # We return PARAM_TYPE_CONTROLLED here.
 
-            return SELECTION_STRUCTURE["param"["type"]]["controlled"]
+            return SELECTION_STRUCTURE["param"]["type"]["controlled"]
 
     else:
-        return SELECTION_STRUCTURE["param"["type"]]["controlled"]
+        return SELECTION_STRUCTURE["param"]["type"]["controlled"]
 
 
 def exists_parameter_value(name, value):
     name = handle_negated_value(name)
 
-    if get_parameter_type(name) == SELECTION_STRUCTURE["param"["type"]]["free"]:
+    if get_parameter_type(name) == SELECTION_STRUCTURE["param"]["type"]["free"]:
         # we don't check value for free parameters
 
         return True
@@ -124,7 +124,7 @@ def reverse_params(params):
     """Transform key/value dict to value/key dict."""
     di={}
 
-    for name,values in params.iteritems():
+    for name,values in params.items():
         for v in values:
             if v in di:
                 if name not in di[v]:
@@ -137,7 +137,7 @@ def reverse_params(params):
 def build_ucvalue_index(reversed_params):
     di={}
 
-    for value in reversed_params.keys():
+    for value in list(reversed_params.keys()):
 
         # hack: exclude None value artefact
         if value is None:
@@ -159,10 +159,10 @@ def build_ucvalue_index(reversed_params):
 def print_models_mapping(models,pattern=None):
 
     def print_models_mapping_line(norm_name,non_norm_name):
-        print "%-40s %s"%(norm_name,non_norm_name)
+        print("%-40s %s"%(norm_name,non_norm_name))
 
-    print "%-40s %s"%('Normalized','Not normalized')
-    print
+    print("%-40s %s"%('Normalized','Not normalized'))
+    print()
     for m in models:
         if pattern is None:
             print_models_mapping_line(m,models[m])
@@ -175,10 +175,10 @@ def filter_and_print_name(li,pattern=None):
 
     if len(li)==1:
         v=li[0]
-        print v
+        print(v)
     elif len(li)>1:
         for v in li:
-            print v
+            print(v)
     else:
         sdtools.print_stderr("Parameter name not found")
 
@@ -191,7 +191,7 @@ def filter_and_print_value(li,columns=1,pattern=None):
         if v == None:
             sdtools.print_stderr('Free text parameter')
         else:
-            print v
+            print(v)
 
     elif len(li)>1:
 
@@ -201,7 +201,7 @@ def filter_and_print_value(li,columns=1,pattern=None):
             # mono-column version
 
             for v in li:
-                print v
+                print(v)
     else:
         sdtools.print_stderr("Parameter value not found")
 
@@ -234,7 +234,7 @@ def search_match(value):
     """Search name(s) matching the given value."""
     names=[]
 
-    for name,values in params.iteritems():
+    for name,values in params.items():
         for v in values:
             if v == value: 
                 names.append(name)
@@ -286,7 +286,7 @@ def print_(args):
     p2=args.pattern2
 
     if (p1 is None and p2 is None):
-        filter_and_print_name(params.keys())
+        filter_and_print_name(list(params.keys()))
     elif (p1 is not None and p2 is None):
         if p1 in params:
             filter_and_print_value(params[p1],columns=args.columns)
@@ -294,7 +294,7 @@ def print_(args):
             if p1 in mapping_keywords:
                 print_models_mapping(models)
             else:
-                filter_and_print_name(params.keys(),pattern=p1)
+                filter_and_print_name(list(params.keys()),pattern=p1)
 
     elif (p1 is not None and p2 is not None):
         if p1 in params:

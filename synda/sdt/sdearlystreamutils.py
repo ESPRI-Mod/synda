@@ -16,9 +16,9 @@ Notes
 """
 
 import sys
-import sdtools
-from sdtools import print_stderr
-import sdexception
+from synda.sdt import sdtools
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdexception
 
 from synda.source.config.process.download.hack.constants import get_projects as get_hack_projects
 
@@ -76,7 +76,8 @@ def get_facet_values_early(orig_stream,name,extract_item=False):
     TODO
         Maybe find a proper way to do that
     """
-    import sdstream, sdextractitem, sdignorecase, sdinference, copy, sddeferredbefore, sddeferredafter
+    import copy
+    from synda.sdt import sdstream, sdextractitem, sdignorecase, sdinference, sddeferredbefore, sddeferredafter
 
     assert name!='type' # type cannot be inferred using this func (use infer_type() func instead)
 

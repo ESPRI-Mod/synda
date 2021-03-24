@@ -25,10 +25,10 @@ import pwd
 import psutil
 import signal
 
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 
-from synda.source.config.subcommand.daemon.constants import daemon_context, pidfile
+from synda.source.config.process.synda_daemon.constants import daemon_context, pidfile
 from synda.source.config.file.daemon.models import Config as File
 
 FULLFILENAME = File().default
@@ -42,7 +42,7 @@ def get_daemon_status():
 
 
 def print_daemon_status():
-    print get_daemon_status()
+    print(get_daemon_status())
 
 
 def is_running():
@@ -55,7 +55,7 @@ def is_running():
 
 def main_loop(config_manager):
     # must be here because of double-fork
-    import sdlog, sdtaskscheduler
+    from synda.sdt import sdlog, sdtaskscheduler
 
     preferences = config_manager.get_user_preferences()
 
@@ -64,7 +64,7 @@ def main_loop(config_manager):
     try:
         sdtaskscheduler.event_loop(config_manager)
 
-    except SDException, e:
+    except SDException as e:
 
         level = preferences.log_verbosity_level
 
@@ -112,8 +112,8 @@ def start(config_manager):
             with daemon_context:
                 main_loop(config_manager)
 
-        except Exception, e:
-            import sdtrace
+        except Exception as e:
+            from synda.sdt import sdtrace
             sdtrace.log_exception()
 
         # DOESN'T WORK !
@@ -126,11 +126,11 @@ def start(config_manager):
         """
         time.sleep(5)
         if not is_running():
-            print 'Error occurs during daemon startup.'
+            print('Error occurs during daemon startup.')
         """
     else:
-        print 'Daemon is already running.'
-        print 'PID file location: {}'.format(FULLFILENAME)
+        print('Daemon is already running.')
+        print('PID file location: {}'.format(FULLFILENAME))
 
 
 def stop():
@@ -142,7 +142,7 @@ def stop():
             os.kill(pid, signal.SIGTERM)
         else:
             # sdlog import must not be at the top of this file, because of double-fork
-            import sdlog
+            from synda.sdt import sdlog
 
             sdlog.error(
                 'SDDAEMON-014',
@@ -166,7 +166,7 @@ def terminate(signum, frame):
     # must be here because of double-fork (i.e. we can't move import at the top of this file,
     # because the first import must occur in 'main_loop' func).
 
-    import sdtaskscheduler
+    from synda.sdt import sdtaskscheduler
     sdtaskscheduler.terminate(signum, frame)
 
 
@@ -210,7 +210,7 @@ def unprivileged_user_mode(user, group):
 # init.
 
 
-os.umask(0002)
+os.umask(0o0002)
 
 
 if __name__ == "__main__":

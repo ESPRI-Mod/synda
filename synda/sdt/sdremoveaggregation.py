@@ -14,8 +14,8 @@
 import sys
 import argparse
 import json
-import sdprint
-from sdexception import SDException
+from synda.sdt import sdprint
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 

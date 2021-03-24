@@ -15,8 +15,8 @@ Notes
     - sddquery means 'SynDa Deserialized query'
     - A stream is a group of dquery
 """
-import sdutils
-from sdexception import SDException
+from synda.sdt import sdutils
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.selection.constants import SDSSP
 
@@ -32,9 +32,9 @@ def print_(dquery):
     )
 
     if verbose:
-        print dquery
+        print(dquery)
     else:
-        print dquery['url']
+        print(dquery['url'])
 
 
 def set_scalar(dquery, name, value):
@@ -114,7 +114,7 @@ def is_empty(dquery):
     if len(di) == 0:
         result = True
     elif len(di) == 1:
-        if 'limit' in dquery.keys():
+        if 'limit' in list(dquery.keys()):
             # if only this key, then consider empty
 
             result = True

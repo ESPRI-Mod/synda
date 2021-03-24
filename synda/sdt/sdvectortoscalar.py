@@ -14,7 +14,7 @@
 import sys
 import argparse
 import json
-import sdprint
+from synda.sdt import sdprint
 
 from synda.source.config.file.selection.constants import SDSSSP
 

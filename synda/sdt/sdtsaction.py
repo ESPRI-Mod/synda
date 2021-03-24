@@ -15,9 +15,9 @@ Note
     In this file, module import directives are moved near the calls,
     so to improve startup time.
 """
-import sdprint
-from sdtools import print_stderr
-import sdexception
+from synda.sdt import sdprint
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdexception
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 from synda.source.config.api.constants import METADATA_SERVER_TYPES
@@ -33,12 +33,12 @@ from synda.source.config.process.list.messages import VARIABLE_NOT_IMPLEMENTED a
 
 
 def list_(args):
-    import sdearlystreamutils
+    from synda.sdt import sdearlystreamutils
 
     """
     disabled as is more practical to list everything by default and filter only on user request.
 
-    import sddeferredafter
+    from synda.sdt import sddeferredafter
 
     # add default status depending on type
     if args.type_==SEARCH_API_STRUCTURE['type']['file']:
@@ -66,10 +66,10 @@ def list_(args):
 
 
 def search(args):
-    import sdearlystreamutils,sdstream
+    from synda.sdt import sdearlystreamutils,sdstream
 
     if args.replica:
-        import sddeferredafter
+        from synda.sdt import sddeferredafter
         sdstream.set_scalar(args.stream,'keep_replica','true')
         sddeferredafter.add_forced_parameter(args.stream,'nearest','false')
 
@@ -124,7 +124,7 @@ def dump(args):
 
 
 def count(args):
-    import sdstream
+    from synda.sdt import sdstream
 
     # timestamp filters
     if args.timestamp_left_boundary is not None:
@@ -154,7 +154,7 @@ def file_foobar(args):
 
 
 def dataset_count(args):
-    import sdquickcount
+    from synda.sdt import sdquickcount
     result=sdquickcount.run(
         stream=args.stream,
         index_host=args.index_host,
@@ -162,8 +162,10 @@ def dataset_count(args):
         type_=SEARCH_API_STRUCTURE['type']['dataset'],
     )
 
-    print COUNT_DATASET_FOUND_TEMPLATE.format(
-        result.num_found,
+    print(
+        COUNT_DATASET_FOUND_TEMPLATE.format(
+            result.num_found,
+        ),
     )
 
 
@@ -172,7 +174,7 @@ def variable_count(args):
 
 
 def file_count(args):
-    import sdquickcount
+    from synda.sdt import sdquickcount
     result = sdquickcount.run(
         stream=args.stream,
         index_host=args.index_host,
@@ -180,17 +182,19 @@ def file_count(args):
         type_=SEARCH_API_STRUCTURE['type']['file'],
     )
 
-    print COUNT_FILE_FOUND_TEMPLATE.format(
-        result.num_found,
+    print(
+        COUNT_FILE_FOUND_TEMPLATE.format(
+            result.num_found,
+        ),
     )
 
 
 def dataset_list(args):
-    import sddeferredafter
+    from synda.sdt import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list'))
 
-    import sdldataset
+    from synda.sdt import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
     if len(datasets)==0:
         print_stderr(LIST_DATASET_NOT_FOUND)
@@ -199,23 +203,23 @@ def dataset_list(args):
 
 
 def variable_list(args):
-    import sddeferredafter
+    from synda.sdt import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list')) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
 
     print_stderr(LIST_VARIABLE_NOT_IMPLEMENTED)
     """
-    import sdldataset
+    from synda.sdt import sdldataset
     datasets=sdldataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
     if len(datasets)==0:
-        print "Variable not found"
+        print("Variable not found")
     else:
         sdldataset.print_list(datasets)
     """
 
 
 def file_list(args):
-    import sddeferredafter, sdlfile
+    from synda.sdt import sddeferredafter, sdlfile
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list'))
 
@@ -227,7 +231,7 @@ def file_list(args):
 
 
 def dataset_search(args):
-    import sddeferredafter, sdrdataset, sdfields, sdearlystreamutils
+    from synda.sdt import sddeferredafter, sdrdataset, sdfields, sdearlystreamutils
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
 
@@ -248,7 +252,7 @@ def dataset_search(args):
 
 
 def variable_search(args):
-    import sddeferredafter, sdrdataset, sdrvariable, sdfields, sdearlystreamutils
+    from synda.sdt import sddeferredafter, sdrdataset, sdrvariable, sdfields, sdearlystreamutils
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
 
@@ -259,7 +263,7 @@ def variable_search(args):
     datasets=sdrdataset.get_datasets(stream=args.stream,dry_run=args.dry_run)
 
     if len(datasets)==0:
-        print "Variable not found"
+        print("Variable not found")
     else:
         sdrvariable.print_list(datasets,args.limit) # TAGJ43JK3J43
 
@@ -270,7 +274,7 @@ def variable_search(args):
 
 
 def file_search(args):
-    import sdfilesearch
+    from synda.sdt import sdfilesearch
     metadata_server_type = Preferences().core_metadata_server_type
     if metadata_server_type not in METADATA_SERVER_TYPES:
         raise sdexception.SDException(
@@ -282,7 +286,7 @@ def file_search(args):
 
 
 def dataset_show(args):
-    import sdearlystreamutils
+    from synda.sdt import sdearlystreamutils
 
     # check
     li=sdearlystreamutils.get_facet_values_early(args.stream,'instance_id')
@@ -294,7 +298,7 @@ def dataset_show(args):
         return 1
 
     if args.localsearch:
-        import sdldataset
+        from synda.sdt import sdldataset
         dataset=sdldataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
 
         if not args.dry_run:
@@ -303,7 +307,7 @@ def dataset_show(args):
             else:
                 sdldataset.print_details(dataset)
     else:
-        import sdrdataset
+        from synda.sdt import sdrdataset
         dataset=sdrdataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
 
         if not args.dry_run:
@@ -317,17 +321,17 @@ def variable_show(args):
     if args.localsearch:
         print_stderr('Not implemented yet.')   
         """
-        import sdldataset
+        from synda.sdt import sdldataset
         dataset=sdldataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
         if dataset is None:
-            print "Variable not found"
+            print("Variable not found")
         else:
             sdldataset.print_details(dataset)
         """
     else:
         print_stderr('Not implemented yet.')   
         """
-        import sdrdataset
+        from synda.sdt import sdrdataset
 
         sddeferredafter.add_forced_parameter(args.stream,'fields','instance_id,id,type') # force output fields
         dataset=sdrdataset.get_dataset(stream=args.stream,dry_run=args.dry_run)
@@ -339,7 +343,7 @@ def variable_show(args):
 
 
 def file_show(args):
-    import sdearlystreamutils
+    from synda.sdt import sdearlystreamutils
 
     # check
 
@@ -365,7 +369,7 @@ def file_show(args):
     # main
 
     if args.localsearch:
-        import sdlfile
+        from synda.sdt import sdlfile
         file=sdlfile.get_file(stream=args.stream,dry_run=args.dry_run)
 
         if not args.dry_run:
@@ -374,7 +378,7 @@ def file_show(args):
             else:
                 sdlfile.print_details(file)
     else:
-        import sdrfile
+        from synda.sdt import sdrfile
         file=sdrfile.get_file(stream=args.stream,dry_run=args.dry_run)
 
         if not args.dry_run:
@@ -385,9 +389,9 @@ def file_show(args):
 
 
 def dataset_version(args):
-    import sdremoteparam
-    import syndautils
-    import sdearlystreamutils
+    from synda.sdt import sdremoteparam
+    from synda.sdt import syndautils
+    from synda.sdt import sdearlystreamutils
 
     # don't be misled about identifiers here: sdinference produces search-api
     # key (always do) name i.e. instance_id, and I use Synda style variable name
@@ -417,7 +421,7 @@ def dataset_version(args):
     # TODO: func for code below
     items = params.get('version', [])
     for item in items:
-        print item.name
+        print(item.name)
 
 
 def variable_version(args):
@@ -431,9 +435,9 @@ def file_version(args):
 
 
 def dataset_dump(args):
-    import sdrdataset
-    import sddeferredafter
-    import sdcolumnfilter
+    from synda.sdt import sdrdataset
+    from synda.sdt import sddeferredafter
+    from synda.sdt import sdcolumnfilter
 
     sddeferredafter.add_default_parameter(
         args.stream,
@@ -462,10 +466,10 @@ def variable_dump(args):
 
 
 def file_dump(args):
-    import sdrfile
-    import sddeferredafter
-    import sdcolumnfilter
-    import sdreducecol
+    from synda.sdt import sdrfile
+    from synda.sdt import sddeferredafter
+    from synda.sdt import sdcolumnfilter
+    from synda.sdt import sdreducecol
 
     sddeferredafter.add_default_parameter(
         args.stream,

@@ -19,16 +19,16 @@ Notes
 """
 import argparse
 import json
-import sdnearestutils
-import sdpostpipelineutils
-import sdprint
-import sdrtt
+from synda.sdt import sdnearestutils
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdprint
+from synda.sdt import sdrtt
 
-import sdlog
-import sdgc
-import sdpipelineprocessing
-import sdlmattrfilter
-from sdexception import SDException
+from synda.sdt import sdlog
+from synda.sdt import sdgc
+from synda.sdt import sdpipelineprocessing
+from synda.sdt import sdlmattrfilter
+from synda.sdt.sdexception import SDException
 from synda.source.config.file.user.preferences.models import Config
 
 
@@ -110,7 +110,7 @@ def old_algo(files):
         else:
             new_files[id_]=f
 
-    return new_files.values()
+    return list(new_files.values())
 
 def get_nearest_dn(datanodes):
     nearest=datanodes[0]
@@ -146,7 +146,7 @@ def compute_RTT(remote_host):
 
     try:
         rtt=sdrtt.compute_RTT(remote_host)
-    except SDException,e:
+    except SDException as e:
         if e.code=='SYNDARTT-002':
             # when here, it means no response from host
 

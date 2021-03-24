@@ -13,7 +13,11 @@ from synda.tests.context.download.models import Context as Base
 class Context(Base):
 
     def __init__(self, dataset="", folder="", expected_files_description=None, capsys=None):
-        super(Context, self).__init__(folder=folder, expected_files_description=expected_files_description, capsys=capsys)
+        super(Context, self).__init__(
+            folder=folder,
+            expected_files_description=expected_files_description,
+            capsys=capsys,
+        )
         self.dataset = ""
         self.dataset = dataset
 

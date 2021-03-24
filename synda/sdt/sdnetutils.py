@@ -10,16 +10,16 @@
 ##################################
 
 """This module contains network functions."""
-import urllib2
+import urllib3
+import urllib.request
 import requests
-import sdtypes
-from sdexception import SDException
-from sdtime import SDTimer
-import sdlog
-import sdconfig
-import sdpoodlefix
-import httplib
-import sdtrace
+from synda.sdt import sdtypes
+from synda.sdt.sdexception import SDException
+from synda.sdt.sdtime import SDTimer
+from synda.sdt import sdlog
+from synda.sdt import sdconfig
+import http.client
+from synda.sdt import sdtrace
 import ssl
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
@@ -27,30 +27,30 @@ from synda.source.config.api.constants import OUTPUT_FORMAT_JSON
 from synda.source.config.api.constants import OUTPUT_FORMAT_XML
 
 
-class HTTPSClientAuthHandler(urllib2.HTTPSHandler):
+class HTTPSClientAuthHandler(urllib.request.HTTPSHandler):
     """HTTP handler that transmits an X509 certificate as part of the request."""
     def __init__(self, key, cert):
-            urllib2.HTTPSHandler.__init__(self)
+            urllib.request.HTTPSHandler.__init__(self)
             self.key = key
             self.cert = cert
     def https_open(self, req):
             return self.do_open(self.getConnection, req)
     def getConnection(self, host, timeout=300):
-            return httplib.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
+            return http.client.HTTPSConnection(host, key_file=self.key, cert_file=self.cert)
 
 
 # default is to load list resulting from HTTP call in memory
 # (should work on lowmem machine as response should not exceed Preferences().esgf_search_api_chunksize)
 def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowmem=False):
     start_time=SDTimer.get_time()
-    buf=HTTP_GET(url,timeout)
+    buf=http_get(url, timeout)
     elapsed_time=SDTimer.get_elapsed_time(start_time)
 
     buf=fix_encoding(buf)
 
     try:
         di=search_api_parser.parse_metadata(buf)
-    except Exception,e:
+    except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
@@ -71,7 +71,7 @@ def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowm
         #
         #raise
 
-        raise SDException('SDNETUTI-008','Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        raise SDException('SDNETUTI-008', 'Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
 
     sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
     for difile in di['files']:
@@ -82,20 +82,21 @@ def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowm
 
 
 def call_param_web_service(url,timeout):
-    buf=HTTP_GET(url,timeout)
+    buf = http_get(url, timeout)
 
-    buf=fix_encoding(buf)
+    buf = fix_encoding(buf)
 
     try:
-        params=search_api_parser.parse_parameters(buf)
+        params = search_api_parser.parse_parameters(buf)
     except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        raise SDException('SDNETUTI-003','Network error (%s)'%str(e))
+        raise SDException('SDNETUTI-003', 'Network error (%s)' % str(e))
 
     return params
+
 
 def fix_encoding(buf):
 
@@ -106,55 +107,57 @@ def fix_encoding(buf):
     # e.g. http://esgf-data.dkrz.de/esg-search/search?distrib=true&fields=*&type=File&limit=100&title=sftgif_fx_IPSL-CM5A-LR_abrupt4xCO2_r0i0p0.nc&format=application%2Fsolr%2Bxml&offset=0
     #
     if sdconfig.fix_encoding:
-        import sdencoding
+        from synda.sdt import sdencoding
         buf=sdencoding.fix_mixed_encoding_ISO8859_UTF8(buf)
 
     return buf
 
-def HTTP_GET_2(url,timeout=20,verify=True):
+
+def http_get_2(url, timeout=20, verify=True):
     """requests impl."""
 
-    buf=None
+    buf = None
 
     try:
-        requests.packages.urllib3.disable_warnings()
-        result=requests.get(url, timeout=timeout, verify=verify)
-        buf=result.text
-    except Exception, e:
-        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
-        errcode="SDNETUTI-004"
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        result = requests.get(url, timeout=timeout, verify=verify)
+        buf = result.text
+    except Exception as e:
+        errmsg = "HTTP query failed (url={},exception={},timeout={})".format(
+            url,
+            str(e),
+            timeout,
+        )
+        errcode = "SDNETUTI-004"
 
-        raise SDException(errcode,errmsg)
+        raise SDException(errcode, errmsg)
 
     return buf
 
-def HTTP_GET(url,timeout=20):
+
+def http_get(url, timeout=20):
     """urllib impl."""
-
-    sock=None
-    buf=None
+    buf = None
 
     try:
-        sdpoodlefix.start(url)
+        context = ssl.create_default_context()
+        response = urllib.request.urlopen(url, timeout=timeout, context=context)
+        buf = response.read()
+    except Exception as e:
+        errmsg = "HTTP query failed (url={},exception={},timeout={})".format(
+            url,
+            str(e),
+            timeout,
+        )
+        errcode = "SDNETUTI-002"
 
-        sock=urllib2.urlopen(url, timeout=timeout)
-        buf=sock.read()
-    except Exception, e:
-        errmsg="HTTP query failed (url=%s,exception=%s,timeout=%d)"%(url,str(e),timeout)
-        errcode="SDNETUTI-002"
-
-        raise SDException(errcode,errmsg)
-
-    finally:
-        if sock!=None:
-            sock.close()
-
-        sdpoodlefix.stop()
+        raise SDException(errcode, errmsg)
 
     return buf
+
 
 def test_access():
-    urlfile = urllib2.urlopen("http://www.google.com")
+    urlfile = urllib.request.urlopen("http://www.google.com")
 
     data_list = []
     chunk = 4096
@@ -167,31 +170,22 @@ def test_access():
 
 def get_search_api_parser():
     if sdconfig.searchapi_output_format==OUTPUT_FORMAT_XML:
-        import sdxml
-        return sdxml
+        assert False
     elif sdconfig.searchapi_output_format==OUTPUT_FORMAT_JSON:
-        import sdjson
+        from synda.sdt import sdjson
         return sdjson
     else:
         assert False
 
-def allow_self_signed_certificate():
-    """Handle target environment that doesn't support HTTPS verification.
-
-    This is needed for example to allow SDT<=>SDP communication over
-    JSONRPC/HTTPS using a self_signed_certificate (in a Python 2.7+ context).
-
-    For more information, see https://www.python.org/dev/peps/pep-0476
-    """
-
-    try:
-        _create_unverified_https_context = ssl._create_unverified_context
-        ssl._create_default_https_context = _create_unverified_https_context
-    except AttributeError:
-        # legacy Python that doesn't verify HTTPS certificates by default
-
-        pass
-
 # init.
 
 search_api_parser=get_search_api_parser()
+
+
+if __name__ == '__main__':
+    _url = "http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CSIRO-QCCCE/CSIRO-Mk3-6-0/amip/mon/atmos/Amon/r1i1p1/tasmin/1/tasmin_Amon_CSIRO-Mk3-6-0_amip_r1i1p1_197901-200912.nc"
+    _context = ssl.create_default_context()
+    response = urllib.request.urlopen(_url, timeout=20, context=_context)
+    data1 = response.read()
+    data2 = http_get(_url, timeout=20)
+    assert data1 == data2

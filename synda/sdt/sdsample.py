@@ -11,13 +11,13 @@
 
 """This module contains routines to print local and remote metadata samples."""
 
-import sdapp
-import sddao
-import sdfiledao
-import sdsamplequery
+from synda.sdt import sdapp
+from synda.sdt import sddao
+from synda.sdt import sdfiledao
+from synda.sdt import sdsamplequery
 import argparse
-import sdparam
-import sdquicksearch
+from synda.sdt import sdparam
+from synda.sdt import sdquicksearch
 
 def get_dataset_id_samples():
     return [
@@ -48,22 +48,22 @@ def print_local_samples():
         files.extend(sdfiledao.get_files(project=project,limit=1))
 
     for f in files:
-        print "%s" % (f.local_path)
-        print "%s|%s" % (f.file_functional_id,f.data_node)
-        print
+        print("%s" % (f.local_path))
+        print("%s|%s" % (f.file_functional_id,f.data_node))
+        print()
 
 def print_remote_samples():
     for project in sdparam.params['project']:
-        print project
+        print(project)
         print_remote_sample(project)
 
 def print_remote_sample(project):
     """Print one random file of given project."""
     result=sdquicksearch.run(parameter=['project=%s'%project,"limit=1"])
     for f in result.get_files():
-        print "%s" % (f['local_path'])
-        print "%s|%s" % (f['file_functional_id'],f['data_node'])
-        print
+        print("%s" % (f['local_path']))
+        print("%s|%s" % (f['file_functional_id'],f['data_node']))
+        print()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

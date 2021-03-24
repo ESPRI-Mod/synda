@@ -17,8 +17,8 @@ import threading
 import time
 import argparse
 import re
-import sdapp
-import sdlog
+from synda.sdt import sdapp
+from synda.sdt import sdlog
 
 
 class FrozenDownloadCheckerThread(threading.Thread):
@@ -73,16 +73,16 @@ def scan_processes(previous_processes,new_processes,debug=False):
 
                             if debug:
                                 if os.path.isfile(local_path):
-                                    print '%i %s'%(os.path.getsize(local_path),local_path)
+                                    print('%i %s'%(os.path.getsize(local_path),local_path))
                                 else:
-                                    print 'File not found: %s'%(local_path,)
+                                    print('File not found: %s'%(local_path,))
                             else:
                                 if os.path.isfile(local_path):
                                     check_if_frozen(p,pid,local_path,previous_processes,new_processes)
                                 else:
                                     sdlog.info("SDWATCHD-274","file not found (%s%s)"%(local_path,pid)) # this can occur if wget already started, but didn't create the output file yet
 
-        except Exception, e:
+        except Exception as e:
             if debug:
                 raise
             else:

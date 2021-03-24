@@ -19,10 +19,10 @@ Example
         ALADIN52
 """
 
-import sdapp
-import sdparam
-import sddquery
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdparam
+from synda.sdt import sddquery
+from synda.sdt import sdprint
 
 def run(facets_groups,key):
     for facets_group in facets_groups:
@@ -38,7 +38,7 @@ def param_values(key):
     if key=='model':
         # this case is specific, because we want normalized model here, not non-normalized ones
 
-        return sdparam.models.keys()
+        return list(sdparam.models.keys())
     else:
         return sdparam.params[key]
 
@@ -87,7 +87,7 @@ def extract_variable_name_from_filename(filename):
     Not used
     """
 
-    rege=re.compile("^([^_]+)_.+$")
+    rege=re.compile(r"^([^_]+)_.+$")
 
     rege_result=rege.match(filename) # sample => sfcWind_day_HadGEM2-ES_piControl_r1i1p1_19091201-19191130.nc
     if rege_result!=None:
@@ -105,7 +105,7 @@ def process_item(facets_group,identifier,key):
         # as model doesn't exist for Obs
         # (e.g. synda search obs4MIPs.PCMDI.CloudSat.mon.v1.cfadDbze94_obs4MIPs_CloudSat_L3_V2.0_20081101_20081130.nc -y)
 
-        #print 'Cannot extract %s from functional identifier'%key
+        #print('Cannot extract %s from functional identifier'%key)
         pass
 
     else:

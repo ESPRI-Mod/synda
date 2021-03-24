@@ -13,10 +13,10 @@
 
 import os
 import argparse
-import sdlog
-import sdtools
-import sdutils
-from sdexception import SDException
+from synda.sdt import sdlog
+from synda.sdt import sdtools
+from synda.sdt import sdutils
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.log.models import Config as Log
 

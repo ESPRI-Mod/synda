@@ -20,10 +20,10 @@ import sys
 import re
 import argparse
 import json
-from sdexception import SDException
-import sdlog
-import sdidtest
-import sdprint
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdlog
+from synda.sdt import sdidtest
+from synda.sdt import sdprint
 
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 
@@ -81,7 +81,7 @@ def remove_malformed_dataset_functional_id(files):
     reject=[] # not used
 
     for f in files:
-        m=re.search("^(.*)\.([^.]*)$",f["dataset_functional_id"])
+        m=re.search(r"^(.*)\.([^.]*)$",f["dataset_functional_id"])
         if m!=None:
             keep.append(f)
         else:

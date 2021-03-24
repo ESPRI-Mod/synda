@@ -12,21 +12,21 @@
 """Contains local dataset flags refresh routines."""
 
 import argparse
-import sdapp
-import sddb
-import sddao
-import sddatasetdao
-import sdfilequery
-import sddatasetquery
-import sdconst
-import sddatasetutils
-import sdutils
-import sdtime
-import sdlog
-import sdvariable
-import sdmodifyquery
-from sdprogress import SDProgressDot
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sddao
+from synda.sdt import sddatasetdao
+from synda.sdt import sdfilequery
+from synda.sdt import sddatasetquery
+from synda.sdt import sdconst
+from synda.sdt import sddatasetutils
+from synda.sdt import sdutils
+from synda.sdt import sdtime
+from synda.sdt import sdlog
+from synda.sdt import sdvariable
+from synda.sdt import sdmodifyquery
+from synda.sdt.sdprogress import SDProgressDot
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.process.download.dataset.constants import STRUCTURE as DATASET_STRUCTURE
 from synda.source.config.process.download.constants import TRANSFER
@@ -47,7 +47,7 @@ def switch_off_latest_flag_for_all_other_versions(latest_dataset_version,dataset
         # switch all other versions to False (set "latest" flag of all other versions of this dataset to false)
         for l__d in dataset_versions.get_datasets():
 
-            if l__d.version<>latest_dataset_version: # exclude ourself. As we are now the latest, we don't want to be set to False here, of course..
+            if l__d.version != latest_dataset_version: # exclude ourself. As we are now the latest, we don't want to be set to False here, of course..
 
                 l__d.latest=False
                 sddatasetdao.update_dataset(l__d,False,sddb.conn)
@@ -369,7 +369,7 @@ def update_datasets__status_and_latest():
 
         i+=1
 
-    print ""
+    print("")
     sdlog.info("SYDDFLAG-630","modified datasets: %i"%datasets_modified_count)
 
     return datasets_modified_count

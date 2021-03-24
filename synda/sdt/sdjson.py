@@ -13,21 +13,21 @@
 
 import argparse
 import json
-import sdapp
-import sdlog
-from sdexception import SDException
-from sdtypes import Item
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt.sdexception import SDException
+from synda.sdt.sdtypes import Item
 
 def parse_parameters(buffer):
     try:
         xmldoc = json.loads(buffer)
-    except Exception, e:
+    except Exception as e:
         raise
 
     params={}
     footer_node=xmldoc.get("facet_counts",{"facet_fields":{}})
     fields_node=footer_node["facet_fields"]
-    for facet_name,li in fields_node.iteritems():
+    for facet_name,li in list(fields_node.items()):
         items=[]
 
         """
@@ -66,7 +66,7 @@ def parse_metadata(buffer):
 
     try:
         xmldoc = json.loads(buffer)
-    except Exception, e:
+    except Exception as e:
         raise
 
 
@@ -110,7 +110,7 @@ def parse_metadata(buffer):
         },
         """
 
-        for attr_name,attr_value in doc_node.iteritems():
+        for attr_name,attr_value in list(doc_node.items()):
 
             # TODO: maybe move transformation below in a downstream
             #       step (e.g. in the generic pipeline) so to keep
@@ -150,4 +150,4 @@ if __name__ == '__main__':
     #result=parse_parameters(buffer)
     result=parse_metadata(buffer)
 
-    print "%s\n"%json.dumps(result,indent=4, separators=(',', ': '))
+    print("%s\n"%json.dumps(result,indent=4, separators=(',', ': ')))

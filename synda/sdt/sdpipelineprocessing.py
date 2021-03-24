@@ -11,9 +11,9 @@
 
 """This module contains pipeline execution routines."""
 
-import sdapp
-import sdtypes
-import sdlog
+from synda.sdt import sdapp
+from synda.sdt import sdtypes
+from synda.sdt import sdlog
 
 from synda.source.config.process.constants import FETCH_MODE_GENERATOR
 

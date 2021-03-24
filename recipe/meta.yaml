@@ -1,4 +1,4 @@
-{% set version = "3.3" %}
+{% set version = "3.32" %}
 
 package:
   name: synda
@@ -10,6 +10,9 @@ source:
 build:
   number: 1
   noarch: generic
+
+channels:
+  - conda-forge
 
 requirements:
   host:
@@ -27,12 +30,12 @@ requirements:
     - babel
     - reportlab
     - requests
-    - 'MyProxyClient[channel=ipsl]'
-    - 'pycountry[channel=ipsl]'
-    - 'texttable[channel=ipsl]'
-    - 'python-jsonrpc[channel=ipsl]'
+    - MyProxyClient
+    - pycountry
+    - texttable
     - pytest
     - pandas
+
 about:
     home: https://github.com/Prodiguer/synda
     license: Public

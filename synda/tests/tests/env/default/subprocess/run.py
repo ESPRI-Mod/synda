@@ -27,7 +27,7 @@ def get_subcommand_dirname(subcommand):
 
 def get_test_daemon_fullfilename(arg):
     dirname = os.path.join(
-        get_subcommand_dirname("daemon"),
+        get_subcommand_dirname("synda_daemon"),
         "{}".format(arg),
     )
 
@@ -62,7 +62,7 @@ def test_daemon(manager):
             os.path.join(
                 os.path.join(
                     os.path.join(
-                        get_subcommand_dirname("daemon"),
+                        get_subcommand_dirname("synda_daemon"),
                         "start",
                     ),
                     "control",

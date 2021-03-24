@@ -42,24 +42,16 @@ def test_filename(install_filename_context, capsys):
     context.set_file(filename, dest_folder=dest_folder)
     context.set_capsys(capsys)
 
-    # context.set_expected_files_description(
-    #     Description(
-    #         [
-    #             File(
-    #                 "orog_fx_CanCM4_decadal1972_r0i0p0.nc",
-    #                 dest_folder,
-    #             ),
-    #             File(
-    #                 "orog_fx_CanCM4_decadal1972_r0i0p0.nc",
-    #                 dest_folder,
-    #             ),
-    #             File(
-    #                 "sftlf_fx_CanCM4_decadal1972_r0i0p0.nc",
-    #                 dest_folder,
-    #             ),
-    #         ],
-    #     ),
-    # )
+    context.set_expected_files_description(
+        Description(
+            [
+                File(
+                    filename,
+                    dest_folder,
+                ),
+            ],
+        ),
+    )
 
     from synda.tests.subcommand.install.filename.models import SubCommand
 

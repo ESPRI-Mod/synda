@@ -15,7 +15,7 @@ Notes
     - sdsqueries means 'SynDa Serialized queries'.
     - squeries are queries once url is built.
 """
-import sdsquery
+from synda.sdt import sdsquery
 
 def print_(squeries):
     for squery in squeries:

@@ -6,11 +6,10 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.source.process.subcommand.required.env.models import Process as Base
-from synda.source.process.authority.models import Authority
+from synda.source.process.subcommand.models import Process as Base
 
 
 class Process(Base):
 
     def __init__(self):
-        super(Process, self).__init__(name="open", authority=Authority())
+        super(Process, self).__init__(name="synda_version", authority=None)

@@ -16,8 +16,8 @@ import time
 import threading
 import argparse
 from progress.spinner import Spinner
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 from synda.source.config.file.user.preferences.models import Config
 
 
@@ -163,35 +163,35 @@ class SDProgressBar():
 class K2KSpinner():
     idx = 0
     sprite = [
-                u'▉            ',
-                u'▊▉           ',
-                u'▋▊▉          ',
-                u'▌▋▊▉         ',
-                u'▍▌▋▊▉        ',
-                u'▎▍▌▋▊▉       ',
-                u'▏▎▍▌▋▊▉      ',
-                u' ▏▎▍▌▋▊▉     ',
-                u'  ▏▎▍▌▋▊▉    ',
-                u'   ▏▎▍▌▋▊▉   ',
-                u'    ▏▎▍▌▋▊▉  ',
-                u'     ▏▎▍▌▋▊▉ ',
-                u'      ▏▎▍▌▋▊▉',
-                u'       ▏▎▍▌▉▊',
-                u'        ▏▎▉▊▋',
-                u'         ▉▊▋▌',
-                u'        ▉▊▋▌▍',
-                u'       ▉▊▋▌▍▎',
-                u'      ▉▊▋▌▍▎▏',
-                u'     ▉▊▋▌▍▎▏ ',
-                u'    ▉▊▋▌▍▎▏  ',
-                u'   ▉▊▋▌▍▎▏   ',
-                u'  ▉▊▋▌▍▎▏    ',
-                u' ▉▊▋▌▍▎▏     ',
-                u'▉▊▋▌▍▎▏      ',
-                u'▉▋▌▍▎▏       ',
-                u'▊▉▍▎▏        ',
-                u'▋▊▉▏         ',
-                u'▌▋▊▉         '
+                '▉            ',
+                '▊▉           ',
+                '▋▊▉          ',
+                '▌▋▊▉         ',
+                '▍▌▋▊▉        ',
+                '▎▍▌▋▊▉       ',
+                '▏▎▍▌▋▊▉      ',
+                ' ▏▎▍▌▋▊▉     ',
+                '  ▏▎▍▌▋▊▉    ',
+                '   ▏▎▍▌▋▊▉   ',
+                '    ▏▎▍▌▋▊▉  ',
+                '     ▏▎▍▌▋▊▉ ',
+                '      ▏▎▍▌▋▊▉',
+                '       ▏▎▍▌▉▊',
+                '        ▏▎▉▊▋',
+                '         ▉▊▋▌',
+                '        ▉▊▋▌▍',
+                '       ▉▊▋▌▍▎',
+                '      ▉▊▋▌▍▎▏',
+                '     ▉▊▋▌▍▎▏ ',
+                '    ▉▊▋▌▍▎▏  ',
+                '   ▉▊▋▌▍▎▏   ',
+                '  ▉▊▋▌▍▎▏    ',
+                ' ▉▊▋▌▍▎▏     ',
+                '▉▊▋▌▍▎▏      ',
+                '▉▋▌▍▎▏       ',
+                '▊▉▍▎▏        ',
+                '▋▊▉▏         ',
+                '▌▋▊▉         '
     ]
 
     def __init__(self, label):

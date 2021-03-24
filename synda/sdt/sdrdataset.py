@@ -13,13 +13,13 @@
 
 import os
 import argparse
-import sdapp
-import sdquicksearch
+from synda.sdt import sdapp
+from synda.sdt import sdquicksearch
 from tabulate import tabulate
-from sdtools import print_stderr
-import sdi18n
-import sdcliex
-import sddeferredbefore
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sddeferredbefore
 import humanize
 
 def get_datasets(stream=None,parameter=None,post_pipeline_mode='dataset',dry_run=False): # TODO: maybe remove parameter argument everywhere as there is a mess in get_selection_file_buffer, because of default/forced parameter (i.e. len(parameter) is non-zero even if non parameter args set on CLI !)
@@ -60,22 +60,22 @@ def get_dataset(stream=None,parameter=None,dry_run=False):
 def print_replica_list(datasets):
     """Print dataset list in a multi-replica context."""
     li=[[d['status'],d['dataset_functional_id'],d['data_node']] for d in datasets]
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_list(datasets):
     """Print dataset list in a mono-replica context."""
     li=[[d['status'],d['dataset_functional_id']] for d in datasets]
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_details(d,verbose=False):
-    print "Dataset: %s"%d['dataset_functional_id']
-    print "Datanode: %s"%d['data_node']
+    print("Dataset: %s"%d['dataset_functional_id'])
+    print("Datanode: %s"%d['data_node'])
 
     if verbose:
-        print "ESGF identifier (id): %s|%s"%(d['dataset_functional_id'],d['data_node'])
+        print("ESGF identifier (id): %s|%s"%(d['dataset_functional_id'],d['data_node']))
 
-    print "Dataset total size: %s"%humanize.naturalsize(int(d['size']),gnu=False)
-    print "Dataset variable(s) list: %s"%','.join(d['variable'])
+    print("Dataset total size: %s"%humanize.naturalsize(int(d['size']),gnu=False))
+    print("Dataset variable(s) list: %s"%','.join(d['variable']))
 
     if verbose:
 
@@ -90,10 +90,10 @@ def print_details(d,verbose=False):
 
         """
         print
-        print "Dataset files list:"
+        print("Dataset files list:")
         for f in d.files:
-            print "%-15s  %s"%(f['size'],f['filename'])
-        print "%i files found."%(len(d.files),)
+            print("%-15s  %s"%(f['size'],f['filename']))
+        print("%i files found."%(len(d.files),))
         """
 
         pass

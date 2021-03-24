@@ -14,8 +14,8 @@ import os
 import logging
 import argparse
 
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.internal.models import Config as Internal
 
@@ -129,7 +129,7 @@ def set_default_logger(name):
 # module init.
 
 
-os.umask(0002)
+os.umask(0o0002)
 
 discovery_logger = create_logger(internal.logger_feeder, internal.logger_feeder_file)
 transfer_logger = create_logger(internal.logger_consumer, internal.logger_consumer_file)

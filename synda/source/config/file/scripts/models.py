@@ -27,7 +27,7 @@ class Config(Container, Identifier):
 
         path = Path().get("bin")
         data = dict()
-        for identifier in STRUCTURE.keys():
+        for identifier in list(STRUCTURE.keys()):
             filename = STRUCTURE[identifier]
             data[identifier] = os.path.join(
                 path,
@@ -37,7 +37,7 @@ class Config(Container, Identifier):
         self.set_data(data)
 
     def get_filenames_identifiers(self):
-        return self.get_data().keys()
+        return list(self.get_data().keys())
 
     def provides(self, identifier):
         return True if identifier in self.get_filenames_identifiers() else False

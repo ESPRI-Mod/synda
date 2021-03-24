@@ -11,9 +11,9 @@
 
 """This module contains stream related routines."""
 
-import sdbuffer
-import sdparse
-import sdexception
+from synda.sdt import sdbuffer
+from synda.sdt import sdparse
+from synda.sdt import sdexception
 
 def get_stream(parameter=None,selection_file=None,no_default=True,raise_exception_if_empty=False):
     """

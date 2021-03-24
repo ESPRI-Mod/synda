@@ -17,13 +17,13 @@ Reference
 
 import os
 import argparse
-import sdapp
-import sdconst
-import sdi18n
-import sdcliex
-import sdpipeline
-import sddenormodel
-import sdremoteparam_light
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdpipeline
+from synda.sdt import sddenormodel
+from synda.sdt import sdremoteparam_light
 
 def run(pname=None,host=None,facets_group=None,dry_run=False):
     """
@@ -66,6 +66,6 @@ if __name__ == '__main__':
     params=run(pname=args.name,facets_group=facets_group,dry_run=args.dry_run,host=args.host)
 
     if len(params)>0:
-        for name,values in params.iteritems():
+        for name,values in params.items():
             for value in values:
-                print '%s => %s'%(name, value.name)
+                print('%s => %s'%(name, value.name))

@@ -65,7 +65,7 @@ class Cursor(object):
         desc = self.db_cursor.description
         column_names = [col[0] for col in desc]
         return [
-            dict(itertools.izip_longest(column_names, row)) for row in self.db_cursor.fetchall()
+            dict(itertools.zip_longest(column_names, row)) for row in self.db_cursor.fetchall()
         ]
 
 

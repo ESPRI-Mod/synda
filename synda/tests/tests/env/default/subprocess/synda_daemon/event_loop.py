@@ -15,10 +15,10 @@ from synda.source.process.subcommand.manager import Manager as SubCommandManager
 
 def main():
 
-
     config = SubCommandManager(["synda", "daemon", 'start']).get_config_manager()
     from synda.sdt import sdtaskscheduler
-    sdtaskscheduler.event_loop(config)
+    # sdtaskscheduler.event_loop(config)
+    sdtaskscheduler.run_soft_tasks()
 
 
 if __name__ == '__main__':

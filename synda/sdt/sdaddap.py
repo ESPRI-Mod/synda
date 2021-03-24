@@ -12,10 +12,10 @@
 """This module contains 'attached_parameters' addition routine."""
 
 import copy
-import sdapp
-import sdlog
-import sdtypes
-import sdpipelineprocessing
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sdtypes
+from synda.sdt import sdpipelineprocessing
 
 
 def run(o, attached_parameters):

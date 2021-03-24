@@ -11,10 +11,10 @@
 
 """Contains history dao."""
 
-import sdapp
-import sddb
-import sdsqlutils
-import sdtime
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
+from synda.sdt import sdtime
 
 _HISTORY_COLUMNS="action,crea_date,selection_filename,insertion_group_id,selection_file_checksum"
 

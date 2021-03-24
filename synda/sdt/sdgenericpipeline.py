@@ -20,8 +20,8 @@ Note
 """
 
 import argparse
-import sdpostxpcleanup
-import sdpostxptransform
+from synda.sdt import sdpostxpcleanup
+from synda.sdt import sdpostxptransform
 
 def run(files):
 

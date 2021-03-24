@@ -22,11 +22,12 @@ Credit
 """
 
 import json
-import collections
+import collections.abc
 import sqlite3
 import contextlib
 
-class ProxyDict(collections.MutableMapping):
+
+class ProxyDict(collections.abc.MutableMapping):
 
     def __init__(self, target=None, *args, **kwargs):
         if target is None:
@@ -48,7 +49,7 @@ class ProxyDict(collections.MutableMapping):
         del self.target[self.trans(key)]
 
     def iteritems(self):
-        for key, value in self.target.iteritems():
+        for key, value in self.target.items():
             yield self.invert_trans(key), self.invert_trans(value)
 
     def __iter__(self):
@@ -81,7 +82,8 @@ class JsonProxyDict(ProxyDict):
     def copy(self):
         return JsonProxyDict(target=self.target)
 
-class SqliteStringDict(collections.MutableMapping):
+
+class SqliteStringDict(collections.abc.MutableMapping):
     """
     Sqlite database with an interface of dictionary
     """
@@ -111,7 +113,7 @@ class SqliteStringDict(collections.MutableMapping):
                       (key,))
             row = c.fetchone()
             if row is None:
-                raise KeyError
+                raise KeyError(key)
             return row[0]
 
     def __setitem__(self, key, value):
@@ -122,7 +124,7 @@ class SqliteStringDict(collections.MutableMapping):
 
     def __delitem__(self, key):
         if key not in self:
-            raise KeyError
+            raise KeyError(key)
         with contextlib.closing(self.conn.cursor()) as c:
             c.execute("DELETE FROM %s "
                       "WHERE key=?" % self.table,

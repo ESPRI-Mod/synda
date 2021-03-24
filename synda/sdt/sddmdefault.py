@@ -18,21 +18,21 @@ Note
 
 import os
 import time
-import Queue
-import sdapp
-import sdlog
-import sdexception
-import sdlogon
-import sdconfig
-import sdtime
-import sdfiledao
-# import sdevent
-import sdutils
-import sdtools
-import sdget
-import sdtrace
-import sdnexturl
-import sdworkerutils
+import queue
+from synda.sdt import sdapp
+from synda.sdt import sdlog
+from synda.sdt import sdexception
+from synda.sdt import sdlogon
+from synda.sdt import sdconfig
+from synda.sdt import sdtime
+from synda.sdt import sdfiledao
+# from synda.sdt import sdevent
+from synda.sdt import sdutils
+from synda.sdt import sdtools
+from synda.sdt import sdget
+from synda.sdt import sdtrace
+from synda.sdt import sdnexturl
+from synda.sdt import sdworkerutils
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.user.credentials.models import Config as Credentials
@@ -140,7 +140,7 @@ class Download():
                             os.remove(
                                 tr.get_full_local_path(),
                             )
-                        except Exception, e:
+                        except Exception as e:
                             sdlog.error(
                                 "SDDMDEFA-158",
                                 "error occurs while removing local file ({})".format(
@@ -175,7 +175,7 @@ class Download():
             if os.path.isfile(tr.get_full_local_path()):
                 try:
                     os.remove(tr.get_full_local_path())
-                except Exception, e:
+                except Exception as e:
                     sdlog.error(
                         "SDDMDEFA-528",
                         "Error occurs during file suppression ({},{})".format(
@@ -318,9 +318,9 @@ def transfers_end():
             task = eot_queue.get_nowait() # raises Empty when empty
             end_of_transfer(task)
             eot_queue.task_done()
-        except Queue.Empty, e:
+        except queue.Empty as e:
             pass
-        except sdexception.FatalException, e:
+        except sdexception.FatalException as e:
             raise
         except:
             # debug
@@ -338,7 +338,7 @@ def transfers_begin(transfers):
             force_renew_certificate=False,
         )
 
-    except Exception, e:
+    except Exception as e:
         sdlog.error(
             "SDDMDEFA-502",
             "Exception occured while retrieving certificate ({})".format(e),
@@ -367,5 +367,5 @@ def fatal_exception():
 hpss = preferences.is_download_hpss
 
 # eot means "End Of Task"
-eot_queue = Queue.Queue()
+eot_queue = queue.Queue()
 incorrect_checksum_action = preferences.behaviour_incorrect_checksum_action

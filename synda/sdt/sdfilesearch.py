@@ -10,10 +10,10 @@
 ##################################
 
 """This module contains file search routines (one for each 'metadata_server_type')."""
-import sdrfile
-import sddeferredafter
+from synda.sdt import sdrfile
+from synda.sdt import sddeferredafter
 
-from sdtools import print_stderr
+from synda.sdt.sdtools import print_stderr
 
 
 def esgf_search_api(args):

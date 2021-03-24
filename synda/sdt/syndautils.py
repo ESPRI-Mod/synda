@@ -24,11 +24,11 @@ from synda.source.config.process.history.constants import STRUCTURE as HISTORY_S
 
 
 def check_daemon():
-    import sdconfig
+    from synda.sdt import sdconfig
     if sdconfig.prevent_daemon_and_modification:
-        import sddaemon
+        from synda.sdt import sddaemon
         if sddaemon.is_running():
-            print 'The daemon must be stopped before installing/removing dataset'
+            print('The daemon must be stopped before installing/removing dataset')
             sys.exit(3)
 
 
@@ -43,10 +43,10 @@ def get_stream(
     """
     TODO: merge me with sdstreamutils.get_stream
     """
-    import sdbuffer
-    import sdparse
-    import sdstream
-    import sdexception
+    from synda.sdt import sdbuffer
+    from synda.sdt import sdparse
+    from synda.sdt import sdstream
+    from synda.sdt import sdexception
 
     preferences = Preferences()
 
@@ -100,13 +100,13 @@ def file_full_search(args, stream=None):
         - sdremove
         - sdstat
     """
-    import sdsearch
-    import sdlog
-    import sdhistory
-    import sdstream
-    import sdtime
-    import sdselectionfileutils
-    import sdexception
+    from synda.sdt import sdsearch
+    from synda.sdt import sdlog
+    from synda.sdt import sdhistory
+    from synda.sdt import sdstream
+    from synda.sdt import sdtime
+    from synda.sdt import sdselectionfileutils
+    from synda.sdt import sdexception
 
     if stream is None:
         stream = get_stream(
@@ -188,7 +188,7 @@ def file_full_search(args, stream=None):
 
 
 def force_type(stream, type_):
-    import sddeferredbefore
+    from synda.sdt import sddeferredbefore
 
     # we 'force' (i.e. we do not just set as 'default') the parameter here, so
     # to prevent user to set it
@@ -197,4 +197,4 @@ def force_type(stream, type_):
 
 def strip_dataset_version(dataset_functional_id):
     import re
-    return re.sub('\.[^.]+$', '', dataset_functional_id)
+    return re.sub(r'\.[^.]+$', '', dataset_functional_id)

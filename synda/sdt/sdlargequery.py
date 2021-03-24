@@ -15,10 +15,10 @@ Also see
     sddbpagination
 """
 
-import sdapp
-from sdtypes import File
-import sddb
-import sdsqlutils
+from synda.sdt import sdapp
+from synda.sdt.sdtypes import File
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
 
 # method 1
 

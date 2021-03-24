@@ -12,9 +12,9 @@
 """Contains database normalization routines."""
 
 import argparse
-import sdapp
-import sdnormalize
-import sdprogress
+from synda.sdt import sdapp
+from synda.sdt import sdnormalize
+from synda.sdt import sdprogress
 
 def normalize_checksum_type(conn):
     conn.create_function("NORMALIZE_CHECKSUM_TYPE", 1, sdnormalize.normalize_checksum_type)
@@ -24,6 +24,6 @@ def normalize_checksum_type(conn):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    import sddb # do not move at the top (this module is used by sddb module)
+    from synda.sdt import sddb # do not move at the top (this module is used by sddb module)
     normalize_checksum_type(sddb.conn)
     sddb.conn.commit()

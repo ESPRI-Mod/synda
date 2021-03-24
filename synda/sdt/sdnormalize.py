@@ -16,8 +16,8 @@ Example
 """
 
 import string
-import sdapp
-import sdexception
+from synda.sdt import sdapp
+from synda.sdt import sdexception
 
 from synda.source.config.file.constants import CHECKSUM
 
@@ -58,7 +58,7 @@ def normalize_model_name(model_name):
     #     (from details at http://stackoverflow.com/questions/10367302/what-is-producing-typeerror-character-mapping-must-return-integer-in-this-p)
     #
     mode_name_without_special_character = \
-        str(model_name).translate(string.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
+        str(model_name).translate(str.maketrans("""_().;,[]:/*?<>"'"{}& """, "---------------------"))
 
     # remove last hyphen if any
     if mode_name_without_special_character[-1] == "-":

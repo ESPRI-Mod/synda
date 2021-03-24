@@ -13,7 +13,7 @@
 
 Notes
     - This module provides 3 ways to download data file
-        - urllib2 (pure python)
+        - urllib.request (pure python)
         - wget (external script)
         - gridftp (external script)
     - This module is mainly used as module, but can also be used as script for basic
@@ -24,10 +24,10 @@ import argparse
 import os
 import sys
 import json
-import sdconfig
-import sdutils
-import sdget_urllib
-from sdtools import print_stderr
+from synda.sdt import sdconfig
+from synda.sdt import sdutils
+from synda.sdt import sdget_urllib
+from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.file.scripts.models import Config as Scripts
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
@@ -176,7 +176,7 @@ def run_download_script_BUFSTDXXX(li):
     #     stderr=unicode(stderr, encoding='latin1')
     #
     #
-    stderr = unicode(stderr, errors='ignore').encode('latin1')
+    # stderr = str(stderr, errors='ignore').encode('latin1')
 
     # debug (unexpected errors may be hidden in stdxxx)
     """

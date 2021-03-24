@@ -7,10 +7,19 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
+def test_main():
+
+    print("Control that the status of the daemon is : 'running'...")
+    from synda.tests.manager import Manager
+    Manager().set_tests_mode()
+    from synda.sdt import sddaemon
+
+    assert sddaemon.is_running()
+
 
 def main():
 
-    print "Control that the status of the daemon is : 'running'..."
+    print("Control that the status of the daemon is : 'running'...")
     from synda.tests.manager import Manager
     Manager().set_tests_mode()
     from synda.sdt import sddaemon

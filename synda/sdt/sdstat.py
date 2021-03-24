@@ -23,17 +23,17 @@ import sys
 import argparse
 import json
 import humanize
-import sdstatutils
+from synda.sdt import sdstatutils
 import syndautils
-import sdexception
-import sdpipelineprocessing
-from sdtools import print_stderr
+from synda.sdt import sdexception
+from synda.sdt import sdpipelineprocessing
+from synda.sdt.sdtools import print_stderr
 
 
 def run(args):
     try:
         metadata = syndautils.file_full_search(args)
-    except sdexception.EmptySelectionException, e:
+    except sdexception.EmptySelectionException as e:
         print_stderr("You must specify at least one facet to perform this action.")
         return 1
 
@@ -52,28 +52,32 @@ def run(args):
 
 def print_summary(statuses, total, mode='line'):
     if mode == 'delimited':
-        print "Total size;Pending size;Local size;Total files count;Pending files count;Local files count"
-        print "%s;%s;%s;%s;%s;%s" % (humanize.naturalsize(total['all']['size'], gnu=False),
-                                     humanize.naturalsize(total['pending']['size'], gnu=False),
-                                     humanize.naturalsize(statuses['done']['size'], gnu=False),
-                                     humanize.naturalsize(statuses['new']['size'], gnu=False),
-                                     total['all']['count'],
-                                     total['pending']['count'],
-                                     statuses['done']['count'],
-                                     statuses['new']['count'])
+        print("Total size;Pending size;Local size;Total files count;Pending files count;Local files count")
+        print(
+            "%s;%s;%s;%s;%s;%s;%s;%s".format(
+                humanize.naturalsize(total['all']['size'], gnu=False),
+                humanize.naturalsize(total['pending']['size'], gnu=False),
+                humanize.naturalsize(statuses['done']['size'], gnu=False),
+                humanize.naturalsize(statuses['new']['size'], gnu=False),
+                total['all']['count'],
+                total['pending']['count'],
+                statuses['done']['count'],
+                statuses['new']['count'],
+            ),
+        )
     elif mode == 'line':
-        print "Total files count: %s" % total['all']['count']
-        # print "Pending files count: %s"%total['pending']['count']
-        for s in statuses.keys():
+        print("Total files count: %s" % total['all']['count'])
+        # print("Pending files count: %s"%total['pending']['count'])
+        for s in list(statuses.keys()):
             count = statuses[s]['count']
             if count > 0:
-                print "%s files count: %s" % (s.title(), count)
-        print "Total size: %s" % humanize.naturalsize(total['all']['size'], gnu=False)
-        # print "Pending size: %s"%humanize.naturalsize(total['pending']['size'],gnu=False)
-        for s in statuses.keys():
+                print("%s files count: %s" % (s.title(), count))
+        print("Total size: %s" % humanize.naturalsize(total['all']['size'], gnu=False))
+        # print("Pending size: %s"%humanize.naturalsize(total['pending']['size'],gnu=False)
+        for s in list(statuses.keys()):
             size = statuses[s]['size']
             if size > 0:
-                print "%s files size: %s" % (s.title(), humanize.naturalsize(size, gnu=False))
+                print("%s files size: %s" % (s.title(), humanize.naturalsize(size, gnu=False)))
 
 
 if __name__ == '__main__':

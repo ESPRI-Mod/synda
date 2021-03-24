@@ -15,10 +15,10 @@ import os
 import argparse
 import sqlite3
 import atexit
-import sdlog
-import sddbobj
-import sddbversion
-import sdtools
+from synda.sdt import sdlog
+from synda.sdt import sddbobj
+from synda.sdt import sddbversion
+from synda.sdt import sdtools
 from synda.source.config.file.db.models import Config as DbConfig
 from synda.source.config.process.db.constants import get_timeout
 
@@ -104,6 +104,6 @@ if __name__ == '__main__':
     c.execute("select url from file")
     rs = c.fetchone()
     if rs:
-        print type(rs[0])
-        print rs[0]
+        print(type(rs[0]))
+        print(rs[0])
     c.close()

@@ -17,17 +17,17 @@ Note
 
 import os
 import argparse
-import sdapp
-import sdpipeline
-import sdutils
-import sdi18n
-import sdcliex
-import sddb
+from synda.sdt import sdapp
+from synda.sdt import sdpipeline
+from synda.sdt import sdutils
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sddb
 import humanize
-import sdsqlutils
-import sddquery
-import sdprint
-from sdtypes import File,Dataset
+from synda.sdt import sdsqlutils
+from synda.sdt import sddquery
+from synda.sdt import sdprint
+from synda.sdt.sdtypes import File,Dataset
 
 def run(stream=None,path=None,parameter=None,dry_run=False,load_default=None):
 
@@ -43,7 +43,7 @@ def run(stream=None,path=None,parameter=None,dry_run=False,load_default=None):
         type_=sddquery.get_scalar(ap,'type') # yes, get_scalar works also on attached_parameters
 
         if dry_run:
-            print sqlquery
+            print(sqlquery)
         else:
             files.extend(get_files(sqlquery,type_))
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     if not args.dry_run:
         if args.count:
-            print "%i"%len(files)
+            print("%i"%len(files))
         else:
             for f in files:
-                print "%-9s %-8s %s"%(f.status,humanize.naturalsize(f.size,gnu=False),f.file_functional_id)
+                print("%-9s %-8s %s"%(f.status,humanize.naturalsize(f.size,gnu=False),f.file_functional_id))

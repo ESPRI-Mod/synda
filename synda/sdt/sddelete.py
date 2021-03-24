@@ -15,15 +15,15 @@ import sys
 import os
 import json
 import argparse
-import sdapp
-import sdhistorydao
-import sdpostpipelineutils
-import sdsimplefilter
-import sdconst
-import sdlog
-import sddeletefile
-import sddb
-import sdpipelineprocessing
+from synda.sdt import sdapp
+from synda.sdt import sdhistorydao
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdsimplefilter
+from synda.sdt import sdconst
+from synda.sdt import sdlog
+from synda.sdt import sddeletefile
+from synda.sdt import sddb
+from synda.sdt import sdpipelineprocessing
 from synda.source.config.process.download.constants import TRANSFER
 
 

@@ -16,9 +16,9 @@ Note
 """
 
 import os
-import sdapp
-import sdutils
-import sdhistorydao
+from synda.sdt import sdapp
+from synda.sdt import sdutils
+from synda.sdt import sdhistorydao
 
 from synda.source.config.input.constants import USER_INPUT_TYPES
 

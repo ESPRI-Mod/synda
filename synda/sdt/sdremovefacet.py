@@ -14,7 +14,7 @@
 import sys
 import argparse
 import json
-import sdprint
+from synda.sdt import sdprint
 
 from synda.source.config.api.esgf_search.constants import SANAP
 
@@ -39,7 +39,7 @@ def process_wildcard(facets_group):
     # modified on the fly.
 
     keys_to_remove = []
-    for k, values in facets_group.iteritems():
+    for k, values in facets_group.items():
         if len(values) == 1:
             value = values[0]
             if value in ("all", "*"):

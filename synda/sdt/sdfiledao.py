@@ -11,13 +11,13 @@
 
 """Contains file DAO SQL queries."""
 
-from sdexception import SDException
-import sddb
-import sdsqlutils
-from sdtypes import File
-import sdlog
-from sdtime import SDTimer
-import sdsqlitedict
+from synda.sdt.sdexception import SDException
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
+from synda.sdt.sdtypes import File
+from synda.sdt import sdlog
+from synda.sdt.sdtime import SDTimer
+from synda.sdt import sdsqlitedict
 from synda.source.config.path.tree.default.models import Config as DefaultTreePath
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -57,7 +57,7 @@ def delete_file(tr,commit=True,conn=sddb.conn):
     # note that we don't delete entries (if any) from post_processing tables (this will be done in a batch procedure which will be manually executed from time to time)
 
     # TAGKRE45343J54K5JK
-    if c.rowcount<>1:
+    if c.rowcount != 1:
         raise SDException("SYNCDDAO-908","file not found (file_id=%i,local_path=%s)"%(tr.file_id,tr.local_path,))
 
     c.close()
@@ -108,7 +108,7 @@ def get_file(file_functional_id,conn=sddb.conn):
     c = conn.cursor()
     c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
     rs=c.fetchone()
-    if rs<>None:
+    if rs is not None:
         t=sdsqlutils.get_object_from_resultset(rs,File)
     c.close()
 
@@ -237,7 +237,13 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
     - If data_node==True, then this function will be applied to all data nodes.
     """
     if cursor is None:
-        return (highest_waiting_priority.vals).get(data_node,None)
+        priority = highest_waiting_priority.vals.get(data_node, None)
+        if isinstance(priority, str):
+            try:
+                priority = int(priority)
+            except ValueError:
+                priority = None
+        return priority
     else:
         if cursor==True:
             c = connection.cursor()
@@ -264,7 +270,13 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             #sdlog.info("SDFILDAO-301","  query %s" % q )
         if cursor==True:
             c.close()
-        return (highest_waiting_priority.vals).get(data_nodes[0],None) if data_nodes else None
+        priority = (highest_waiting_priority.vals).get(data_nodes[0],None) if data_nodes else None
+        if isinstance(priority, str):
+            try:
+                priority = int(priority)
+            except ValueError:
+                priority = None
+        return priority
 # The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
 # highest_waiting_priority.vals = {}
 

@@ -23,14 +23,14 @@ Note
 
 import os
 import argparse
-import sdapp
-import sdconst
-import sddquery
-import sdremotequtils
-import sdnetutils
-import sdindex
-import sdi18n
-import sdcliex
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sddquery
+from synda.sdt import sdremotequtils
+from synda.sdt import sdnetutils
+from synda.sdt import sdindex
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
 
 def run(pname=None,host=None,facets_group=None,dry_run=False):
     """
@@ -69,7 +69,7 @@ def run(pname=None,host=None,facets_group=None,dry_run=False):
     url=sdremotequtils.build_url(facets_group,host)
 
     if dry_run:
-        print url
+        print(url)
         return {}
 
     # retrieve parameters
@@ -91,12 +91,12 @@ if __name__ == '__main__':
     parser.add_argument('-y','--dry_run',action='store_true')
     args = parser.parse_args()
 
-    import sdpipeline # BEWARE: keep it here because of circular dependency problem here: see TAG3434 tag in TODO file
+    from synda.sdt import sdpipeline # BEWARE: keep it here because of circular dependency problem here: see TAG3434 tag in TODO file
     facets_groups=sdpipeline.prepare_param(parameter=args.parameter)
     facets_group=facets_groups[0]
     params=run(pname=args.name,facets_group=facets_group,dry_run=args.dry_run,host=args.host)
 
     if len(params)>0:
-        for name,values in params.iteritems():
+        for name,values in params.items():
             for value in values:
-                print '%s => %s'%(name, value.name)
+                print('%s => %s'%(name, value.name))

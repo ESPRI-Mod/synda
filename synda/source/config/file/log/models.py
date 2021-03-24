@@ -49,7 +49,7 @@ class Config(Container, Identifier):
             log_path = path.get("log")
 
             paths = dict()
-            for identifier, filename in self.filenames.items():
+            for identifier, filename in list(self.filenames.items()):
                 paths[identifier] = os.path.join(
                     log_path,
                     filename,
@@ -58,7 +58,7 @@ class Config(Container, Identifier):
             self.set_data(paths)
 
     def get_filenames(self):
-        return self.filenames.values()
+        return list(self.filenames.values())
 
     def get(self, filename_identifier):
         return self.get_data()[filename_identifier]

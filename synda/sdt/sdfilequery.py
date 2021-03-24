@@ -17,12 +17,12 @@ Also see
 
 import humanize
 import argparse
-import sdapp
-import sddb
-from sdtools import print_stderr
-import sdlog
-import sdfiledao
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sddb
+from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdlog
+from synda.sdt import sdfiledao
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
@@ -51,7 +51,7 @@ def transfer_running_count_by_datanode( conn=sddb.conn ):
     c = conn.cursor()
     if Internal().is_processes_get_files_caching:
         # Get a list of 'waiting' data nodes from the highest-priority cache
-        dns = [dn for dn in sdfiledao.highest_waiting_priority.vals.keys() if
+        dns = [dn for dn in list(sdfiledao.highest_waiting_priority.vals.keys()) if
                sdfiledao.highest_waiting_priority.vals[dn] is not None]
         rcs = {r:0 for r in dns}
     else:
@@ -193,4 +193,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     li=get_download_status()
-    print li
+    print(li)

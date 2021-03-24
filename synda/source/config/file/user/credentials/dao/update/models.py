@@ -9,7 +9,7 @@
 """
 """
 import os
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 
 from synda.source.constants import get_env_folder
 from synda.source.config.file.user.credentials.constants import FILENAME
@@ -26,7 +26,7 @@ def update(openid, password):
         FILENAME,
     )
 
-    cred = SafeConfigParser()
+    cred = ConfigParser()
     cred.read(full_filename)
     cred.set('esgf_credential', 'openid', openid)
     cred.set('esgf_credential', 'password', password)

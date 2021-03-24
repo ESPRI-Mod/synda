@@ -18,10 +18,10 @@ Note
 import os
 import re
 import copy
-import sdconfig
-import sdmts
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdconfig
+from synda.sdt import sdmts
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.internal.models import Config as Internal
 
@@ -71,7 +71,7 @@ class Buffer():
             ['{}={}'.format(
                     k,
                     str(v),
-                ) for (k, v) in self.__dict__.iteritems()],
+                ) for (k, v) in self.__dict__.items()],
         )
 
 
@@ -210,10 +210,10 @@ class Dataset(BaseType):
         self.__dict__.update(kw)
 
     def get_full_local_path_without_version(self):
-        return re.sub('/[^/]+$', '', self.get_full_local_path())
+        return re.sub(r'/[^/]+$', '', self.get_full_local_path())
 
     def __str__(self):
-            return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.iteritems()])
+            return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.items()])
 
 
 class SessionParam():
@@ -259,7 +259,7 @@ class SessionParam():
             self.value = v
 
     def __str__(self):
-            return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.iteritems()])
+            return "".join(['%s=%s\n' % (k, v) for (k, v) in self.__dict__.items()])
 
 
 class Parameter():
@@ -294,7 +294,7 @@ class Item():
         self.count = count
 
     def __str__(self):
-        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.iteritems()])
+        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.items()])
 
 
 class Request():
@@ -366,7 +366,7 @@ class Request():
             return ""
 
     def __str__(self):
-        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.iteritems()])
+        return ",".join(['%s=%s' % (k, str(v)) for (k, v) in self.__dict__.items()])
 
 
 class CommonIO(object):

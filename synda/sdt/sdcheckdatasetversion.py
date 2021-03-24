@@ -15,12 +15,12 @@ import sys
 import time
 import textwrap
 import texttable
-import sdexception
-import sddump
-import sdtypes
-import sddatasetversion
-import sdtxt2pdf
-import StringIO
+from synda.sdt import sdexception
+from synda.sdt import sddump
+from synda.sdt import sdtypes
+from synda.sdt import sddatasetversion
+from synda.sdt import sdtxt2pdf
+import io
 
 OUT_WIDTH = 80
 
@@ -45,7 +45,7 @@ def run(args):
     if args.output_format=='text':
         output=sys.stdout
     elif args.output_format=='pdf':
-        output=StringIO.StringIO()
+        output=io.StringIO()
 
     DSV_ERR_FMT = 1
     DSV_ERR_NUM = 2
@@ -141,7 +141,7 @@ def run(args):
         """
 
         # Add "vfn" & "vernum" keys to every dsv_info
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             for dsv_info in ds_info['dsv']:
                 vfn, vernum = sddatasetversion.DatasetVersion(dsv_info['verstr']).analyse()
                 dsv_info['vfn'] = vfn
@@ -149,14 +149,14 @@ def run(args):
 
         # Initialise the per-data-set error counters and per-data-set version
         # error flags
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             ds_info['errors'] = 0
             for dsv_info in ds_info['dsv']:
                 dsv_info['err_flags'] = 0
 
         # Basic check : all version strings must have a valid format and we
         # must be able to extract a version number from them.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             for dsv_info in ds_info['dsv']:
                 if dsv_info['vfn'] is None:
                     dsv_info['err_flags'] |= DSV_ERR_FMT
@@ -167,7 +167,7 @@ def run(args):
 
         # Intermediate check : no two versions of the same data set must have
         # the same versions numbers.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             dsv_verstr = set()
             for dsv_info in ds_info['dsv']:
                 if dsv_info['vernum'] in dsv_verstr:
@@ -178,7 +178,7 @@ def run(args):
         # Monotonicity check : verify that, after sorting the versions by
         # timestamp, the version numbers are strictly increasing. Versions
         # which have no "timestamp" field must be excluded from the check.
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             dsv_list = []
             for dsv_info in ds_info['dsv']:
                 if 'timestamp' in dsv_info:
@@ -190,7 +190,7 @@ def run(args):
                     ds_info['errors'] += 1
 
         # datasets_with_errors = the master_id of all the data sets with errors
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             if ds_info['errors'] != 0:
                 datasets_with_errors.add(master_id)
 
@@ -237,9 +237,9 @@ def run(args):
 
     #digits = len('%d' % (len(dsv_grouped_by_master_id)))
     versatile_print('\nFound %d dataset(s), of which' % (len(dsv_grouped_by_master_id)))
-    versatile_print('  %*d have a timestamp field on all  of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 1 else 0, dsv_grouped_by_master_id.values()))))
-    versatile_print('  %*d have a timestamp field on some of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 3 else 0, dsv_grouped_by_master_id.values()))))
-    versatile_print('  %*d have a timestamp field on none of their versions' % (digits, sum(map(lambda x: 1 if x['flags'] == 2 else 0, dsv_grouped_by_master_id.values()))))
+    versatile_print('  %*d have a timestamp field on all  of their versions' % (digits, sum([1 if x['flags'] == 1 else 0 for x in list(dsv_grouped_by_master_id.values())])))
+    versatile_print('  %*d have a timestamp field on some of their versions' % (digits, sum([1 if x['flags'] == 3 else 0 for x in list(dsv_grouped_by_master_id.values())])))
+    versatile_print('  %*d have a timestamp field on none of their versions' % (digits, sum([1 if x['flags'] == 2 else 0 for x in list(dsv_grouped_by_master_id.values())])))
 
     versatile_print('\nBreakdown of errors:')
     tbl = texttable.Texttable()
@@ -250,7 +250,7 @@ def run(args):
     for e in dsv_err:
         ds_count = 0
         dsv_count = 0
-        for master_id, ds_info in dsv_grouped_by_master_id.iteritems():
+        for master_id, ds_info in dsv_grouped_by_master_id.items():
             c = 0
             for dsv_info in ds_info['dsv']:
                 if dsv_info['err_flags'] & e['v']:

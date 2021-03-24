@@ -15,10 +15,10 @@ import os
 import argparse
 import humanize
 from tabulate import tabulate
-import sdlsearch
-import sdi18n
-import sdcliex
-import sddeferredbefore
+from synda.sdt import sdlsearch
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sddeferredbefore
 
 def get_files(stream=None,parameter=None,dry_run=False):
 
@@ -46,26 +46,26 @@ def get_file(stream=None,dry_run=False):
 
 def print_(files):
     if len(files)==0:
-        print "File not found"
+        print("File not found")
     elif len(files)==1:
         f=files[0]
         print_details(f)
     elif len(files)>1:
         li=[[f.status, f.file_functional_id] for f in files]
-        print tabulate(li,tablefmt="plain")
+        print(tabulate(li,tablefmt="plain"))
 
 def print_list(files):
     li=[[f.status, f.file_functional_id,f.data_node] for f in files]
-    print tabulate(li,tablefmt="plain")
+    print(tabulate(li,tablefmt="plain"))
 
 def print_details(f):
-    print "file: %s"%f.file_functional_id
-    print "status: %s"%f.status
-    print "size: %s (%s)"%(f.size,humanize.naturalsize(f.size,gnu=False))
-    print "checksum: %s"%f.checksum
-    print "url: %s"%f.url
-    print "local path: %s"%f.get_full_local_path()
-    print
+    print("file: %s"%f.file_functional_id)
+    print("status: %s"%f.status)
+    print("size: %s (%s)"%(f.size,humanize.naturalsize(f.size,gnu=False)))
+    print("checksum: %s"%f.checksum)
+    print("url: %s"%f.url)
+    print("local path: %s"%f.get_full_local_path())
+    print()
 
 # init.
 

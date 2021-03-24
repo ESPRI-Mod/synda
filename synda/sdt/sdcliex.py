@@ -114,10 +114,6 @@ def metric():
   synda metric -g project -m size"""
     return buf
 
-def open():
-    buf="""  synda open cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
-  synda open -g 1000x600+70+0 orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""
-    return buf
 
 def param():
     buf="""  synda param | column

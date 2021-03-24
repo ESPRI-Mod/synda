@@ -11,14 +11,14 @@
 
 """Contains SQL simple queries."""
 
-import sdapp
-import sdconst
-from sdexception import SDException,NoTransferWaitingException,FileNotFoundException
-import sddb
-import sdsqlutils
-import sdtime
-import sdfiledao
-import sddatasetdao
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt.sdexception import SDException,NoTransferWaitingException,FileNotFoundException
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
+from synda.sdt import sdtime
+from synda.sdt import sdfiledao
+from synda.sdt import sddatasetdao
 
 from synda.source.config.process.download.constants import TRANSFER
 

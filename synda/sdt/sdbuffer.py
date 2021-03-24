@@ -13,11 +13,11 @@
 
 import os
 import sys
-import sdapp
-import sdselectionfileutils
-import sdtools
-from sdtypes import Buffer
-from sdexception import SDException, FileNotFoundException
+from synda.sdt import sdapp
+from synda.sdt import sdselectionfileutils
+from synda.sdt import sdtools
+from synda.sdt.sdtypes import Buffer
+from synda.sdt.sdexception import SDException, FileNotFoundException
 
 from synda.source.config.input.constants import USER_INPUT_TYPES
 

@@ -20,11 +20,11 @@ Notes
       sdsample.get_sample_files() funcs).
 """
 
-import sdindex
-import sdnetutils
-import sdconfig
-import sdurlutils
-from sdtypes import Request
+from synda.sdt import sdindex
+from synda.sdt import sdnetutils
+from synda.sdt import sdconfig
+from synda.sdt import sdurlutils
+from synda.sdt.sdtypes import Request
 
 def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_run=None):
     """Return one sample file with all attributes."""
@@ -38,7 +38,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
 
     if dry_run:
 
-        print url
+        print(url)
 
         return None
 
@@ -56,7 +56,7 @@ def get_one_file(host=sdindex.get_default_index(),project=None,query=None,dry_ru
                     well_formed_file=file_
                     break
                 else:
-                    #print "WARNING: 'variable' attribute contains too much values ('%s')."%file_['title']
+                    #print("WARNING: 'variable' attribute contains too much values ('%s')."%file_['title'])
                     pass
 
             if well_formed_file is not None:

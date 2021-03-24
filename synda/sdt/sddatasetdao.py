@@ -12,11 +12,11 @@
 """Contains dataset DAO SQL queries."""
 
 import argparse
-import sdapp
-from sdexception import SDException
-import sddb
-import sdsqlutils
-from sdtypes import Dataset
+from synda.sdt import sdapp
+from synda.sdt.sdexception import SDException
+from synda.sdt import sddb
+from synda.sdt import sdsqlutils
+from synda.sdt.sdtypes import Dataset
 
 def add_dataset(dataset,commit=True,conn=sddb.conn):
     keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model', 'timestamp']
@@ -132,4 +132,4 @@ if __name__ == '__main__':
     if args.dataset is not None:
         #d=get_dataset(dataset_functional_id=args.dataset)
         d=get_dataset_(local_path=args.dataset)
-        print d
+        print(d)

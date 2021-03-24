@@ -19,8 +19,8 @@ import sys
 import argparse
 import json
 import copy
-import sdapp
-import sdprint
+from synda.sdt import sdapp
+from synda.sdt import sdprint
 
 def run(facets_groups):
     new_facets_groups=[]

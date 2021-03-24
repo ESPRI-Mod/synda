@@ -9,6 +9,7 @@
 import os
 
 from synda.source.config.path.tree.default.models import Config as TreePath
+from synda.source.constants import RESOURCES_DIR
 
 IDENTIFIER = "internal"
 
@@ -16,7 +17,7 @@ DIRECTORY = "conf"
 FILENAME = "internal.conf"
 
 DEFAULT_FULL_FILENAME = os.path.join(*[TreePath().get(DIRECTORY), FILENAME])
-
+FULL_FILENAME_USED_IF_INIT_ENV_NOT_FOUND = os.path.join(*[RESOURCES_DIR, DIRECTORY, FILENAME])
 
 DEFAULT_OPTIONS = dict(
 

@@ -11,11 +11,11 @@
 
 """This module contains local path utils."""
 
-import sdapp
-import sdconst
-import sdpostpipelineutils
-import sdtools
-from sdexception import SDException
+from synda.sdt import sdapp
+from synda.sdt import sdconst
+from synda.sdt import sdpostpipelineutils
+from synda.sdt import sdtools
+from synda.sdt.sdexception import SDException
 
 def build_dataset_local_path(f):
     fmt=sdpostpipelineutils.get_attached_parameter(f,'local_path_format',sdconst.DEFAULT_LOCAL_PATH_FORMAT)

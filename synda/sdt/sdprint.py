@@ -31,7 +31,7 @@ def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
         fh.write("%s\n"%json.dumps(files,indent=4, separators=(',', ': ')))
     elif format == 'value':
         for f in files:
-            for k,v in f.iteritems():
+            for k,v in f.items():
                 if isinstance(v,dict):
 
                     # WARNING: breaks genericity
@@ -47,7 +47,7 @@ def print_format(files,format,print_only_one_item=False,fh=sys.stdout):
                 elif isinstance(v,list):
                     for item in v:
                         fh.write("%s\n"%item)
-                elif isinstance(v,basestring):
+                elif isinstance(v,str):
                     fh.write("%s\n"%v)
                 elif isinstance(v,int):
                     fh.write("%d\n"%v)

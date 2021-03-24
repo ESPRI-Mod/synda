@@ -12,13 +12,13 @@
 """Contains administration routines."""
 
 import argparse
-import sdapp
-import sddeletefile
-import sdlog
-import sdhistorydao
-import sdfiledao
-import sdconst
-import sddb
+from synda.sdt import sdapp
+from synda.sdt import sddeletefile
+from synda.sdt import sdlog
+from synda.sdt import sdhistorydao
+from synda.sdt import sdfiledao
+from synda.sdt import sdconst
+from synda.sdt import sddb
 
 def delete_insertion_group(insertion_group_id):
     files=sdfiledao.get_files(insertion_group_id=insertion_group_id)
@@ -31,15 +31,15 @@ def delete_insertion_group(insertion_group_id):
 
         # deferred mode
         # if effective deletion is done by the daemon, uncomment this  line
-        #print "%i file(s) marked for deletion"%len(files)
+        #print("%i file(s) marked for deletion"%len(files))
 
         # immediate mode
         sddeletefile.delete_transfers_lowmem()
-        print "%i file(s) deleted"%len(files)
+        print("%i file(s) deleted"%len(files))
 
         sdhistorydao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
     else:
-        print "Nothing to delete"
+        print("Nothing to delete")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

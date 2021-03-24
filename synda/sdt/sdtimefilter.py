@@ -15,11 +15,11 @@ import sys
 import re
 import argparse
 import json
-import sdapp
-from sdtypes import File
-from sdexception import SDException
-import sdprint
-import sdpostpipelineutils
+from synda.sdt import sdapp
+from synda.sdt.sdtypes import File
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdprint
+from synda.sdt import sdpostpipelineutils
 
 def run(files):
     new_files=[]
@@ -73,7 +73,7 @@ def get_timeslice_from_filename(filename):
     #  195001-198912
 
     timeslice=None
-    m=re.search('_([^_]+)\.nc.*$',filename)
+    m=re.search(r'_([^_]+)\.nc.*$',filename)
     if(m!=None):
         timeslice=m.group(1)
     else:

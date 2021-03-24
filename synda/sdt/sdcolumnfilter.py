@@ -14,7 +14,7 @@
 import sys
 import argparse
 import json
-import sdprint
+from synda.sdt import sdprint
 
 def run(files,key_list_to_keep):
 

@@ -12,9 +12,9 @@
 """This module contains func used to retrieve information from 'parameter' token list."""
 
 import argparse
-import sdpipeline
-import sdstream
-import sdi18n
+from synda.sdt import sdpipeline
+from synda.sdt import sdstream
+from synda.sdt import sdi18n
 
 def extract_values_from_parameter(parameter,name):
     facets_groups=sdpipeline.parse(parameter)
@@ -28,4 +28,4 @@ if __name__ == '__main__':
 
     # test
     values=extract_values_from_parameter(args.parameter,'project')
-    print values
+    print(values)

@@ -27,19 +27,19 @@ Notes
 
 import os
 import argparse
-import sdtools
-import sdpipeline
+from synda.sdt import sdtools
+from synda.sdt import sdpipeline
 
-import sdnetutils
-import sdi18n
-import sdcliex
-import sdprint
-import sdsqueries
-import sdlog
-import sdaddap
-from sdprogress import ProgressThread
-import sdtypes
-from sdexception import SDException
+from synda.sdt import sdnetutils
+from synda.sdt import sdi18n
+from synda.sdt import sdcliex
+from synda.sdt import sdprint
+from synda.sdt import sdsqueries
+from synda.sdt import sdlog
+from synda.sdt import sdaddap
+from synda.sdt.sdprogress import ProgressThread
+from synda.sdt import sdtypes
+from synda.sdt.sdexception import SDException
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -62,11 +62,11 @@ def run(stream=None,path=None,parameter=None,index_host=None,post_pipeline_mode=
         for query in queries:
             request=sdtypes.Request(url=query['url'],pagination=False)
 
-            print '%s'%request.get_url()
+            print('%s'%request.get_url())
 
             # debug
-            #print 'Url: %s'%request.get_url()
-            #print 'Attached parameters: %s'%query.get('attached_parameters')
+            #print('Url: %s'%request.get_url())
+            #print('Attached parameters: %s'%query.get('attached_parameters'))
 
         return sdtypes.Response()
     else:

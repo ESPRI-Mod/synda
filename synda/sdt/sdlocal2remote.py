@@ -19,9 +19,9 @@ Note
 import sys
 import argparse
 import json
-# import sdapp
-import sdtranslate
-import sdprint
+# from synda.sdt import sdapp
+from synda.sdt import sdtranslate
+from synda.sdt import sdprint
 
 name_rules = {
     'frequency': 'time_frequency',
@@ -39,7 +39,7 @@ def run(facets_groups):
     for facets_group in facets_groups:
         # shallow copy of the rules
         local_name_rules = name_rules
-        if 'project' in facets_group.keys():
+        if 'project' in list(facets_group.keys()):
             if facets_group['project'] == ['CMIP6']:
                 del local_name_rules['frequency']
 

@@ -11,8 +11,8 @@
 
 """This module contains SQL routines used by sdsample module."""
 
-import sdapp
-import sddb
+from synda.sdt import sdapp
+from synda.sdt import sddb
 
 def get_local_projects(conn=sddb.conn):
     """Returns discovered projects"""

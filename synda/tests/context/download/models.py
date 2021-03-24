@@ -47,27 +47,27 @@ class Context(Base):
     #             return True
     #     return False
     #
-    # def all_expected_file_exists(self):
-    #     for expected_file in self.expected_files_description.get_data():
-    #         if not expected_file.exists():
-    #             return False
-    #     return True
+    def all_expected_file_exists(self):
+        for expected_file in self.expected_files_description.get_data():
+            if not expected_file.exists():
+                return False
+        return True
 
-    # def remove_all_expected_files(self):
-    #     for file in self.expected_files:
-    #         if file.exists():
-    #             os.remove(
-    #                 file.get_full_filename(),
-    #             )
+    def remove_all_expected_files(self):
+        for file in self.expected_files:
+            if file.exists():
+                os.remove(
+                    file.get_full_filename(),
+                )
 
-    # def validate_downloaded_files(self):
-    #     assert self.all_expected_file_exists()
-    #
+    def validate_downloaded_files(self):
+        assert self.all_expected_file_exists()
+
     # def validate_checksums(self):
     #     captured = self.get_capsys().readouterr()
     #     assert VERIFY_CHECKSUM_OK in captured.err
     #     assert VERIFY_CHECKSUM_KO not in captured.err
     #
-    # def validation_after_subcommand_execution(self):
-    #     self.validate_downloaded_files()
-    #     self.validate_checksums()
+    def validation_after_subcommand_execution(self):
+        self.validate_downloaded_files()
+        # self.validate_checksums()
