@@ -5,15 +5,22 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.32 - 2021-03-24 - (PYTHON 3)
+    - enhancement
+      - code migration : third attempt to migrate synda from python 2 to python 3  (success)
+    - bug correction :
+      - issue # 176 (conda channel changed : now : conda-forge [ipsl channel has been removed])
 Version 3.31 - 2021-03-22
+    - enhancement
+      - code migration : second attempt to migrate synda from python 2 to python 3 (failure)
     - bug correction :
       - issue # 168 (Master branch update broke sdnexturl.py)
 Version 3.30 - 2021-03-22
     - enhancement
-      - code migration : synda is now written in python 3.8
+      - code migration : first attempt to migrate synda from python 2 to python 3 (failure)
     - bugs correction :
       - synda -h and synda -V sub-commands are now operational
-    - deprecated fixtures
+    - deprecated features
       - 'open' subcommand
       - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
 Version 3.2 - 2021-01-11
@@ -32,7 +39,7 @@ Version 3.2 - 2021-01-11
 
       - help subcommand can be used even if user has not built yet any environment
 
-    - deprecated fixtures
+    - deprecated features
 
       - 'pexec' subcommand
       - 'thredds_catalog' & 'apache_default_listing' APIS (synda operates only the 'esgf_search' API)

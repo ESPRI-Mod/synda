@@ -25,6 +25,9 @@ from synda.sdt import sdlog
 from synda.sdt import sdutils
 
 from myproxy.client import MyProxyClient
+from OpenSSL import SSL
+MyProxyClient.SSL_METHOD = SSL.TLSv1_2_METHOD
+
 from synda.sdt import sdexception
 
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath

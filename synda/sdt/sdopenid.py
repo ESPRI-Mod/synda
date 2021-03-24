@@ -32,23 +32,28 @@ MYPROXY_URI_REXP = r'socket://([^:]*):?(\d+)?'
 
 def extract_info_from_openid(openid):
     """Retrieve username,host,port informations from ESGF openID."""
-
+    success = False
+    hostname = None
+    port = None
     # openid check (see #44 for more info)
     for openid_host in invalid_openids:
         if openid_host in openid:
             sdlog.warning("SDOPENID-210","Invalid openid (%s)"%openid)
     try:
-        xrds_buf=sdnetutils.http_get_2(openid, timeout=10, verify=False)
-        (hostname,port)=parse_XRDS(xrds_buf)
-        success = True
+        xrds_buf = sdnetutils.http_get_2(openid, timeout=10, verify=False)
+        try:
+            hostname, port = parse_xrds(xrds_buf)
+            success = True
+        except Exception as e:
+            sdtools.print_stdout("FOLLOWING ERROR captured from ESGF openid Service...\n")
+            sdtools.print_stdout(xrds_buf)
     except Exception as e:
-        success = False
         sdtools.print_stdout("FOLLOWING ERROR captured from ESGF openid Service...\n")
-        sdtools.print_stdout(xrds_buf)
+        sdtools.print_stdout(e)
     if success:
         try:
             username=parse_openid(openid)
-            return success, hostname,port,username
+            return success, hostname, port, username
         except Exception as e:
             sdlog.error("SDOPENID-200","Error occured while processing OpenID (%s)"%str(e))
             raise OpenIDProcessingException('SDOPENID-002','Error occured while processing OpenID')
@@ -56,8 +61,8 @@ def extract_info_from_openid(openid):
         return success, "", "", ""
 
 
-def parse_XRDS(XRDS_document):
-    xml = ElementTree.fromstring(XRDS_document)
+def parse_xrds(xrds_document):
+    xml = ElementTree.fromstring(xrds_document)
 
     hostname = None
     port = None
@@ -79,6 +84,7 @@ def parse_XRDS(XRDS_document):
 
     return hostname, port
 
+
 def parse_openid(openid):
 
     # In standard ESGF pattern, openID contains the username
@@ -92,15 +98,5 @@ def parse_openid(openid):
 
 # init.
 
-invalid_openids=['earthsystemgrid.org']
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-o','--openid',default="https://esgf-node.ipsl.fr/esgf-idp/openid/foobar")
-    args = parser.parse_args()
-
-    (hostname,port,username)=extract_info_from_openid(args.openid)
-
-    print("Username: %s"%username)
-    print("Myproxy hostname: %s"%hostname)
-    print("Myproxy port: %s"%port)
+invalid_openids = ['earthsystemgrid.org']
