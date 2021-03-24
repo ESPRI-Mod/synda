@@ -14,9 +14,9 @@
 # multiple changes by JfP to make fallback more flexible.
 
 import argparse
-import sdlog
-import sdquicksearch
-import sdexception
+from synda.sdt import sdlog
+from synda.sdt import sdquicksearch
+from synda.sdt import sdexception
 import sqlite3
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
@@ -81,10 +81,7 @@ def next_url(tr,conn):
     sdlog.info("SDNEXTUR-007","failed_urls= %s"%(failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
-    urls=remove_unsupported_url(urlps)
-    # At this point urls is just a list of urls.  We no longer have to keep track of the
-    # protocol because only http and gsiftp are possible (OpenDAP is a different protocol
-    # but it also uses a http url).
+    urls = [urlp[0] for urlp in urlps]
     
     if len(urls)>0:
         old_url=tr.url
@@ -95,9 +92,6 @@ def next_url(tr,conn):
         sdlog.info("SDNEXTUR-009","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
         raise sdexception.NextUrlNotFoundException()
 
-def remove_unsupported_url(urlps):
-    # remove opendap and globus urls (opendap and globus are not used in synda for now)
-    return [ urlp[0] for urlp in urlps if (urlp[1].find('opendap')<0 and urlp[1].find('globus')<0)]
 
 def get_urls(file_functional_id):
     """returns a prioritized list of [url,protocol] where each url can supply the specified file"""
