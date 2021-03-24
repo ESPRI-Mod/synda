@@ -55,5 +55,3 @@ if __name__ == '__main__':
 
     data = get_data_nodes()
     priority_data = get_data_node_priority_filtered_on_status_waiting(data[0]["data_node"])
-
-    print "ok"
