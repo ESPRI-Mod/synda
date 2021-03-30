@@ -36,9 +36,9 @@ def run(args,metadata=None):
             sdlog.info("SYNDINST-006","Process '%s'"%args.selection_file)
 
         try:
-            sdlog.debug("JFPINST-0000","begin file_full_search")
+            sdlog.debug("SYNDINST-060","begin file_full_search")
             metadata=syndautils.file_full_search(args)
-            sdlog.debug("JFPINST-0001","metadata examples:")
+            sdlog.debug("SYNDINST-061","metadata examples:")
             ngsiftp = 0
             nhttp = 0
             for file in metadata.get_files():
@@ -46,10 +46,10 @@ def run(args,metadata=None):
                 if 'url' not in file:
                     continue
                 if ngsiftp==0 and file['url'][:6]=='gsiftp':
-                    sdlog.debug("  JFPINST-01", "gsiftp %s"%file['filename'])
+                    sdlog.debug("  SYINS-061a", "gsiftp %s"%file['filename'])
                     ngsiftp += 1
                 elif nhttp==0 and file['url'][:4]=='http':
-                    sdlog.debug("  JFPINST-01", "http %s"%file['filename'])
+                    sdlog.debug("  SYINS-061b", "http %s"%file['filename'])
                     nhttp += 1
                 if nhttp>=1 and ngsiftp>=1:
                     break
