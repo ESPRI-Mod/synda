@@ -81,7 +81,7 @@ class Config(Identifier):
         while answer not in ['y', 'n']:
             answer = input('Would you like to set your openID credentials? y/n: ').lower()
             if answer == 'y':
-                openid = input('openID url: ').lower()
+                openid = input('openID url: ')
                 password = input('password: ')
                 update_credentials(openid, password)
 

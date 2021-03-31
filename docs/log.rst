@@ -5,6 +5,9 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.33 - 2021-03-31
+    - bug correction :
+      - issue # 177 : synda now allows that ESGF openIDs are case sensitive
 Version 3.32 - 2021-03-24 - (PYTHON 3)
     - enhancement
       - code migration : third attempt to migrate synda from python 2 to python 3  (success)
