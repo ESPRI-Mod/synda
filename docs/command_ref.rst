@@ -22,6 +22,7 @@ Available subcommands are:
     autoremove   Remove old datasets versions
     certificate  Manage X509 certificate
     check        Perform check over ESGF metadata
+    check-env    Check Synda environment
     contact      Print contact information
     count        Count dataset
     daemon       Daemon management
@@ -30,13 +31,12 @@ Available subcommands are:
     get          Download dataset
     help         Show help
     history      Show history
+    init-env     Initialize Synda environment
     install      Install dataset
     intro        Print introduction to synda command
     list         List installed dataset
     metric       Display performance and disk usage metrics
-    open         Open netcdf file
     param        Print ESGF facets
-    pexec        Execute post-processing task
     queue        Display download queue status
     remove       Remove dataset
     replica      Move to next replica
@@ -198,6 +198,13 @@ check
       synda check dataset_version
       synda check file_variable CMIP5 atmos orog
       synda check selection
+
+check-env
+    Check Synda environment
+
+.. code-block:: bash
+
+    usage: synda check-env
 
 contact
     Print contact information
@@ -395,6 +402,13 @@ history
     optional arguments:
       -h, --help  show this help message and exit
 
+init-env
+    Initialize Synda environment
+
+.. code-block:: bash
+
+    usage: synda init-env
+
 install
     Install dataset
 
@@ -485,29 +499,6 @@ metric
       synda metric -g data_node -m rate -p CMIP5
       synda metric -g project -m size
 
-open
-    Open netcdf file
-
-.. code-block:: bash
-
-    usage: synda open [-h] [-s SELECTION_FILE] [-z] [--geometry GEOMETRY]
-                      [parameter [parameter ...]]
-
-    positional arguments:
-      parameter             search parameters. Format is name=value1,value2.. ...
-                            Most of the time, parameter name can be omitted.
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -s SELECTION_FILE, --selection_file SELECTION_FILE
-      -z, --dry_run
-      --geometry GEOMETRY, -g GEOMETRY
-                            Window geometry
-
-    examples
-      synda open cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
-      synda open -g 1000x600+70+0 orog_fx_CanESM2_historicalGHG_r0i0p0.nc
-
 param
     Print ESGF facets
 
@@ -528,22 +519,6 @@ param
       synda param institute | column
       synda param institute NA
       synda param project
-
-pexec
-    Execute post-processing task
-
-.. code-block:: bash
-
-    usage: synda pexec [-h] [-s SELECTION_FILE] [-n] [-z] {cdf}
-
-    positional arguments:
-      {cdf}                 Order name
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -s SELECTION_FILE, --selection_file SELECTION_FILE
-      -n, --no_default      prevent loading default value
-      -z, --dry_run
 
 queue
     Display download queue status

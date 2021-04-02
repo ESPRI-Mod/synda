@@ -5,6 +5,11 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.34 - 2021-04-02
+    - bug correction :
+      - Default selection file for CMIP6 project is now delivered empty. It can be customized under user control
+      (issue # 178 : Dataset not found but available on ESGF web interface)
+    - Documentation update
 Version 3.33 - 2021-03-31
     - bug correction :
       - issue # 177 : synda now allows that ESGF openIDs are case sensitive

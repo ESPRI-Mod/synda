@@ -15,6 +15,7 @@ Available subcommands are:
     autoremove   Remove old datasets versions
     certificate  Manage X509 certificate
     check        Perform check over ESGF metadata
+    check-env    Check Synda environment
     contact      Print contact information
     count        Count dataset
     daemon       Daemon management
@@ -23,12 +24,12 @@ Available subcommands are:
     get          Download dataset
     help         Show help
     history      Show history
+    init-env     Initialize Synda environment
     install      Install dataset
     intro        Print introduction to synda command
     list         List installed dataset
     metric       Display performance and disk usage metrics
     param        Print ESGF facets
-    pexec        Execute post-processing task
     queue        Display download queue status
     remove       Remove dataset
     replica      Move to next replica
@@ -191,6 +192,15 @@ examples
   synda check dataset_version
   synda check file_variable CMIP5 atmos orog
   synda check selection
+```
+
+### check-env
+
+Check Synda environment
+
+```
+usage: synda check-env
+
 ```
 
 ### contact
@@ -395,6 +405,15 @@ usage: synda history [-h]
 
 optional arguments:
   -h, --help  show this help message and exit
+```
+
+### init-env
+
+Initialize Synda environment
+
+```
+usage: synda init-env
+
 ```
 
 ### install

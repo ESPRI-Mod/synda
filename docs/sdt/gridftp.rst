@@ -41,7 +41,7 @@ To use GridFTP as default protocol, add ``protocol=gridftp`` parameter in ``defa
 
 .. note::
 
-    ``default.txt`` file location differs depending on which synda installation method has been used: ``$ST_HOME/conf/default/default.txt`` for source installation and ``/etc/synda/sdt/default/default.txt`` for system package installation.
+    ``default.txt`` file location differs depending on which synda installation method has been used: ``$ST_HOME/conf/default/default.txt``.
 
 
 Usage

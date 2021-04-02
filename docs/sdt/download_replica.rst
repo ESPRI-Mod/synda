@@ -3,7 +3,7 @@
 Download the nearest replica
 ============================
 
-To make Synda automatically select the nearest replica, set the following parameters in ``sdt/conf/sdt.conf``:
+To make Synda automatically select the nearest replica, set the following parameters in ``$HOME/conf/sdt.conf``:
 
 .. code-block:: text
 

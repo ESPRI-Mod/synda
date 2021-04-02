@@ -10,4 +10,4 @@ Then install ``synda`` package using command below:
 
 .. code-block:: bash
 
-    conda update -c IPSL synda
+    conda update -c ipsl -c conda-forge synda
