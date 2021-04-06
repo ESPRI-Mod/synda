@@ -118,10 +118,6 @@ In source installation, run command below
 
     synda daemon [ start | stop ]
 
-In system package installation, run command below
-
-    service synda [ start | stop ]
-
 ### Error management
 
 #### Changing replica for all file in errors
@@ -140,5 +136,4 @@ Log files below contain useful informations about errors
 * *transfer.log* contains informations regarding download.
 * *debug.log* contains low-level download informations.
 
-Note: log files are stored in '$HOME/sdt/log' folder (source installation) and
-'/var/log/synda/sdt' folder (system package installation).
+Note: log files are stored in '$HOME/log' folder.

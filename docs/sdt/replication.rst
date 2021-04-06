@@ -11,7 +11,7 @@ This document describes how to untar an ESGF archives partial mirror on a local 
 Synda installation
 ******************
 
-See synda installation from :ref:`RPM package <rpm-install-sdt>`, :ref:`DEB package <deb-install-sdt>` or :ref:`sources <src-install-sdt>`.
+See :ref:`synda installation <src-install-sdt>`.
 
 Create a selection file to describe which data to replicate
 ***********************************************************
@@ -45,32 +45,20 @@ Files download
 Start
 -----
 
-To start the download, in single-user installation, run command below:
+To start the download, run command below:
 
 .. code-block:: bash
 
     synda daemon start
 
-In multi-user installation, run command below:
-
-.. code-block:: bash
-
-    service sdt start
-
 Stop
 ----
 
-To stop the download, in single-user installation, run command below:
+To stop the download, run command below:
 
 .. code-block:: bash
 
     synda daemon stop
-
-In multi-user installation, run command below:
-
-.. code-block:: bash
-
-    service sdt stop
 
 Watching download progress
 **************************
@@ -154,4 +142,4 @@ Log files below contain useful information about errors:
 
 .. note::
 
-    Log files are stored in ``$HOME/sdt/log`` folder (single-user installation) and ``/var/log/synda/sdt`` folder (multi-user installation).
+    Log files are stored in ``$HOME/log`` folder.

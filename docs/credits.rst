@@ -12,6 +12,8 @@ Contributors
 
 `Atef Ben Nasser <abennasser@ipsl.fr>`_ (`CNRS <http://www.cnrs.fr/>`_/`IPSL <https://www.ipsl.fr/>`_)
 
+`Patrice Journoud <patrice.journoud@ipsl.fr>`_ (`CNRS <http://www.cnrs.fr/>`_/`IPSL <https://www.ipsl.fr/>`_)
+
 Contacts
 ********
 

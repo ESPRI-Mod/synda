@@ -19,7 +19,6 @@ Content
    :maxdepth: 2
 
    sdt/sdt
-   sdp/sdp
 
 .. toctree::
    :maxdepth: 1

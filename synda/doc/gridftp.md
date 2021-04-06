@@ -33,10 +33,6 @@ For source installation, location is:
 
     $ST_HOME/conf/default/default.txt
 
-For system package installation, location is:
-
-    /etc/synda/sdt/default/default.txt
-
 ## Usage
 
 Download a file using gridftp protocol

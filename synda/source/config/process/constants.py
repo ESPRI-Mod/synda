@@ -12,4 +12,4 @@ CHUNKSIZE = 5000
 
 FETCH_MODE_GENERATOR = 'generator'
 
-ADMIN_SUBCOMMANDS = ['autoremove', 'install', 'open', 'pexec', 'remove', 'reset', 'retry', 'update', 'upgrade']
+ADMIN_SUBCOMMANDS = ['autoremove', 'install', 'remove', 'reset', 'retry', 'update', 'upgrade']
