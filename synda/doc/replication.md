@@ -115,5 +115,4 @@ Log files below contain useful informations about errors
 * 'debug.log' contains 'wget' command log.
 * 'discovery.log' contains search-api log.
 
-Note: log files are stored in '$HOME/sdt/log' folder (single-user installation)
-and '/var/log/synda/sdt' folder (multi-user installation).
+Note: log files are stored in '$HOME/log' folder.

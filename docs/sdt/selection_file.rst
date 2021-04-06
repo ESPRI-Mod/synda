@@ -15,9 +15,7 @@ download the possible new files. Typically each file is associated with
 an analysis (cfmip, downscaling and so on). Create as many selection
 files as you want in the "selection" folder.
 
-Those selection files are stored in ``$HOME/sdt/selection`` folder (source
-installation) or ``/etc/synda/sdt/selection`` (system package
-installation).
+Those selection files are stored in ``$HOME/selection`` folder.
 
 Example of a selection file
 
@@ -33,7 +31,7 @@ Example of a selection file
 
 .. note::
 
-    Many selection file examples can be found `here <https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample>`_. Selection files are sometimes called "template" or "selection form".
+    Many selection file examples can be found `here <https://github.com/Prodiguer/synda/tree/master/selection/sample>`_. Selection files are sometimes called "template" or "selection form".
 
 Selection file format
 *********************

@@ -150,12 +150,6 @@ In source installation, run command below:
 
     synda daemon [ start | stop ]
 
-In system package installation, run command below:
-
-.. code-block:: bash
-
-    service sdt [ start | stop ]
-
 Error management
 ****************
 
@@ -181,4 +175,4 @@ Log files below contain useful information about errors:
 
 .. note::
 
-    Log files are stored in ``$HOME/sdt/log`` folder (source installation) and ``/var/log/synda/sdt`` folder (system package installation).
+    Log files are stored in ``$HOME/log`` folder.

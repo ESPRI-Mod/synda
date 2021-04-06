@@ -1,6 +1,6 @@
 # Download the nearest replica
 
-To make Synda automaticaly select the nearest replica, set the following parameters in sdt/conf/sdt.conf
+To make Synda automaticaly select the nearest replica, set the following parameters in $HOME/conf/sdt.conf
 
     [behaviour]
     nearest=true

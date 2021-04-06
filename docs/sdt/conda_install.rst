@@ -1,5 +1,3 @@
-.. _deb-install-sdt:
-
 Installation from conda package
 ===============================
 
@@ -30,7 +28,7 @@ Create a synda isolated environment if you wish:
 
 .. code-block:: bash
 
-    conda untar --name my-synda-environment python=2.7
+    conda create -n my-synda-environment python=3.8+
 
 Activate the created environment:
 
@@ -43,12 +41,12 @@ Then install ``synda`` package using command below:
 
 .. code-block:: bash
 
-    conda install -c IPSL synda
+    conda install -c ipsl -c conda-forge synda
 
 .. note::
 
-    Specifying -c IPSL is using the IPSL anaconda channel to get the right package. Currently all dependencies are
-    hosted on either default anaconda channels or the IPSL channels to ease the installation.
+    Specifying -c ipsl -c conda-forge is using the ipsl anaconda channel to get the right package. Currently all dependencies are
+    hosted on either default conda-forge anaconda channels or the ipsl channels to ease the installation.
 
 Configuration
 *************
@@ -80,7 +78,9 @@ The structure of synda home directory should be as follows:
     │   ├── credentials.conf
     │   ├── default
     │   │   ├── default_CMIP5.txt
+    │   │   ├── default_CMIP6.txt
     │   │   └── default.txt
+    │   ├── internal.conf
     │   └── sdt.conf
     ├── data
     ├── db
@@ -113,7 +113,7 @@ In case of a from scratch install, synda can init the environment for you at the
 
     > synda -h
     Synda has issues reaching your credential file, in ST_HOME.
-    Running synda checking environment tool...
+    Running synda initializing or checking environment tools...
     Key file missing: bin/sdcleanup_tree.sh
     You can either copy previously used file into your ST_HOME (/root/.synda) or use synda init-env command to
     initialize a new synda home file system with stubs to fill properly.
@@ -125,7 +125,7 @@ filled properly afterwards. Especially the openID credentials. Which can also be
 
 .. code-block:: bash
 
-    >synda check-env
+    >synda init-env or synda check-env
     Would you like to set your openID credentials? y/n: y
     openID url: https://open-id.url.com
     password: some_strong_password

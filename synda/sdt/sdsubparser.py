@@ -19,7 +19,6 @@ from synda.sdt import sdcommonarg
 from synda.sdt import sddescription
 
 from synda.source.config.subcommand.argument.constants import DEFAULT_DEST_FOLDER_PARSER_ARGUMENT
-from synda.source.config.subcommand.argument.constants import HELP_DEPRECATED_SUBCOMMAND
 
 from synda.source.config.subcommand.constants import get_default_limit
 
@@ -544,15 +543,6 @@ def run(subparsers, config):
 
     subparser.add_argument(
         '-c', '--columns', type=int, default=1,
-    )
-
-    # pexec
-
-    subparsers.add_parser(
-        'pexec',
-        help=HELP_DEPRECATED_SUBCOMMAND,
-        epilog=build_epilog(dict(description=HELP_DEPRECATED_SUBCOMMAND.upper())),
-        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
     # queue

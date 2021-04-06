@@ -6,8 +6,6 @@ Synda Transfer Module
 .. note:
 
    ``synda`` is the application name
-   ``sdt`` is the module name (synda is made of several modules)
-   ``synda`` is the RPM package name
 
 Installation
 ************
@@ -15,10 +13,7 @@ Installation
 .. toctree::
    :maxdepth: 1
 
-   src_install
    conda_install
-   rpm_install
-   deb_install
 
 Upgrade
 *******
@@ -26,10 +21,7 @@ Upgrade
 .. toctree::
    :maxdepth: 1
 
-   src_upgrade
    conda_upgrade
-   rpm_upgrade
-   deb_upgrade
 
 Configuration
 *************
@@ -52,5 +44,4 @@ Usage
    download
    download_replica
    gridftp
-   globustransfer
    replication
