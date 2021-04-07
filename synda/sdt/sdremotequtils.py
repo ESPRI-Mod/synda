@@ -23,6 +23,7 @@ from synda.sdt import sdconfig
 from synda.sdt import sdurlutils
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.internal.models import Config as Internal
+from synda.sdt import sdlog
 
 
 def serialize_parameters(facets):
@@ -67,10 +68,10 @@ def serialize_parameter__ovpp(name, values):
         # (The '*' at the end of the instance_id value signals the need for wildcards.)
         # That's because when the SOLR index is built, sometimes the name is changed (by suffixing
         # "_0" or "_1", etc.) to preserve uniqueness.  And only string search supports wildcards.
-        # sdlog.info("JFPRMTQUTS01","name=%s, values=%s"%(name,values))
+        # sdlog.info("SDRMTQUTS_01","name=%s, values=%s"%(name,values))
         name = "query"
         values = ["id:" + v + "*" for v in values]
-        # sdlog.info("JFPRMTQUTS02","name=%s, values=%s"%(name,values))
+        # sdlog.info("SDRMTQUTS_02","name=%s, values=%s"%(name,values))
 
     for v in values:
         l.append(name + "=" + v)
