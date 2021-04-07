@@ -22,8 +22,9 @@ import uuid
 import sqlite3
 import contextlib
 import shutil
-from synda.sdt import sddbpagination
 from synda.sdt import sdconfig
+# from synda.sdt import sddbpagination
+# sddbpagination is imported in DatabaseStorage.get_chunks_PAGINATION, to prevent circular imports.
 
 from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.internal.models import Config as Internal
@@ -106,6 +107,7 @@ class DatabaseStorage(Storage):
 
             self.connect()
             self.create_table()
+            self.status = 'ok'
         else:
             # this case is only to duplicate the object (see copy method)
 
@@ -201,6 +203,7 @@ class DatabaseStorage(Storage):
                 yield li
 
     def get_chunks_PAGINATION(self):
+        from synda.sdt import sddbpagination
         dbpagination=sddbpagination.DBPagination('bla','foo',self.conn)
         dbpagination.reset()
 
@@ -268,6 +271,8 @@ class DatabaseStorage(Storage):
 
         # create new instance
         cpy=DatabaseStorage(dbfile=dbfile_cpy)
+        if 'status' in self.__dict__:
+            cpy.status = self.status
 
         # re-open ori connection
         self.connect()

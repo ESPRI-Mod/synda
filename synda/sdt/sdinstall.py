@@ -51,6 +51,9 @@ def run(args, metadata=None):
             sdlog.info("SYNDINST-006", "Exception occured during installation ('{}')".format(e))
             raise
 
+    if 'status' in metadata.store.__dict__ and metadata.store.status=='incomplete':
+        print_stderr("WARNING: The file search failed part way through.  Proceeding with what was found.")
+        sdlog.warning("SYNDINST-008","Installing from incomplete search results.")
     # in dry-run mode, we stop here
     if args.dry_run:
         return 0, 0
