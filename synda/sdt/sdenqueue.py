@@ -146,7 +146,12 @@ def keep_recent_datasets(datasets):
 
     for d in datasets:
 
-        if 'last_mode_date' in list(d.__dict__.keys()):
+        if not hasattr(d,'last_mod_date') or d.last_mod_date is None:
+            # probably imported from another database missing last_mod_date.
+            # But certainly it wasn't modified in the last 24 hours.
+            # And an interval calculation won't work with None.
+            pass
+        else:
             interval = sdtime.compute_time_delta(
                 d.last_mod_date,
                 sdtime.now(),

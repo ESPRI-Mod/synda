@@ -187,7 +187,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--host', '-h', default='pcmdi9.llnl.gov')
+    parser.add_argument('--host', '-h', default='esgf-node.llnl.gov')
     parser.add_argument('--port', '-p', type=int, default=7512)
     parser.add_argument(
         '--force_renew_certificate',
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     run(
-        args.hostname,
+        args.host,
         args.port,
         args.username,
         args.force_renew_certificate,
