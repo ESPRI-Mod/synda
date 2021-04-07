@@ -76,6 +76,7 @@ class Buffer():
 
 
 class Selection():
+    searchapi_host = None    # a recently user-specified searchapi_host
     def __init__(self, **kw):
         # sub-selections list (a selection can contain facets groups, but can also contain other selections)
         self.childs = []
