@@ -105,9 +105,14 @@ def get_file(file_functional_id,conn=sddb.conn):
     """
     t=None
 
-    c = conn.cursor()
-    c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
-    rs=c.fetchone()
+    try:
+        c = conn.cursor()
+        c.execute("select * from file where file_functional_id = ?", (file_functional_id,))
+        rs=c.fetchone()
+    except:
+        sdlog.info("SDFILDAO-100","get_file exception %s, file_functional_id %s" %
+                   (e, file_functional_id) )
+        raise e
     if rs is not None:
         t=sdsqlutils.get_object_from_resultset(rs,File)
     c.close()
