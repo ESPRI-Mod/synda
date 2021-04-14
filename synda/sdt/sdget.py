@@ -28,6 +28,7 @@ from synda.sdt import sdconfig
 from synda.sdt import sdutils
 from synda.sdt import sdget_urllib
 from synda.sdt.sdtools import print_stderr
+from synda.sdt import sdlog
 
 from synda.source.config.file.scripts.models import Config as Scripts
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
@@ -79,6 +80,7 @@ def download(
             )
 
             status, script_stderr = run_download_script(li, buffered)
+            sdlog.debug('SDGET000-020',"status=%s, script_stderr=%s"%(status,script_stderr))
 
             killed = is_killed(transfer_protocol, status)
 
@@ -265,6 +267,7 @@ def prepare_args(
         li.insert(1, '-p')
         li.insert(2, '0')
 
+    sdlog.debug('SDGET000-010',"sdget command %s"%li)
     return li
 
 # init.
