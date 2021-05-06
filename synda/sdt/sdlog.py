@@ -85,6 +85,8 @@ def log(code, message, level, stdout=False, stderr=False, logfile=True, logger_n
         else:
             if logger_name == internal.logger_domain:
                 domain_logger.log(level, message, extra={'code': code})
+            elif logger_name == internal.logger_consumer:
+                transfer_logger.log(level, message, extra={'code': code})
             else:
                 assert False
 
@@ -136,6 +138,8 @@ transfer_logger = create_logger(internal.logger_consumer, internal.logger_consum
 domain_logger = create_logger(internal.logger_domain, internal.logger_domain_file)
 
 default_logger = discovery_logger
+
+# default_logger_file_name = default_logger.handlers[0].baseFilename
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

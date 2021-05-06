@@ -8,9 +8,16 @@
 ##################################
 import asyncio
 import datetime
-from tabulate import tabulate
-# for generation of uml documentation
-# from synda.source.process.asynchronous.manager.batch.models import Manager as BatchManager
+
+
+class Event(object):
+    def __init__(self, worker):
+        self.worker = None
+        # settings
+        self.worker = worker
+
+    def new_task_status(self, task):
+        self.worker.new_task_status(task)
 
 
 async def default_post_process(task):
@@ -20,32 +27,33 @@ async def default_post_process(task):
 
 
 class Task(object):
-    def __init__(self, name, manager):
+    def __init__(self, name, verbose=False):
 
         # initialization
-        self.manager = None
-        # for generation of uml documentation
-        # self.batch_manager = BatchManager([])
+        self.allowed_statuses = ["pending", "running", "cancelled", "done"]
+        self.worker = None
+        self.verbose = False
+        self.event = None
         self.name = ""
         self.status = ""
 
         # settings
+        self.verbose = verbose
         self.name = name
-        self.manager = manager
         self.status = "pending"
 
-    def update_tasks_dashboard(self):
-        return self.manager.update_tasks_dashboard()
+    def get_event(self):
+        return self.event
 
-    def print_current_report_if_required(self):
-        self.manager.get_scheduler().print_current_report_if_required()
+    def set_worker(self, worker):
+        self.event = Event(worker)
+        self.worker = worker
 
-    def print_verbose_if_required(self, task):
-        return self.manager.get_scheduler().print_verbose_if_required(task)
+    def get_worker(self):
+        return self.worker
 
     async def process(self):
         self.set_status("running")
-        self.print_verbose_if_required(self)
         await asyncio.sleep(10)
         success = await default_post_process(self)
         return success
@@ -54,17 +62,27 @@ class Task(object):
         return self.name
 
     def set_status(self, status):
-        self.status = status
-        self.update_tasks_dashboard()
-        self.print_current_report_if_required()
+        if status in self.allowed_statuses:
+            self.status = status
+            self.event.new_task_status(self)
 
-    def print_verbose(self):
+    def print_metrics(self):
         print(
-            "{} | Task {} - Status : {}".format(
+            "{} | Manager : {} | worker : {} | Task name : {} - status : {}".format(
                 datetime.datetime.now(),
+                self.worker.get_manager().get_name(),
+                self.worker.get_name(),
                 self.get_name(),
                 self.status,
             ),
+        )
+
+    def get_metrics(self):
+        return "Manager : {} | worker : {} | Task name : {} - status : {}".format(
+            self.worker.get_manager().get_name(),
+            self.worker.get_name(),
+            self.get_name(),
+            self.status,
         )
 
     def done(self):

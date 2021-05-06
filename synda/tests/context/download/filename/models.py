@@ -21,6 +21,7 @@ class Context(Base):
             capsys=capsys,
         )
 
+        self.file = None
         if filename and folder:
             self.file = File(filename, folder)
 

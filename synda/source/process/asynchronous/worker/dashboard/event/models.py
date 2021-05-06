@@ -6,13 +6,11 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.source.process.asynchronous.task.models import Task as Base
+class Event(object):
 
+    def __init__(self, dashboard):
+        self.dashboard = None
+        self.dashboard = dashboard
 
-class Task(Base):
-
-    def __init__(self):
-        Base.__init__(self)
-
-    async def process(self):
-        await Base.process(self)
+    def new_task_status(self, task):
+        self.dashboard.update_metrics()

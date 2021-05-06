@@ -18,6 +18,7 @@ Note
 import os
 import re
 import copy
+
 from synda.sdt import sdconfig
 from synda.sdt import sdmts
 from synda.sdt import sdtools
@@ -31,10 +32,10 @@ from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
-data_folder = TreePath().get("data")
+preferences = Preferences()
 
 
-def build_full_local_path(local_path, prefix=data_folder):
+def build_full_local_path(local_path, prefix=TreePath().get("data")):
     add_prefix = True
 
     if len(local_path) > 0:
@@ -162,13 +163,109 @@ class Selection():
 
 
 class BaseType():
-    def get_full_local_path(self, prefix=data_folder):
+    def get_full_local_path(self, prefix=TreePath().get("data")):
         return build_full_local_path(self.local_path, prefix)
 
 
 class File(BaseType):
     def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+        self.file_id = 0
+        self.url = ""
+        self.file_functional_id = ""
+        self.filename = ""
+        self.local_path = ""
+        self.data_node = ""
+        self.checksum = ""
+
+        self.checksum_type = ""
+        self.duration = 0
+        self.size = 0
+        self.rate = 0
+
+        self.start_date = ""
+        self.end_date = ""
+        self.crea_date = ""
+        self.status = ""
+
+        self.error_msg = ""
+        self.sdget_status = ""
+        self.sdget_error_msg = ""
+        self.priority = 0
+
+        self.tracking_id = ""
+        self.model = ""
+        self.project = ""
+        self.variable = ""
+        self.last_access_date = ""
+        self.dataset_functional_id = ""
+        self.insertion_group_id = 0
+        self.timestamp = ""
+
+        if kwargs:
+            self.__dict__.update(kwargs)
+
+    def print(self):
+        return {
+            'file_id': self.file_id,
+            'url': self.url,
+            'file_functional_id': self.file_functional_id,
+            'filename': self.filename,
+            'local_path': self.local_path,
+            'data_node': self.data_node,
+            'checksum': self.checksum,
+            'checksum_type': self.checksum_type,
+            'duration': self.duration,
+            'size': self.size,
+            'rate': self.rate,
+            'start_date': self.start_date,
+            'end_date': self.end_date,
+            'crea_date': self.crea_date,
+            'status': self.status,
+            'error_msg': self.error_msg,
+            'sdget_status': self.sdget_status,
+            'sdget_error_msg': self.sdget_error_msg,
+            'priority': self.priority,
+            'tracking_id': self.tracking_id,
+            'model': self.model,
+            'project': self.project,
+            'variable': self.variable,
+            'last_access_date': self.last_access_date,
+            'insertion_group_id': self.insertion_group_id,
+            'timestamp': self.timestamp,
+        }
+
+    def copy(self, instance):
+        self.file_id = instance.file_id
+        self.url = instance.url
+        self.file_functional_id = instance.file_functional_id
+        self.filename = instance.filename
+        self.local_path = instance.local_path
+        self.data_node = instance.data_node
+        self.checksum = instance.checksum
+
+        self.checksum_type = instance.checksum_type
+        self.duration = instance.duration
+        self.size = instance.size
+        self.rate = instance.rate
+
+        self.start_date = instance.start_date
+        self.end_date = instance.end_date
+        self.crea_date = instance.crea_date
+        self.status = instance.status
+
+        self.error_msg = instance.error_msg
+        self.sdget_status = instance.sdget_status
+        self.sdget_error_msg = instance.sdget_error_msg
+        self.priority = instance.priority
+
+        self.tracking_id = instance.tracking_id
+        self.model = instance.model
+        self.project = instance.project
+        self.variable = instance.variable
+        self.last_access_date = instance.last_access_date
+        self.dataset_functional_id = instance.dataset_functional_id
+        self.insertion_group_id = instance.insertion_group_id
+        self.timestamp = instance.timestamp
 
     def __str__(self):
         if self.status == TRANSFER["status"]['error']:
@@ -298,7 +395,7 @@ class Item():
 
 
 class Request():
-    def __init__(self, url=None, pagination=True, limit=Preferences().api_esgf_search_chunksize):
+    def __init__(self, url=None, pagination=True, limit=preferences.api_esgf_search_chunksize):
 
         self._url = url
         self.pagination = pagination
@@ -336,7 +433,7 @@ class Request():
 
         # check
         # we limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer
-        if len(url) > Preferences().download_url_max_buffer_size:
+        if len(url) > preferences.download_url_max_buffer_size:
             raise SDException(
                 "SDATYPES-003",
                 "url is too long (%i)".format(
@@ -538,7 +635,7 @@ class Response(CommonIO):
         if self.num_found is None:
             raise SDException("SDATYPES-005", "assert error")
 
-        if self.count() > Preferences().api_esgf_search_chunksize:
+        if self.count() > preferences.api_esgf_search_chunksize:
             assert False
 
     def __str__(self):

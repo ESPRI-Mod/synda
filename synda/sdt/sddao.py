@@ -21,6 +21,7 @@ from synda.sdt import sdfiledao
 from synda.sdt import sddatasetdao
 
 from synda.source.config.process.download.constants import TRANSFER
+from synda.source.db.task.file.read.models import get_data_nodes
 
 # --- parameter table --- #
 
@@ -200,3 +201,73 @@ def get_one_waiting_transfer(datanode=None):
     t.dataset = d
 
     return t
+
+
+def get_one_waiting_transfer_new(datanode=None):
+    t = None
+    if datanode is None:
+        li = sdfiledao.get_files(
+            limit=1,
+            status=TRANSFER["status"]['waiting'],
+        )
+    else:
+        li = sdfiledao.get_files(
+            limit=1,
+            status=TRANSFER["status"]['waiting'],
+            data_node=datanode,
+        )
+
+    if len(li) > 0:
+        t = li[0]
+        # retrieve the dataset
+        d = sddatasetdao.get_dataset(dataset_id=t.dataset_id)
+        t.dataset = d
+
+    return t
+
+
+def get_waiting_downloads():
+
+    downloads = []
+    files = sdfiledao.get_files(
+        status=TRANSFER["status"]['waiting'],
+    )
+    if len(files) > 0:
+        for _file in files:
+            # retrieve the dataset
+            d = sddatasetdao.get_dataset(dataset_id=_file.dataset_id)
+            _file.dataset = d
+            downloads.append(_file)
+
+    return downloads
+
+
+def check_waiting_files_for_download():
+
+    data_nodes = get_data_nodes()
+
+    unvalidated = []
+    validated = []
+
+    for data_node in data_nodes:
+
+        files = sdfiledao.get_files(
+            status=TRANSFER["status"]['waiting'],
+            data_node=data_node,
+        )
+        if len(files) > 0:
+            batch = []
+            for _file in files:
+                if sdfiledao.validate_for_download(_file):
+                    # retrieve the dataset
+                    d = sddatasetdao.get_dataset(dataset_id=_file.dataset_id)
+                    _file.dataset = d
+                    batch.append(_file)
+                else:
+                    unvalidated.append(_file)
+            if len(batch) > 0:
+                validated.append(
+                    {data_node: batch},
+                )
+
+    return validated, unvalidated

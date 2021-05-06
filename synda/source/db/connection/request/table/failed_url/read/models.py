@@ -8,3 +8,27 @@
 ##################################
 
 from synda.source.db.connection.request.table.models import Request
+
+
+class AllRows(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(AllRows, self).__init__(table_name="failed_url", identifier="all rows")
+        self.set_sql(
+            "SELECT * FROM failed_url",
+        )
+
+
+class RowsWithLimit(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(RowsWithLimit, self).__init__(table_name="failed_url", identifier="rows")
+        self.set_sql(
+            "SELECT * FROM failed_url LIMIT ?",
+        )

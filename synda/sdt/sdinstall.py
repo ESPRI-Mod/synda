@@ -62,8 +62,6 @@ def run(args, metadata=None):
 
 def _install(metadata, interactive, config_manager, timestamp_right_boundary=None):
 
-    from synda.sdt import sddaemon
-
     # Compute total files stat
     count_total = metadata.count()
 
@@ -141,7 +139,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
             print_stderr(
                 "You can follow the download using 'synda watch' and 'synda queue' commands",
             )
-
+            from synda.sdt import sddaemon
             if not sddaemon.is_running():
                 msg = sdi18n.m0026
                 print_stderr(

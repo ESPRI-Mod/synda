@@ -29,6 +29,7 @@ def update_paths():
     cfg.read(full_filename)
     cfg.set('core', 'db_path', os.path.join(root, 'db'))
     cfg.set('core', 'selection_path', os.path.join(root, 'selection'))
+    cfg.set('core', 'data_path', os.path.join(root, 'data'))
     cfg.set('core', 'sandbox_path', os.path.join(root, 'sandbox'))
     cfg.set('core', 'default_path', os.path.join(*[root, 'conf', "default"]))
 

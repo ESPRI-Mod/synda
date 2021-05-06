@@ -20,8 +20,8 @@ class DestFolderGetSubCommand(Base):
         )
 
         self.configure(
-            context.get_file().get_folder(),
-            context.get_file().get_filename(),
+            context.get_file_instance().get_folder(),
+            context.get_file_instance().get_filename(),
         )
 
     def configure(self, dest_folder, filename):
@@ -39,7 +39,7 @@ class ConfigSubCommand(Base):
             description="Download configuration is given by file",
         )
         self.configure(
-            context.get_file().get_filename(),
+            context.get_file_instance().get_filename(),
         )
 
     def configure(self, filename):

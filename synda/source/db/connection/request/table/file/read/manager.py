@@ -9,7 +9,8 @@
 """
 """
 from synda.source.db.connection.request.table.dao.read.manager import Manager as Base
-
+from synda.source.db.connection.request.table.file.read.models import AllRows as AllRowsRequest
+from synda.source.db.connection.request.table.file.read.models import Row as RowRequest
 from synda.source.db.connection.request.table.file.read.models import Rows as RowsRequest
 from synda.source.db.connection.request.table.file.read.models import DataNodes as DataNodesRequest
 from synda.source.db.connection.request.table.file.read.models import SelectAllByFileId as SelectAllByFileIdRequest
@@ -25,6 +26,13 @@ class Manager(Base):
         Base.__init__(self, table_name=table_name)
 
         self.add(
+            AllRowsRequest(),
+        )
+
+        self.add(
+            RowRequest(),
+        )
+        self.add(
             RowsRequest(),
         )
         self.add(
@@ -39,7 +47,16 @@ class Manager(Base):
 
     def get_data_nodes(self):
         request = self.get_item("data_nodes")
+        res = self.get_request_data(request)
+        return res
+
+    def get_all_rows(self):
+        request = self.get_item("all rows")
         return self.get_request_data(request)
+
+    def get_row(self, file_id):
+        request = self.get_item("row")
+        return self.get_request_data(request, (file_id,))
 
     def get_rows(self):
         request = self.get_item("rows")

@@ -19,6 +19,7 @@ Note
     double-fork, then who_am_i() doesn't work anymore. i.e. sdapp module init
     code doesn't get executed twice. TAGJL54JJJ3JK22LLL.
 """
+import asyncio
 import os
 import grp
 import pwd
@@ -62,8 +63,14 @@ def main_loop(config_manager):
     sdlog.info('SDDAEMON-001', "Daemon starting ...")
 
     try:
-        sdtaskscheduler.event_loop(config_manager)
-
+        old_download_process = False
+        if old_download_process:
+            sdtaskscheduler.event_loop(config_manager)
+        else:
+            from synda.source.process.asynchronous.download.scheduler.models import scheduler
+            asyncio.run(scheduler(verbose=True, build_report=False))
+            # timer = 5
+            # await asyncio.sleep(timer)
     except SDException as e:
 
         level = preferences.log_verbosity_level

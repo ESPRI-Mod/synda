@@ -30,6 +30,12 @@ class Process(Identifier):
         self.arguments = arguments
         self.exceptions_codes = exceptions_codes
 
+    def set_exceptions_codes(self, exceptions_codes):
+        self.exceptions_codes = exceptions_codes
+
+    def set_arguments(self, arguments):
+        self.arguments = arguments
+
     def get_authority(self):
         return self.authority
 

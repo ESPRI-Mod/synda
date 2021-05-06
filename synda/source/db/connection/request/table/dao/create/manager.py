@@ -8,6 +8,7 @@
 ##################################
 """
 """
+from synda.source.db.connection.exceptions import DataIntegrityError, DataUnexpectedError
 from synda.source.db.connection.request.noresultset.manager import Manager as Base
 from synda.source.db.connection.request.table.manager import TableName
 

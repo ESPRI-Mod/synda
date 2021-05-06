@@ -18,6 +18,7 @@ class SubCommand(Base):
             exceptions_codes=exceptions_codes,
             description="Download with install subcommand, configuration is given by file",
         )
+        print(context.get_file())
         self.configure(
             context.get_file().get_filename(),
         )

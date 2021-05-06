@@ -14,6 +14,13 @@ build:
 channels:
   - conda-forge
 
+dependencies:
+- python>=3.8
+- pip
+- pip:
+  # works for regular pip packages
+  - asyncio
+
 requirements:
   host:
     - python
@@ -34,7 +41,11 @@ requirements:
     - pycountry
     - texttable
     - pytest
+    - pytest-asyncio
     - pandas
+    - aiohttp
+    - aiofiles
+    - numpy
 
 about:
     home: https://github.com/Prodiguer/synda

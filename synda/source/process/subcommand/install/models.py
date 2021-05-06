@@ -12,5 +12,10 @@ from synda.source.process.authority.models import Authority
 
 class Process(Base):
 
-    def __init__(self):
-        super(Process, self).__init__(name="install", authority=Authority())
+    def __init__(self, arguments=None, exceptions_codes=None):
+        super(Process, self).__init__(
+            name="install",
+            authority=Authority(),
+            arguments=arguments,
+            exceptions_codes=exceptions_codes,
+        )

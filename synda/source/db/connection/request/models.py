@@ -19,6 +19,9 @@ class Request(Identifier):
         self.cursor = None
         self.sql = ""
 
+    def get_db_cursor(self):
+        return self.cursor.get_db_cursor()
+
     def set_cursor(self, cursor):
         self.cursor = cursor
 

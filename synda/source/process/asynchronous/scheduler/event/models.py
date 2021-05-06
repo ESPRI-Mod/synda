@@ -6,13 +6,16 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.source.process.asynchronous.task.models import Task as Base
+class Event(object):
 
+    def __init__(self, scheduler):
+        self.scheduler = None
+        self.scheduler = scheduler
 
-class Task(Base):
+    def all_task_done(self):
+        self.scheduler.watchdog.get_event().all_task_done()
 
-    def __init__(self):
-        Base.__init__(self)
-
-    async def process(self):
-        await Base.process(self)
+    def new_task_status(self, task):
+        self.scheduler.print_workers_activity(task)
+        if self.scheduler.get_report():
+            self.scheduler.get_report().add_metrics()

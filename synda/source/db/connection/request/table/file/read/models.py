@@ -10,6 +10,34 @@
 from synda.source.db.connection.request.table.models import Request
 
 
+class AllRows(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(AllRows, self).__init__(table_name="file", identifier="all rows")
+        self.set_sql(
+            "SELECT * FROM file",
+        )
+
+
+class Row(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(Row, self).__init__(table_name="file", identifier="row")
+        self.set_sql(
+            "SELECT * FROM file WHERE file_id = ?",
+        )
+
+    def get_data(self):
+        data = super(Row, self).get_data()
+        return data[0]
+
+
 class Rows(Request):
     """
     Request
@@ -32,6 +60,10 @@ class DataNodes(Request):
         self.set_sql(
             "SELECT data_node FROM file GROUP BY data_node",
         )
+
+    def get_data(self):
+        data = super(DataNodes, self).get_data()
+        return [item["data_node"] for item in data]
 
 
 class DataNodePriorityFilteredOnStatusWaiting(Request):

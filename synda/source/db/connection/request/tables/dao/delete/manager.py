@@ -20,6 +20,13 @@ class Manager(Base):
             DeleteTable(),
         )
 
+    def process_table(self, table_name):
+        connection = self.get_db_connection()
+        request = self.get_item("delete").get_item("drop")
+        request.set_cursor(self.get_cursor())
+        with connection.get_database_connection():
+            success = request.execute((table_name,))
+
     def process_tables(self, table_names):
         connection = self.get_db_connection()
         request = self.get_item("delete").get_item("drop")

@@ -8,21 +8,26 @@
 #                             All Rights Reserved”
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-
+import os
 """Contains file DAO SQL queries."""
 
 from synda.sdt.sdexception import SDException
+from synda.sdt import sdtime
 from synda.sdt import sddb
 from synda.sdt import sdsqlutils
 from synda.sdt.sdtypes import File
 from synda.sdt import sdlog
 from synda.sdt.sdtime import SDTimer
 from synda.sdt import sdsqlitedict
+
+from synda.source.db.connection.models import Connection
 from synda.source.config.path.tree.default.models import Config as DefaultTreePath
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
+from synda.source.config.file.user.preferences.models import Config as Preferences
+preferences = Preferences()
 
 
 def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
@@ -165,9 +170,18 @@ def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change 
     if getfirst == '':
         return []
     q = "select * from file where %s %s %s" % (search_placeholder, getfirst, limit_clause)
-    c.execute(q, search_constraints)
-    rs = c.fetchone()
+    import sqlite3
+    try:
+        c.execute(q, search_constraints)
+        rs = c.fetchone()
+        db_error = False
+    except sqlite3.OperationalError as e:
+        db_error = True
+        rs = None
+        print(e)
 
+    if db_error:
+        return []
     # if use_cache and (rs is None or len(rs)==0):
     if use_cache and (rs is None or len(rs) == 0):
         # No files found.  Possibly we could find one if we retry at another priority level.
@@ -317,7 +331,10 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
     return files
 
 
-def update_file(_file, commit=True, conn=sddb.conn):
+def update_file(_file, commit=True, conn=None):
+
+    if not conn:
+        conn = Connection().get_database_connection()
 
     keys = [
         'status',
@@ -345,6 +362,7 @@ def update_file(_file, commit=True, conn=sddb.conn):
         conn,
     )
 
+    conn.close()
     # check
     if rowcount == 0:
         raise SDException(
@@ -357,3 +375,86 @@ def update_file(_file, commit=True, conn=sddb.conn):
             "SYNCDDAO-120",
             "duplicate functional primary key (file_id=%i)" % (i__tr.file_id,),
         )
+
+
+def update_files(file_instances):
+    for file_instance in file_instances:
+        file_instance.start_date = sdtime.now()
+        file_instance.end_date = sdtime.now()
+        update_file(file_instance, commit=False)
+
+
+def update_file_as_running(file_instance):
+    file_instance.start_date = sdtime.now()
+    file_instance.status = TRANSFER["status"]['running']
+    update_file(file_instance, commit=True)
+
+
+def update_file_after_download(file_instance):
+    if file_instance.status == 'done':
+        file_instance.end_date = sdtime.now()
+    update_file(file_instance, commit=True)
+
+
+def validate_for_download(file_instance):
+    validated = False
+    lfae_mode = preferences.behaviour_lfae_mode
+
+    file_instance.start_date = None
+    file_instance.end_date = None
+    file_instance.error_msg = None
+
+    if lfae_mode == "keep":
+
+        # usefull mode if
+        #  - metadata needs to be regenerated without retransfering the data
+        #  - synda files are mixed with files from other sources
+
+        if os.path.isfile(file_instance.get_full_local_path()):
+            # file already here, mark the file as done
+
+            sdlog.info(
+                "SYNDTASK-197",
+                "Local file already exists: keep it (lfae_mode=keep, local_file={})".format(
+                    file_instance.get_full_local_path(),
+                ),
+            )
+
+            file_instance.status = TRANSFER["status"]['done']
+            file_instance.error_msg = "Local file already exists: keep it (lfae_mode=keep)"
+
+            # note: it is important not to update a running status in this case,
+            # else local file non-related with synda may be removed by synda
+            # (because of cleanup_running_transfer() func). See mail from Hans Ramthun at 20150331 for more details.
+
+        else:
+            validated = True
+
+    elif lfae_mode == "replace":
+        if os.path.isfile(file_instance.get_full_local_path()):
+            sdlog.info(
+                "SYNDTASK-187",
+                "Local file already exists: remove it (lfae_mode=replace, local_file={})".format(
+                    file_instance.get_full_local_path(),
+                ),
+            )
+            os.remove(file_instance.get_full_local_path())
+        # file_instance.status = TRANSFER["status"]['running']
+        validated = True
+    elif lfae_mode == "abort":
+        if os.path.isfile(file_instance.get_full_local_path()):
+            sdlog.info(
+                "SYNDTASK-188",
+                "Local file already exists: file_instance transfer aborted (lfae_mode=abort, local_file={})".format(
+                    file_instance.get_full_local_path(),
+                ),
+            )
+
+            file_instance.status = TRANSFER["status"]['error']
+            file_instance.priority -= 1
+            file_instance.error_msg = "Local file already exists: transfer aborted (lfae_mode=abort)"
+
+        else:
+            validated = True
+
+    return validated
