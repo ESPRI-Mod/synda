@@ -51,7 +51,7 @@ def run(tr):
     conn = None
     try:
         conn = Connection().get_database_connection()
-        next_url(tr, conn)
+        next_http_url(tr, conn)
         success = True
     except sdexception.FileNotFoundException as e:
         sdlog.info(
@@ -72,7 +72,7 @@ def run(tr):
     return success
 
 
-def next_url(tr, conn):
+def next_http_url(tr, conn):
     # [[url1,protocol1],[url2,protocol2],...]
     all_urlps = get_urls(tr.file_functional_id)
     sdlog.info("SDNEXTUR-006", "all_urpls= %s" % (all_urlps,))
@@ -85,7 +85,7 @@ def next_url(tr, conn):
     sdlog.info("SDNEXTUR-007", "failed_urls= %s" % (failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
-    urls = [urlp[0] for urlp in urlps]
+    urls = [urlp[0] for urlp in urlps if urlp[0].startswith("http")]
     # At this point urls is just a list of urls.
     
     if len(urls) > 0:

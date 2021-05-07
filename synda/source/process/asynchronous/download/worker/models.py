@@ -35,7 +35,7 @@ class Worker(Base):
     async def post_process_task(self, task):
         await Base.post_process_task(self, task)
         file_id = task.get_file_instance().file_id
-        test_mode = True
+        test_mode = False
 
         # for fallback_strategy tests
         if test_mode:

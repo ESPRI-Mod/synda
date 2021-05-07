@@ -18,7 +18,6 @@ from synda.source.config.process.download.constants import get_http_clients
 from synda.source.config.process.download.constants import get_transfer_protocols
 
 from synda.source.process.asynchronous.manager.batch.models import Manager as Base
-from synda.source.process.asynchronous.download.task.grid_ftp.models import Task as GridFtpTask
 
 from synda.source.process.asynchronous.download.task.http.small_file.models import Task as HttpSmallFileTask
 from synda.source.process.asynchronous.download.task.http.big_file.models import Task as HttpBigFileTask
@@ -47,7 +46,6 @@ class Manager(Base):
 
         # settings
         self.http_client_session = aiohttp.ClientSession(timeout=timeout)
-        self.cpt = 0
 
     def get_http_client_session(self):
         return self.http_client_session
@@ -93,11 +91,6 @@ class Manager(Base):
         return await self.get_scheduler().get_task(self.name)
 
     def create_task(self, file_instance):
-        test_mode = False
-        if test_mode:
-            if file_instance.url.startswith("http") and not self.cpt:
-                file_instance.url = "gsiftp://esgf-dn1.ceda.ac.uk:2811//esg_dataroot/cmip5/output1/CNRM-CERFACS/CNRM-CM5/amip/mon/atmos/Amon/r1i1p1/v20111006/tasmin/tasmin_Amon_CNRM-CM5_amip_r1i1p1_197901-200812.nc"
-                self.cpt += 1
         new_task = None
         if file_instance:
             task_name = "{} , {}".format(
@@ -122,9 +115,6 @@ class Manager(Base):
                             task_name,
                             verbose=self.verbose,
                         )
-
-            elif transfer_protocol == get_transfer_protocols()['gridftp']:
-                new_task = GridFtpTask(file_instance, task_name, verbose=self.verbose)
 
         return new_task
 

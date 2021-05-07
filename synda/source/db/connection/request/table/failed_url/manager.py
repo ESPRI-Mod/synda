@@ -12,7 +12,7 @@ from synda.source.db.connection.request.table.manager import Manager as Base
 
 from synda.source.db.connection.request.table.failed_url.create.manager import Manager as CreateManager
 from synda.source.db.connection.request.table.failed_url.read.manager import Manager as ReadManager
-
+from synda.source.db.connection.request.table.failed_url.update.manager import Manager as UpdateManager
 
 table_name = CreateManager().get_table_name()
 
@@ -26,4 +26,7 @@ class Manager(Base):
         )
         self.add(
             ReadManager(),
+        )
+        self.add(
+            UpdateManager(),
         )
