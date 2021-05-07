@@ -22,6 +22,7 @@ def parse_parameters(buffer):
     try:
         xmldoc = json.loads(buffer)
     except Exception as e:
+        sdlog.debug("SYNDJSON-010","exception %s"%e)
         raise
 
     params={}
