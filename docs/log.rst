@@ -5,6 +5,9 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.36 - 2021-xx-xx
+    - tests :
+        - remove subcommand test : new file embedded is ten times smaller than previous one
 Version 3.35 - 2021-05-07
     - bug correction :
         - init-env subcommand now provides empty default selection files (see conf/default directory)

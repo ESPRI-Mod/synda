@@ -19,11 +19,11 @@ class SubCommand(Base):
             description="Remove",
         )
         self.configure(
-            context.get_selection_file(),
+            context.get_dataset(),
         )
 
-    def configure(self, selection_file):
+    def configure(self, dataset):
 
         self.set_argv(
-            ['synda', self.name, "--yes", "--selection_file", selection_file],
+            ['synda', self.name, "--yes", dataset],
         )

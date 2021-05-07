@@ -24,14 +24,14 @@ class Context(Base):
         Base.__init__(self, arguments=arguments)
 
         # settings
-        self.selection_file = ENVS["installed"]["env"]["selection_file"]
+        self.dataset = ENVS["installed"]["env"]["dataset"]
 
-    def get_selection_file(self):
-        return self.selection_file
+    def get_dataset(self):
+        return self.dataset
 
     def validation_after_subcommand_execution(self):
         captured = self.get_capsys().readouterr()
 
-        expected_removed_data_file = ENVS["installed"]["env"]["data_file"]
+        local_path = ENVS["installed"]["env"]["local_path"]
         assert "1 file(s) will be removed." in captured.err
-        assert not os.path.isfile(expected_removed_data_file)
+        assert not os.path.isfile(local_path)

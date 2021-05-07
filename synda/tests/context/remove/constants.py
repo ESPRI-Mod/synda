@@ -52,7 +52,8 @@ ENVS = dict(
                 DATA_DIRECTORY,
                 "selection_file.txt",
             ),
-            data_file=os.path.join(
+            dataset="tntogw_EmonZ_IPSL-CM6A-LR_historical_r23i1p1f1_grz_195001-201412.nc",
+            local_path=os.path.join(
                 os.path.join(
                     ST_HOME_TESTS,
                     "data",

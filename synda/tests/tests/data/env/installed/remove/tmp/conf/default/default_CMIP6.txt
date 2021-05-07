@@ -1,1 +1,0 @@
-#This file contains selection parameters default values for CMIP6 project.
