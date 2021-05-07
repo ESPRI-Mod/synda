@@ -6,7 +6,14 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
+import os
+from synda.tests.tests.constants import TESTS_DIR as ROOT
 
-# Current release
+subdirectories = [
+    ROOT,
+    "env",
+    "installed",
+    "subprocess",
+]
 
-CURRENT = '3.36'
+TESTS_DIR = os.path.join(*subdirectories)

@@ -9,13 +9,14 @@
 """
 """
 import os
-from shutil import copyfile
+from shutil import copyfile, copytree
 
 from synda.source.config.file.db.constants import FILENAME as DB_FILENAME
 from synda.source.process.env.build.models import Process as Base
 from synda.source.config.file.env.models import Config as EnvFile
-from synda.tests.process.env.build.installed.env1.constants import DATA_DIRECTORY
-from synda.tests.process.env.build.installed.env1.constants import DB_RESOURCES_DIRECTORY
+from synda.tests.process.env.build.installed.remove.constants import DATA_DIRECTORY
+from synda.tests.process.env.build.installed.remove.constants import DB_RESOURCES_DIRECTORY
+from synda.tests.process.env.build.installed.remove.constants import DATA_RESOURCES_DIRECTORY
 
 
 BUILD_LOCATION = os.path.join(
@@ -38,6 +39,7 @@ class Process(Base):
 
     def customize(self):
         self.overwrite_db()
+        self.add_data()
 
     def overwrite_db(self):
         filename = DB_FILENAME
@@ -55,3 +57,12 @@ class Process(Base):
         )
         copyfile(src, dst)
 
+    def add_data(self):
+        filename = DB_FILENAME
+        src = DATA_RESOURCES_DIRECTORY
+
+        dst = os.path.join(
+                self.build_directory,
+                "data",
+            )
+        copytree(src, dst, dirs_exist_ok=True)

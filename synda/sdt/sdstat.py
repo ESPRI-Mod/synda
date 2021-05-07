@@ -24,7 +24,7 @@ import argparse
 import json
 import humanize
 from synda.sdt import sdstatutils
-import syndautils
+from synda.sdt import syndautils
 from synda.sdt import sdexception
 from synda.sdt import sdpipelineprocessing
 from synda.sdt.sdtools import print_stderr

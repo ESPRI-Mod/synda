@@ -12,38 +12,48 @@
 """Contains administration routines."""
 
 import argparse
-from synda.sdt import sdapp
 from synda.sdt import sddeletefile
 from synda.sdt import sdlog
 from synda.sdt import sdhistorydao
 from synda.sdt import sdfiledao
-from synda.sdt import sdconst
 from synda.sdt import sddb
+from synda.source.config.process.history.constants import STRUCTURE as HISTORY_STRUCT
+
 
 def delete_insertion_group(insertion_group_id):
-    files=sdfiledao.get_files(insertion_group_id=insertion_group_id)
-    files=[f for f in files] # exclude files already marked for deletion
-    if len(files)>0:
+    files = sdfiledao.get_files(insertion_group_id=insertion_group_id)
+    # exclude files already marked for deletion
+    files = [f for f in files]
+    if len(files) > 0:
         for f in files:
             sddeletefile.deferred_delete(f.file_functional_id)
-            sdlog.info("SDINSGRP-001","File marked for deletion (%s)"%f.file_functional_id)
-        sddb.conn.commit() # final commit (we do all update in one transaction).
+            sdlog.info(
+                "SDINSGRP-001",
+                "File marked for deletion (%s)" % f.file_functional_id,
+            )
+
+        # final commit (we do all update in one transaction).
+        sddb.conn.commit()
 
         # deferred mode
         # if effective deletion is done by the daemon, uncomment this  line
-        #print("%i file(s) marked for deletion"%len(files))
+        # print("%i file(s) marked for deletion"%len(files))
 
         # immediate mode
         sddeletefile.delete_transfers_lowmem()
-        print("%i file(s) deleted"%len(files))
+        print("%i file(s) deleted" % len(files))
 
-        sdhistorydao.add_history_line(sdconst.ACTION_DELETE,insertion_group_id=insertion_group_id)
+        sdhistorydao.add_history_line(
+            HISTORY_STRUCT["action"]['delete'],
+            insertion_group_id=insertion_group_id,
+        )
     else:
         print("Nothing to delete")
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', '--action',choices=['delete'],required=True)
+    parser.add_argument('-a', '--action', choices=['delete'], required=True)
     parser.add_argument('-i', '--insertion_group_id')
     args = parser.parse_args()
 

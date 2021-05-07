@@ -6,16 +6,20 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
+"""
+MAIN run for TEST SUITE
+it allows to control the tests sequences from the most required to the most advanced ones
+"""
 import os
 
 from synda.tests.manager import Manager
 manager = Manager()
 manager.set_tests_mode()
 
-from synda.tests.context.api.esgf_search.list.constants import ENVS
-from synda.tests.tests.env.installed.synchronous.api.esgf_search.constants import TESTS_DIR
+from synda.tests.context.remove.constants import ENVS
+from synda.tests.tests.env.installed.subprocess.remove.constants import TESTS_DIR
 from synda.tests.tests.utils import search_requested_fullfilenames
-from synda.tests.tests.utils import run_simple_tests
+from synda.tests.tests.utils import run_test_under_subprocess
 
 
 def get_subcommand_dirname(subcommand):
@@ -31,10 +35,11 @@ def tests(coverage_activated=False):
     manager.create_test_environment(source=source)
 
     fullfilenames = search_requested_fullfilenames(
-        get_subcommand_dirname("list"),
+        get_subcommand_dirname("remove"),
     )
 
-    run_simple_tests(fullfilenames, coverage_activated=coverage_activated)
+    for fullfilename in fullfilenames:
+        run_test_under_subprocess(fullfilename, coverage_activated=coverage_activated)
 
     manager.delete_test_environment()
 
@@ -48,4 +53,3 @@ def main(coverage_activated=False):
 
 if __name__ == '__main__':
     main()
-

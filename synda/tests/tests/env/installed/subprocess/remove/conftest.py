@@ -15,22 +15,15 @@ manager.set_tests_mode()
 
 # COUNT SUCOMMAND
 
-from synda.tests.context.api.esgf_search.list.constants import ENVS
-from synda.tests.context.api.esgf_search.list.dataset.models import Context as DatasetListContext
-from synda.tests.context.api.esgf_search.list.file.models import Context as FileListContext
+from synda.tests.context.remove.constants import ENVS
+from synda.tests.context.remove.models import Context as RemoveContext
 
 
 # LIST FIXTURES
 
 @pytest.fixture
-def dataset_list_context():
-    context = DatasetListContext()
-    return context
-
-
-@pytest.fixture
-def file_list_context():
-    context = FileListContext()
+def remove_dataset_context():
+    context = RemoveContext()
     return context
 
 

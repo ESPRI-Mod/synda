@@ -8,11 +8,11 @@
 ##################################
 """
  From an existing synda user workspace environment with installed files & datasets,
- create a .tar file that will be located into the tests/data/installed/env1 directory
+ create a .tar file that will be located into the tests/data/env/installed/remove directory
 """
 import os
 
-from synda.tests.process.env.build.installed.env1.models import Process
+from synda.tests.process.env.build.installed.remove.models import Process
 
 
 if __name__ == '__main__':

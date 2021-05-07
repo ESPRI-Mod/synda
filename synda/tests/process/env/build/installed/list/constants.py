@@ -11,7 +11,7 @@ import os
 from synda.tests.process.env.build.installed.constants import INSTALLED_ENV_RESOURCES_DIRECTORY
 from synda.tests.process.env.build.installed.constants import INSTALLED_ENV_DATA_DIRECTORY
 
-FUNCTIONAL_DIRECTORY_NAME = "env1"
+FUNCTIONAL_DIRECTORY_NAME = "list"
 
 RESOURCES_DIRECTORY = os.path.join(
     INSTALLED_ENV_RESOURCES_DIRECTORY,
