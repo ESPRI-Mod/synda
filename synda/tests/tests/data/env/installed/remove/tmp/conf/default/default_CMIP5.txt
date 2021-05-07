@@ -1,0 +1,4 @@
+local_path_format=treevar
+#model=BNU-ESM MRI-ESM1 NICAM-09 NorESM1-M NorESM1-ME CanAM4 CanCM4 CanESM2 BCC-CSM1-1 BCC-CSM1-1-m GFDL-CM2-1 INM-CM4
+#model!=IPSL-CM5A-MR IPSL-CM5A-LR IPSL-CM5B-LR
+#ensemble=r1i1p1

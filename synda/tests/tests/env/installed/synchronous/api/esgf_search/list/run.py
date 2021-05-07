@@ -27,7 +27,7 @@ def get_subcommand_dirname(subcommand):
 
 def tests(coverage_activated=False):
 
-    source = ENVS["installed"]["env1"]["full_filename"]
+    source = ENVS["installed"]["env"]["full_filename"]
     manager.create_test_environment(source=source)
 
     fullfilenames = search_requested_fullfilenames(

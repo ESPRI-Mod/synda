@@ -5,24 +5,27 @@ Changelog
 
 Transfer Module
 ***************
+Version 3.35 - 2021-05-07
+    - bug correction :
+        - init-env subcommand now provides empty default selection files (see conf/default directory)
+        - issue # 185 : 'synda remove' fails to import sdsimplefilter
 Version 3.34 - 2021-04-02
     - bug correction :
-      - Default selection file for CMIP6 project is now delivered empty. It can be customized under user control
-      (issue # 178 : Dataset not found but available on ESGF web interface)
+        - Default selection file for CMIP6 project is now delivered empty. It can be customized under user control (issue # 178 : Dataset not found but available on ESGF web interface)
     - Documentation update
 Version 3.33 - 2021-03-31
     - bug correction :
-      - issue # 177 : synda now allows that ESGF openIDs are case sensitive
+        - issue # 177 : synda now allows that ESGF openIDs are case sensitive
 Version 3.32 - 2021-03-24 - (PYTHON 3)
     - enhancement
-      - code migration : third attempt to migrate synda from python 2 to python 3  (success)
+        - code migration : third attempt to migrate synda from python 2 to python 3  (success)
     - bug correction :
-      - issue # 176 (conda channel changed : now : conda-forge [ipsl channel has been removed])
+        - issue # 176 (conda channel changed : now : conda-forge [ipsl channel has been removed])
 Version 3.31 - 2021-03-22
     - enhancement
-      - code migration : second attempt to migrate synda from python 2 to python 3 (failure)
+        - code migration : second attempt to migrate synda from python 2 to python 3 (failure)
     - bug correction :
-      - issue # 168 (Master branch update broke sdnexturl.py)
+        - issue # 168 (Master branch update broke sdnexturl.py)
 Version 3.30 - 2021-03-22
     - enhancement
       - code migration : first attempt to migrate synda from python 2 to python 3 (failure)

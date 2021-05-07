@@ -6,6 +6,7 @@ global-exclude .*swp
 
 recursive-exclude synda/data_package *
 recursive-include synda/resources *
+recursive-include synda/tests/resources *
 recursive-include synda/tests/tests/data *
 include synda/tests/pytest.ini
 

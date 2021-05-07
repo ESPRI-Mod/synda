@@ -38,6 +38,6 @@ class Context(Base):
 
         assert TRANSFER_STATUS_DONE in captured.out
 
-        expected_filenames = ENVS["installed"]["env1"]["expected"][self.get_api_type()]
+        expected_filenames = ENVS["installed"]["env"]["expected"][self.get_api_type()]
         for filename in expected_filenames:
             assert filename in captured.out

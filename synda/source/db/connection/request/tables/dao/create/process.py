@@ -28,7 +28,7 @@ class Process(object):
 
     def execute(self):
 
-        self.create_manager.process(self.connection)
+        self.create_manager.process_tables(self.connection)
         return self.check()
 
     def check(self):
@@ -36,9 +36,11 @@ class Process(object):
         read_tables_manager = self.connection.get_item("tables crud").get_item("read")
         read_tables_manager.set_db_connection(self.connection)
         table_names = read_tables_manager.get_table_names()
-        assert sorted(table_names) == sorted(expected_table_names)
+        for table_name in expected_table_names:
+            assert table_name in table_names
 
         index_names = read_tables_manager.get_index_names()
         expected_index_names = self.create_manager.get_index_names()
-        assert sorted(index_names) == sorted(expected_index_names)
+        for index_name in expected_index_names:
+            assert index_name in index_names
         return True

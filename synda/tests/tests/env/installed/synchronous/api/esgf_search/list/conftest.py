@@ -39,7 +39,7 @@ def pytest_collection_modifyitems(session, config, items):
 
 
 def pytest_runtest_setup(item):
-    source = ENVS["installed"]["env1"]["full_filename"]
+    source = ENVS["installed"]["env"]["full_filename"]
     manager.create_test_environment(source=source)
 
 

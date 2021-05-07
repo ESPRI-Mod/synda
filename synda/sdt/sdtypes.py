@@ -443,7 +443,7 @@ def compute_total_size(files):
     if len(files) > 0:
         total_size = 0
         for f in files:
-            if 'size' not in f:
+            if 'size' not in list(f.keys()):
                 file_size = 0
             else:
                 file_size = int(f['size'])

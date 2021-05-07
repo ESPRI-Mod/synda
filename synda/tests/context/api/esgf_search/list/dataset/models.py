@@ -35,7 +35,7 @@ class Context(Base):
     def validation_after_subcommand_execution(self):
         captured = self.get_capsys().readouterr()
 
-        expected_datasets = ENVS["installed"]["env1"]["expected"][self.get_api_type()]
+        expected_datasets = ENVS["installed"]["env"]["expected"][self.get_api_type()]
         expected_dataset = expected_datasets[0]
         assert DATASET_STATUS_COMPLETE in captured.out
         assert expected_dataset in captured.out
