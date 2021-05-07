@@ -88,7 +88,7 @@ nearest_schedule = 'post'
 # choices : error | warning
 unknown_value_behaviour = 'error'
 
-mono_host_retry = False
+mono_host_retry = True
 proxymt_progress_stat = False
 
 lowmem = True
