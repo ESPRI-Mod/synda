@@ -20,7 +20,7 @@ from synda.sdt import sdaddap
 from synda.sdt import sdurlutils
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
-
+from synda.source.config.process.constants import NEVER_RAISE_EXCEPTION
 
 # not a singleton
 class SearchAPIProxy():
@@ -68,11 +68,15 @@ class SearchAPIProxy():
 
             # if exception occurs in sdnetutils.call_web_service() method, all
             # previous calls to this method inside this paginated call are also
-            # cancelled
+            # cancelled (unless call_web_service__RETRY is the calling method)
 
+            # (original)
             # we reset the offset so the paginated call can be restarted from the begining the next time
             # (maybe overkill as offset is reinitialized when entering 'call_web_service__PAGINATION()' func)
-            request.offset=0
+            # JFP:  In fact, if call_web_service__RETRY is being used, then resetting request.offset here will
+            # cause the wrong offset to be used on the next try.  It is better to give the paginator exclusive
+            # rights to change the offset.
+            #request.offset=0
 
             raise
 
@@ -91,7 +95,8 @@ class SearchAPIProxy():
               probability for a failure inside one pagination call is big (because one
               pagination call is composed of many sub calls (i.e. not just 2 or 3)).
         """
-        max_retry=3
+        # original max_retry=3
+        max_retry=6
 
         i=0
         while True:
@@ -133,7 +138,18 @@ class SearchAPIProxy():
 
             # call
             if sdconfig.mono_host_retry:
-                response=self.call_web_service__RETRY(request)
+                try:
+                    response=self.call_web_service__RETRY(request)
+                except:
+                    if NEVER_RAISE_EXCEPTION:
+                        # Despite retrying, we couldn't get a response from the index node.
+                        # Return the partial response that we already have, but mark it with an
+                        # "incomplete" flag.
+                        sdlog.debug('SYDPROXY-120', 'Network error, giving up with what we have' )
+                        paginated_response.store.status = 'incomplete'
+                        return paginated_response
+                    else:
+                        raise
             else:
                 response=self.call_web_service(request)
 
