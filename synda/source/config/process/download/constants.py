@@ -57,46 +57,36 @@ def get_http_clients(requested=Internal().processes_http_clients):
 # PROTOCOLS
 
 
-ALLOWED_TRANSFER_PROTOCOLS = ["http", "gridftp"]
+ALLOWED_TRANSFER_PROTOCOL = "http"
 
 
-def validate_transfer_protocols(choices):
+def validate_transfer_protocol(choice):
+    bad_internal_entry = True
+    transfer_protocols = dict(choices=ALLOWED_TRANSFER_PROTOCOL)
+    transfer_protocols["http"] = "http"
 
-    # remove not allowed requested choices
+    if len(choice) > 0:
 
-    remove_not_allowed(choices, ALLOWED_TRANSFER_PROTOCOLS)
+        wchoice = choice.lower()
 
-    transfer_protocols = dict(choices=ALLOWED_TRANSFER_PROTOCOLS)
+        if wchoice == ALLOWED_TRANSFER_PROTOCOL:
+            bad_internal_entry = False
 
-    transfer_protocols_default = dict(
-        default="http",
-    )
-
-    if len(choices) > 0:
-
-        choices = [choice.lower() for choice in choices]
-
-        if "http" in choices:
-            transfer_protocols["http"] = "http"
-            transfer_protocols.update(
-                transfer_protocols_default,
-            )
-
-        if "gridftp" in choices:
-            transfer_protocols["gridftp"] = "gridftp"
-            if "default" not in list(transfer_protocols.keys()):
-                transfer_protocols["default"] = "gridftp"
-    else:
-        transfer_protocols["http"] = "http"
-        transfer_protocols.update(
-            transfer_protocols_default,
+    if bad_internal_entry:
+        from synda.sdt import sdlog
+        sdlog.warning(
+            "INT-CONF-001",
+            "Not allowed entry {} = {}. 'http' is the only allowed transfer protocol".format(
+                "transfer_protocol",
+                choice
+            ),
         )
 
     return transfer_protocols
 
 
-def get_transfer_protocols(requested=Internal().processes_transfer_protocols):
-    return validate_transfer_protocols(requested)
+def get_transfer_protocol(requested=Internal().processes_transfer_protocol):
+    return validate_transfer_protocol(requested)["http"]
 
 
 TRANSFER_STATUS_DELETE = "delete"

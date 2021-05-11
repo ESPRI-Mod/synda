@@ -61,13 +61,13 @@ FILENAMES = {
             ]
         ),
     },
-    'transfer_protocols': {
+    'transfer_protocol': {
         "1": os.path.join(
             *[
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocols",
+                "transfer_protocol",
                 "1",
                 INTERNAL_FILENAME,
             ]
@@ -77,7 +77,7 @@ FILENAMES = {
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocols",
+                "transfer_protocol",
                 "2",
                 INTERNAL_FILENAME,
             ]
@@ -87,7 +87,7 @@ FILENAMES = {
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocols",
+                "transfer_protocol",
                 "3",
                 INTERNAL_FILENAME,
             ]

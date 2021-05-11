@@ -147,14 +147,12 @@ url_fields = ','.join(URL_FIELDS)  # used for the sdquicksearch call above
 
 def prioritize_urlps( urlps ):
     """Orders a list urlps so that the highest-priority urls come first.  urlps is a list of
-    lists of the form [url,protocol].  First, GridFTP urls are preferred over everything else.
+    lists of the form [url,protocol].  HTTP urls are preferred over everything else.
     Then, prefer some data nodes over others."""
     def priprotocol(protocol):
-        if protocol.find('gridftp') > 0:
-            return 0
         if protocol.find('http') > 0:
-            return 1
-        return 2
+            return 0
+        return 1
 
     def priurl(url):
         if url.find('llnl') >0:

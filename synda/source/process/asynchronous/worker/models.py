@@ -9,6 +9,7 @@
 import asyncio
 
 from synda.source.process.asynchronous.worker.dashboard.models import DashBoard
+from synda.source.process.asynchronous.task.models import Task
 
 
 class Worker(object):
@@ -25,6 +26,10 @@ class Worker(object):
         self.name = name
         self.manager = manager
         self.dashboard = DashBoard(self, identifier=self.name)
+
+    @property
+    def verbose(self):
+        return self.get_manager().verbose
 
     def get_name(self):
         return self.name
@@ -55,6 +60,9 @@ class Worker(object):
     def cancel_running_tasks(self):
         self.dashboard.cancel_running_tasks()
 
+    def create_task(self, name):
+        return Task(name, verbose=self.verbose)
+
     async def process_task(self):
         if self.queue.empty():
             # at the moment, tasks manager refuses to deliver a new task
@@ -66,7 +74,8 @@ class Worker(object):
             await asyncio.sleep(1)
         else:
             # get a task out of the queue
-            task = await self.queue.get()
+            scheduler_task = await self.queue.get()
+            task = self.create_task(scheduler_task)
             # process it if it is pending
             if task.pending():
                 try:

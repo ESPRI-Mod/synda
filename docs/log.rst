@@ -5,9 +5,19 @@ Changelog
 
 Transfer Module
 ***************
-Version 3.36 - 2021-xx-xx
+Version 3.4 - 2021-xx-xx
+    - enhancement
+        - downloads are performed asynchronously, using only one protocol (http) and under the control of asyncio
+        - std.conf new entries : big_file_size, big_file_chunksize
+        - internal.conf entry : transfer_protocol
     - tests :
-        - remove subcommand test : new file embedded is ten times smaller than previous one
+        - remove subcommand : new data file embedded is ten times smaller than previous one
+    - deprecated features
+        - gridftp protocol
+        - wget http client
+        - std.conf entries : gridftp_opt
+        - internal.conf entry : transfer_protocols
+        - documentation update
 Version 3.35 - 2021-05-07
     - bug correction :
         - init-env subcommand now provides empty default selection files (see conf/default directory)
@@ -31,12 +41,12 @@ Version 3.31 - 2021-03-22
         - issue # 168 (Master branch update broke sdnexturl.py)
 Version 3.30 - 2021-03-22
     - enhancement
-      - code migration : first attempt to migrate synda from python 2 to python 3 (failure)
+        - code migration : first attempt to migrate synda from python 2 to python 3 (failure)
     - bugs correction :
-      - synda -h and synda -V sub-commands are now operational
+        - synda -h and synda -V sub-commands are now operational
     - deprecated features
-      - 'open' subcommand
-      - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
+        - 'open' subcommand
+        - packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview
 Version 3.2 - 2021-01-11
     - config parameters externalisation
 

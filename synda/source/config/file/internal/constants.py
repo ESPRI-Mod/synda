@@ -44,7 +44,7 @@ DEFAULT_OPTIONS = dict(
 
     chunksize='5000',
     http_clients='wget, urllib',
-    transfer_protocols='http, gridftp',
+    transfer_protocol='http',
     get_files_caching='true',
 
     # hack

@@ -68,8 +68,8 @@ class Config(Base):
     def processes_chunksize(self):
         return self.get_data().getint('processes', 'chunksize')
     @property
-    def processes_transfer_protocols(self):
-        return [e.strip() for e in self.get_data().get('processes', 'transfer_protocols').split(',')]
+    def processes_transfer_protocol(self):
+        return self.get_data().get('processes', 'transfer_protocol')
     @property
     def processes_http_clients(self):
         return [e.strip() for e in self.get_data().get('processes', 'http_clients').split(',')]

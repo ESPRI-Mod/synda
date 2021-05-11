@@ -36,8 +36,8 @@ Default: 1
 
 ### download.http_fallback
 
-If true, if gridftp transfer fails, gridftp url is automatically replaced with
-http url.
+If true, if http transfer fails, the url is automatically replaced with
+another http url.
 
 Type: boolean
 
@@ -45,7 +45,7 @@ Default: false
 
 --------------------------------------------------------
 
-### download.direct_http_timeout (NEW)
+### download.direct_http_timeout
 
 Direct download HTTP timeout, in seconds (time to wait for HTTP response).
 
@@ -57,7 +57,7 @@ Default: 30
 
 --------------------------------------------------------
 
-### download.async_http_timeout (NEW)
+### download.async_http_timeout
 
 Asynchronous download HTTP timeout, in seconds (time to wait for HTTP response).
 
@@ -69,7 +69,7 @@ Default: 120
 
 --------------------------------------------------------
 
-### download.direct_db_timeout (NEW)
+### download.direct_db_timeout
 
 Used only for direct downloads
 This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.
@@ -80,7 +80,7 @@ Default: 120
 
 --------------------------------------------------------
 
-### download.async_db_timeout (NEW)
+### download.async_db_timeout
 
 Used only for asynchronous downloads
 This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.
@@ -88,6 +88,30 @@ This timeout parameter specifies how long, in seconds, the connection should wai
 Type: int
 
 Default: 12000
+
+--------------------------------------------------------
+
+### download.big_file_size
+
+Files that are a size greater than big_file_size that considered to be big files
+These files cannot be downloaded at once => the download is performed into parts
+
+(see download.big_file_chunksize parameter)
+
+Type: int
+
+Default: 795795708
+
+--------------------------------------------------------
+
+### download.big_file_chunksize
+
+Big files must be downloaded into several parts to not exceed max memory dedicated to the download process
+'big_file_chunksize' characterizes the size of each part (i.e. the data size of each http response) 
+
+Type: int
+
+Default: 16384
 
 --------------------------------------------------------
 

@@ -43,5 +43,4 @@ Usage
    selection_file
    download
    download_replica
-   gridftp
    replication

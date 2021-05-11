@@ -20,8 +20,7 @@ Synda download parameters
 +----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
 | Parameter      | Type     | Default value                                         | Function                                                    |
 +================+==========+=======================================================+=============================================================+
-| protocol       | *string* | http                                                  | Select which protocol to use to download the data.          |
-|                |          |                                                       | The two currently supported protocols are HTTP and GridFTP. |
+| protocol       | *string* | http                                                  | HTTP is the only supported protocol.                        |
 +----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
 | searchapi_host | *string* | <index.default_index> from sdt.conf file              | Set which ESGF index to use for files discovery.            |
 |                |          | or random index from <index.indexes> in parallel mode |                                                             |

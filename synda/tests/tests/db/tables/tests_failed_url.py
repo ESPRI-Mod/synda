@@ -19,7 +19,7 @@ manager = Manager()
 manager.set_tests_mode()
 
 from synda.source.db.connection.request.table.dao.delete.manager import Manager as DeleteTableManager
-from synda.source.db.task.failed_url.create.models import insert_into_failed_url
+from synda.source.db.task.failed_url.update.models import insert_into_failed_url
 from synda.source.db.task.failed_url.read.models import get_all_rows
 
 
@@ -39,4 +39,3 @@ def test_insert():
     assert file_functional_id == all_data[0]["file_id"]
 
     create_manager = DeleteTableManager()
-    create_manager.process_tables(conn)

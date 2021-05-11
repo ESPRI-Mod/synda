@@ -22,21 +22,20 @@ import hashlib
 from functools import partial
 import subprocess
 import argparse
-from synda.sdt import sdconfig
+
 from synda.sdt.sdexception import SDException,FileNotFoundException
-from synda.source.config.process.download.constants import get_transfer_protocols
+from synda.source.config.process.download.constants import get_transfer_protocol as get_config_transfer_protocol
 from synda.source.config.file.constants import CHECKSUM
 
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):
-        return get_transfer_protocols()['http']
+        return get_config_transfer_protocol()
     elif url.startswith('https://'):
-        return get_transfer_protocols()['http']
-    elif url.startswith('gsiftp://'):
-        return get_transfer_protocols()['gridftp']
+        return get_config_transfer_protocol()
     else:
         assert False
+
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.

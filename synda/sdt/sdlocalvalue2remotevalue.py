@@ -19,32 +19,18 @@ Notes
 import sys
 import argparse
 import json
-from synda.sdt import sdapp
 from synda.sdt import sdprint
-from synda.sdt import sdutils
 
-from synda.source.config.process.download.constants import get_transfer_protocols
 
 def local_urls_to_remote_urls(local_urls):
 
     remote_urls = []
 
+    http_suffix = '|application/netcdf|HTTPServer'
+
     for local_url in local_urls:
 
-        protocol = sdutils.get_transfer_protocol(local_url)
-
-        gridftp_suffix = '|application/gridftp|GridFTP'
-        http_suffix = '|application/netcdf|HTTPServer'
-
-        if protocol == get_transfer_protocols()['gridftp']:
-            suffix = gridftp_suffix
-        elif protocol == get_transfer_protocols()['http']:
-            suffix = http_suffix
-        else:
-            # if unknown, default to HTTP
-            suffix = http_suffix
-
-        remote_url = '%s%s' % (local_url, suffix)
+        remote_url = '%s%s' % (local_url, http_suffix)
         remote_urls.append(remote_url)
 
     return remote_urls

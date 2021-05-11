@@ -20,7 +20,7 @@ Manager().set_tests_mode()
 
 from synda.source.config.file.internal.models import Config
 from synda.source.config.process.download.constants import get_http_clients
-from synda.source.config.process.download.constants import get_transfer_protocols
+from synda.source.config.process.download.constants import get_transfer_protocol
 from synda.source.config.process.download.hack.constants import get_projects as get_hack_projects
 from synda.source.config.file.internal.models import Config as Internal
 from synda.tests.tests.config.file.internal.constants import FILENAMES
@@ -35,7 +35,7 @@ def test_return_default_value():
     assert config.is_processes_get_files_caching
     assert config.hack_projects_with_one_variable_per_dataset == internal.hack_projects_with_one_variable_per_dataset
     assert config.processes_http_clients == internal.processes_http_clients
-    assert config.processes_transfer_protocols == internal.processes_transfer_protocols
+    assert config.processes_transfer_protocol == internal.processes_transfer_protocol
 
 
 @pytest.mark.on_all_envs
@@ -79,52 +79,29 @@ def test_http_clients_urllib4():
 
 
 @pytest.mark.on_all_envs
-def test_transfer_protocols_empty():
-    config = Config(FILENAMES["transfer_protocols"]["1"])
-    assert config.processes_transfer_protocols == [""]
-    assert get_transfer_protocols(
-        requested=config.processes_transfer_protocols,
-    )["default"] == "http"
-    assert len(
-        list(get_transfer_protocols(
-            requested=config.processes_transfer_protocols,
-        ).keys()),
-    ) == 3
+def test_transfer_protocol_empty():
+    config = Config(FILENAMES["transfer_protocol"]["1"])
+    assert config.processes_transfer_protocol == ""
+    assert get_transfer_protocol(
+        requested=config.processes_transfer_protocol,
+    ) == "http"
+
+@pytest.mark.on_all_envs
+def test_bad_transfer_protocol():
+    config = Config(FILENAMES["transfer_protocol"]["2"])
+    assert config.processes_transfer_protocol == "gridftp"
+    assert get_transfer_protocol(
+        requested=config.processes_transfer_protocol,
+    ) == "http"
 
 
 @pytest.mark.on_all_envs
-def test_transfer_protocols_gridftp():
-    config = Config(FILENAMES["transfer_protocols"]["2"])
-    assert config.processes_transfer_protocols == ["gridftp"]
-    assert get_transfer_protocols(
-        requested=config.processes_transfer_protocols,
-    )["default"] == "gridftp"
-    assert get_transfer_protocols(
-        requested=config.processes_transfer_protocols,
-    )["gridftp"] == "gridftp"
-    assert len(
-        list(get_transfer_protocols(
-            requested=config.processes_transfer_protocols,
-        ).keys()),
-    ) == 3
-
-
-@pytest.mark.on_all_envs
-def test_transfer_protocols_gridftp4():
-    config = Config(FILENAMES["transfer_protocols"]["3"])
-    assert "http" in config.processes_transfer_protocols
-    assert "gridftp4" in config.processes_transfer_protocols
-    assert get_transfer_protocols(
-        requested=config.processes_transfer_protocols,
-    )["default"] == "http"
-    assert get_transfer_protocols(
-        requested=config.processes_transfer_protocols,
-    )["http"] == "http"
-    assert len(
-        list(get_transfer_protocols(
-            requested=config.processes_transfer_protocols,
-        ).keys()),
-    ) == 3
+def test_correct_transfer_protocol():
+    config = Config(FILENAMES["transfer_protocol"]["3"])
+    assert "http" in config.processes_transfer_protocol
+    assert get_transfer_protocol(
+        requested=config.processes_transfer_protocol,
+    ) == "http"
 
 
 @pytest.mark.on_all_envs

@@ -60,6 +60,7 @@ class Scheduler(Base):
                 ),
             )
 
+
 async def main(
         batch_manager_class,
         nb_max_workers=3,

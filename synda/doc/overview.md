@@ -6,7 +6,7 @@ This document describes how to search and download files from ESGF archives with
 
 ## General
 
-Synda downloads files using HTTP or GridFtp protocol.
+Synda downloads files using HTTP protocol.
 
 Search criteria called facets are used to select which files to download.
 

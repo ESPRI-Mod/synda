@@ -26,7 +26,7 @@ from synda.source.config.file.user.preferences.models import Config as Preferenc
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
-from synda.source.config.file.user.preferences.models import Config as Preferences
+
 preferences = Preferences()
 
 
@@ -331,10 +331,7 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
     return files
 
 
-def update_file(_file, commit=True, conn=None):
-
-    if not conn:
-        conn = Connection().get_database_connection()
+def update_file(_file, commit=True, conn=sddb.conn):
 
     keys = [
         'status',
@@ -362,7 +359,7 @@ def update_file(_file, commit=True, conn=None):
         conn,
     )
 
-    conn.close()
+    # conn.close()
     # check
     if rowcount == 0:
         raise SDException(

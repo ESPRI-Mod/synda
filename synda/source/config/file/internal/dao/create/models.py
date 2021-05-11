@@ -69,7 +69,7 @@ class Create(object):
 
         config.set('processes', 'chunksize', '5000')
         config.set('processes', 'http_clients', 'wget, urllib')
-        config.set('processes', 'transfer_protocols', 'http, gridftp')
+        config.set('processes', 'transfer_protocol', 'http')
         config.set('processes', 'get_files_caching', 'true')
 
         config.add_section('hack')

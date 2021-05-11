@@ -15,7 +15,6 @@ Notes
     - This module provides 3 ways to download data file
         - urllib.request (pure python)
         - wget (external script)
-        - gridftp (external script)
     - This module is mainly used as module, but can also be used as script for basic
       url download test.
 """
@@ -37,7 +36,7 @@ from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
 from synda.source.config.process.download.constants import get_http_clients
-from synda.source.config.process.download.constants import get_transfer_protocols
+from synda.source.config.process.download.constants import get_transfer_protocol
 
 def download(
         url,
@@ -54,7 +53,7 @@ def download(
 
     transfer_protocol = sdutils.get_transfer_protocol(url)
 
-    if transfer_protocol == get_transfer_protocols()['http']:
+    if transfer_protocol == get_transfer_protocol():
 
         if http_client == get_http_clients()["urllib"]:
 
@@ -84,29 +83,6 @@ def download(
 
         else:
             assert False
-
-    elif transfer_protocol == get_transfer_protocols()['gridftp']:
-
-        gridftp_opt = Preferences().download_gridftp_opt
-
-        if len(gridftp_opt) > 0:
-            os.environ["GRIDFTP_OPT"] = gridftp_opt
-
-        data_download_script_gridftp = Scripts().get("sdgetg")
-
-        li = prepare_args(
-            url,
-            full_local_path,
-            data_download_script_gridftp,
-            debug,
-            timeout,
-            verbosity,
-            hpss,
-        )
-
-        status, script_stderr = run_download_script(li, buffered)
-
-        killed = is_killed(transfer_protocol, status)
 
     else:
 
@@ -196,7 +172,7 @@ def run_download_script_BUFSTDXXX(li):
 def is_killed(transfer_protocol, status):
     """This func return True if child process has been killed."""
 
-    if transfer_protocol == get_transfer_protocols()['http']:
+    if transfer_protocol == get_transfer_protocol():
         if sdconfig.http_client == get_http_clients()["wget"]:
             if status in (7, 29):
                 return True
@@ -206,8 +182,6 @@ def is_killed(transfer_protocol, status):
             return False
         else:
             assert False
-    elif transfer_protocol == get_transfer_protocols()['gridftp']:
-        return False  # TODO
     else:
         assert False
 

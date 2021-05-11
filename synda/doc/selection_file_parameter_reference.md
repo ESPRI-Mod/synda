@@ -21,8 +21,7 @@ This section contains the following sub-groups:
 
 #### protocol
 
-Select which protocol to use to download the data. The two currently supported
-protocols are http and gridftp.
+http in the only available protocol to download the data.
 
 Type: string
 
@@ -44,7 +43,7 @@ Type: string
 
 Example:
 
-    url_replace=s|gsiftp://esgf1.dkrz.de/data/cmip6|gsiftp://gridftp.dkrz.de/pool/data/projects/cmip6|
+    url_replace=s|http://esgf1.dkrz.de/data/cmip6://esfg1.dkrz.de/pool/data/projects/cmip6|
 
 #### priority
 

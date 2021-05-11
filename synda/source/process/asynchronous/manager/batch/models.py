@@ -10,7 +10,6 @@ import asyncio
 
 from synda.source.containers import Container
 from synda.source.process.asynchronous.worker.models import Worker
-from synda.source.process.asynchronous.task.models import Task
 
 
 class Manager(Container):
@@ -40,12 +39,8 @@ class Manager(Container):
     def get_dashboard(self):
         return self.dashboard
 
-    async def get_task(self):
-        new_task = None
-        name = await self.get_scheduler().get_task(self.name)
-        if name:
-            new_task = Task(name, verbose=self.verbose)
-        return new_task
+    async def get_scheduler_task(self):
+        return await self.get_scheduler().get_task(self.name)
 
     def get_name(self):
         return self.name
@@ -96,9 +91,9 @@ class Manager(Container):
         success = False
         if queue.empty():
             if self.authorizes_new_task():
-                new_task = await self.get_task()
-                if new_task:
-                    queue.put_nowait(new_task)
+                scheduler_task = await self.get_scheduler_task()
+                if scheduler_task:
+                    queue.put_nowait(scheduler_task)
                     success = True
         else:
             success = True
@@ -119,15 +114,6 @@ class Manager(Container):
         self.add(
             self.get_worker_cls()(name, asyncio.Queue(), self),
         )
-
-    async def put_new_task(self, queue):
-        new_task = None
-        if self.scheduler.authorizes_new_task():
-            if not self.all_workers_are_busy():
-                new_task = await self.get_task()
-                if new_task:
-                    queue.put_nowait(new_task)
-        return new_task
 
     def all_workers_are_busy(self):
         nb_running_tasks, nb_cancelled_tasks, nb_done_tasks = self.get_metrics()

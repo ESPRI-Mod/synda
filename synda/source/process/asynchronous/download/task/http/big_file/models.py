@@ -12,9 +12,10 @@ import aiofiles
 
 from synda.source.process.asynchronous.download.task.http.models import Task as Base
 
-DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
+from synda.source.config.file.user.preferences.models import Config as Preferences
+preferences = Preferences()
 
-optimized_chunk_sizes = 16384
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 
 class Task(Base):
@@ -23,7 +24,7 @@ class Task(Base):
         Base.__init__(self, file_instance, name, verbose=verbose)
 
     async def read_chunk(self, response):
-        return await response.content.read(optimized_chunk_sizes)
+        return await response.content.read(preferences.download_big_file_chunksize)
 
     async def download(self):
 
@@ -79,28 +80,28 @@ class Task(Base):
         end = datetime.datetime.now()
         elapsed = end - begin
 
-        result = {
-            "file_id": self.file_instance.file_id,
-            "name": self.get_name(),
-            "size": file_size,
-            "duration": elapsed.total_seconds(),
-            "waiting_times": np.array(waiting_times).sum(),
-            "downloading_chunk_lengths": np.array(current_chunk_sizes).mean(),
+        debug = False
+        if debug:
+            result = {
+                "file_id": self.file_instance.file_id,
+                "name": self.get_name(),
+                "size": file_size,
+                "duration": elapsed.total_seconds(),
+                "waiting_times": np.array(waiting_times).sum(),
+                "downloading_chunk_lengths": np.array(current_chunk_sizes).mean(),
 
-            "writing_times": np.array(writing_times).sum(),
-            "writing_chunk_lengths": np.array(downloading_chunk_lengths).mean(),
+                "writing_times": np.array(writing_times).sum(),
+                "writing_chunk_lengths": np.array(downloading_chunk_lengths).mean(),
 
-            "downloaded mean chunk size observed": np.array(writing_chunk_lengths).mean(),
-            "start_date": begin.strftime(DATE_FORMAT),
-            "end_date": end.strftime(DATE_FORMAT),
-            "strategy": "asyncio aiohttp",
-            "sdget_status": self.file_instance.sdget_status,
-            "sdget_error_msg": self.file_instance.sdget_error_msg,
-            "local_path": self.file_instance.local_path,
-            "process_name": "small file task",
-        }
-
-        # if self.verbose:
-        #     print(result)
+                "downloaded mean chunk size observed": np.array(writing_chunk_lengths).mean(),
+                "start_date": begin.strftime(DATE_FORMAT),
+                "end_date": end.strftime(DATE_FORMAT),
+                "strategy": "asyncio aiohttp",
+                "sdget_status": self.file_instance.sdget_status,
+                "sdget_error_msg": self.file_instance.sdget_error_msg,
+                "local_path": self.file_instance.local_path,
+                "process_name": "small file task",
+            }
+            print(result)
 
         return status

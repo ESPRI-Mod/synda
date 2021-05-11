@@ -96,3 +96,6 @@ class Task(object):
 
     def running(self):
         return self.status == "running"
+
+    async def killed(self):
+        pass

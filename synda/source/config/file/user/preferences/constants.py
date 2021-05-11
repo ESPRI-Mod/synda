@@ -40,7 +40,6 @@ DEFAULT_OPTIONS = dict(
     ignorecase='true',
     default_listing_size='small',
     http_fallback='false',
-    gridftp_opt='',
     check_parameter='1',
     verbosity_level='info',
     scheduler_profiling='0',
@@ -76,4 +75,6 @@ DEFAULT_OPTIONS = dict(
     aesgf_search_chunksize="9000",
     esgf_search_http_timeout="300",
 
+    big_file_size='795795708',
+    big_file_chunksize='16384',
 )

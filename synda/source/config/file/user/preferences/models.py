@@ -136,7 +136,7 @@ class Config(Base):
 
     @property
     def is_download_http_fallback(self):
-        # if set to True, automatically switch to the next url if error occurs (e.g. move from gridftp url to http url)
+        # if set to True, automatically switch to the next url if error occurs
         return self.get_data().getboolean('download', 'http_fallback')
 
     @property
@@ -172,8 +172,12 @@ class Config(Base):
         return self.get_data().getint('download', 'url_max_buffer_size')
 
     @property
-    def download_gridftp_opt(self):
-        return self.get_data().get('download', 'gridftp_opt')
+    def download_big_file_size(self):
+        return self.get_data().getint('download', 'big_file_size')
+
+    @property
+    def download_big_file_chunksize(self):
+        return self.get_data().getint('download', 'big_file_chunksize')
 
     # SECTION : INDEX
 

@@ -2,7 +2,7 @@
 
 This document describes each parameter used in "internal.conf" file to configure Synda.
 
-Note: Do not change parameter values in case of doubt
+Note: Very few parameters might be customized. No guarantee of upward compatibility
 
 ### logger.feeder_name
 
@@ -122,15 +122,15 @@ Default: wget, urllib
 
 --------------------------------------------------------
 
-### processes.transfer_protocols
+### processes.transfer_protocol
 
-Allowed transfer protocols
+Allowed transfer protocol
 
-Mandatory values
+Mandatory value
 
 Type: string
 
-Default: http, gridftp
+Value: http
 
 --------------------------------------------------------
 

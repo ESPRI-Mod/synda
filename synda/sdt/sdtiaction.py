@@ -25,7 +25,7 @@ from synda.source.config.file.user.credentials.models import Config as Credentia
 
 from synda.source.config.process.download.constants import get_http_clients
 from synda.source.config.process.download.constants import TRANSFER
-from synda.source.config.process.download.constants import get_transfer_protocols
+from synda.source.config.process.download.constants import get_transfer_protocol
 from synda.source.process.env.manager import Manager
 
 
@@ -440,11 +440,20 @@ def metric(args):
     elif args.metric=='rate':
         sdmetric.print_rate(args.groupby,args.project,dry_run=args.dry_run)
 
-def remove(args):
-    from synda.sdt import sdremove,syndautils
 
-    stream=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=args.no_default,raise_exception_if_empty=True)
-    return sdremove.run(args,stream)
+def remove(args):
+    from synda.sdt import sdremove, syndautils
+
+    stream = syndautils.get_stream(
+        subcommand=args.subcommand,
+        parameter=args.parameter,
+        selection_file=args.selection_file,
+        no_default=args.no_default,
+        raise_exception_if_empty=True,
+    )
+
+    return sdremove.run(args, stream)
+
 
 def reset(args):
     from synda.sdt import sddeletefile
@@ -487,7 +496,7 @@ def replica_next(file_functional_id,args):
             file_=sdfiledao.get_file(file_functional_id)
             if file_ is not None:
 
-                if sdutils.get_transfer_protocol(file_.url)==get_transfer_protocols()['http']:
+                if sdutils.get_transfer_protocol(file_.url)==get_transfer_protocol():
                     sdmodify.replica_next(file_,replicas)
                 else:
                     print_stderr("Incorrect protocol") # only http protocol is supported in 'synda replica' for now

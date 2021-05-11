@@ -31,7 +31,7 @@ def run(metadata):
 
     Returns:
         Number of deleted items.
-ll
+
     Note
         - the func only change the status (i.e. data and metadata will be removed later by the daemon)
     """
