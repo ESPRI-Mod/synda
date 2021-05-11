@@ -120,6 +120,9 @@ class Create(object):
         # 200mn # TODO maybe use 86400 / 24h here
         config.set('download', 'async_db_timeout', '12000')
 
+        config.set('download', 'big_file_size', '795795708')
+        config.set('download', 'big_file_chunksize', '16384')
+
         config.add_section('api')
 
         # Maximum files number returned by one search-api call.
