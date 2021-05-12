@@ -1,102 +1,117 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Download the nearest replica &mdash; synda 3.0 documentation</title>
+  
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Download the nearest replica &#8212; synda 3.36 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ESGF replication" href="replication.html" />
-    <link rel="prev" title="Basic download" href="download.html" />
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="synda 3.0 documentation" href="../index.html"/>
+        <link rel="up" title="Synda Transfer Module" href="sdt.html"/>
+        <link rel="next" title="Download with GridFTP" href="gridftp.html"/>
+        <link rel="prev" title="Basic download" href="download.html"/> 
+
+  
+  <script src="../static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
    
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  <div class="wy-grid-for-nav">
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
           
 
-          <div class="body" role="main">
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
             
-  <div class="section" id="download-the-nearest-replica">
-<span id="download-nearest-replica"></span><h1>Download the nearest replica<a class="headerlink" href="#download-the-nearest-replica" title="Permalink to this headline">¶</a></h1>
-<p>To make Synda automatically select the nearest replica, set the following parameters in <code class="docutils literal notranslate"><span class="pre">$HOME/conf/sdt.conf</span></code>:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[behaviour]
-nearest=true
-nearest_mode=geolocation
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
 
-[locale]
-country=&lt;your country&gt;
-</pre></div>
-</div>
-<p>Country value examples:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>country=England
-country=Germany
-country=France
-[...]
-</pre></div>
-</div>
-<p>To show available replica for a file, you can run the command below:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda search cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -r
-</pre></div>
-</div>
-<p>To test if the nearest replica is correctly selected, you can run the command below:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda dump cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -F indent <span class="p">|</span> grep data_node
-</pre></div>
-</div>
-<p>It will show which replica has been selected.</p>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p>If you are located in England <em>AND</em> there is a replica available in England, output of the last command should looks like:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esgf-data1.ceda.ac.uk
-</pre></div>
-</div>
-<p>If you are located in Germany <em>AND</em> there is a replica available in Germany, output of the last command should looks like:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wdcc-esgf.dkrz.de
-</pre></div>
-</div>
-</div>
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
 
-
-          </div>
           
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">synda</a></h1>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Download the nearest replica</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="gridftp.html">Download with GridFTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="globustransfer.html">Download with Globus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html">ESGF replication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
@@ -107,53 +122,180 @@ country=France
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
 </ul>
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="sdt.html">Synda Transfer Module</a><ul>
-      <li>Previous: <a href="download.html" title="previous chapter">Basic download</a></li>
-      <li>Next: <a href="replication.html" title="next chapter">ESGF replication</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+        
+      <li>Download the nearest replica</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../sources/sdt/download_replica.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
 </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="download-the-nearest-replica">
+<span id="download-nearest-replica"></span><h1>Download the nearest replica<a class="headerlink" href="#download-the-nearest-replica" title="Permalink to this headline">¶</a></h1>
+<p>To make Synda automatically select the nearest replica, set the following parameters in <code class="docutils literal"><span class="pre">sdt/conf/sdt.conf</span></code>:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>[behaviour]
+nearest=true
+nearest_mode=geolocation
+
+[locale]
+country=&lt;your country&gt;
+</pre></div>
+</div>
+<p>Country value examples:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>country=England
+country=Germany
+country=France
+[...]
+</pre></div>
+</div>
+<p>To show available replica for a file, you can run the command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda search cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -r
+</pre></div>
+</div>
+<p>To test if the nearest replica is correctly selected, you can run the command below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>synda dump cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -F indent <span class="p">|</span> grep data_node
+</pre></div>
+</div>
+<p>It will show which replica has been selected.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>If you are located in England <em>AND</em> there is a replica available in England, output of the last command should looks like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>esgf-data1.ceda.ac.uk
+</pre></div>
+</div>
+<p>If you are located in Germany <em>AND</em> there is a replica available in Germany, output of the last command should looks like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wdcc-esgf.dkrz.de
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gridftp.html" class="btn btn-neutral float-right" title="Download with GridFTP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="download.html" class="btn btn-neutral" title="Basic download" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, CNRS.
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2021, CNRS.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/sdt/download_replica.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
-    
-  </body>
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../static/jquery.js"></script>
+      <script type="text/javascript" src="../static/underscore.js"></script>
+      <script type="text/javascript" src="../static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>
