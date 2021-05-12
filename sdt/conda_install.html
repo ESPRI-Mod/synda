@@ -1,183 +1,39 @@
 
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Installation from conda package &mdash; synda 3.0 documentation</title>
-  
 
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation from conda package &#8212; synda 3.36 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation from RPM package" href="rpm_install.html" />
-    <link rel="prev" title="Installation from source" href="src_install.html" /> 
-
-  
-  <script src="../static/js/modernizr.min.js"></script>
-
-</head>
-
-<body class="wy-body-for-nav">
-
+    <link rel="next" title="Upgrade from conda package" href="conda_upgrade.html" />
+    <link rel="prev" title="Synda Transfer Module" href="sdt.html" />
    
-  <div class="wy-grid-for-nav">
-
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> synda
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                3.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="src_install.html">Installation from source</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Installation from conda package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="rpm_install.html">Installation from RPM package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deb_install.html">Installation from DEB package</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../sdp/sdp.html">Synda Post-Processing Module</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
-</ul>
-
-            
-          
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">synda</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
-        
-      <li>Installation from conda package</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="../sources/sdt/conda_install.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
             
   <div class="section" id="installation-from-conda-package">
-<span id="deb-install-sdt"></span><h1>Installation from conda package<a class="headerlink" href="#installation-from-conda-package" title="Permalink to this headline">¶</a></h1>
+<span id="conda-install"></span><h1>Installation from conda package<a class="headerlink" href="#installation-from-conda-package" title="Permalink to this headline">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">transfer</span> <span class="pre">module</span></code> is now available on anaconda.</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
@@ -192,7 +48,7 @@
 role for this. Using sudo might not be the best idea as it is not really required at all and
 can interefere with other installation across the machine.</p>
 <p>Create a synda isolated environment if you wish:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create --name my-synda-envrionment <span class="nv">python</span><span class="o">=</span><span class="m">2</span>.7
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n my-synda-environment <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8+
 </pre></div>
 </div>
 <p>Activate the created environment:</p>
@@ -200,13 +56,13 @@ can interefere with other installation across the machine.</p>
 </pre></div>
 </div>
 <p>Then install <code class="docutils literal notranslate"><span class="pre">synda</span></code> package using command below:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c IPSL synda
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c ipsl -c conda-forge synda
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Specifying -c IPSL is using the IPSL anaconda channel to get the right package. Currently all dependencies are
-hosted on either default anaconda channels or the IPSL channels to ease the installation.</p>
+<p class="admonition-title">Note</p>
+<p>Specify : -c ipsl -c conda-forge (i.e. ipsl &amp; conda-forge anaconda channels) to get the right packages. Currently all dependencies are
+hosted on either default conda-forge anaconda channels or the ipsl channels to ease the installation.</p>
 </div>
 </div>
 <div class="section" id="configuration">
@@ -233,7 +89,9 @@ The structure of synda home directory should be as follows:</p>
 │   ├── credentials.conf
 │   ├── default
 │   │   ├── default_CMIP5.txt
+│   │   ├── default_CMIP6.txt
 │   │   └── default.txt
+│   ├── internal.conf
 │   └── sdt.conf
 ├── data
 ├── db
@@ -262,8 +120,8 @@ The structure of synda home directory should be as follows:</p>
 <p>Whether this is an upgrade install or a from scratch install this is how the directory tree should look.
 In case of a from scratch install, synda can init the environment for you at the first run of any synda command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda -h
-Synda has issues reaching your credential file, in ST_HOME.
-Running synda checking environment tool...
+Synda has issues reaching your credential file, <span class="k">in</span> ST_HOME.
+Running synda initializing or checking environment tools...
 Key file missing: bin/sdcleanup_tree.sh
 You can either copy previously used file into your ST_HOME <span class="o">(</span>/root/.synda<span class="o">)</span> or use synda init-env <span class="nb">command</span> to
 initialize a new synda home file system with stubs to fill properly.
@@ -273,7 +131,7 @@ Would you like to init the stubs of these files? y/n:
 </div>
 <p>In case the user replies positively, a directory will be created under ST_HOME with file stubs that need to be
 filled properly afterwards. Especially the openID credentials. Which can also be used interactively using synda.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;synda check-env
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;synda init-env or synda check-env
 Would you like to <span class="nb">set</span> your openID credentials? y/n: y
 openID url: https://open-id.url.com
 password: some_strong_password
@@ -285,72 +143,87 @@ Check complete.
 </div>
 
 
-           </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="rpm_install.html" class="btn btn-neutral float-right" title="Installation from RPM package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="src_install.html" class="btn btn-neutral" title="Installation from source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synda</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="sdt.html">Synda Transfer Module</a><ul>
+      <li>Previous: <a href="sdt.html" title="previous chapter">Synda Transfer Module</a></li>
+      <li>Next: <a href="conda_upgrade.html" title="next chapter">Upgrade from conda package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
     </div>
-  
+</div>
+<script>$('#searchbox').show(0);</script>
 
-  <hr/>
 
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2017, CNRS
 
-    </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-</footer>
+
+
+
 
         </div>
       </div>
-
-    </section>
-
-  </div>
-  
-
-
-  
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, CNRS.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/sdt/conda_install.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
 
     
+
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'3.0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../static/jquery.js"></script>
-        <script type="text/javascript" src="../static/underscore.js"></script>
-        <script type="text/javascript" src="../static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../static/js/theme.js"></script>
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  </body>
 </html>
