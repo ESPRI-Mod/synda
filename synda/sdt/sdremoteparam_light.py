@@ -23,8 +23,7 @@ Note
 
 import os
 import argparse
-from synda.sdt import sdapp
-from synda.sdt import sdconst
+
 from synda.sdt import sddquery
 from synda.sdt import sdremotequtils
 from synda.sdt import sdnetutils
@@ -32,52 +31,57 @@ from synda.sdt import sdindex
 from synda.sdt import sdi18n
 from synda.sdt import sdcliex
 
-def run(pname=None,host=None,facets_group=None,dry_run=False):
+
+def run(pname=None, host=None, facets_group=None, dry_run=False):
     """
     Returns:
         Dict of list of 'Item' object
     """
 
     if facets_group is None:
-        facets_group={}
+        facets_group = {}
 
-    assert isinstance(facets_group,dict)
+    assert isinstance(facets_group, dict)
 
     # keep only search-API parameter
-    facets_group=sddquery.search_api_parameters(facets_group)
+    facets_group = sddquery.search_api_parameters(facets_group)
 
     # set parameter name
     if pname is None:
-        facets_group['facets']=['*']
+        facets_group['facets'] = ['*']
     else:
-        facets_group['facets']=[pname]
+        facets_group['facets'] = [pname]
 
     # force 'limit' to 0
-    facets_group['limit']=['0']
+    facets_group['limit'] = ['0']
 
     # set default type
     if 'type' not in facets_group:
-        facets_group['type']=['File']
+        facets_group['type'] = ['File']
 
     # force 'fields' to '*'
-    facets_group['fields']=['*'] # TODO: maybe this is not needed to retrieve parameter (maybe we can set 'fields' only to 'id', or something like that)
+    # TODO: maybe this is not needed to retrieve parameter (maybe we can set 'fields' only to 'id',
+    #  or something like that)
+
+    facets_group['fields'] = ['*']
 
     # set index host
-    host=sdindex.get_default_index() if host is None else host
+    host = sdindex.get_default_index() if host is None else host
 
     # build url
-    url=sdremotequtils.build_url(facets_group,host)
+    url = sdremotequtils.build_url(facets_group, host)
 
     if dry_run:
         print(url)
         return {}
 
     # retrieve parameters
-    params=sdnetutils.call_param_web_service(url,60)
+    params = sdnetutils.call_param_web_service(url, 60)
 
     return params
 
 # init.
+
 
 if __name__ == '__main__':
     prog=os.path.basename(__file__)
