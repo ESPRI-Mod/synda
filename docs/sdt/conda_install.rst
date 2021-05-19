@@ -1,3 +1,5 @@
+.. _conda-install:
+
 Installation from conda package
 ===============================
 
@@ -45,7 +47,7 @@ Then install ``synda`` package using command below:
 
 .. note::
 
-    Specifying -c ipsl -c conda-forge is using the ipsl anaconda channel to get the right package. Currently all dependencies are
+    Specify : -c ipsl -c conda-forge (i.e. ipsl & conda-forge anaconda channels) to get the right packages. Currently all dependencies are
     hosted on either default conda-forge anaconda channels or the ipsl channels to ease the installation.
 
 Configuration

@@ -11,7 +11,7 @@ This document describes how to untar an ESGF archives partial mirror on a local 
 Synda installation
 ******************
 
-See :ref:`synda installation <src-install-sdt>`.
+See :ref:`synda installation <conda-install>`.
 
 Create a selection file to describe which data to replicate
 ***********************************************************
