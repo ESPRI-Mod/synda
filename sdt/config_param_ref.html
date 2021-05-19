@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Configuration parameter reference &mdash; synda 3.36 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Selection file parameter reference" href="selection_file_param_ref.html" />
+    <link rel="prev" title="Upgrade from conda package" href="conda_upgrade.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.36
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration parameter reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file_param_ref.html">Selection file parameter reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select_indexes.html">ESGF index selection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+        
+      <li>Configuration parameter reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/sdt/config_param_ref.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration-parameter-reference">
+<span id="config-param-ref-sdt"></span><h1>Configuration parameter reference<a class="headerlink" href="#configuration-parameter-reference" title="Permalink to this headline">¶</a></h1>
+<p>This document describes each parameter used in <code class="docutils literal notranslate"><span class="pre">sdt.conf</span></code> file to configure Synda.</p>
+<dl class="simple">
+<dt>notes</dt><dd><p>$HOME is the directory in which you want to place your Synda environment.</p>
+</dd>
+</dl>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 18%" />
+<col style="width: 5%" />
+<col style="width: 16%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Section</p></th>
+<th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[daemon]</p></td>
+<td><p>user</p></td>
+<td><p><em>string</em></p></td>
+<td></td>
+<td><p>Set daemon user.
+The daemon must be started by root for this parameter to work.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[daemon]</p></td>
+<td><p>group</p></td>
+<td><p><em>string</em></p></td>
+<td></td>
+<td><p>Set daemon group.
+The daemon must be started by root for this parameter to work.</p></td>
+</tr>
+<tr class="row-even"><td><p>[download]</p></td>
+<td><p>max_parallel_download</p></td>
+<td><p><em>int</em></p></td>
+<td><p>8</p></td>
+<td><p>Set the number of parallel download.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[download]</p></td>
+<td><p>hpss</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>True</p></td>
+<td><p>Gives HPSS service some time to move data from tape to disk.</p></td>
+</tr>
+<tr class="row-even"><td><p>[download]</p></td>
+<td><p>http_fallback</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>If HTTP transfer fails, URL is automatically replaced with another HTTP URL.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[download]</p></td>
+<td><p>url_max_buffer_size</p></td>
+<td><p><em>int</em></p></td>
+<td><p>3500</p></td>
+<td><p>limit buffer size as apache server doesnt support more than 4000 chars for HTTP GET buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p>[download]</p></td>
+<td><p>direct_http_timeout</p></td>
+<td><p><em>int</em></p></td>
+<td><p>30</p></td>
+<td><p>Direct download HTTP timeout, in seconds (time to wait for HTTP response).</p></td>
+</tr>
+<tr class="row-odd"><td><p>[download]</p></td>
+<td><p>async_http_timeout</p></td>
+<td><p><em>int</em></p></td>
+<td><p>120</p></td>
+<td><p>Asynchronous download HTTP timeout, in seconds (time to wait for HTTP response).</p></td>
+</tr>
+<tr class="row-even"><td><p>[download]</p></td>
+<td><p>direct_db_timeout</p></td>
+<td><p><em>int</em></p></td>
+<td><p>120</p></td>
+<td><p>This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away
+until raising an exception.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[download]</p></td>
+<td><p>async_db_timeout</p></td>
+<td><p><em>int</em></p></td>
+<td><p>12000</p></td>
+<td><p>This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away
+until raising an exception.</p></td>
+</tr>
+<tr class="row-even"><td><p>[download]</p></td>
+<td><p>big_file_size</p></td>
+<td><p><em>int</em></p></td>
+<td><p>795795708</p></td>
+<td><p>Files that are a size greater than big_file_size that considered to be big files. These files cannot be
+downloaded at once =&gt; the download is performed into parts (see download.big_file_chunksize parameter).</p></td>
+</tr>
+<tr class="row-odd"><td><p>[download]</p></td>
+<td><p>big_file_chunksize</p></td>
+<td><p><em>int</em></p></td>
+<td><p>16384</p></td>
+<td><p>Big files must be downloaded into several parts to not exceed max memory dedicated to the download process
+‘big_file_chunksize’ characterizes the size of each part (i.e. the data size of each http response).</p></td>
+</tr>
+<tr class="row-even"><td><p>[module]</p></td>
+<td><p>download</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>True</p></td>
+<td><p>If true, download files from ESGF.
+To use synda in discovery or post-processing mode only, set this parameter to false.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[log]</p></td>
+<td><p>verbosity_level</p></td>
+<td><p><em>string</em></p></td>
+<td><p>info</p></td>
+<td><p>Log verbosity level.</p></td>
+</tr>
+<tr class="row-even"><td><p>[log]</p></td>
+<td><p>scheduler_profiling</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Log code profiling information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[core]</p></td>
+<td><p>metadata_server_type</p></td>
+<td><p><em>string</em></p></td>
+<td><p>esgf_search_api</p></td>
+<td><p>Type of metadata server.
+Single possible value : <code class="docutils literal notranslate"><span class="pre">esgf_search_api</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>[core]</p></td>
+<td><p>default_path</p></td>
+<td><p><em>string</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$HOME/conf/default</span></code></p></td>
+<td><p>Default directory path for default selection files.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[core]</p></td>
+<td><p>selection_path</p></td>
+<td><p><em>string</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$HOME/selection</span></code></p></td>
+<td><p>Default directory path for selection files.</p></td>
+</tr>
+<tr class="row-even"><td><p>[core]</p></td>
+<td><p>data_path</p></td>
+<td><p><em>string</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$HOME/data</span></code></p></td>
+<td><p>Default data directory path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[core]</p></td>
+<td><p>db_path</p></td>
+<td><p><em>string</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$HOME/db</span></code></p></td>
+<td><p>Default database directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>[core]</p></td>
+<td><p>sandbox_path</p></td>
+<td><p><em>string</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$HOME/sandbox</span></code></p></td>
+<td><p>Default sandbox directory path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>unicode_term</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Use unicode characters for progress bar.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>progress</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Show progress bar for time consuming task.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>default_listing_size</p></td>
+<td><p><em>string</em></p></td>
+<td><p>small</p></td>
+<td><p>This parameter drives how many results are displayed by default for “search”, “list” and “dump” subcommands.
+Possible values are: “small”, “medium” and “big”.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>dump_listing_limit_for_small_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>50</p></td>
+<td><p>This parameter drives how many results are displayed by default in small mode for “dump” subcommand.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>dump_listing_limit_for_medium_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>100</p></td>
+<td><p>This parameter drives how many results are displayed by default in medium mode for “dump” subcommand.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>dump_listing_limit_for_big_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>6000</p></td>
+<td><p>This parameter drives how many results are displayed by default in big mode for “dump” subcommand.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>list_listing_limit_for_small_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>20</p></td>
+<td><p>This parameter drives how many results are displayed by default in small mode for “list” subcommand.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>list_listing_limit_for_medium_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>200</p></td>
+<td><p>This parameter drives how many results are displayed by default in medium mode for “list” subcommand.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>list_listing_limit_for_big_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>20000</p></td>
+<td><p>This parameter drives how many results are displayed by default in big mode for “list” subcommand.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>search_listing_limit_for_small_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>100</p></td>
+<td><p>This parameter drives how many results are displayed by default in small mode for “search” subcommand.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>search_listing_limit_for_medium_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>1000</p></td>
+<td><p>This parameter drives how many results are displayed by default in medium mode for “search” subcommand.</p></td>
+</tr>
+<tr class="row-even"><td><p>[interface]</p></td>
+<td><p>search_listing_limit_for_big_mode</p></td>
+<td><p><em>int</em></p></td>
+<td><p>6000</p></td>
+<td><p>This parameter drives how many results are displayed by default in big mode for “search” subcommand.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[interface]</p></td>
+<td><p>show_advanced_options</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Allow selection of advanced options associated with some subcommands.</p></td>
+</tr>
+<tr class="row-even"><td><p>[behaviour]</p></td>
+<td><p>onemgf</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Improve search performance.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[behaviour]</p></td>
+<td><p>check_parameter</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Perform parameter typo detection (name and value).</p></td>
+</tr>
+<tr class="row-even"><td><p>[behaviour]</p></td>
+<td><p>ignorecase</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>True</p></td>
+<td><p>Automatically fix incorrect case.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[behaviour]</p></td>
+<td><p>nearest</p></td>
+<td><p><em>boolean</em></p></td>
+<td><p>False</p></td>
+<td><p>Automatically select the nearest file replica.</p></td>
+</tr>
+<tr class="row-even"><td><p>[behaviour]</p></td>
+<td><p>nearest_mode</p></td>
+<td><p><em>string</em></p></td>
+<td><p>geolocation</p></td>
+<td><p>Set nearest replica algorithm.
+Possible values are: “geolocation” and “rtt”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[behaviour]</p></td>
+<td><p>lfae_mode</p></td>
+<td><p><em>string</em></p></td>
+<td><p>abort</p></td>
+<td><p>Set which policies to adopt when a download starts and local file already exists (lfae).
+Possible values are: “keep”, “replace” and “abort”.</p></td>
+</tr>
+<tr class="row-even"><td><p>[behaviour]</p></td>
+<td><p>incorrect_checksum_action</p></td>
+<td><p><em>string</em></p></td>
+<td><p>remove</p></td>
+<td><p>Set which policies to adopt when checksum doesn’t match.
+Possible values are: “remove” and “keep”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[index]</p></td>
+<td><p>indexes</p></td>
+<td><p><em>string</em></p></td>
+<td><p>pcmdi.llnl.gov</p></td>
+<td><p>Set the indexes list to use for large operation.
+This parameter is used for load-balancing on several indexes, to speed up large search-API requests.</p></td>
+</tr>
+<tr class="row-even"><td><p>[index]</p></td>
+<td><p>default_index</p></td>
+<td><p><em>string</em></p></td>
+<td><p>pcmdi.llnl.gov</p></td>
+<td><p>Set the index to use in priority.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[locale]</p></td>
+<td><p>country</p></td>
+<td><p><em>string</em></p></td>
+<td></td>
+<td><p>Set the country in which synda is installed.
+Used to compute nearest replica when “geolocation” mode is used.</p></td>
+</tr>
+<tr class="row-even"><td><p>[api]</p></td>
+<td><p>esgf_search_chunksize</p></td>
+<td><p><em>int</em></p></td>
+<td><p>9000</p></td>
+<td><p>Maximum files number returned by one api call.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[api]</p></td>
+<td><p>esgf_search_http_timeout</p></td>
+<td><p><em>int</em></p></td>
+<td><p>300</p></td>
+<td><p>HTTP timeout in seconds (time to wait for HTTP esgf_search api response).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="selection_file_param_ref.html" class="btn btn-neutral float-right" title="Selection file parameter reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="conda_upgrade.html" class="btn btn-neutral float-left" title="Upgrade from conda package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, CNRS.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

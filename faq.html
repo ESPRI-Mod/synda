@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Frequently asked questions &mdash; synda 3.36 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credits" href="credits.html" />
+    <link rel="prev" title="Synda Command reference" href="command_ref.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.36
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="sdt/sdt.html">Synda Transfer Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Frequently asked questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#transfer-module">Transfer Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-jpeg-zlib-syntaxerror-invalid-syntax">required = {‘jpeg’, ‘zlib’} - SyntaxError: invalid syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nosectionerror-no-section-esgf-credential">NoSectionError: No section: ‘esgf_credential’</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581">urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt">sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importerror-no-module-named-sysconfig">ImportError: No module named sysconfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pkg-resources-distributionnotfound-setuptools-1-0-error">‘pkg_resources.DistributionNotFound: setuptools&gt;=1.0’ error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-argparse-was-already-imported-error">‘Module argparse was already imported’ error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving">“(‘system library’, ‘fopen’, ‘No such file or directory’)” error during certificate retrieving</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error">‘OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown’ error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#no-module-named-datetime-error">“No module named datetime” error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error">AttributeError: ‘FFILibrary’ object has no attribute ‘SSL_OP_NO_TICKET’ error</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Frequently asked questions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/faq.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="frequently-asked-questions">
+<span id="faq"></span><h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="transfer-module">
+<h2>Transfer Module<a class="headerlink" href="#transfer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="required-jpeg-zlib-syntaxerror-invalid-syntax">
+<h3>required = {‘jpeg’, ‘zlib’} - SyntaxError: invalid syntax<a class="headerlink" href="#required-jpeg-zlib-syntaxerror-invalid-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Full error stack:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Collecting pillow&gt;<span class="o">=</span><span class="m">2</span>.4.0 <span class="o">(</span>from reportlab<span class="o">)</span>
+   Using cached Pillow-4.0.0.tar.gz
+      Complete output from <span class="nb">command</span> python setup.py egg_info:
+      Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+         File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line <span class="m">1</span>, <span class="k">in</span> &lt;module&gt;
+         File <span class="s2">&quot;/tmp/root/pip-build-525vF6/pillow/setup.py&quot;</span>, line <span class="m">138</span>
+            <span class="nv">required</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;jpeg&#39;</span>, <span class="s1">&#39;zlib&#39;</span><span class="o">}</span>
+                           ^
+      SyntaxError: invalid syntax
+</pre></div>
+</div>
+<p>This bug affects 3.6 version installed from source (RPM 3.6 and DEB 3.6 should not be affected). It has been fixed in 3.7.
+It can be fixed in 3.6 by downgrading the pypi pillow package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install <span class="nv">pillow</span><span class="o">==</span><span class="m">3</span>.4.2
+</pre></div>
+</div>
+</div>
+<div class="section" id="nosectionerror-no-section-esgf-credential">
+<h3>NoSectionError: No section: ‘esgf_credential’<a class="headerlink" href="#nosectionerror-no-section-esgf-credential" title="Permalink to this headline">¶</a></h3>
+<p>Run commands below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo sed -i -e <span class="s2">&quot;s/install/get&#39;,&#39;install/&quot;</span> /usr/share/python/synda/sdt/bin/sdconst.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581">
+<h3>urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)<a class="headerlink" href="#urlopen-error-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c-581" title="Permalink to this headline">¶</a></h3>
+<p>Run commands below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda certificate renew -x
+</pre></div>
+</div>
+</div>
+<div class="section" id="sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt">
+<h3>sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)<a class="headerlink" href="#sdexception-sdexception-code-sdatypes-101-message-path-not-found-srv-synda-sdt" title="Permalink to this headline">¶</a></h3>
+<p>Run commands below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /srv/synda/sdt
+sudo wget http://sd-104052.dedibox.fr/synda/patches/3.2/sdcleanup_tree.sh -O /usr/share/python/synda/sdt/bin/sdcleanup_tree.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="importerror-no-module-named-sysconfig">
+<h3>ImportError: No module named sysconfig<a class="headerlink" href="#importerror-no-module-named-sysconfig" title="Permalink to this headline">¶</a></h3>
+<p>This error occurs when installing Synda from source with an old version of <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script (&lt;20160215). Downloading the last version of install.sh script should fix the problem.</p>
+</div>
+<div class="section" id="pkg-resources-distributionnotfound-setuptools-1-0-error">
+<h3>‘pkg_resources.DistributionNotFound: setuptools&gt;=1.0’ error<a class="headerlink" href="#pkg-resources-distributionnotfound-setuptools-1-0-error" title="Permalink to this headline">¶</a></h3>
+<p>Run command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo /usr/share/python/synda/sdt/bin/pip install <span class="nv">setuptools</span><span class="o">==</span><span class="m">19</span>.7
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-argparse-was-already-imported-error">
+<h3>‘Module argparse was already imported’ error<a class="headerlink" href="#module-argparse-was-already-imported-error" title="Permalink to this headline">¶</a></h3>
+<p>Run command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall argparse
+</pre></div>
+</div>
+</div>
+<div class="section" id="system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving">
+<h3>“(‘system library’, ‘fopen’, ‘No such file or directory’)” error during certificate retrieving<a class="headerlink" href="#system-library-fopen-no-such-file-or-directory-error-during-certificate-retrieving" title="Permalink to this headline">¶</a></h3>
+<p>Unset all X509 environment variables and remove <code class="docutils literal notranslate"><span class="pre">~/.esg</span></code> directory.</p>
+</div>
+<div class="section" id="opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error">
+<h3>‘OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown’ error<a class="headerlink" href="#opensl-error-ssl-routines-ssl3-read-bytes-sslv3-alert-certificate-unknown-error" title="Permalink to this headline">¶</a></h3>
+<p>This signals that the server does not trust the certificate issued by the MyProxy CA.</p>
+<p>Run commands below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda certificate renew -x
+</pre></div>
+</div>
+<p>If this doesn’t help, you can find more information <a class="reference external" href="https://github.com/ESGF/esgf.github.io/wiki/CMIP5_FAQs">here</a></p>
+</div>
+<div class="section" id="no-module-named-datetime-error">
+<h3>“No module named datetime” error<a class="headerlink" href="#no-module-named-datetime-error" title="Permalink to this headline">¶</a></h3>
+<p>Remove virtualenv from the path:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:/usr/bin:/bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error">
+<h3>AttributeError: ‘FFILibrary’ object has no attribute ‘SSL_OP_NO_TICKET’ error<a class="headerlink" href="#attributeerror-ffilibrary-object-has-no-attribute-ssl-op-no-ticket-error" title="Permalink to this headline">¶</a></h3>
+<p>Run command below in <em>synda</em> virtualenv to retrieve pyopenssl HEAD version from GitHub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>easy_install https://github.com/pyca/pyopenssl/tarball/master
+</pre></div>
+</div>
+<p><a class="reference external" href="http://stackoverflow.com/questions/23006023/error-installing-pyopenssl">More information</a>.</p>
+</div>
+</div>
+<div class="section" id="post-processing-module">
+<h2>Post-Processing Module<a class="headerlink" href="#post-processing-module" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="credits.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="command_ref.html" class="btn btn-neutral float-left" title="Synda Command reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, CNRS.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

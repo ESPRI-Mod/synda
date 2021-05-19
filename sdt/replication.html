@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ESGF replication &mdash; synda 3.36 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Synda Files and Folders" href="../files.html" />
+    <link rel="prev" title="Download the nearest replica" href="download_replica.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> synda
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.36
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sdt.html">Synda Transfer Module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdt.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sdt.html#usage">Usage</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download.html">Basic download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="download_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ESGF replication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synda-installation">Synda installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-selection-file-to-describe-which-data-to-replicate">Create a selection file to describe which data to replicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-discovery">File discovery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#files-download">Files download</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#watching-download-progress">Watching download progress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-datasets-to-the-latest-version">Update datasets to the latest version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remove-old-datasets-version">Remove old datasets version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-management">Error management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#retrying-download-in-errors">Retrying download in errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-replica-for-all-files-in-errors">Changing replica for all files in errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-more-details-about-errors">Getting more details about errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Synda Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License and Disclaimer</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">synda</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="sdt.html">Synda Transfer Module</a> &raquo;</li>
+        
+      <li>ESGF replication</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/sdt/replication.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="esgf-replication">
+<span id="replication-sdt"></span><h1>ESGF replication<a class="headerlink" href="#esgf-replication" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how to untar an ESGF archives partial mirror on a local cluster and keep it up to date.</p>
+</div>
+<div class="section" id="synda-installation">
+<h2>Synda installation<a class="headerlink" href="#synda-installation" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="conda_install.html#conda-install"><span class="std std-ref">synda installation</span></a>.</p>
+</div>
+<div class="section" id="create-a-selection-file-to-describe-which-data-to-replicate">
+<h2>Create a selection file to describe which data to replicate<a class="headerlink" href="#create-a-selection-file-to-describe-which-data-to-replicate" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="selection_file.html#selection-file"><span class="std std-ref">the selection file section</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can untar many selection files (e.g. one per project). Selection file(s) must be stored in the “selection” folder.</p>
+</div>
+</div>
+<div class="section" id="file-discovery">
+<h2>File discovery<a class="headerlink" href="#file-discovery" title="Permalink to this headline">¶</a></h2>
+<p>Install your selection file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
+</pre></div>
+</div>
+<p>Or upgrade the file discovery:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda upgrade
+</pre></div>
+</div>
+<p>At this point, files metadata are stored in local database and data download can begin.</p>
+</div>
+<div class="section" id="files-download">
+<h2>Files download<a class="headerlink" href="#files-download" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="start">
+<h3>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h3>
+<p>To start the download, run command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda daemon start
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop">
+<h3>Stop<a class="headerlink" href="#stop" title="Permalink to this headline">¶</a></h3>
+<p>To stop the download, run command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda daemon stop
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="watching-download-progress">
+<h2>Watching download progress<a class="headerlink" href="#watching-download-progress" title="Permalink to this headline">¶</a></h2>
+<p>Commands below give download status and progress:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda queue
+synda watch
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-datasets-to-the-latest-version">
+<h2>Update datasets to the latest version<a class="headerlink" href="#update-datasets-to-the-latest-version" title="Permalink to this headline">¶</a></h2>
+<p>In ESGF, a dataset can change over time and thus have several versions. Re-run the discovery to search for new versions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda upgrade
+</pre></div>
+</div>
+<p>Then start the Synda service to start the download of new versions if any.</p>
+</div>
+<div class="section" id="remove-old-datasets-version">
+<h2>Remove old datasets version<a class="headerlink" href="#remove-old-datasets-version" title="Permalink to this headline">¶</a></h2>
+<p>Run command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda autoremove
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-management">
+<h2>Error management<a class="headerlink" href="#error-management" title="Permalink to this headline">¶</a></h2>
+<p>Errors can occur during download for different reasons: remote server is
+down, incorrect files access right, authorization issue, authentication
+issue, etc.</p>
+<div class="section" id="displaying-errors">
+<h3>Displaying errors<a class="headerlink" href="#displaying-errors" title="Permalink to this headline">¶</a></h3>
+<p>Command below can be used to print how many error occured</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda queue
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="retrying-download-in-errors">
+<h2>Retrying download in errors<a class="headerlink" href="#retrying-download-in-errors" title="Permalink to this headline">¶</a></h2>
+<p>Command below can be used to retry transfer(s) in error:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda retry
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>crontab can be used to retry errors (e.g. every day).</p>
+</div>
+</div>
+<div class="section" id="changing-replica-for-all-files-in-errors">
+<h2>Changing replica for all files in errors<a class="headerlink" href="#changing-replica-for-all-files-in-errors" title="Permalink to this headline">¶</a></h2>
+<p>Sometime, current file replica always fails as the remote server is
+down. One way to solve the problem is to change the file replica.</p>
+<p>To change the replica for all files in error, use command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda replica next
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-more-details-about-errors">
+<h2>Getting more details about errors<a class="headerlink" href="#getting-more-details-about-errors" title="Permalink to this headline">¶</a></h2>
+<p>Log files below contain useful information about errors:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">discovery.log</span></code> contains information regarding discovery.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transfer.log</span></code> contains information regarding download.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">debug.log</span></code> contains low-level download information.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Log files are stored in <code class="docutils literal notranslate"><span class="pre">$HOME/log</span></code> folder.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../files.html" class="btn btn-neutral float-right" title="Synda Files and Folders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="download_replica.html" class="btn btn-neutral float-left" title="Download the nearest replica" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, CNRS.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
