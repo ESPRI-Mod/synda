@@ -42,13 +42,13 @@ This folder contains log files.
 
 --------------------------------------------------------
 
-### configuration
+### conf
 
 This folder contains configuration files.
 
 --------------------------------------------------------
 
-### database
+### db
 
 This folder contains database file.
 

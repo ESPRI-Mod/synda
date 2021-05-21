@@ -43,7 +43,7 @@ DEFAULT_OPTIONS = dict(
     # processes
 
     chunksize='5000',
-    http_clients='wget, urllib',
+    http_client='aiohttp',
     transfer_protocol='http',
     get_files_caching='true',
 

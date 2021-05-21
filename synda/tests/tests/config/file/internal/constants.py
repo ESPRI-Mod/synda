@@ -29,13 +29,13 @@ FILENAMES = {
             INTERNAL_FILENAME,
         ]
     ),
-    'http_clients': {
+    'http_client': {
         "1": os.path.join(
             *[
                 ROOT,
                 "file",
                 "internal",
-                "http_clients",
+                "http_client",
                 "1",
                 INTERNAL_FILENAME,
             ]
@@ -45,18 +45,8 @@ FILENAMES = {
                 ROOT,
                 "file",
                 "internal",
-                "http_clients",
+                "http_client",
                 "2",
-                INTERNAL_FILENAME,
-            ]
-        ),
-        "3": os.path.join(
-            *[
-                ROOT,
-                "file",
-                "internal",
-                "http_clients",
-                "3",
                 INTERNAL_FILENAME,
             ]
         ),

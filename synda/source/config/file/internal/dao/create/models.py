@@ -68,7 +68,7 @@ class Create(object):
         config.add_section('processes')
 
         config.set('processes', 'chunksize', '5000')
-        config.set('processes', 'http_clients', 'wget, urllib')
+        config.set('processes', 'http_client', 'aiohttp')
         config.set('processes', 'transfer_protocol', 'http')
         config.set('processes', 'get_files_caching', 'true')
 

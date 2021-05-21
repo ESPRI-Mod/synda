@@ -72,7 +72,6 @@ class Download():
             tr.url,
             tr.get_full_local_path(),
             debug=False,
-            http_client=get_http_clients()["wget"],
             timeout=Preferences().download_async_http_timeout,
             verbosity=0,
             buffered=True,

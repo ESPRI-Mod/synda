@@ -42,7 +42,6 @@ def download(
         url,
         full_local_path,
         debug=False,
-        http_client=sdconfig.http_client,
         timeout=Preferences().download_async_http_timeout,
         verbosity=0,
         buffered=True,
@@ -54,35 +53,21 @@ def download(
     transfer_protocol = sdutils.get_transfer_protocol(url)
 
     if transfer_protocol == get_transfer_protocol():
+        data_download_script_http = Scripts().get("sdget")
 
-        if http_client == get_http_clients()["urllib"]:
+        li = prepare_args(
+            url,
+            full_local_path,
+            data_download_script_http,
+            debug,
+            timeout,
+            verbosity,
+            hpss,
+        )
 
-            status = sdget_urllib.download_file(
-                url,
-                full_local_path,
-                timeout,
-            )
+        status, script_stderr = run_download_script(li, buffered)
 
-        elif http_client == get_http_clients()["wget"]:
-
-            data_download_script_http = Scripts().get("sdget")
-
-            li = prepare_args(
-                url,
-                full_local_path,
-                data_download_script_http,
-                debug,
-                timeout,
-                verbosity,
-                hpss,
-            )
-
-            status, script_stderr = run_download_script(li, buffered)
-
-            killed = is_killed(transfer_protocol, status)
-
-        else:
-            assert False
+        killed = is_killed(transfer_protocol, status)
 
     else:
 
@@ -173,15 +158,10 @@ def is_killed(transfer_protocol, status):
     """This func return True if child process has been killed."""
 
     if transfer_protocol == get_transfer_protocol():
-        if sdconfig.http_client == get_http_clients()["wget"]:
-            if status in (7, 29):
-                return True
-            else:
-                return False
-        elif sdconfig.http_client == get_http_clients()["urllib"]:
-            return False
+        if status in (7, 29):
+            return True
         else:
-            assert False
+            return False
     else:
         assert False
 

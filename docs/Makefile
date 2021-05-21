@@ -49,7 +49,7 @@ help:
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 	@echo "  coverage   to run coverage check of the documentation (if enabled)"
-	@echo "  gh-pages   to make standalone HTML files and commit them on gh-pages"
+	@echo "  doc        to make standalone HTML files and commit them on doc"
 
 .PHONY: clean
 clean:
@@ -225,13 +225,13 @@ pseudoxml:
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
 
-gh-pages:
+doc:
 	cd $(BUILDDIR)/html;\
-    git pull origin gh-pages;\
+    git pull origin doc;\
     cd -;\
     $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html;\
     cd $(BUILDDIR)/html;\
 	git add .;\
 	git commit -m "Docs rebuilt at $(date +'%Y/%m/%d - %H:%M:%S')";\
-	git push origin gh-pages
-	@echo "Build finished and committed on gh-pages."
+	git push origin doc
+	@echo "Build finished and committed on doc."

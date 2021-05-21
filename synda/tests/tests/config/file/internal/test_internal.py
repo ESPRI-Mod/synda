@@ -34,7 +34,7 @@ def test_return_default_value():
     assert config.processes_chunksize == internal.processes_chunksize
     assert config.is_processes_get_files_caching
     assert config.hack_projects_with_one_variable_per_dataset == internal.hack_projects_with_one_variable_per_dataset
-    assert config.processes_http_clients == internal.processes_http_clients
+    assert config.processes_http_client == internal.processes_http_client
     assert config.processes_transfer_protocol == internal.processes_transfer_protocol
 
 
@@ -47,34 +47,22 @@ def test_processes_get_files_caching():
 
 @pytest.mark.on_all_envs
 def test_http_clients_empty():
-    config = Config(FILENAMES["http_clients"]["1"])
-    assert config.processes_http_clients == [""]
-    assert get_http_clients(requested=config.processes_http_clients)["default"] == "wget"
+    config = Config(FILENAMES["http_client"]["1"])
+    assert config.processes_http_client == ""
+    assert get_http_clients(requested=config.processes_http_client)["default"] == "aiohttp"
     assert len(
-        list(get_http_clients(requested=config.processes_http_clients).keys()),
+        list(get_http_clients(requested=config.processes_http_client).keys()),
     ) == 3
 
 
 @pytest.mark.on_all_envs
-def test_http_clients_urllib():
-    config = Config(FILENAMES["http_clients"]["2"])
-    assert config.processes_http_clients == ["urllib"]
-    assert get_http_clients(requested=config.processes_http_clients)["default"] == "urllib"
-    assert get_http_clients(requested=config.processes_http_clients)["urllib"] == "urllib"
+def test_http_clients_aiohttp():
+    config = Config(FILENAMES["http_client"]["2"])
+    assert config.processes_http_client == "aiohttp"
+    assert get_http_clients(requested=config.processes_http_client)["default"] == "aiohttp"
+    assert get_http_clients(requested=config.processes_http_client)["aiohttp"] == "aiohttp"
     assert len(
-        list(get_http_clients(requested=config.processes_http_clients).keys()),
-    ) == 3
-
-
-@pytest.mark.on_all_envs
-def test_http_clients_urllib4():
-    config = Config(FILENAMES["http_clients"]["3"])
-    assert "wget" in config.processes_http_clients
-    assert "urllib4" in config.processes_http_clients
-    assert get_http_clients(requested=config.processes_http_clients)["default"] == "wget"
-    assert get_http_clients(requested=config.processes_http_clients)["wget"] == "wget"
-    assert len(
-        list(get_http_clients(requested=config.processes_http_clients).keys()),
+        list(get_http_clients(requested=config.processes_http_client).keys()),
     ) == 3
 
 

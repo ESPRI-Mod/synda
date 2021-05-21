@@ -21,7 +21,7 @@ This section contains the following sub-groups:
 
 #### protocol
 
-http in the only available protocol to download the data.
+http is the only available protocol to download the data.
 
 Type: string
 

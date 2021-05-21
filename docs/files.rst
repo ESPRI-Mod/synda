@@ -47,7 +47,7 @@ Folders
 
 ``log``
     This folder contains log files.
-    Location is ``$HOME/{sdt,sdp}/log``.
+    Location is ``$HOME/log``.
 
 ``selection``
     This folder contains selection files.

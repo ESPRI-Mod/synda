@@ -71,8 +71,8 @@ class Config(Base):
     def processes_transfer_protocol(self):
         return self.get_data().get('processes', 'transfer_protocol')
     @property
-    def processes_http_clients(self):
-        return [e.strip() for e in self.get_data().get('processes', 'http_clients').split(',')]
+    def processes_http_client(self):
+        return self.get_data().get('processes', 'http_client')
     @property
     def is_processes_get_files_caching(self):
         return self.get_data().getboolean('processes', 'get_files_caching')

@@ -48,7 +48,7 @@ def run(files,
         timeout = preferences.download_direct_http_timeout
 
     if not http_client:
-        http_client = get_http_clients()["wget"]
+        http_client = get_http_clients()["aiohttp"]
 
     if not local_path_prefix:
         paths = config_manager.get_paths()
@@ -106,7 +106,6 @@ def run(files,
             f.url,
             local_path,
             debug,
-            http_client,
             timeout,
             verbosity,
             buffered,

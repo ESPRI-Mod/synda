@@ -110,15 +110,15 @@ Default: 5000
 
 --------------------------------------------------------
 
-### processes.http_clients
+### processes.http_client
 
-Allowed http clients
+Allowed http client
 
 Mandatory values
 
 Type: string
 
-Default: wget, urllib
+Default: aiohttp
 
 --------------------------------------------------------
 

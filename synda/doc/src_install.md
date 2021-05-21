@@ -68,12 +68,11 @@ synda intro | more
 
 ## Files location
 
-* $HOME/sdt/doc
-* $HOME/sdt/bin
-* $HOME/sdt/conf
-* $HOME/sdt/data
-* $HOME/sdt/db
-* $HOME/sdt/log
-* $HOME/sdt/tmp
-* $HOME/sdt/tmp/.esg
-* $HOME/sdt/tmp/.esg/certificates
+* $HOME/bin
+* $HOME/conf
+* $HOME/data
+* $HOME/db
+* $HOME/log
+* $HOME/tmp
+* $HOME/tmp/.esg
+* $HOME/tmp/.esg/certificates

@@ -8,7 +8,7 @@
 ##################################
 from synda.source.config.file.internal.models import Config as Internal
 
-ALLOWED_HTTP_CLIENTS = ["wget", "urllib"]
+ALLOWED_HTTP_CLIENTS = ["aiohttp"]
 
 
 def remove_not_allowed(choices, allowed):
@@ -26,23 +26,18 @@ def validate_http_clients(choices):
     http_clients = dict(choices=ALLOWED_HTTP_CLIENTS)
 
     http_client_default = dict(
-        default="wget",
+        default="aiohttp",
     )
 
     if len(choices) > 0:
         choices = [choice.lower() for choice in choices]
-        if "wget" in choices:
-            http_clients["wget"] = "wget"
+        if "aiohttp" in choices:
+            http_clients["aiohttp"] = "aiohttp"
             http_clients.update(
                 http_client_default,
             )
-
-        if "urllib" in choices:
-            http_clients["urllib"] = "urllib"
-            if "default" not in list(http_clients.keys()):
-                http_clients["default"] = "urllib"
     else:
-        http_clients["wget"] = "wget"
+        http_clients["aiohttp"] = "aiohttp"
         http_clients.update(
             http_client_default,
         )
@@ -50,9 +45,9 @@ def validate_http_clients(choices):
     return http_clients
 
 
-def get_http_clients(requested=Internal().processes_http_clients):
+def get_http_clients(requested=Internal().processes_http_client):
 
-    return validate_http_clients(requested)
+    return validate_http_clients([requested])
 
 # PROTOCOLS
 

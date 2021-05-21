@@ -319,7 +319,11 @@ if len(params)<1:
 reversed_params=reverse_params(params)
 
 # load norm.=>non-norm. model mapping in memory
-models=get_models_mapping(params['model'])
+
+if 'model' in params.keys():
+    models = get_models_mapping(params['model'])
+elif 'source_id' in params.keys():
+    models = get_models_mapping(params['source_id'])
 
 # data structure used by ignorecase mode
 ucvalue2value=build_ucvalue_index(reversed_params)
