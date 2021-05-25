@@ -8,9 +8,9 @@ Synopsis
 ``synda`` is a command line tool to search and download files from the Earth System Grid Federation (`ESGF <http://pcmdi.llnl.gov/>`_) archive.
 
 .. image:: synda.png
-   :scale: 50%
+   :scale: 65%
    :alt: SYNDA architecture
-   :align: center
+   :align: left
 
 Content
 *******
