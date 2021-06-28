@@ -6,6 +6,8 @@ Version 3.4 - 2021-xx-xx
         - documentation update
     - tests :
         - remove subcommand : new data file embedded is ten times smaller than previous one
+    - bug correction :
+        - Subcommande "synda param data_node" returns the exhaustive list of data nodes
     - deprecated features
         - gridftp protocol
         - wget http client

@@ -32,7 +32,7 @@ from synda.sdt import sdi18n
 from synda.sdt import sdcliex
 
 
-def run(pname=None, host=None, facets_group=None, dry_run=False):
+def run(pname=None, host=None, facets_group=None, dry_run=False, fields=None):
     """
     Returns:
         Dict of list of 'Item' object
@@ -63,8 +63,10 @@ def run(pname=None, host=None, facets_group=None, dry_run=False):
     # TODO: maybe this is not needed to retrieve parameter (maybe we can set 'fields' only to 'id',
     #  or something like that)
 
-    facets_group['fields'] = ['*']
-
+    if not fields:
+        facets_group['fields'] = ['*']
+    else:
+        facets_group['fields'] = fields
     # set index host
     host = sdindex.get_default_index() if host is None else host
 

@@ -12,7 +12,7 @@ Version 3.4 - 2021-xx-xx
         - internal.conf entry : transfer_protocol
         - documentation update
     - bug correction :
-        - synda param data_node returns the exhaustive list of data nodes
+        - Subcommande "synda param data_node" returns the exhaustive list of data nodes
     - tests :
         - remove subcommand : new data file embedded is ten times smaller than previous one
     - deprecated features

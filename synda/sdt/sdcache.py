@@ -230,13 +230,32 @@ def get_parameters_from_searchapi(host,project,dry_run=False):
     params={}
 
     # First pass to retrieve most parameters. TAG4353453453
-    d=sdremoteparam_light.run(facets_group={'type':['Dataset']},dry_run=dry_run,host=host)
+    d = sdremoteparam_light.run(
+        facets_group={'type': ['Dataset']},
+        dry_run=dry_run,
+        host=host,
+    )
     params.update(d)
 
     #sdprogress.SDProgressDot.print_char()
 
     # Second pass needed as some parameters are missing when using 'facets=*' (currently, only for 'index_node' parameter)
-    d=sdremoteparam_light.run(pname='index_node',facets_group={'type':['Dataset']},dry_run=dry_run,host=host)
+    d = sdremoteparam_light.run(
+        pname='index_node',
+        facets_group={'type': ['Dataset']},
+        dry_run=dry_run,
+        host=host,
+        fields=['index_node'],
+    )
+    params.update(d)
+
+    d = sdremoteparam_light.run(
+        pname='data_node',
+        facets_group={'type': ['Dataset']},
+        dry_run=dry_run,
+        host=host,
+        fields=['data_node'],
+    )
     params.update(d)
 
     #sdprogress.SDProgressDot.print_char()
