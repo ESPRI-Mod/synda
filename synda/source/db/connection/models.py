@@ -44,6 +44,11 @@ from synda.source.config.file.db.models import Config as DBFile
 from synda.source.db.connection.cursor.exceptions import CursorNotValid
 
 
+def get_db_connection():
+    connection = Connection()
+    return connection.get_database_connection()
+
+
 class Connection(Manager):
 
     def __init__(self, full_filename="", timeout=0):

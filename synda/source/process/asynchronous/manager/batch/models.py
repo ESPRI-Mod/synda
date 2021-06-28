@@ -39,8 +39,8 @@ class Manager(Container):
     def get_dashboard(self):
         return self.dashboard
 
-    async def get_scheduler_task(self):
-        return await self.get_scheduler().get_task(self.name)
+    async def get_scheduler_task(self, ascending):
+        return await self.get_scheduler().get_task(self.name, ascending)
 
     def get_name(self):
         return self.name

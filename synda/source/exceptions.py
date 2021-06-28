@@ -21,3 +21,23 @@ class MethodNotImplemented(Exception):
                 class_name,
             ),
         )
+
+
+class FileNotFound(Exception):
+    def __init__(self, full_filename):
+        error_msg = "FILE NOT FOUND : '{}'"
+        Exception.__init__(
+            self, error_msg.format(
+                full_filename,
+            ),
+        )
+
+
+class FileFormatError(Exception):
+    def __init__(self, full_filename):
+        error_msg = "FILE FORMAT is Unknown : '{}'"
+        Exception.__init__(
+            self, error_msg.format(
+                full_filename,
+            ),
+        )

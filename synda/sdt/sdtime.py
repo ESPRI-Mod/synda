@@ -73,17 +73,18 @@ def datetime_to_isoformat_FIXED(dt):
     s=s if len(s)==26 else s+'.000000'
     return s
 
+
 def compute_time_delta(start_date,end_date):
+
     format = '%Y-%m-%d %H:%M:%S.%f'
-    sta=datetime.datetime.strptime(start_date,format)
-    sto=datetime.datetime.strptime(end_date,format)
-    delt=sto-sta
+    dt = datetime.datetime.strptime(end_date, format) - datetime.datetime.strptime(start_date, format)
 
     # compute how many seconds by hand, as "delt.seconds" DO NOT returns total number of seconds !!!
     #
-    seconds=(delt.microseconds + (delt.seconds + delt.days * 24 * 3600) * 10**6) / 10**6 # microsecond is present here, but disappear after the last division
-
+    # seconds = dt.seconds
+    seconds = dt.total_seconds()
     return seconds
+
 
 def now():
     """

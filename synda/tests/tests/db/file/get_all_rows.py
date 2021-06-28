@@ -15,5 +15,12 @@ from synda.source.db.task.file.read.models import get_all_rows as get_table_file
 if __name__ == '__main__':
     all_rows = get_table_file_all_rows()
     for row in all_rows:
-        print(row)
-    pass
+        print("{},".format(row))
+        # print(row)
+    print()
+    for row in all_rows:
+        print("'{}': {},".format(row['file_functional_id'], row['size']))
+    for row in all_rows:
+        print("'{}',".format(row['url']))
+    for row in all_rows:
+        print("'{}',".format(row['file_functional_id']))

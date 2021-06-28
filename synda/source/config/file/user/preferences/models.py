@@ -9,11 +9,12 @@
 """
 """
 import os
+from numpy import nan
 
 from synda.source.constants import get_env_folder
 
 from synda.source.config.file.models import Config as Base
-from synda.source.config.file.env.constants import ENV_NOT_FOUND
+
 from synda.source.config.file.user.preferences.constants import DEFAULT_FULL_FILENAME
 from synda.source.config.file.user.preferences.constants import IDENTIFIER
 from synda.source.config.file.user.preferences.constants import DEFAULT_OPTIONS
@@ -177,7 +178,14 @@ class Config(Base):
 
     @property
     def download_big_file_chunksize(self):
-        return self.get_data().getint('download', 'big_file_chunksize')
+        value = self.get_data().get('download', 'big_file_chunksize')
+        try:
+            validated = int(value)
+
+        except ValueError:
+            validated = nan
+
+        return validated
 
     # SECTION : INDEX
 

@@ -27,6 +27,7 @@ from synda.sdt import sdfilequery
 from synda.sdt import sdsqlutils
 from synda.sdt.sdexception import FatalException,SDException,OpenIDNotSetException
 from synda.sdt.sdtime import SDTimer
+
 from synda.source.config.file.daemon.models import Config as DaemonFile
 
 from synda.source.config.process.download.constants import TRANSFER
@@ -189,6 +190,7 @@ def daemon_process():
     return success
 
 
+@report_elapsed_time_into_log_file(1)
 def event_loop(config_manager):
     global scheduler_state
 

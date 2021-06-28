@@ -77,8 +77,9 @@ class Task(Base):
 
     def set_status(self, status):
         Base.set_status(self, status)
-        if status == "running":
-            self.file_instance.status = "running"
+        # if status == "running":
+        #     sdfiledao.update_file_before_download(self.file_instance)
+            # self.file_instance.status = "running"
 
     def compute_metrics(self):
         # compute metrics
@@ -95,7 +96,7 @@ class Task(Base):
 
         self.compute_metrics()
 
-        self.post_process_control.process()
+        await self.post_process_control.process()
 
         if self.error():
 
@@ -122,9 +123,10 @@ class Task(Base):
         await renew_certificate()
 
         self.set_status("running")
+        sdfiledao.update_file_before_download(self.file_instance)
         self.create_local_path()
 
-    async def download(self):
+    async def download(self, http_client_session):
         """
         Abstract method
         Must be implemented into child classes
@@ -132,7 +134,7 @@ class Task(Base):
         """
         pass
 
-    async def process(self):
+    async def process(self, http_client_session):
 
         begin = datetime.datetime.now()
 
@@ -145,7 +147,7 @@ class Task(Base):
             self.file_instance.error_msg = ""
             self.file_instance.sdget_error_msg = ""
         else:
-            status = await self.download()
+            status = await self.download(http_client_session)
             self.file_instance.status = status
 
         await self.post_process()

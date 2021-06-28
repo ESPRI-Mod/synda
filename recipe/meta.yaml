@@ -20,10 +20,12 @@ dependencies:
 - pip:
   # works for regular pip packages
   - asyncio
+  - python3-wget
 
 requirements:
   host:
     - python
+    - numpy
   run:
     - python
     - six
@@ -45,7 +47,7 @@ requirements:
     - pandas
     - aiohttp
     - aiofiles
-    - numpy
+    - httpx
 
 about:
     home: https://github.com/Prodiguer/synda

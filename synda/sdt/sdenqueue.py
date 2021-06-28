@@ -22,7 +22,6 @@ import argparse
 import json
 from synda.sdt import sdapp
 from synda.sdt import sdlog
-from synda.sdt import sddb
 from synda.sdt import sdsimplefilter
 from synda.sdt import sdhistory
 from synda.sdt import sdfiledao
@@ -37,6 +36,7 @@ from synda.sdt import sdpipelineprocessing
 from synda.sdt.sdexception import SDException
 from synda.sdt import sdprogress
 
+from synda.source.db.connection.models import get_db_connection
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.process.download.dataset.constants import STRUCTURE as DATASET_STRUCTURE
 from synda.source.config.process.history.constants import STRUCTURE as HISTORY_STRUCTURE
@@ -85,7 +85,8 @@ def run(metadata, config_manager, timestamp_right_boundary=None):
 
         sdlog.info("SDENQUEU-103", "Insert files and datasets..")
 
-        po = sdpipelineprocessing.ProcessingObject(add_files)
+        conn = get_db_connection()
+        po = sdpipelineprocessing.ProcessingObject(add_files, conn=conn)
         sdpipelineprocessing.run_pipeline(metadata, po)
 
         sdlog.info("SDENQUEU-104", "Fill timestamp..")
@@ -93,7 +94,8 @@ def run(metadata, config_manager, timestamp_right_boundary=None):
         fix_timestamp()
 
         # final commit (we do all insertion/update in one transaction).
-        sddb.conn.commit()
+        conn.commit()
+        conn.close()
 
         if preferences.is_interface_progress:
             # spinner stop
@@ -163,15 +165,15 @@ def keep_recent_datasets(datasets):
     return li
 
 
-def add_files(files):
+def add_files(files, conn=None):
     for f in files:
-        add_file(File(**f))
+        add_file(File(**f), conn=conn)
 
     # nothing to return (end of processing)
     return []
 
 
-def add_file(f):
+def add_file(f, conn=None):
     sdlog.info(
         "SDENQUEU-003",
         "Create transfer (local_path={}, url={})".format(
@@ -180,12 +182,12 @@ def add_file(f):
         ),
     )
 
-    f.dataset_id = add_dataset(f)
+    f.dataset_id = add_dataset(f, conn=conn)
     f.status = TRANSFER["status"]['waiting']
     f.crea_date = sdtime.now()
 
     try:
-        sdfiledao.add_file(f, commit=False)
+        sdfiledao.add_file(f, commit=False, conn=conn)
     except Exception as e:
         sdlog.error(
             "SDENQUEU-005",
@@ -205,12 +207,12 @@ def add_file(f):
         )
 
 
-def add_dataset(f):
+def add_dataset(f, conn=None):
     """
     Returns:
         dataset_id
     """
-    d = sddatasetdao.get_dataset(dataset_functional_id=f.dataset_functional_id)
+    d = sddatasetdao.get_dataset(dataset_functional_id=f.dataset_functional_id, conn=conn)
 
     if d is not None:
 
@@ -254,7 +256,7 @@ def add_dataset(f):
         #
         d.last_mod_date = sdtime.now()
 
-        sddatasetdao.update_dataset(d, commit=False)
+        sddatasetdao.update_dataset(d, commit=False, conn=conn)
 
         return d.dataset_id
 
@@ -279,7 +281,7 @@ def add_dataset(f):
         d.timestamp = f.dataset_timestamp if hasattr(f, 'dataset_timestamp') else None
         d.model = f.model if hasattr(f, 'model') else None
 
-        return sddatasetdao.add_dataset(d, commit=False)
+        return sddatasetdao.add_dataset(d, commit=False, conn=conn)
 
 
 def fix_timestamp():

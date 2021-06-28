@@ -9,6 +9,8 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import os
+from numpy import array as numpy_array
+
 """Contains file DAO SQL queries."""
 
 from synda.sdt.sdexception import SDException
@@ -20,7 +22,7 @@ from synda.sdt import sdlog
 from synda.sdt.sdtime import SDTimer
 from synda.sdt import sdsqlitedict
 
-from synda.source.db.connection.models import Connection
+from synda.source.db.connection.models import get_db_connection
 from synda.source.config.path.tree.default.models import Config as DefaultTreePath
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
@@ -30,31 +32,59 @@ from synda.source.config.file.internal.models import Config as Internal
 preferences = Preferences()
 
 
-def update_transfer_last_access_date(i__date,i__transfer_id,conn=sddb.conn):
+def update_transfer_last_access_date(i__date, i__transfer_id, conn=None):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
     # no commit here (will be committed in updatelastaccessdate())
     c = conn.cursor()
     c.execute("update file set last_access_date=? where file_id = ?", (i__date, i__transfer_id))
     c.close()
 
-def add_file(file,commit=True,conn=sddb.conn):
+    if not transaction:
+        conn.close()
+
+
+def add_file(file, commit=True, conn=None):
+
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     keys_to_insert=['status', 'crea_date', 'url', 'local_path', 'filename', 'file_functional_id', 'tracking_id', 'priority', 'checksum', 'checksum_type', 'size', 'variable', 'project', 'model', 'data_node', 'dataset_id', 'insertion_group_id', 'timestamp']
     # for future:, 'searchapi_host']
 
     if not Internal().is_processes_get_files_caching:
-        return sdsqlutils.insert(file,keys_to_insert,commit,conn)
+        id_ = sdsqlutils.insert(file, keys_to_insert, commit, conn)
+        if not transaction:
+            conn.close()
+        return id_
     else:
-        id_ = sdsqlutils.insert(file,keys_to_insert,commit,conn)
+        id_ = sdsqlutils.insert(file, keys_to_insert, commit, conn)
 
         priority = file.__dict__['priority']
         data_node = file.__dict__['data_node']
         hipri = highest_waiting_priority( data_node )
         if hipri is None or priority>hipri:
             # Compute cached max(priority) for the data node, ignoring any previous value.
-            highest_waiting_priority( data_node, True )
-
+            highest_waiting_priority( data_node, True, conn=conn)
+        if not transaction:
+            conn.close()
         return id_
 
-def delete_file(tr,commit=True,conn=sddb.conn):
+
+def delete_file(tr, commit=True, conn=None):
+
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     c = conn.cursor()
 
     c.execute("delete from selection__file where file_id=?", (tr.file_id,)) # also delete entries from junction table
@@ -70,17 +100,27 @@ def delete_file(tr,commit=True,conn=sddb.conn):
     if commit:
         conn.commit()
 
-def exists_file(f,conn=sddb.conn):
-    """
-    Not used.
-    """
-    return exists_file_status(f,None,conn)
+    if not transaction:
+        conn.close()
 
-def exists_files_status(f,i__status,conn=sddb.conn):
+# def exists_file(f,conn=sddb.conn):
+#     """
+#     Not used.
+#     """
+#     return exists_file_status(f , None, conn)
+
+
+def exists_files_status(f,i__status,conn=None):
     """
     Not used.
     """
     found=False
+
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
 
     c = conn.cursor()
 
@@ -100,14 +140,23 @@ def exists_files_status(f,i__status,conn=sddb.conn):
 
     c.close()
 
+    if not transaction:
+        conn.close()
+
     return found
 
-def get_file(file_functional_id,conn=sddb.conn):
+def get_file(file_functional_id,conn=None):
     """
     notes
       - returns None if file not found
       - return type is File
     """
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     t=None
 
     c = conn.cursor()
@@ -117,15 +166,20 @@ def get_file(file_functional_id,conn=sddb.conn):
         t=sdsqlutils.get_object_from_resultset(rs,File)
     c.close()
 
+    if not transaction:
+        conn.close()
+
     return t
 
 
-def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change arguments order here
+# don't change arguments order here
+def get_files(limit=None, conn=None, **search_constraints):
     """
     Notes
       - one search constraint must be given at least
       - if 'limit' is None, retrieve all records matching the search constraints
     """
+
     gfs0 = SDTimer.get_time()
 
     data_node = search_constraints.get('data_node', None)
@@ -155,8 +209,14 @@ def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change 
     else:
         use_cache = False
 
-    files = []
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
     c = conn.cursor()
+
+    files = []
 
     search_placeholder = sdsqlutils.build_search_placeholder(search_constraints)
     limit_clause = "limit %i" % limit if limit is not None else ""
@@ -168,6 +228,9 @@ def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change 
     )
 
     if getfirst == '':
+        if not transaction:
+            c.close()
+            conn.close()
         return []
     q = "select * from file where %s %s %s" % (search_placeholder, getfirst, limit_clause)
     import sqlite3
@@ -176,11 +239,19 @@ def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change 
         rs = c.fetchone()
         db_error = False
     except sqlite3.OperationalError as e:
+        sdlog.info(
+            "SDFILDAO-201",
+            "sqlite3.OperationalError : {}".format(
+                e,
+            ),
+        )
         db_error = True
         rs = None
-        print(e)
 
     if db_error:
+        if not transaction:
+            c.close()
+            conn.close()
         return []
     # if use_cache and (rs is None or len(rs)==0):
     if use_cache and (rs is None or len(rs) == 0):
@@ -208,7 +279,10 @@ def get_files(limit=None, conn=sddb.conn, **search_constraints): # don't change 
             ),
         )
         rs = c.fetchone()
-    c.close()
+
+    if not transaction:
+        c.close()
+        conn.close()
 
     if len(files) > 1 and use_cache:
         # We shall return one of the files and cache the rest.
@@ -242,7 +316,8 @@ def priority_clause( data_node, use_cache, cursor ):
         getfirst = "ORDER BY priority DESC, checksum"
     return getfirst
 
-def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
+
+def highest_waiting_priority(data_node, cursor=None, conn=None):
     """This function contains a dictionary-like cache of the highest priority among status='waiting'
     files for each data_node.  It will always return the dictionary value for the specified
     data node, or one of the specified data nodes if several are provided.
@@ -259,16 +334,23 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
                 priority = None
         return priority
     else:
+        transaction = True
         if cursor==True:
-            c = connection.cursor()
+            if not conn:
+                transaction = False
+                conn = get_db_connection()
+            c = conn.cursor()
         else:
+            conn = None
             c = cursor
-        if data_node==True:
+
+        if data_node:
             q = "SELECT data_node FROM file GROUP BY data_node"
             c.execute(q)
             data_nodes = [tup[0] for tup in c.fetchall()]
         else:
             data_nodes = [data_node]
+
         for dn in data_nodes:
             hwp0 = SDTimer.get_time()
             q = "SELECT MAX(priority) FROM file WHERE status='waiting' AND data_node='%s'" % dn
@@ -282,14 +364,17 @@ def highest_waiting_priority( data_node, cursor=None, connection=sddb.conn ):
             #sdlog.info("SDFILDAO-300","time %s to recompute priority=%s for %s" %
             #           (hwp1,val[0],dn) )
             #sdlog.info("SDFILDAO-301","  query %s" % q )
+
         if cursor==True:
             c.close()
-        priority = (highest_waiting_priority.vals).get(data_nodes[0],None) if data_nodes else None
+        priority = (highest_waiting_priority.vals).get(data_nodes[0], None) if data_nodes else None
         if isinstance(priority, str):
             try:
                 priority = int(priority)
             except ValueError:
                 priority = None
+        if not transaction:
+            conn.close()
         return priority
 # The cache is a database masquerading as a dictionary.  A real dictionary in memory would be:
 # highest_waiting_priority.vals = {}
@@ -304,7 +389,7 @@ highest_waiting_priority.vals = sdsqlitedict.SqliteStringDict(
 )
 
 
-def get_dataset_files(d,conn=sddb.conn,limit=None):
+def get_dataset_files(d,conn=sddb.conn,limit=None, transaction=False):
     """
     Retrieves all dataset's files
 
@@ -326,12 +411,13 @@ def get_dataset_files(d,conn=sddb.conn,limit=None):
         files.append(sdsqlutils.get_object_from_resultset(rs,File))
         rs=c.fetchone()
 
-    c.close()
+    if not transaction:
+        c.close()
 
     return files
 
 
-def update_file(_file, commit=True, conn=sddb.conn):
+def update_file(_file, commit=True, conn=None):
 
     keys = [
         'status',
@@ -344,6 +430,12 @@ def update_file(_file, commit=True, conn=sddb.conn):
         'rate',
         'priority',
     ]
+
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
 
     # 'url' needs to be present when 'sdnexturl' feature is enabled
     next_url_on_error = Preferences().is_download_http_fallback
@@ -359,7 +451,9 @@ def update_file(_file, commit=True, conn=sddb.conn):
         conn,
     )
 
-    # conn.close()
+    if not transaction:
+        conn.close()
+
     # check
     if rowcount == 0:
         raise SDException(
@@ -382,14 +476,18 @@ def update_files(file_instances):
 
 
 def update_file_as_running(file_instance):
-    file_instance.start_date = sdtime.now()
     file_instance.status = TRANSFER["status"]['running']
     update_file(file_instance, commit=True)
 
 
+def update_file_before_download(file_instance):
+    file_instance.start_date = sdtime.now()
+    update_file(file_instance, commit=True)
+
+
 def update_file_after_download(file_instance):
-    if file_instance.status == 'done':
-        file_instance.end_date = sdtime.now()
+    # if file_instance.status == 'done':
+    #     file_instance.end_date = sdtime.now()
     update_file(file_instance, commit=True)
 
 
@@ -455,3 +553,21 @@ def validate_for_download(file_instance):
             validated = True
 
     return validated
+
+
+def sort_by_size_descending(files):
+    sizes = numpy_array([_file.size for _file in files])
+    ascending_indexes = sizes.argsort()
+    descending_indexes = ascending_indexes[::-1]
+    return [files[index] for index in descending_indexes]
+
+
+def sort_by_size_ascending(files):
+    sizes = numpy_array([_file.size for _file in files])
+    ascending_indexes = sizes.argsort()
+    return [files[index] for index in ascending_indexes]
+
+
+def file_status_is_running(file_functional_id):
+    _file = get_file(file_functional_id=file_functional_id)
+    return _file.status == TRANSFER["status"]['running']

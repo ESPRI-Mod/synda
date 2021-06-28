@@ -6,13 +6,17 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
+import time
 import datetime
 import asyncio
+import aiohttp
+import threading
+import concurrent.futures
 
 from synda.sdt import sdlog
 
 from synda.source.process.asynchronous.scheduler.models import Scheduler as Base
-from synda.source.process.asynchronous.download.manager.batch.models import Manager as BatchManager
+from synda.source.process.asynchronous.download.manager.batch.http.aio.models import Manager as AiohttpBatchManager
 
 from synda.source.process.asynchronous.download.task.provider.models import Provider as TaskProvider
 
@@ -40,12 +44,29 @@ class Scheduler(Base):
             identifier="asynchronous downloads scheduler",
         )
 
+        # initializations
+    #     self.http_client_session = None
+    #
+    #     # settings
+    #     self.http_client_session = aiohttp.ClientSession(
+    #         timeout=aiohttp.ClientTimeout(total=preferences.download_async_http_timeout),
+    #     )
+    #
+    # def get_http_client_session(self):
+    #     return self.http_client_session
+
+    # async def clean(self):
+    #     await self.http_client_session.close()
+
     def set_task_provider(self):
         self.task_provider = TaskProvider()
 
-    async def clean(self):
-        for manager in self.get_managers():
-            await manager.clean()
+    # async def clean(self):
+    #     for manager in self.get_managers():
+    #         await manager.clean()
+
+    async def get_task(self, batch_name, ascending):
+        return await self.task_provider.get_task(batch_name, ascending)
 
     def print_workers_activity(self, task):
         if self.verbose:
@@ -81,24 +102,196 @@ async def main(
     tasks = scheduler.get_workers_coroutines()
     # Wait until all worker tasks are cancelled.
     # results = await asyncio.gather(*tasks, return_exceptions=True)
+    # if tasks:
+    #     try:
+    #         done, pending = await asyncio.wait(tasks)
+    #         for task in done:
+    #             task.cancel()
+    #     except asyncio.CancelledError:
+    #         scheduler.cancel_running_tasks()
+    #     finally:
+    #         scheduler.print_metrics()
+    #         # await scheduler.clean()
     if tasks:
         try:
-            done, pending = await asyncio.wait(tasks)
-            for task in done:
-                task.cancel()
+            results = await asyncio.gather(*tasks)
+            for result in results:
+                print(result)
         except asyncio.CancelledError:
             scheduler.cancel_running_tasks()
         finally:
             scheduler.print_metrics()
-            await scheduler.clean()
+            # await scheduler.clean()
+
+async def main3(
+        batch_manager_class,
+        nb_max_workers=3,
+        nb_max_batch_workers=1,
+        verbose=False,
+        build_report=False,
+):
+    scheduler = Scheduler(
+        batch_manager_class,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+    # Create three worker tasks to process the queue concurrently.
+    tasks = scheduler.get_workers_coroutines()
+    # Wait until all worker tasks are cancelled.
+    # results = await asyncio.gather(*tasks, return_exceptions=True)
+    loop = asyncio.get_event_loop()
+    if tasks:
+        try:
+            done = await asyncio.gather(*tasks)
+            for task in done:
+                print(task)
+        except asyncio.CancelledError:
+            scheduler.cancel_running_tasks()
+        finally:
+            scheduler.print_metrics()
 
 
-async def scheduler(verbose=False, build_report=False):
+async def scheduler(batch_manager, verbose=False, build_report=False):
     nb_max_workers = preferences.download_max_parallel_download
     nb_max_batch_workers = preferences.download_max_parallel_download_per_datanode
     # nb_max_batch_workers = 1
+
     await main(
-        BatchManager,
+        batch_manager,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+
+async def coro(worker_coroutine):
+    await worker_coroutine()
+
+
+def thr(worker_coroutine):
+    # we need to create a new loop for the thread, and set it as the 'default'
+    # loop that will be returned by calls to asyncio.get_event_loop() from this
+    # thread.
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    try:
+        loop.run_until_complete(coro(worker_coroutine))
+    finally:
+        loop.close()
+
+
+def main2(
+        batch_manager_class,
+        nb_max_workers=3,
+        nb_max_batch_workers=1,
+        verbose=False,
+        build_report=False,
+):
+    scheduler = Scheduler(
+        batch_manager_class,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+    worker_coroutines = scheduler.get_workers_coroutines()
+
+    # threads = [threading.Thread(target=thr, args=(workers_coroutine,)) for workers_coroutine in workers_coroutines]
+    #
+    # print("Nb threads : {}".format(len(threads)))
+
+    delay = 5
+
+    t = threading.Thread(target=thr, args=(worker_coroutines[0],))
+
+    t.start()
+    # threads[0].join()
+
+    # for i, t in enumerate(threads):
+    #     t.start()
+    #     time.sleep(i*delay)
+    #
+    # [t.join() for t in threads]
+    print("end")
+
+
+def scheduler2(verbose=False, build_report=False):
+    nb_max_workers = preferences.download_max_parallel_download
+    nb_max_batch_workers = preferences.download_max_parallel_download_per_datanode
+    # nb_max_batch_workers = 1
+    batch_manager = AiohttpBatchManager
+    main2(
+        batch_manager,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+
+async def scheduler3(batch_manager, verbose=False, build_report=False):
+    nb_max_workers = preferences.download_max_parallel_download
+    nb_max_batch_workers = preferences.download_max_parallel_download_per_datanode
+    # nb_max_batch_workers = 1
+    await main3(
+        batch_manager,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+
+async def blocking_main(
+        batch_manager_class,
+        nb_max_workers=3,
+        nb_max_batch_workers=1,
+        verbose=False,
+        build_report=False,
+):
+    scheduler = Scheduler(
+        batch_manager_class,
+        nb_max_workers=nb_max_workers,
+        nb_max_batch_workers=nb_max_batch_workers,
+        verbose=verbose,
+        build_report=build_report,
+    )
+
+    # Create three worker tasks to process the queue concurrently.
+    tasks = scheduler.get_workers_coroutines2()
+    # Wait until all worker tasks are cancelled.
+    if tasks:
+        try:
+            loop = asyncio.get_event_loop()
+            blocking_tasks = []
+            start_delay = 0
+            for task in tasks:
+                blocking_tasks = [
+                    loop.run_in_executor(None, task, start_delay)
+                ]
+
+            completed, pending = await asyncio.wait(blocking_tasks)
+            results = [t.result() for t in completed]
+            for result in results:
+                print(result)
+        except asyncio.CancelledError:
+            scheduler.cancel_running_tasks()
+        finally:
+            scheduler.print_metrics()
+
+
+async def blocking_scheduler(batch_manager, verbose=False, build_report=False):
+    nb_max_workers = preferences.download_max_parallel_download
+    nb_max_batch_workers = preferences.download_max_parallel_download_per_datanode
+    # nb_max_batch_workers = 1
+    await blocking_main(
+        batch_manager,
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
         verbose=verbose,

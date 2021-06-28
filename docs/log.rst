@@ -10,14 +10,16 @@ Version 3.4 - 2021-xx-xx
         - downloads are performed asynchronously, using only one protocol (http) and under the control of asyncio
         - std.conf new entries : big_file_size, big_file_chunksize
         - internal.conf entry : transfer_protocol
+        - documentation update
+    - bug correction :
+        - synda param data_node returns the exhaustive list of data nodes
     - tests :
         - remove subcommand : new data file embedded is ten times smaller than previous one
     - deprecated features
         - gridftp protocol
         - wget http client
         - std.conf entries : gridftp_opt
-        - internal.conf entry : transfer_protocols
-        - documentation update
+        - internal.conf, entry : transfer_protocols
 Version 3.35 - 2021-05-07
     - bug correction :
         - init-env subcommand now provides empty default selection files (see conf/default directory)

@@ -17,10 +17,38 @@ from synda.sdt.sdexception import SDException
 from synda.sdt import sddb
 from synda.sdt import sdsqlutils
 from synda.sdt.sdtypes import Dataset
+from synda.source.db.connection.models import get_db_connection
 
-def add_dataset(dataset,commit=True,conn=sddb.conn):
-    keys_to_insert=['local_path','path','path_without_version','dataset_functional_id','template','version','status','latest','crea_date','last_mod_date','project','model', 'timestamp']
-    return sdsqlutils.insert(dataset,keys_to_insert,commit,conn)
+
+def add_dataset(dataset, commit=True, conn=None):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+    keys_to_insert = [
+        'local_path',
+        'path',
+        'path_without_version',
+        'dataset_functional_id',
+        'template',
+        'version',
+        'status',
+        'latest',
+        'crea_date',
+        'last_mod_date',
+        'project',
+        'model',
+        'timestamp',
+    ]
+
+    _id = sdsqlutils.insert(dataset, keys_to_insert, commit, conn)
+
+    if not transaction:
+        conn.close()
+
+    return _id
+
 
 def get_dataset_(not_found_raise_exception=False,**search_constraints):
     datasets=get_datasets(**search_constraints)
@@ -35,14 +63,20 @@ def get_dataset_(not_found_raise_exception=False,**search_constraints):
     else:
         raise SDException("SYNCDDAO-004","Too many results")
 
-def get_dataset(path=None,dataset_id=None,dataset_functional_id=None,conn=sddb.conn):
+
+def get_dataset(path=None, dataset_id=None, dataset_functional_id=None, conn=None):
     """
     TODO: if possible, remove this func and use get_dataset_() instead
     """
-    d=None
+    d = None
+
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
 
     c = conn.cursor()
-
     # Raise exception if having to much search keys
     count=0
     for va in (path,dataset_id,dataset_functional_id):
@@ -66,10 +100,18 @@ def get_dataset(path=None,dataset_id=None,dataset_functional_id=None,conn=sddb.c
         d=sdsqlutils.get_object_from_resultset(rs,Dataset)
 
     c.close()
-
+    if not transaction:
+        conn.close()
     return d
 
-def remove_dataset(i__d,commit=True,conn=sddb.conn):
+
+def remove_dataset(i__d,commit=True,conn=None):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     c = conn.cursor()
 
     c.execute("delete from dataset where dataset_id=?", (i__d.dataset_id,))
@@ -83,25 +125,54 @@ def remove_dataset(i__d,commit=True,conn=sddb.conn):
     if commit:
         conn.commit()
 
-def update_dataset(d,commit=True,conn=sddb.conn,keys=['latest','status','last_mod_date','latest_date','last_done_transfer_date']):
-    rowcount=sdsqlutils.update(d,keys,commit,conn)
-    
-    # check
-    if rowcount==0:
-        raise SDException("SYNCDDAO-128","dataset not found (dataset_id=%s)"%d.dataset_id)
+    if not transaction:
+        conn.close()
 
-def exists_dataset(path=None,conn=sddb.conn):
+
+def update_dataset(d,commit=True, conn=None, keys=['latest', 'status', 'last_mod_date', 'latest_date', 'last_done_transfer_date']):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
+    rowcount = sdsqlutils.update(d, keys, commit, conn)
+
+    if not transaction:
+        conn.close()
+
+    # check
+    if rowcount == 0:
+        raise SDException("SYNCDDAO-128", "dataset not found (dataset_id=%s)" % d.dataset_id)
+
+
+def exists_dataset(path=None,conn=None):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
+    if not transaction:
+        conn.close()
+
     d=get_dataset(path=path)
     if d is not None:
         return True
     else:
         return False
 
-def get_datasets(limit=None,conn=sddb.conn,**search_constraints): # don't change arguments order here
+def get_datasets(limit=None,conn=None,**search_constraints): # don't change arguments order here
     """
     Note
         If 'limit' is None, retrieve all records matching the search constraints
     """
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     datasets=[]
 
     c = conn.cursor()
@@ -121,8 +192,11 @@ def get_datasets(limit=None,conn=sddb.conn,**search_constraints): # don't change
         rs=c.fetchone()
 
     c.close()
+    if not transaction:
+        conn.close()
 
     return datasets
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

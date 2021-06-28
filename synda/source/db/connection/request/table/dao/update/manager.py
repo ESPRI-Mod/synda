@@ -27,7 +27,7 @@ class Manager(Base, TableName):
                 names.append(name)
         return names
 
-    def insert(self, request, args=None, connection=None):
+    def update(self, request, args=None, connection=None):
         if connection:
             self.set_db_connection(connection)
         else:

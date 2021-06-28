@@ -20,6 +20,7 @@ from synda.sdt import sdtime
 from synda.sdt import sdfiledao
 from synda.sdt import sddatasetdao
 
+from synda.source.db.connection.models import get_db_connection
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.db.task.file.read.models import get_data_nodes
 
@@ -203,27 +204,66 @@ def get_one_waiting_transfer(datanode=None):
     return t
 
 
-def get_one_waiting_transfer_new(datanode=None):
+def get_one_waiting_transfer_new(datanode=None, ascending=True):
     t = None
+    conn = get_db_connection()
     if datanode is None:
         li = sdfiledao.get_files(
-            limit=1,
             status=TRANSFER["status"]['waiting'],
+            conn=conn,
         )
     else:
         li = sdfiledao.get_files(
-            limit=1,
             status=TRANSFER["status"]['waiting'],
             data_node=datanode,
+            conn=conn,
         )
 
+    conn.close()
+
     if len(li) > 0:
+        if ascending:
+            li = sdfiledao.sort_by_size_ascending(li)
+        else:
+            li = sdfiledao.sort_by_size_descending(li)
         t = li[0]
         # retrieve the dataset
-        d = sddatasetdao.get_dataset(dataset_id=t.dataset_id)
+        d = sddatasetdao.get_dataset(
+            dataset_id=t.dataset_id,
+        )
         t.dataset = d
 
     return t
+
+
+def get_new_tasks(limit=8, datanode=None, ascending=True):
+    t = None
+    conn = get_db_connection()
+    if datanode is None:
+        li = sdfiledao.get_files(
+            status=TRANSFER["status"]['waiting'],
+            conn=conn,
+        )
+    else:
+        li = sdfiledao.get_files(
+            status=TRANSFER["status"]['waiting'],
+            data_node=datanode,
+            conn=conn,
+        )
+
+    conn.close()
+
+    if len(li) > 0:
+        for _li in li:
+            d = sddatasetdao.get_dataset(dataset_id=_li.dataset_id)
+            _li.dataset = d
+        if ascending:
+            li = sdfiledao.sort_by_size_ascending(li)
+        else:
+            li = sdfiledao.sort_by_size_descending(li)
+        if limit:
+            li = li[0: limit - 1]
+    return li
 
 
 def get_waiting_downloads():
@@ -256,6 +296,7 @@ def check_waiting_files_for_download():
             data_node=data_node,
         )
         if len(files) > 0:
+            files = sdfiledao.sort_by_size_descending(files)
             batch = []
             for _file in files:
                 if sdfiledao.validate_for_download(_file):

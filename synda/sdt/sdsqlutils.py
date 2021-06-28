@@ -15,7 +15,9 @@ import re
 import argparse
 from synda.sdt import sdapp
 from synda.sdt.sdexception import SDException
-from synda.sdt import sddb
+# from synda.sdt import sddb
+from synda.source.db.connection.models import get_db_connection
+
 
 def sql_injection_safe(s):
     regex=r'[^a-zA-Z0-9_]'
@@ -25,17 +27,21 @@ def sql_injection_safe(s):
     else:
         return True
 
+
 def get_object_from_resultset(rs,class_):
     kw=resultset_to_dict(rs)
     return class_(**kw)
+
 
 def get_tablename(o):
     # beware: this method works only if the object name is the same as the table name (case excluded)
 
     return o.__class__.__name__.lower() # (e.g. File gives "file")
 
+
 def build_search_placeholder(search_constraints):
     return " AND ".join(["%s=:%s"%(k,k) if search_constraints[k] is not None else "%s IS NULL"%k for k in search_constraints])
+
 
 def resultset_to_dict(rs):
     # TODO: is this method needed ?
@@ -45,14 +51,25 @@ def resultset_to_dict(rs):
         kw[column]=rs[column]
     return kw
 
-def truncate_table(table,conn=sddb.conn):
+
+def truncate_table(table,conn=None):
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     conn.execute("delete from %s"%table)
     conn.commit()
+
+    if not transaction:
+        conn.close()
+
 
 def nextval(col,tbl):
     """Return next value for column given in argument."""
     max_id=None
-    conn=sddb.conn
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("select max(%s) from %s"%(col,tbl))
     rs=c.fetchone()
@@ -66,8 +83,9 @@ def nextval(col,tbl):
         max_id=1
 
     c.close()
-
+    conn.close()
     return max_id
+
 
 def insert(instance,columns_subset,commit,conn):
     """This func insert data in table using placeholders.
@@ -90,6 +108,12 @@ def insert(instance,columns_subset,commit,conn):
                         print('FAILED')
         return d
 
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     # create dict containing key/val list to be inserted
     d=get_dict(instance,columns_subset)
 
@@ -107,6 +131,9 @@ def insert(instance,columns_subset,commit,conn):
 
     if commit:
         conn.commit()
+
+    if not transaction:
+        conn.close()
 
     return id_
 
@@ -128,6 +155,11 @@ def update(instance,columns_subset_without_pk,commit,conn):
 
         return (d_with_pk,d_without_pk)
 
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
 
     tablename=get_tablename(instance)
     pk=tablename+'_id'
@@ -147,12 +179,16 @@ def update(instance,columns_subset_without_pk,commit,conn):
 
     # EXEC
     c = conn.cursor()
+
     c.execute(query, d_with_pk) # placeholders resolution take place here
     rowcount=c.rowcount
     c.close()
 
     if commit:
         conn.commit()
+
+    if not transaction:
+        conn.close()
 
     return rowcount
 

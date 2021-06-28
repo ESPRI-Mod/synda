@@ -10,7 +10,7 @@ Version 3.4 - 2021-xx-xx
         - gridftp protocol
         - wget http client
         - std.conf entries : gridftp_opt
-        - internal.conf entry : transfer_protocols
+        - internal.conf, entry : transfer_protocols
 Version 3.35 - 2021-05-07
     - bug correction :
         - init-env subcommand now provides empty default selection files (see conf/default directory)

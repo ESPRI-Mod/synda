@@ -7,6 +7,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import os
+import asyncio
 
 from synda.sdt import sdutils
 from synda.sdt import sdlog
@@ -113,6 +114,12 @@ class Control(object):
 
         return validated
 
+    def _process(self):
+        # 1 / file size must be the expected one
+        self.file_size()
+        # 1 / checksum must be correct
+        self.file_checksum()
+
     def update_log(self):
 
         if self.file_instance.status == TRANSFER["status"]['done']:
@@ -142,15 +149,12 @@ class Control(object):
                 "Transfer failed ({})".format(self.file_instance),
             )
 
-    def process(self):
+    async def process(self):
 
         may_be_a_success = self.file_instance.sdget_status == 0 or self.file_instance.sdget_status is None
         if may_be_a_success:
             # MORE CONTROLS ARE REQUIRED TO BE SURE THAT NO PROBLEM OCCURED DURING DOWNLOAD
-            # 1 / file size must be the expected one
-            self.file_size()
-            # 1 / checksum must be correct
-            self.file_checksum()
+            await asyncio.to_thread(self._process)
 
         else:
             self.file_instance.status = TRANSFER["status"]['error']

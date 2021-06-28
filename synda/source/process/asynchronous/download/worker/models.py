@@ -8,7 +8,6 @@
 ##################################
 import asyncio
 
-from synda.sdt import sdutils
 from synda.sdt import sdlog
 from synda.sdt import sdtypes
 from synda.sdt import sdnexturl
@@ -16,10 +15,6 @@ from synda.sdt import sdnexturl
 from synda.source.process.asynchronous.worker.models import Worker as Base
 from synda.source.process.asynchronous.download.worker.dashboard.models import DashBoard
 
-from synda.source.process.asynchronous.download.task.http.small_file.models import Task as HttpSmallFileTask
-from synda.source.process.asynchronous.download.task.http.big_file.models import Task as HttpBigFileTask
-
-from synda.source.config.process.download.constants import get_transfer_protocol
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
 from synda.source.config.file.user.preferences.models import Config as Preferences
@@ -38,33 +33,17 @@ class Worker(Base):
 
     def __init__(self, name, queue, manager):
         Base.__init__(self, name, queue, manager)
+        # initializations
+        self.tasks_counter = 0
+        # self.conn = None
+        # settings
         self.dashboard = DashBoard(self, identifier=self.name)
 
-    def create_task(self, file_instance):
-        new_task = None
-        if file_instance:
-            task_name = "{} , {}".format(
-                self.name,
-                file_instance.url,
-            )
+    def increment_tasks_counter(self):
+        self.tasks_counter += 1
 
-            transfer_protocol = sdutils.get_transfer_protocol(file_instance.url)
-
-            if transfer_protocol == get_transfer_protocol():
-                if file_instance.size <= preferences.download_big_file_size:
-                    new_task = HttpSmallFileTask(
-                        file_instance,
-                        task_name,
-                        verbose=self.verbose,
-                    )
-                else:
-                    new_task = HttpBigFileTask(
-                        file_instance,
-                        task_name,
-                        verbose=self.verbose,
-                    )
-
-        return new_task
+    def get_tasks_counter(self):
+        return self.tasks_counter
 
     def get_fallback_task(self, file_instance):
         # Hack
