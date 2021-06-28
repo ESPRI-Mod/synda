@@ -212,35 +212,3 @@ async def scheduler(verbose=True, build_report=False):
         verbose=verbose,
         build_report=build_report,
     )
-
-
-def thr(workers_coroutine):
-    # we need to create a new loop for the thread, and set it as the 'default'
-    # loop that will be returned by calls to asyncio.get_event_loop() from this
-    # thread.
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
-    loop.run_until_complete(workers_coroutine)
-    loop.close()
-
-
-def main2(
-        nb_max_workers=3,
-        nb_max_batch_workers=1,
-        verbose=False,
-        build_report=False,
-):
-    _scheduler = Scheduler(
-        nb_max_workers=nb_max_workers,
-        nb_max_batch_workers=nb_max_batch_workers,
-        verbose=verbose,
-        build_report=build_report,
-    )
-
-    workers_coroutines = _scheduler.get_workers_coroutines()
-
-    threads = [threading.Thread(target=thr, args=(workers_coroutine,)) for workers_coroutine in workers_coroutines]
-    [t.start() for t in threads]
-    [t.join() for t in threads]
-    print("end")

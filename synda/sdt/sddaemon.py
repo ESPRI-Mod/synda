@@ -67,11 +67,8 @@ def main_loop(config_manager):
         if old_download_process:
             sdtaskscheduler.event_loop(config_manager)
         else:
-            # from synda.source.process.asynchronous.download.scheduler.models import scheduler
-            # asyncio.run(scheduler(verbose=True, build_report=False))
-            from synda.source.process.asynchronous.download.scheduler.models import scheduler2
-            scheduler2(verbose=True, build_report=False)
-            time.sleep(60)
+            from synda.source.process.asynchronous.download.scheduler.models import scheduler
+            asyncio.run(scheduler(verbose=True, build_report=False))
 
     except SDException as e:
 
