@@ -322,6 +322,7 @@ def update_file(_file, commit=True, conn=sddb.conn):
     keys = [
         'status',
         'error_msg',
+        'error_history',
         'sdget_status',
         'sdget_error_msg',
         'start_date',

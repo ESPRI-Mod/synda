@@ -22,5 +22,5 @@ from synda.sdt import sdapputils
 os.umask(0o0002)
 
 name = 'transfer'
-version = '3.10'
+version = '3.11'
 sdapputils.set_exception_handler()
