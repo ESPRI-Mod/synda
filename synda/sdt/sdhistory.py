@@ -52,7 +52,7 @@ def file_changed_since_last_run(selection_file, action):
     previous_run = get_previous_run(selection_filename, action)
     previous_checksum = previous_run['selection_file_checksum']
 
-    return previous_checksum == current_checksum
+    return previous_checksum != current_checksum
 
 
 def add_history_line(action=None, selection_file=None, insertion_group_id=None, crea_date=None):

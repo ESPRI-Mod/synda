@@ -64,7 +64,7 @@ def main_loop(config_manager):
     try:
         sdtaskscheduler.event_loop(config_manager)
 
-    except SDException as e:
+    except Exception as e:
 
         level = preferences.log_verbosity_level
 
