@@ -10,12 +10,10 @@
 MAIN run for TEST SUITE
 it allows to control the tests sequences from the most required to the most advanced ones
 """
-from synda.tests.tests.env.installed.synchronous.run import main as run_synchronous_tests
-from synda.tests.tests.env.installed.subprocess.run import main as run_subprocess_tests
+from synda.tests.tests.env.installed.under_subprocess.run import main as run_subprocess_tests
 
 
 def main(coverage_activated=False):
-    run_synchronous_tests(coverage_activated=coverage_activated)
     run_subprocess_tests(coverage_activated=coverage_activated)
 
 

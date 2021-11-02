@@ -17,11 +17,9 @@ import argparse
 from synda.sdt import sdtools
 from synda.sdt.sdexception import SDException
 
-from synda.source.config.file.internal.models import Config as Internal
-
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.path.tree.models import Config as TreePath
-
+from synda.source.config.file.internal.models import Config as Internal
 internal = Internal()
 
 
@@ -122,6 +120,13 @@ def create_logger(name, filename):
     logger.addHandler(fh)
 
     return logger
+
+
+def remove_handler(logger):
+    handlers = logger.handlers[:]
+    for handler in handlers:
+        handler.close()
+        logger.removeHandler(handler)
 
 
 def set_default_logger(name):

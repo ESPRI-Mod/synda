@@ -69,18 +69,22 @@ def is_default_file(fullpath_file):
     else:
         return False
 
+
 def build_selection_file_list():
     """Return full path files list."""
-    files=[]
+    files = []
     selection_folder = TreePath().get("selection")
-    for file in glob.glob( os.path.join(selection_folder, '*') ):
-        if not os.path.isdir(file): # exclude sub-dirs
-            if not is_default_file(file): # exclude default special selections
+    for file in glob.glob(os.path.join(selection_folder, '*')):
+        # exclude sub-dirs
+        if not os.path.isdir(file):
+            # exclude default special selections
+            if not is_default_file(file):
                 files.append(file)
 
-    files=sorted(files)
+    files = sorted(files)
 
     return files
+
 
 def build_selection_list():
     """

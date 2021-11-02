@@ -12,6 +12,7 @@ import re
 from synda.tests.tests.constants import TESTS_DIR
 from synda.tests.tests.config.run import main as run_config_tests
 from synda.tests.tests.env.run import main as run_envs_tests
+from synda.tests.tests.envs.run import main as run_new_envs_tests
 
 
 def is_test_filename(filename):
@@ -43,6 +44,7 @@ def main(coverage_activated=False):
 
     run_config_tests()
     run_envs_tests(coverage_activated=coverage_activated)
+    run_new_envs_tests(coverage_activated=coverage_activated)
 
     print(
         "{} Tests Processed".format(

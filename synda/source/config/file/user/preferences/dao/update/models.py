@@ -13,6 +13,8 @@ from configparser import ConfigParser
 
 from synda.source.constants import get_env_folder
 from synda.source.config.file.user.preferences.constants import FILENAME
+from synda.source.config.file.user.preferences.constants import DEFAULT_CONTENT
+from synda.source.config.file.user.readers import overwrite_parser
 
 
 def update_paths():
@@ -26,7 +28,10 @@ def update_paths():
     )
 
     cfg = ConfigParser()
-    cfg.read(full_filename)
+    cfg.read_dict(
+        DEFAULT_CONTENT,
+    )
+    cfg = overwrite_parser(full_filename, cfg)
     cfg.set('core', 'db_path', os.path.join(root, 'db'))
     cfg.set('core', 'selection_path', os.path.join(root, 'selection'))
     cfg.set('core', 'data_path', os.path.join(root, 'data'))

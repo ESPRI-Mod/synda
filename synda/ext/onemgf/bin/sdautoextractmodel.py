@@ -15,13 +15,14 @@ Note
     This module works together with the 'sdonemgf_pre' module.
 """
 
-import sdextractitem
-import sdconfig
+from synda.sdt import sdextractitem
+from synda.source.config.file.user.preferences.models import Config as Preferences
+
 
 def run(facets_groups):
 
-    onemgf=sdconfig.config.getboolean('behaviour','onemgf')
+    onemgf = Preferences().is_behaviour_onemgf
     if onemgf:
-        facets_groups=sdextractitem.run(facets_groups,'model')
+        facets_groups = sdextractitem.run(facets_groups, 'model')
 
     return facets_groups

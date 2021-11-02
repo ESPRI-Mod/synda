@@ -13,11 +13,10 @@
 
 import os
 import argparse
-from synda.sdt import sdconfig
 from synda.sdt import sdtools
 
 from synda.source.config.file.db.models import Config as Db
-from synda.source.config.file.daemon.models import Config as DaemonFile
+from synda.source.config.file.downloading.models import Config as DownloadingFile
 
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
 from synda.source.config.file.certificate.x509.models import Config as SecurityFile
@@ -26,7 +25,7 @@ from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.user.credentials.models import Config as Credentials
 
 tree_path = TreePath()
-DAEMON_FULLFILENAME = DaemonFile().default
+DOWNLOADING_FULLFILENAME = DownloadingFile().default
 
 
 def run(uid, gid):
@@ -60,7 +59,7 @@ def chown_folder(uid,gid):
 def chown_file(uid, gid):
 
     # pid files
-    li = [DAEMON_FULLFILENAME]
+    li = [DOWNLOADING_FULLFILENAME]
     chown_files(li, uid, gid)
 
     # sdt credentials file

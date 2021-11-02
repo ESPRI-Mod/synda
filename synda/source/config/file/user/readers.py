@@ -19,5 +19,11 @@ def get_parser(fullfilename, default_options):
     return parser
 
 
+def overwrite_parser(fullfilename, parser):
+    if os.path.isfile(fullfilename):
+        parser.read(fullfilename)
+    return parser
+
+
 if __name__ == '__main__':
     pass

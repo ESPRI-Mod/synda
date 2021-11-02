@@ -23,10 +23,11 @@ from synda.source.process.subcommand.initenv.models import Process as InitEnv
 from synda.source.process.subcommand.help.models import Process as Help
 from synda.source.process.subcommand.api.esgf_search.count.models import Process as Count
 
-from synda.source.process.subcommand.daemon.models import Process as Daemon
+from synda.source.process.subcommand.download.models import Process as Download
 from synda.source.process.subcommand.dump.models import Process as Dump
 from synda.source.process.subcommand.facet.models import Process as Facet
 from synda.source.process.subcommand.get.models import Process as Get
+from synda.source.process.subcommand.getinfo.models import Process as GetInfo
 from synda.source.process.subcommand.history.models import Process as History
 from synda.source.process.subcommand.install.models import Process as Install
 from synda.source.process.subcommand.intro.models import Process as Intro
@@ -74,14 +75,16 @@ def get_process_class(name):
             process = Contact
         elif name == "count":
             process = Count
-        elif name == "daemon":
-            process = Daemon
+        elif name == "download":
+            process = Download
         elif name == "dump":
             process = Dump
         elif name == "facet":
             process = Facet
         elif name == "get":
             process = Get
+        elif name == "getinfo":
+            process = GetInfo
         elif name == "help":
             process = Help
         elif name == "history":

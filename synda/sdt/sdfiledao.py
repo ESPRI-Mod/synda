@@ -571,3 +571,27 @@ def sort_by_size_ascending(files):
 def file_status_is_running(file_functional_id):
     _file = get_file(file_functional_id=file_functional_id)
     return _file.status == TRANSFER["status"]['running']
+
+
+def cleanup_running_transfer():
+    """This handle zombie cases (transfers with 'running' status, but not running).
+
+    Check for zombie transfer (move "running" transfer to "waiting")
+
+    Notes:
+        - remaining "running" transfers exist if the daemon has been killed or if the server rebooted when the daemon was running)
+        - if there are still transfers in running state, we switch them to waiting and remove file chunk
+    """
+    transfer_list = get_files(status=TRANSFER["status"]['running'])
+
+    for t in transfer_list:
+        sdlog.info(
+            "SDTSCHED-023",
+            "fixing transfer status (%s)" % t.get_full_local_path(),
+        )
+
+        if os.path.isfile(t.get_full_local_path()):
+            os.remove(t.get_full_local_path())
+
+        t.status = TRANSFER["status"]['waiting']
+        update_file(t)

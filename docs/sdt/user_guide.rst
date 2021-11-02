@@ -148,7 +148,7 @@ In source installation, run command below:
 
 .. code-block:: bash
 
-    synda daemon [ start | stop ]
+    synda download [ start | stop ]
 
 Error management
 ****************

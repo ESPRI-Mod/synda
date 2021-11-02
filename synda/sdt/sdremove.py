@@ -12,6 +12,7 @@
 """This module contains 'synda remove' related routines."""
 
 import os
+import sys
 import argparse
 from synda.sdt.sdtools import print_stderr, print_stdout
 from synda.sdt import sdexception
@@ -44,10 +45,17 @@ def is_local(stream):
         return False
 
 
+def check_downloading_status():
+    from synda.source.config.file.downloading.models import Config as DownloadingFile
+    downloading_file = DownloadingFile()
+    if downloading_file.process_is_active():
+        print('The downloading process must be stopped before installing/removing dataset')
+        sys.exit(3)
+
+
 def run_local(args, stream):
     from synda.sdt import sdlfile
-
-    syndautils.check_daemon()
+    check_downloading_status()
 
     try:
         files = sdlfile.get_files(
@@ -77,8 +85,7 @@ def run_local(args, stream):
 
 
 def run_remote(args, stream):
-
-    syndautils.check_daemon()
+    check_downloading_status()
 
     try:
         metadata = syndautils.file_full_search(args, stream)

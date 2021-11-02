@@ -47,10 +47,6 @@ class Create(object):
 
         config = configparser.ConfigParser()
 
-        config.add_section('daemon')
-        config.set('daemon', 'user', '')
-        config.set('daemon', 'group', '')
-
         config.add_section('module')
         config.set('module', 'download', 'true')
 
@@ -110,8 +106,6 @@ class Create(object):
 
         config.set('download', 'url_max_buffer_size', '3500')
 
-        # nouvelles variables
-
         config.set('download', 'direct_http_timeout', '30')
         config.set('download', 'async_http_timeout', '120')
 
@@ -120,8 +114,7 @@ class Create(object):
         # 200mn # TODO maybe use 86400 / 24h here
         config.set('download', 'async_db_timeout', '12000')
 
-        config.set('download', 'big_file_size', '795795708')
-        config.set('download', 'big_file_chunksize', '16384')
+        config.set('download', 'streaming_chunk_size', '0')
 
         config.add_section('api')
 
@@ -141,6 +134,9 @@ class Create(object):
         config.set('api', 'esgf_search_chunksize', '9000')
         # HTTP timeout (time to wait for HTTP response)
         config.set('api', 'esgf_search_http_timeout', '300')
+
+        config.add_section('install')
+        config.set('install', 'interactive', 'true')
 
         with open(full_filename, 'w') as fh:
             for line in header:

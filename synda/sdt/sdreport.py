@@ -59,18 +59,45 @@ def PROC0005():
      - also see PROC0001
     """
     for d in sddatasetutils.get_old_versions_datasets():
-        print(d.get_full_local_path('output{,1,2}')) # note: for non CMIP5-DRS-based-project, product argument is not used
+        # note: for non CMIP5-DRS-based-project, product argument is not used
+        print(d.get_full_local_path('output{,1,2}'))
+
 
 def print_running_transfers():
-    li=[]
+    li = []
     for tr in sdfiledao.get_files(status=TRANSFER["status"]['running']):
-        current_size=os.path.getsize(tr.get_full_local_path()) if os.path.isfile(tr.get_full_local_path()) else 0
-        li.append([humanize.naturalsize(current_size,gnu=False),humanize.naturalsize(tr.size,gnu=False),tr.start_date,tr.filename])
+        current_size = os.path.getsize(tr.get_full_local_path()) if os.path.isfile(tr.get_full_local_path()) else 0
 
-    if len(li)>0:
-        print(tabulate(li,headers=['Current size','Total size','Download start date','Filename'],tablefmt="plain"))
+        # Find the status of the checks
+        if current_size < tr.size:
+            # waiting status
+            checks_status = ""
+        elif current_size == tr.size:
+            checks_status = tr.status
+        else:
+            checks_status = "error"
+
+        li.append(
+            [
+                humanize.naturalsize(current_size, gnu=False),
+                humanize.naturalsize(tr.size, gnu=False),
+                tr.start_date,
+                checks_status,
+                tr.filename,
+            ],
+        )
+
+    if len(li) > 0:
+        print(
+            tabulate(
+                li,
+                headers=['Current size', 'Total size', 'Download start date', 'Checks', 'Filename'],
+                tablefmt="plain",
+            ),
+        )
     else:
         print('No current download')
+
 
 def print_old_versions_stats():
     """Print stats regarding old versions."""

@@ -35,4 +35,4 @@ class TestEnvContext(Context):
 
     def validate_checksums(self):
         for file in self.expected_files:
-            file.file_checksum()
+            file.validate_checksum()

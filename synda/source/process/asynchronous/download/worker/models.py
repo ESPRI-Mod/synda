@@ -7,6 +7,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import asyncio
+import uvloop
 
 from synda.sdt import sdlog
 from synda.sdt import sdtypes
@@ -17,10 +18,11 @@ from synda.source.process.asynchronous.download.worker.dashboard.models import D
 
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.file.internal.models import Config as Internal
-from synda.source.config.file.user.preferences.models import Config as Preferences
 
 internal = Internal()
-preferences = Preferences()
+DOWNLOADING_LOGGER_NAME = internal.logger_consumer
+
+uvloop.install()
 
 
 def activate_tests_for_fallback_strategy(task):
@@ -56,6 +58,7 @@ class Worker(Base):
         sdlog.info(
             "SDDMDEFA-088",
             "Transfer failed: try to use another url ({})".format(file_instance.url),
+            logger_name=DOWNLOADING_LOGGER_NAME,
         )
         new_file = sdtypes.File()
         new_file.copy(file_instance)
@@ -76,10 +79,11 @@ class Worker(Base):
                     new_file.url,
                     new_file.file_id,
                 ),
+                logger_name=DOWNLOADING_LOGGER_NAME,
             )
         return self.create_task(new_file) if new_url_found else None
 
-    async def post_process_task(self, task):
+    async def post_process_task(self, task, config):
         await Base.post_process_task(self, task)
         file_id = task.get_file_instance().file_id
 
@@ -94,7 +98,7 @@ class Worker(Base):
 
             # => new strategy
             # the file instance is updated to allow a new download attempt with another url (if exists)
-            fallback_strategy = True if preferences.is_download_http_fallback else False
+            fallback_strategy = True if config["is_download_http_fallback"] else False
 
             if fallback_strategy:
                 new_task = self.get_fallback_task(task.get_file_instance())
@@ -114,12 +118,11 @@ class Worker(Base):
                         await new_task.killed()
 
         if self.verbose:
-            self.log_history(file_id)
+            self.log_history(file_id, config["logger_consumer"])
 
-    def log_history(self, file_id):
+    def log_history(self, file_id, logger_name):
         tasks = self.get_dashboard().get_tasks()
         nb_tasks = len(tasks)
-        logger_name = internal.logger_consumer
         sdlog.info(
             "D/L-HIST-001",
             "file id : {} | Downloads History".format(

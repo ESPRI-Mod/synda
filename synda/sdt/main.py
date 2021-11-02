@@ -15,7 +15,7 @@ Notes
     - in this file, most module import directives are moved near the calls, so
       to improve startup time.
     - do not import 'sdlog' at the beginning of this file, because in this
-      case, it breaks the daemon startup (i.e. double-fork problem) !
+      case, it breaks the download startup (i.e. double-fork problem) !
     - do not put a dry_run test here (sdtiaction's funcs are called from other
       place too, so the dry_run test need to be done inside sdtiaction's funcs)
     - remove '-W ignore' once only Python 2.7+. TAG5J43K

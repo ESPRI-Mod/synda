@@ -91,23 +91,10 @@ Default: 12000
 
 --------------------------------------------------------
 
-### download.big_file_size
+### download.streaming_chunk_size
 
-Files that are a size greater than big_file_size that considered to be big files
-These files cannot be downloaded at once => the download is performed into parts
-
-(see download.big_file_chunksize parameter)
-
-Type: int
-
-Default: 795795708
-
---------------------------------------------------------
-
-### download.big_file_chunksize
-
-Big files must be downloaded into several parts to not exceed max memory dedicated to the download process
-'big_file_chunksize' characterizes the size of each part (i.e. the data size of each http response) 
+Files are downloaded into several parts to not exceed max memory dedicated to the download process
+'streaming_chunk_size' characterizes the size of each part (i.e. the data size of each http response) 
 
 Type: int
 

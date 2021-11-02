@@ -7,7 +7,8 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 from synda.source.config.file.user.preferences.models import Config as Preferences
-from synda.source.process.constants import is_daemon as current_process_is_a_daemon
+
+from synda.source.config.file.downloading.models import Config as Filedownloading
 
 
 def get_timeout():
@@ -20,23 +21,12 @@ def get_timeout():
     #
     # more info here => http://www.sqlite.org/faq.html#q5
     #
-    if current_process_is_a_daemon():
+    fd = Filedownloading()
+    if fd.process_is_active():
 
-        # we set a high sqlite timeout value for the daemon,
-        # so it doesn't exit on timeout error when we are running
-        # huge query in Synda IHM (e.g. synda install CMIP5)
-        #
-        # by doing so, so we are able to use Synda IHM and sqlite3
-        # to run manual query without stopping the daemon.
-
+        # we set a high sqlite timeout value if the downloading process is active
         timeout = Preferences().download_async_db_timeout
-
     else:
-
-        # we do not need to set a high sqlite timeout value for Synda IHM,
-        # as daemon do not perform huge queries, so Synda IHM do not have
-        # to wait for long until the sqlite lock is release.
-
         timeout = Preferences().download_direct_db_timeout
 
     return timeout

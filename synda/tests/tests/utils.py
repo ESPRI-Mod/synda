@@ -30,15 +30,16 @@ def is_test_filename(filename):
 
 def search_requested_fullfilenames(dirname):
     fullfilenames = []
-    for dirpath, subdirectories, filenames in os.walk(dirname):
-        for filename in filenames:
-            if is_test_filename(filename):
-                fullfilenames.append(
-                    os.path.join(
-                        dirpath,
-                        filename,
-                    ),
-                )
+    if dirname:
+        for dirpath, subdirectories, filenames in os.walk(dirname):
+            for filename in filenames:
+                if is_test_filename(filename):
+                    fullfilenames.append(
+                        os.path.join(
+                            dirpath,
+                            filename,
+                        ),
+                    )
     return fullfilenames
 
 
@@ -57,7 +58,7 @@ def run_simple_tests(fullfilenames, coverage_activated=False):
             sys.exit(-1)
 
 
-def run_test_under_subprocess(fullfilename, coverage_activated=False):
+def run_test_under_subprocess(fullfilename, coverage_activated=False, popen=False):
     print(
         "Testing : {}".format(fullfilename),
     )
@@ -65,4 +66,7 @@ def run_test_under_subprocess(fullfilename, coverage_activated=False):
         args = ["python", get_pytest_source_fullfilename(), "-v", "-m", "on_all_envs", "--cov=sdt", "-x", fullfilename]
     else:
         args = ["python", get_pytest_source_fullfilename(), "-v", "-m", "on_all_envs", "-x", fullfilename]
-    subprocess.call(args)
+    if popen:
+        subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    else:
+        subprocess.run(args)

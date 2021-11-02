@@ -12,7 +12,7 @@ from shutil import rmtree
 
 def delete_dirs(target):
     if os.path.isdir(target):
-        rmtree(target)
+        rmtree(target, ignore_errors=True)
 
 
 def create_dir(directory):
@@ -26,3 +26,16 @@ def has_environment_variable(var_name):
     if var_name in list(os.environ.keys()):
         checked = True
     return checked
+
+
+def remove_local_path(full_filename):
+    error = ""
+    try:
+        os.remove(
+            full_filename,
+        )
+    except OSError:
+        error = "error occurs while removing local file ({})".format(
+                full_filename,
+            )
+    return error

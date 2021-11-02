@@ -43,7 +43,7 @@ def get_rows_filtered_on_file_functional_id(file_functional_id):
     conn = Connection()
     manager = conn.get_item("file table crud").get_item("read")
     manager.set_db_connection(conn)
-    data = manager.get_rows_filtered_on_file_functional_id(file_functional_id)
+    data = manager.get_rows_filtered_on_file_functional_id(file_functional_id)[0]
     conn.close()
 
     return data

@@ -13,6 +13,7 @@ it allows to control the tests sequences from the most required to the most adva
 from synda.tests.tests.env.default.init.run import main as run_init_env_tests
 from synda.tests.tests.env.default.run import main as run_default_env_tests
 from synda.tests.tests.env.installed.run import main as run_installed_env_tests
+from synda.tests.tests.envs.env1.subcommand.download.run import main as run_download_subcommand_tests
 
 
 def main(coverage_activated=False):
@@ -20,6 +21,7 @@ def main(coverage_activated=False):
     run_init_env_tests()
     run_installed_env_tests(coverage_activated=coverage_activated)
     run_default_env_tests(coverage_activated=coverage_activated)
+    run_download_subcommand_tests(coverage_activated=coverage_activated)
 
 
 if __name__ == '__main__':

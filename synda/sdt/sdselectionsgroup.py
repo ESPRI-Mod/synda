@@ -27,34 +27,40 @@ def print_selection_list_with_index(pattern=None):
     for i,s in enumerate(get_selection_list(filename_pattern=pattern)):
         print("%3d %s"%(i,s.filename))
 
-def print_selection_list(pattern=None,project=None):
+
+def print_selection_list(pattern=None, project=None):
 
     if project is None:
-        project=[]
+        project = []
 
-    for s in get_selection_list(pattern,project=project):
+    for s in get_selection_list(pattern, project=project):
         print(s.filename)
 
-def get_selection_list(filename_pattern=None,project=None):
+
+def get_selection_list(filename_pattern=None, project=None):
 
     if project is None:
-        project=[]
+        project = []
 
     if selections is None:
         load_selections()
 
-    new_selections=selections
+    new_selections = selections
 
     if filename_pattern is not None:
-        new_selections=sdselectionsgrouputils.filename_filter(new_selections,filename_pattern)
+        new_selections = sdselectionsgrouputils.filename_filter(
+            new_selections,
+            filename_pattern,
+        )
 
-    new_selections=sdselectionsgrouputils.project_filter(new_selections,project)
+    new_selections = sdselectionsgrouputils.project_filter(new_selections, project)
 
     return new_selections
 
 # module init.
 
-selections=None
+
+selections = None
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

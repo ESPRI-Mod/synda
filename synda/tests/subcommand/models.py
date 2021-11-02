@@ -86,6 +86,8 @@ class SubCommand(object):
 
         sys.argv = self.get_argv()
 
+        str_subcommand = " ".join(self.get_argv())
+
         # synda.run()
 
         with pytest.raises(BaseException) as exception:
@@ -95,4 +97,5 @@ class SubCommand(object):
 
         if isinstance(exception.value.code, int):
             if exception.value.code in [0, 1]:
-                self.context.validation_after_subcommand_execution()
+                if self.context.validate:
+                    self.context.validation_after_subcommand_execution()

@@ -14,22 +14,11 @@
 Notes
     - In this file, module import directives are moved near the calls, so to improve startup time.
 """
-
-import sys
 import os
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.api.esgf_search.constants import STRUCTURE as SEARCH_API_STRUCTURE
 from synda.source.config.process.history.constants import STRUCTURE as HISTORY_STRUCTURE
-
-
-def check_daemon():
-    from synda.sdt import sdconfig
-    if sdconfig.prevent_daemon_and_modification:
-        from synda.sdt import sddaemon
-        if sddaemon.is_running():
-            print('The daemon must be stopped before installing/removing dataset')
-            sys.exit(3)
 
 
 def get_stream(

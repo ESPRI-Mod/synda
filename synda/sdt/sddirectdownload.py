@@ -9,7 +9,7 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 
-"""This script download files sequentially in foreground (without using the daemon)."""
+"""This script download files sequentially in foreground."""
 
 import argparse
 import os

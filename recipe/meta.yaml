@@ -1,4 +1,4 @@
-{% set version = "3.36" %}
+{% set version = "3.4" %}
 
 package:
   name: synda
@@ -15,21 +15,21 @@ channels:
   - conda-forge
 
 dependencies:
-- python>=3.8
-- pip
-- pip:
-  # works for regular pip packages
-  - asyncio
-  - python3-wget
+  - python>=3.9
+  - pip
+  - pip:
+    # works for regular pip packages
+    - asyncio
+    - uvloop
 
 requirements:
   host:
     - python
     - numpy
   run:
+    - numpy
     - python
     - six
-    - python-daemon
     - psutil
     - retrying
     - progress
@@ -47,7 +47,7 @@ requirements:
     - pandas
     - aiohttp
     - aiofiles
-    - httpx
+    - uvloop
 
 about:
     home: https://github.com/Prodiguer/synda

@@ -49,25 +49,25 @@ Mark the file for download:
     Do you want to continue? [Y/n] 
     1 file(s) enqueued
 
-Start the daemon:
+Start the asynchronous download process:
 
 .. code-block:: bash
 
-    $ synda daemon start
+    $ synda download start
 
-Check download progress:
+Check asynchronous download progress:
 
 .. code-block:: bash
 
-    $ synda queue
+    $ synda download queue
     status      count  size
     running         1  8.9 MB
 
-    $ synda watch
+    $ synda download watch
     Current size    Total size    Download start date         Filename
     8.9 MB          8.9 MB        2015-12-15 10:31:53.848936  baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-    $ synda queue
+    $ synda download queue
     status      count  size
     done            1  8.9 MB
 

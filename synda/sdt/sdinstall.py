@@ -12,20 +12,32 @@
 """This module contains 'synda install' related routines."""
 
 import argparse
-from synda.sdt import sdconfig
-from synda.sdt import sdi18n
+
+# from synda.sdt import sdi18n
 from synda.sdt import sdexception
 from synda.sdt import sdlog
 from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.process.download.constants import TRANSFER
+from synda.source.config.file.user.preferences.models import Config as Preferences
+
+
+def is_interactive_active(non_interactive_from_cli, interactive_from_preferences):
+    if non_interactive_from_cli:
+        # User explicitly requires the non-interactive mode at the command line
+        is_non_interactive = True
+    else:
+        is_non_interactive = False
+        if not interactive_from_preferences:
+            # User preferences require the non-interactive mode
+            is_non_interactive = True
+
+    return not is_non_interactive
 
 
 def run(args, metadata=None):
 
     from synda.sdt import syndautils
-
-    syndautils.check_daemon()
 
     if metadata is None:
 
@@ -55,7 +67,7 @@ def run(args, metadata=None):
     if args.dry_run:
         return 0, 0
 
-    interactive = not args.yes
+    interactive = is_interactive_active(args.yes, Preferences().is_install_interactive)
 
     return _install(metadata, interactive, args.config_manager, args.timestamp_right_boundary)
 
@@ -74,7 +86,6 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
     # perfomance)
     #
     from synda.sdt import sdsimplefilter
-    from synda.sdt import sdconst
 
     metadata = sdsimplefilter.run(metadata, 'status', TRANSFER["status"]['new'], 'keep')
     metadata = sdsimplefilter.run(metadata, 'url', "//None", 'remove_substr')
@@ -90,7 +101,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
             sdlog.info(
                 "SYNDINST-027",
                 "Nothing to install (matching files are already installed or waiting in the download queue)."
-                " To monitor transfers status and progress, use 'synda queue' command.",
+                " To monitor transfers status and progress, use 'synda download queue' command.",
                 stderr=interactive,
             )
         else:
@@ -137,14 +148,8 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
                 "{} file(s) enqueued".format(count_new),
             )
             print_stderr(
-                "You can follow the download using 'synda watch' and 'synda queue' commands",
+                "You can follow the download using 'synda download watch' and 'synda download queue' commands",
             )
-            from synda.sdt import sddaemon
-            if not sddaemon.is_running():
-                msg = sdi18n.m0026
-                print_stderr(
-                    "The daemon is not running. To start it, use '{}'.".format(msg),
-                )
     else:
         if interactive:
             print_stderr('Abort.')

@@ -1,0 +1,4 @@
+project=CMIP6
+priority=4000
+table_id=3hr
+variable=huss pr tas uas vas

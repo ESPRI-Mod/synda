@@ -64,9 +64,11 @@ m0011="""
         """
 
 m0012="""
-            daemon start
-            daemon stop
-            daemon status
+            download start
+            download stop
+            download status
+            download queue
+            download watch
         """
 
 m0013="""
@@ -144,21 +146,21 @@ Once downloaded, 8.9 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
 1 file(s) enqueued
 
-Start the daemon
+Start the download
 
-$ synda daemon start
+$ synda download start
 
 Check download progress:
 
-$ synda queue
+$ synda download queue
 status      count  size
 running         1  8.9 MB
 
-$ synda watch
+$ synda download watch
 Current size    Total size    Download start date         Filename
 8.9 MB          8.9 MB        2015-12-15 10:31:53.848936  baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
 
-$ synda queue
+$ synda download queue
 status      count  size
 done            1  8.9 MB
 
@@ -198,8 +200,8 @@ You can also disable parameters checking by setting 'check_parameter=0' in confi
 """
 
 m0022="""  'install' command is asynchronous, the transfer is handled by a
-  background process. To check when the download is complete, use 'synda 
-  queue' command.
+  background process. To check when the download is complete, 
+  use 'synda download queue' command.
 """
 
 m0023="""  This command is for source installation only (in system package
@@ -211,8 +213,20 @@ m0024="""Set the total number of returned results. By default, returns the first
 
 m0025="""sudo service synda start"""
 
-m0026="""synda daemon start"""
+# m0026="""synda download start"""
 
 m0027="You must either be root, or part of the synda group to perform this command."
 m0028="Unable to access credentials file necessary to perform this action, please make sure you have sufficient " \
       "permissions for the said file then retry the command."
+
+m0029 = """  Downloads Services
+    - start  : to start the downloads process
+    - stop   : to stop it
+    - status : to display its status
+    - queue  : to know its progression state
+    - watch  : to display information about the current downloads
+"""
+m0030 = """
+    Provides atomic information
+        Usage 'synda getinfo --key' returns key value
+"""

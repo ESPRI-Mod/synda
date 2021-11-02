@@ -7,7 +7,10 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import asyncio
+import uvloop
 import datetime
+
+uvloop.install()
 
 
 class Event(object):
@@ -52,7 +55,10 @@ class Task(object):
     def get_worker(self):
         return self.worker
 
-    async def process(self):
+    async def post_process(self, **download_results):
+        pass
+
+    async def process(self, *args):
         self.set_status("running")
         await asyncio.sleep(10)
         success = await default_post_process(self)
@@ -96,6 +102,10 @@ class Task(object):
 
     def running(self):
         return self.status == "running"
+
+    @property
+    def killed_by_worker(self):
+        return self.get_worker().stopped
 
     async def killed(self):
         pass

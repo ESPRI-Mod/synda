@@ -11,9 +11,11 @@
 
 """This module contains routines used to focus on one index (by turning off 'distrib' flag)."""
 
-import sdsessionparam
-import sdremoteparam
+from synda.sdt import sdsessionparam
+from synda.sdt.sdexception import SDException
+from synda.sdt import sdremoteparam
 from operator import attrgetter
+
 
 def lock(model):
     dry_run=sdsessionparam.get_value('dry_run')

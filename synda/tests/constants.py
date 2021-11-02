@@ -30,7 +30,3 @@ def is_test_mode_activated():
 
 # 2 minute timeout
 DB_CONNECTION_TIMEOUT = 120
-
-# DAEMON
-
-WAIT_DURATION_AFTER_DAEMON_STOP = 10

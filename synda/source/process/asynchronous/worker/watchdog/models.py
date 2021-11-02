@@ -11,6 +11,9 @@ import sys
 import shutil
 import os
 import asyncio
+import uvloop
+
+uvloop.install()
 
 from synda.source.process.asynchronous.worker.watchdog.event.models import Event
 

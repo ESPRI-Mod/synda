@@ -14,9 +14,10 @@ from synda.tests.stderr import VERIFY_CHECKSUM_KO, VERIFY_CHECKSUM_OK
 
 class Context(Base):
 
-    def __init__(self, folder="", expected_files_description=None, capsys=None):
+    def __init__(self, folder="", expected_files_description=None, capsys=None, validate=True):
         super(Context, self).__init__(
             capsys=capsys,
+            validate=validate,
         )
         self.expected_files_description = []
         self.folder = ""

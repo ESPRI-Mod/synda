@@ -46,3 +46,8 @@ def test_reader_download_direct_http_timeout():
 @pytest.mark.on_all_envs
 def test_reader_download_async_http_timeout():
     assert parser.get('download', 'async_http_timeout') == '120'
+
+
+@pytest.mark.on_all_envs
+def test_reader_download_streaming_chunk_size():
+    assert parser.get('download', 'streaming_chunk_size') == '0'

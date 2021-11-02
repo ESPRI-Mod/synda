@@ -3,8 +3,23 @@
 Frequently asked questions
 ==========================
 
-Transfer Module
-***************
+Unable to change paths settings (#193)
+--------------------------------------
+
+In a first Synda version, the workspace location was based on a Linux environment variable (ST_HOME). It was a simple solution, but too rigid.
+
+In a second Synda version, the workspace subdirectories location has been outsourcing in the user preferences file (sdt.conf). It was a much better solution, but for strange reason, these customized paths settings, whatever their values, are ignored at the moment.
+
+To avoid the problem, you can create a symbolic link.
+
+Adapt the code below :
+
+.. code-block:: bash
+
+    ln -s your/customized/data/path $ST_HOME/data
+
+
+
 
 required = {'jpeg', 'zlib'} - SyntaxError: invalid syntax
 ---------------------------------------------------------
@@ -118,7 +133,3 @@ Run command below in *synda* virtualenv to retrieve pyopenssl HEAD version from 
     easy_install https://github.com/pyca/pyopenssl/tarball/master
 
 `More information <http://stackoverflow.com/questions/23006023/error-installing-pyopenssl>`_.
-
-
-Post-Processing Module
-**********************

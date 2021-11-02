@@ -22,6 +22,7 @@ from synda.sdt import sdconst
 from synda.sdt import sdlog
 from synda.sdt import sddeletequery
 from synda.sdt import sddb
+from synda.source.db.connection.models import get_db_connection
 from synda.sdt import sdfilequery
 
 from synda.source.config.process.download.constants import TRANSFER
@@ -43,13 +44,14 @@ def delete_transfers(limit=None,remove_all=True):
     transfer_list=sdfiledao.get_files(status=TRANSFER["status"]['delete'],limit=limit)
 
     try:
+        conn = get_db_connection()
         for tr in transfer_list:
             if remove_all:
-                immediate_delete(tr)
+                immediate_delete(tr, conn=conn)
             else:
-                immediate_md_delete(tr)
+                immediate_md_delete(tr, conn=conn)
 
-        sddb.conn.commit() # final commit (we do all deletion in one transaction).
+        conn.commit() # final commit (we do all deletion in one transaction).
     except Exception as e:
         sdlog.error("SDDELETE-880","Error occurs during files suppression (%s)"%(str(e),))
 
@@ -67,7 +69,7 @@ def delete_transfers(limit=None,remove_all=True):
 
     return sdfilequery.transfer_status_count(status=TRANSFER["status"]['delete'])
 
-def deferred_delete(file_functional_id):
+def deferred_delete(file_functional_id, conn=None):
     f=sdfiledao.get_file(file_functional_id)
 
     f.status=TRANSFER["status"]['delete']
@@ -75,9 +77,9 @@ def deferred_delete(file_functional_id):
     f.sdget_status=None
     f.sdget_error_msg=None
 
-    sdfiledao.update_file(f,commit=False)
+    sdfiledao.update_file(f,commit=False, conn=conn)
 
-def immediate_delete(tr):
+def immediate_delete(tr, conn=None):
     """Delete file (metadata and data).
 
     Notes
@@ -89,7 +91,7 @@ def immediate_delete(tr):
         try:
             os.remove(tr.get_full_local_path())
             # note: if data cannot be removed (i.e. exception is raised), we don't remove metadata
-            sdfiledao.delete_file(tr,commit=False)
+            sdfiledao.delete_file(tr,commit=False, conn=conn)
 
         except Exception as e:
             sdlog.error("SDDELETE-528","Error occurs during file suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
@@ -102,13 +104,13 @@ def immediate_delete(tr):
         else:
             # this case is for 'waiting' and 'error' status (in these cases, data do not exist, so we just remove metadata)
 
-            sdfiledao.delete_file(tr,commit=False)
+            sdfiledao.delete_file(tr,commit=False, conn=conn)
 
-def immediate_md_delete(tr):
+def immediate_md_delete(tr, conn=None):
     """Delete file (metadata only)."""
     sdlog.info("SDDELETE-080","Delete metadata (%s)"%tr.get_full_local_path())
     try:
-        sdfiledao.delete_file(tr,commit=False)
+        sdfiledao.delete_file(tr,commit=False, conn=conn)
     except Exception as e:
         sdlog.error("SDDELETE-128","Error occurs during file metadata suppression (%s,%s)"%(tr.get_full_local_path(),str(e)))
 

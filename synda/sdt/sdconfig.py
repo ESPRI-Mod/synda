@@ -59,9 +59,6 @@ if 'ST_HOME' not in os.environ:
 
 # check_path(bin_folder)
 
-# prevent modification while daemon is running
-prevent_daemon_and_modification = False
-
 # this is to prevent flooding log file with domain message during debugging session
 # (i.e. set it to false when debugging).
 log_domain_inconsistency = True

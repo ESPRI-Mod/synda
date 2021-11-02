@@ -19,7 +19,7 @@ class DashBoard(Base):
         Base.__init__(self, manager, identifier=identifier)
         self.event = Event(self)
 
-    def print_downloads_metrics(self):
+    def print_metrics(self):
         nb_done = 0
         nb_error = 0
         nb_waiting = 0
@@ -44,7 +44,3 @@ class DashBoard(Base):
                 nb_done,
             ),
         )
-
-    def print_metrics(self):
-        Base.print_metrics(self)
-        self.print_downloads_metrics()

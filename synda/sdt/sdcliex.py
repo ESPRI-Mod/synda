@@ -15,48 +15,63 @@ Note
     sdcliex means 'SynDa Command LIne EXample'
 """
 
+
 def autoremove():
-    buf=""""""
+    buf = """"""
     return buf
+
 
 def cache():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def certificate():
-    buf="""  synda certificate renew
+    buf = """  synda certificate renew
   synda certificate print
   synda certificate info"""
     return buf
 
+
 def check():
-    buf="""  synda check dataset_version
+    buf = """  synda check dataset_version
   synda check file_variable CMIP5 atmos orog
   synda check selection"""
     return buf
 
+
 def config():
-    buf=""""""
+    buf = """"""
     return buf
+
 
 def contact():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def count():
-    buf="""  synda count
+    buf = """  synda count
   synda count CMIP5
   synda count obs4MIPs -f
   synda count -s selection.txt --timestamp_left_boundary 2012-01-01T01:00:00Z --timestamp_right_boundary 2015-01-01T01:00:00Z"""
     return buf
 
-def daemon():
-    buf="""  synda daemon start
-  synda daemon stop"""
+
+def download():
+    buf = """  synda download start
+  synda download stop
+  synda download status
+  synda download queue
+      synda download queue obs4MIPs
+      synda download queue CMIP5
+  synda download watch
+"""
     return buf
 
+
 def dump():
-    buf="""  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -F indent
+    buf = """  synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -F indent
   synda dump CMIP5 IPSL mon atmos limit=1 -d -F indent
   synda dump -R CMIP5 limit=1 -f -F indent
   synda dump omldamax_day_IPSL-CM5A-LR_decadal1995_r1i1p1_19960101-20051231.nc -F indent
@@ -64,14 +79,16 @@ def dump():
   synda dump CORDEX IPSL-INERIS  evaluation limit=1 -f -C local_path -F value"""
     return buf
 
+
 def facet():
-    buf="""  synda facet experiment MPI-ESM-LR | column
+    buf = """  synda facet experiment MPI-ESM-LR | column
   synda facet variable MPI-ESM-LR | column
   synda facet experiment fddtalk MPI-ESM-LR"""
     return buf
 
+
 def get():
-    buf="""  synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
+    buf = """  synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
   synda get http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
   synda get sfcWind_ARC-44_ECMWF-ERAINT_evaluation_r1i1p1_AWI-HIRHAM5_v1_sem_197903-198011.nc
   synda get clcalipso_cfDay_NICAM-09_aqua4K_r1i1p1_00000101-00000330.nc
@@ -85,38 +102,51 @@ def get():
   synda get cmip5.output2.MPI-M.MPI-ESM-P.past1000.mon.ocean.Omon.r1i1p1.v20131203.rhopoto_Omon_MPI-ESM-P_past1000_r1i1p1_179001-179912.nc"""
     return buf
 
-def help():
-    buf=""""""
+
+def getinfo():
+    buf = """
+    synda getinfo --filesize MPI-ESM-LR rcp26
+    """
     return buf
+
+
+def help():
+    buf = """"""
+    return buf
+
 
 def history():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def install():
-    buf="""  synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+    buf = """  synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
   synda install sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
   synda install MPI-ESM-LR rcp26"""
     return buf
 
+
 def intro():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def list():
-    buf="""  synda list limit=5 -f
+    buf = """  synda list limit=5 -f
   synda list limit=5 -d
 """
     return buf
 
+
 def metric():
-    buf="""  synda metric -g data_node -m rate -p CMIP5
+    buf = """  synda metric -g data_node -m rate -p CMIP5
   synda metric -g project -m size"""
     return buf
 
 
 def param():
-    buf="""  synda param | column
+    buf = """  synda param | column
   synda param institute | column
   synda param institute NA
   synda param project"""
@@ -124,33 +154,38 @@ def param():
 
 
 def queue():
-    buf="""  synda queue obs4MIPs
-  synda queue CMIP5
-  synda queue"""
+    buf = """  synda download queue obs4MIPs
+  synda download queue CMIP5
+  synda download queue"""
     return buf
 
+
 def remove():
-    buf="""  synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+    buf = """  synda remove cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
   synda remove status=error -n
   synda remove data_node=vesg.ipsl.upmc.fr,tds.ucar.edu,esgnode2.nci.org.au status=error -n
   synda remove CMIP5 MIROC-ESM historicalNat mon"""
     return buf
 
+
 def replica():
-    buf="""  synda replica next
+    buf = """  synda replica next
   synda replica next cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""
     return buf
 
+
 def reset():
-    buf=""""""
+    buf = """"""
     return buf
+
 
 def retry():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def search(prog):
-    buf="""  %s cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
+    buf = """  %s cmip5 output1 MOHC HadGEM2-A amip4xCO2 mon atmos Amon r1i1p1
   %s rcp85 3hr timeslice=20050101-21001231 -f
   %s project=CORDEX 'query=domain:EUR*11*'
   %s rcp85 3hr start=2005-01-01T00:00:00Z end=2100-12-31T23:59:59Z -d
@@ -177,37 +212,43 @@ def search(prog):
   %s dataset_id=tamip.output1.NCAR.CCSM4.tamip200904.3hr.atmos.3hrSlev.r9i1p1.v20120613|tds.ucar.edu
   %s http://aims3.llnl.gov/thredds/fileServer/cmip5_css02_data/cmip5/output1/CCCma/CanESM2/esmFdbk2/mon/ocean/Omon/r1i1p1/zostoga/1/zostoga_Omon_CanESM2_esmFdbk2_r1i1p1_200601-210012.nc
   %s gsiftp://esgf1.dkrz.de:2811//cmip5/cmip5/output2/MPI-M/MPI-ESM-P/past1000/mon/ocean/Omon/r1i1p1/v20131203/umo/umo_Omon_MPI-ESM-P_past1000_r1i1p1_112001-112912.nc
-  %s cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc"""%((prog,)*28)
+  %s cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc""" % ((prog,)*28)
 
     return buf
+
 
 def selection():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def show():
-    buf="""  synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
+    buf = """  synda show cmip5.output1.CCCma.CanESM2.historicalGHG.fx.atmos.fx.r0i0p0.v20120410.orog_fx_CanESM2_historicalGHG_r0i0p0.nc
   synda show cmip5.output1.IPSL.IPSL-CM5A-LR.historical.mon.land.Lmon.r1i1p1.v20120430"""
     return buf
 
+
 def stat():
-    buf="""  synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
+    buf = """  synda stat cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
   synda stat cmip5.output1.CCCma.CanCM4.decadal1964.mon.ocean.Omon.r1i1p1.v20120622
   synda stat MPI-ESM-LR rcp26
   synda stat project=CORDEX 'query=domain:EUR*11*'
   synda stat ECMWF-ERAINT frequency=day"""
     return buf
 
+
 def update():
-    buf=""""""
+    buf = """"""
     return buf
+
 
 def upgrade():
-    buf=""""""
+    buf = """"""
     return buf
 
+
 def variable():
-    buf="""  synda variable
+    buf = """  synda variable
   synda variable -S
   synda variable -s
   synda variable sfcWind
@@ -218,11 +259,13 @@ def variable():
   export COLUMNS ; synda variable -s | cut -c 1-20 | column | less"""
     return buf
 
+
 def version():
-    buf="""  synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
+    buf = """  synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
   synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426"""
     return buf
 
+
 def watch():
-    buf=""""""
+    buf = """"""
     return buf

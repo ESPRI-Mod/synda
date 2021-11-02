@@ -81,3 +81,7 @@ class MissingDatasetUrlException(SDException):
 
 class EnvironmentNotSet(SDException):
     pass
+
+
+class EsgfCredentialsException(Exception):
+    pass

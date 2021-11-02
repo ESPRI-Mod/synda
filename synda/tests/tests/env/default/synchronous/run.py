@@ -37,7 +37,7 @@ def main(coverage_activated=False):
 
     run_simple_tests(fullfilenames, coverage_activated=coverage_activated)
 
-    # Synchronous MODE, subcommand install (except the part of the process handled by the daemon)
+    # Synchronous MODE, subcommand install
 
     fullfilenames = search_requested_fullfilenames(
         get_subcommand_dirname("install"),

@@ -91,7 +91,7 @@ def run(metadata, config_manager, timestamp_right_boundary=None):
 
         sdlog.info("SDENQUEU-104", "Fill timestamp..")
 
-        fix_timestamp()
+        fix_timestamp(conn=conn)
 
         # final commit (we do all insertion/update in one transaction).
         conn.commit()
@@ -284,7 +284,7 @@ def add_dataset(f, conn=None):
         return sddatasetdao.add_dataset(d, commit=False, conn=conn)
 
 
-def fix_timestamp():
+def fix_timestamp(conn=None):
 
     # HACK 1
     #
@@ -304,8 +304,14 @@ def fix_timestamp():
     # sdquicksearch (also in this case, sdsearch can still be used for the top
     # level search (so resulting with a mix of sdsearch and sdquicksearch)).
 
+    if conn:
+        transaction = True
+    else:
+        conn = get_db_connection()
+        transaction = False
+
     # retrieve datasets with timestamp not set
-    datasets_without_timestamp = sddatasetdao.get_datasets(timestamp=None)
+    datasets_without_timestamp = sddatasetdao.get_datasets(timestamp=None, conn=conn)
 
     # HACK 2
     recent_datasets_without_timestamp = keep_recent_datasets(datasets_without_timestamp)

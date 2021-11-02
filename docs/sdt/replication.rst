@@ -49,7 +49,7 @@ To start the download, run command below:
 
 .. code-block:: bash
 
-    synda daemon start
+    synda download start
 
 Stop
 ----
@@ -58,7 +58,7 @@ To stop the download, run command below:
 
 .. code-block:: bash
 
-    synda daemon stop
+    synda download stop
 
 Watching download progress
 **************************
@@ -67,8 +67,8 @@ Commands below give download status and progress:
 
 .. code-block:: bash
 
-    synda queue
-    synda watch
+    synda download queue
+    synda download watch
 
 Update datasets to the latest version
 *************************************
@@ -104,7 +104,7 @@ Command below can be used to print how many error occured
 
 .. code-block:: bash
 
-    synda queue
+    synda download queue
 
 Retrying download in errors
 ***************************

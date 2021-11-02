@@ -12,6 +12,24 @@ from synda.sdt.sdtime import SDTimer
 from synda.sdt import sdlog
 
 
+def print_elapsed_time():
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            start_time = SDTimer.get_time()
+            result = func(*args, **kwargs)
+            elapsed_time = SDTimer.get_elapsed_time(start_time)
+            # print('SDPROFIL-001', '%s ran in %2.9f sec' % (func.__name__, elapsed_time))
+            # data = dict(
+            #     time=elapsed_time,
+            #     validated=result,
+            # )
+            # print(f"{data},")
+
+            return result
+        return wrapper
+    return decorator
+
+
 def report_elapsed_time_into_log_file(scheduler_profiling):
     def decorator(func):
         def wrapper(*args, **kwargs):

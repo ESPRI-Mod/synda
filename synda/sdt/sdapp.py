@@ -12,7 +12,7 @@
 """This module contains application initialization code.
 
 Note
-    This module must be imported in every other scripts (daemon included)
+    This module must be imported in every other scripts
 """
 
 import os

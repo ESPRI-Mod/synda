@@ -18,7 +18,7 @@ from synda.tests.manager import Manager
 manager = Manager()
 manager.set_tests_mode()
 
-from synda.tests.context.api.esgf_search.list.constants import ENVS
+from synda.tests.context.envs.env1.subcommand.api.esgf_search.list.constants import ENVS
 
 from synda.source.db.task.file.read.models import get_data_nodes
 from synda.source.db.task.file.read.models import get_data_node_priority_filtered_on_status_waiting

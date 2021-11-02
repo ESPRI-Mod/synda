@@ -16,7 +16,7 @@ from synda.sdt.sdtypes import File
 from synda.tests.manager import Manager
 
 from synda.source.process.asynchronous.download.control.models import FILE_CORRUPTION_CHECKSUM_ERROR_MSG
-from synda.source.process.asynchronous.download.worker.http.aio.task.small_file import Task
+from synda.source.process.asynchronous.download.worker.aiohttp.task import Task
 from synda.source.config.process.download.constants import TRANSFER
 
 manager = Manager()
@@ -62,7 +62,7 @@ async def test_checksum_ok():
 
     await new_task.download()
 
-    validated = new_task.post_process_control.file_checksum()
+    validated = new_task.post_process_control.validate_checksum()
 
     assert validated
     assert new_task.get_file_instance().status == TRANSFER["status"]['done']
@@ -99,7 +99,7 @@ async def test_checksum_ko_keep():
 
     await new_task.download()
 
-    validated = new_task.post_process_control.file_checksum("keep")
+    validated = new_task.post_process_control.validate_checksum("keep")
 
     assert not validated
     assert new_task.get_file_instance().status == TRANSFER["status"]['done']
@@ -135,7 +135,7 @@ async def test_checksum_ko_remove():
 
     await new_task.download()
 
-    validated = new_task.post_process_control.file_checksum(
+    validated = new_task.post_process_control.validate_checksum(
         incorrect_checksum_action="remove",
     )
 

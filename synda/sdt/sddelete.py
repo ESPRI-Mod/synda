@@ -19,8 +19,9 @@ from synda.sdt import sdpostpipelineutils
 from synda.sdt import sdsimplefilter
 from synda.sdt import sdlog
 from synda.sdt import sddeletefile
-from synda.sdt import sddb
 from synda.sdt import sdpipelineprocessing
+
+from synda.source.db.connection.models import get_db_connection
 from synda.source.config.process.download.constants import TRANSFER
 from synda.source.config.process.history.constants import STRUCTURE as HISTORY_STRUCT
 
@@ -55,8 +56,6 @@ def run(metadata):
     if count > 0:
         po = sdpipelineprocessing.ProcessingObject(delete)
         sdpipelineprocessing.run_pipeline(metadata, po)
-        # final commit (we do all update in one transaction).
-        sddb.conn.commit()
 
         sdhistorydao.add_history_line(
             HISTORY_STRUCT["action"]['delete'],
@@ -72,9 +71,11 @@ def run(metadata):
 
 
 def delete(files):
+    conn = get_db_connection()
     for file in files:
-        sddeletefile.deferred_delete(file['file_functional_id'])
-
+        sddeletefile.deferred_delete(file['file_functional_id'], conn=conn)
+    # final commit (we do all update in one transaction).
+    conn.commit()
     # nothing to return (end of processing)
     return []
 

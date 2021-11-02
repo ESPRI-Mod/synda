@@ -15,6 +15,7 @@
 """
 import os
 import pytest
+from numpy import nan
 
 from synda.tests.manager import Manager
 Manager().set_tests_mode()
@@ -54,3 +55,8 @@ def test_model_download_direct_http_timeout():
 @pytest.mark.on_all_envs
 def test_model_download_async_http_timeout():
     assert config.download_async_http_timeout == 120
+
+
+@pytest.mark.on_all_envs
+def test_model_download_streaming_chunk_size():
+    assert not config.download_streaming_chunk_size

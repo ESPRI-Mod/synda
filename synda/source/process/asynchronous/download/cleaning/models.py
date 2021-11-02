@@ -12,7 +12,10 @@ from synda.sdt import sdlog
 
 from synda.source.config.process.download.constants import TRANSFER
 
-DOWNLOAD_ERROR_MSG = "Error occured during download."
+from synda.source.config.file.internal.models import Config as Internal
+internal = Internal()
+
+DOWNLOADING_LOGGER_NAME = internal.logger_consumer
 
 
 class Process(object):
@@ -29,16 +32,20 @@ class Process(object):
         self.file_instance.rate = None
 
     def remove_local_path(self):
+        full_local_path = self.file_instance.get_full_local_path()
         try:
-            os.remove(
-                self.file_instance.get_full_local_path(),
-            )
+            if os.path.exists(full_local_path):
+                os.remove(
+                    full_local_path,
+                )
         except OSError:
             sdlog.error(
                 "SDDMDEFA-158",
                 "error occurs while removing local file ({})".format(
-                    self.file_instance.get_full_local_path(),
+                    full_local_path,
                 ),
+                logger_name=DOWNLOADING_LOGGER_NAME,
+
             )
 
     def process(self):
@@ -58,4 +65,3 @@ class Process(object):
             self.init_metrics()
 
             self.file_instance.priority -= 1
-            self.file_instance.error_msg = DOWNLOAD_ERROR_MSG

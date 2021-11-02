@@ -16,7 +16,7 @@ from synda.sdt.sdtypes import File
 from synda.tests.manager import Manager
 
 from synda.source.process.asynchronous.download.task.models import DOWNLOAD_ERROR_MSG
-from synda.source.process.asynchronous.download.worker.http.aio.task.small_file import Task
+from synda.source.process.asynchronous.download.worker.aiohttp.task import Task
 from synda.source.config.process.download.constants import TRANSFER
 
 manager = Manager()

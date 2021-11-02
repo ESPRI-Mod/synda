@@ -10,7 +10,8 @@ from synda.source.manager import Manager as Base
 from synda.source.config.manager import Manager as ConfigManager
 from synda.source.process.env.manager import Manager as EnvManager
 from synda.source.config.subcommand.constants import NAMES as SUB_COMMAND_NAMES
-
+from synda.source.config.subcommand.constants import DEPRECATED_STRUCT as SUB_COMMAND_DEPRECATED_STRUCT
+from synda.source.config.subcommand.constants import deprecated as deprecated_subcommand
 from synda.source.process.subcommand.constants import get_process_class
 from synda.source.process.subcommand.exceptions import InvalidRequest
 
@@ -30,7 +31,7 @@ class Manager(Base):
     def settings(self, argv):
         self.env_manager = EnvManager()
         self.load()
-        validated = self.validate(argv)
+        self.validate(argv)
 
     def is_validated_sub_command(self):
         return self.sub_command != ""
@@ -43,10 +44,13 @@ class Manager(Base):
                 sub_command_candidate = 'help'
             if sub_command_candidate == '-V':
                 sub_command_candidate = 'synda_version'
-            if sub_command_candidate in SUB_COMMAND_NAMES:
-                self.sub_command = sub_command_candidate
+            if sub_command_candidate in list(SUB_COMMAND_DEPRECATED_STRUCT.keys()):
+                deprecated_subcommand(sub_command_candidate)
             else:
-                strerror = "Invalid sub command request '{}'".format(sub_command_candidate)
+                if sub_command_candidate in SUB_COMMAND_NAMES:
+                    self.sub_command = sub_command_candidate
+                else:
+                    strerror = "Invalid sub command request '{}'".format(sub_command_candidate)
         else:
             strerror = 'Invalid request'
 
@@ -58,7 +62,6 @@ class Manager(Base):
             self.validate_env()
         else:
             raise InvalidRequest(strerror)
-        return strerror == ""
 
     def check_env(self, interactive_mode=False):
         checked = self.env_manager.check(interactive_mode=interactive_mode)

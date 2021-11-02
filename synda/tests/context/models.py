@@ -10,7 +10,7 @@
 
 class Context(object):
 
-    def __init__(self, arguments=None, capsys=None):
+    def __init__(self, arguments=None, capsys=None, validate=True):
 
         # initialization
         self.arguments = dict(
@@ -20,10 +20,15 @@ class Context(object):
         # During test execution any output sent to stdout and stderr is captured
         self.capsys = None
 
+        # After test execution, a context post process can be executed to validate the test
+        # It may be disabled with this property
+        self.validate = False
+
         # settings
 
         self.capsys = capsys
         self.arguments = arguments
+        self.validate = validate
 
     def get_arguments(self):
         return self.arguments

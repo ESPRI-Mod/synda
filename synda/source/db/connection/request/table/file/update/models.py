@@ -10,18 +10,52 @@
 from synda.source.db.connection.request.table.models import Request
 
 
-class Delete(Request):
+class Status(Request):
     """
     Request
 
     """
     def __init__(self):
-        super(Delete, self).__init__(
+        super(Status, self).__init__(
             table_name="file",
-            identifier="delete_file_record",
+            identifier="update_file_status",
         )
         # init
 
         self.set_sql(
-            "INSERT INTO failed_url(url,file_id) VALUES (?, (SELECT file_id FROM file WHERE file_functional_id=?))",
+            f"UPDATE {self.get_table_name()} SET status=? WHERE file_id=?",
+        )
+
+
+class StatusErrorMsg(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(StatusErrorMsg, self).__init__(
+            table_name="file",
+            identifier="update_file_status_error_msg",
+        )
+        # init
+
+        self.set_sql(
+            f"UPDATE {self.get_table_name()} SET status=?,error_msg=? WHERE file_id=?",
+        )
+
+
+class StatusErrorMsgPriority(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(StatusErrorMsgPriority, self).__init__(
+            table_name="file",
+            identifier="update_file_status_error_msg_priority",
+        )
+        # init
+
+        self.set_sql(
+            f"UPDATE {self.get_table_name()} SET status=?,error_msg=?,priority=? WHERE file_id=?",
         )

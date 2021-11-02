@@ -1,0 +1,2 @@
+This file is used to tests "selection" subcommand
+It must be added at $ST_HOME/selection into "env3" environment

@@ -8,6 +8,7 @@
 ##################################
 import os
 import datetime
+import uvloop
 
 from synda.sdt import sdlog
 from synda.sdt import sdtime
@@ -18,7 +19,6 @@ from synda.sdt import sdexception
 from synda.sdt import sdlogon
 from synda.sdt import sdconfig
 
-from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.user.credentials.models import Config as Credentials
 from synda.source.config.process.download.constants import TRANSFER
 
@@ -26,13 +26,15 @@ from synda.source.process.asynchronous.task.models import Task as Base
 
 from synda.source.process.asynchronous.download.cleaning.models import Process as CleaningProcess
 from synda.source.process.asynchronous.download.control.models import Control as DownloadControl
+from synda.source.config.file.internal.models import Config as Internal
 
-preferences = Preferences()
+internal = Internal()
+DOWNLOADING_LOGGER_NAME = internal.logger_consumer
+
 credentials = Credentials()
+uvloop.install()
 
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
-
-DOWNLOAD_ERROR_MSG = "Error occured during download."
 
 
 async def renew_certificate():
@@ -47,6 +49,7 @@ async def renew_certificate():
         sdlog.error(
             "SDDMDEFA-502",
             "Exception occured while retrieving certificate ({})".format(e),
+            logger_name=DOWNLOADING_LOGGER_NAME,
         )
 
         raise
@@ -70,16 +73,12 @@ class Task(Base):
         self.file_instance = file_instance
         self.post_process_control = DownloadControl(file_instance)
         self.cleaning = CleaningProcess(file_instance)
-        # self.timeout = preferences.download_async_http_timeout
 
     def get_file_instance(self):
         return self.file_instance
 
     def set_status(self, status):
         Base.set_status(self, status)
-        # if status == "running":
-        #     sdfiledao.update_file_before_download(self.file_instance)
-            # self.file_instance.status = "running"
 
     def compute_metrics(self):
         # compute metrics
@@ -92,11 +91,10 @@ class Task(Base):
         if not os.path.exists(target):
             os.makedirs(target)
 
-    async def post_process(self):
+    async def post_process(self, incorrect_checksum_action, local_file_size, local_checksum=""):
 
         self.compute_metrics()
-
-        await self.post_process_control.process()
+        await self.post_process_control.process(incorrect_checksum_action, local_file_size, local_checksum)
 
         if self.error():
 
@@ -116,6 +114,7 @@ class Task(Base):
                 self.get_name(),
                 self.status,
             ),
+            logger_name=DOWNLOADING_LOGGER_NAME,
         )
 
     async def pre_process(self):
@@ -126,31 +125,36 @@ class Task(Base):
         sdfiledao.update_file_before_download(self.file_instance)
         self.create_local_path()
 
-    async def download(self, http_client_session):
+    async def download(self, client, config):
         """
         Abstract method
         Must be implemented into child classes
         :return: status
         """
-        pass
+        return dict()
 
-    async def process(self, http_client_session):
+    async def process(self, client, config):
 
         begin = datetime.datetime.now()
 
         await self.pre_process()
 
-        sdlog.info("JFPDMDEF-001", "Will download url={}".format(self.file_instance.url, ))
+        sdlog.info(
+            "JFPDMDEF-001",
+            "Will download url={}".format(self.file_instance.url, ),
+            logger_name=DOWNLOADING_LOGGER_NAME,
+        )
 
         if sdconfig.fake_download:
             self.file_instance.status = TRANSFER["status"]['done']
             self.file_instance.error_msg = ""
             self.file_instance.sdget_error_msg = ""
         else:
-            status = await self.download(http_client_session)
-            self.file_instance.status = status
-
-        await self.post_process()
+            download_results = await self.download(client, config)
+            await self.post_process(
+                config["incorrect_checksum_action"],
+                download_results["local_file_size"],
+            )
 
     async def killed(self):
 
@@ -173,6 +177,7 @@ class Task(Base):
                 self.file_instance.url,
                 self.file_instance.local_path,
             ),
+            logger_name=DOWNLOADING_LOGGER_NAME,
         )
 
         # update the DB file table
@@ -180,9 +185,10 @@ class Task(Base):
 
         # add specific message into the log
         # check for fatal error
-        if self.file_instance.sdget_status == 4:
+        if self.file_instance.sdget_status != 0:
             sdlog.info(
                 "SDDMDEFA-147",
-                "Stopping daemon as sdget.download() returned fatal error.",
+                self.file_instance.sdget_error_msg,
+                logger_name=DOWNLOADING_LOGGER_NAME,
             )
             raise sdexception.FatalException()

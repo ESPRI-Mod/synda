@@ -9,4 +9,4 @@
 
 # Current release
 
-CURRENT = '3.36'
+CURRENT = '3.4'

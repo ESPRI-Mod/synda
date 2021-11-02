@@ -56,7 +56,7 @@ class DashBoard(Container):
     def print_metrics(self):
         self.update_metrics()
         print(
-            "Batch {} | Tasks | {} running, {} done, {} cancelled".format(
+            "Worker {} | Tasks | {} running, {} done, {} cancelled".format(
                 self.get_identifier(),
                 self.nb_running,
                 self.nb_done,

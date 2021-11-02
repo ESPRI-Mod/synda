@@ -9,7 +9,7 @@
 """
 """
 import os
-from numpy import nan
+import configparser
 
 from synda.source.constants import get_env_folder
 
@@ -17,11 +17,11 @@ from synda.source.config.file.models import Config as Base
 
 from synda.source.config.file.user.preferences.constants import DEFAULT_FULL_FILENAME
 from synda.source.config.file.user.preferences.constants import IDENTIFIER
-from synda.source.config.file.user.preferences.constants import DEFAULT_OPTIONS
 from synda.source.config.file.user.preferences.constants import DIRECTORY
 from synda.source.config.file.user.preferences.constants import FILENAME
+from synda.source.config.file.user.preferences.constants import DEFAULT_CONTENT
 
-from synda.source.config.file.user.readers import get_parser
+from synda.source.config.file.user.readers import overwrite_parser
 
 
 class Config(Base):
@@ -52,7 +52,13 @@ class Config(Base):
             # print(ENV_NOT_FOUND)
             full_filename = DEFAULT_FULL_FILENAME
 
-        self.set_data(get_parser(full_filename, DEFAULT_OPTIONS))
+        default_parser = configparser.ConfigParser()
+
+        default_parser.read_dict(
+            DEFAULT_CONTENT,
+        )
+
+        self.set_data(overwrite_parser(full_filename, default_parser))
 
     # SECTION : CORE
 
@@ -93,16 +99,6 @@ class Config(Base):
     def core_sandbox_path(self):
         return self.get_data().get('core', 'sandbox_path')
 
-    # SECTION : DAEMON
-
-    @property
-    def daemon_user(self):
-        return self.get_data().get('daemon', 'user')
-
-    @property
-    def daemon_group(self):
-        return self.get_data().get('daemon', 'group')
-
     # SECTION : BEHAVIOUR
 
     @property
@@ -116,6 +112,10 @@ class Config(Base):
     @property
     def behaviour_nearest_mode(self):
         return self.get_data().get('behaviour', 'nearest_mode')
+
+    @property
+    def is_behaviour_onemgf(self):
+        return self.get_data().getboolean('behaviour', 'onemgf')
 
     @property
     def is_behaviour_nearest(self):
@@ -173,17 +173,13 @@ class Config(Base):
         return self.get_data().getint('download', 'url_max_buffer_size')
 
     @property
-    def download_big_file_size(self):
-        return self.get_data().getint('download', 'big_file_size')
-
-    @property
-    def download_big_file_chunksize(self):
-        value = self.get_data().get('download', 'big_file_chunksize')
+    def download_streaming_chunk_size(self):
+        value = self.get_data().get('download', 'streaming_chunk_size')
         try:
             validated = int(value)
 
         except ValueError:
-            validated = nan
+            validated = 0
 
         return validated
 
@@ -277,10 +273,6 @@ class Config(Base):
     def is_module_download(self):
         return self.get_data().getboolean('module', 'download')
 
-    @property
-    def is_module_post_processing(self):
-        return self.get_data().getboolean('module', 'post_processing')
-
     # SECTION : API
 
     @property
@@ -290,6 +282,12 @@ class Config(Base):
     @property
     def api_esgf_search_http_timeout(self):
         return self.get_data().getint('api', 'esgf_search_http_timeout')
+
+    # SECTION : INSTALL
+
+    @property
+    def is_install_interactive(self):
+        return self.get_data().getboolean('install', 'interactive')
 
 
 if __name__ == '__main__':

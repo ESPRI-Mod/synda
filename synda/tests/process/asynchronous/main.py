@@ -14,4 +14,5 @@ from synda.source.process.asynchronous.scheduler.models import scheduler
 
 
 if __name__ == '__main__':
+
     asyncio.run(scheduler(verbose=True, build_report=False))

@@ -6,28 +6,40 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-import time
 import datetime
 import asyncio
-import aiohttp
-import threading
-import concurrent.futures
+import uvloop
+import signal
+import functools
+
 
 from synda.sdt import sdlog
 
 from synda.source.process.asynchronous.scheduler.models import Scheduler as Base
-from synda.source.process.asynchronous.download.manager.batch.http.aio.models import Manager as AiohttpBatchManager
+from synda.source.process.asynchronous.download.manager.batch.aiohttp.models import Manager as AiohttpBatchManager
 
 from synda.source.process.asynchronous.download.task.provider.models import Provider as TaskProvider
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
+from synda.source.config.file.internal.models import Config as Internal
+from synda.sdt.sdfiledao import cleanup_running_transfer
+
+EMPTY_QUEUE_MESSAGE = """
+Download queue is empty.
+Load the queue with the 'synda install' subcommand and try again : 'synda download start'.
+"""
+internal = Internal()
+DOWNLOADING_LOGGER_NAME = internal.logger_consumer
 preferences = Preferences()
+
+uvloop.install()
 
 
 class Scheduler(Base):
     def __init__(
             self,
             batch_manager_class,
+            config,
             nb_max_workers=3,
             nb_max_batch_workers=1,
             verbose=False,
@@ -45,28 +57,16 @@ class Scheduler(Base):
         )
 
         # initializations
-    #     self.http_client_session = None
-    #
-    #     # settings
-    #     self.http_client_session = aiohttp.ClientSession(
-    #         timeout=aiohttp.ClientTimeout(total=preferences.download_async_http_timeout),
-    #     )
-    #
-    # def get_http_client_session(self):
-    #     return self.http_client_session
+        self.config = dict()
 
-    # async def clean(self):
-    #     await self.http_client_session.close()
+        # settings
+        self.config = config
+
+    def get_config(self):
+        return self.config
 
     def set_task_provider(self):
         self.task_provider = TaskProvider()
-
-    # async def clean(self):
-    #     for manager in self.get_managers():
-    #         await manager.clean()
-
-    async def get_task(self, batch_name, ascending):
-        return await self.task_provider.get_task(batch_name, ascending)
 
     def print_workers_activity(self, task):
         if self.verbose:
@@ -79,60 +79,97 @@ class Scheduler(Base):
                     nb_not_busy_workers,
                     nb_busy_workers,
                 ),
+                logger_name=DOWNLOADING_LOGGER_NAME,
             )
+
+    def get_workers_coroutines(self, config=None):
+        return Base.get_workers_coroutines(
+            self,
+            self.get_config(),
+        )
+
+    def stop(self, signame, loop):
+        Base.stop(self, signame, loop)
 
 
 async def main(
         batch_manager_class,
+        config,
         nb_max_workers=3,
         nb_max_batch_workers=1,
         verbose=False,
         build_report=False,
 ):
 
-    scheduler = Scheduler(
+    _scheduler = Scheduler(
         batch_manager_class,
+        config,
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
         verbose=verbose,
         build_report=build_report,
     )
 
+    loop = asyncio.get_running_loop()
+
+    for signame in {'SIGINT', 'SIGTERM'}:
+        loop.add_signal_handler(
+            getattr(signal, signame),
+            functools.partial(_scheduler.stop, signame, loop))
+
     # Create three worker tasks to process the queue concurrently.
-    tasks = scheduler.get_workers_coroutines()
-    # Wait until all worker tasks are cancelled.
-    # results = await asyncio.gather(*tasks, return_exceptions=True)
-    # if tasks:
-    #     try:
-    #         done, pending = await asyncio.wait(tasks)
-    #         for task in done:
-    #             task.cancel()
-    #     except asyncio.CancelledError:
-    #         scheduler.cancel_running_tasks()
-    #     finally:
-    #         scheduler.print_metrics()
-    #         # await scheduler.clean()
+    _scheduler.print_metrics()
+    tasks = _scheduler.get_workers_coroutines()
+    success = False
     if tasks:
         try:
             results = await asyncio.gather(*tasks)
-            for result in results:
-                print(result)
+            if verbose:
+                for result in results:
+                    print(result)
+            success = True
         except asyncio.CancelledError:
-            scheduler.cancel_running_tasks()
+            _scheduler.cancel_running_tasks()
+        except Exception as e:
+            print(e)
+            pass
         finally:
-            scheduler.print_metrics()
-            # await scheduler.clean()
+            if _scheduler.verbose:
+                _scheduler.print_metrics()
+
+            cleanup_running_transfer()
+
+    else:
+        print(EMPTY_QUEUE_MESSAGE)
+    return success
 
 
-async def scheduler(batch_manager, verbose=False, build_report=False):
-    nb_max_workers = preferences.download_max_parallel_download
-    nb_max_batch_workers = preferences.download_max_parallel_download_per_datanode
+async def scheduler(
+        batch_manager=AiohttpBatchManager,
+        nb_max_workers=preferences.download_max_parallel_download,
+        nb_max_batch_workers=preferences.download_max_parallel_download_per_datanode,
+        config=None,
+        verbose=False,
+        build_report=False,
+):
+
     # nb_max_batch_workers = 1
 
-    await main(
+    if not config:
+        config = dict(
+            http_timeout=preferences.download_async_http_timeout,
+            streaming_chunk_size=preferences.download_streaming_chunk_size,
+            incorrect_checksum_action=preferences.behaviour_incorrect_checksum_action,
+            is_download_http_fallback=preferences.is_download_http_fallback,
+            logger_consumer=internal.logger_consumer,
+        )
+    success = await main(
         batch_manager,
+        config,
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
         verbose=verbose,
         build_report=build_report,
     )
+
+    return success

@@ -22,22 +22,23 @@ Available subcommands are:
     autoremove   Remove old datasets versions
     certificate  Manage X509 certificate
     check        Perform check over ESGF metadata
-    check-env    Check Synda environment
     contact      Print contact information
-    count        Count dataset
-    daemon       Daemon management
+    count        Count file / dataset
+    download     Download dataset (async)
+                 (queue, start, status, stop, watch)
     dump         Display raw metadata
     facet        Facet discovery
-    get          Download dataset
+    get          Download dataset (sync)
+    getinfo      Display relevant atomic information
     help         Show help
+    check-env    Check User local environment
+    init-env     Initialize User local environment
     history      Show history
-    init-env     Initialize Synda environment
     install      Install dataset
     intro        Print introduction to synda command
     list         List installed dataset
     metric       Display performance and disk usage metrics
     param        Print ESGF facets
-    queue        Display download queue status
     remove       Remove dataset
     replica      Move to next replica
     reset        Remove all 'waiting' and 'error' transfers
@@ -50,7 +51,6 @@ Available subcommands are:
     upgrade      Run 'install' command on all selection files
     variable     Print variable
     version      List all versions of a dataset
-    watch        Display running transfer
 
 Each subcommand is detailed in the next section.
 
@@ -247,23 +247,32 @@ count
       synda count obs4MIPs -f
       synda count -s selection.txt --timestamp_left_boundary 2012-01-01T01:00:00Z --timestamp_right_boundary 2015-01-01T01:00:00Z
 
-daemon
-    Daemon management
+download
+    Downloads Manager
 
 .. code-block:: bash
 
-    usage: synda daemon [-h] [{start,stop,status}]
+    usage: synda download [-h] [{queue,start,status,stop,watch}] [project]
 
     positional arguments:
-      {start,stop,status}  action
+      {queue,start,status,stop,watch}
+                            action
+      project               ESGF project (e.g. CMIP5)
 
     optional arguments:
-      -h, --help           show this help message and exit
+      -h, --help            show this help message and exit
+
+    examples
+      synda download start
+      synda download stop
+      synda download status
+      synda download queue
+          synda download queue obs4MIPs
+          synda download queue CMIP5
+      synda download watch
 
     notes
-      This command is for source installation only (in system package
-      installation, Synda daemon is installed as a service and is managed
-      using 'service' command).
+      Asynchronous Downloads Manager
 
 dump
     Display raw metadata
@@ -378,8 +387,34 @@ get
       synda get http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output2/MPI-M/MPI-ESM-P/past1000/mon/ocean/Omon/r1i1p1/v20131203/umo/umo_Omon_MPI-ESM-P_past1000_r1i1p1_112001-112912.nc
       synda get cmip5.output2.MPI-M.MPI-ESM-P.past1000.mon.ocean.Omon.r1i1p1.v20131203.rhopoto_Omon_MPI-ESM-P_past1000_r1i1p1_179001-179912.nc
 
-help
-    Show help
+getinfo
+    Display key information
+
+.. code-block:: bash
+
+    usage: synda getinfo [-h] [-fs] [parameter ...]
+
+    positional arguments:
+      parameter        search parameters. Format is name=value1,value2.. ... Most
+                       of the time, parameter name can be omitted.
+
+    optional arguments:
+      -h, --help       show this help message and exit
+      -fs, --filesize  Display filesize given by ESGF metadata
+
+    examples
+
+        getinfo --filesize sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
+        getinfo -fs sfcWind_ARC-44_MPI-M-MPI-ESM-LR_historical_r1i1p1_SMHI-RCA4-SN_v1_sem_197012-198011.nc
+
+
+    notes
+
+        Usage : 'synda getinfo --key' then returns key value
+
+
+    help
+        Show help
 
 .. code-block:: bash
 
@@ -518,24 +553,6 @@ param
       synda param institute | column
       synda param institute NA
       synda param project
-
-queue
-    Display download queue status
-
-.. code-block:: bash
-
-    usage: synda queue [-h] [project]
-
-    positional arguments:
-      project     ESGF project (e.g. CMIP5)
-
-    optional arguments:
-      -h, --help  show this help message and exit
-
-    examples
-      synda queue obs4MIPs
-      synda queue CMIP5
-      synda queue
 
 remove
     Remove dataset
@@ -812,13 +829,3 @@ version
     examples
       synda version cmip5.output1.MOHC.HadGEM2-A.amip4xCO2.mon.atmos.Amon.r1i1p1.v20131108
       synda version cmip5.output1.NCAR.CCSM4.rcp26.mon.atmos.Amon.r1i1p1.v20130426
-
-watch
-    Display running transfer
-
-.. code-block:: bash
-
-    usage: synda watch [-h]
-
-    optional arguments:
-      -h, --help  show this help message and exit

@@ -22,6 +22,8 @@ from synda.source.config.subcommand.argument.constants import DEFAULT_DEST_FOLDE
 
 from synda.source.config.subcommand.constants import get_default_limit
 
+deprecated_subcommand_template = "Deprecated. Use '{}' instead."
+
 
 def add_lsearch_option(parser):
     parser.add_argument(
@@ -309,13 +311,36 @@ def run(subparsers, config):
         subparsers,
         'daemon',
         common_option=False,
-        help='Daemon management',
+        help=deprecated_subcommand_template.format("synda download"),
         note=sdi18n.m0023,
     )
 
+    # download
+
+    allowed_arguments = [
+        "queue",
+        "start",
+        'status',
+        "stop",
+        "watch"]
+
+    help = f'Downloads manager ({", ".join(allowed_arguments)})'
+
+    subparser = add_parser(
+        subparsers,
+        'download',
+        common_option=False,
+        help=help,
+        note=sdi18n.m0029,
+        example=sdcliex.download(),
+    )
     add_action_argument(
         subparser,
-        choices=['start', 'stop', 'status'],
+        choices=allowed_arguments,
+    )
+
+    subparser.add_argument(
+        'project', nargs='?', default=None, help='ESGF project (e.g. CMIP5)',
     )
 
     # dump
@@ -424,6 +449,35 @@ def run(subparsers, config):
 
     add_parameter_argument(subparser)
 
+    # getinfo
+
+    subparser = add_parser(
+        subparsers,
+        'getinfo',
+        common_option=False,
+        help="Provides atomic information",
+        note=sdi18n.m0030,
+        example=sdcliex.getinfo(),
+    )
+
+    subparser.add_argument(
+        '-s',
+        '--selection_file',
+        default=None,
+        metavar='FILE',
+    )
+
+    subparser.add_argument(
+        '-fs',
+        '--filesize',
+        action='store_true',
+        help='Display filesize given by ESGF metadata',
+    )
+
+    add_parameter_argument(subparser)
+    # hidden option mainly used for test and debug
+    add_timestamp_boundaries(subparser, show_advanced_options, hidden=True)
+
     # help
 
     subparser = subparsers.add_parser(
@@ -439,13 +493,13 @@ def run(subparsers, config):
     add_parser(
         subparsers,
         'check-env',
-        help='Checks install environment.',
+        help='Check synda local environment.',
     )
 
     add_parser(
         subparsers,
         'init-env',
-        help='Initializes install environment.',
+        help='Initialize synda local environment.',
     )
 
     # history
@@ -551,7 +605,7 @@ def run(subparsers, config):
         subparsers,
         'queue',
         common_option=False,
-        help='Display download queue status',
+        help=deprecated_subcommand_template.format("synda download queue"),
         example=sdcliex.queue(),
     )
 
@@ -775,5 +829,5 @@ def run(subparsers, config):
         subparsers,
         'watch',
         common_option=False,
-        help='Display running transfer',
+        help=deprecated_subcommand_template.format("synda download watch"),
     )

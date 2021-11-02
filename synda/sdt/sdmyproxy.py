@@ -23,8 +23,10 @@ import shutil
 import argparse
 from synda.sdt import sdlog
 from synda.sdt import sdutils
+from synda.sdt.sdtools import print_stderr
 
 from myproxy.client import MyProxyClient
+from myproxy.client import MyProxyClientGetError
 from OpenSSL import SSL
 MyProxyClient.SSL_METHOD = SSL.TLSv1_2_METHOD
 
@@ -166,14 +168,19 @@ def renew_certificate(host, port, username, password):
         proxyCertLifetime=43200,
     )
 
-    # credname=credname
-    creds = myproxy_clnt.logon(
-        username,
-        password,
-        bootstrap=bootstrap,
-        updateTrustRoots=updateTrustRoots,
-        authnGetTrustRootsCall=authnGetTrustRootsCall,
-    )
+    try:
+        creds = myproxy_clnt.logon(
+            username,
+            password,
+            bootstrap=bootstrap,
+            updateTrustRoots=updateTrustRoots,
+            authnGetTrustRootsCall=authnGetTrustRootsCall,
+        )
+    except MyProxyClientGetError as e:
+        msg = f"MyProxyClientGetError | Error occured while logon | {e}"
+        print_stderr(msg)
+        sdlog.error("SDMYPROX-010", msg)
+        raise sdexception.EsgfCredentialsException()
 
     # store cert on disk
 

@@ -8,9 +8,9 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-
 """Contains SQL simple queries."""
-
+from pandas import DataFrame
+from numpy import array
 from synda.sdt import sdapp
 from synda.sdt import sdconst
 from synda.sdt.sdexception import SDException,NoTransferWaitingException,FileNotFoundException
@@ -204,7 +204,7 @@ def get_one_waiting_transfer(datanode=None):
     return t
 
 
-def get_one_waiting_transfer_new(datanode=None, ascending=True):
+def get_one_waiting_instance(datanode=None, ascending=True):
     t = None
     conn = get_db_connection()
     if datanode is None:
@@ -222,10 +222,18 @@ def get_one_waiting_transfer_new(datanode=None, ascending=True):
     conn.close()
 
     if len(li) > 0:
-        if ascending:
-            li = sdfiledao.sort_by_size_ascending(li)
-        else:
-            li = sdfiledao.sort_by_size_descending(li)
+        # we must provide instance, fist according to priority before size
+        instances = []
+        for _li in li:
+            instances.append(
+                dict(
+                    priority=_li.priority,
+                    size=_li.size,
+                )
+            )
+        df=DataFrame(instances)
+        df = df.sort_values(["priority", "size"], ascending=(False, ascending))
+        li = list(array(li)[df.index])
         t = li[0]
         # retrieve the dataset
         d = sddatasetdao.get_dataset(
@@ -236,7 +244,7 @@ def get_one_waiting_transfer_new(datanode=None, ascending=True):
     return t
 
 
-def get_new_tasks(limit=8, datanode=None, ascending=True):
+def get_new_tasks(limit=None, datanode=None, ascending=True):
     t = None
     conn = get_db_connection()
     if datanode is None:

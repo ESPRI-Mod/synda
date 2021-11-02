@@ -6,36 +6,38 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.sdt import sdfiledao
-from synda.sdt.sdtypes import File
+from synda.source.db.connection.models import Connection
 
 
-def delete_files(_files):
-    sdfiledao.delete_file(_files)
+def file_status(file_id, status, full_filename=""):
+    conn = Connection(full_filename=full_filename)
+    manager = conn.get_item("file table crud").get_item("update")
+    manager.set_db_connection(conn)
+    success = manager.file_status(file_id, status)
+    conn.close()
+
+    return success
+
+
+def file_status_error_msg(file_id, status, error_msg, full_filename=""):
+    conn = Connection(full_filename=full_filename)
+    manager = conn.get_item("file table crud").get_item("update")
+    manager.set_db_connection(conn)
+    success = manager.update_file_status_error_msg(file_id, status, error_msg)
+    conn.close()
+
+    return success
+
+
+def file_status_error_msg_priority(file_id, status, error_msg, priority, full_filename=""):
+    conn = Connection(full_filename=full_filename)
+    manager = conn.get_item("file table crud").get_item("update")
+    manager.set_db_connection(conn)
+    success = manager.file_status_error_msg_priority(file_id, status, error_msg, priority)
+    conn.close()
+
+    return success
 
 
 if __name__ == '__main__':
-
-    from synda.source.db.task.file.read.models import get_all_rows
-    all_rows = get_all_rows()
-    rows = all_rows[0:3]
-    rows.extend(
-        all_rows[4::],
-    )
-    # rows = all_rows[5::]
-    # rows = all_rows[40::]
-
-    # rows = all_rows[0:39]
-    # rows.extend(
-    #     all_rows[40::],
-    # )
-
-    # rows = all_rows[0:39]
-    # rows.extend(
-    #     all_rows[40::],
-    # )
-    # rows = all_rows[20::]
-    # rows = all_rows
-    for row in rows:
-        _file = File(**row)
-        sdfiledao.delete_file(_file)
+    pass

@@ -11,12 +11,9 @@
 """
 import asyncio
 from synda.source.process.asynchronous.download.scheduler.models import scheduler
-from synda.source.process.asynchronous.download.manager.batch.http.aio.models import Manager as AiohttpBatchManager
 
 if __name__ == '__main__':
 
-    batch_manager = AiohttpBatchManager
-
     asyncio.run(
-        scheduler(batch_manager, verbose=True, build_report=False),
+        scheduler(verbose=True, build_report=False),
     )

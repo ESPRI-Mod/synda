@@ -4,7 +4,6 @@ humanize==3.2.0
 tabulate==0.8.9
 progress==1.5
 pycountry==20.7.3
-python-daemon==2.3.0
 
 reportlab==3.5.59
 requests==2.25.1
@@ -23,7 +22,6 @@ asyncio
 pandas==1.2.4
 aiohttp==3.7.4
 aiofiles == 0.6.0
-httpx == 0.18.1
 numpy==1.20.0
-python3-wget==0.0.2b1
 futures==3.1.1
+uvloop==0.15.2

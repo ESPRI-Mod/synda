@@ -36,7 +36,7 @@ def delete_insertion_group(insertion_group_id):
         sddb.conn.commit()
 
         # deferred mode
-        # if effective deletion is done by the daemon, uncomment this  line
+        # if effective deletion is done by the downloading process, uncomment this  line
         # print("%i file(s) marked for deletion"%len(files))
 
         # immediate mode

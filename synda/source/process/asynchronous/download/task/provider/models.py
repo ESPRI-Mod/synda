@@ -8,15 +8,19 @@
 ##################################
 import psutil
 import asyncio
+import uvloop
+
 from synda.sdt import sddao
 from synda.sdt import sdfiledao
-# from synda.sdt.sdlog import default_logger_file_name
+
+uvloop.install()
 
 SLEEP_DURATION = 0.1
 TIMEOUT = 60
 
 
-def get_batches():
+def get_data_nodes():
+    data_nodes = []
     validated, unvalidated = sddao.check_waiting_files_for_download()
     sdfiledao.update_files(unvalidated)
     if unvalidated:
@@ -26,20 +30,11 @@ def get_batches():
                 len(unvalidated) + len(validated),
             ),
         )
-        # print(
-        #     '{} downloads aborted (out of a total of {}), you can check the logs at {} for further information.'.format(
-        #         len(unvalidated),
-        #         len(unvalidated) + len(validated),
-        #         default_logger_file_name,
-        #     ),
-        # )
 
-    if not validated:
-        print(
-            '=> Nothing done',
-        )
+    if validated:
+        data_nodes = [list(record.keys())[0] for record in validated]
 
-    return validated
+    return data_nodes
 
 
 async def confirm_is_running(file_instance):
@@ -53,38 +48,22 @@ async def confirm_is_running(file_instance):
     return sdfiledao.file_status_is_running(file_functional_id)
 
 
-async def get_file_instances(data_node, ascending=True):
+async def get_file_instance(data_node):
     # print(psutil.virtual_memory())
     # print(psutil.swap_memory())
-    # if file_instance:
-    #     sdfiledao.update_file_as_running(file_instance)
+    file_instance = sddao.get_one_waiting_instance(datanode=data_node, ascending=False)
+    if file_instance:
+        sdfiledao.update_file_as_running(file_instance)
         # is_running = await confirm_is_running(file_instance)
         # print("File id  : {} is confirmed has running".format(file_instance.file_id))
-    return sddao.get_new_tasks(datanode=data_node, ascending=ascending)
+    return file_instance
 
 
 class Provider(object):
-    def __init__(self):
-        self.file_instances = []
-        self.batches = []
-        self.batches = get_batches()
 
-    def get_batch_names(self):
-        batch_names = []
-        for batch in self.batches:
-            batch_names.append(list(batch.keys())[0])
-        return batch_names
+    def get_db_batch_names(self):
+        return get_data_nodes()
 
-    async def get_task(self, batch_name, ascending):
-        if not self.file_instances:
-            self.file_instances = await get_file_instances(batch_name, ascending=ascending)
-
-        if self.file_instances:
-            index = 0
-            file_instance = self.file_instances.pop(index)
-            if file_instance:
-                sdfiledao.update_file_as_running(file_instance)
-        else:
-            file_instance = None
-
-        return file_instance
+    async def get_task(self, batch_name):
+        task = await get_file_instance(batch_name)
+        return task, self.get_db_batch_names()

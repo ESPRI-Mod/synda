@@ -9,10 +9,10 @@
 """
 """
 from synda.source.db.connection.request.table.dao.update.manager import Manager as Base
-
 from synda.source.db.connection.request.table.failed_url.create.models import Table
-
-from synda.source.db.connection.request.table.failed_url.update.models import InsertFailedUrl
+from synda.source.db.connection.request.table.file.update.models import Status
+from synda.source.db.connection.request.table.file.update.models import StatusErrorMsg
+from synda.source.db.connection.request.table.file.update.models import StatusErrorMsgPriority
 
 table_name = Table().get_table_name()
 
@@ -23,12 +23,24 @@ class Manager(Base):
         Base.__init__(self, table_name=table_name)
         self.set_data(
             [
-                InsertFailedUrl(),
+                Status(),
+                StatusErrorMsg(),
+                StatusErrorMsgPriority(),
 
             ]
         )
 
-    def insert_into_failed_url(self, url, file_functional_id, connection=None):
-        request = self.get_item("insert_into_failed_url")
-        success = self.update(request, (url, file_functional_id), connection=connection)
+    def update_file_status(self, file_id, status, connection=None):
+        request = self.get_item("update_file_status")
+        success = self.update(request, (file_id, status), connection=connection)
+        return success
+
+    def update_file_status_error_msg(self, file_id, status, error_msg, connection=None):
+        request = self.get_item("update_file_status_error_msg")
+        success = self.update(request, (file_id, status, error_msg), connection=connection)
+        return success
+
+    def update_file_status_error_msg_priority(self, file_id, status, error_msg, priority, connection=None):
+        request = self.get_item("update_file_status_error_msg_priority")
+        success = self.update(request, (file_id, status, error_msg, priority), connection=connection)
         return success

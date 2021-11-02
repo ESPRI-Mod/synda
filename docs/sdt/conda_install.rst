@@ -30,7 +30,7 @@ Create a synda isolated environment if you wish:
 
 .. code-block:: bash
 
-    conda create -n my-synda-environment python=3.8+
+    conda create -n my-synda-environment python=3.9+
 
 Activate the created environment:
 

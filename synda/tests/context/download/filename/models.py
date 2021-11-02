@@ -14,11 +14,12 @@ from synda.tests.file.models import File
 
 class Context(Base):
 
-    def __init__(self, filename="", folder="", expected_files_description=None, capsys=None):
+    def __init__(self, filename="", folder="", expected_files_description=None, capsys=None, validate=True):
         super(Context, self).__init__(
             folder=folder,
             expected_files_description=expected_files_description,
             capsys=capsys,
+            validate=validate,
         )
 
         self.file = None

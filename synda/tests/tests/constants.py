@@ -29,6 +29,13 @@ ST_HOME_TESTS = os.path.join(
 
 # TESTS DB LOCATION
 
+DATA_HOME_TESTS = os.path.join(
+    ST_HOME_TESTS,
+    "data",
+)
+
+# TESTS DB LOCATION
+
 DB_HOME_TESTS = os.path.join(
     ST_HOME_TESTS,
     "db",

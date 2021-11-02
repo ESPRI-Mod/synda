@@ -157,34 +157,12 @@ def contact(args):
     print(sdi18n.m0018)
 
 
-def daemon(args):
-    from synda.sdt import sddaemon
+def download(args):
+    from synda.source.process.subcommand.download.models import Process as DownloadProcess
 
-    if args.action is None:
-        sddaemon.print_daemon_status()
-    else:
-        if args.action == "start":
+    status = DownloadProcess().run(args)
 
-            if sddaemon.is_running():
-                print_stderr("Daemon already started")
-            else:
-                try:
-                    sddaemon.start(args.config_manager)
-                    print_stderr("Daemon successfully started")
-                except sdexception.SDException as e:
-                    print_stderr('error occured', e.msg)
-        elif args.action == "stop":
-
-            if sddaemon.is_running():
-                try:
-                    sddaemon.stop()
-                    print_stderr("Daemon successfully stopped")
-                except sdexception.SDException as e:
-                    print_stderr('error occured', e.msg)
-            else:
-                print_stderr("Daemon already stopped")
-        elif args.action == "status":
-            sddaemon.print_daemon_status()
+    return status
 
 
 def facet(args):
@@ -409,22 +387,33 @@ def get(args):
     return 0
 
 
+def getinfo(args):
+    from synda.source.process.subcommand.getinfo.models import Process as GetInfoProcess
+
+    status = GetInfoProcess().run(args)
+
+    return status
+
+
 def history(args):
     from synda.sdt import sdhistorydao
     from tabulate import tabulate
     li = [list(d.values()) for d in sdhistorydao.get_all_history_lines()]  # listofdict to listoflist
     print(tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl"))
 
-def install(args):
-    from synda.sdt import sdinstall
 
-    status, newly_installed_files_count = sdinstall.run(args)
+def install(args):
+    from synda.source.process.subcommand.install.models import Process as InstallProcess
+
+    status = InstallProcess().run(args)
 
     return status
+
 
 def intro(args):
     from synda.sdt import sdi18n
     print(sdi18n.m0019)
+
 
 def metric(args):
     from synda.sdt import sdmetric,sdparam
@@ -463,13 +452,16 @@ def stat(args):
     from synda.sdt import sdstat
     return sdstat.run(args)
 
-def selection(args): # don't remove 'args' argument event if not used
+
+# don't remove 'args' argument event if not used
+def selection(args):
     """
     Note
         inter-selection func
     """
     from synda.sdt import sdselectionsgroup
     sdselectionsgroup.print_selection_list()
+
 
 def upgrade(args):
     """
@@ -529,19 +521,6 @@ def retry(args):
 def param(args):
     from synda.sdt import sdparam
     sdparam.print_(args)
-
-
-def queue(args):
-    from synda.sdt import sdfilequery
-    from tabulate import tabulate
-    from synda.sdt.sdprogress import ProgressThread
-
-    ProgressThread.start(sleep=0.1,running_message='Collecting status information.. ',end_message='') # spinner start
-    li=sdfilequery.get_download_status(args.project)
-    ProgressThread.stop() # spinner stop
-
-    print(tabulate(li,headers=['status','count','size'],tablefmt="plain"))
-    #sddaemon.print_daemon_status()
 
 
 def update(args):
@@ -617,15 +596,6 @@ def variable(args):
                 print('unit:             ',file_['variable_units'][0])
 
 
-def watch(args):
-    from synda.sdt import sdreport, sddaemon
-
-    if sddaemon.is_running():
-        sdreport.print_running_transfers()
-    else:
-        print_stderr('Daemon not running')
-
-
 def checkenv(args):
     env_manager = Manager()
     env_manager.check(interactive_mode=True)
@@ -635,38 +605,39 @@ def checkenv(args):
 def initenv(args):
     """
     should find the tar data.tar.bz and untar it
+    should find the tar data.tar.bz and untar it
     :param args:
     :return:
     """
     env_manager = Manager()
     env_manager.init(interactive_mode=True)
 
+
 # TODO: rename as subcommands
-actions={
-    'autoremove':autoremove,
-    'certificate':certificate, 
-    'check':check, 
-    'config':config,
-    'contact':contact,
-    'daemon':daemon, 
-    'facet':facet,
-    'get':get,
-    'history':history, 
-    'install':install, 
-    'intro':intro, 
-    'metric':metric,
-    'param':param,
-    'queue':queue,
-    'remove':remove, 
-    'replica':replica,
-    'reset':reset,
-    'retry':retry,
-    'selection':selection, 
-    'stat':stat,
-    'update':update,
-    'upgrade':upgrade,
-    'variable':variable,
-    'watch':watch,
+actions = {
+    'autoremove': autoremove,
+    'certificate': certificate,
+    'check': check,
+    'config': config,
+    'contact': contact,
+    'download': download,
+    'facet': facet,
+    'get': get,
+    'getinfo': getinfo,
+    'history': history,
+    'install': install,
+    'intro': intro,
+    'metric': metric,
+    'param': param,
+    'remove': remove,
+    'replica': replica,
+    'reset': reset,
+    'retry': retry,
+    'selection': selection,
+    'stat': stat,
+    'update': update,
+    'upgrade': upgrade,
+    'variable': variable,
     'check-env': checkenv,
     'init-env': initenv,
 }

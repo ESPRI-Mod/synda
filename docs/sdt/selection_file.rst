@@ -129,16 +129,7 @@ Then run command below to start the discovery:
 
     synda install -s <selection-file>
 
-Editing a selection file
-------------------------
-
-Edit the file and change filters accordingly.
-
-Then run command below:
-
-.. code-block:: bash
-
-    synda install -s <selection-file>
+Remark : Edit a selection file using any text editor at your disposal.
 
 Removing a selection file
 -------------------------

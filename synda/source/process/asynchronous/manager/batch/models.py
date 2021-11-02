@@ -7,6 +7,9 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import asyncio
+import uvloop
+
+uvloop.install()
 
 from synda.source.containers import Container
 from synda.source.process.asynchronous.worker.models import Worker
@@ -24,14 +27,22 @@ class Manager(Container):
         self.scheduler = None
         self.dashboard = None
         self.worker_cls = ""
+        self.status = ""
+        self.allowed_statuses = ["pending", "running", "done"]
         # settings
         self.verbose = verbose
         self.name = name
         self.max_workers = max_workers
         self.scheduler = scheduler
         self.worker_cls = worker_cls
-
+        self.status = "pending"
         self.create_workers()
+
+    def get_status(self):
+        return self.status
+
+    def set_status(self, status):
+        self.status = status
 
     def get_worker_cls(self):
         return self.worker_cls
@@ -39,8 +50,14 @@ class Manager(Container):
     def get_dashboard(self):
         return self.dashboard
 
-    async def get_scheduler_task(self, ascending):
-        return await self.get_scheduler().get_task(self.name, ascending)
+    async def get_scheduler_task(self):
+        if self.verbose:
+            print(
+                "Manager {} is asking scheduler for a new task (get_scheduler_task)".format(
+                    self.name,
+                )
+            )
+        return await self.get_scheduler().get_task(self.name)
 
     def get_name(self):
         return self.name
@@ -51,11 +68,19 @@ class Manager(Container):
     def create_workers(self):
         for i in range(self.max_workers):
             name = str(i)
-            self.create_worker(name)
-            # self.add_asyncio_task(asyncio_task)
+            self.create_worker(
+                "{} # {}".format(
+                    self.name,
+                    name,
+                )
+            )
 
     def get_scheduler(self):
         return self.scheduler
+
+    @property
+    def stopped_by_scheduler(self):
+        return self.get_scheduler().stopped
 
     def get_all_dashboard_tasks(self):
         all_tasks = []
@@ -111,9 +136,34 @@ class Manager(Container):
         return self.max_workers
 
     def create_worker(self, name):
+        worker = self.get_worker_cls()(name, asyncio.Queue(), self)
+        worker.set_status("running")
         self.add(
-            self.get_worker_cls()(name, asyncio.Queue(), self),
+            worker,
         )
+
+    def rename_workers(self):
+        for i, worker in enumerate(self.get_workers()):
+            worker.set_name(
+                "{}  # {}".format(
+                    self.name,
+                    i,
+                )
+            )
+
+    def get_nb_workers(self, status):
+        nb = 0
+        for worker in self.get_workers():
+            if worker.get_status() == status:
+                nb += 1
+        return nb
+
+    def update_workers(self):
+        for worker in self.get_workers():
+            if worker.get_status() == "done":
+                worker.set_status("running")
+                msg = f"Info | New status for Worker '{self.name}' : running (previous : done)"
+                print(msg)
 
     def all_workers_are_busy(self):
         nb_running_tasks, nb_cancelled_tasks, nb_done_tasks = self.get_metrics()
