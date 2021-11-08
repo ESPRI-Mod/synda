@@ -18,10 +18,12 @@ from synda.source.config.env.check.constants import ERROR_ENVIRONMENT_VARIABLE_P
 from synda.source.config.env.check.constants import ERROR_KEY_FILE_MISSING_TEMPLATE
 from synda.source.config.env.check.constants import ERROR_KEY_DIRECTORY_MISSING_TEMPLATE
 from synda.source.config.env.check.constants import CHECK_COMPLETE
+from synda.source.config.env.check.constants import CHECK_ERROR
 
 from synda.source.process.env.check.constants import IDENTIFIER
 
-from synda.source.config.file.user.preferences.dao.update.models import update_paths as preferences_update_paths
+from synda.source.config.file.user.preferences.dao.update.models \
+    import check_paths as preferences_check_paths
 from synda.source.config.file.user.credentials.dao.update.models import update as update_credentials
 
 
@@ -62,10 +64,13 @@ class Config(Identifier):
             if checked:
                 checked = self.process_required_directories()
                 if checked:
-                    preferences_update_paths()
-                    if interactive_mode:
-                        self.update_credentials_file()
+                    checked = preferences_check_paths()
+                    if checked:
+                        if interactive_mode:
+                            self.update_credentials_file()
                         print(CHECK_COMPLETE)
+                    else:
+                        print(CHECK_ERROR)
         else:
             print(
                 "{} {}".format(

@@ -37,3 +37,4 @@ ERROR_KEY_FILE_MISSING_TEMPLATE = 'Key file missing: {}'
 ERROR_KEY_DIRECTORY_MISSING_TEMPLATE = 'Key directory missing: {}'
 
 CHECK_COMPLETE = 'Check complete.'
+CHECK_ERROR = 'Check with error(s).'

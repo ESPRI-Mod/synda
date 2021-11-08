@@ -17,7 +17,6 @@ from synda.source.process.env.manager import Manager
 
 
 from synda.source.config.file.env.constants import SUB_DIRECTORIES as ENV_SUB_DIRECTORIES
-from synda.source.config.file.user.preferences.dao.update.models import update_paths as preferences_update_paths
 from synda.source.config.file.user.credentials.constants import FILENAME as CREDENTIALS_FILENAME
 
 
@@ -35,7 +34,6 @@ class Context(Base, Manager):
         self.create_root()
         self.init(source=source, interactive_mode=False)
         self.overwrite_credentials()
-        preferences_update_paths()
 
     def create_root(self):
 

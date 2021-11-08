@@ -51,3 +51,32 @@ def test_reader_download_async_http_timeout():
 @pytest.mark.on_all_envs
 def test_reader_download_streaming_chunk_size():
     assert parser.get('download', 'streaming_chunk_size') == '0'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_selection_path():
+    assert parser.get('core', 'selection_path') == 'my/selection/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_default_path():
+    assert parser.get('core', 'default_path') == 'my/default/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_data_path():
+    assert parser.get('core', 'data_path') == 'my/data/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_db_path():
+    assert parser.get('core', 'db_path') == 'my/db/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_sandbox_path():
+    assert parser.get('core', 'sandbox_path') == 'my/sandbox/path'
+
+
+if __name__ == '__main__':
+    test_reader_core_data_path()

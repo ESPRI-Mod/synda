@@ -6,10 +6,6 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.sdt import sdlog
-from synda.sdt import sdexception
-from synda.sdt.sdtools import print_stderr
-
 from synda.source.process.subcommand.required.env.models import Process as Base
 from synda.source.process.authority.models import Authority
 

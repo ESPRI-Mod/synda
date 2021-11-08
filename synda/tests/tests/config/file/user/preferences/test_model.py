@@ -15,7 +15,6 @@
 """
 import os
 import pytest
-from numpy import nan
 
 from synda.tests.manager import Manager
 Manager().set_tests_mode()
@@ -60,3 +59,32 @@ def test_model_download_async_http_timeout():
 @pytest.mark.on_all_envs
 def test_model_download_streaming_chunk_size():
     assert not config.download_streaming_chunk_size
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_selection_path():
+    assert config.core_selection_path == 'my/selection/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_default_path():
+    assert config.core_default_path == 'my/default/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_data_path():
+    assert config.core_data_path == 'my/data/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_db_path():
+    assert config.core_db_path == 'my/db/path'
+
+
+@pytest.mark.on_all_envs
+def test_reader_core_sandbox_path():
+    assert config.core_sandbox_path == 'my/sandbox/path'
+
+
+if __name__ == '__main__':
+    test_reader_core_data_path()
