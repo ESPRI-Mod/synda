@@ -9,8 +9,10 @@
 """
  Tests driven by pytest
 
- Sub-command : synda version
- Context : env0
+    Paths have not been customized by User
+
+ Sub-command : synda check
+ Context : env5
 """
 import pytest
 
@@ -19,13 +21,13 @@ Manager()
 
 
 @pytest.mark.on_all_envs
-def test_env0_version(env0_version_context, capsys):
+def test_env5_checkenv_paths_unknown(env5_checkenv_context, capsys):
 
-    context = env0_version_context
+    context = env5_checkenv_context
 
     context.set_capsys(capsys)
 
-    from synda.tests.subcommand.version.models import SubCommand
+    from synda.tests.subcommand.checkenv.models import SubCommand
 
     sub_command = SubCommand(context, exceptions_codes=[0])
 

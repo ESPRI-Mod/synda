@@ -10,6 +10,7 @@ Version 3.4 - 2021-xx-xx
         - documentation | update
     - bug correction
         - "synda param data_node" returns now the exhaustive list of data nodes
+        - issue #193 : In the user preferences file, [core]Paths parameters are now taken into account
     - about unit tests
         - remove subcommand : new data file embedded is ten times smaller than previous one
     - deprecation

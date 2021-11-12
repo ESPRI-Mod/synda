@@ -12,14 +12,6 @@ from synda.tests.manager import Manager
 manager = Manager()
 manager.set_tests_mode()
 
-# # GET SUCOMMAND
-#
-# from synda.tests.context.download.filename.models import Context as GetFilenameContext
-# from synda.tests.context.download.dataset.models import Context as GetDatasetContext
-#
-# from synda.tests.context.download.selection.no_data.models import Context as GetSelectionDataNotFoundContext
-# from synda.tests.context.download.selection.models import Context as GetSelectionContext
-
 # CHECK-ENV SUCOMMAND
 
 from synda.tests.context.env.check.models import Context as CheckEnvContext

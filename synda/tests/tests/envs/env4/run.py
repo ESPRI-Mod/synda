@@ -10,21 +10,12 @@
 MAIN run for TEST SUITE
 it allows to control the tests sequences from the most required to the most advanced ones
 """
-from synda.tests.tests.envs.env0.run import main as run_env0
-from synda.tests.tests.envs.env1.run import main as run_env1
-from synda.tests.tests.envs.env3.subcommand.selection.run import main as run_env3_selection
-
-from synda.tests.tests.envs.env5.run import main as run_env4
-from synda.tests.tests.envs.env5.run import main as run_env5
+from synda.tests.tests.envs.env4.subcommand.checkenv.run import main as run_env4_checkenv
 
 
 def main(coverage_activated=False):
 
-    run_env0(coverage_activated=coverage_activated)
-    run_env1(coverage_activated=coverage_activated)
-    run_env3_selection(coverage_activated=coverage_activated)
-    run_env4(coverage_activated=coverage_activated)
-    run_env5(coverage_activated=coverage_activated)
+    run_env4_checkenv(coverage_activated=coverage_activated)
 
 
 if __name__ == '__main__':

@@ -50,11 +50,11 @@ class Context(Base, Config):
         assert CHECK_COMPLETE in captured.out
 
 
-class OneRequiredFileMissingContext(Base, Config):
+class OneRequiredFileMissingContext(Context, Config):
 
     def __init__(self, capsys=None):
         assert isinstance(capsys, object)
-        Base.__init__(self, capsys=capsys)
+        Context.__init__(self, capsys=capsys)
         Config.__init__(self, ST_HOME_TESTS)
 
         remove_one_required_file()
@@ -66,11 +66,11 @@ class OneRequiredFileMissingContext(Base, Config):
         ) in captured.out
 
 
-class OneRequiredDirectoryMissingContext(Base, Config):
+class OneRequiredDirectoryMissingContext(Context, Config):
 
     def __init__(self, capsys=None):
         assert isinstance(capsys, object)
-        Base.__init__(self, capsys=capsys)
+        Context.__init__(self, capsys=capsys)
         Config.__init__(self, ST_HOME_TESTS)
 
         remove_one_required_directory()
