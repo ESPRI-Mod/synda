@@ -148,7 +148,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
                 "{} file(s) enqueued".format(count_new),
             )
             print_stderr(
-                "You can follow the download using 'synda download watch' and 'synda download queue' commands",
+                "You can start the download using 'synda download start' command",
             )
     else:
         if interactive:

@@ -142,6 +142,9 @@ class Process(Base):
             self.delete_downloading_file()
 
     def start(self):
+        print_stderr(
+            "You can follow the download using 'synda download watch' and 'synda download queue' commands",
+        )
         from synda.source.process.asynchronous.download.scheduler.models import scheduler
         self.create_downloading_file()
         # Run the downloading process
