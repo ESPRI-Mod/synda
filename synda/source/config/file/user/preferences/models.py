@@ -172,6 +172,10 @@ class Config(Base):
         return self.get_data().getint('download', 'url_max_buffer_size')
 
     @property
+    def is_download_continue_on_cert_errors(self):
+        return self.get_data().getboolean('download', 'continue_on_cert_errors')
+
+    @property
     def download_gridftp_opt(self):
         return self.get_data().get('download', 'gridftp_opt')
 

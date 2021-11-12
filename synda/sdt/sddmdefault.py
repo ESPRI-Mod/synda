@@ -344,7 +344,14 @@ def transfers_begin(transfers):
             "Exception occured while retrieving certificate ({})".format(e),
         )
 
-        raise
+        sdlog.error("SDDMDEFA-503","  continue_on_cert_errors=%s"%
+                    preferences.is_download_continue_on_cert_errors )
+        if preferences.is_download_continue_on_cert_errors:
+            sdlog.error("SDDMDEFA-504","Ignoring exception")
+            pass  # Try to keep on going, probably a certificate isn't needed.
+        else:
+            sdlog.error("SDDMDEFA-505","Re-raising exception")
+            raise
 
     for tr in transfers:
         start_transfer_thread(tr)
