@@ -18,7 +18,7 @@ from synda.tests.manager import Manager
 Manager()
 
 
-from synda.tests.tests.constants import DATASET_EXAMPLE
+from synda.tests.context.envs.constants import SYNDA_DEV_DATA
 
 
 @pytest.mark.on_all_envs
@@ -27,6 +27,9 @@ def test_env0_version(env0_version_context, capsys):
     context = env0_version_context
 
     context.set_capsys(capsys)
+
+    dataset = SYNDA_DEV_DATA["cordex"]["dataset"]["name"]
+    context.set_dataset(dataset)
 
     from synda.tests.subcommand.version.models import SubCommand
 

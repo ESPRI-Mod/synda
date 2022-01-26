@@ -20,6 +20,6 @@ class Context(Base):
         )
 
     def validation_after_subcommand_execution(self):
-        from synda.source.process.asynchronous.download.scheduler.models import EMPTY_QUEUE_MESSAGE
+        from synda.source.process.asynchronous.download.subcommand.download.scheduler.models import EMPTY_QUEUE_MESSAGE
         captured = self.get_capsys().readouterr()
         assert EMPTY_QUEUE_MESSAGE in captured.out

@@ -13,13 +13,24 @@ import os
 from synda.source.config.file.models import Config as Base
 from synda.source.config.file.user.credentials.constants import IDENTIFIER
 from synda.source.config.file.user.credentials.constants import DEFAULT_OPTIONS
-from synda.source.config.file.user.credentials.constants import DEFAULT_FULLFILENAME
+from synda.source.config.file.user.credentials.constants import get_fullfilename
 from synda.source.config.file.user.readers import get_parser
+
+DEFAULT_OPENID = 'https://esgf-node.ipsl.fr/esgf-idp/openid/foo'
+
+
+def validate_openid(openid):
+    is_set = False
+    if openid:
+        if openid.startswith("https://") and openid != DEFAULT_OPENID:
+            is_set = True
+
+    return is_set
 
 
 class Config(Base):
 
-    def __init__(self, full_filename=DEFAULT_FULLFILENAME):
+    def __init__(self, full_filename=get_fullfilename()):
         Base.__init__(self, IDENTIFIER, full_filename)
         self.default_openid = 'https://esgf-node.ipsl.fr/esgf-idp/openid/foo'
         if self.exists():
@@ -34,13 +45,7 @@ class Config(Base):
         return self.get_data().get('esgf_credential', 'password')
 
     def is_openid_set(self):
-        is_set = False
-        openid = self.openid
-        if openid:
-            if openid.startswith("https://") and openid != self.default_openid:
-                is_set = True
-
-        return is_set
+        return validate_openid(self.openid)
 
     def is_read_access_allowed(self):
         try:

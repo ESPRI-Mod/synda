@@ -442,6 +442,7 @@ def update_file(_file, commit=True, conn=None):
 
     if next_url_on_error:
         keys.append('url')
+        keys.append('data_node')
         # for future: keys.append('searchapi_host')
 
     rowcount = sdsqlutils.update(
@@ -486,8 +487,6 @@ def update_file_before_download(file_instance):
 
 
 def update_file_after_download(file_instance):
-    # if file_instance.status == 'done':
-    #     file_instance.end_date = sdtime.now()
     update_file(file_instance, commit=True)
 
 

@@ -281,3 +281,21 @@ class IndexOnLocalPath(Request):
                 self.get_table_name(),
             ),
         )
+
+
+class IndexOnDatanode(Request):
+    """
+    """
+
+    def __init__(self):
+        super(IndexOnDatanode, self).__init__(
+            "index on data_node",
+            table_name="file",
+            index_name="idx_file_13",
+        )
+        self.set_sql(
+            "create index if not exists {} on {} (data_node)".format(
+                self.get_index_name(),
+                self.get_table_name(),
+            ),
+        )

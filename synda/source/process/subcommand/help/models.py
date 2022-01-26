@@ -11,5 +11,5 @@ from synda.source.process.subcommand.models import Process as Base
 
 class Process(Base):
 
-    def __init__(self):
-        super(Process, self).__init__(name="help", authority=None)
+    def __init__(self, payload):
+        super(Process, self).__init__("help", None)

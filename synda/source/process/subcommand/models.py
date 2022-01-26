@@ -11,11 +11,11 @@ from synda.source.identifier import Identifier
 
 class Process(Identifier):
 
-    def __init__(self, name, authority, is_environment_required=False, arguments=None, exceptions_codes=None):
+    def __init__(self, name, payload, is_environment_required=False, arguments=None, exceptions_codes=None):
         super(Process, self).__init__(name)
 
         # initializations
-        self.authority = None
+        self.payload = None
         self.is_environment_required = False
         self.exceptions_codes = []
 
@@ -25,7 +25,7 @@ class Process(Identifier):
         )
 
         # settings
-        self.authority = authority
+        self.payload = payload
         self.is_environment_required = is_environment_required
         self.arguments = arguments
         self.exceptions_codes = exceptions_codes
@@ -36,8 +36,8 @@ class Process(Identifier):
     def set_arguments(self, arguments):
         self.arguments = arguments
 
-    def get_authority(self):
-        return self.authority
+    def get_payload(self):
+        return self.payload
 
     def get_arguments(self):
         return self.arguments

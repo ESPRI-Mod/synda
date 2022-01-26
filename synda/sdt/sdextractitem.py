@@ -122,6 +122,6 @@ if __name__ == '__main__':
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
-    facets_groups=json.load( sys.stdin )
+    facets_groups=json.load_data(sys.stdin)
     facets_groups=run(facets_groups)
     sdprint.print_format(facets_groups,args.format,args.print_only_one_item)

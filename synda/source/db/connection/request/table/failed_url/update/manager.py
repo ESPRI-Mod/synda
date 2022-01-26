@@ -30,5 +30,4 @@ class Manager(Base):
 
     def insert_into_failed_url(self, url, file_functional_id, connection=None):
         request = self.get_item("insert_into_failed_url")
-        success = self.update(request, (url, file_functional_id), connection=connection)
-        return success
+        return self.update(request, (url, file_functional_id), connection=connection)

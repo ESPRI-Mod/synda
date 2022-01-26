@@ -6,25 +6,23 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-from synda.sdt import sdlog
-from synda.sdt import sdexception
-from synda.sdt.sdtools import print_stderr
-
 from synda.source.process.subcommand.required.env.models import Process as Base
-from synda.source.process.authority.models import Authority
 
 
 class Process(Base):
 
-    def __init__(self, arguments=None, exceptions_codes=None):
+    def __init__(self, payload, arguments=None, exceptions_codes=None):
         super(Process, self).__init__(
-            name="install",
-            authority=Authority(),
+            "install",
+            payload,
             arguments=arguments,
             exceptions_codes=exceptions_codes,
         )
 
     def run(self, args):
         from synda.sdt import sdinstall
-        status, newly_installed_files_count = sdinstall.run(args)
+        status, newly_installed_files_count = sdinstall.run(
+            args,
+            self.get_payload().get_config(),
+        )
         return status

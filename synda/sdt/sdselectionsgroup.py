@@ -10,13 +10,7 @@
 ##################################
 
 """This module manages a selections group."""
-
-import re
-import os
-import glob
 import argparse
-from synda.sdt import sdapp
-from synda.sdt import sdconfig
 from synda.sdt import sdselectionsgrouputils
 
 def load_selections():

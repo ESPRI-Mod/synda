@@ -93,9 +93,7 @@ def run():
     sdsubparser.run(subparsers, manager.get_command_line_user_customization())
 
     args = parser.parse_args()
-
-    args.config_manager = manager.get_config_manager(checked=True)
-    args.authority = manager.get_authority()
+    payload = manager.get_payload()
 
     # check type mutex
     #
@@ -181,7 +179,7 @@ def run():
         args.stream = stream
         set_stream_type(args)
 
-        status = sdtsaction.actions[args.subcommand](args)
+        status = sdtsaction.actions[args.subcommand](args, payload)
 
         # hack
         # TODO: review all return code in sdtsaction module
@@ -193,7 +191,7 @@ def run():
 
     from synda.sdt import sdtiaction
     if args.subcommand in list(sdtiaction.actions.keys()):
-        status = sdtiaction.actions[args.subcommand](args)
+        status = sdtiaction.actions[args.subcommand](args, payload)
 
         # hack
         # TODO: review all return code in sdtiaction module

@@ -11,10 +11,10 @@ from synda.source.process.subcommand.models import Process as Base
 
 class Process(Base):
 
-    def __init__(self, name, authority, arguments=None, exceptions_codes=None):
+    def __init__(self, name, payload, arguments=None, exceptions_codes=None):
         super(Process, self).__init__(
             name,
-            authority,
+            payload,
             is_environment_required=True,
             arguments=arguments,
             exceptions_codes=exceptions_codes,

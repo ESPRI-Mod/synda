@@ -5,10 +5,7 @@ Selection file parameter reference
 
 This document describes each parameter used in a selection file.
 
-Search-api parameter
-********************
-
-Those parameters are described `here <https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API>`_
+The ESGF Search-api parameters are described `here <https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API>`_
 
 .. warning ::
 
@@ -17,20 +14,51 @@ Those parameters are described `here <https://github.com/ESGF/esgf.github.io/wik
 Synda download parameters
 *************************
 
-+----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
-| Parameter      | Type     | Default value                                         | Function                                                    |
-+================+==========+=======================================================+=============================================================+
-| protocol       | *string* | http                                                  | HTTP is the only supported protocol.                        |
-+----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
-| searchapi_host | *string* | <index.default_index> from sdt.conf file              | Set which ESGF index to use for files discovery.            |
-|                |          | or random index from <index.indexes> in parallel mode |                                                             |
-+----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
-| url_replace    | *string* |                                                       | Replace all occurrences of substring in url.                |
-+----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
-| priority       | *int*    | 1000                                                  | Set download priority.                                      |
-+----------------+----------+-------------------------------------------------------+-------------------------------------------------------------+
+``protocol``
+    Select which protocol to use to download the data.
 
-Examples:
+    The two currently supported protocols are HTTP and GridFTP.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  | http          |
+    +-----------+---------------+
+
+------------------
+
+``searchapi_host``
+    Set which ESGF index to use for files discovery.
+
+    +-----------+------------------------------------------+
+    | Type      | Default                                  |
+    +===========+==========================================+
+    | *string*  | <index.default_index> from sdt.conf file |
+    +-----------+------------------------------------------+
+
+------------------
+
+``url_replace``
+    Replace all occurrences of substring in url.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+------------------
+
+``priority``
+    Set download priority.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *int*     | 1000          |
+    +-----------+---------------+
+
+Example :
 
 .. code-block:: text
 
@@ -39,13 +67,16 @@ Examples:
 Synda remote search parameters
 ******************************
 
-+-----------+----------+---------------+----------------------------------+
-| Parameter | Type     | Default value | Function                         |
-+===========+==========+===============+==================================+
-| timeslice | *string* |               | Select files inside <timeslice>. |
-+-----------+----------+---------------+----------------------------------+
+``timeslice``
+    Select files inside <timeslice>.
 
-Examples:
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+Example :
 
 .. code-block:: bash
 
@@ -54,21 +85,60 @@ Examples:
 Synda local search parameters
 *****************************
 
-+--------------------+----------+---------------+---------------------------------------------+
-| Parameter          | Type     | Default value | Function                                    |
-+====================+==========+===============+=============================================+
-| local_path         | *string* |               | Select files matching <local_path>.         |
-+--------------------+----------+---------------+---------------------------------------------+
-| error_msg          | *string* |               | Select files matching <error_msg>.          |
-+--------------------+----------+---------------+---------------------------------------------+
-| insertion_group_id | *int*    |               | Select files matching <insertion_group_id>. |
-+--------------------+----------+---------------+---------------------------------------------+
-| status             | *string* |               | Select files matching download <status>.    |
-+--------------------+----------+---------------+---------------------------------------------+
-| sdget_status       | *int*    |               | Select files matching <sdget_status>.       |
-+--------------------+----------+---------------+---------------------------------------------+
+``local_path``
+    Select files matching <local_path>.
 
-Examples:
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+------------------
+
+``error_msg``
+    Select files matching <error_msg>.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+------------------
+
+``status``
+    Select files matching download <status>.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+------------------
+
+``insertion_group_id``
+    Select files matching <insertion_group_id>.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *int*     |               |
+    +-----------+---------------+
+
+------------------
+
+``sdget_status``
+    Select files matching <sdget_status>.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *int*     |               |
+    +-----------+---------------+
+
+Examples :
 
 .. code-block:: bash
 
@@ -82,25 +152,75 @@ Examples:
 Synda formatting parameters
 ***************************
 
-+---------------------------+----------+---------------+------------------------------------------------------------------------------------------------------------------------+
-| Parameter                 | Type     | Default value | Function                                                                                                               |
-+===========================+==========+===============+========================================================================================================================+
-| local_path_format         | *string* | treevar       | Set local path format.                                                                                                 |
-|                           |          |               | If set to "treevar", the dataset DRS is used to build the local path and a folder is added to group files by variable. |
-|                           |          |               | If set to "tree", the dataset DRS is used to build the local path.                                                     |
-|                           |          |               | If set to "custom", the local path is built based on template defined in <local_path_drs_template> variable.           |
-|                           |          |               | If set to "notree", all files are stored in the same folder.                                                           |
-+---------------------------+----------+---------------+------------------------------------------------------------------------------------------------------------------------+
-| local_path_product_format | *string* | normal        | If set to "normal", product folders (e.g. "output1" and "output2") are kept in local path.                             |
-|                           |          |               | If set to "remove", product folders level are removed from local path and products sub-folders are merged.             |
-|                           |          |               | If set to "merge", product folders are merged into one folder called "output" and products sub-folders are merged.     |
-+---------------------------+----------+---------------+------------------------------------------------------------------------------------------------------------------------+
-| local_path_project_format | *string* | uc            | If set to "uc", local path project folder is converted to uppercase.                                                   |
-+---------------------------+----------+---------------+------------------------------------------------------------------------------------------------------------------------+
-| local_path_drs_template   | *string* |               | Contain the local path custom template.                                                                                |
-+---------------------------+----------+---------------+------------------------------------------------------------------------------------------------------------------------+
+``local_path_format``
+    **treevar**
 
-Examples:
+    If set to "treevar", the dataset DRS is used to build the local path and a folder is added to group files by variable.
+
+    **tree**
+
+    If set to "tree", the dataset DRS is used to build the local path.
+
+    **custom**
+
+    If set to "custom", the local path is built based on template defined in <local_path_drs_template> variable.
+
+    **notree**
+
+    If set to "notree", all files are stored in the same folder.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  | treevar       |
+    +-----------+---------------+
+
+------------------
+
+``local_path_product_format``
+    **normal**
+
+    If set to "normal", product folders (e.g. "output1" and "output2") are kept in local path.
+
+    **remove**
+
+    If set to "remove", product folders level are removed from local path and products sub-folders are merged.
+
+    **merge**
+
+    If set to "merge", product folders are merged into one folder called "output" and products sub-folders are merged.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  | normal        |
+    +-----------+---------------+
+
+------------------
+
+``local_path_project_format``
+    **uc**
+
+    If set to "uc", local path project folder is converted to uppercase.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  | uc            |
+    +-----------+---------------+
+
+------------------
+
+``local_path_drs_template``
+    Contain the local path custom template.
+
+    +-----------+---------------+
+    | Type      | Default       |
+    +===========+===============+
+    | *string*  |               |
+    +-----------+---------------+
+
+Example :
 
 .. code-block:: text
 

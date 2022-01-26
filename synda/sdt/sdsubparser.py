@@ -38,7 +38,10 @@ def add_verbose_option(parser):
     # TODO: use this => parser.add_argument('--verbosity','-v', action='count', default=0)
     # '-v' not used to prevent collision
     parser.add_argument(
-        '--verbose', action='store_true', help='verbose mode')
+        '--verbose',
+        action='store_true',
+        help='verbose mode',
+    )
 
 
 # 'ni' means 'Non-Interactive'
@@ -423,29 +426,8 @@ def run(subparsers, config):
     )
 
     subparser.add_argument(
-        '--urllib', '-u', action='store_true', help='Use urllib instead of wget as HTTP client',
+        '--verbosity', '-v', action='store_true',
     )
-
-    #  TAG43534FSFS.
-    # As default verbosity is 1, the only way to disable verbosity (i.e. set it to 0) is to use '--quiet' option.
-    # Also note that as default is 1 for an argparse 'count' option, '-v' triggers the value 2, not 1, and
-    # '-vv' triggers the value 3, not 2: this is normal. To summarize, what we do here is map 'unset' to 1,
-    # map [-vvvvvvv...] to the range [2-N], and add '--quiet' option to trigger verbosity level 0.
-
-    subparser.add_argument(
-        '--verbosity', '-v', action='count', default=1,
-    )
-
-    subparser.add_argument(
-        '--hpss', dest='hpss', action='store_true', help="Enable 'hpss' flag",
-    )
-
-    subparser.add_argument(
-        '--no-hpss', dest='hpss', action='store_false', help="Disable 'hpss' flag (Default)",
-    )
-
-    # maybe use preferences.is_download_hpss as default
-    subparser.set_defaults(hpss=False)
 
     add_parameter_argument(subparser)
 

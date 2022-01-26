@@ -44,10 +44,45 @@ DEFAULT_OPTIONS = dict(
 
     chunksize='5000',
     http_client='aiohttp',
-    transfer_protocol='http',
+    transfer_protocols='http, gridftp',
     get_files_caching='true',
 
     # hack
 
     projects_with_one_variable_per_dataset='CORDEX, CMIP6',
+
+    # sub command get
+
+    display_downloads_progression_every_n_seconds='1.0',
+
 )
+
+DEFAULT_CONTENT = {
+    'loggers': {
+        'feeder': DEFAULT_OPTIONS["feeder"],
+        'consumer': DEFAULT_OPTIONS["consumer"],
+        'domain': DEFAULT_OPTIONS["domain"],
+    },
+    'filenames': {
+        'checksum_type_md5': DEFAULT_OPTIONS["checksum_type_md5"],
+        'checksum_type_sha256': DEFAULT_OPTIONS["checksum_type_sha256"],
+        'feeder_logfile': DEFAULT_OPTIONS["feeder_logfile"],
+        'consumer_logfile': DEFAULT_OPTIONS["consumer_logfile"],
+        'domain_logfile': DEFAULT_OPTIONS["domain_logfile"],
+    },
+    'api': {
+        'esgf_search_domain_name': DEFAULT_OPTIONS["esgf_search_domain_name"],
+    },
+    'processes': {
+        'chunksize': DEFAULT_OPTIONS["chunksize"],
+        'http_client': DEFAULT_OPTIONS["http_client"],
+        'transfer_protocols': DEFAULT_OPTIONS["transfer_protocols"],
+        'get_files_caching': DEFAULT_OPTIONS["get_files_caching"],
+    },
+    'hack': {
+        'projects_with_one_variable_per_dataset': DEFAULT_OPTIONS["projects_with_one_variable_per_dataset"],
+    },
+    'sub command get': {
+        'display_downloads_progression_every_n_seconds': DEFAULT_OPTIONS["display_downloads_progression_every_n_seconds"],
+    },
+}

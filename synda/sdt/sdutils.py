@@ -24,17 +24,65 @@ import subprocess
 import argparse
 
 from synda.sdt.sdexception import SDException,FileNotFoundException
-from synda.source.config.process.download.constants import get_transfer_protocol as get_config_transfer_protocol
+from synda.source.config.process.download.constants import get_transfer_protocols
 from synda.source.config.file.constants import CHECKSUM
 
 
 def get_transfer_protocol(url):
     if url.startswith('http://'):
-        return get_config_transfer_protocol()
+        return get_transfer_protocols()['http']
     elif url.startswith('https://'):
-        return get_config_transfer_protocol()
+        return get_transfer_protocols()['http']
+    elif url.startswith('gsiftp://'):
+        return get_transfer_protocols()['gridftp']
     else:
         assert False
+
+
+def which_item(question, items, user_message):
+    def print_message(question, user_message, allowed_choices):
+        sys.stderr.write(f"{user_message}\n")
+        str_allowed_choices= ""
+        nb_allowed_choices = len(allowed_choices)
+        for allowed_int_choice, option in allowed_choices:
+            sys.stderr.write(f"  {allowed_int_choice}) {option}\n")
+            if allowed_int_choice == nb_allowed_choices - 1:
+                str_allowed_choices += f" or {allowed_int_choice}"
+                str_allowed_choices += "]"
+            elif allowed_int_choice == 0:
+                str_allowed_choices += "["
+                str_allowed_choices += f"{allowed_int_choice}"
+            else:
+                str_allowed_choices += f", {allowed_int_choice}"
+
+        prompt = f"{str_allowed_choices}> "
+        sys.stderr.write(f"{question} {prompt}")
+
+    validated = False
+    while True:
+        choice = None
+        allowed_choices = []
+        for i, item in enumerate(items):
+            allowed_choices.append((i, item))
+
+        print_message(question, user_message, allowed_choices)
+        user_choice = input()
+        try:
+            int_choice = int(
+                user_choice,
+            )
+            allowed_int_choices = [allowed_choice[0] for allowed_choice in allowed_choices]
+            if int_choice in allowed_int_choices:
+                validated = True
+        except ValueError:
+            pass
+        finally:
+            if validated:
+                return int_choice
+            else:
+                sys.stderr.write(
+                    f"'{user_choice}' is not valid\n",
+                )
 
 
 def query_yes_no(question, default="yes"):
@@ -222,17 +270,22 @@ def cast(value,dest_type_):
     return casted_value
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-b','--blocksize',type=int,default=(1024*64))
-    parser.add_argument('-f','--file',required=True)
-    parser.add_argument('-t','--checksum_type',default=CHECKSUM['type']["sha256"])
-    args = parser.parse_args()
-
-    # test
-
-    compute_checksum(args.file,args.checksum_type,args.blocksize)
-
-    """
-    res=query_yes_no('test ?', default="yes")
-    print(res
-    """
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('-b','--blocksize',type=int,default=(1024*64))
+    # parser.add_argument('-f','--file',required=True)
+    # parser.add_argument('-t','--checksum_type',default=CHECKSUM['type']["sha256"])
+    # args = parser.parse_args()
+    #
+    # # test
+    #
+    # compute_checksum(args.file,args.checksum_type,args.blocksize)
+    #
+    # """
+    # res=query_yes_no('test ?', default="yes")
+    # print(res
+    # """
+    question = "Which file do you want to download ?"
+    user_message = "Several files found"
+    items = ["file 1", "file 2", "file 3"]
+    choice = which_item(question, items, user_message)
+    print(choice)

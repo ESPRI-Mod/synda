@@ -8,8 +8,6 @@
 ##################################
 import os
 
-from synda.sdt import sdlog
-
 from synda.source.config.process.download.constants import TRANSFER
 
 from synda.source.config.file.internal.models import Config as Internal
@@ -39,6 +37,7 @@ class Process(object):
                     full_local_path,
                 )
         except OSError:
+            from synda.sdt import sdlog
             sdlog.error(
                 "SDDMDEFA-158",
                 "error occurs while removing local file ({})".format(

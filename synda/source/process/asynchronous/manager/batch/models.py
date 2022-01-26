@@ -90,6 +90,15 @@ class Manager(Container):
             )
         return all_tasks
 
+    def get_messages(self):
+        messages = []
+
+        for worker in self.get_workers():
+            messages.extend(
+                worker.get_messages(),
+            )
+        return messages
+
     def get_metrics(self):
         nb_running_tasks = 0
         nb_cancelled_tasks = 0

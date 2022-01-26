@@ -11,6 +11,7 @@ import uvloop
 
 from synda.source.process.asynchronous.worker.dashboard.models import DashBoard
 from synda.source.process.asynchronous.task.models import Task
+from synda.source.process.asynchronous.task.processes import Process
 
 uvloop.install()
 
@@ -70,6 +71,9 @@ class Worker(object):
     def get_dashboard(self):
         return self.dashboard
 
+    def get_messages(self):
+        return self.dashboard.get_messages()
+
     def get_metrics(self):
         return self.dashboard.get_metrics()
 
@@ -88,7 +92,7 @@ class Worker(object):
         self.dashboard.cancel_running_tasks()
 
     def create_task(self, name):
-        return Task(name, verbose=self.verbose)
+        return Task(name, Process, verbose=self.verbose)
 
     async def process_task(self, *args):
         if self.queue.empty():
@@ -108,7 +112,7 @@ class Worker(object):
                 try:
                     self.pre_process_task(task)
                     task.set_worker(self)
-                    await task.process(*args)
+                    await task.execute(*args)
                     await self.post_process_task(task)
 
                 except asyncio.CancelledError:

@@ -53,7 +53,7 @@ Folders
     This folder contains selection files.
     Location is ``$HOME/selection``.
 
-Databases
+Database
 *********
 
 ``sdt.db``

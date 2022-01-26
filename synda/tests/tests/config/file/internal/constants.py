@@ -12,6 +12,15 @@ from synda.source.config.file.internal.constants import FILENAME as INTERNAL_FIL
 from synda.tests.tests.constants import DATADIR as ROOT
 
 FILENAMES = {
+    'subcommand_get_display_downloads_progression_every_n_seconds': os.path.join(
+        *[
+            ROOT,
+            "file",
+            "internal",
+            "subcommand_get_display_downloads_progression_every_n_seconds",
+            INTERNAL_FILENAME,
+        ]
+    ),
     'standard': os.path.join(
         *[
             ROOT,
@@ -51,13 +60,13 @@ FILENAMES = {
             ]
         ),
     },
-    'transfer_protocol': {
+    'transfer_protocols': {
         "1": os.path.join(
             *[
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocol",
+                "transfer_protocols",
                 "1",
                 INTERNAL_FILENAME,
             ]
@@ -67,7 +76,7 @@ FILENAMES = {
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocol",
+                "transfer_protocols",
                 "2",
                 INTERNAL_FILENAME,
             ]
@@ -77,7 +86,7 @@ FILENAMES = {
                 ROOT,
                 "file",
                 "internal",
-                "transfer_protocol",
+                "transfer_protocols",
                 "3",
                 INTERNAL_FILENAME,
             ]

@@ -28,23 +28,24 @@ class Manager(Base, TableName):
         return names
 
     def update(self, request, args=None, connection=None):
+        success = False
         if connection:
             self.set_db_connection(connection)
         else:
             connection = self.get_db_connection()
         request.set_cursor(self.get_cursor())
 
-        lastrowid = 0
+        last_row_id = 0
         msg = ""
         try:
             success = request.execute(args=args)
             if success:
                 connection.commit()
-                lastrowid = request.get_db_cursor().lastrowid
+                last_row_id = request.get_db_cursor().lastrowid
 
         except DataIntegrityError as error:
             msg = str(error)
         except DataUnexpectedError as error:
             msg = str(error)
 
-        return lastrowid, msg
+        return success, last_row_id, msg

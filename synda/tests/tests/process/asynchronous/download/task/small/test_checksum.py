@@ -15,7 +15,7 @@ import pytest
 from synda.sdt.sdtypes import File
 from synda.tests.manager import Manager
 
-from synda.source.process.asynchronous.download.control.models import FILE_CORRUPTION_CHECKSUM_ERROR_MSG
+from synda.source.process.asynchronous.download.task.subcommand.download import FILE_CORRUPTION_CHECKSUM_ERROR_MSG
 from synda.source.process.asynchronous.download.worker.aiohttp.task import Task
 from synda.source.config.process.download.constants import TRANSFER
 

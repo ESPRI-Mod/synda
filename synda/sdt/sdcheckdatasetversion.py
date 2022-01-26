@@ -183,7 +183,7 @@ def run(args):
             for dsv_info in ds_info['dsv']:
                 if 'timestamp' in dsv_info:
                     dsv_list.append(dsv_info)
-            dsv_list = sorted(dsv_list, cmp = lambda a, b: cmp(a['timestamp'], b['timestamp']))
+            dsv_list.sort(cmp = lambda a, b: 1 if a['timestamp'] < b['timestamp'] else -1)
             for n, dsv_info in enumerate(dsv_list):
                 if n > 0 and dsv_info['vernum'] <= dsv_list[n - 1]['vernum']:
                     dsv_info['err_flags'] |= DSV_ERR_SEQ

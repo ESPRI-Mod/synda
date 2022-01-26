@@ -15,13 +15,10 @@ import argparse
 import os
 import sys
 import json
-from synda.sdt import sdapp
 from synda.sdt import sdutils
 from synda.sdt import sdget
 from synda.sdt.sdtypes import File
 from synda.sdt.sdtools import print_stderr
-
-from synda.source.config.process.download.constants import get_http_clients
 
 
 def run(files,
@@ -46,9 +43,6 @@ def run(files,
 
     if not timeout:
         timeout = preferences.download_direct_http_timeout
-
-    if not http_client:
-        http_client = get_http_clients()["aiohttp"]
 
     if not local_path_prefix:
         paths = config_manager.get_paths()

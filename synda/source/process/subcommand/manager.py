@@ -14,6 +14,8 @@ from synda.source.config.subcommand.constants import DEPRECATED_STRUCT as SUB_CO
 from synda.source.config.subcommand.constants import deprecated as deprecated_subcommand
 from synda.source.process.subcommand.constants import get_process_class
 from synda.source.process.subcommand.exceptions import InvalidRequest
+from synda.source.process.subcommand.payload import Payload
+from synda.source.process.authority.models import Authority
 
 
 class Manager(Base):
@@ -25,11 +27,13 @@ class Manager(Base):
         self.sub_command = ""
         self.error = ""
         self.config_manager = None
+        self.authority = None
         # settings
         self.settings(argv)
 
     def settings(self, argv):
         self.env_manager = EnvManager()
+        self.authority = Authority()
         self.load()
         self.validate(argv)
 
@@ -78,12 +82,14 @@ class Manager(Base):
 
         self.config_manager = ConfigManager(checked=checked)
 
+    def get_payload(self):
+        return Payload(self.authority, self.config_manager)
     def load(self):
-
+        payload = self.get_payload()
         for name in SUB_COMMAND_NAMES:
             process_class = get_process_class(name)
             if process_class:
-                process_instance = process_class()
+                process_instance = process_class(payload)
                 self.add(
                     process_instance,
                 )
@@ -95,10 +101,10 @@ class Manager(Base):
         return self.config_manager.get_user_preferences()
 
     def get_authority(self):
-        return self.get_subcommand(self.sub_command).get_authority()
+        return self.authority
 
     def get_user_credentials(self):
-        return self.get_subcommand(self.sub_command).get_authority().get_user_credentials()
+        return self.get_authority().get_user_credentials()
 
     def get_command_line_user_customization(self):
 

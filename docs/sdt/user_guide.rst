@@ -23,7 +23,7 @@ The differences between ``synda get`` and ``synda install`` are listed below:
 - use daemon to manage download
 - asynchronous
 
-``synda search``
+synda search
 ****************
 
 Search criteria called facets are used to select which files to download. Search criteria can be set on command line first:
@@ -38,7 +38,7 @@ or stored in a file:
 
     synda search -s <selection-file>
 
-``synda param``
+synda param
 ***************
 
 To list facets:
@@ -59,14 +59,14 @@ To search datasets on-the-fly:
 
     synda search <facet-value>
 
-``synda get``
+synda get
 *************
 
 .. code-block:: bash
 
     synda get [ ID ] [ FACET ]...
 
-The downloaded file(s) are stored in the :ref:`sandbox directory <config-param-ref-sdt>`. A different folder can be specified using ``-d`` option.
+The downloaded file(s) are stored in the :ref:`sandbox <config-param>` directory. A different folder can be specified using ``-d`` option.
 
 Download a dataset:
 
@@ -94,7 +94,7 @@ Then retry the download with the ``data_node`` parameter to specify which replic
 
     synda get -f orog_fx_CanCM4_decadal1972_r0i0p0.nc data_node=esgf2.dkrz.de 
 
-``synda install``
+synda install
 *****************
 
 .. code-block:: bash
@@ -105,7 +105,7 @@ This command adds matching file(s) in the download queue and store tracking info
 
 A background process checks the download queue regularly and download the files.
 
-The downloaded files are stored in the :ref:`data directory <config-param-ref-sdt>`.
+The downloaded files are stored in the :ref:`data <config-param>` directory.
 
 Install a dataset:
 
@@ -125,7 +125,7 @@ Install a file:
 
     synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
-Install files matching facets stored in a :ref:`selection file <selection-file>`:
+Install files matching facets stored in a :ref:`selection <selection-file>` file :
 
 .. code-block:: text
 

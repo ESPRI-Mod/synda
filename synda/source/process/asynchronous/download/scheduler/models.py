@@ -16,9 +16,6 @@ import functools
 from synda.sdt import sdlog
 
 from synda.source.process.asynchronous.scheduler.models import Scheduler as Base
-from synda.source.process.asynchronous.download.manager.batch.aiohttp.models import Manager as AiohttpBatchManager
-
-from synda.source.process.asynchronous.download.task.provider.models import Provider as TaskProvider
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.internal.models import Config as Internal
@@ -39,16 +36,17 @@ class Scheduler(Base):
     def __init__(
             self,
             batch_manager_class,
+            task_provider,
             config,
             nb_max_workers=3,
             nb_max_batch_workers=1,
             verbose=False,
             build_report=False,
     ):
-
         Base.__init__(
             self,
             batch_manager_class,
+            task_provider,
             nb_max_workers=nb_max_workers,
             nb_max_batch_workers=nb_max_batch_workers,
             verbose=verbose,
@@ -64,9 +62,6 @@ class Scheduler(Base):
 
     def get_config(self):
         return self.config
-
-    def set_task_provider(self):
-        self.task_provider = TaskProvider()
 
     def print_workers_activity(self, task):
         if self.verbose:
@@ -94,6 +89,7 @@ class Scheduler(Base):
 
 async def main(
         batch_manager_class,
+        task_provider,
         config,
         nb_max_workers=3,
         nb_max_batch_workers=1,
@@ -103,6 +99,7 @@ async def main(
 
     _scheduler = Scheduler(
         batch_manager_class,
+        task_provider,
         config,
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
@@ -141,35 +138,4 @@ async def main(
 
     else:
         print(EMPTY_QUEUE_MESSAGE)
-    return success
-
-
-async def scheduler(
-        batch_manager=AiohttpBatchManager,
-        nb_max_workers=preferences.download_max_parallel_download,
-        nb_max_batch_workers=preferences.download_max_parallel_download_per_datanode,
-        config=None,
-        verbose=False,
-        build_report=False,
-):
-
-    # nb_max_batch_workers = 1
-
-    if not config:
-        config = dict(
-            http_timeout=preferences.download_async_http_timeout,
-            streaming_chunk_size=preferences.download_streaming_chunk_size,
-            incorrect_checksum_action=preferences.behaviour_incorrect_checksum_action,
-            is_download_http_fallback=preferences.is_download_http_fallback,
-            logger_consumer=internal.logger_consumer,
-        )
-    success = await main(
-        batch_manager,
-        config,
-        nb_max_workers=nb_max_workers,
-        nb_max_batch_workers=nb_max_batch_workers,
-        verbose=verbose,
-        build_report=build_report,
-    )
-
     return success

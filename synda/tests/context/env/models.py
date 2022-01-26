@@ -31,10 +31,11 @@ class Context(Base, Manager):
 
         self.set_locations()
 
-    def create(self, source=""):
+    def create(self, source="", with_credentials=True):
         self.create_root()
         self.init(source=source, interactive_mode=False)
-        self.overwrite_credentials()
+        if with_credentials:
+            self.overwrite_credentials()
         preferences_update_paths()
 
     def create_root(self):

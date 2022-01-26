@@ -59,3 +59,20 @@ class StatusErrorMsgPriority(Request):
         self.set_sql(
             f"UPDATE {self.get_table_name()} SET status=?,error_msg=?,priority=? WHERE file_id=?",
         )
+
+
+class Checksum(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(Checksum, self).__init__(
+            table_name="file",
+            identifier="update_file_checksum",
+        )
+        # init
+
+        self.set_sql(
+            f"UPDATE {self.get_table_name()} SET checksum=? WHERE file_id=?",
+        )

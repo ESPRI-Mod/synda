@@ -12,6 +12,7 @@ import signal
 import functools
 import tabulate
 
+from synda.sdt.sdtools import print_stderr
 from synda.source.containers import Container
 from synda.source.process.asynchronous.manager.batch.models import Manager as BatchManager
 from synda.source.process.asynchronous.task.provider.models import Default as DefaultTaskProvider
@@ -26,7 +27,7 @@ class Scheduler(Container):
     def __init__(
             self,
             batch_manager_class=BatchManager,
-            task_provider_class=None,
+            task_provider=None,
             nb_max_workers=3,
             nb_max_batch_workers=1,
             verbose=False,
@@ -36,7 +37,7 @@ class Scheduler(Container):
         Container.__init__(self, identifier=identifier)
 
         # initializations
-        self.task_provider_class = None
+        self.task_provider = None
         self.task_provider = None
         self.event = None
         self.manager_cls = ""
@@ -44,7 +45,7 @@ class Scheduler(Container):
         self.nb_max_batch_workers = 0
         self.watchdog = None
 
-        self.task_provider_class = task_provider_class
+        self.task_provider = task_provider
         self.nb_max_workers = nb_max_workers
         self.nb_max_batch_workers = nb_max_batch_workers
         self.report = None
@@ -58,7 +59,6 @@ class Scheduler(Container):
         self.verbose = verbose
         if build_report:
             self.report = Report(self)
-        self.set_task_provider()
         self.create_managers()
 
     def set_stopped(self):
@@ -80,6 +80,19 @@ class Scheduler(Container):
     def authorizes_new_task(self):
         nb_busy_workers, nb_available_workers = self.get_workers_activity()
         return nb_available_workers > 0
+
+    def get_messages(self):
+        messages = []
+        for manager in self.get_managers():
+            messages.extend(
+                manager.get_messages(),
+            )
+
+        return messages
+
+    def print_messages(self):
+        for message in self.get_messages():
+            print(message)
 
     def get_metrics(self):
         nb_running_tasks = 0
@@ -118,7 +131,8 @@ class Scheduler(Container):
             )
 
     def set_task_provider(self):
-        self.task_provider = self.task_provider_class()
+        if self.task_provider:
+            self.task_provider = self.task_provider()
 
     def get_manager(self, name):
         manager = None
@@ -214,7 +228,7 @@ class Scheduler(Container):
 async def main(
         nb_max_workers=3,
         nb_max_batch_workers=1,
-        task_provider_class=DefaultTaskProvider,
+        task_provider=DefaultTaskProvider(),
         verbose=False,
         build_report=False,
 ):
@@ -222,7 +236,7 @@ async def main(
     _scheduler = Scheduler(
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
-        task_provider_class=task_provider_class,
+        task_provider=task_provider,
         verbose=verbose,
         build_report=build_report,
     )
@@ -247,14 +261,14 @@ async def main(
 async def scheduler(
         nb_max_workers=3,
         nb_max_batch_workers=1,
-        task_provider_class=DefaultTaskProvider,
+        task_provider=DefaultTaskProvider(),
         verbose=True,
         build_report=False,
 ):
     await main(
         nb_max_workers=nb_max_workers,
         nb_max_batch_workers=nb_max_batch_workers,
-        task_provider_class=task_provider_class,
+        task_provider=task_provider,
         verbose=verbose,
         build_report=build_report,
     )

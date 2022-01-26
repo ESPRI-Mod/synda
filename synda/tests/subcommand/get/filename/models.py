@@ -7,21 +7,50 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 from synda.tests.subcommand.get.models import SubCommand as Base
-from synda.tests.exceptions import MethodNotImplemented
 
 
-class DestFolderGetSubCommand(Base):
+class SubCommand(Base):
 
     def __init__(self, context, exceptions_codes=None):
-        super(DestFolderGetSubCommand, self).__init__(
+        super(SubCommand, self).__init__(
             context,
             exceptions_codes=exceptions_codes,
-            description="Download configuration is given by command line",
+            description="No optional parameter",
         )
 
         self.configure(
-            context.get_file_instance().get_folder(),
-            context.get_file_instance().get_filename(),
+            context.get_file().get_folder(),
+            context.get_file().get_filename(),
+            context.get_parameters(),
+        )
+
+    def configure(self, dest_folder, filename, parameters):
+
+        if parameters:
+            argv = ['', self.name, "--dest_folder", dest_folder]
+            for parameter in parameters:
+                argv.append(parameter)
+            self.set_argv(
+                argv,
+            )
+        else:
+            self.set_argv(
+                ['', self.name, "--dest_folder", dest_folder, filename],
+            )
+
+
+class VerifyChecksumSubCommand(Base):
+
+    def __init__(self, context, exceptions_codes=None):
+        super(VerifyChecksumSubCommand, self).__init__(
+            context,
+            exceptions_codes=exceptions_codes,
+            description="Optional parameters : --dest_folder --verify_checksum",
+        )
+
+        self.configure(
+            context.get_file().get_folder(),
+            context.get_file().get_filename(),
         )
 
     def configure(self, dest_folder, filename):
@@ -31,19 +60,42 @@ class DestFolderGetSubCommand(Base):
         )
 
 
-class ConfigSubCommand(Base):
+class VerifyChecksumWithNetworkBandwidthTestSubCommand(Base):
 
-    def __init__(self, context):
-        super(ConfigSubCommand, self).__init__(
+    def __init__(self, context, exceptions_codes=None):
+        super(VerifyChecksumWithNetworkBandwidthTestSubCommand, self).__init__(
             context,
-            description="Download configuration is given by file",
-        )
-        self.configure(
-            context.get_file_instance().get_filename(),
+            exceptions_codes=exceptions_codes,
+            description="Optional parameters : --dest_folder --verify_checksum --network_bandwidth_test",
         )
 
-    def configure(self, filename):
+        self.configure(
+            context.get_file().get_folder(),
+            context.get_file().get_filename(),
+        )
+
+    def configure(self, dest_folder, filename):
 
         self.set_argv(
-            ['synda', self.name, "--verify_checksum", filename],
+            ['', self.name, "--verify_checksum", "--dest_folder", dest_folder, "--network_bandwidth_test", filename],
+        )
+
+
+class DestFolderSubCommand(Base):
+
+    def __init__(self, context, exceptions_codes=None):
+        super(DestFolderSubCommand, self).__init__(
+            context,
+            exceptions_codes=exceptions_codes,
+            description="Optional parameter : only --dest_folder",
+        )
+        self.configure(
+            context.get_file().get_folder(),
+            context.get_file().get_filename(),
+        )
+
+    def configure(self, dest_folder, filename):
+
+        self.set_argv(
+            ['synda', self.name, "--dest_folder", dest_folder, filename],
         )

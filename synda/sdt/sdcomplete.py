@@ -88,6 +88,6 @@ if __name__ == '__main__':
     parser.add_argument('-F','--format',choices=sdprint.formats,default='raw')
     args = parser.parse_args()
 
-    files=json.load( sys.stdin )
+    files=json.load_data(sys.stdin)
     files=run(files)
     sdprint.print_format(files,args.format,args.print_only_one_item)

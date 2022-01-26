@@ -28,37 +28,41 @@ class FrozenDownloadCheckerThread(threading.Thread):
     def run(self):
         watch()
 
+
 def watch():
-    previous_processes={}
+    previous_processes = {}
 
     while True:
-        new_processes={}
+        new_processes = {}
 
         # 10 mn sleep (exit event aware)
         for i in range(10):
-            if quit==1:
+            if quit == 1:
                 break
             for i in range(6):
-                if quit==1:
+                if quit == 1:
                     break
                 time.sleep(10)
 
         # exit event
-        if quit==1:
+        if quit == 1:
             break
 
-        scan_processes(previous_processes,new_processes)
+        scan_processes(previous_processes, new_processes)
 
-        previous_processes=new_processes
+        previous_processes = new_processes
 
-def scan_processes(previous_processes,new_processes,debug=False):
-    for pid in psutil.pids(): # retrieve wget pids
+
+def scan_processes(previous_processes, new_processes, debug=False):
+
+    # retrieve wget pids
+    for pid in psutil.pids():
         try:
-            p=psutil.Process(pid)
-            if len(p.cmdline())>0:
-                cmd=p.cmdline()[0]
+            p = psutil.Process(pid)
+            if len(p.cmdline()) > 0:
+                cmd = p.cmdline()[0]
 
-                if cmd=="wget":
+                if cmd == "wget":
 
                     # second check to be sure not to take other wget process not related to our application
                     parent=psutil.Process(p.ppid())

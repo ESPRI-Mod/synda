@@ -13,12 +13,10 @@ from synda.sdt import sdlog
 from synda.sdt import sdexception
 from synda.sdt.sdtools import print_stderr, print_stdout
 from synda.sdt import syndautils
-from synda.sdt import sdsimplefilter
 
 from synda.source.config.process.download.constants import TRANSFER
 
 from synda.source.process.subcommand.required.env.models import Process as Base
-from synda.source.process.authority.models import Authority
 
 
 def get_metadata(args):
@@ -51,6 +49,7 @@ def _print(info):
 
 
 def getinfo_filesize(metadata):
+    from synda.sdt import sdsimplefilter
     # Compute total files stat
     count_total = metadata.count()
     metadata = sdsimplefilter.run(metadata, 'status', TRANSFER["status"]['new'], 'keep')
@@ -66,13 +65,12 @@ def getinfo_filesize(metadata):
 
 class Process(Base):
 
-    def __init__(self):
-        super(Process, self).__init__(name="getinfo", authority=Authority())
+    def __init__(self, payload):
+        super(Process, self).__init__("getinfo", payload)
 
     def run(self, args):
         args.dry_run = False
         args.no_default = True
-        args.selection_file = None
         metadata = get_metadata(args)
         if metadata:
             info = None

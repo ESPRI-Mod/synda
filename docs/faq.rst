@@ -3,22 +3,44 @@
 Frequently asked questions
 ==========================
 
-Unable to change paths settings (#193)
---------------------------------------
 
-In a first Synda version, the workspace location was based on a Linux environment variable (ST_HOME). It was a simple solution, but too rigid.
+What is the correct selection file syntax ?
+---------------------------------------------------
 
-In a second Synda version, the workspace subdirectories location has been outsourcing in the user preferences file (sdt.conf). It was a much better solution, but for strange reason, these customized paths settings, whatever their values, are ignored at the moment.
+1 / A ``selection file`` accepts commas or blanks as ``values`` separator.
 
-To avoid the problem, you can create a symbolic link.
+    Examples :
 
-Adapt the code below :
+    .. code-block:: text
 
-.. code-block:: bash
-
-    ln -s your/customized/data/path $ST_HOME/data
+        variable[atmos][mon]=tas psl tasmin
+        variable[atmos][mon]=tas,psl,tasmin
 
 
+2 / A ``selection file`` does not accept the following expression :
+
+    .. code-block:: text
+
+        variable[table_id=Amon]=tas
+
+The correct syntax is :
+
+    .. code-block:: text
+
+        table_id=Amon
+        variable_id=tas
+
+
+3 / A selection file accepts only the four following templates as line formats :
+
+    .. code-block:: text
+
+        variable[<realm>][<frequency>]=<variable1> <variable2> [...]
+        variable[<facet1> <facet2> <facet3> [...]]=<variable1> <variable2> [...]
+        <name>=<value>
+        <value>
+
+For more details, see the `selection file format <https://prodiguer.github.io/synda/sdt/selection_file.html#selection-file-format>`_ page of the synda documentation.
 
 
 required = {'jpeg', 'zlib'} - SyntaxError: invalid syntax

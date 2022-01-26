@@ -7,12 +7,12 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 from synda.tests.context.models import Context as Base
-from synda.tests.context.envs.env0.constants import DB
+from synda.tests.context.envs.constants import SYNDA_DEV_DATA
 
 
 class Context(Base):
 
-    def __init__(self, dataset, capsys=None, validate=True):
+    def __init__(self, dataset="", capsys=None, validate=True):
         super(Context, self).__init__(
             capsys=capsys,
             validate=validate,
@@ -30,4 +30,4 @@ class Context(Base):
 
     def validation_after_subcommand_execution(self):
         captured = self.get_capsys().readouterr()
-        assert DB["dataset"]["version"] in captured.out
+        assert SYNDA_DEV_DATA["cordex"]["dataset"]["version"] in captured.out

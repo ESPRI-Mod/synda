@@ -13,6 +13,7 @@ from synda.source.db.connection.request.table.failed_url.create.models import Ta
 from synda.source.db.connection.request.table.file.update.models import Status
 from synda.source.db.connection.request.table.file.update.models import StatusErrorMsg
 from synda.source.db.connection.request.table.file.update.models import StatusErrorMsgPriority
+from synda.source.db.connection.request.table.file.update.models import Checksum as ChecksumRequest
 
 table_name = Table().get_table_name()
 
@@ -26,21 +27,23 @@ class Manager(Base):
                 Status(),
                 StatusErrorMsg(),
                 StatusErrorMsgPriority(),
+                ChecksumRequest(),
 
             ]
         )
 
+    def checksum(self, file_id, checksum, connection=None):
+        request = self.get_item("update_file_checksum")
+        return self.update(request, (checksum, file_id), connection=connection)
+
     def update_file_status(self, file_id, status, connection=None):
         request = self.get_item("update_file_status")
-        success = self.update(request, (file_id, status), connection=connection)
-        return success
+        return self.update(request, (file_id, status), connection=connection)
 
     def update_file_status_error_msg(self, file_id, status, error_msg, connection=None):
         request = self.get_item("update_file_status_error_msg")
-        success = self.update(request, (file_id, status, error_msg), connection=connection)
-        return success
+        return self.update(request, (file_id, status, error_msg), connection=connection)
 
     def update_file_status_error_msg_priority(self, file_id, status, error_msg, priority, connection=None):
         request = self.get_item("update_file_status_error_msg_priority")
-        success = self.update(request, (file_id, status, error_msg, priority), connection=connection)
-        return success
+        return self.update(request, (file_id, status, error_msg, priority), connection=connection)

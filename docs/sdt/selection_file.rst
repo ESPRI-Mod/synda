@@ -1,7 +1,7 @@
 .. _selection-file:
 
-Selection file
-==============
+ESGF Data selection file
+=========================
 
 A selection file contains parameters to define which data you want to
 download from ESGF archive, how to download it and how to store the
@@ -31,7 +31,7 @@ Example of a selection file
 
 .. note::
 
-    Many selection file examples can be found `here <https://github.com/Prodiguer/synda/tree/master/selection/sample>`_. Selection files are sometimes called "template" or "selection form".
+    Many selection file examples can be found `here <https://github.com/Prodiguer/synda/tree/master/synda/build/selection/sample>`_. Selection files are sometimes called "template" or "selection form".
 
 Selection file format
 *********************
@@ -141,3 +141,11 @@ Run command below to remove files matching the selection file
     synda remove -s <selection-file>
 
 Then manually remove the selection file from the "selection" folder.
+
+
+Indices and tables
+******************
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

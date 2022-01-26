@@ -9,23 +9,28 @@ Version 3.4 - 2021-xx-xx
     - enhancement
         - New subcommand : 'download'
             Usage : synda download queue|start|stop|status|watch
-        - New downloads scheduler, using only one protocol (http) and under the control of asyncio
+        - New downloads scheduler for both 'download' and 'get' subcommands.
+            It supports only one protocol, the http protocol, and it works under the control of asyncio
         - std.conf | new entries
             [download]streaming_chunk_size and [install]interactive
-        - internal.conf | new entry
+        - internal.conf | new entries
             [processes]transfer_protocol
+            [sub command get]display_downloads_progression_every_n_seconds
+        - DB file table | new index on data_node field (issue # 122)
         - documentation | update
     - bug correction
         - "synda param data_node" returns now the exhaustive list of data nodes
+        - issue #139
+        - issue #118
     - about unit tests
         - remove subcommand : new data file embedded, ten times smaller than previous one
     - deprecation
         - subcommands
             daemon, queue, watch
-        - protocol : gridftp
-        - http client : wget
+        - 'get' subcommand doesn't work under the control of wget
+        - http client used for downloads : wget
         - std.conf | removed entries
-            [download]gridftp_opt and [daemon]user|group
+            [download]gridftp_opt, [download]hpss and [daemon]user|group
         - internal.conf | removed entry
             [processes]transfer_protocols
         - packages : sddaemon, sddmdefault, sdtask, sdtaskscheduler, sdworkerutils

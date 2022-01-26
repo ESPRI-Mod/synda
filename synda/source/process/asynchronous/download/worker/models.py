@@ -8,37 +8,31 @@
 ##################################
 import asyncio
 import uvloop
-
-from synda.sdt import sdlog
-from synda.sdt import sdtypes
-from synda.sdt import sdnexturl
+import aiohttp
+from synda.sdt import sdutils
 
 from synda.source.process.asynchronous.worker.models import Worker as Base
 from synda.source.process.asynchronous.download.worker.dashboard.models import DashBoard
+from synda.source.process.asynchronous.download.subcommand.download.task.aiohttp.models import Task as AiohttpTask
+from synda.source.process.asynchronous.download.task.gridftp.models import Task as GridftpTask
 
-from synda.source.config.process.download.constants import TRANSFER
-from synda.source.config.file.internal.models import Config as Internal
-
-internal = Internal()
-DOWNLOADING_LOGGER_NAME = internal.logger_consumer
-
+from synda.source.config.process.download.constants import get_transfer_protocols
 uvloop.install()
-
-
-def activate_tests_for_fallback_strategy(task):
-    status = 'error'
-    file_instance = task.get_file_instance()
-    file_instance.status = status
 
 
 class Worker(Base):
 
-    def __init__(self, name, queue, manager):
+    def __init__(self, name, queue, manager, aiohttp_task_cls=AiohttpTask, gridftp_task_cls=GridftpTask):
         Base.__init__(self, name, queue, manager)
         # initializations
         self.tasks_counter = 0
-        # self.conn = None
+        self.aiohttp_task_cls = None
+        self.gridftp_task_cls = None
+
         # settings
+        self.aiohttp_task_cls = aiohttp_task_cls
+        self.gridftp_task_cls = gridftp_task_cls
+
         self.dashboard = DashBoard(self, identifier=self.name)
 
     def increment_tasks_counter(self):
@@ -47,100 +41,95 @@ class Worker(Base):
     def get_tasks_counter(self):
         return self.tasks_counter
 
-    def get_fallback_task(self, file_instance):
-        # Hack
-        #
-        # Notes
-        #     - We need a log here so to have a trace of the original failed transfer
-        # (i.e. in case the url-switch succeed, the error msg will be reset)
-        #
-
-        sdlog.info(
-            "SDDMDEFA-088",
-            "Transfer failed: try to use another url ({})".format(file_instance.url),
-            logger_name=DOWNLOADING_LOGGER_NAME,
-        )
-        new_file = sdtypes.File()
-        new_file.copy(file_instance)
-
-        new_url_found = sdnexturl.run(new_file)
-
-        if new_url_found:
-            new_file.status = TRANSFER["status"]['waiting']
-            new_file.error_msg = None
-            new_file.sdget_status = None
-            new_file.sdget_error_msg = None
-            new_file.start_date = None
-            new_file.end_date = None
-            sdlog.info(
-                "SDDMDEFA-108",
-                "Transfer marked for retry (error_msg='{}',url={},file_id={}".format(
-                    new_file.error_msg,
-                    new_file.url,
-                    new_file.file_id,
-                ),
-                logger_name=DOWNLOADING_LOGGER_NAME,
+    def create_task(self, file_instance):
+        new_task = None
+        if file_instance:
+            task_name = "{} , {}".format(
+                self.name,
+                file_instance.url,
             )
-        return self.create_task(new_file) if new_url_found else None
 
-    async def post_process_task(self, task, config):
-        await Base.post_process_task(self, task)
-        file_id = task.get_file_instance().file_id
+            transfer_protocol = sdutils.get_transfer_protocol(file_instance.url)
 
-        test_mode = False
-        # for fallback_strategy tests
-        if test_mode:
-            activate_tests_for_fallback_strategy(task)
+            if transfer_protocol == get_transfer_protocols()['http']:
+                new_task = self.aiohttp_task_cls(
+                    file_instance,
+                    task_name,
+                    verbose=self.verbose,
+                )
+            elif transfer_protocol == get_transfer_protocols()['gridftp']:
+                new_task = self.gridftp_task_cls(
+                    file_instance,
+                    task_name,
+                    verbose=self.verbose,
+                )
 
-        if task.error():
+        return new_task
 
-            # A PROBLEM OCCURED DURING DOWNLOAD
+    async def process_task(self, client, args):
+        if self.queue.empty():
+            # print("Empty queue with id : {}".format(id(self.queue)))
+            # at the moment, tasks manager refuses to deliver a new task
+            # probably reason :
+            #      1 / the maximum pool of workers for the current batch has been reached,
+            #      2 / the maximum pool of workers for all running batches has been reached
+            # => worker has to wait , why not 1 second, before a new attempt
+            print("{} worker is waiting".format(self.name))
+            await asyncio.sleep(1)
+        else:
+            # get a task out of the queue
+            scheduler_task = await self.queue.get()
+            # print("Task (id : {} / status : {}) for queue with id : {}".format(scheduler_task.file_id, scheduler_task.status, id(self.queue)))
 
-            # => new strategy
-            # the file instance is updated to allow a new download attempt with another url (if exists)
-            fallback_strategy = True if config["is_download_http_fallback"] else False
+            task = self.create_task(scheduler_task)
+            # process it if it is pending
+            if task.pending():
+                try:
+                    self.pre_process_task(task)
+                    task.set_worker(self)
+                    await task.execute(client, args)
+                    # await task.process(client)
+                    await self.post_process_task(
+                        task,
+                        *[client, args],
+                    )
 
-            if fallback_strategy:
-                new_task = self.get_fallback_task(task.get_file_instance())
-                while new_task:
-                    new_task.set_worker(self)
-                    self.pre_process_task(new_task)
-                    # next url case => another url has been set
-                    try:
-                        await new_task.process()
+                except asyncio.CancelledError:
+                    await task.killed()
+                finally:
+                    self.queue.task_done()
 
-                        # for fallback_strategy tests
-                        if test_mode:
-                            activate_tests_for_fallback_strategy(new_task)
-                        new_task = \
-                            self.get_fallback_task(new_task.get_file_instance()) if new_task.error() else None
-                    except asyncio.CancelledError:
-                        await new_task.killed()
+    async def process_all_tasks(self, config):
+
+        http_client_session = aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=config["http_timeout"]),
+        )
+
+        async with http_client_session as client:
+            while not self.stopped_by_manager:
+                if not self.get_status() == "done":
+                    if self.manager.authorizes_new_task():
+                        if await self.manager.has_new_task(self.queue):
+                            await self.process_task(client, config)
+                            self.increment_tasks_counter()
+                        else:
+                            self.set_status("done")
+                            await asyncio.sleep(1)
+                    else:
+                        # at the moment, manager refuses to deliver a new task
+                        # probably reason :
+                        #      1 / the maximum pool of workers for the current batch has been reached,
+                        #      2 / the maximum pool of workers for all running batches has been reached
+                        # => worker has to wait , why not 1 second, before a new attempt
+                        # print("{} worker is waiting".format(self.name))
+                        self.set_status("waiting")
+                        await asyncio.sleep(1)
+                else:
+                    await asyncio.sleep(1)
+            await client.close()
 
         if self.verbose:
-            self.log_history(file_id, config["logger_consumer"])
-
-    def log_history(self, file_id, logger_name):
-        tasks = self.get_dashboard().get_tasks()
-        nb_tasks = len(tasks)
-        sdlog.info(
-            "D/L-HIST-001",
-            "file id : {} | Downloads History".format(
-                file_id,
-            ),
-            logger_name=logger_name,
+            print("All tasks processed | Queue id : {}".format(id(self.queue)))
+        return "{} | All tasks processed".format(
+            self.name,
         )
-        nb_attempts = 0
-        for task in tasks:
-            file_instance = task.get_file_instance()
-            if file_instance.file_id == file_id:
-                nb_attempts += 1
-                sdlog.info(
-                    "D/L-HIST-002",
-                    "file id : {} | Attempt # {}, file instance : {}".format(
-                        file_id,
-                        nb_attempts,
-                        str(file_instance),
-                    ),
-                    logger_name=logger_name,
-                )

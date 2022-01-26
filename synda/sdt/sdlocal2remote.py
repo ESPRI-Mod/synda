@@ -41,7 +41,8 @@ def run(facets_groups):
         local_name_rules = name_rules
         if 'project' in list(facets_group.keys()):
             if facets_group['project'] == ['CMIP6']:
-                del local_name_rules['frequency']
+                if 'frequency' in local_name_rules:
+                    del local_name_rules['frequency']
 
         facets_group = sdtranslate.translate_name(facets_group, local_name_rules)
         facets_groups_new.append(facets_group)

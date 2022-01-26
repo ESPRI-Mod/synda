@@ -6,18 +6,15 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-"""
-"""
+import configparser
+
 from synda.source.config.file.models import Config as Base
-from synda.source.config.file.env.constants import ENV_NOT_FOUND
 from synda.source.config.file.internal.constants import IDENTIFIER
-from synda.source.config.file.internal.constants import DEFAULT_OPTIONS
 from synda.source.config.file.internal.constants import FULL_FILENAME_USED_IF_INIT_ENV_NOT_FOUND
 from synda.source.config.file.internal.constants import DEFAULT_FULL_FILENAME
-from synda.source.config.file.internal.constants import FILENAME, DIRECTORY
-from synda.source.config.file.internal.exceptions import NotFound
-
-from synda.source.config.file.user.readers import get_parser
+from synda.source.config.file.internal.constants import DEFAULT_CONTENT
+from synda.source.config.file.internal.constants import DEFAULT_OPTIONS
+from synda.source.config.file.user.readers import overwrite_parser
 
 
 class Config(Base):
@@ -30,7 +27,13 @@ class Config(Base):
             # Use of the 'sdt.conf' located into the synda resource directory
             full_filename = FULL_FILENAME_USED_IF_INIT_ENV_NOT_FOUND
 
-        self.set_data(get_parser(full_filename, DEFAULT_OPTIONS))
+        default_parser = configparser.ConfigParser()
+
+        default_parser.read_dict(
+            DEFAULT_CONTENT,
+        )
+
+        self.set_data(overwrite_parser(full_filename, default_parser))
 
     # LOGGERS SECTION
 
@@ -68,8 +71,8 @@ class Config(Base):
     def processes_chunksize(self):
         return self.get_data().getint('processes', 'chunksize')
     @property
-    def processes_transfer_protocol(self):
-        return self.get_data().get('processes', 'transfer_protocol')
+    def processes_transfer_protocols(self):
+        return [e.strip() for e in self.get_data().get('processes', 'transfer_protocols').split(',')]
     @property
     def processes_http_client(self):
         return self.get_data().get('processes', 'http_client')
@@ -88,3 +91,15 @@ class Config(Base):
     @property
     def hack_projects_with_one_variable_per_dataset(self):
         return [e.strip() for e in self.get_data().get('hack', 'projects_with_one_variable_per_dataset').split(',')]
+
+
+    # GET SUBCOMMAND SECTION
+
+    @property
+    def subcommand_get_display_downloads_progression_every_n_seconds(self):
+        try:
+            val = self.get_data().getfloat('sub command get', 'display_downloads_progression_every_n_seconds')
+        except ValueError:
+            val = float(DEFAULT_OPTIONS["display_downloads_progression_every_n_seconds"])
+
+        return val

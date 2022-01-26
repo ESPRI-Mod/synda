@@ -38,17 +38,5 @@ class Context(Base):
     def get_file(self):
         return self.file
 
-    # def remove_all_expected_files(self):
-    #     if self.file:
-    #         os.remove(
-    #             self.file.get_full_filename(),
-    #         )
-    #
-    #     super(Context, self).remove_all_expected_files()
-
-
-# class TestEnvContext(Context):
-#
-#     def validate_checksums(self):
-#         for file in self.expected_files_description:
-#             file.validate_checksum()
+    def validation_after_subcommand_execution(self):
+        self.validate_no_checksums()

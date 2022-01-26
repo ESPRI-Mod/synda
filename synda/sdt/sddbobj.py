@@ -81,6 +81,7 @@ def create_indexes(conn):
     conn.execute("create        index if not exists idx_file_10 on file (model)")
     conn.execute("create        index if not exists idx_file_11 on file (filename)")
     conn.execute("create unique index if not exists idx_file_12 on file (local_path)")
+    conn.execute("create        index if not exists idx_file_13 on file (data_node)")
     conn.execute("create unique index if not exists idx_dataset_1 on dataset (dataset_functional_id)")
     conn.execute("create        index if not exists idx_dataset_2 on dataset (status)")
     conn.execute("create        index if not exists idx_dataset_3 on dataset (path_without_version)")
@@ -95,5 +96,4 @@ def create_indexes(conn):
     conn.execute("create        index if not exists idx_event_1 on event (name)")
     conn.execute("create        index if not exists idx_event_2 on event (status)")
     conn.execute("create        index if not exists idx_event_3 on event (crea_date)")
-    conn.execute("create        index if not exists idx_file_13 on file (data_node)")
     conn.execute("create unique index if not exists idx_failed_url_1 on failed_url (url)")

@@ -21,6 +21,7 @@ from synda.sdt import sdbuffer
 from synda.sdt import sdprint
 from synda.sdt import sdi18n
 from synda.sdt import sdearlystreamutils
+from synda.sdt import sdtranslate
 
 from synda.source.config.file.selection.models import Config as SelectionConfig
 from synda.source.config.file.selection.constants import PENDING_PARAMETER
@@ -60,6 +61,16 @@ def build(buffer, load_default=None):
 
     # store inner attributes ('inner' means attributes stored in selection file)
     parse_buffer(buffer.lines, selection)
+
+    # Update facets respecting the following rules
+    local_name_rules = {
+        'mip_era': 'project',
+    }
+
+    selection.facets = sdtranslate.translate_name(
+        selection.facets,
+        local_name_rules,
+    )
 
     # merge some outer attributes with inner attributes (else they are not returned by merge_facets() method)
     process_parameter("selection_filename=%s" % selection.filename, selection)

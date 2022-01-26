@@ -41,21 +41,28 @@ class HTTPSClientAuthHandler(urllib.request.HTTPSHandler):
 
 # default is to load list resulting from HTTP call in memory
 # (should work on lowmem machine as response should not exceed Preferences().esgf_search_api_chunksize)
-def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowmem=False):
-    start_time=SDTimer.get_time()
-    buf=http_get(url, timeout)
-    elapsed_time=SDTimer.get_elapsed_time(start_time)
+def call_web_service(
+        url,
+        timeout=Preferences().api_esgf_search_http_timeout,
+        lowmem=False,
+):
+    start_time = SDTimer.get_time()
+    buf = http_get(url, timeout)
+    elapsed_time = SDTimer.get_elapsed_time(start_time)
 
     buf=fix_encoding(buf)
 
     try:
-        di=search_api_parser.parse_metadata(buf)
+        di = search_api_parser.parse_metadata(buf)
     except Exception as e:
 
         # If we are here, it's likely that they is a problem with the internet connection
         # (e.g. we are behind an HTTP proxy and have no authorization to use it)
 
-        sdlog.info('SDNETUTI-001','XML parsing error (exception=%s). Most of the time, this error is due to a network error.'%str(e))
+        sdlog.info(
+            'SDNETUTI-001',
+            f'XML parsing error (exception={str(e)}). Most of the time, this error is due to a network error.',
+        )
 
         # debug
         #
@@ -71,14 +78,27 @@ def call_web_service(url,timeout=Preferences().api_esgf_search_http_timeout,lowm
         #
         #raise
 
-        raise SDException('SDNETUTI-008', 'Network error (see log for details)') # we raise a new exception 'network error' here, because most of the time, 'xml parsing error' is due to an 'network error'.
+        # we raise a new exception 'network error' here,
+        # because most of the time, 'xml parsing error' is due to an 'network error'.
+        raise SDException(
+            'SDNETUTI-008',
+            'Network error (see log for details)',
+        )
 
-    sdlog.debug("SDNETUTI-044","files-count=%d"%len(di.get('files')))
+    sdlog.debug(
+        "SDNETUTI-044",
+        "files-count=%d" % len(di.get('files')),
+    )
+
     for difile in di['files']:
         difile['search_url'] = url
 
     # RAM storage is ok here as one response is limited by Preferences().api_esgf_search_chunksize
-    return sdtypes.Response(call_duration=elapsed_time,lowmem=lowmem,**di)
+    return sdtypes.Response(
+        call_duration=elapsed_time,
+        lowmem=lowmem,
+        **di,
+    )
 
 
 def call_param_web_service(url,timeout):

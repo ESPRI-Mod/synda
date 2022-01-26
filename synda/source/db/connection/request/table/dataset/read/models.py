@@ -8,3 +8,43 @@
 ##################################
 
 from synda.source.db.connection.request.table.models import Request
+
+
+class AllRows(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(AllRows, self).__init__(table_name="dataset", identifier="all rows")
+        self.set_sql(
+            "SELECT * FROM dataset",
+        )
+
+
+class Row(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(Row, self).__init__(table_name="file", identifier="row")
+        self.set_sql(
+            "SELECT * FROM file WHERE file_id = ?",
+        )
+
+    def get_data(self):
+        data = super(Row, self).get_data()
+        return data[0]
+
+
+class Rows(Request):
+    """
+    Request
+
+    """
+    def __init__(self):
+        super(Rows, self).__init__(table_name="file", identifier="rows")
+        self.set_sql(
+            "SELECT * FROM file LIMIT 5",
+        )

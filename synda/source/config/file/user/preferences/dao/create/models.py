@@ -92,8 +92,8 @@ class Create(object):
         config.set('behaviour', 'incorrect_checksum_action', 'remove')
 
         config.add_section('index')
-        config.set('index', 'indexes', 'esgf-data.dkrz.de')
-        config.set('index', 'default_index', 'esgf-data.dkrz.de')
+        config.set('index', 'indexes', 'esgf-node.ipsl.upmc.fr')
+        config.set('index', 'default_index', 'esgf-node.ipsl.upmc.fr')
 
         config.add_section('locale')
         config.set('locale', 'country', '')
@@ -103,16 +103,17 @@ class Create(object):
 
         config.set('download', 'hpss', '1')
         config.set('download', 'http_fallback', 'false')
+        config.set('download', 'gridftp_opt', '')
 
         config.set('download', 'url_max_buffer_size', '3500')
 
-        config.set('download', 'direct_http_timeout', '30')
+        config.set('download', 'direct_http_timeout', '120')
         config.set('download', 'async_http_timeout', '120')
 
-        # 2 mn
-        config.set('download', 'direct_db_timeout', '120')
-        # 200mn # TODO maybe use 86400 / 24h here
-        config.set('download', 'async_db_timeout', '12000')
+        # 30 seconds
+        config.set('download', 'direct_db_timeout', '30')
+        # 2mn
+        config.set('download', 'async_db_timeout', '120')
 
         config.set('download', 'streaming_chunk_size', '0')
 

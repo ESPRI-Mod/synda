@@ -9,11 +9,20 @@
 """
 """
 from synda.source.db.connection.request.table.dao.read.manager import Manager as Base
+from synda.source.db.connection.request.table.dataset.read.models import AllRows as AllRowsRequest
 
-table_name = "dataset"
+table_name = AllRowsRequest().get_table_name()
 
 
 class Manager(Base):
 
     def __init__(self):
         Base.__init__(self, table_name=table_name)
+
+        self.add(
+            AllRowsRequest(),
+        )
+
+    def get_all_rows(self):
+        request = self.get_item("all rows")
+        return self.get_request_data(request)

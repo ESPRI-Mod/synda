@@ -23,7 +23,6 @@ import sqlite3
 import contextlib
 import shutil
 from synda.sdt import sddbpagination
-from synda.sdt import sdconfig
 
 from synda.source.config.path.tree.models import Config as TreePath
 from synda.source.config.file.internal.models import Config as Internal
