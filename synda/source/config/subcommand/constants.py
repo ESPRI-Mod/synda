@@ -47,7 +47,6 @@ NAMES = {
     'list',
     'metric',
     'param',
-    'queue',
     'remove',
     'replica',
     'reset',
@@ -61,7 +60,6 @@ NAMES = {
     'variable',
     'version',
     'synda_version',
-    'watch',
 }
 
 DEFAULT_LIMITS = {

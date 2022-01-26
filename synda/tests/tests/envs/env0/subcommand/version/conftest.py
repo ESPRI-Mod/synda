@@ -13,7 +13,6 @@ manager = Manager()
 manager.set_tests_mode()
 
 from synda.tests.context.envs.env0.constants import ENV
-from synda.tests.context.envs.env0.constants import DB
 from synda.tests.context.envs.env0.subcommand.version.models import Context
 
 
@@ -21,7 +20,7 @@ from synda.tests.context.envs.env0.subcommand.version.models import Context
 
 @pytest.fixture
 def env0_version_context():
-    context = Context(DB["dataset"]["name"])
+    context = Context()
     return context
 
 

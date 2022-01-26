@@ -8,6 +8,7 @@
 ##################################
 import os
 
+from synda.tests.tests.constants import DATADIR as ROOT
 from synda.source.config.file.env.constants import FILENAME as ENV_FILENAME
 from synda.tests.process.envs.constants import DATA_DIRECTORY
 
@@ -26,10 +27,17 @@ ENV = dict(
     ),
 )
 
-DB = dict(
-    files=[],
-    dataset=dict(
-        name="CMIP6.CMIP.IPSL.IPSL-CM6A-LR.1pctCO2.r1i1p1f1.Amon.tas.gr.v20180605",
-        version="20180727",
-    ),
+subdirectories = [
+    ROOT,
+    "envs",
+    "env0",
+    "get",
+    "confirm",
+]
+
+SUBCOMMAND_GET_CONFIRM_ANSWER_DIR = os.path.join(*subdirectories)
+
+SUBCOMMAND_GET_CONFIRM_ANSWER_FILE = os.path.join(
+    SUBCOMMAND_GET_CONFIRM_ANSWER_DIR,
+    "answer.txt",
 )

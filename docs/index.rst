@@ -1,4 +1,4 @@
-``synda`` documentation
+Synda documentation
 =======================
 
 
@@ -16,9 +16,19 @@ Content
 *******
 
 .. toctree::
+   :maxdepth: 1
+
+   sdt/conda_install
+
+.. toctree::
    :maxdepth: 2
 
-   sdt/sdt
+   sdt/config
+
+.. toctree::
+   :maxdepth: 2
+
+   sdt/usage
 
 .. toctree::
    :maxdepth: 1

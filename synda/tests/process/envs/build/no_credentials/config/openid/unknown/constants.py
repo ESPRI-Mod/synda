@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+##################################
+#  @program        synda
+#  @description    climate models data transfer program
+#  @copyright      Copyright "(c)2009 Centre National de la Recherche Scientifique CNRS.
+#                             All Rights Reserved"
+#  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
+##################################
+import os
+
+from synda.tests.process.envs.constants import RESOURCES_DIRECTORY
+from synda.tests.process.envs.constants import DATA_DIRECTORY
+
+subdirectories = [
+    "no_credentials",
+    "config",
+    "openid",
+    "default",
+]
+
+FUNCTIONAL_DIRECTORY_NAME = os.path.join(*subdirectories)
+
+RESOURCES_DIRECTORY = os.path.join(
+    RESOURCES_DIRECTORY,
+    FUNCTIONAL_DIRECTORY_NAME,
+)
+
+PREFERENCES_FILE_RESOURCES_DIRECTORY = RESOURCES_DIRECTORY
+
+DATA_DIRECTORY = os.path.join(
+    DATA_DIRECTORY,
+    FUNCTIONAL_DIRECTORY_NAME,
+)

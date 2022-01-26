@@ -9,11 +9,21 @@
 from synda.source.db.connection.models import Connection
 
 
+def checksum(file_id, _checksum, full_filename=""):
+    conn = Connection(full_filename=full_filename)
+    manager = conn.get_item("file table crud").get_item("update")
+    manager.set_db_connection(conn)
+    success, lastrowid, msg = manager.checksum(file_id, _checksum)
+    conn.close()
+
+    return success
+
+
 def file_status(file_id, status, full_filename=""):
     conn = Connection(full_filename=full_filename)
     manager = conn.get_item("file table crud").get_item("update")
     manager.set_db_connection(conn)
-    success = manager.file_status(file_id, status)
+    success, lastrowid, msg = manager.file_status(file_id, status)
     conn.close()
 
     return success
@@ -23,7 +33,7 @@ def file_status_error_msg(file_id, status, error_msg, full_filename=""):
     conn = Connection(full_filename=full_filename)
     manager = conn.get_item("file table crud").get_item("update")
     manager.set_db_connection(conn)
-    success = manager.update_file_status_error_msg(file_id, status, error_msg)
+    success, lastrowid, msg = manager.update_file_status_error_msg(file_id, status, error_msg)
     conn.close()
 
     return success
@@ -33,7 +43,7 @@ def file_status_error_msg_priority(file_id, status, error_msg, priority, full_fi
     conn = Connection(full_filename=full_filename)
     manager = conn.get_item("file table crud").get_item("update")
     manager.set_db_connection(conn)
-    success = manager.file_status_error_msg_priority(file_id, status, error_msg, priority)
+    success, lastrowid, msg = manager.file_status_error_msg_priority(file_id, status, error_msg, priority)
     conn.close()
 
     return success

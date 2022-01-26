@@ -24,6 +24,7 @@ from synda.source.config.file.user.preferences.models import Config as Preferenc
 from synda.source.config.file.db.models import Config as Db
 from synda.source.config.api.constants import URL_FIELDS
 from synda.source.db.task.failed_url.update.models import insert_into_failed_url
+from synda.source.config.process.download.constants import TRANSFER
 
 
 def run(tr):
@@ -32,9 +33,9 @@ def run(tr):
         True: url has been switched to a new one
         False: nothing changed (same url)
     """
-    lastrowid, msg = insert_into_failed_url(tr.url, tr.file_functional_id)
+    success, lastrowid, msg = insert_into_failed_url(tr.url, tr.file_functional_id)
 
-    if msg:
+    if not success:
         code = "SDNEXTUR-001" if "integrity" in msg.lower() else "SDNEXTUR-002"
         sdlog.info(
             code,
@@ -47,32 +48,37 @@ def run(tr):
             ),
         )
 
-    success = False
     conn = None
+    exception_encountered = False
     try:
         conn = Connection().get_database_connection()
-        next_http_url(tr, conn)
-        success = True
+        success = next_http_url(tr, conn)
     except sdexception.FileNotFoundException as e:
+        exception_encountered = True
         sdlog.info(
             "SDNEXTUR-003", "Cannot switch url for %s (FileNotFoundException)" % (tr.file_functional_id,),
         )
     except sdexception.NextUrlNotFoundException as e:
+        exception_encountered = True
         sdlog.info(
             "SDNEXTUR-004", "Cannot switch url for %s (NextUrlNotFoundException)" % (tr.file_functional_id,),
         )
     except Exception as e:
+        exception_encountered = True
         sdlog.info(
             "SDNEXTUR-005", "Unknown exception (file_functional_id=%s,exception=%s)" % (tr.file_functional_id, str(e)),
         )
     finally:
         if conn:
             conn.close()
+        if exception_encountered:
+            success = False
 
     return success
 
 
 def next_http_url(tr, conn):
+    success = False
     # [[url1,protocol1],[url2,protocol2],...]
     all_urlps = get_urls(tr.file_functional_id)
     sdlog.info("SDNEXTUR-006", "all_urpls= %s" % (all_urlps,))
@@ -85,19 +91,34 @@ def next_http_url(tr, conn):
     sdlog.info("SDNEXTUR-007", "failed_urls= %s" % (failed_urls,))
     urlps = [urlp for urlp in all_urlps if urlp[0] not in failed_urls]
     # ... Note that list comprehensions preserve order.
-    urls = [urlp[0] for urlp in urlps if urlp[0].startswith("http")]
+    urls = [urlp[0] for urlp in urlps]
     # At this point urls is just a list of urls.
     
     if len(urls) > 0:
+        success = True
         old_url = tr.url
         new_url = urls[0]
         tr.url = new_url
+        tr.data_node = new_url.split("://")[1].split("/")[1]
+        tr.status = TRANSFER["status"]['waiting']
+        tr.error_msg = None
+        tr.sdget_status = None
+        tr.sdget_error_msg = None
+        tr.start_date = None
+        tr.end_date = None
         sdlog.info(
             "SDNEXTUR-008",
-            "Url successfully switched (file_functional_id=%s,old_url=%s,new_url=%s)" % (tr.file_functional_id, old_url, new_url))
+            "Url successfully switched "
+            "(file_functional_id=%s,old_url=%s,new_url=%s)" % (tr.file_functional_id, old_url, new_url))
     else:
-        sdlog.info("SDNEXTUR-009","Next url not found (file_functional_id=%s)"%(tr.file_functional_id,))
+        sdlog.info(
+            "SDNEXTUR-009",
+            "Next url not found / "
+            "To fix the problem, you may extend your list of indexes "
+            "(file_functional_id=%s)" % (tr.file_functional_id,))
         raise sdexception.NextUrlNotFoundException()
+
+    return success
 
 
 def get_urls(file_functional_id):
@@ -118,8 +139,14 @@ def get_urls(file_functional_id):
     if len(li) == 0:
         # No urls found. Try again, but wildcard the file id. (That leads to a string search on all
         # fields for the wildcarded file id, rather than a match of the instance_id field only.)
-        result=sdquicksearch.run(
-            parameter=['limit=4', 'fields=%s' % url_fields, 'type=File', 'instance_id=%s' % file_functional_id+'*'],
+
+        result = sdquicksearch.run(
+            parameter=[
+                'limit=4',
+                'fields=%s' % url_fields,
+                'type=File',
+                'instance_id=%s' % file_functional_id+'*',
+            ],
             post_pipeline_mode=None,
         )
         li = result.get_files()

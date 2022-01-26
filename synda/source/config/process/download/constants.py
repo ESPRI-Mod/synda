@@ -8,8 +8,10 @@
 ##################################
 from synda.source.config.file.internal.models import Config as Internal
 
-ALLOWED_HTTP_CLIENTS = ["aiohttp"]
+# PROTOCOLS
 
+
+ALLOWED_TRANSFER_PROTOCOLS = ["http", "gridftp"]
 
 def remove_not_allowed(choices, allowed):
     for choice in choices:
@@ -17,71 +19,43 @@ def remove_not_allowed(choices, allowed):
             choices.remove(choice)
 
 
-def validate_http_clients(choices):
+def validate_transfer_protocols(choices):
 
     # remove not allowed requested choices
 
-    remove_not_allowed(choices, ALLOWED_HTTP_CLIENTS)
+    remove_not_allowed(choices, ALLOWED_TRANSFER_PROTOCOLS)
 
-    http_clients = dict(choices=ALLOWED_HTTP_CLIENTS)
+    transfer_protocols = dict(choices=ALLOWED_TRANSFER_PROTOCOLS)
 
-    http_client_default = dict(
-        default="aiohttp",
+    transfer_protocols_default = dict(
+        default="http",
     )
 
     if len(choices) > 0:
+
         choices = [choice.lower() for choice in choices]
-        if "aiohttp" in choices:
-            http_clients["aiohttp"] = "aiohttp"
-            http_clients.update(
-                http_client_default,
+
+        if "http" in choices:
+            transfer_protocols["http"] = "http"
+            transfer_protocols.update(
+                transfer_protocols_default,
             )
+
+        if "gridftp" in choices:
+            transfer_protocols["gridftp"] = "gridftp"
+            if "default" not in list(transfer_protocols.keys()):
+                transfer_protocols["default"] = "gridftp"
     else:
-        http_clients["aiohttp"] = "aiohttp"
-        http_clients.update(
-            http_client_default,
-        )
-
-    return http_clients
-
-
-def get_http_clients(requested=Internal().processes_http_client):
-
-    return validate_http_clients([requested])
-
-# PROTOCOLS
-
-
-ALLOWED_TRANSFER_PROTOCOL = "http"
-
-
-def validate_transfer_protocol(choice):
-    bad_internal_entry = True
-    transfer_protocols = dict(choices=ALLOWED_TRANSFER_PROTOCOL)
-    transfer_protocols["http"] = "http"
-
-    if len(choice) > 0:
-
-        wchoice = choice.lower()
-
-        if wchoice == ALLOWED_TRANSFER_PROTOCOL:
-            bad_internal_entry = False
-
-    if bad_internal_entry:
-        from synda.sdt import sdlog
-        sdlog.warning(
-            "INT-CONF-001",
-            "Not allowed entry {} = {}. 'http' is the only allowed transfer protocol".format(
-                "transfer_protocol",
-                choice
-            ),
+        transfer_protocols["http"] = "http"
+        transfer_protocols.update(
+            transfer_protocols_default,
         )
 
     return transfer_protocols
 
 
-def get_transfer_protocol(requested=Internal().processes_transfer_protocol):
-    return validate_transfer_protocol(requested)["http"]
+def get_transfer_protocols(requested=Internal().processes_transfer_protocols):
+    return validate_transfer_protocols(requested)
 
 
 TRANSFER_STATUS_DELETE = "delete"

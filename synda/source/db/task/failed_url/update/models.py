@@ -13,7 +13,7 @@ def insert_into_failed_url(url, file_functional_id):
     conn = Connection()
     manager = conn.get_item("failed_url table crud").get_item("update")
     manager.set_db_connection(conn)
-    success = manager.insert_into_failed_url(url, file_functional_id, connection=conn)
+    success, lastrowid, msg = manager.insert_into_failed_url(url, file_functional_id, connection=conn)
     conn.close()
 
-    return success
+    return success, lastrowid, msg

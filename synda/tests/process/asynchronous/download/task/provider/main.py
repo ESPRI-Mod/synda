@@ -9,8 +9,7 @@
 """
 
 """
-import asyncio
-from synda.source.process.asynchronous.download.task.provider.models import Provider
+from synda.source.process.asynchronous.download.task.subcommand.download import Provider
 
 
 if __name__ == '__main__':

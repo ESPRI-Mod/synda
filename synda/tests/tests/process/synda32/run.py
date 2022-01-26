@@ -9,7 +9,7 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 from synda.sdt import sdlog
 from synda.sdt import sdlogon
 
-from synda.source.process.asynchronous.download.scheduler.models import get_batches
+from synda.source.process.asynchronous.download.subcommand.download import get_batches
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 from synda.source.config.file.user.credentials.models import Config as Credentials

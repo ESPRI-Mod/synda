@@ -20,15 +20,13 @@ The differences between *synda get* and *synda install* are listed below:
 *synda get* :
 
 * no tracking
-* no parallel download
-* no daemon involved
+* parallel download
 * synchronous
 
 *synda install* :
 
 * tracking
 * parallel download
-* use daemon to manage download
 * asynchronous
 
 The next sections will detail both commands.

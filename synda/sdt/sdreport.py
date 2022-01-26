@@ -83,6 +83,7 @@ def print_running_transfers():
                 humanize.naturalsize(tr.size, gnu=False),
                 tr.start_date,
                 checks_status,
+                tr.data_node,
                 tr.filename,
             ],
         )
@@ -91,7 +92,7 @@ def print_running_transfers():
         print(
             tabulate(
                 li,
-                headers=['Current size', 'Total size', 'Download start date', 'Checks', 'Filename'],
+                headers=['Current size', 'Total size', 'Download start date', 'Checks', 'Data node', 'Filename'],
                 tablefmt="plain",
             ),
         )

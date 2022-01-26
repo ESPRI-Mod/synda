@@ -37,8 +37,8 @@ class Manager(object):
 
         self.env = Context()
 
-    def create_test_environment(self, source=""):
-        self.env.create(source=source)
+    def create_test_environment(self, source="", with_credentials=True):
+        self.env.create(source=source, with_credentials=with_credentials)
 
     def delete_test_environment(self):
         self.env.delete(self.env.root)

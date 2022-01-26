@@ -103,16 +103,20 @@ def get_verbosity_label(level):
     return label
 
 
+def get_log_full_filename(filename):
+    return os.path.join(
+        TreePath().get("log"),
+        filename,
+    )
+
+
 def create_logger(name, filename):
     verbosity_level = get_verbosity_level()
 
     logger = logging.getLogger(name)
     logger.setLevel(verbosity_level)
 
-    fullpath_filename = os.path.join(
-        TreePath().get("log"),
-        filename,
-    )
+    fullpath_filename = get_log_full_filename(filename)
 
     fh = logging.FileHandler(fullpath_filename)
     fh.setLevel(verbosity_level)

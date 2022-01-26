@@ -42,12 +42,12 @@ from synda.source.config.process.download.dataset.constants import STRUCTURE as 
 from synda.source.config.process.history.constants import STRUCTURE as HISTORY_STRUCTURE
 
 
-def run(metadata, config_manager, timestamp_right_boundary=None):
+def run(metadata, config, timestamp_right_boundary=None):
     """
     Returns
         Number of enqueued items.
     """
-    preferences = config_manager.get_user_preferences()
+    preferences = config.get_user_preferences()
 
     if metadata.count() < 1:
         return 0

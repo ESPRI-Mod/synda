@@ -9,36 +9,32 @@
 import os
 import datetime
 import uvloop
-
-from synda.sdt import sdlog
 from synda.sdt import sdtime
 from synda.sdt import sdtools
-from synda.sdt import sdfiledao
 
 from synda.sdt import sdexception
-from synda.sdt import sdlogon
 from synda.sdt import sdconfig
 
 from synda.source.config.file.user.credentials.models import Config as Credentials
 from synda.source.config.process.download.constants import TRANSFER
 
 from synda.source.process.asynchronous.task.models import Task as Base
-
 from synda.source.process.asynchronous.download.cleaning.models import Process as CleaningProcess
-from synda.source.process.asynchronous.download.control.models import Control as DownloadControl
 from synda.source.config.file.internal.models import Config as Internal
 
 internal = Internal()
 DOWNLOADING_LOGGER_NAME = internal.logger_consumer
 
-credentials = Credentials()
 uvloop.install()
 
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 
 async def renew_certificate():
+    from synda.sdt import sdlog
+    from synda.sdt import sdlogon
     try:
+        credentials = Credentials()
         sdlogon.renew_certificate(
             credentials.openid,
             credentials.password,
@@ -59,8 +55,8 @@ class Task(Base):
     """
     Abstract class
     """
-    def __init__(self, file_instance, name, verbose=False):
-        Base.__init__(self, name, verbose=verbose)
+    def __init__(self, file_instance, name, process_cls, control_cls, verbose=False):
+        Base.__init__(self, name, process_cls, verbose=verbose)
 
         # initializations
 
@@ -71,7 +67,7 @@ class Task(Base):
 
         # settings
         self.file_instance = file_instance
-        self.post_process_control = DownloadControl(file_instance)
+        self.post_process_control = control_cls(file_instance)
         self.cleaning = CleaningProcess(file_instance)
 
     def get_file_instance(self):
@@ -91,22 +87,28 @@ class Task(Base):
         if not os.path.exists(target):
             os.makedirs(target)
 
-    async def post_process(self, incorrect_checksum_action, local_file_size, local_checksum=""):
-
+    async def post_process(self, incorrect_checksum_action, local_file_size, do_controls, local_checksum=""):
         self.compute_metrics()
-        await self.post_process_control.process(incorrect_checksum_action, local_file_size, local_checksum)
+        if do_controls:
+            await self.post_process_control.process(
+                incorrect_checksum_action,
+                local_file_size,
+                local_checksum,
+            )
 
         if self.error():
 
             # NOW WE ARE SURE THAT A PROBLEM OCCURED DURING DOWNLOAD
             self.cleaning.process()
 
+        # asyncio task is now done
         self.set_status("done")
 
     def error(self):
         return self.file_instance.status == "error"
 
     def print_metrics(self):
+        from synda.sdt import sdlog
         sdlog.info(
             "TASKMETR-001",
             "{} | Task {} - Status : {}".format(
@@ -122,7 +124,6 @@ class Task(Base):
         await renew_certificate()
 
         self.set_status("running")
-        sdfiledao.update_file_before_download(self.file_instance)
         self.create_local_path()
 
     async def download(self, client, config):
@@ -133,8 +134,8 @@ class Task(Base):
         """
         return dict()
 
-    async def process(self, client, config):
-
+    async def execute(self, client, config):
+        from synda.sdt import sdlog
         begin = datetime.datetime.now()
 
         await self.pre_process()
@@ -150,24 +151,26 @@ class Task(Base):
             self.file_instance.error_msg = ""
             self.file_instance.sdget_error_msg = ""
         else:
-            download_results = await self.download(client, config)
+            download_results = await self.process.execute(client, config)
             await self.post_process(
                 config["incorrect_checksum_action"],
                 download_results["local_file_size"],
+                config["do_post_download_controls"],
             )
 
     async def killed(self):
-
-        # cancel the task
-        self.set_status("cancelled")
-
+        from synda.sdt import sdlog
         # remove downloaded file that was in progress
         self.cleaning.process()
 
         # update the file instance
         self.file_instance.status = TRANSFER["status"]['error']
         self.file_instance.priority -= 1
-        self.file_instance.error_msg = "Download process has been killed"
+        if not self.file_instance.error_msg:
+            self.file_instance.error_msg = "Download process has been killed"
+
+        # cancel the task
+        self.set_status("cancelled")
 
         sdlog.error(
             "SDDMDEFA-190",
@@ -179,9 +182,6 @@ class Task(Base):
             ),
             logger_name=DOWNLOADING_LOGGER_NAME,
         )
-
-        # update the DB file table
-        sdfiledao.update_file(self.file_instance, commit=True)
 
         # add specific message into the log
         # check for fatal error

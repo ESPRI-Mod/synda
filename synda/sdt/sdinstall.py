@@ -19,7 +19,6 @@ from synda.sdt import sdlog
 from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.process.download.constants import TRANSFER
-from synda.source.config.file.user.preferences.models import Config as Preferences
 
 
 def is_interactive_active(non_interactive_from_cli, interactive_from_preferences):
@@ -35,7 +34,7 @@ def is_interactive_active(non_interactive_from_cli, interactive_from_preferences
     return not is_non_interactive
 
 
-def run(args, metadata=None):
+def run(args, config, metadata=None):
 
     from synda.sdt import syndautils
 
@@ -67,12 +66,13 @@ def run(args, metadata=None):
     if args.dry_run:
         return 0, 0
 
-    interactive = is_interactive_active(args.yes, Preferences().is_install_interactive)
+    is_install_interactive = config.get_user_preferences().is_install_interactive
+    interactive = is_interactive_active(args.yes, is_install_interactive)
 
-    return _install(metadata, interactive, args.config_manager, args.timestamp_right_boundary)
+    return _install(metadata, interactive, config, args.timestamp_right_boundary)
 
 
-def _install(metadata, interactive, config_manager, timestamp_right_boundary=None):
+def _install(metadata, interactive, config, timestamp_right_boundary=None):
 
     # Compute total files stat
     count_total = metadata.count()
@@ -141,7 +141,7 @@ def _install(metadata, interactive, config_manager, timestamp_right_boundary=Non
     if installation_confirmed:
 
         from synda.sdt import sdenqueue
-        sdenqueue.run(metadata, config_manager, timestamp_right_boundary)
+        sdenqueue.run(metadata, config, timestamp_right_boundary)
 
         if interactive:
             print_stderr(

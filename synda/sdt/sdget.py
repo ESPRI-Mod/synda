@@ -23,9 +23,7 @@ import argparse
 import os
 import sys
 import json
-from synda.sdt import sdconfig
 from synda.sdt import sdutils
-from synda.sdt import sdget_urllib
 from synda.sdt.sdtools import print_stderr
 
 from synda.source.config.file.scripts.models import Config as Scripts
@@ -35,8 +33,45 @@ from synda.source.config.path.tree.models import Config as TreePath
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
 
-from synda.source.config.process.download.constants import get_http_clients
-from synda.source.config.process.download.constants import get_transfer_protocol
+from synda.source.config.process.download.constants import get_transfer_protocols
+
+
+def gridftp_download(
+        url,
+        full_local_path,
+        debug=False,
+        timeout=Preferences().download_async_http_timeout,
+        verbosity=0,
+        buffered=True,
+        hpss=False,
+):
+
+    gridftp_opt = Preferences().download_gridftp_opt
+
+    if len(gridftp_opt) > 0:
+        os.environ["GRIDFTP_OPT"] = gridftp_opt
+
+    download_script = Scripts().get("sdgetg")
+
+    li = prepare_args(
+        url,
+        full_local_path,
+        download_script,
+        debug,
+        timeout,
+        verbosity,
+        hpss,
+    )
+
+    status, script_stderr = run_download_script(li, buffered)
+
+    killed = is_killed(
+        get_transfer_protocols()['gridftp'],
+        status,
+    )
+
+    return status, killed, script_stderr
+
 
 def download(
         url,
@@ -52,7 +87,7 @@ def download(
 
     transfer_protocol = sdutils.get_transfer_protocol(url)
 
-    if transfer_protocol == get_transfer_protocol():
+    if transfer_protocol == get_transfer_protocols()["http"]:
         data_download_script_http = Scripts().get("sdget")
 
         li = prepare_args(
@@ -69,6 +104,16 @@ def download(
 
         killed = is_killed(transfer_protocol, status)
 
+    elif transfer_protocol == get_transfer_protocols()['gridftp']:
+        status, killed, script_stderr = gridftp_download(
+            url,
+            full_local_path,
+            debug=debug,
+            timeout=timeout,
+            verbosity=verbosity,
+            buffered=buffered,
+            hpss=hpss,
+        )
     else:
 
         assert False
@@ -157,11 +202,13 @@ def run_download_script_BUFSTDXXX(li):
 def is_killed(transfer_protocol, status):
     """This func return True if child process has been killed."""
 
-    if transfer_protocol == get_transfer_protocol():
+    if transfer_protocol == get_transfer_protocols()['http']:
         if status in (7, 29):
             return True
         else:
             return False
+    elif transfer_protocol == get_transfer_protocols()['gridftp']:
+        return False  # TODO
     else:
         assert False
 

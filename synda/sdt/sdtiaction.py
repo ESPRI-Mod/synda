@@ -23,18 +23,17 @@ from synda.source.config.file.certificate.x509.models import Config as SecurityF
 from synda.source.config.path.tree.certificate.x509.models import Config as SecurityPath
 from synda.source.config.file.user.credentials.models import Config as Credentials
 
-from synda.source.config.process.download.constants import get_http_clients
 from synda.source.config.process.download.constants import TRANSFER
-from synda.source.config.process.download.constants import get_transfer_protocol
+from synda.source.config.process.download.constants import get_transfer_protocols
 from synda.source.process.env.manager import Manager
 
 
-def autoremove(args):
+def autoremove(args, payload):
     from synda.sdt import sddeletedataset,sddeletefile
     sddeletedataset.remove_old_versions_datasets(dry_run=args.dry_run)
     sddeletefile.delete_transfers_lowmem()
 
-def certificate(args):
+def certificate(args, payload):
     from synda.sdt import sdlogon
     if args.action is None:
         sdlogon.print_certificate()
@@ -50,7 +49,7 @@ def certificate(args):
                 pwd=args.password
             else:
                 # use credential from file
-                credentials = args.authority.get_user_credentials()
+                credentials = payload.get_config().get_user_credentials()
                 if credentials.is_openid_set():
                     oid = credentials.openid
                     pwd = credentials.password
@@ -81,7 +80,7 @@ def certificate(args):
             print_stderr('Not implemented yet.')   
             return 1
 
-def check(args):
+def check(args, payload):
     from synda.sdt import sddump,sdcheckdatasetversion,sdfields
 
     status=0
@@ -140,7 +139,7 @@ def check(args):
 
     return status
 
-def config(args):
+def config(args, payload):
     from synda.sdt import sdconfig
     if args.action is None:
         sdconfig.print_()
@@ -152,20 +151,20 @@ def config(args):
             print('Feature not implemented yet.')
 
 
-def contact(args):
+def contact(args, payload):
     from synda.sdt import sdi18n
     print(sdi18n.m0018)
 
 
-def download(args):
+def download(args, payload):
     from synda.source.process.subcommand.download.models import Process as DownloadProcess
 
-    status = DownloadProcess().run(args)
+    status = DownloadProcess(payload).run(args)
 
     return status
 
 
-def facet(args):
+def facet(args, payload):
     from synda.sdt import sdparam,sdremoteparam,syndautils,sdinference,sdignorecase
 
     facets_groups=syndautils.get_stream(subcommand=args.subcommand,parameter=args.parameter,selection_file=args.selection_file,no_default=True)
@@ -198,224 +197,42 @@ def facet(args):
         print_stderr('Unknown facet')   
 
 
-def get(args):
+def get(args, payload):
 
-    from synda.sdt import sdlogon
-    from synda.sdt import sdrfile
-    from synda.sdt import sddeferredafter
-    from synda.sdt import sddirectdownload
-    from synda.sdt import syndautils
-    import humanize
-    import os
-    from synda.sdt import sdearlystreamutils
-
-    # hack
-    # see TAG43534FSFS
-    if args.quiet:
-        args.verbosity = 0
-
-    if args.verify_checksum and args.network_bandwidth_test:
-        print_stderr("'verify_checksum' option cannot be set when 'network_bandwidth_test' option is set.")
-        return 1
-
-    stream = syndautils.get_stream(
-        subcommand=args.subcommand,
-        parameter=args.parameter,
-        selection_file=args.selection_file,
-    )
-
-    if args.openid and args.password:
-        # use credential from CLI
-
-        oid = args.openid
-        pwd = args.password
-    else:
-        # use credential from file
-        credentials = args.authority.get_user_credentials()
-        if credentials.is_openid_set():
-            oid = credentials.openid
-            pwd = credentials.password
-        else:
-            credential_file = Credentials().get()
-            print_stderr(
-                'Error: OpenID not set in configuration file (%s).'.format(
-                    credential_file,
-                ),
-            )
-
-            return 1
-
-    # retrieve certificate
-    sdlogon.renew_certificate(
-        oid,
-        pwd,
-        force_renew_certificate=False,
-    )
-
-    http_client = get_http_clients()["urllib"] if args.urllib else get_http_clients()["wget"]
-
-    # local_path
-    #
-    # 'synda get' subcommand currently force local_path to the following construct:
-    # '<dest_folder>/<filename>' (i.e. you can't use DRS tree in-between). This may
-    # change in the future.
-    #
-    if args.dest_folder is None:
-        # current working directory
-        local_path_prefix = os.getcwd()
-    else:
-        local_path_prefix = args.dest_folder
-
-    # BEWARE
-    #
-    # when set in CLI parameter, url is usually an ESGF facet, and as so should
-    # be sent to the search-api as other facets
-    # BUT
-    # we want a special behaviour here (i.e. with 'synda get' command) with url:
-    # if url is set by user, we DON'T call search-api operator. Instead, we
-    # download the url directly.
-
-    urls = sdearlystreamutils.get_facet_values_early(stream, 'url')
-
-    if len(urls) == 0:
-        # no url in stream: switch to search-api operator mode
-
-        sddeferredafter.add_default_parameter(stream, 'limit', 5)
-        sddeferredafter.add_forced_parameter(stream, 'local_path_format', 'notree')
-
-        # yes: this is the second time we run sdinference filter, but it doesn't hurt as sdinference is idempotent
-        files = sdrfile.get_files(
-            stream=stream,
-            post_pipeline_mode='file',
-            dry_run=args.dry_run,
-        )
-
-        if not args.dry_run:
-            if len(files) > 0:
-
-                # compute metric
-                total_size = sum(int(f['size']) for f in files)
-                total_size = humanize.naturalsize(total_size, gnu=False)
-
-                print_stderr(
-                    '{} file(s) will be downloaded for a total size of {}.'.format(
-                        len(files),
-                        total_size,
-                    ),
-                )
-
-                status = \
-                    sddirectdownload.run(
-                        files,
-                        args.config_manager,
-                        timeout=args.timeout,
-                        force=args.force,
-                        http_client=http_client,
-                        local_path_prefix=local_path_prefix,
-                        verify_checksum=args.verify_checksum,
-                        network_bandwidth_test=args.network_bandwidth_test,
-                        debug=True,
-                        verbosity=args.verbosity,
-                        buffered=False,
-                        hpss=args.hpss,
-                    )
-
-                if status != 0:
-                    return 1
-
-            else:
-                print_stderr("File not found")
-                return 1
-        else:
-            for f in files:
-                size = humanize.naturalsize(f['size'], gnu=False)
-                print(
-                    '%-12s %s'.format(
-                        size,
-                        f['filename'],
-                    ),
-                )
-
-    elif len(urls) > 0:
-
-        # url(s) found in stream: search-api operator not needed (download url directly)
-
-        # TAGDSFDF432F
-        if args.verify_checksum:
-            print_stderr(
-                "To perform checksum verification, "
-                "ESGF file identifier (e.g. title, id, tracking id..)  must be used instead of file url.",
-            )
-            return 1
-
-        # TODO: to improve genericity, maybe merge this block into the previous one (i.e.
-        # TODO: url CAN be used as a search key in the search-api (but not irods url))
-
-        files = []
-        for url in urls:
-
-            filename = os.path.basename(url)
-            local_path = filename
-
-            f = dict(local_path=local_path, url=url)
-
-            files.append(f)
-            
-        status = \
-            sddirectdownload.run(
-                files,
-                args.config_manager,
-                timeout=args.timeout,
-                force=args.force,
-                http_client=http_client,
-                local_path_prefix=local_path_prefix,
-                # see above at TAGDSFDF432F
-                verify_checksum=args.verify_checksum,
-                network_bandwidth_test=args.network_bandwidth_test,
-                debug=True,
-                verbosity=args.verbosity,
-                buffered=False,
-                hpss=args.hpss,
-            )
-
-        if status != 0:
-            return 1
-
-    else:
-        assert False
-
-    return 0
+    from synda.source.process.subcommand.get.models import Process as GetProcess
+    status = GetProcess(payload).run(args)
+    return status
 
 
-def getinfo(args):
+def getinfo(args, payload):
     from synda.source.process.subcommand.getinfo.models import Process as GetInfoProcess
 
-    status = GetInfoProcess().run(args)
+    status = GetInfoProcess(payload).run(args)
 
     return status
 
 
-def history(args):
+def history(args, payload):
     from synda.sdt import sdhistorydao
     from tabulate import tabulate
     li = [list(d.values()) for d in sdhistorydao.get_all_history_lines()]  # listofdict to listoflist
     print(tabulate(li,headers=['action','selection source','date','insertion_group_id'],tablefmt="orgtbl"))
 
 
-def install(args):
+def install(args, payload):
     from synda.source.process.subcommand.install.models import Process as InstallProcess
 
-    status = InstallProcess().run(args)
+    status = InstallProcess(payload).run(args)
 
     return status
 
 
-def intro(args):
+def intro(args, payload):
     from synda.sdt import sdi18n
     print(sdi18n.m0019)
 
 
-def metric(args):
+def metric(args, payload):
     from synda.sdt import sdmetric,sdparam
 
     # check
@@ -430,7 +247,7 @@ def metric(args):
         sdmetric.print_rate(args.groupby,args.project,dry_run=args.dry_run)
 
 
-def remove(args):
+def remove(args, payload):
     from synda.sdt import sdremove, syndautils
 
     stream = syndautils.get_stream(
@@ -444,17 +261,17 @@ def remove(args):
     return sdremove.run(args, stream)
 
 
-def reset(args):
+def reset(args, payload):
     from synda.sdt import sddeletefile
     sddeletefile.reset()
 
-def stat(args):
+def stat(args, payload):
     from synda.sdt import sdstat
     return sdstat.run(args)
 
 
 # don't remove 'args' argument event if not used
-def selection(args):
+def selection(args, payload):
     """
     Note
         inter-selection func
@@ -463,7 +280,7 @@ def selection(args):
     sdselectionsgroup.print_selection_list()
 
 
-def upgrade(args):
+def upgrade(args, payload):
     """
     Note
         inter-selection func
@@ -488,7 +305,7 @@ def replica_next(file_functional_id,args):
             file_=sdfiledao.get_file(file_functional_id)
             if file_ is not None:
 
-                if sdutils.get_transfer_protocol(file_.url)==get_transfer_protocol():
+                if sdutils.get_transfer_protocol(file_.url)==get_transfer_protocols()['http']:
                     sdmodify.replica_next(file_,replicas)
                 else:
                     print_stderr("Incorrect protocol") # only http protocol is supported in 'synda replica' for now
@@ -496,8 +313,8 @@ def replica_next(file_functional_id,args):
             else:
                 print_stderr("Local file not found")
 
-def replica(args):
-    if args.action=="next":
+def replica(args, payload):
+    if args.action== "next":
         if args.file_id is None:
             from synda.sdt import sdfiledao,sdconst
             files=sdfiledao.get_files(status=TRANSFER["status"]['error'])
@@ -509,7 +326,7 @@ def replica(args):
         print_stderr('Incorrect argument')   
 
 
-def retry(args):
+def retry(args, payload):
     from synda.sdt import sdmodify
     nbr = sdmodify.retry_all(query_filter=args.where)
     if nbr > 0:
@@ -518,18 +335,18 @@ def retry(args):
         print_stderr("No transfer in error")
 
 
-def param(args):
+def param(args, payload):
     from synda.sdt import sdparam
     sdparam.print_(args)
 
 
-def update(args):
+def update(args, payload):
     print_stderr("Retrieving parameters from ESGF...")
     from synda.sdt import sdcache
     sdcache.run(reload=True,host=args.index_host,project=args.project)
     print_stderr("Parameters are up-to-date.")
 
-def variable(args):
+def variable(args, payload):
     from synda.sdt import sdremoteparam,sdutils,sdproxy_ra
 
     # currently, mode (list or show) is determined by
@@ -596,13 +413,13 @@ def variable(args):
                 print('unit:             ',file_['variable_units'][0])
 
 
-def checkenv(args):
+def checkenv(args, payload):
     env_manager = Manager()
     env_manager.check(interactive_mode=True)
 
 
 # init.
-def initenv(args):
+def initenv(args, payload):
     """
     should find the tar data.tar.bz and untar it
     should find the tar data.tar.bz and untar it

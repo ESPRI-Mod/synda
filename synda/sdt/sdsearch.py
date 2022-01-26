@@ -21,7 +21,6 @@ Notes
 import os
 import argparse
 import json
-from synda.sdt import sdapp
 from synda.sdt import sdlog
 from synda.sdt import sdconfig
 from synda.sdt import sdpipeline
@@ -29,7 +28,6 @@ from synda.sdt import sdrun
 from synda.sdt import sdi18n
 from synda.sdt import sdcliex
 from synda.sdt import sdprint
-from synda.sdt import sdconst
 from synda.sdt import sdtools
 from synda.sdt import sdsqueries
 from synda.sdt import sdbatchtimestamp

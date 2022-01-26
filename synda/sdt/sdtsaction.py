@@ -32,7 +32,7 @@ from synda.source.config.process.list.messages import FILE_NOT_FOUND as LIST_FIL
 from synda.source.config.process.list.messages import VARIABLE_NOT_IMPLEMENTED as LIST_VARIABLE_NOT_IMPLEMENTED
 
 
-def list_(args):
+def list_(args, payload):
     from synda.sdt import sdearlystreamutils
 
     """
@@ -49,23 +49,23 @@ def list_(args):
 
     # branching
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_list(args)
+        file_list(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         move_to_dataset_printing_routine=sdearlystreamutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
-            dataset_list(args)
+            dataset_list(args, payload)
         else:
             # many var exist per dataset for this project
 
-            variable_list(args)
+            variable_list(args, payload)
 
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_list(args)
+        dataset_list(args, payload)
 
 
-def search(args):
+def search(args, payload):
     from synda.sdt import sdearlystreamutils,sdstream
 
     if args.replica:
@@ -80,50 +80,50 @@ def search(args):
         sdstream.set_scalar(args.stream,'to',args.timestamp_right_boundary)
 
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_search(args)
+        file_search(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         move_to_dataset_printing_routine=sdearlystreamutils.is_one_variable_per_dataset_project(args.stream) # HACK
         if move_to_dataset_printing_routine:
             # one var exist per dataset for this project
 
-            dataset_search(args)
+            dataset_search(args, payload)
         else:
             # many var exist per dataset for this project
 
-            variable_search(args)
+            variable_search(args, payload)
 
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_search(args)
+        dataset_search(args, payload)
 
 
-def show(args):
+def show(args, payload):
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_show(args)
+        file_show(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         print_stderr('Not implemented yet.')   
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_show(args)
+        dataset_show(args, payload)
 
 
-def version(args):
+def version(args, payload):
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_version(args)
+        file_version(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         print_stderr('%s operation is not available for variable/aggregation type'%args.action)   
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_version(args)
+        dataset_version(args, payload)
 
 
-def dump(args):
+def dump(args, payload):
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_dump(args)
+        file_dump(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_dump(args)
+        dataset_dump(args, payload)
 
 
-def count(args):
+def count(args, payload):
     from synda.sdt import sdstream
 
     # timestamp filters
@@ -134,26 +134,26 @@ def count(args):
 
 
     if args.type_== SEARCH_API_STRUCTURE['type']['file']:
-        file_count(args)
+        file_count(args, payload)
     elif args.type_== SEARCH_API_STRUCTURE['type']['aggregation']:
         print_stderr("'%s' operation is not available for variable/aggregation type"%args.subcommand)   
     elif args.type_== SEARCH_API_STRUCTURE['type']['dataset']:
-        dataset_count(args)
+        dataset_count(args, payload)
 
 
-def dataset_foobar(args):
+def dataset_foobar(args, payload):
     print_stderr('Not implemented yet.')   
 
 
-def variable_foobar(args):
+def variable_foobar(args, payload):
     print_stderr('Not implemented yet.')   
 
 
-def file_foobar(args):
+def file_foobar(args, payload):
     print_stderr('Not implemented yet.')   
 
 
-def dataset_count(args):
+def dataset_count(args, payload):
     from synda.sdt import sdquickcount
     result=sdquickcount.run(
         stream=args.stream,
@@ -169,11 +169,11 @@ def dataset_count(args):
     )
 
 
-def variable_count(args):
+def variable_count(args, payload):
     print_stderr(COUNT_VARIABLE_NOT_IMPLEMENTED)
 
 
-def file_count(args):
+def file_count(args, payload):
     from synda.sdt import sdquickcount
     result = sdquickcount.run(
         stream=args.stream,
@@ -189,7 +189,7 @@ def file_count(args):
     )
 
 
-def dataset_list(args):
+def dataset_list(args, payload):
     from synda.sdt import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list'))
@@ -202,7 +202,7 @@ def dataset_list(args):
         sdldataset.print_list(datasets)
 
 
-def variable_list(args):
+def variable_list(args, payload):
     from synda.sdt import sddeferredafter
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list')) # note: in variable mode, total number of row is given by: "total+=#variable for each ds"
@@ -218,7 +218,7 @@ def variable_list(args):
     """
 
 
-def file_list(args):
+def file_list(args, payload):
     from synda.sdt import sddeferredafter, sdlfile
 
     sddeferredafter.add_default_parameter(args.stream,'limit',get_default_limit('list'))
@@ -230,7 +230,7 @@ def file_list(args):
         sdlfile.print_list(files)
 
 
-def dataset_search(args):
+def dataset_search(args, payload):
     from synda.sdt import sddeferredafter, sdrdataset, sdfields, sdearlystreamutils
 
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit)
@@ -251,9 +251,8 @@ def dataset_search(args):
                 sdrdataset.print_list(datasets)
 
 
-def variable_search(args):
+def variable_search(args, payload):
     from synda.sdt import sddeferredafter, sdrdataset, sdrvariable, sdfields, sdearlystreamutils
-
     sddeferredafter.add_default_parameter(args.stream,'limit',args.limit) # TAGJ43JK3J43
 
     lpcme=sdearlystreamutils.test_facet_value_early(args.stream,'local_path_format','custom') # lpcme means 'Local Path Custom Mode Enabled'
@@ -273,7 +272,7 @@ def variable_search(args):
     # (this is needed as we don't know in advance the number of variable for each dataset)
 
 
-def file_search(args):
+def file_search(args, payload):
     from synda.sdt import sdfilesearch
     metadata_server_type = Preferences().core_metadata_server_type
     if metadata_server_type not in METADATA_SERVER_TYPES:
@@ -285,7 +284,7 @@ def file_search(args):
     return getattr(sdfilesearch, metadata_server_type)(args)
 
 
-def dataset_show(args):
+def dataset_show(args, payload):
     from synda.sdt import sdearlystreamutils
 
     # check
@@ -317,7 +316,7 @@ def dataset_show(args):
                 sdrdataset.print_details(dataset,verbose=args.verbose)
 
 
-def variable_show(args):
+def variable_show(args, payload):
     if args.localsearch:
         print_stderr('Not implemented yet.')   
         """
@@ -342,7 +341,7 @@ def variable_show(args):
         """
 
 
-def file_show(args):
+def file_show(args, payload):
     from synda.sdt import sdearlystreamutils
 
     # check
@@ -388,7 +387,7 @@ def file_show(args):
                 sdrfile.print_details(file)
 
 
-def dataset_version(args):
+def dataset_version(args, payload):
     from synda.sdt import sdremoteparam
     from synda.sdt import syndautils
     from synda.sdt import sdearlystreamutils
@@ -424,17 +423,17 @@ def dataset_version(args):
         print(item.name)
 
 
-def variable_version(args):
+def variable_version(args, payload):
     # there is no version for variable
 
     print_stderr('Version list feature is only available for dataset.')
 
 
-def file_version(args):
+def file_version(args, payload):
     print_stderr('Not implemented yet.')
 
 
-def dataset_dump(args):
+def dataset_dump(args, payload):
     from synda.sdt import sdrdataset
     from synda.sdt import sddeferredafter
     from synda.sdt import sdcolumnfilter
@@ -460,12 +459,12 @@ def dataset_dump(args):
             print_stderr('Dataset not found')
 
 
-def variable_dump(args):
+def variable_dump(args, payload):
     # there is no dump for variable
     assert False
 
 
-def file_dump(args):
+def file_dump(args, payload):
     from synda.sdt import sdrfile
     from synda.sdt import sddeferredafter
     from synda.sdt import sdcolumnfilter

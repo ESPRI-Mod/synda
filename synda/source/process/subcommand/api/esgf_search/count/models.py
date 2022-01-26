@@ -7,16 +7,14 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 from synda.source.process.subcommand.required.env.models import Process as Base
-from synda.source.process.authority.models import Authority
-
 
 from synda.source.config.api.esgf_search.constants import TYPE_DATASET as API_TYPE_DATASET
 
 
 class Process(Base):
 
-    def __init__(self, arguments=None):
-        super(Process, self).__init__(name="count", authority=Authority(), arguments=arguments, exceptions_codes=[0, 1])
+    def __init__(self, payload, arguments=None):
+        super(Process, self).__init__("count", payload, arguments=arguments, exceptions_codes=[0, 1])
 
 
 if __name__ == '__main__':

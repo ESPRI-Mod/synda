@@ -10,6 +10,7 @@
 ##################################
 
 """This module contains search-api proxy."""
+import time
 from synda.sdt import sdtypes
 from synda.sdt import sdnetutils
 
@@ -20,6 +21,8 @@ from synda.sdt import sdaddap
 from synda.sdt import sdurlutils
 
 from synda.source.config.file.user.preferences.models import Config as Preferences
+
+
 
 
 # not a singleton
@@ -60,12 +63,18 @@ class SearchAPIProxy():
 
     def call_web_service(self,request):
 
-        sdlog.debug("SYDPROXY-100","Search-API call started (%s)."%request.get_url())
+        sdlog.debug(
+            "SYDPROXY-100",
+            "Search-API call started (%s)."%request.get_url(),
+        )
 
         try:
-            response=sdnetutils.call_web_service(request.get_url(),timeout=Preferences().api_esgf_search_http_timeout) # returns Response object
+            # returns Response object
+            response = sdnetutils.call_web_service(
+                request.get_url(),
+                timeout=Preferences().api_esgf_search_http_timeout,
+            )
         except:
-
             # if exception occurs in sdnetutils.call_web_service() method, all
             # previous calls to this method inside this paginated call are also
             # cancelled
@@ -76,7 +85,10 @@ class SearchAPIProxy():
 
             raise
 
-        sdlog.info("SYDPROXY-100","Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(response.count(),response.num_found,request.get_url()))
+        sdlog.info(
+            "SYDPROXY-100",
+            "Search-API call completed (returned-files-count=%i,match-count=%i,url=%s)."%(response.count(),response.num_found,request.get_url()),
+        )
 
         return response
 
@@ -109,6 +121,7 @@ class SearchAPIProxy():
                     raise
                 else:
                     i+=1
+                time.sleep(sdconfig.WAITING_TIME_IN_CASE_OF_RETRY)
 
         return response
 

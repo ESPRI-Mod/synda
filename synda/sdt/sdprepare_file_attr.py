@@ -18,6 +18,7 @@ Note
     dependent (so to be able to download the file from any replicas we want
     without creating local duplicates).
 """
+import os
 import sys
 import argparse
 import json
@@ -89,7 +90,9 @@ def transform_id(files):
 def rename_attributes(files):
     for f in files:
 
-        f["filename"]=f["title"]
+        # reliability is better if filename is extracted from url than from f["title"] metadata
+        # (see issue #118)
+        f["filename"] = os.path.basename(f["url"])
         del f["title"]
 
     return files

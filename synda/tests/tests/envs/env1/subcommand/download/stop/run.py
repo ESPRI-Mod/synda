@@ -124,19 +124,17 @@ def test_download_stopped_by_user(manager):
         exit(1)
 
     # STEP 5 : control of the file record status (waiting)
-    test_title = "STOP CONTROL | The Status of the File Record (waiting)"
+    test_title = "STOP CONTROL | Download has been stopped by user"
 
     file_functional_id = DB_CONTEXT["files"][0]["functional_id"]
     record = get_record(file_functional_id)
 
-    if record["status"] != "waiting":
+    if record["sdget_error_msg"] != "Download has been stopped by user":
         print_stderr(f'{test_title} | FAILED')
         print_stderr(
-            f"STOP CONTROL | File status is {record['status']} [waiting expected]",
+            f"STOP CONTROL | sdget_error_msg : {record['sdget_error_msg']} ['Download has been stopped by user' expected]",
         )
         exit(1)
-
-    assert record["status"] == "waiting"
 
     print(f'{test_title} PASSED [100%]')
 

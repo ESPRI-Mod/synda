@@ -7,7 +7,6 @@
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
 import asyncio
-import psutil
 import os
 from signal import SIGTERM
 
@@ -15,7 +14,6 @@ from synda.sdt import sdlog
 from synda.sdt import sdexception
 from synda.sdt.sdtools import print_stderr
 
-from synda.source.process.authority.models import Authority
 from synda.source.process.subcommand.required.env.models import Process as Base
 from synda.source.config.file.downloading.models import Config as File
 
@@ -81,10 +79,10 @@ def kill(pid, interval=1, timeout=TIMEOUT):
 
 class Process(Base):
 
-    def __init__(self, arguments=None, exceptions_codes=None):
+    def __init__(self, payload, arguments=None, exceptions_codes=None):
         super(Process, self).__init__(
-            name="download",
-            authority=Authority(),
+            "download",
+            payload,
             arguments=arguments,
             exceptions_codes=exceptions_codes,
         )
@@ -145,7 +143,7 @@ class Process(Base):
         print_stderr(
             "You can follow the download using 'synda download watch' and 'synda download queue' commands",
         )
-        from synda.source.process.asynchronous.download.scheduler.models import scheduler
+        from synda.source.process.asynchronous.download.subcommand.download.scheduler.models import scheduler
         self.create_downloading_file()
         # Run the downloading process
         asyncio.run(scheduler(verbose=False, build_report=False))

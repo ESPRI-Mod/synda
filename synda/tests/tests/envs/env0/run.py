@@ -6,18 +6,15 @@
 #                             All Rights Reserved"
 #  @license        CeCILL (https://raw.githubusercontent.com/Prodiguer/synda/master/sdt/doc/LICENSE)
 ##################################
-"""
-MAIN run for TEST SUITE
-it allows to control the tests sequences from the most required to the most advanced ones
-"""
 from synda.tests.tests.envs.env0.subcommand.download.run import main as run_env0_download
 from synda.tests.tests.envs.env0.subcommand.version.run import main as run_env0_version
-
+from synda.tests.tests.envs.env0.subcommand.get.run import main as run_env0_get
 
 def main(coverage_activated=False):
 
     run_env0_download(coverage_activated=coverage_activated)
     run_env0_version(coverage_activated=coverage_activated)
+    run_env0_get(coverage_activated=coverage_activated)
 
 
 if __name__ == '__main__':

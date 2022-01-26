@@ -14,14 +14,13 @@
 import sys
 import argparse
 import json
-from synda.sdt import sdapp
 from synda.sdt import sdprint
 from synda.sdt import sdtools
 from synda.sdt import sdlog
 from synda.sdt.sdexception import SDException
 from synda.sdt import sdpostpipelineutils
 
-from synda.source.config.process.download.constants import get_transfer_protocol
+from synda.source.config.process.download.constants import get_transfer_protocols
 
 
 def run(files):
@@ -31,10 +30,26 @@ def run(files):
             sdpostpipelineutils.get_attached_parameter(
                 _file,
                 'protocol',
-                default=get_transfer_protocol(),
+                get_transfer_protocols()['http'],
             )
 
-        if protocol == get_transfer_protocol():
+        if protocol not in get_transfer_protocols():
+            raise SDException(
+                "SYNPROTO-004",
+                "Incorrect protocol (%s)" % protocol,
+            )
+
+        if protocol == get_transfer_protocols()['gridftp']:
+            if 'url_gridftp' in _file:
+                _file['url'] = _file['url_gridftp']
+            elif 'url_http' in _file:
+                sdlog.debug(
+                    'SYNPROTO-002',
+                    'Fallback to http as gridftp url is missing (%s)' % _file["title"],
+                )
+                _file['url'] = _file['url_http']
+
+        elif protocol == get_transfer_protocols()['http']:
             if 'url_http' in _file:
                 _file['url'] = _file['url_http']
             elif 'url_gridftp' in _file:
@@ -46,7 +61,7 @@ def run(files):
 
         else:
             raise SDException(
-                "SYNPROTO-004",
+                "SYNPROTO-003",
                 "Incorrect protocol (%s)" % protocol,
             )
 

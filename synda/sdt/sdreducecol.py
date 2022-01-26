@@ -25,21 +25,25 @@ def run(files):
 
 def remove_unused_fields(files):
 
-    li=[ 'index_node'
-        ,'instance_id'
-        ,'cf_standard_name'
-        ,'drs_id'
-        ,'format'
-        ,'metadata_format'
-        ,'variable_long_name'
-        ,'variable_units'
-        ,'forcing'
-        ,'description'
-        ,'master_id'
-        ,'master_gateway']
+    fields=[
+        'index_node',
+        'instance_id',
+        'cf_standard_name',
+        'drs_id',
+        'format',
+        'metadata_format',
+        'variable_long_name',
+        'variable_units',
+        'forcing',
+        'description',
+        'master_id',
+        'master_gateway',
+    ]
 
     for file in files:
-        sdtools.remove_dict_items(file,li)
+        for field in fields:
+            if field in file:
+                file.pop(field)
 
     return files
 
@@ -49,13 +53,13 @@ def remove_facets(files):
         - 'variable', 'project' and 'model' facets are kept.
     """
     for file in files:
-        for k in [ 'realm'
-                  ,'institute'
-                  ,'ensemble'
-                  ,'cmor_table'
-                  ,'product'
-                  ,'experiment'
-                  ,'time_frequency']:
+        for k in ['realm'
+                  'institute'
+                  'ensemble'
+                  'cmor_table'
+                  'product'
+                  'experiment'
+                  'time_frequency']:
             try:
                 del file[k]
             except KeyError:

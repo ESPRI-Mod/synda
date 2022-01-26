@@ -45,6 +45,15 @@ class DashBoard(Container):
     def add_task(self, task):
         self.add(task)
 
+    def get_messages(self):
+        messages = []
+        tasks = self.get_tasks()
+        for task in tasks:
+            messages.append(
+                task.get_message(),
+            )
+        return messages
+
     def get_metrics(self):
         return self.nb_running, self.nb_cancelled, self.nb_done
 

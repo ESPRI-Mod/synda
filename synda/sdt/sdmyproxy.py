@@ -188,6 +188,7 @@ def renew_certificate(host, port, username, password):
     for cred in creds:
         fout.write(cred)
     fout.close()
+    os.chmod(esgf_x509_proxy, 0o600)
 
 
 if __name__ == '__main__':

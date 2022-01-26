@@ -17,6 +17,7 @@ from synda.source.process.env.manager import Manager
 
 
 from synda.source.config.file.env.constants import SUB_DIRECTORIES as ENV_SUB_DIRECTORIES
+from synda.source.config.file.user.preferences.dao.update.models import check_paths as preferences_check_paths
 from synda.source.config.file.user.credentials.constants import FILENAME as CREDENTIALS_FILENAME
 
 
@@ -30,10 +31,12 @@ class Context(Base, Manager):
 
         self.set_locations()
 
-    def create(self, source=""):
+    def create(self, source="", with_credentials=True):
         self.create_root()
         self.init(source=source, interactive_mode=False)
-        self.overwrite_credentials()
+        if with_credentials:
+            self.overwrite_credentials()
+        preferences_check_paths()
 
     def create_root(self):
 

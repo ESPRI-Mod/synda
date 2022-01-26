@@ -10,7 +10,7 @@
 
 """
 import asyncio
-from synda.source.process.asynchronous.download.scheduler.models import scheduler
+from synda.source.process.asynchronous.download.subcommand.download import scheduler
 
 if __name__ == '__main__':
 

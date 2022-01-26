@@ -17,7 +17,7 @@ from synda.sdt import sdtools
 from synda.sdt.sdexception import SDException
 
 from synda.source.config.api.esgf_search.constants import OUTPUT_FORMAT as SEARCH_API_OUTPUT_FORMAT
-from synda.source.config.process.download.constants import get_http_clients
+
 
 def check_path(path):
     if not os.path.exists(path):
@@ -73,8 +73,6 @@ max_metadata_parallel_download_per_index = 3
 
 metadata_parallel_download = False
 
-# choices : HTTP_CLIENT["choices"]
-http_client = get_http_clients()["default"]
 
 # note that variable below only set which low_level mecanism to use to find the nearest
 # (i.e. it's not an on/off flag (the on/off flag is the 'nearest' selection file parameter))
@@ -86,6 +84,8 @@ nearest_schedule = 'post'
 unknown_value_behaviour = 'error'
 
 mono_host_retry = False
+WAITING_TIME_IN_CASE_OF_RETRY = 1.0
+
 proxymt_progress_stat = False
 
 lowmem = True

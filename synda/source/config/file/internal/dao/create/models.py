@@ -68,12 +68,14 @@ class Create(object):
         config.add_section('processes')
 
         config.set('processes', 'chunksize', '5000')
-        config.set('processes', 'http_client', 'aiohttp')
-        config.set('processes', 'transfer_protocol', 'http')
+        config.set('processes', 'transfer_protocols', 'http, gridftp')
         config.set('processes', 'get_files_caching', 'true')
 
         config.add_section('hack')
         config.set('hack', 'projects_with_one_variable_per_dataset', 'CORDEX, CMIP6')
+
+        config.add_section('sub command get')
+        config.set('sub command get', 'display_downloads_progression_every_n_seconds', '1')
 
         with open(full_filename, 'w') as fh:
             for line in header:

@@ -18,10 +18,7 @@ Notes
 
 import os
 import argparse
-import json
-from synda.sdt import sdconfig
 from synda.sdt import sdremoteparam
-from synda.sdt.sdexception import SDException
 from synda.sdt import sdi18n
 from synda.sdt import sdcliex
 from synda.sdt import sdpipeline

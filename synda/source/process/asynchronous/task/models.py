@@ -30,7 +30,7 @@ async def default_post_process(task):
 
 
 class Task(object):
-    def __init__(self, name, verbose=False):
+    def __init__(self, name, process_cls, verbose=False):
 
         # initialization
         self.allowed_statuses = ["pending", "running", "cancelled", "done"]
@@ -39,11 +39,21 @@ class Task(object):
         self.event = None
         self.name = ""
         self.status = ""
+        self.process = None
+        self.message = ""
 
         # settings
         self.verbose = verbose
         self.name = name
         self.status = "pending"
+        self.set_process(process_cls)
+
+    def get_message(self):
+        return self.message
+    def set_message(self, value):
+        self.message = value
+    def set_process(self, process_cls):
+        self.process = process_cls(self)
 
     def get_event(self):
         return self.event
@@ -58,9 +68,9 @@ class Task(object):
     async def post_process(self, **download_results):
         pass
 
-    async def process(self, *args):
+    async def execute(self, *args):
         self.set_status("running")
-        await asyncio.sleep(10)
+        await self.process.execute()
         success = await default_post_process(self)
         return success
 
