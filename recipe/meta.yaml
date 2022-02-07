@@ -16,6 +16,7 @@ channels:
 
 dependencies:
   - python>=3.9
+  - openssl=
   - pip
   - pip:
     # works for regular pip packages
@@ -27,7 +28,7 @@ requirements:
     - python
     - numpy
   run:
-    - numpy=1.16
+    - numpy==1.16
     - python
     - six
     - psutil
@@ -48,8 +49,8 @@ requirements:
     - aiohttp
     - aiofiles
     - uvloop
-    - cryptography=36.0.1
-    - openssl=1.1.1l
+    - cryptography==36.0.1
+    - openssl==1.1.1l
 
 about:
     home: https://github.com/Prodiguer/synda
