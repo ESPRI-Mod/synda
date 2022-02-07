@@ -16,7 +16,6 @@ channels:
 
 dependencies:
   - python>=3.9
-  - openssl=
   - pip
   - pip:
     # works for regular pip packages
@@ -24,11 +23,15 @@ dependencies:
     - uvloop
 
 requirements:
+  build:
+    - openssl=1.1.1l
+    - cryptography=36.0.1
+    - numpy=1.16
   host:
     - python
     - numpy
   run:
-    - numpy==1.16
+    - numpy
     - python
     - six
     - psutil
@@ -49,8 +52,8 @@ requirements:
     - aiohttp
     - aiofiles
     - uvloop
-    - cryptography==36.0.1
-    - openssl==1.1.1l
+    - cryptography
+    - openssl
 
 about:
     home: https://github.com/Prodiguer/synda
