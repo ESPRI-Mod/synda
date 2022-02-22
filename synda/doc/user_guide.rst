@@ -1,10 +1,14 @@
-# Download Guide
+.. _user_guide:
 
-## Synopsis
+Download Guide
+===============
+Synopsis
+##########
 
 This document describes how to download files with Synda.
 
-## Introduction
+Introduction
+##############
 
 There are two ways of downloading data with Synda: using *synda get* command, and
 using *synda install* command.
@@ -31,26 +35,33 @@ The differences between *synda get* and *synda install* are listed below:
 
 The next sections will detail both commands.
 
-## Download files using 'synda get' command
+Download files using 'synda get' command
+#########################################
 
-### Usage
+Usage
+******
 
     synda get [ ID ] [ FACET ]...
 
-The downloaded file(s) are stored in the [*sandbox* directory](configuration_parameter_reference.md#coresandbox_path). 
+The downloaded file(s) are stored in the [*sandbox* directory](configuration_parameter_reference.rst#coresandbox_path). 
 A different folder can be specified using '-d' option.
 
-#### Example
+Example
 
 Install a dataset
+
+.. code-block:: bash
 
     synda get cmip5.output1.CCCma.CanCM4.decadal1972.fx.atmos.fx.r0i0p0.v20120601
 
 Install a file
 
+.. code-block:: bash
+
     synda get orog_fx_CanCM4_decadal1972_r0i0p0.nc
 
-### Error management
+Error management
+*****************
 
 If download fails, you can search for another replica using '-r' option
 
@@ -61,15 +72,19 @@ use.
 
     synda search -r [ ID ] [ FACET ]...
 
-#### Example
+Example
+
+.. code-block:: bash
 
     synda search -r orog_fx_CanCM4_decadal1972_r0i0p0.nc
 
     synda get -f orog_fx_CanCM4_decadal1972_r0i0p0.nc data_node=esgf2.dkrz.de 
 
-## Download files using 'synda install' command
+Download files using 'synda install' command
+#############################################
 
-### Usage
+Usage
+*******
 
     synda install [ ID ] [ FACET ]...
 
@@ -78,23 +93,31 @@ informations in the local database.
 
 A background process checks the download queue regularly and download the files.
 
-The downloaded files are stored in the [*data* directory](configuration_parameter_reference.md#coredata_path).
+The downloaded files are stored in the [*data* directory](configuration_parameter_reference.rst#coredata_path).
 
-### Example
+Example
 
 Install a dataset
+
+.. code-block:: bash
 
     synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
 
 Install a variable
 
+.. code-block:: bash
+
     synda install cmip5.output1.CSIRO-BOM.ACCESS1-3.abrupt4xCO2.day.atmos.day.r1i1p1.v1 tas
 
 Install a file
 
+.. code-block:: bash
+
     synda install cmip5.output1.CNRM-CERFACS.CNRM-CM5.rcp85.fx.atmos.fx.r0i0p0.v20130826.sftlf_fx_CNRM-CM5_rcp85_r0i0p0.nc
 
-Install files matching facets stored in a [*selection file*](selection_file.md)
+Install files matching facets stored in a [*selection file*](selection_file.rst)
+
+.. code-block:: bash
 
     synda install -s sample_selection_01.txt
 
@@ -110,23 +133,27 @@ Install files matching facets stored in a [*selection file*](selection_file.md)
     variable[ocnBgchem][mon]="dissic fbddtalk"
     -->
 
-### Start/Stop files download
+Start/Stop files download
+***************************
 
 In source installation, run command below
 
-    synda daemon [ start | stop ]
+    synda download [ start | stop ]
 
-### Error management
+Error management
+*****************
 
-#### Changing replica for all file in errors
+* Changing replica for all file in errors
 
 If download fails you can try another replica.
 
 To change the replica for all files in error, use command below
 
+.. code-block:: bash
+
     synda replica next
 
-#### Getting informations about errors
+* Getting informations about errors
 
 Log files below contain useful informations about errors
 

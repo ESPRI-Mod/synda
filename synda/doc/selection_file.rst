@@ -1,4 +1,7 @@
-# Selection file
+.. _selection_file:
+
+Selection file
+===============
 
 A selection file contains parameters to define which data you want to download
 from ESGF archive, how to download it and how to store the data.
@@ -15,6 +18,8 @@ Those selection files are stored in *$HOME/selection* folder.
 
 Example of a selection file
 
+.. code-block:: ini
+
     project=CMIP5
     model=CNRM-CM5 CSIRO-Mk3-6-0
     experiment=historical amip
@@ -28,6 +33,7 @@ Example of a selection file
     variable[Lmon]=mrro mrso
 
 Notes:
+*******
 
 * many selection file examples can be found [here](https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample)
 * selection files are sometimes called 'template' or 'selection form'
@@ -38,89 +44,127 @@ Next parts of this document are organized in 3 main sections
 * Selection file parameter
 * Selection file management
 
-## Selection file format
+Selection file format
+########################
 
 A selection file accepts the four following line formats
 
-### realm frequency and variable(s)
+realm frequency and variable(s)
+#################################
 
 Definition
+***********
 
     variable[<realm>][<frequency>]=<variable1> <variable2> ...
 
 Example
+********
+
+.. code-block:: ini
 
     variable[atmos][mon]=tas psl tasmin
 
 Note
+*****
 
 * space is used as variable delimiter
 
-### facet(s) and variable(s)
+facet(s) and variable(s)
+#############################
 
 Definition
+***********
+
+.. code-block:: ini
 
     variable[<facet1> <facet2> <facet3> ...]=<variable1> <variable2> ...
 
 Example
+*********
 
     variable[rcp26 atmos mon]=tasmin tasmax
 
 Note
+*****
 
 * space is used as facets and variables delimiter
 
-### name and value
+name and value
+##################
 
 Definition
+***********
+.. code-block:: ini
 
     <name>=<value>
 
 Example
+********
+
+.. code-block:: ini
 
     experiment=rcp26
 
-### standalone value
+standalone value
+#######################
 
 Definition
+***********
+
+.. code-block:: ini
 
     <value>
 
 Example
+********
+
+.. code-block:: ini
 
     rcp26
 
-### Notes
+Notes
+###########
 
 * Blank line are ignored.
 * Selection files may include comments, prefixed by specific characters (#).
 * Trailing comments are not supported.
 
-## Selection file parameter
+Selection file parameter
+#############################
 
-See [selection file parameter reference](selection_file_parameter_reference.md)
+See [selection file parameter reference](selection_file_parameter_reference.rst)
 
-## Selection file management
+Selection file management
+#############################
 
-### Adding a selection file
+Adding a selection file
+#############################
 
 Create a new selection file in the 'selection' folder and set the filters.
 
 Then run command below to start the discovery
 
+.. code-block:: bash
+
     synda install -s <selection-file>
 
-### Editing a selection file
+Editing a selection file
+#############################
 
 Edit the file and change filters accordingly.
 
 Then run command below
 
+.. code-block:: bash
+
     synda install -s <selection-file>
 
-### Removing a selection file
+Removing a selection file
+#############################
 
 Run command below to remove files matching the selection file
+
+.. code-block:: bash
 
     synda remove -s <selection-file>
 

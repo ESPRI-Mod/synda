@@ -1,6 +1,9 @@
-# Synda FAQ
+.. _faq:
 
-### required = {'jpeg', 'zlib'} - SyntaxError: invalid syntax
+Synda FAQ
+===========
+
+* required = {'jpeg', 'zlib'} - SyntaxError: invalid syntax
 
 Full error stack
 
@@ -21,7 +24,7 @@ It can be fixed in 3.6 by downgrading the pypi pillow package
 
     pip install pillow==3.4.2
 
-### NoSectionError: No section: 'esgf_credential'
+* NoSectionError: No section: 'esgf_credential'
 
 Run commands below
 
@@ -29,7 +32,7 @@ Run commands below
 
 --------------------------------------------------------
 
-### urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
+* urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
 
 Run commands below
 
@@ -37,7 +40,7 @@ Run commands below
 
 --------------------------------------------------------
 
-### sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)
+* sdexception.SDException: code=SDATYPES-101,message=Path not found (/srv/synda/sdt)
 
 Run commands below
 
@@ -46,7 +49,7 @@ Run commands below
 
 --------------------------------------------------------
 
-### ImportError: No module named sysconfig
+* ImportError: No module named sysconfig
 
 This error occurs when installing Synda from source with an old version of
 'install.sh' script (<20160215). Downloading the last version of install.sh
@@ -54,7 +57,7 @@ script should fix the problem.
 
 --------------------------------------------------------
 
-### 'pkg_resources.DistributionNotFound: setuptools>=1.0' error
+* 'pkg_resources.DistributionNotFound: setuptools>=1.0' error
 
 Run command below
 
@@ -62,7 +65,7 @@ Run command below
 
 --------------------------------------------------------
 
-### 'Module argparse was already imported' error
+* 'Module argparse was already imported' error
 
 Run command below
 
@@ -70,13 +73,13 @@ Run command below
 
 --------------------------------------------------------
 
-### "('system library', 'fopen', 'No such file or directory')" error during certificate retrieving
+* "('system library', 'fopen', 'No such file or directory')" error during certificate retrieving
 
 Unset all X509 environment variables and remove '~/.esg' directory.
 
 --------------------------------------------------------
 
-### 'OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown' error
+* 'OpenSL: error:SSL routines:SSL3_READ_BYTES:sslv3 alert certificate unknown' error
 
 This signals that the server does not trust the certificate issued by the
 MyProxy CA.
@@ -90,7 +93,7 @@ If this doesn't help, you can find more info
 
 --------------------------------------------------------
 
-### "No module named datetime" error
+* "No module named datetime" error
 
 Remove virtualenv from the path
 
@@ -98,7 +101,7 @@ Remove virtualenv from the path
 
 --------------------------------------------------------
 
-### AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET' error
+* AttributeError: 'FFILibrary' object has no attribute 'SSL_OP_NO_TICKET' error
 
 Run command below in Synda virtualenv to retrieve pyopenssl HEAD version from github
 

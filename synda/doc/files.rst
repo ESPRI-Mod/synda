@@ -1,65 +1,70 @@
-# Synda Files and Folders
+.. _files:
 
+Synda Files and Folders
+=======================
 This document describes most important files and folders in use in Synda
 
-## Files
+Files
+#####
 
-### credentials.conf
-
+credentials.conf
+****************
 This file contains user credentials (e.g. ESGF openid).
 
 --------------------------------------------------------
 
-### sdt.conf
+sdt.conf
+********
 
 This file contains configuration parameters.
 
 --------------------------------------------------------
 
-### internal.conf
+internal.conf
+*************
 
 This file contains internal configuration parameters.
 
 --------------------------------------------------------
 
-## Folders
-
-### data
-
+Folders
+#######
+data
+****
 This folder contains ESGF files downloaded in tracking mode.
 
 --------------------------------------------------------
 
-### sandbox
-
+sandbox
+*******
 This folder contains ESGF files downloaded in non-tracking mode.
 
 --------------------------------------------------------
 
-### log
-
+log
+****
 This folder contains log files.
 
 --------------------------------------------------------
 
-### conf
-
+conf
+****
 This folder contains configuration files.
 
 --------------------------------------------------------
 
-### db
-
+db
+**
 This folder contains database file.
 
 --------------------------------------------------------
 
-### selection
-
+selection
+*********
 This folder contains selection files.
 
 --------------------------------------------------------
 
-### default
-
+default
+*******
 This folder contains selection parameters default values.

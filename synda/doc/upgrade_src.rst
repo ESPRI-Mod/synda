@@ -1,18 +1,27 @@
-# Synda upgrade guide (installation from source)
+.. _upgrade_src:
 
-## Synopsis
+Synda upgrade guide (installation from source)
+===============================================
+
+Synopsis
+###########
 
 This document contains instructions to install new Synda version.
 
-## Procedure
+Procedure
+##########
 
-### Pre-upgrade
+Pre-upgrade
+*************
 
 Backup $ST_HOME folder ($HOME/sdt)
 
-### Upgrade
+Upgrade
+**********
 
 Run commands below:
+
+.. code-block:: bash
 
     mkdir inst_tmpdir
     cd inst_tmpdir
@@ -20,7 +29,8 @@ Run commands below:
     chmod +x install.sh
     ./install.sh -u transfer
 
-### Post-upgrade
+Post-upgrade
+**************
 
 As configuration files located in $ST_HOME/conf may have been reinitialized
 during upgrade, you need to check if parameters are still correctly set (e.g.
