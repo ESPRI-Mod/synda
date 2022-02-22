@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced configuration parameter reference &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to &amp; tutorial" href="howto_and_tutorial.html" />
+    <link rel="prev" title="Synda command reference" href="command_reference.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_parameter_reference.html">Configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced configuration parameter reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#logger-feeder-name">[logger].feeder_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logger-consumer-name">[logger].consumer_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logger-domain-name">[logger].domain_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logger-feeder-file">[logger].feeder_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logger-consumer-file">[logger].consumer_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logger-domain-file">[logger].domain_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checksum-type-md5">[checksum].type_md5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checksum-type-sha256">[checksum].type_sha256</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-esgf-search-domain-name">[api].esgf_search_domain_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processes-chunksize">[processes].chunksize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processes-http-client">[processes].http_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processes-transfer-protocol">[processes].transfer_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processes-get-files-caching">[processes].get_files_caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hack-projects-with-one-variable-per-dataset">[hack].projects_with_one_variable_per_dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-command-get-display-downloads-progression-every-n-seconds">[sub command get].display_downloads_progression_every_n_seconds</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_tutorial.html">Download Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="replication.html">ESGF replication howto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="select_indexes.html">Select which ESGF index to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Synda FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Synda Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Advanced configuration parameter reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/advanced_configuration_parameter_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-configuration-parameter-reference">
+<span id="id1"></span><h1>Advanced configuration parameter reference<a class="headerlink" href="#advanced-configuration-parameter-reference" title="Permalink to this headline"></a></h1>
+<p>This document describes each parameter used in “internal.conf” file to configure Synda.</p>
+<p>Note: Very few parameters might be customized. No guarantee of upward compatibility</p>
+<section id="logger-feeder-name">
+<h2>[logger].feeder_name<a class="headerlink" href="#logger-feeder-name" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘feeder’ logger.</p>
+<p>Type: string</p>
+<p>Default: feeder</p>
+</section>
+<hr class="docutils" />
+<section id="logger-consumer-name">
+<h2>[logger].consumer_name<a class="headerlink" href="#logger-consumer-name" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘consumer’ logger.</p>
+<p>Type: string</p>
+<p>Default: consumer</p>
+</section>
+<hr class="docutils" />
+<section id="logger-domain-name">
+<h2>[logger].domain_name<a class="headerlink" href="#logger-domain-name" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘domain’ logger.</p>
+<p>Type: string</p>
+<p>Default: domain</p>
+</section>
+<hr class="docutils" />
+<section id="logger-feeder-file">
+<h2>[logger].feeder_file<a class="headerlink" href="#logger-feeder-file" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘feeder’ logger file.</p>
+<p>Type: string</p>
+<p>Default: discovery.log</p>
+</section>
+<hr class="docutils" />
+<section id="logger-consumer-file">
+<h2>[logger].consumer_file<a class="headerlink" href="#logger-consumer-file" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘consumer’ logger file.</p>
+<p>Type: string</p>
+<p>Default: transfer.log</p>
+</section>
+<hr class="docutils" />
+<section id="logger-domain-file">
+<h2>[logger].domain_file<a class="headerlink" href="#logger-domain-file" title="Permalink to this headline"></a></h2>
+<p>Default name of the ‘domain’ logger file.</p>
+<p>Type: string</p>
+<p>Default: domain.log</p>
+</section>
+<hr class="docutils" />
+<section id="checksum-type-md5">
+<h2>[checksum].type_md5<a class="headerlink" href="#checksum-type-md5" title="Permalink to this headline"></a></h2>
+<p>Identifier for the md5 hash type.</p>
+<p>Mandatory value</p>
+<p>Type: string</p>
+<p>Default: md5</p>
+</section>
+<hr class="docutils" />
+<section id="checksum-type-sha256">
+<h2>[checksum].type_sha256<a class="headerlink" href="#checksum-type-sha256" title="Permalink to this headline"></a></h2>
+<p>Identifier for the sha256 hash type.</p>
+<p>Mandatory value</p>
+<p>Type: string</p>
+<p>Default: sha256</p>
+</section>
+<hr class="docutils" />
+<section id="api-esgf-search-domain-name">
+<h2>[api].esgf_search_domain_name<a class="headerlink" href="#api-esgf-search-domain-name" title="Permalink to this headline"></a></h2>
+<p>Domain name of the esgf_search api.</p>
+<p>Mandatory value</p>
+<p>Type: string</p>
+<p>Default: IDXHOSTMARK</p>
+</section>
+<hr class="docutils" />
+<section id="processes-chunksize">
+<h2>[processes].chunksize<a class="headerlink" href="#processes-chunksize" title="Permalink to this headline"></a></h2>
+<p>Maximum files number returned by one esgf_search api call.</p>
+<p>Type: int</p>
+<p>Default: 5000</p>
+</section>
+<hr class="docutils" />
+<section id="processes-http-client">
+<h2>[processes].http_client<a class="headerlink" href="#processes-http-client" title="Permalink to this headline"></a></h2>
+<p>Allowed http client</p>
+<p>Mandatory values</p>
+<p>Type: string</p>
+<p>Default: aiohttp</p>
+</section>
+<hr class="docutils" />
+<section id="processes-transfer-protocol">
+<h2>[processes].transfer_protocol<a class="headerlink" href="#processes-transfer-protocol" title="Permalink to this headline"></a></h2>
+<p>Allowed transfer protocol</p>
+<p>Mandatory value</p>
+<p>Type: string</p>
+<p>Value: http</p>
+</section>
+<hr class="docutils" />
+<section id="processes-get-files-caching">
+<h2>[processes].get_files_caching<a class="headerlink" href="#processes-get-files-caching" title="Permalink to this headline"></a></h2>
+<p>If true, enables caching logic.</p>
+<p>Type: boolean</p>
+<p>Default: true</p>
+</section>
+<hr class="docutils" />
+<section id="hack-projects-with-one-variable-per-dataset">
+<h2>[hack].projects_with_one_variable_per_dataset<a class="headerlink" href="#hack-projects-with-one-variable-per-dataset" title="Permalink to this headline"></a></h2>
+<p>Allowed transfer protocols</p>
+<p>Type: string</p>
+<p>Default: CORDEX, CMIP6</p>
+</section>
+<hr class="docutils" />
+<section id="sub-command-get-display-downloads-progression-every-n-seconds">
+<h2>[sub command get].display_downloads_progression_every_n_seconds<a class="headerlink" href="#sub-command-get-display-downloads-progression-every-n-seconds" title="Permalink to this headline"></a></h2>
+<p>Used for subcommand <code class="docutils literal notranslate"><span class="pre">get</span></code>.
+When the verbose argument is active, the downloads report is refreshed every <code class="docutils literal notranslate"><span class="pre">n</span></code> seconds</p>
+<p>Type: integer</p>
+<p>Default: 1</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="command_reference.html" class="btn btn-neutral float-left" title="Synda command reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="howto_and_tutorial.html" class="btn btn-neutral float-right" title="How to &amp; tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

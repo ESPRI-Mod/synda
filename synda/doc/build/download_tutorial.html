@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Tutorial &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Selection file" href="selection_file.html" />
+    <link rel="prev" title="How to &amp; tutorial" href="howto_and_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_parameter_reference.html">Configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_configuration_parameter_reference.html">Advanced configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Download Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="replication.html">ESGF replication howto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="select_indexes.html">Select which ESGF index to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Synda FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Synda Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Download Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/download_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="download-tutorial">
+<span id="id1"></span><h1>Download Tutorial<a class="headerlink" href="#download-tutorial" title="Permalink to this headline"></a></h1>
+<p>A typical synda session would go as follows</p>
+<p>Set ESGF openid and passwd in [<em>credentials file</em>](files.md#credentialsconf):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi credentials.conf
+</pre></div>
+</div>
+<p>Search a dataset:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda search CMIP5 decadal1995 mon land
+new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r2i2p1.v20120608
+new  cmip5.output1.CCCma.CanCM4.decadal1995.mon.land.Lmon.r8i2p1.v20120608
+new  cmip5.output1.MIROC.MIROC4h.decadal1995.mon.land.Lmon.r5i1p1.v20120628
+new  cmip5.output1.MRI.MRI-CGCM3.decadal1995.mon.land.Lmon.r5i1p1.v20110915
+..
+</pre></div>
+</div>
+<p>List dataset variables:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda search -v cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.baresoilFrac.v20120529.aggregation
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.burntArea.v20120529.aggregation
+cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.c3PftFrac.v20120529.aggregation
+..
+</pre></div>
+</div>
+<p>List file(s) for baresoilFrac variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda search -f cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+new  <span class="m">8</span>.9 MB  cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529.baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+</pre></div>
+</div>
+<p>Mark the file for download:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda install cmip5.output1.MPI-M.MPI-ESM-LR.decadal1995.mon.land.Lmon.r2i1p1.v20120529 baresoilFrac
+<span class="m">1</span> file<span class="o">(</span>s<span class="o">)</span> will be added to the download queue.
+Once downloaded, <span class="m">8</span>.9 MB of additional disk space will be used.
+Do you want to <span class="k">continue</span>? <span class="o">[</span>Y/n<span class="o">]</span>
+<span class="m">1</span> file<span class="o">(</span>s<span class="o">)</span> enqueued
+</pre></div>
+</div>
+<p>Start the asynchronous download process</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda download start
+</pre></div>
+</div>
+<p>Check download progress:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda download queue
+status      count  size
+running         <span class="m">1</span>  <span class="m">8</span>.9 MB
+
+&gt; synda download watch
+Current size    Total size    Download start date         Filename
+<span class="m">8</span>.9 MB          <span class="m">8</span>.9 MB        <span class="m">2015</span>-12-15 <span class="m">10</span>:31:53.848936  baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+
+&gt; synda download queue
+status      count  size
+<span class="k">done</span>            <span class="m">1</span>  <span class="m">8</span>.9 MB
+</pre></div>
+</div>
+<p>The file should be available in [<em>data folder</em>](files.md#data)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; find data -type f
+data/cmip5/output1/MPI-M/MPI-ESM-LR/decadal1995/mon/land/Lmon/r2i1p1/v20120529/baresoilFrac/baresoilFrac_Lmon_MPI-ESM-LR_decadal1995_r2i1p1_199601-200512.nc
+</pre></div>
+</div>
+<p>In case something goes wrong, you can check [<em>log files</em>](files.md#log)
+for information about the error.</p>
+<p>To debug certificate issue, you can use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda certificate renew
+</pre></div>
+</div>
+<p>To debug file transfer error, you can use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; synda get &lt;file_url&gt;
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="howto_and_tutorial.html" class="btn btn-neutral float-left" title="How to &amp; tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="selection_file.html" class="btn btn-neutral float-right" title="Selection file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

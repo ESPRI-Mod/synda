@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synda documentation &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Synda overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src_install.html">Synda installation from source guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Synda Upgrade Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_src.html">Synda upgrade guide (installation from source)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">Download Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_parameter_reference.html">Configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_configuration_parameter_reference.html">Advanced configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_tutorial.html">Download Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file_parameter_reference.html">Selection file parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="replication.html">ESGF replication howto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="select_indexes.html">Select which ESGF index to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Synda FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Synda Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Synda documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="synda-documentation">
+<h1>Synda documentation<a class="headerlink" href="#synda-documentation" title="Permalink to this headline"></a></h1>
+<section id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline"></a></h2>
+<p><em>synda</em> is a command line tool to search and download files from the Earth System Grid Federation (<a class="reference external" href="http://pcmdi.llnl.gov/">ESGF</a>) archive.</p>
+<a class="reference internal image-reference" href="_images/synda.png"><img alt="SYNDA architecture" class="align-left" src="_images/synda.png" style="width: 544.0px; height: 544.0px;" /></a>
+</section>
+<section id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#general">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#see-also">See also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conda_install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conda_install.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conda_install.html#upgrade">Upgrade</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src_install.html">Synda installation from source guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src_install.html#files-location">Files location</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_guide.html">Synda Upgrade Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_src.html">Synda upgrade guide (installation from source)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="upgrade_src.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrade_src.html#procedure">Procedure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="upgrade_src.html#pre-upgrade">Pre-upgrade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade_src.html#upgrade">Upgrade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade_src.html#post-upgrade">Post-upgrade</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">Download Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide.html#download-files-using-synda-get-command">Download files using ‘synda get’ command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#error-management">Error management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide.html#download-files-using-synda-install-command">Download files using ‘synda install’ command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#id1">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#start-stop-files-download">Start/Stop files download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#id2">Error management</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_parameter_reference.html">Configuration parameter reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#daemon-user">daemon.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#daemon-group">daemon.group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-max-parallel-download">download.max_parallel_download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-hpss">download.hpss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-http-fallback">download.http_fallback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-direct-http-timeout">download.direct_http_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-async-http-timeout">download.async_http_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-direct-db-timeout">download.direct_db_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-async-db-timeout">download.async_db_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#download-streaming-chunk-size">download.streaming_chunk_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#module-download">module.download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#module-post-processing">module.post_processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#module-globustransfer">module.globustransfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#post-processing-host">post_processing.host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#post-processing-port">post_processing.port</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#log-verbosity-level">log.verbosity_level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#log-scheduler-profiling">log.scheduler_profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-security-dir-mode">core.security_dir_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-metadata-server-type">core.metadata_server_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-default-path">core.default_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-selection-path">core.selection_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-data-path">core.data_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-db-path">core.db_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#core-sandbox-path">core.sandbox_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-unicode-term">interface.unicode_term</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-progress">interface.progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-default-listing-size">interface.default_listing_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-dump-listing-limit-for-small-mode-new">interface.dump_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-dump-listing-limit-for-medium-mode-new">interface.dump_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-dump-listing-limit-for-big-mode-new">interface.dump_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-list-listing-limit-for-small-mode-new">interface.list_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-list-listing-limit-for-medium-mode-new">interface.list_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-list-listing-limit-for-big-mode-new">interface.list_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-search-listing-limit-for-small-mode-new">interface.search_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-search-listing-limit-for-medium-mode-new">interface.search_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-search-listing-limit-for-big-mode-new">interface.search_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#interface-show-advanced-options-new">interface.show_advanced_options (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-onemgf">behaviour.onemgf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-check-parameter">behaviour.check_parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-ignorecase">behaviour.ignorecase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-nearest">behaviour.nearest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-nearest-mode">behaviour.nearest_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-lfae-mode">behaviour.lfae_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#behaviour-incorrect-checksum-action">behaviour.incorrect_checksum_action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#index-indexes">index.indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#index-default-index">index.default_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#locale-country">locale.country</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#globus-esgf-endpoints">globus.esgf_endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#globus-destination-endpoint">globus.destination_endpoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#api-esgf-search-chunksize-new">api.esgf_search_chunksize (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_parameter_reference.html#api-esgf-search-http-timeout-new">api.esgf_search_http_timeout (NEW)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="files.html#id1">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="files.html#credentials-conf">credentials.conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#sdt-conf">sdt.conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#internal-conf">internal.conf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html#folders">Folders</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="files.html#data">data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#sandbox">sandbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#log">log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#conf">conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#db">db</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#selection">selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="files.html#default">default</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="command_reference.html#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_reference.html#subcommands-description">Subcommands description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#autoremove">autoremove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#certificate">certificate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#check">check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#check-env">check-env</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#contact">contact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#count">count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#download">download</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#dump">dump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#facet">facet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#get">get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#help">help</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#history">history</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#init-env">init-env</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#install">install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#intro">intro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#list">list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#metric">metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#param">param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#queue">queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#remove">remove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#replica">replica</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#reset">reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#retry">retry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#search">search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#selection">selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#show">show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#stat">stat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#update">update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#upgrade">upgrade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#variable">variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#version">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="command_reference.html#watch">watch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_configuration_parameter_reference.html">Advanced configuration parameter reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-feeder-name">[logger].feeder_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-consumer-name">[logger].consumer_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-domain-name">[logger].domain_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-feeder-file">[logger].feeder_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-consumer-file">[logger].consumer_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#logger-domain-file">[logger].domain_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#checksum-type-md5">[checksum].type_md5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#checksum-type-sha256">[checksum].type_sha256</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#api-esgf-search-domain-name">[api].esgf_search_domain_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#processes-chunksize">[processes].chunksize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#processes-http-client">[processes].http_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#processes-transfer-protocol">[processes].transfer_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#processes-get-files-caching">[processes].get_files_caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#hack-projects-with-one-variable-per-dataset">[hack].projects_with_one_variable_per_dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_configuration_parameter_reference.html#sub-command-get-display-downloads-progression-every-n-seconds">[sub command get].display_downloads_progression_every_n_seconds</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto_and_tutorial.html#howto">Howto:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto_and_tutorial.html#tutorial">Tutorial:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="download_tutorial.html">Download Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file.html">Selection file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#notes">Notes:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#selection-file-format">Selection file format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#realm-frequency-and-variable-s">realm frequency and variable(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#definition">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#note">Note</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#facet-s-and-variable-s">facet(s) and variable(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id2">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id3">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id4">Note</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#name-and-value">name and value</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id5">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id6">Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#standalone-value">standalone value</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id7">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file.html#id8">Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#id9">Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#selection-file-parameter">Selection file parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#selection-file-management">Selection file management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#adding-a-selection-file">Adding a selection file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#editing-a-selection-file">Editing a selection file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selection_file.html#removing-a-selection-file">Removing a selection file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file_parameter_reference.html">Selection file parameter reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#search-api-parameter">Search-api parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#synda-parameter">Synda parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#synda-download-parameter">Synda download parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#synda-remote-search-parameter">Synda remote search parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#synda-local-search-parameter">Synda local search parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_file_parameter_reference.html#synda-formatting-parameter">Synda formatting parameter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="download_nearest_replica.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="replication.html">ESGF replication howto</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#synda-installation">Synda installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#create-a-selection-file-to-describe-which-data-to-replicate">Create a selection file to describe which data to replicate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#file-discovery">File discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#files-download">Files download</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#start">Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#stop">Stop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#watching-download-progress">Watching download progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#version-management">Version management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#update-datasets-to-the-last-version">Update datasets to the last version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#remove-old-datasets-version">Remove old datasets version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="replication.html#error-management">Error management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#displaying-errors">Displaying errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#retrying-download-in-errors">Retrying download in errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#changing-replica-for-all-files-in-errors">Changing replica for all files in errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replication.html#getting-more-details-about-errors">Getting more details about errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="select_indexes.html">Select which ESGF index to use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="select_indexes.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select_indexes.html#esgf-main-indexes">ESGF main indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select_indexes.html#esgf-indexes-complete-list">ESGF indexes complete list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Synda FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="log.html#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log.html#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Synda Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#contacts">Contacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#acknowledgment">Acknowledgment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#reference">Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#transfer-module">Transfer Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-right" title="Synda overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
