@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration parameter reference &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Synda Files and Folders" href="files.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration parameter reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#daemon-user">daemon.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#daemon-group">daemon.group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-max-parallel-download">download.max_parallel_download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-hpss">download.hpss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-http-fallback">download.http_fallback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-direct-http-timeout">download.direct_http_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-async-http-timeout">download.async_http_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-direct-db-timeout">download.direct_db_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-async-db-timeout">download.async_db_timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-streaming-chunk-size">download.streaming_chunk_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-download">module.download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-post-processing">module.post_processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-globustransfer">module.globustransfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing-host">post_processing.host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing-port">post_processing.port</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-verbosity-level">log.verbosity_level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-scheduler-profiling">log.scheduler_profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-security-dir-mode">core.security_dir_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-metadata-server-type">core.metadata_server_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-default-path">core.default_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-selection-path">core.selection_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-data-path">core.data_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-db-path">core.db_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-sandbox-path">core.sandbox_path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-unicode-term">interface.unicode_term</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-progress">interface.progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-default-listing-size">interface.default_listing_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-dump-listing-limit-for-small-mode-new">interface.dump_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-dump-listing-limit-for-medium-mode-new">interface.dump_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-dump-listing-limit-for-big-mode-new">interface.dump_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-list-listing-limit-for-small-mode-new">interface.list_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-list-listing-limit-for-medium-mode-new">interface.list_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-list-listing-limit-for-big-mode-new">interface.list_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-search-listing-limit-for-small-mode-new">interface.search_listing_limit_for_small_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-search-listing-limit-for-medium-mode-new">interface.search_listing_limit_for_medium_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-search-listing-limit-for-big-mode-new">interface.search_listing_limit_for_big_mode (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface-show-advanced-options-new">interface.show_advanced_options (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-onemgf">behaviour.onemgf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-check-parameter">behaviour.check_parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-ignorecase">behaviour.ignorecase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-nearest">behaviour.nearest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-nearest-mode">behaviour.nearest_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-lfae-mode">behaviour.lfae_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behaviour-incorrect-checksum-action">behaviour.incorrect_checksum_action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-indexes">index.indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-default-index">index.default_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#locale-country">locale.country</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#globus-esgf-endpoints">globus.esgf_endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#globus-destination-endpoint">globus.destination_endpoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-esgf-search-chunksize-new">api.esgf_search_chunksize (NEW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-esgf-search-http-timeout-new">api.esgf_search_http_timeout (NEW)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_configuration_parameter_reference.html">Advanced configuration parameter reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_tutorial.html">Download Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection_file.html">Selection file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="replication.html">ESGF replication howto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="select_indexes.html">Select which ESGF index to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Synda FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Synda Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Configuration parameter reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration_parameter_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration-parameter-reference">
+<span id="id1"></span><h1>Configuration parameter reference<a class="headerlink" href="#configuration-parameter-reference" title="Permalink to this headline"></a></h1>
+<p>This document describes each parameter used in “std.conf” file to configure Synda.</p>
+<section id="daemon-user">
+<h2>daemon.user<a class="headerlink" href="#daemon-user" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="daemon-group">
+<h2>daemon.group<a class="headerlink" href="#daemon-group" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="download-max-parallel-download">
+<h2>download.max_parallel_download<a class="headerlink" href="#download-max-parallel-download" title="Permalink to this headline"></a></h2>
+<p>Set the number of parallel download.</p>
+<p>Type: int</p>
+<p>Default: 8</p>
+</section>
+<hr class="docutils" />
+<section id="download-hpss">
+<h2>download.hpss<a class="headerlink" href="#download-hpss" title="Permalink to this headline"></a></h2>
+<p>Gives HPSS service some time to move data from tape to disk.</p>
+<p>Type: boolean</p>
+<p>Default: 1</p>
+</section>
+<hr class="docutils" />
+<section id="download-http-fallback">
+<h2>download.http_fallback<a class="headerlink" href="#download-http-fallback" title="Permalink to this headline"></a></h2>
+<p>If true, if http transfer fails, the url is automatically replaced with
+another http url.</p>
+<p>Type: boolean</p>
+<p>Default: false</p>
+</section>
+<hr class="docutils" />
+<section id="download-direct-http-timeout">
+<h2>download.direct_http_timeout<a class="headerlink" href="#download-direct-http-timeout" title="Permalink to this headline"></a></h2>
+<p>Direct download HTTP timeout, in seconds (time to wait for HTTP response).</p>
+<p>Type: int</p>
+<p>Default: 30</p>
+<p>(sdconst.DIRECT_DOWNLOAD_HTTP_TIMEOUT is predicated)</p>
+</section>
+<hr class="docutils" />
+<section id="download-async-http-timeout">
+<h2>download.async_http_timeout<a class="headerlink" href="#download-async-http-timeout" title="Permalink to this headline"></a></h2>
+<p>Asynchronous download HTTP timeout, in seconds (time to wait for HTTP response).</p>
+<p>Type: int</p>
+<p>Default: 120</p>
+<p>(sdconst.ASYNC_DOWNLOAD_HTTP_TIMEOUT is predicated)</p>
+</section>
+<hr class="docutils" />
+<section id="download-direct-db-timeout">
+<h2>download.direct_db_timeout<a class="headerlink" href="#download-direct-db-timeout" title="Permalink to this headline"></a></h2>
+<p>Used only for direct downloads
+This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.</p>
+<p>Type: int</p>
+<p>Default: 120</p>
+</section>
+<hr class="docutils" />
+<section id="download-async-db-timeout">
+<h2>download.async_db_timeout<a class="headerlink" href="#download-async-db-timeout" title="Permalink to this headline"></a></h2>
+<p>Used only for asynchronous downloads
+This timeout parameter specifies how long, in seconds, the connection should wait for the lock to go away until raising an exception.</p>
+<p>Type: int</p>
+<p>Default: 12000</p>
+</section>
+<hr class="docutils" />
+<section id="download-streaming-chunk-size">
+<h2>download.streaming_chunk_size<a class="headerlink" href="#download-streaming-chunk-size" title="Permalink to this headline"></a></h2>
+<p>Files are downloaded into several parts to not exceed max memory dedicated to the download process
+‘streaming_chunk_size’ characterizes the size of each part (i.e. the data size of each http response)</p>
+<p>Type: int</p>
+<p>Default: 16384</p>
+</section>
+<hr class="docutils" />
+<section id="module-download">
+<h2>module.download<a class="headerlink" href="#module-download" title="Permalink to this headline"></a></h2>
+<p>If true, download files from ESGF. To use Synda in discovery or post-processing
+mode only, set this parameter to false.</p>
+<p>Type: boolean</p>
+<p>Default: true</p>
+</section>
+<hr class="docutils" />
+<section id="module-post-processing">
+<h2>module.post_processing<a class="headerlink" href="#module-post-processing" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="module-globustransfer">
+<h2>module.globustransfer<a class="headerlink" href="#module-globustransfer" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="post-processing-host">
+<h2>post_processing.host<a class="headerlink" href="#post-processing-host" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="post-processing-port">
+<h2>post_processing.port<a class="headerlink" href="#post-processing-port" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="log-verbosity-level">
+<h2>log.verbosity_level<a class="headerlink" href="#log-verbosity-level" title="Permalink to this headline"></a></h2>
+<p>Log verbosity level</p>
+<p>Type: string</p>
+<p>Default: info</p>
+</section>
+<hr class="docutils" />
+<section id="log-scheduler-profiling">
+<h2>log.scheduler_profiling<a class="headerlink" href="#log-scheduler-profiling" title="Permalink to this headline"></a></h2>
+<p>If true, log code profiling information</p>
+<p>Type: boolean</p>
+<p>Default: 0</p>
+</section>
+<hr class="docutils" />
+<section id="core-security-dir-mode">
+<h2>core.security_dir_mode<a class="headerlink" href="#core-security-dir-mode" title="Permalink to this headline"></a></h2>
+<p>Set the location of X509 certificates.</p>
+<p>Possible values are: “tmp”, “tmpuid”, “home” and “mixed”.</p>
+<p>“tmp”: all users certificates are stored in Synda tmp folder.</p>
+<p>“tmpuid”: interactive user and daemon user certificates are stored into
+separate subfolders (named after the user UID) inside Synda tmp folder.</p>
+<p>“home”: interactive user and daemon user certificates are stored in user home
+directory.</p>
+<p>“mixed”: daemon user certificates is stored in Synda tmp folder and interactive
+user certificate is stored in user home directory.</p>
+<p>Type: string</p>
+<p>Default: ‘tmpuid’</p>
+</section>
+<hr class="docutils" />
+<section id="core-metadata-server-type">
+<h2>core.metadata_server_type<a class="headerlink" href="#core-metadata-server-type" title="Permalink to this headline"></a></h2>
+<p>Type of metadata server</p>
+<p>Only one possible value at the moment.</p>
+<p>Type: string</p>
+<p>Default: ‘esgf_search_api’</p>
+</section>
+<hr class="docutils" />
+<section id="core-default-path">
+<h2>core.default_path<a class="headerlink" href="#core-default-path" title="Permalink to this headline"></a></h2>
+<p>Override ‘selection file default value’ directory default path</p>
+<p>Type: string</p>
+<p>Default: ‘$ST_HOME/conf/default’</p>
+</section>
+<hr class="docutils" />
+<section id="core-selection-path">
+<h2>core.selection_path<a class="headerlink" href="#core-selection-path" title="Permalink to this headline"></a></h2>
+<p>Override selection directory default path</p>
+<p>Type: string</p>
+<p>Default: ‘$ST_HOME/selection’</p>
+</section>
+<hr class="docutils" />
+<section id="core-data-path">
+<h2>core.data_path<a class="headerlink" href="#core-data-path" title="Permalink to this headline"></a></h2>
+<p>Override data directory default path</p>
+<p>Type: string</p>
+<p>Default: ‘$ST_HOME/data’</p>
+</section>
+<hr class="docutils" />
+<section id="core-db-path">
+<h2>core.db_path<a class="headerlink" href="#core-db-path" title="Permalink to this headline"></a></h2>
+<p>Override database default path</p>
+<p>Type: string</p>
+<p>Default: ‘$ST_HOME/sdt/db’</p>
+</section>
+<hr class="docutils" />
+<section id="core-sandbox-path">
+<h2>core.sandbox_path<a class="headerlink" href="#core-sandbox-path" title="Permalink to this headline"></a></h2>
+<p>Override sandbox directory default path</p>
+<p>Type: string</p>
+<p>Default: ‘$ST_HOME/sandbox’</p>
+</section>
+<hr class="docutils" />
+<section id="interface-unicode-term">
+<h2>interface.unicode_term<a class="headerlink" href="#interface-unicode-term" title="Permalink to this headline"></a></h2>
+<p>If true, use unicode characters for progress bar.</p>
+<p>Type: boolean</p>
+<p>Default: 0</p>
+</section>
+<hr class="docutils" />
+<section id="interface-progress">
+<h2>interface.progress<a class="headerlink" href="#interface-progress" title="Permalink to this headline"></a></h2>
+<p>If true, show progress bar for time consuming task.</p>
+<p>Type: boolean</p>
+<p>Default: 0</p>
+</section>
+<hr class="docutils" />
+<section id="interface-default-listing-size">
+<h2>interface.default_listing_size<a class="headerlink" href="#interface-default-listing-size" title="Permalink to this headline"></a></h2>
+<p>This parameter drives how many results are displayed by default for “search”,
+“list” and “dump” subcommands.</p>
+<p>Possible values are: “small”, “medium” and “big”.</p>
+<p>Type: string</p>
+<p>Default: small</p>
+</section>
+<hr class="docutils" />
+<section id="interface-dump-listing-limit-for-small-mode-new">
+<h2>interface.dump_listing_limit_for_small_mode (NEW)<a class="headerlink" href="#interface-dump-listing-limit-for-small-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘small’.</p>
+<p>Type: int</p>
+<p>Default: 50</p>
+</section>
+<hr class="docutils" />
+<section id="interface-dump-listing-limit-for-medium-mode-new">
+<h2>interface.dump_listing_limit_for_medium_mode (NEW)<a class="headerlink" href="#interface-dump-listing-limit-for-medium-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘medium’.</p>
+<p>Type: int</p>
+<p>Default: 100</p>
+</section>
+<hr class="docutils" />
+<section id="interface-dump-listing-limit-for-big-mode-new">
+<h2>interface.dump_listing_limit_for_big_mode (NEW)<a class="headerlink" href="#interface-dump-listing-limit-for-big-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘big’.</p>
+<p>Type: int</p>
+<p>Default: 6000</p>
+</section>
+<hr class="docutils" />
+<section id="interface-list-listing-limit-for-small-mode-new">
+<h2>interface.list_listing_limit_for_small_mode (NEW)<a class="headerlink" href="#interface-list-listing-limit-for-small-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘small’.</p>
+<p>Type: int</p>
+<p>Default: 20</p>
+</section>
+<hr class="docutils" />
+<section id="interface-list-listing-limit-for-medium-mode-new">
+<h2>interface.list_listing_limit_for_medium_mode (NEW)<a class="headerlink" href="#interface-list-listing-limit-for-medium-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘medium’.</p>
+<p>Type: int</p>
+<p>Default: 200</p>
+</section>
+<hr class="docutils" />
+<section id="interface-list-listing-limit-for-big-mode-new">
+<h2>interface.list_listing_limit_for_big_mode (NEW)<a class="headerlink" href="#interface-list-listing-limit-for-big-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘big’.</p>
+<p>Type: int</p>
+<p>Default: 20000</p>
+</section>
+<hr class="docutils" />
+<section id="interface-search-listing-limit-for-small-mode-new">
+<h2>interface.search_listing_limit_for_small_mode (NEW)<a class="headerlink" href="#interface-search-listing-limit-for-small-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘small’.</p>
+<p>Type: int</p>
+<p>Default: 100</p>
+</section>
+<hr class="docutils" />
+<section id="interface-search-listing-limit-for-medium-mode-new">
+<h2>interface.search_listing_limit_for_medium_mode (NEW)<a class="headerlink" href="#interface-search-listing-limit-for-medium-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘medium’.</p>
+<p>Type: int</p>
+<p>Default: 1000</p>
+</section>
+<hr class="docutils" />
+<section id="interface-search-listing-limit-for-big-mode-new">
+<h2>interface.search_listing_limit_for_big_mode (NEW)<a class="headerlink" href="#interface-search-listing-limit-for-big-mode-new" title="Permalink to this headline"></a></h2>
+<p>Set the total number of returned results when default_listing_size is set to ‘big’.</p>
+<p>Type: int</p>
+<p>Default: 6000</p>
+</section>
+<hr class="docutils" />
+<section id="interface-show-advanced-options-new">
+<h2>interface.show_advanced_options (NEW)<a class="headerlink" href="#interface-show-advanced-options-new" title="Permalink to this headline"></a></h2>
+<p>Available for the following subcommands : count, install, search, stat, upgrade</p>
+<p>When True allows to access the two following arguments : –timestamp_left_boundary and –timestamp_right_boundary</p>
+<p>Example</p>
+<blockquote>
+<div><p>$ synda count -s selection.txt –timestamp_left_boundary 2012-01-01T01:00:00Z –timestamp_right_boundary 2015-01-01T01:00:00Z</p>
+</div></blockquote>
+<p>Type: boolean</p>
+<p>Default: false</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-onemgf">
+<h2>behaviour.onemgf<a class="headerlink" href="#behaviour-onemgf" title="Permalink to this headline"></a></h2>
+<p>Improve search performance (experimental).</p>
+<p>Type: boolean</p>
+<p>Default: false</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-check-parameter">
+<h2>behaviour.check_parameter<a class="headerlink" href="#behaviour-check-parameter" title="Permalink to this headline"></a></h2>
+<p>If true, perform parameter typo detection (name and value).</p>
+<p>Example</p>
+<p>If behaviour.check_parameter is true,</p>
+<blockquote>
+<div><p>$ synda search cmip5 taz</p>
+</div></blockquote>
+<p>will raises an exception and inform the user that ‘taz’ value is not found.</p>
+<p>Type: boolean</p>
+<p>Default: 0</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-ignorecase">
+<h2>behaviour.ignorecase<a class="headerlink" href="#behaviour-ignorecase" title="Permalink to this headline"></a></h2>
+<p>If true, automatically fix incorrect case</p>
+<p>Example</p>
+<blockquote>
+<div><p>$ synda search MOHC-HADGEM3-RA</p>
+</div></blockquote>
+<p>This command normally raises an exception as the correct case should be ‘MOHC-HadGEM3-RA’.</p>
+<p>But if behaviour.ignorecase is true, the model name will be automatically corrected and no exception will occur.</p>
+<p>Type: boolean</p>
+<p>Default: true</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-nearest">
+<h2>behaviour.nearest<a class="headerlink" href="#behaviour-nearest" title="Permalink to this headline"></a></h2>
+<p>If true, automatically select the nearest file replica</p>
+<p>Type: boolean</p>
+<p>Default: false</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-nearest-mode">
+<h2>behaviour.nearest_mode<a class="headerlink" href="#behaviour-nearest-mode" title="Permalink to this headline"></a></h2>
+<p>Set nearest replica algorithm.</p>
+<p>Possible values are: “geolocation” and “rtt”.</p>
+<p>Type: string</p>
+<p>Default: geolocation</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-lfae-mode">
+<h2>behaviour.lfae_mode<a class="headerlink" href="#behaviour-lfae-mode" title="Permalink to this headline"></a></h2>
+<p>Set which policies to adopt when a download starts and local file already
+exists (‘lfae’ means ‘Local File Already Exist). Possible values are: “keep”,
+“replace” and “abort”. When set to “keep”, local file is used instead of the
+remote file. When set to “replace”, the remote file overwrites the local file.
+When set to “abort”, the transfer is cancelled (the transfer status is set to
+‘error’) and the local file is kept.</p>
+<p>Type: string</p>
+<p>Default: abort</p>
+</section>
+<hr class="docutils" />
+<section id="behaviour-incorrect-checksum-action">
+<h2>behaviour.incorrect_checksum_action<a class="headerlink" href="#behaviour-incorrect-checksum-action" title="Permalink to this headline"></a></h2>
+<p>Set which policies to adopt when checksum doesn’t match</p>
+<p>Possible values are: “remove” and “keep”</p>
+<p>“remove”: set transfer status to error and remove the downloaded file</p>
+<p>“keep”: set transfer status to done, log a warning and keep the downloaded file</p>
+<p>Type: string</p>
+<p>Default: remove</p>
+</section>
+<hr class="docutils" />
+<section id="index-indexes">
+<h2>index.indexes<a class="headerlink" href="#index-indexes" title="Permalink to this headline"></a></h2>
+<p>Set the indexes list to use for large operation</p>
+<p>Type: string</p>
+<p>Default: pcmdi.llnl.gov</p>
+<p>Note: this parameter is used for load-balancing on several indexes, to speed up large search-API requests</p>
+</section>
+<hr class="docutils" />
+<section id="index-default-index">
+<h2>index.default_index<a class="headerlink" href="#index-default-index" title="Permalink to this headline"></a></h2>
+<p>Set the index to use in priority</p>
+<p>Type: string</p>
+<p>Default: pcmdi.llnl.gov</p>
+</section>
+<hr class="docutils" />
+<section id="locale-country">
+<h2>locale.country<a class="headerlink" href="#locale-country" title="Permalink to this headline"></a></h2>
+<p>Set the country in which synda is installed</p>
+<p>Type: string</p>
+<p>Default: “”</p>
+<p>Note: used to compute nearest replicat when “geolocation” mode is used</p>
+</section>
+<hr class="docutils" />
+<section id="globus-esgf-endpoints">
+<h2>globus.esgf_endpoints<a class="headerlink" href="#globus-esgf-endpoints" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="globus-destination-endpoint">
+<h2>globus.destination_endpoint<a class="headerlink" href="#globus-destination-endpoint" title="Permalink to this headline"></a></h2>
+<p>Deprecated</p>
+</section>
+<hr class="docutils" />
+<section id="api-esgf-search-chunksize-new">
+<h2>api.esgf_search_chunksize (NEW)<a class="headerlink" href="#api-esgf-search-chunksize-new" title="Permalink to this headline"></a></h2>
+<p>Maximum files number returned by one api call.</p>
+<p>Type: int</p>
+<p>Default: 9000</p>
+</section>
+<hr class="docutils" />
+<section id="api-esgf-search-http-timeout-new">
+<h2>api.esgf_search_http_timeout (NEW)<a class="headerlink" href="#api-esgf-search-http-timeout-new" title="Permalink to this headline"></a></h2>
+<p>HTTP timeout in seconds (time to wait for HTTP esgf_search api response)</p>
+<p>Type: int</p>
+<p>Default: 300</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user_guide.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="files.html" class="btn btn-neutral float-right" title="Synda Files and Folders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

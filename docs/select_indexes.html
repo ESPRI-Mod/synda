@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select which ESGF index to use &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Select which ESGF index to use</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/select_indexes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="select-which-esgf-index-to-use">
+<span id="select-indexes"></span><h1>Select which ESGF index to use<a class="headerlink" href="#select-which-esgf-index-to-use" title="Permalink to this headline"></a></h1>
+<p>Synda index settings are stored in sdt.conf in [index] section.</p>
+<ul class="simple">
+<li><p><em>default_index</em> parameter is used for interactive search operations.</p></li>
+<li><p><em>indexes</em> parameter is used for parallel searches (to improve response time by distributing queries on several indexes simultaneously).</p></li>
+</ul>
+<p>Note: host set in <em>default_index</em> parameter can also be set in <em>indexes</em> parameter (i.e. same host can be used at both places).</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[index]</span><span class="w"></span>
+<span class="na">default_index</span><span class="o">=</span><span class="s">&lt;index&gt;</span><span class="w"></span>
+<span class="na">indexes</span><span class="o">=</span><span class="s">&lt;idx1,idx2,etc..&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="esgf-main-indexes">
+<h2>ESGF main indexes<a class="headerlink" href="#esgf-main-indexes" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">* esg-datanode.jpl.nasa.gov</span><span class="w"></span>
+<span class="na">* esgf-node.ipsl.fr</span><span class="w"></span>
+<span class="na">* esgf-data.dkrz.de</span><span class="w"></span>
+<span class="na">* esgf-index1.ceda.ac.uk</span><span class="w"></span>
+<span class="na">* esg.ccs.ornl.gov</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="esgf-indexes-complete-list">
+<h2>ESGF indexes complete list<a class="headerlink" href="#esgf-indexes-complete-list" title="Permalink to this headline"></a></h2>
+<p>To display complete ESGF index list, use command below</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda param index_node
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

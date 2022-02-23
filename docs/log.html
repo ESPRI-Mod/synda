@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credits" href="credits.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="faq.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#transfer-module">Transfer Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing-module">Post-Processing Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/log.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<span id="log"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<section id="transfer-module">
+<h2>Transfer Module<a class="headerlink" href="#transfer-module" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt>Version 3.4 - 2021-xx-xx</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>enhancement</dt><dd><ul>
+<li><dl class="simple">
+<dt>New subcommand<span class="classifier">‘download’</span></dt><dd><p>Usage : synda download queue|start|stop|status|watch</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>New downloads scheduler for both ‘download’ and ‘get’ subcommands.</dt><dd><p>It supports only one protocol, the http protocol, and it works under the control of asyncio</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>std.conf | new entries</dt><dd><p>[download]streaming_chunk_size and [install]interactive</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>internal.conf | new entries</dt><dd><p>[processes]transfer_protocol
+[sub command get]display_downloads_progression_every_n_seconds</p>
+</dd>
+</dl>
+</li>
+<li><p>DB file table | new index on data_node field (issue # 122)</p></li>
+<li><p>documentation | update</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>bug correction</dt><dd><ul>
+<li><p>“synda param data_node” returns now the exhaustive list of data nodes</p></li>
+<li><p>issue #193 : In the user preferences file, [core]Paths parameters are now taken into account</p></li>
+<li><p>issue #139</p></li>
+<li><p>issue #118</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>about unit tests</dt><dd><ul>
+<li><p>remove subcommand : new data file embedded, ten times smaller than previous one</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>deprecation</dt><dd><ul>
+<li><dl class="simple">
+<dt>subcommands</dt><dd><p>daemon, queue, watch</p>
+</dd>
+</dl>
+</li>
+<li><p>‘get’ subcommand doesn’t work under the control of wget</p></li>
+<li><p>http client used for downloads : wget</p></li>
+<li><dl class="simple">
+<dt>std.conf | removed entries</dt><dd><p>[download]gridftp_opt, [download]hpss and [daemon]user|group</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>internal.conf | removed entry</dt><dd><p>[processes]transfer_protocols</p>
+</dd>
+</dl>
+</li>
+<li><p>packages : sddaemon, sddmdefault, sdtask, sdtaskscheduler, sdworkerutils</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.35 - 2021-05-07</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>bug correction :</dt><dd><ul>
+<li><p>init-env subcommand now provides empty default selection files (see conf/default directory)</p></li>
+<li><p>issue # 185 : ‘synda remove’ fails to import sdsimplefilter</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.34 - 2021-04-02</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>bug correction :</dt><dd><ul>
+<li><p>Default selection file for CMIP6 project is now delivered empty. It can be customized under user control (issue # 178 : Dataset not found but available on ESGF web interface)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Documentation update</p></li>
+</ul>
+</dd>
+<dt>Version 3.33 - 2021-03-31</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>bug correction :</dt><dd><ul>
+<li><p>issue # 177 : synda now allows that ESGF openIDs are case sensitive</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.32 - 2021-03-24 - (PYTHON 3)</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>enhancement</dt><dd><ul>
+<li><p>code migration : third attempt to migrate synda from python 2 to python 3  (success)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>bug correction :</dt><dd><ul>
+<li><p>issue # 176 (conda channel changed : now : conda-forge [ipsl channel has been removed])</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.31 - 2021-03-22</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>enhancement</dt><dd><ul>
+<li><p>code migration : second attempt to migrate synda from python 2 to python 3 (failure)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>bug correction :</dt><dd><ul>
+<li><p>issue # 168 (Master branch update broke sdnexturl.py)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.30 - 2021-03-22</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>enhancement</dt><dd><ul>
+<li><p>code migration : first attempt to migrate synda from python 2 to python 3 (failure)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>bugs correction :</dt><dd><ul>
+<li><p>synda -h and synda -V sub-commands are now operational</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>deprecated features</dt><dd><ul>
+<li><p>‘open’ subcommand</p></li>
+<li><p>packages : sdpoodlefix, sdxml, sdhtmlbasic, sdselectionfile, sdview</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Version 3.2 - 2021-01-11</dt><dd><ul class="simple">
+<li><p>config parameters externalisation</p>
+<ul>
+<li><p>‘sdt.conf’ file has new customizable parameters</p></li>
+<li><p>New ‘internal.conf’ file, for advanced parameters (not customizable, located into the /conf directory)</p></li>
+</ul>
+</li>
+<li><p>enhancements</p>
+<ul>
+<li><p>init-env subcommand is enabled to build user environment</p></li>
+<li><p>synda raises on the command line the problems encountered by esgf_search api service</p></li>
+<li><p>In sdparam.get_name_from_value method, if more than one match, the print message has now a ‘info’ level</p></li>
+<li><p>store stacktrace log files in /log directory.</p></li>
+</ul>
+</li>
+<li><p>bugs correction :</p>
+<ul>
+<li><p>help subcommand can be used even if user has not built yet any environment</p></li>
+</ul>
+</li>
+<li><p>deprecated features</p>
+<ul>
+<li><p>‘pexec’ subcommand</p></li>
+<li><p>‘thredds_catalog’ &amp; ‘apache_default_listing’ APIS (synda operates only the ‘esgf_search’ API)</p></li>
+<li><p>synda ihm</p></li>
+<li><p>packages : sdevent, sdeventdao, sddatasetpattern, sdoperation</p></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt>Version 3.15 - 2020-11-17</dt><dd><ul class="simple">
+<li><p>cleaning &amp; packages reorganization</p></li>
+<li><p>issue #158 - bug correction - daemon stopping without reporting errors</p></li>
+</ul>
+</dd>
+<dt>Version 3.14 - 2020-10-29</dt><dd><ul class="simple">
+<li><p>new files encoding : ISO-8859-1 =&gt; utf8</p></li>
+</ul>
+</dd>
+<dt>Version 3.13 - 2020-10-28</dt><dd><ul class="simple">
+<li><p>entry point moved to setup.py instead of meta.yaml file</p></li>
+</ul>
+</dd>
+<dt>Version 3.9 - 2017-02-19</dt><dd><ul class="simple">
+<li><p>add gridftp_opt option in sdt.conf.</p></li>
+<li><p>dataset attributes can be used in ‘local_path_drs_template’.</p></li>
+<li><p>use decimal prefix instead of binary prefix in ‘synda metrics’ command.</p></li>
+<li><p>do not include checksum computation time in download time metric.</p></li>
+<li><p>enable supplementary groups support if available.</p></li>
+</ul>
+</dd>
+<dt>Version 3.8 - 2017-02-19</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">info</span></code> action to <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">certificate</span></code> command</p></li>
+<li><p>add security_dir_mode option</p></li>
+<li><p>add subfolder to the ESGF certificate path (named after the user UID)</p></li>
+<li><p>all deletions now occurs synchronously (deferred mode is disabled)</p></li>
+<li><p>follow symlinks during <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">remove</span></code> operation</p></li>
+<li><p>add manual routines to refresh dataset status</p></li>
+<li><p>new cleanup algo for <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">remove</span></code> command (run faster)</p></li>
+<li><p>add full path support in <code class="docutils literal notranslate"><span class="pre">local_path_drs_template</span></code> var</p></li>
+<li><p>add write test in sddaemon module</p></li>
+<li><p>store stacktrace file in /tmp</p></li>
+<li><p>add uuid to stacktrace file name</p></li>
+<li><p>move try/except block upstream to enclose the daemon context</p></li>
+<li><p>fix permission in sys-pkg for <code class="docutils literal notranslate"><span class="pre">/srv/synda/sdt</span></code> folder (g+sw)</p></li>
+</ul>
+</dd>
+<dt>Version 3.7 - 2017-01-15</dt><dd><ul class="simple">
+<li><p>ESGF certificate path set to $HOME/sdt/tmp/.esg for source install.</p></li>
+<li><p>disable sdfilepermission module.</p></li>
+<li><p>add user personal env (SDT_USER_ENV).</p></li>
+<li><p>synda group can be used instead of sudo (system package).</p></li>
+<li><p>set specific version for pillow package.</p></li>
+<li><p>bugfixes.</p></li>
+</ul>
+</dd>
+<dt>Version 3.6 - 2016-12-04</dt><dd><ul class="simple">
+<li><p>use search-api json format instead of xml</p></li>
+<li><p>add end-of-transfer events replay mode (trigger all EOT events in batch mode)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">count</span></code> subcommand</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">config</span></code> subcommand</p></li>
+<li><p>add incremental mode for discovery operation</p></li>
+<li><p>add dataset version consistency check</p></li>
+</ul>
+</dd>
+<dt>Version 3.5 - 2016-09-19</dt><dd><ul class="simple">
+<li><p>use requests (pypi) to resolve openid</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">~/.sdt/conf/credentials.conf</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">~/.sdt/conf/sdt.conf</span></code></p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">~/.syndarc</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">open</span></code> subcommand</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">check</span></code> subcommand for selection</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">check</span></code> subcommand for file’s variable</p></li>
+<li><p>use myproxyclient latest version</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">default_path</span></code> option in sdt.conf</p></li>
+<li><p>use sdpyproxy python module to renew X509 certificate (replace obsolete sdlogon.sh script)</p></li>
+<li><p>change tarball location for source installation (use install.sh latest version)</p></li>
+<li><p>replace argparse RawTextHelpFormatter with RawDescriptionHelpFormatter</p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">metadata_parallel_download</span></code> to False</p></li>
+<li><p>add support for lowmem machine</p></li>
+<li><p>add sdsqlitedict module</p></li>
+<li><p>add sdmts module</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">ignorecase</span></code> filter for <code class="docutils literal notranslate"><span class="pre">upgrade</span></code> and <code class="docutils literal notranslate"><span class="pre">facet</span></code> subcommands</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">-n</span></code> option from <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">facet</span></code> subcommand</p></li>
+<li><p>do not stop daemon anymore when error occurs during download (except for certificate renewal error)</p></li>
+<li><p>always print stacktrace when error occurs (ST_DEBUG env. var. is not used anymore)</p></li>
+<li><p>write yes/no confirmation message on stderr</p></li>
+<li><p>prevent adding predefined values for <code class="docutils literal notranslate"><span class="pre">version</span></code> facet in local cache</p></li>
+<li><p>add checksum type normalization routine</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">url_replace</span></code> selection file parameter</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">http_fallback</span></code> option (switch protocol on error)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">default_listing_size</span></code> configuration option</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-m</span></code> option to <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">remove</span></code> subcommand</p></li>
+<li><p>ergonomy improvements</p></li>
+</ul>
+</dd>
+<dt>Version 3.4 - 2016-05-04</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">variable</span></code> subcommand</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">get</span></code> subcommand</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">test</span></code> subcommand (<code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">test</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">get</span></code>)</p></li>
+<li><p>add urllib2 based download impl</p></li>
+<li><p>add sandbox folder for untracked data</p></li>
+<li><p>set data folder default value to /srv/synda/sdt/data (system package installation only)</p></li>
+<li><p>disable parameter checking by default</p></li>
+<li><p>insert event in db even if post-processing module is disabled</p></li>
+<li><p>improve obs4MIPs project support</p></li>
+<li><p>user documentation reorganization</p></li>
+<li><p>add parameter reference documentation</p></li>
+<li><p>add commands reference documentation</p></li>
+<li><p>add selection file documentation</p></li>
+</ul>
+</dd>
+<dt>Version 3.3 - 2016-04-04</dt><dd><ul class="simple">
+<li><p>localpath DRS can be customized by user in configuration file (local_path_drs_template)</p></li>
+<li><p>add hpss configuration parameter to retry transfer on error</p></li>
+<li><p>add index_host and project options to the <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">update</span></code> subcommand</p></li>
+<li><p>add examples for each subcommands</p></li>
+<li><p>use argparse.RawTextHelpFormatter in subcommand help</p></li>
+<li><p>add globus online support</p></li>
+<li><p>set gridftp port range to 50000-51000</p></li>
+<li><p>in sdget.sh and sdgetg.sh, <code class="docutils literal notranslate"><span class="pre">-v</span></code> option replace <code class="docutils literal notranslate"><span class="pre">-d</span></code> option (verbose replace debug_level)</p></li>
+<li><p>add new <code class="docutils literal notranslate"><span class="pre">value</span></code> format for synda dump <code class="docutils literal notranslate"><span class="pre">-F</span></code> option</p></li>
+<li><p>enable debug mode when using synda test &lt;url&gt; subcommand</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">list</span></code> now list everything by default</p></li>
+<li><p>add missing initialization in install.sh (g__transfer=0)</p></li>
+<li><p>add configuration file documentation</p></li>
+<li><p>move post_processing parameter from daemon section to module section</p></li>
+<li><p>rename configuration file <code class="docutils literal notranslate"><span class="pre">[path]</span></code> section to <code class="docutils literal notranslate"><span class="pre">[core]</span></code> section</p></li>
+<li><p>do not remove ca certs when using <code class="docutils literal notranslate"><span class="pre">synda</span> <span class="pre">certificate</span> <span class="pre">renew</span></code> option</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">force_renew_ca_certficates</span></code> option to remove ca certs</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">cache</span></code> subcommand</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">sdreducecol</span></code> filter from sdfilepipeline module</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">pkg_resources.DistributionNotFound:</span> <span class="pre">setuptools&gt;=1.0</span></code> bug</p></li>
+<li><p>move common method from Dataset and File class to BaseType class</p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">prevent_daemon_and_modification</span></code> to false for source installation</p></li>
+<li><p>move <code class="docutils literal notranslate"><span class="pre">max_parallel_download</span></code> from <code class="docutils literal notranslate"><span class="pre">[daemon]</span></code> to <code class="docutils literal notranslate"><span class="pre">[download]</span></code> section</p></li>
+<li><p>untar ihm_pid_file only if mutually exclusive lock is enabled</p></li>
+<li><p>increase daemon sqlite timeout from 120s to 12000s</p></li>
+<li><p>do not parse wget output by default and increase wget <code class="docutils literal notranslate"><span class="pre">--tries</span></code> to prevent hpss failure</p></li>
+<li><p>default indexes set to dkrz</p></li>
+<li><p>daemon non-privileged mode</p></li>
+</ul>
+</dd>
+<dt>Version 3.2 - 2016-02-03</dt><dd><ul class="simple">
+<li><p>DEB package</p></li>
+<li><p>retrieve dataset timestamp in batch mode</p></li>
+<li><p>modify Synda scheduler to ease Globus Online integration</p></li>
+<li><p>prevent normal user to run admin commands in multi-user mode</p></li>
+<li><p>set model attribute as optional</p></li>
+<li><p>improve documentation</p></li>
+</ul>
+</dd>
+<dt>Version 3.1 - 2015-12-29</dt><dd><ul class="simple">
+<li><p>multi-user</p></li>
+<li><p>daemon integrated in systemd</p></li>
+<li><p>RPM package</p></li>
+<li><p>per-user config file (~/.syndarc)</p></li>
+<li><p>online help</p></li>
+<li><p>parameter discovery (list parameter based on other parameters)</p></li>
+<li><p>support for free syntax in template (e.g. [realm experiment frequency]=v1 v2)</p></li>
+<li><p>default indexes set to pcmdi9</p></li>
+<li><p>add inline tutorial</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-z</span></code> option replace <code class="docutils literal notranslate"><span class="pre">-y</span></code> option</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-y</span></code> option replace <code class="docutils literal notranslate"><span class="pre">-N</span></code> option</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--yes</span></code> option replace <code class="docutils literal notranslate"><span class="pre">--non-interactive</span></code> option</p></li>
+<li><p>openid/passwd moved from sdt.conf to credentials.conf</p></li>
+<li><p>add check to prevent normal user from running synda in write mode</p></li>
+<li><p>add ignorecase filter</p></li>
+</ul>
+</dd>
+<dt>Version 3.0 - 2015-03-25</dt><dd><ul class="simple">
+<li><p>add new local search filter (status, error_msg)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">--version</span></code> option to print version in synda command</p></li>
+<li><p>improve external files support</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">next</span> <span class="pre">replica</span></code> action (batch mode)</p></li>
+<li><p>move default selection files in <code class="docutils literal notranslate"><span class="pre">sdt/conf/default</span></code></p></li>
+<li><p>move configuration file in <code class="docutils literal notranslate"><span class="pre">sdt/conf</span></code> folder</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">history</span></code> subcommand</p></li>
+<li><p>move lfae_mode into sdt.conf</p></li>
+<li><p>gridftp support</p></li>
+</ul>
+</dd>
+<dt>Version 2.9 - 2014-11-03</dt><dd><ul class="simple">
+<li><p>several template parameters names changed (e.g. tablename is now named cmor_table). See sdconvert.sh for more info</p></li>
+<li><p>new synda command (apt-get like front-end)</p></li>
+<li><p>support for most search-API parameters</p></li>
+<li><p>“not” operation support (e.g. all models but one)</p></li>
+<li><p>multi-DRS support</p></li>
+<li><p>new formatting keyword</p></li>
+<li><p>only localpath is mutable</p></li>
+<li><p>support for different name for the same model (e.g. GFDL-CM2p1, GFDL-CM2.1 et GFDL-CM2-1)</p></li>
+<li><p>default values per project</p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">searchapi_host</span></code> parameter to specify which index to use</p></li>
+<li><p>space are supported (e.g. “ISI-MIP Fasttrack”)</p></li>
+<li><p>replica support</p></li>
+<li><p>wildcard (all/_*) supported in all facets</p></li>
+<li><p>local database reorganization</p></li>
+</ul>
+</dd>
+<dt>Version 2.8 - 2013-12-20</dt><dd><ul class="simple">
+<li><p>set CHUNKSIZE (search-API limit parameter) to 10000 (was 1000)</p></li>
+<li><p>add time coverage filter</p></li>
+<li><p>add support for <code class="docutils literal notranslate"><span class="pre">sha256</span></code> checksum type</p></li>
+</ul>
+</dd>
+<dt>Version 2.7 - 2013-08-20</dt><dd><ul class="simple">
+<li><p>fix B0039 bug</p></li>
+<li><p>fix B0034 bug</p></li>
+<li><p>fix B0033 bug</p></li>
+<li><p>add EUCLIPSE project</p></li>
+<li><p>XML parsing module rewriting</p></li>
+<li><p>add “timeout/retry” mechanism in the discovery process</p></li>
+<li><p>models discovery module improvement</p></li>
+<li><p>move tuning parameters into configuration file</p></li>
+<li><p>increase thredds-catalog timeout from 10 to 100</p></li>
+<li><p>add second logger for domain/functional messages</p></li>
+<li><p>load readonly tables in memory to speed up the discovery process</p></li>
+<li><p>add CMOR tables cache system</p></li>
+<li><p>add orphan transfer detection (without selection match)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat</span></code> subcommand rewriting</p></li>
+<li><p>add db_path option in configuration file</p></li>
+</ul>
+</dd>
+<dt>Version 2.6 - 2013-04-18</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">search-api-nocache</span></code> discovery engine</p></li>
+<li><p>add support for “obs4MIPs” project</p></li>
+<li><p>add wild card support for realm and frequency</p></li>
+<li><p>fix B0032 bug</p></li>
+</ul>
+</dd>
+<dt>Version 2.5 - 2012-12-18</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">url</span></code> column in dataset tmp tables</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-G</span></code> option (remove tmp tables)</p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">MyProxyClient</span></code> as default myproxy client</p></li>
+<li><p>set search-API as default search-engine</p></li>
+<li><p>add selection based statistics</p></li>
+<li><p>add new <code class="docutils literal notranslate"><span class="pre">-E</span></code> option to retrieve model list from search-API</p></li>
+<li><p>fix B0031 bug</p></li>
+<li><p>replace PCMDI3 with PCMDI9 in get_data.sh script (myproxy server)</p></li>
+<li><p>add search-API multithreading to run several search in parallel</p></li>
+<li><p>add search-API call metrics (to trace time spent in each call)</p></li>
+<li><p>add search-API pagination</p></li>
+<li><p>fix B0030 bug</p></li>
+<li><p>fix B0029 bug</p></li>
+<li><p>fix B0028 bug</p></li>
+<li><p>fix B0027 bug</p></li>
+<li><p>fix B0026 bug</p></li>
+</ul>
+</dd>
+<dt>Version 2.4 - 2012-06-19</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-x</span></code> option to run discovery process and print ESGF checksums</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-X</span></code> option to control if local checksum match remote checksum</p></li>
+<li><p>fix B0025 bug</p></li>
+<li><p>add “latest” symlink creation routine (last version identifier)</p></li>
+<li><p>add old versions suppression routine</p></li>
+<li><p>add search API mode</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-L</span></code> option (set <code class="docutils literal notranslate"><span class="pre">latest</span></code> flag)</p></li>
+<li><p>fix B0024 bug</p></li>
+<li><p>mark CSTE_TRANSFERT_STATUS_DELETED status as deprecated</p></li>
+</ul>
+</dd>
+<dt>Version 2.3 - 2012-04-20</dt><dd><ul class="simple">
+<li><p>add PROC0001 method to list obsolete version</p></li>
+<li><p>add new columns latest_date and last_done_transfer_date</p></li>
+<li><p>fix B0023 bug</p></li>
+<li><p>fix B0022 bug (MIGR0001() method broken)</p></li>
+<li><p>fix B0021 bug. (variable missing when retrieving transfert from database)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-y</span></code> option (dataset-info)</p></li>
+</ul>
+</dd>
+<dt>Version 2.2 - 2012-04-07</dt><dd><ul class="simple">
+<li><p>fix B0020 bug. (fix 2.2 at 20120410)</p></li>
+<li><p>fix B0019 bug. (fix 2.2 at 20120407)</p></li>
+<li><p>add ESGF MyProxyLogon (MyProxy Java client)</p></li>
+<li><p>replace <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">fax</span></code> with <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">ax</span></code> (Mac port)</p></li>
+<li><p>add dependencies check in install.sh</p></li>
+<li><p>add transfer_helper modules</p></li>
+<li><p>add dataset in transfer queue (eot_queue)</p></li>
+<li><p>fix B0018 bug</p></li>
+<li><p>fix B0017 bug</p></li>
+<li><p>fix “[Error 98] address already in use”</p></li>
+<li><p>use wget tries and timeout parameters from conf. file</p></li>
+<li><p>fix B0016 bug</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-r</span></code> option (exec proc)</p></li>
+<li><p>use transfert_id instead of local_image as primary key (for update)</p></li>
+<li><p>add new table <code class="docutils literal notranslate"><span class="pre">dataset</span></code></p></li>
+<li><p>add new column <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code> in transfer table</p></li>
+</ul>
+</dd>
+<dt>Version 2.1 - 2012-03-12</dt><dd><ul class="simple">
+<li><p>fix B0015 bug</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-V</span></code> option in start.sh</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-b</span></code> to myproxy-logon options (only if myproxy-logon &gt;= 5.0)</p></li>
+<li><p>set wget tries option to 1</p></li>
+<li><p>fix B0014 bug</p></li>
+<li><p>fix B0013 bug</p></li>
+<li><p>add abnormal termination recovery routine</p></li>
+<li><p>add ignore checksum option</p></li>
+<li><p>fix B0012 bug</p></li>
+<li><p>set SQLite lock timeout to 120s</p></li>
+<li><p>improve scheduler (increase queue and dequeue performance)</p></li>
+<li><p>frozen wget watchdog reactivation</p></li>
+</ul>
+</dd>
+<dt>Version 2.0 - 2012-02-14</dt><dd><ul class="simple">
+<li><p>add new synchronisation mode (retrieve dataset last version only)</p></li>
+<li><p>fix B0011 bug (remove local files when checksum doesn’t match)</p></li>
+<li><p>add list-local-files action</p></li>
+<li><p>fix B0007 bug (replace urllib with urllib2 and set timeout to 10)</p></li>
+<li><p>fix B0006 bug (add missing env. var. in stop.sh)</p></li>
+<li><p>fix B0009 bug (catch exception and process others datasets)</p></li>
+<li><p>remove non-working models from models table</p></li>
+</ul>
+</dd>
+<dt>Version 1.9 - 2012-01-30</dt><dd><ul class="simple">
+<li><p>fix B0005 bug</p></li>
+</ul>
+</dd>
+<dt>Version 1.8 - 2012-01-28</dt><dd><ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">-w</span></code> option (shutdown immediate)</p></li>
+<li><p>improve errors handling</p></li>
+<li><p>fix B0003 bug</p></li>
+<li><p>fix start.sh <code class="docutils literal notranslate"><span class="pre">-e</span></code> option (B0004 bug)</p></li>
+</ul>
+</dd>
+<dt>Version 1.7 - 2012-01-27</dt><dd><ul class="simple">
+<li><p>add start.sh <code class="docutils literal notranslate"><span class="pre">-u</span></code> option (refresh ESGF metadata)</p></li>
+<li><p>add start.sh <code class="docutils literal notranslate"><span class="pre">-q</span></code> option (stop daemon)</p></li>
+<li><p>add start.sh <code class="docutils literal notranslate"><span class="pre">-l</span></code> option (list selections)</p></li>
+</ul>
+</dd>
+<dt>Version 1.6 - 2012-01-26</dt><dd><ul class="simple">
+<li><p>fix B0001 and B0002 bugs</p></li>
+<li><p>remove one-file-per-model logging</p></li>
+<li><p>add metadata caching system</p></li>
+<li><p>merge all logs in one file</p></li>
+<li><p>add model in tmp tables (dataset_version and file_timeslice)</p></li>
+</ul>
+</dd>
+<dt>Version 1.5 - 2012-01-18</dt><dd><ul class="simple">
+<li><p>move models loop inside the feeder</p></li>
+<li><p>add CMOR tablename forcing in template</p></li>
+<li><p>add stat subcommand</p></li>
+<li><p>add syncmode check in start.sh</p></li>
+<li><p>move product out of local_image column</p></li>
+</ul>
+</dd>
+<dt>Version 1.4 - 2012-01-14</dt><dd><ul class="simple">
+<li><p>set myproxy-logon as default (change procedure in README to use <code class="docutils literal notranslate"><span class="pre">install.sh</span> <span class="pre">-a</span></code>)</p></li>
+<li><p>add delete subcommand</p></li>
+<li><p>add cancel subcommand</p></li>
+<li><p>add retry subcommand</p></li>
+<li><p>add info subcommand</p></li>
+<li><p>merge output1 and output2 into output</p></li>
+<li><p>improve installation process</p></li>
+<li><p>use synchronous events to control the daemon</p></li>
+</ul>
+</dd>
+<dt>Version 1.3 - 2012-01-02</dt><dd><ul class="simple">
+<li><p>automatic update of model/datanode list</p></li>
+<li><p>add remote and local checksum</p></li>
+<li><p>unset X509_USER_PROXY variable (in get_data.sh script)</p></li>
+<li><p>fix selection overlapping bug</p></li>
+<li><p>fix product bug (check to prevent <code class="docutils literal notranslate"><span class="pre">output</span></code> value for product)</p></li>
+<li><p>add license information</p></li>
+<li><p>add svn properties in header</p></li>
+<li><p>ignore blank lines in selection files</p></li>
+</ul>
+</dd>
+<dt>Version 1.2 - 2011-10-07</dt><dd><ul class="simple">
+<li><p>improve <code class="docutils literal notranslate"><span class="pre">ensemble</span></code> support</p></li>
+<li><p>increase from 8 to 16 Wget threads</p></li>
+<li><p>add per model priority</p></li>
+<li><p>move main loop delay from 3 seconds to 6 seconds</p></li>
+<li><p>support file ID with non-standard extension (<code class="docutils literal notranslate"><span class="pre">.nc_0</span></code>)</p></li>
+<li><p>add upgrade and archive option in script install.sh</p></li>
+<li><p>improve HTTP error handling in script get_data.sh</p></li>
+</ul>
+</dd>
+<dt>Version 1.1 - 2011-09-28</dt><dd><ul class="simple">
+<li><p>improve datanode and model configuration</p></li>
+<li><p>improve HTTP error code handling</p></li>
+<li><p>add watchdog to check for frozen wget</p></li>
+<li><p>fix PCMDI datanode incorrect url</p></li>
+<li><p>fix incorrect configuration for models GISS-E2-H, GISS-E2-R and inmcm4</p></li>
+<li><p>add new models (HadCM3,IPSL-CM5A-LR,CanAM4,MIROC5,MIROC4h,CCSM4,MRI-CGCM3,MRI-AGCM3-2S,MRI-AGCM3-2H,MPI-ESM-LR)</p></li>
+</ul>
+</dd>
+<dt>Version 1.0 - 2011-09-09</dt><dd><ul class="simple">
+<li><p>support for <code class="docutils literal notranslate"><span class="pre">myproxy-logon</span></code> and <code class="docutils literal notranslate"><span class="pre">myproxyclient</span></code></p></li>
+<li><p>simple data selection with model, experiment, realm and variable</p></li>
+<li><p>multi threaded downloads (8 tasks by default)</p></li>
+<li><p>manage datasets version following new drs</p></li>
+<li><p>incremental process (download only what’s new)</p></li>
+<li><p>download history stored in a database</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="post-processing-module">
+<h2>Post-Processing Module<a class="headerlink" href="#post-processing-module" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt>Version 1.3 - 2017-01-15</dt><dd><ul class="simple">
+<li><p><em>synda</em> group can be used instead of <code class="docutils literal notranslate"><span class="pre">sudo</span></code> (system package)</p></li>
+</ul>
+</dd>
+<dt>Version 1.2 - 2016-12-04</dt><dd><ul class="simple">
+<li><p>move hard-coded pipeline dependencies into configuration files</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">credentials.conf</span></code> file</p></li>
+<li><p>add pipeline samples</p></li>
+<li><p>bugfixes</p></li>
+</ul>
+</dd>
+<dt>Version 1.1 - 2016-09-19</dt><dd><ul class="simple">
+<li><p>add CORDEX support</p></li>
+<li><p>add pexec support</p></li>
+<li><p>add multivalues support for <code class="docutils literal notranslate"><span class="pre">job_class</span></code> option</p></li>
+<li><p>add conf folder</p></li>
+<li><p>add pipeline_path</p></li>
+<li><p>improve worker log routines</p></li>
+</ul>
+</dd>
+<dt>Version 1.0 - 2014-12-25</dt><dd><ul class="simple">
+<li><p>pipeline engine</p></li>
+<li><p>Jsonrpc server</p></li>
+<li><p>database environment</p></li>
+<li><p>worker script</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="faq.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="credits.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

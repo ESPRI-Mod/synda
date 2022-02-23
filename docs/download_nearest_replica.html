@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download the nearest replica &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Download the nearest replica</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/download_nearest_replica.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="download-the-nearest-replica">
+<span id="nearestreplica"></span><h1>Download the nearest replica<a class="headerlink" href="#download-the-nearest-replica" title="Permalink to this headline"></a></h1>
+<p>To make Synda automaticaly select the nearest replica, set the following parameters in $HOME/conf/sdt.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[behaviour]</span><span class="w"></span>
+<span class="na">nearest</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
+<span class="na">nearest_mode</span><span class="o">=</span><span class="s">geolocation</span><span class="w"></span>
+
+<span class="k">[locale]</span><span class="w"></span>
+<span class="na">country</span><span class="o">=</span><span class="s">&lt;your country&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Country value examples</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">country</span><span class="o">=</span><span class="s">England</span><span class="w"></span>
+<span class="na">country</span><span class="o">=</span><span class="s">Germany</span><span class="w"></span>
+<span class="na">country</span><span class="o">=</span><span class="s">France</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To show available replica for a file, you can run the command below</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda search cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -r
+</pre></div>
+</div>
+<p>To test if the nearest replica is correctly selected, you can run the command below</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda dump cmip5.output1.CNRM-CERFACS.CNRM-CM5.historicalMisc.day.ocean.day.r1i1p1.v20120619.tossq_day_CNRM-CM5_historicalMisc_r1i1p1_19300101-19391231.nc -F indent <span class="p">|</span> grep data_node
+</pre></div>
+</div>
+<p>It will show which replica has been selected.</p>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+<p>If you are located in England <em>AND</em> there is a replica available in England</p>
+<p>output of the last command should looks like</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">esgf-data1.ceda.ac.uk</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If you are located in Germany <em>AND</em> there is a replica available in Germany</p>
+<p>output of the last command should looks like</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">wdcc-esgf.dkrz.de</span><span class="w"></span>
+</pre></div>
+</div>
+<p>etc..</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

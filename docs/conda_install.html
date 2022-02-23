@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation and upgrade &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Installation and upgrade</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#upgrade">Upgrade</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Installation and upgrade</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/conda_install.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-and-upgrade">
+<span id="conda-install"></span><h1>Installation and upgrade<a class="headerlink" href="#installation-and-upgrade" title="Permalink to this headline"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">synda</span></code> is available on anaconda.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<p>Install an Anaconda distribution on your machine, step by step guide per OS available at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>https://docs.conda.io/projects/conda/en/latest/user-guide/install/
+</pre></div>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>While undertaking the synda install via conda, please make sure you’re using the proper
+role for this. Using sudo might not be the best idea as it is not really required at all and
+can interefere with other installation across the machine.</p>
+<p>Create a synda isolated environment if you wish:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n my-synda-environment <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9+
+</pre></div>
+</div>
+<p>Activate the created environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate my-synda-environment
+</pre></div>
+</div>
+<p>Then install <code class="docutils literal notranslate"><span class="pre">synda</span></code> package using command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c ipsl -c conda-forge synda
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Specify : -c <strong>ipsl</strong> -c <strong>conda-forge</strong> (i.e. <em>ipsl</em> and <em>conda-forge</em> anaconda channels) to get the right packages. Currently all dependencies are
+hosted on either default conda-forge anaconda channels or the ipsl channels to ease the installation.</p>
+</div>
+</section>
+<section id="upgrade">
+<h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline"></a></h2>
+<p>Upgrade <code class="docutils literal notranslate"><span class="pre">synda</span></code> package using command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda update -c ipsl -c conda-forge synda
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

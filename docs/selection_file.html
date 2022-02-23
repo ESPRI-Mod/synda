@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selection file &mdash; synda 3.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> synda
+          </a>
+              <div class="version">
+                3.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Synda overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda_install.html">Installation and upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Synda Files and Folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_reference.html">Synda command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto_and_tutorial.html">How to &amp; tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download_nearest_replica.html">Download the nearest replica</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License and Disclaimer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">synda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Selection file</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/selection_file.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="selection-file">
+<span id="id1"></span><h1>Selection file<a class="headerlink" href="#selection-file" title="Permalink to this headline"></a></h1>
+<p>A selection file contains parameters to define which data you want to download
+from ESGF archive, how to download it and how to store the data.</p>
+<p>The user defines one or many selection files. Each of them have a list of
+facets (variables, frequencies, experiments, ensemble, model..). Using them,
+the program explore the ESGF archive and download all the corresponding
+available files. The program may be run regularly to download the possible new
+files. Typically each file is associated with an analysis (cfmip, downscaling
+and so on). Create as many selection files as you want in the ‘selection’
+folder.</p>
+<p>Those selection files are stored in <em>$HOME/selection</em> folder.</p>
+<p>Example of a selection file</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">project</span><span class="o">=</span><span class="s">CMIP5</span><span class="w"></span>
+<span class="na">model</span><span class="o">=</span><span class="s">CNRM-CM5 CSIRO-Mk3-6-0</span><span class="w"></span>
+<span class="na">experiment</span><span class="o">=</span><span class="s">historical amip</span><span class="w"></span>
+<span class="na">ensemble</span><span class="o">=</span><span class="s">r1i1p1</span><span class="w"></span>
+<span class="na">variable[atmos]</span><span class="o">=</span><span class="s">tasmin tas psl</span><span class="w"></span>
+<span class="na">variable[cfDay]</span><span class="o">=</span><span class="s">albisccp cltisccp pctisccp rlut rlutcs rsut rsutcs</span><span class="w"></span>
+<span class="na">variable[ocean fx]</span><span class="o">=</span><span class="s">areacello sftof</span><span class="w"></span>
+<span class="na">variable[land mon]</span><span class="o">=</span><span class="s">mrsos,nppRoot,nep</span><span class="w"></span>
+<span class="na">variable[seaIce mon]</span><span class="o">=</span><span class="s">sic evap</span><span class="w"></span>
+<span class="na">variable[ocnBgchem mon]</span><span class="o">=</span><span class="s">dissic fbddtalk</span><span class="w"></span>
+<span class="na">variable[Lmon]</span><span class="o">=</span><span class="s">mrro mrso</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="notes">
+<h2>Notes:<a class="headerlink" href="#notes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>many selection file examples can be found [here](<a class="reference external" href="https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample">https://github.com/Prodiguer/synda/tree/master/sdt/selection/sample</a>)</p></li>
+<li><p>selection files are sometimes called ‘template’ or ‘selection form’</p></li>
+</ul>
+<p>Next parts of this document are organized in 3 main sections</p>
+<ul class="simple">
+<li><p>Selection file format</p></li>
+<li><p>Selection file parameter</p></li>
+<li><p>Selection file management</p></li>
+</ul>
+<section id="selection-file-format">
+<h3>Selection file format<a class="headerlink" href="#selection-file-format" title="Permalink to this headline"></a></h3>
+<p>A selection file accepts the four following line formats</p>
+</section>
+<section id="realm-frequency-and-variable-s">
+<h3>realm frequency and variable(s)<a class="headerlink" href="#realm-frequency-and-variable-s" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>variable[&lt;realm&gt;][&lt;frequency&gt;]=&lt;variable1&gt; &lt;variable2&gt; …</p>
+</div></blockquote>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">variable[atmos][mon]</span><span class="o">=</span><span class="s">tas psl tasmin</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="note">
+<h2>Note<a class="headerlink" href="#note" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>space is used as variable delimiter</p></li>
+</ul>
+<section id="facet-s-and-variable-s">
+<h3>facet(s) and variable(s)<a class="headerlink" href="#facet-s-and-variable-s" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="id2">
+<h2>Definition<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">variable[&lt;facet1&gt; &lt;facet2&gt; &lt;facet3&gt; ...]</span><span class="o">=</span><span class="s">&lt;variable1&gt; &lt;variable2&gt; ...</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Example<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>variable[rcp26 atmos mon]=tasmin tasmax</p>
+</div></blockquote>
+</section>
+<section id="id4">
+<h2>Note<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>space is used as facets and variables delimiter</p></li>
+</ul>
+<section id="name-and-value">
+<h3>name and value<a class="headerlink" href="#name-and-value" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="id5">
+<h2>Definition<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">&lt;name&gt;</span><span class="o">=</span><span class="s">&lt;value&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Example<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">experiment</span><span class="o">=</span><span class="s">rcp26</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="standalone-value">
+<h3>standalone value<a class="headerlink" href="#standalone-value" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="id7">
+<h2>Definition<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">&lt;value&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2>Example<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h2>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">rcp26</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id9">
+<h3>Notes<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Blank line are ignored.</p></li>
+<li><p>Selection files may include comments, prefixed by specific characters (#).</p></li>
+<li><p>Trailing comments are not supported.</p></li>
+</ul>
+</section>
+<section id="selection-file-parameter">
+<h3>Selection file parameter<a class="headerlink" href="#selection-file-parameter" title="Permalink to this headline"></a></h3>
+<p>See [selection file parameter reference](selection_file_parameter_reference.rst)</p>
+</section>
+<section id="selection-file-management">
+<h3>Selection file management<a class="headerlink" href="#selection-file-management" title="Permalink to this headline"></a></h3>
+</section>
+<section id="adding-a-selection-file">
+<h3>Adding a selection file<a class="headerlink" href="#adding-a-selection-file" title="Permalink to this headline"></a></h3>
+<p>Create a new selection file in the ‘selection’ folder and set the filters.</p>
+<p>Then run command below to start the discovery</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
+</pre></div>
+</div>
+</section>
+<section id="editing-a-selection-file">
+<h3>Editing a selection file<a class="headerlink" href="#editing-a-selection-file" title="Permalink to this headline"></a></h3>
+<p>Edit the file and change filters accordingly.</p>
+<p>Then run command below</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda install -s &lt;selection-file&gt;
+</pre></div>
+</div>
+</section>
+<section id="removing-a-selection-file">
+<h3>Removing a selection file<a class="headerlink" href="#removing-a-selection-file" title="Permalink to this headline"></a></h3>
+<p>Run command below to remove files matching the selection file</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>synda remove -s &lt;selection-file&gt;
+</pre></div>
+</div>
+<p>Then manually remove the selection file from the ‘selection’ folder.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CNRS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
