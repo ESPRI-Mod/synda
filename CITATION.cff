@@ -1,21 +1,44 @@
-# YAML 1.2
----
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: synda
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
 abstract: "synda has incorporated code from several sources. Users have contributed patches and suggestions over time. This work has been undertaken by IPSL, IS-ENES and ANR Convergence."
-authors: 
-  -
-    affiliation: IPSL
-    family-names: "Ben Nasser"
-    given-names: Atef
-  -
-    family-names: Levavasseur
-    given-names: Guillaume
-  -
-    family-names: Denvil
-    given-names: "Sébastien"
-cff-version: "1.1.0"
+type: software
+authors:
+  - given-names: 'Jérôme '
+    family-names: RACIAZEK
+    email: jripsl@ipsl.jussieu.fr
+    affiliation: IPSL/CNRS
+  - given-names: Sébastien
+    family-names: DENVIL
+    email: sdipsl@ipsl.fr
+    affiliation: IPSL/CNRS
+    orcid: 'https://orcid.org/0000-0002-6715-3533'
+  - given-names: Atef
+    family-names: BEN NASSER
+    email: abennasser@ipsl.fr
+    affiliation: IPSL/CNRS
+    orcid: 'https://orcid.org/0000-0001-6948-8735'
+  - given-names: Guillaume
+    family-names: LEVAVASSEUR
+    email: glipsl@ipsl.fr
+    affiliation: IPSL/SU
+    orcid: 'https://orcid.org/0000-0002-0801-0890'
+  - given-names: 'Patrice '
+    family-names: JOURNOUD
+    email: pjournoud@ipsl.fr
+    affiliation: IPSL/CNRS
+repository-code: 'https://github.com/ESPRI-Mod/synda'
+url: 'https://espri-mod.github.io/synda/'
+abstract: >-
+  synda is a command line tool to search and download files
+  from the Earth System Grid Federation (ESGF) archive.
 license: "CECILL-1.0"
-message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/Prodiguer/synda"
-title: Synda
-version: "3.10"
-...0
+commit: '80554e2'
+version: '3.13'
+doi: 10.5281/zenodo.4147465
+date-released: '2020-10-28'
