@@ -13,25 +13,60 @@ authors:
     family-names: RACIAZEK
     email: jripsl@ipsl.jussieu.fr
     affiliation: IPSL/CNRS
+  
   - given-names: Sébastien
     family-names: DENVIL
     email: sdipsl@ipsl.fr
     affiliation: IPSL/CNRS
     orcid: 'https://orcid.org/0000-0002-6715-3533'
+  
   - given-names: Atef
     family-names: BEN NASSER
     email: abennasser@ipsl.fr
     affiliation: IPSL/CNRS
     orcid: 'https://orcid.org/0000-0001-6948-8735'
+  
   - given-names: Guillaume
     family-names: LEVAVASSEUR
     email: glipsl@ipsl.fr
     affiliation: IPSL/SU
     orcid: 'https://orcid.org/0000-0002-0801-0890'
+  
   - given-names: 'Patrice '
     family-names: JOURNOUD
     email: pjournoud@ipsl.fr
     affiliation: IPSL/CNRS
+  
+  - given-names: Jeffrey
+    family-names: PAINTER
+    email: painterjf@gmail.com
+    affiliation: LLNL
+    orcid: 'https://orcid.org/0000-0001-7920-4337' 
+
+  - given-names: Lukasz
+    family-names: LACINSKI
+    email: lukasz@uchicago.edu
+    affiliation: University of Chicago
+    orcid: 'https://orcid.org/0009-0008-3545-528X'
+
+  - given-names: Ruth
+    family-names: PETRIE
+    email: ruth.petrie@stfc.ac.uk
+    affiliation: SFTC
+    orcid: 'https://orcid.org/0000-0002-5568-699X'
+
+  - given-names: Trevor James
+    family-names: SMITH
+    email: smith.trevorj@ouranos.ca
+    affiliation: OURANOUS 
+    orcid: 'https://orcid.org/0000-0001-5393-8359'
+
+  - given-names: Ezequiel
+    family-names: CIMADEVILLA ALVAREZ
+    email:  ezequiel.cimadevilla@unican.es
+    affiliation: University of Cantabria  
+    orcid: 'https://orcid.org/0000-0002-8437-2068'
+
 repository-code: 'https://github.com/ESPRI-Mod/synda'
 url: 'https://espri-mod.github.io/synda/'
 abstract: >-
